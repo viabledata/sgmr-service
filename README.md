@@ -1,9 +1,9 @@
-# sGMR Data Service
+# sGMR Service
 
 ### Getting started
 
 1 - Clone this repo
-2 - Install package dependecies
+2 - Install package dependencies
 ```sh
 npm install
 ```
