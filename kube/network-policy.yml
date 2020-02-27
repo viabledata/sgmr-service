@@ -2,7 +2,7 @@
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
-  name: {{.SGMR_DATA_SERVICE_NAME}}
+  name: {{.SGMR_SERVICE_NAME}}
 spec:
   egress:
     - {}
@@ -13,13 +13,13 @@ spec:
             name: ingress-external
       - podSelector:
           matchLabels:
-            name: {{.SGMR_DATA_SERVICE_NAME}}
+            name: {{.SGMR_SERVICE_NAME}}
       ports:
         - port: 10443
           protocol: TCP
   podSelector:
     matchLabels:
-      name: {{.SGMR_DATA_SERVICE_NAME}}
+      name: {{.SGMR_SERVICE_NAME}}
   policyTypes:
     - Ingress
     - Egress

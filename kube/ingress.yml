@@ -2,7 +2,7 @@
 apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
 metadata:
-  name: {{.SGMR_DATA_SERVICE_NAME}}
+  name: {{.SGMR_SERVICE_NAME}}
   labels:
     stable.k8s.psg.io/kcm.class: default
   annotations:
@@ -15,14 +15,14 @@ metadata:
     stable.k8s.psg.io/kcm.provider: http
 spec:
   rules:
-  - host: {{.SGMR_DATA_SERVICE_URL}}
+  - host: {{.SGMR_SERVICE_URL}}
     http:
       paths:
       - backend:
-          serviceName: {{.SGMR_DATA_SERVICE_NAME}}
+          serviceName: {{.SGMR_SERVICE_NAME}}
           servicePort: 10443
         path: /
   tls:
   - hosts:
-    - {{.SGMR_DATA_SERVICE_URL}}
-    secretName: {{.SGMR_DATA_SERVICE_URL}}-tls
+    - {{.SGMR_SERVICE_URL}}
+    secretName: {{.SGMR_SERVICE_URL}}-tls

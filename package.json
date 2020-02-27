@@ -1,5 +1,5 @@
 {
-  "name": "sgmr-data-service",
+  "name": "sgmr-service",
   "version": "0.1.0",
   "description": "A frontend service for interacting with the sGMR Data API",
   "scripts": {
@@ -10,14 +10,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "ssh://git@gitlab.digital.homeoffice.gov.uk:2222/cop/sgmr-data-service.git"
+    "url": "git@github.com:UKHomeOffice/sgmr-service.git"
   },
   "author": "Pedro Miguel",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/UKHomeOffice/sgmr-data-service/issues"
+    "url": "https://github.com/UKHomeOffice/sgmr-service/issues"
   },
-  "homepage": "https://github.com/UKHomeOffice/sgmr-data-service#readme",
+  "homepage": "https://github.com/UKHomeOffice/sgmr-service#readme",
   "devDependencies": {
     "@babel/core": "^7.8.4",
     "@babel/node": "^7.8.4",
