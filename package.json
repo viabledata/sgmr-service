@@ -1,0 +1,44 @@
+{
+  "name": "sgmr-data-service",
+  "version": "0.1.0",
+  "description": "A frontend service for interacting with the sGMR Data API",
+  "scripts": {
+    "build": "webpack --mode=production",
+    "build-dev": "webpack --mode=development",
+    "start": "webpack-dev-server --watch-poll --mode=development",
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "ssh://git@gitlab.digital.homeoffice.gov.uk:2222/cop/sgmr-data-service.git"
+  },
+  "author": "Pedro Miguel",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/UKHomeOffice/sgmr-data-service/issues"
+  },
+  "homepage": "https://github.com/UKHomeOffice/sgmr-data-service#readme",
+  "devDependencies": {
+    "@babel/core": "^7.8.4",
+    "@babel/node": "^7.8.4",
+    "@babel/plugin-proposal-class-properties": "^7.8.3",
+    "@babel/preset-env": "^7.8.4",
+    "@babel/preset-react": "^7.8.3",
+    "babel-loader": "^8.0.6",
+    "copy-webpack-plugin": "^5.1.1",
+    "file-loader": "^5.1.0",
+    "jest": "^24.9.0",
+    "node-sass": "^4.13.1",
+    "sass-loader": "^8.0.2",
+    "webpack": "^4.41.6",
+    "webpack-cli": "^3.3.11",
+    "webpack-dev-server": "^3.10.3"
+  },
+  "dependencies": {
+    "govuk-frontend": "^3.5.0",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0",
+    "react-router-dom": "^5.1.2",
+    "winston": "^3.2.1"
+  }
+}

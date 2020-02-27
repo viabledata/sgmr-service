@@ -1,0 +1,110 @@
+pipeline:
+
+  unit_test:
+    image: quay.io/ukhomeofficedigital/cop-node:12-alpine
+    commands:
+      - node -v
+      - npm -v
+      - npm install --silent
+      - npm run test
+    when:
+      event: push
+
+  build:
+    image: quay.io/ukhomeofficedigital/drone-docker
+    commands:
+      - docker build -t sgmr-data-service:$${DRONE_COMMIT_SHA} .
+    when:
+      event: push
+
+  vulnerability-scan:
+    image: quay.io/ukhomeofficedigital/anchore-submission:latest
+    dockerfile: Dockerfile
+    image_name: sgmr-data-service:${DRONE_COMMIT_SHA}
+    local_image: true
+    tolerate: low
+    fail_on_detection: false
+    when:
+      branch: master
+      event: push
+
+  build_push_to_ecr:
+    image: quay.io/ukhomeofficedigital/ecr:latest
+    secrets:
+    - source: SGMR_DATA_SERVICE_AWS_ACCESS_KEY_ID
+      target: AWS_ACCESS_KEY_ID
+    - source: SGMR_DATA_SERVICE_AWS_SECRET_ACCESS_KEY
+      target: AWS_SECRET_ACCESS_KEY
+    repo: 340268328991.dkr.ecr.eu-west-2.amazonaws.com/cop/sgmr-data-service
+    tags: ${DRONE_COMMIT_SHA}
+    when:
+      branch: master
+      event: push
+
+  synch_dev_secrets:
+    image: quay.io/ukhomeofficedigital/cop-secrets
+    environment:
+      - DRONE_SERVER=https://drone-gitlab.acp.homeoffice.gov.uk
+      - DEPLOY_ENV=dev
+    secrets:
+      - source: DEV_DRONE_AWS_ACCESS_KEY_ID
+        target: AWS_ACCESS_KEY_ID
+      - source: DEV_DRONE_AWS_SECRET_ACCESS_KEY
+        target: AWS_SECRET_ACCESS_KEY
+      - source: DRONE_PRIVATE_TOKEN
+        target: DRONE_TOKEN
+    when:
+      environment: secrets
+      event: deployment
+
+  deploy_to_dev:
+    image: quay.io/ukhomeofficedigital/kd
+    secrets:
+    - source: DEV_KUBE_NAMESPACE_COP_SGMR
+      target: KUBE_NAMESPACE
+    - source: DEV_KUBE_SERVER
+      target: KUBE_SERVER
+    - source: DEV_SGMR_DATA_SERVICE_URL
+      target: SGMR_DATA_SERVICE_URL
+    - source: DEV_SGMR_KUBE_TOKEN
+      target: KUBE_TOKEN
+    - source: NGINX_IMAGE
+      target: NGINX_IMAGE
+    - source: NGINX_TAG
+      target: NGINX_TAG
+    - source: SGMR_DATA_SERVICE_IMAGE
+      target: SGMR_DATA_SERVICE_IMAGE
+    - source: SGMR_DATA_SERVICE_NAME
+      target: SGMR_DATA_SERVICE_NAME
+    - source: SGMR_DATA_SERVICE_PORT
+      target: SGMR_DATA_SERVICE_PORT
+    - source: SGMR_DATA_SERVICE_URL
+      target: SGMR_DATA_SERVICE_URL
+    commands:
+      - export SGMR_DATA_SERVICE_TAG=$${DRONE_COMMIT_SHA}
+      - kd --insecure-skip-tls-verify -f kube/cert.yml
+      - kd --insecure-skip-tls-verify -f kube/network-policy.yml
+      - kd --insecure-skip-tls-verify -f kube/service.yml
+      - kd --insecure-skip-tls-verify -f kube/deployment.yml
+      - kd --insecure-skip-tls-verify -f kube/ingress.yml
+    when:
+      branch: master
+      event: push
+
+  notify:
+    image: plugins/slack
+    secrets: [ SLACK_WEBHOOK ]
+    channel: cop-deployments
+    username: Drone Build Watcher
+    template: >
+      {{#build.deployTo}}
+        *{{repo.name}} - Build {{build.number}} - {{uppercasefirst build.deployTo}} - {{uppercase build.status}}*
+        {{build.link}}
+      {{else}}
+        *{{repo.name}} - Build {{build.number}} - Development - {{uppercase build.status}}*
+        {{build.link}}
+      {{/build.deployTo}}
+    when:
+      branch: master
+      event: [ push, deployment ]
+      status: [ success, failure ]
