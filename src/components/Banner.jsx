@@ -1,5 +1,4 @@
 import React from 'react';
-import PhaseBanner from '@govuk-react/phase-banner';
 
 export default function Banner() {
   return (
