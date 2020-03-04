@@ -23,6 +23,12 @@ pipeline:
       - npm -v
       - npm install --silent
       - npm run test
+    when:
+      event: push
+
+  linting:
+    image: quay.io/ukhomeofficedigital/cop-node:12-alpine
+    commands:
       - npm run lint -- .
     when:
       event: push
