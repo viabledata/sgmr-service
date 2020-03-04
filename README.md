@@ -22,3 +22,8 @@ npm start
 ```sh
 npm test
 ```
+
+### Running linter
+```sh
+npm run lint -- <directory>
+```
