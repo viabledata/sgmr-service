@@ -1,7 +1,8 @@
 module.exports = {
   "env": {
     "browser": true,
-    "es6": true
+    "es6": true,
+    "jest": true
   },
   "extends": "airbnb/base",
   "globals": {
@@ -23,7 +24,6 @@ module.exports = {
     "arrow-body-style": "off",
     "consistent-return": "off",
     "func-names": ["error", "never"],
-    "quote-props": ["error", "always"],
     "max-len": ["error", { "code": 185 }],
     "no-underscore-dangle": "off",
     "no-param-reassign": "off",

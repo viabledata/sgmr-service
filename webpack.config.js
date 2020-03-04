@@ -9,7 +9,7 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'bundle.js',
-    publicPath: '/'
+    publicPath: '/',
   },
   resolve: {
     alias: {
@@ -17,9 +17,9 @@ module.exports = {
       Footer: path.resolve(__dirname, 'src/components/Footer.jsx'),
       Header: path.resolve(__dirname, 'src/components/Header.jsx'),
       Main: path.resolve(__dirname, 'src/components/Main.jsx'),
-      Reports: path.resolve(__dirname, 'src/components/Reports.jsx')
+      Reports: path.resolve(__dirname, 'src/components/Reports.jsx'),
     },
-    extensions: ['.js', '.jsx']
+    extensions: ['.js', '.jsx'],
   },
   module: {
     rules: [
@@ -28,22 +28,22 @@ module.exports = {
         test: /\.jsx?/,
         exclude: /(node_modules|bower_components)/,
         use: {
-          loader: 'babel-loader'
-        }
+          loader: 'babel-loader',
+        },
       },
       {
         test: /\.(s*)css$/,
         use: [
           {
-            loader: "file-loader",
+            loader: 'file-loader',
             options: {
-              name: "assets/css/[name].css"
-            }
+              name: 'assets/css/[name].css',
+            },
           },
-          "sass-loader"
-        ]
-      }
-    ]
+          'sass-loader',
+        ],
+      },
+    ],
   },
   plugins: [
     new CopyPlugin([
@@ -51,14 +51,14 @@ module.exports = {
       { from: 'src/assets/images', to: 'assets/images' },
       { from: 'src/assets/fonts', to: 'assets/fonts' },
       { from: 'node_modules/govuk-frontend/govuk/all.js', to: 'javascript/all.js' },
-      { from: 'node_modules/govuk-frontend/govuk/assets', to: 'assets' }
-    ])
+      { from: 'node_modules/govuk-frontend/govuk/assets', to: 'assets' },
+    ]),
   ],
   node: { fs: 'empty' },
   watch: true,
   devServer: {
     // in order to use `<Router>`, historyApiFallback needs to be enabled
     historyApiFallback: true,
-    hot: true
-  }
-}
+    hot: true,
+  },
+};
