@@ -26,6 +26,13 @@ pipeline:
     when:
       event: push
 
+  linting:
+    image: quay.io/ukhomeofficedigital/cop-node:12-alpine
+    commands:
+      - npm run lint -- .
+    when:
+      event: push
+
   build:
     image: quay.io/ukhomeofficedigital/drone-docker
     commands:
