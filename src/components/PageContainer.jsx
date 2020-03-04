@@ -1,16 +1,17 @@
-/* eslint-disable import/no-unresolved */
 import React, { useState, useEffect } from 'react';
-import { useLocation, useHistory } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
 // app imports
+import Banner from 'Banner';
 import contentArray from 'contentArray';
 import PageIntro from 'PageIntro';
+import SectionTable from 'SectionTable';
+import SectionTabs from 'SectionTabs';
 
 
-const PageContainer = () => {
+const PageContainer = (props) => {
   // get URL details
   const location = useLocation();
-  const back = useHistory();
 
   // get page details
   const [sectionReport, setSectionReport] = useState(); // determines whether to have tabs, tables, or none for the lower section on page
@@ -18,40 +19,38 @@ const PageContainer = () => {
 
   // get the relevant data from contentArray
   const arr = contentArray;
-
-  const checkPageReportsSection = () => {
-    if (pageData) {
-      switch (pageData.report) {
-        case 'tabs': setSectionReport(<SectionTabs page={location.pathname} />); break;
-        case 'table': setSectionReport(<SectionTable page={location.pathname} />); break;
-        default: setSectionReport(null);
-      }
-    }
-  };
-
   const getPageData = () => {
     const data = arr.find((obj) => {
       return obj.urlStub === location.pathname;
     });
     setPageData(data);
-    checkPageReportsSection();
+  };
+
+  const checkPageReportsSection = () => {
+    if (pageData) {
+      switch (pageData.reportType) {
+        case 'tabs': setSectionReport(<SectionTabs page={location.pathname} />); break;
+        case 'tables': setSectionReport(<SectionTable page={location.pathname} />); break;
+        default: setSectionReport('none');
+      }
+    }
   };
 
   useEffect(() => {
     getPageData();
-  }, []);
+  }, [props]);
 
   useEffect(() => {
     checkPageReportsSection();
   }, [pageData]);
 
-
-  if (!pageData) { return <>Loading</>; }
+  if (!sectionReport) { return (null); }
   return (
-    <>
-      <PageIntro pageData={pageData} />
+    <div className="govuk-width-container">
+      <Banner />
+      <PageIntro pageData={pageData} back={history} />
       {sectionReport}
-    </>
+    </div>
   );
 };
 
