@@ -16,7 +16,7 @@ const contentArray = [
     reportType: 'tables',
   },
   {
-    urlStub: '/People',
+    urlStub: '/people',
     heading: 'People',
     blurb: 'something',
     buttonText: 'Start now',
@@ -24,7 +24,7 @@ const contentArray = [
     reportType: 'tables',
   },
   {
-    urlStub: '/Account',
+    urlStub: '/account',
     heading: 'Account',
     blurb: 'something',
     buttonText: 'Start now',

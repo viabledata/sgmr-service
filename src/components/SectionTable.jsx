@@ -1,6 +1,6 @@
 import React from 'react';
 
-const SectionTabs = (props) => {
+const SectionTable = (props) => {
   return (
     <div>
       <h1>{props.page.pathname} is this page</h1>
@@ -8,4 +8,4 @@ const SectionTabs = (props) => {
   );
 };
 
-export default SectionTabs;
+export default SectionTable;

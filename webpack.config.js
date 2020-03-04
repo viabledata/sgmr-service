@@ -21,6 +21,8 @@ module.exports = {
       contentArray: path.resolve(__dirname, 'src/components/contentArray.js'),
       PageContainer: path.resolve(__dirname, 'src/components/PageContainer.jsx'),
       PageIntro: path.resolve(__dirname, 'src/components/PageIntro.jsx'),
+      SectionTabs: path.resolve(__dirname, 'src/components/SectionTabs.jsx'),
+      SectionTable: path.resolve(__dirname, 'src/components/SectionTable.jsx'),
     },
     extensions: ['.js', '.jsx'],
   },
