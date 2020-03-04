@@ -1,11 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
+import { useHistory } from 'react-router-dom';
 
 // app imports
 
 const PageIntro = (props) => {
+  let history = useHistory();
   return (
     <div className="govuk-width-container">
-      <a href="#" className="govuk-back-link">Back</a>
+      <a href="" className="govuk-back-link" onClick={(e) => {
+        e.preventDefault();
+        history.goBack();
+      }}>Back</a>
 
       <main className="govuk-main-wrapper">
 

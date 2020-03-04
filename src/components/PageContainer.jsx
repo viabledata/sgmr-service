@@ -48,7 +48,7 @@ const PageContainer = (props) => {
   return (
     <div className="govuk-width-container">
       <Banner />
-      <PageIntro pageData={pageData} back={history} />
+      <PageIntro pageData={pageData} />
       {sectionReport}
     </div>
   );
