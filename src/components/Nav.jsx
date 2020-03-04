@@ -5,7 +5,7 @@ const Nav = () => {
   const location = useLocation();
   const [navArray, setNavArray] = useState([]);
 
-  const navLinks = [
+  const navData = [
     {
       urlStem: '/reports',
       text: 'Reports',
@@ -33,9 +33,8 @@ const Nav = () => {
     },
   ];
 
-
   const setActivePage = (url) => {
-    const tempArr = [...navLinks];
+    const tempArr = [...navData];
     tempArr.map((elem, i) => {
       const currentUrl = !url ? location.pathname : url;
       if (currentUrl === elem.urlStem) {

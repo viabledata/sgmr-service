@@ -1,7 +1,14 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
+// app imports
+import Nav from 'Nav';
+
+
 export default function Header() {
+  const serviceName = 'Submit an Advanced Voyage Report';
+  const serviceHome = '/';
+
   return (
     <header className="govuk-header" role="banner" data-module="header">
       <div className="govuk-header__container govuk-width-container">
@@ -15,29 +22,11 @@ export default function Header() {
               <span>GOV.UK</span>
             </span>
           </Link>
-        </div>
+      </div>
         <div className="govuk-header__content">
-          <a className="govuk-header__link govuk-header__link--service-name" href="#">Submit an Advanced Voyage Report</a>
+          <a className="govuk-header__link govuk-header__link--service-name" href={serviceHome}>{serviceName}</a>
           <button type="button" role="button" className="govuk-header__menu-button js-header-toggle" aria-controls="navigation" aria-label="Show or hide Top Level Navigation">Menu</button>
-          <nav>
-            <ul id="navigation" className="govuk-header__navigation " aria-label="Top Level Navigation">
-              <li className="govuk-header__navigation-item govuk-header__navigation-item--active">
-                <a className="govuk-header__link" href="#">Reports</a>
-              </li>
-              <li className="govuk-header__navigation-item">
-                <a className="govuk-header__link" href="#">Vessels</a>
-              </li>
-              <li className="govuk-header__navigation-item">
-                <a className="govuk-header__link" href="#">People</a>
-              </li>
-              <li className="govuk-header__navigation-item">
-                <a className="govuk-header__link" href="#">Account</a>
-              </li>
-              <li className="govuk-header__navigation-item">
-                <a className="govuk-header__link" href="#">Sign out</a>
-              </li>
-            </ul>
-          </nav>
+          <Nav />
         </div>
       </div>
     </header>
