@@ -23,6 +23,7 @@ pipeline:
       - npm -v
       - npm install --silent
       - npm run test
+      - npm run lint -- .
     when:
       event: push
 
