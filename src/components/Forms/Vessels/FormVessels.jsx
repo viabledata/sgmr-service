@@ -47,14 +47,14 @@ const FormVessels = () => {
 
   return (
     <div className="govuk-width-container ">
-      <div class="govuk-breadcrumbs">
-        <ol class="govuk-breadcrumbs__list">
-          <li class="govuk-breadcrumbs__list-item">
-            <a class="govuk-breadcrumbs__link" href="/vessels">Vessels</a>
+      <div className="govuk-breadcrumbs">
+        <ol className="govuk-breadcrumbs__list">
+          <li className="govuk-breadcrumbs__list-item">
+            <a className="govuk-breadcrumbs__link" href="/vessels">Vessels</a>
           </li>
-          <li class="govuk-breadcrumbs__list-item" aria-current="page">Save vessel</li>
+          <li className="govuk-breadcrumbs__list-item" aria-current="page">Save vessel</li>
         </ol>
-</div>
+      </div>
       <main className="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" role="main">
         <div className="govuk-grid-row">
           <div className="govuk-grid-column-two-thirds">
@@ -303,7 +303,7 @@ const FormVessels = () => {
                 />
               </div>
 
-              <div id="form-group" className={`govuk-form-group ${errors.vesselBuiltDate} ? 'govuk-form-group--error' : ''}`}>
+              <div id="form-group" className={`govuk-form-group ${errors.vesselBuiltDate ? 'govuk-form-group--error' : ''}`}>
                 <label className="govuk-label" htmlFor="vesselBuiltDate">
                   What year was the vessel built?
                 </label>
