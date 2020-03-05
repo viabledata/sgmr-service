@@ -75,6 +75,8 @@ const SectionTable = ({ page, pageData }) => {
     //     setVessels(response);
     //   })
     //   .catch((err) => setErrors(err));
+
+    // remember to replace link creation with slugs when available
     setData(fixture);
   };
 
@@ -86,33 +88,35 @@ const SectionTable = ({ page, pageData }) => {
 
   return (
     <div className="govuk-width-container">
-      <div className="govuk-grid-column-full">
-        <h2 className="govuk-heading-l">Saved {pageData.pageHeading.toLowerCase()}</h2>
-        <table className="govuk-table">
-          <thead className="govuk-table__head">
-            <tr className="govuk-table__row">
-              {titles.map((elem, i) => {
-                return (
-                  <th className="govuk-table__header" scope="col" key={i}>{elem}</th>
-                );
-              })}
-            </tr>
-            </thead>
-            <tbody className="govuk-table__body">
-              {fixture.items.map((elem, i) => {
-                const name = elem.name.split(' ').join('-').toLowerCase();
-                return (
-                  <tr className="govuk-table__row" key={i}>
-                    <td className="govuk-table__cell" scope="row">
-                      <a href={`${name}`} className="govuk-link" title={`Edit details for ${elem.name}`}>{elem.name}</a>
-                    </td>
-                    <td className="govuk-table__cell">{elem.vesselType}</td>
-                    <td className="govuk-table__cell">{elem.mooring}</td>
-                  </tr>
-                );
-              })}
-            </tbody>
-        </table>
+      <div className="govuk-grid-row">
+        <div className="govuk-grid-column-full">
+          <h2 className="govuk-heading-l">Saved {pageData.pageHeading.toLowerCase()}</h2>
+          <table className="govuk-table">
+            <thead className="govuk-table__head">
+              <tr className="govuk-table__row">
+                {titles.map((elem, i) => {
+                  return (
+                    <th className="govuk-table__header" scope="col" key={i}>{elem}</th>
+                  );
+                })}
+              </tr>
+              </thead>
+              <tbody className="govuk-table__body">
+                {fixture.items.map((elem, i) => {
+                  const name = elem.name.split(' ').join('-').toLowerCase();
+                  return (
+                    <tr className="govuk-table__row" key={i}>
+                      <td className="govuk-table__cell" scope="row">
+                        <a href={`${name}`} className="govuk-link" title={`Edit details for ${elem.name}`}>{elem.name}</a>
+                      </td>
+                      <td className="govuk-table__cell">{elem.vesselType}</td>
+                      <td className="govuk-table__cell">{elem.mooring}</td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );

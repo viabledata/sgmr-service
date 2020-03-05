@@ -1,15 +1,8 @@
 import React from 'react';
-// import { useHistory } from 'react-router-dom';
 
 const PageIntro = ({ pageData }) => {
-  // let history = useHistory();
-
   return (
     <div className="govuk-width-container">
-      {/* <a className="govuk-back-link" onClick={(e) => {
-        e.preventDefault();
-        history.goBack();
-      }}>Back</a> */}
 
         <div className="govuk-grid-row">
           <div className="govuk-grid-column-full">

@@ -46,13 +46,15 @@ const PageContainer = (props) => {
 
   if (!sectionReport) { return (null); }
   return (
-    <main className="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" role="main">
-      <div className="govuk-grid-row">
-        <PageIntro pageData={pageData} />
-        <PageIntroToForm pageData={pageData} />
-        {sectionReport}
-      </div>
-    </main>
+    <div class="govuk-width-container ">
+      <main className="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" role="main">
+        <div className="govuk-grid-row">
+          <PageIntro pageData={pageData} />
+          <PageIntroToForm pageData={pageData} />
+          {sectionReport}
+        </div>
+      </main>
+    </div>
   );
 };
 
