@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 // app imports
+import Banner from 'Banner';
 import Footer from 'Footer';
 import Header from 'Header';
 import PageContainer from 'PageContainer';
@@ -11,6 +12,7 @@ const Main = () => {
   return (
     <Router>
       <Header />
+      <Banner />
       <Switch>
         <Route exact path="/reports">
           <PageContainer />

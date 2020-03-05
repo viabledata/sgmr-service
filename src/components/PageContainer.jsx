@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 
 // app imports
-import Banner from 'Banner';
 import contentArray from 'contentArray';
 import PageIntro from 'PageIntro';
+import PageIntroToForm from 'PageIntroToForm';
 import SectionTable from 'SectionTable';
 import SectionTabs from 'SectionTabs';
 
@@ -29,8 +29,8 @@ const PageContainer = (props) => {
   const checkPageReportsSection = () => {
     if (pageData) {
       switch (pageData.reportType) {
-        case 'tabs': setSectionReport(<SectionTabs page={location.pathname} />); break;
-        case 'tables': setSectionReport(<SectionTable page={location.pathname} />); break;
+        case 'tabs': setSectionReport(<SectionTabs page={location.pathname} pageData={pageData} />); break;
+        case 'tables': setSectionReport(<SectionTable page={location.pathname} pageData={pageData} />); break;
         default: setSectionReport('none');
       }
     }
@@ -46,10 +46,14 @@ const PageContainer = (props) => {
 
   if (!sectionReport) { return (null); }
   return (
-    <div className="govuk-width-container">
-      <Banner />
-      <PageIntro pageData={pageData} />
-      {sectionReport}
+    <div class="govuk-width-container ">
+      <main className="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" role="main">
+        <div className="govuk-grid-row">
+          <PageIntro pageData={pageData} />
+          <PageIntroToForm pageData={pageData} />
+          {sectionReport}
+        </div>
+      </main>
     </div>
   );
 };
