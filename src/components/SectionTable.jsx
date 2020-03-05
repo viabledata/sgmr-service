@@ -101,10 +101,11 @@ const SectionTable = ({ page, pageData }) => {
             <tbody className="govuk-table__body">
 
               {fixture.items.map((elem, i) => {
+                const name = elem.name.split(' ').join('-').toLowerCase();
                 return (
                   <tr className="govuk-table__row" key={i}>
                     <td className="govuk-table__cell" scope="row">
-                      <a href={`${elem.name}`} className="govuk-link" title={`Edit details for ${elem.name}`}>{elem.name}</a>
+                      <a href={`${name}`} className="govuk-link" title={`Edit details for ${elem.name}`}>{elem.name}</a>
                     </td>
                     <td className="govuk-table__cell">{elem.vesselType}</td>
                     <td className="govuk-table__cell">{elem.mooring}</td>
