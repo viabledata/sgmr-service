@@ -39,6 +39,7 @@ const Nav = () => {
       const currentUrl = !url ? location.pathname : url;
       if (currentUrl === elem.urlStem) {
         elem.active = true;
+        document.activeElement.blur();
       } else {
         elem.active = false;
       }
