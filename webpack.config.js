@@ -24,6 +24,7 @@ module.exports = {
       PageIntroToForm: path.resolve(__dirname, 'src/components/PageIntroToForm.jsx'),
       SectionTabs: path.resolve(__dirname, 'src/components/SectionTabs.jsx'),
       SectionTable: path.resolve(__dirname, 'src/components/SectionTable.jsx'),
+      FormVessels: path.resolve(__dirname, 'src/components/Forms/Vessels/FormVessels.jsx'),
     },
     extensions: ['.js', '.jsx'],
   },

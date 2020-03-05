@@ -14,7 +14,7 @@ const contentArray = [
     formIntroHeading: 'Save a new vessel',
     formIntroBlurb: 'Save the details of vessels that you regularly submit Advanced Voyage Reports for.',
     buttonText: 'Save a vessel',
-    buttonLink: 'somewhere.html',
+    buttonLink: 'vessels/save-vessel',
     reportType: 'tables',
     reportTitles: ['Vessel name', 'Vessel type', 'Usual moorings'],
   },

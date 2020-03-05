@@ -17,7 +17,7 @@ const PageIntroToForm = ({ pageData }) => {
       </div>
       <div className="govuk-grid-row">
         <div className="govuk-grid-column-full">
-        < hr className="govuk-section-break govuk-section-break--visible govuk-section-break--xl govuk-!-margin-top-0" />
+        <hr className="govuk-section-break govuk-section-break--visible govuk-section-break--xl govuk-!-margin-top-0" />
         </div>
       </div>
     </div>
