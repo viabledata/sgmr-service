@@ -21,10 +21,13 @@ const contentArray = [
   {
     urlStub: '/people',
     pageHeading: 'People',
-    pageBlurb: 'something',
-    buttonText: 'Start now',
+    pageBlurb: 'You can view, edit or delete people that you regularly sail with so that you can easily add them to Advanced Voyage Reports.',
+    formIntroHeading: 'Save a new person',
+    formIntroBlurb: 'Save the details of people that you regularly sail with.',
+    buttonText: 'Save a person',
     buttonLink: 'somewhere.html',
     reportType: 'tables',
+    reportTitles: ['Surname', 'Given name', 'Type'],
   },
   {
     urlStub: '/account',

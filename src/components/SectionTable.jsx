@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 const SectionTable = ({ page, pageData }) => {
-  // temp data to setup page before connecting api
-  const fixture = {
+  // temp data to setup page before connecting api, data & return() need refactor based on API call
+  const fixtureVessels = {
     items: [
       {
         id: '05b21e40-cbee-46be-8d61-b24978f32b24',
@@ -65,19 +65,30 @@ const SectionTable = ({ page, pageData }) => {
     lastName: 'Curado',
   };
 
+  const fixturePeople = {
+    items: [
+      {
+        id: '05b21e40-cbee-46be-8d61-b24978f32b24',
+        surname: 'Wallace',
+        givenName: 'Jennifer Kate',
+        type: 'Captain',
+      },
+      {
+        id: 'c1b33366-306a-44ef-a813-4b2f2ef55b97',
+        surname: 'Smith',
+        givenName: 'Bob',
+        type: 'Passenger',
+      },
+    ],
+  };
+
+
   const [data, setData] = useState();
   const [errors, setErrors] = useState();
   const [titles, setTitles] = useState([]);
 
-  const getData = (page) => {
-    // axios.get('x')
-    //   .then((response) => {
-    //     setVessels(response);
-    //   })
-    //   .catch((err) => setErrors(err));
-
-    // remember to replace link creation with slugs when available
-    setData(fixture);
+  const getData = () => {
+    page === '/vessels' ? setData(fixtureVessels) : setData(fixturePeople);
   };
 
   useEffect(() => {
@@ -86,11 +97,12 @@ const SectionTable = ({ page, pageData }) => {
   }, [pageData]);
 
 
+  if (!data) { return (null); }
   return (
     <div className="govuk-width-container">
       <div className="govuk-grid-row">
         <div className="govuk-grid-column-full">
-          <h2 className="govuk-heading-l">Saved {pageData.pageHeading.toLowerCase()}</h2>
+          <h2 className="govuk-heading-l">Saved {pageData.pageHeading}</h2>
           <table className="govuk-table">
             <thead className="govuk-table__head">
               <tr className="govuk-table__row">
@@ -102,15 +114,17 @@ const SectionTable = ({ page, pageData }) => {
               </tr>
               </thead>
               <tbody className="govuk-table__body">
-                {fixture.items.map((elem, i) => {
-                  const name = elem.name.split(' ').join('-').toLowerCase();
+                {data.items.map((elem, i) => {
                   return (
                     <tr className="govuk-table__row" key={i}>
                       <td className="govuk-table__cell" scope="row">
-                        <a href={`${name}`} className="govuk-link" title={`Edit details for ${elem.name}`}>{elem.name}</a>
+                        {page === '/vessels' && <a href={`${elem.id}`} className="govuk-link" title={`Edit details for ${elem.id}`}>{elem.name}</a>}
+                        {page === '/people' && <a href={`${elem.id}`} className="govuk-link" title={`Edit details for ${elem.id}`}>{elem.surname}</a>}
                       </td>
-                      <td className="govuk-table__cell">{elem.vesselType}</td>
-                      <td className="govuk-table__cell">{elem.mooring}</td>
+                      {page === '/vessels' && <td className="govuk-table__cell">{elem.vesselType}</td>}
+                      {page === '/vessels' && <td className="govuk-table__cell">{elem.mooring}</td>}
+                      {page === '/people' && <td className="govuk-table__cell">{elem.givenName}</td>}
+                      {page === '/people' && <td className="govuk-table__cell">{elem.type}</td>}
                     </tr>
                   );
                 })}
