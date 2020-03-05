@@ -16,6 +16,7 @@ const contentArray = [
     buttonText: 'Save a vessel',
     buttonLink: 'somewhere.html',
     reportType: 'tables',
+    reportTitles: ['Vessel name', 'Vessel type', 'Usual moorings'],
   },
   {
     urlStub: '/people',

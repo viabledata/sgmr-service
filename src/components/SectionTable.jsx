@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-// currently only works for Vessels due to hard coded data below. Will review when get to people
-
 const SectionTable = ({ page, pageData }) => {
   // temp data to setup page before connecting api
   const fixture = {
@@ -67,39 +65,40 @@ const SectionTable = ({ page, pageData }) => {
     lastName: 'Curado',
   };
 
-  const [vessels, setVessels] = useState();
+  const [data, setData] = useState();
   const [errors, setErrors] = useState();
+  const [titles, setTitles] = useState([]);
 
-  const getVessels = (pageNumber) => {
+  const getData = (page) => {
     // axios.get('x')
     //   .then((response) => {
     //     setVessels(response);
     //   })
     //   .catch((err) => setErrors(err));
-    setVessels(fixture);
+    setData(fixture);
   };
 
   useEffect(() => {
-    getVessels();
-  }, []);
+    getData();
+    setTitles(pageData.reportTitles);
+  }, [pageData]);
 
 
   return (
     <div className="govuk-width-container">
       <div className="govuk-grid-column-full">
         <h2 className="govuk-heading-l">Saved {pageData.pageHeading.toLowerCase()}</h2>
-
-
         <table className="govuk-table">
-            <thead className="govuk-table__head">
-                <tr className="govuk-table__row">
-                    <th className="govuk-table__header" scope="col">Vessel name</th>
-                    <th className="govuk-table__header" scope="col">Vessel type</th>
-                    <th className="govuk-table__header" scope="col">Usual moorings</th>
-                </tr>
+          <thead className="govuk-table__head">
+            <tr className="govuk-table__row">
+              {titles.map((elem, i) => {
+                return (
+                  <th className="govuk-table__header" scope="col" key={i}>{elem}</th>
+                );
+              })}
+            </tr>
             </thead>
             <tbody className="govuk-table__body">
-
               {fixture.items.map((elem, i) => {
                 const name = elem.name.split(' ').join('-').toLowerCase();
                 return (
