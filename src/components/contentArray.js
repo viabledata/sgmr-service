@@ -25,7 +25,7 @@ const contentArray = [
     formIntroHeading: 'Save a new person',
     formIntroBlurb: 'Save the details of people that you regularly sail with.',
     buttonText: 'Save a person',
-    buttonLink: 'somewhere.html',
+    buttonLink: 'people/save-person',
     reportType: 'tables',
     reportTitles: ['Surname', 'Given name', 'Type'],
   },
