@@ -46,7 +46,7 @@ const PageContainer = (props) => {
 
   if (!sectionReport) { return (null); }
   return (
-    <div class="govuk-width-container ">
+    <div className="govuk-width-container ">
       <main className="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" role="main">
         <div className="govuk-grid-row">
           <PageIntro pageData={pageData} />

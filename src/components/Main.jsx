@@ -6,6 +6,7 @@ import Banner from 'Banner';
 import Footer from 'Footer';
 import Header from 'Header';
 import PageContainer from 'PageContainer';
+import FormVessels from 'FormVessels';
 
 
 const Main = () => {
@@ -19,6 +20,9 @@ const Main = () => {
         </Route>
         <Route exact path="/vessels">
           <PageContainer />
+        </Route>
+        <Route exact path="/vessels/save-vessel">
+          <FormVessels />
         </Route>
         <Route exact path="/people">
           <PageContainer />
