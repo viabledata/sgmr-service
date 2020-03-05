@@ -1,11 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
+
 
 const FormVessels = () => {
-  // breadcrumbs testing
-
-  const history = useHistory();
-
   // Update data from localStorage if it exists
   const [formData, setFormData] = useState(JSON.parse(localStorage.getItem('formData')) || {});
   const [errors, setErrors] = useState(JSON.parse(localStorage.getItem('errors')) || { title: null });
@@ -32,7 +28,6 @@ const FormVessels = () => {
   const clearFormData = (e) => {
     setFormData({});
     setErrors({ title: null });
-    // send delete message to API to delete draft then history.push('/vessels');
   };
 
   // Handle Submit, including clearing localStorage
@@ -50,9 +45,16 @@ const FormVessels = () => {
     localStorage.setItem('errors', JSON.stringify(errors));
   }, [errors]);
 
-
   return (
     <div className="govuk-width-container ">
+      <div class="govuk-breadcrumbs">
+        <ol class="govuk-breadcrumbs__list">
+          <li class="govuk-breadcrumbs__list-item">
+            <a class="govuk-breadcrumbs__link" href="/vessels">Vessels</a>
+          </li>
+          <li class="govuk-breadcrumbs__list-item" aria-current="page">Save vessel</li>
+        </ol>
+</div>
       <main className="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" role="main">
         <div className="govuk-grid-row">
           <div className="govuk-grid-column-two-thirds">
@@ -78,23 +80,23 @@ const FormVessels = () => {
                 </div>
               )}
 
-              <div id="form-group" className={`govuk-form-group ${errors.vesselName ? 'govuk-form-group--error' : ''}`}>
-                <label className="govuk-label" htmlFor="vesselName">
+              <div id="form-group" className={`govuk-form-group ${errors.name ? 'govuk-form-group--error' : ''}`}>
+                <label className="govuk-label" htmlFor="name">
                   Vessel name
                 </label>
-                {errors.vesselName
+                {errors.name
                   && (
-                    <span id="errorvesselName" className="govuk-error-message">
-                      <span className="govuk-visually-hidden">Error:</span> {errors.vesselName}
+                    <span id="errorname" className="govuk-error-message">
+                      <span className="govuk-visually-hidden">Error:</span> {errors.name}
                     </span>
                   )}
                   <span className="govuk-hint">For example Baroness</span>
                 <input
-                  className={`govuk-input ${errors.vesselName ? 'govuk-input--error' : ''}`}
-                  id="vesselName"
-                  name="vesselName"
+                  className={`govuk-input ${errors.name ? 'govuk-input--error' : ''}`}
+                  id="name"
+                  name="name"
                   type="text"
-                  value={formData.vesselName || ''}
+                  value={formData.name || ''}
                   onChange={(e) => handleChange(e)}
                   onBlur={(e) => handleErrors(e, 'You must enter your vessel name')}
                   onKeyPress={(e) => handleErrors(e)}
@@ -147,22 +149,22 @@ const FormVessels = () => {
                 />
               </div>
 
-              <div id="form-group" className={`govuk-form-group ${errors.registrationNumber ? 'govuk-form-group--error' : ''}`}>
-                <label className="govuk-label" htmlFor="registrationNumber">
+              <div id="form-group" className={`govuk-form-group ${errors.registration ? 'govuk-form-group--error' : ''}`}>
+                <label className="govuk-label" htmlFor="registration">
                   Registration number
                 </label>
-                {errors.registrationNumber
+                {errors.registration
                   && (
-                    <span id="errorregistrationNumber" className="govuk-error-message">
-                      <span className="govuk-visually-hidden">Error:</span> {errors.registrationNumber}
+                    <span id="errorregistration" className="govuk-error-message">
+                      <span className="govuk-visually-hidden">Error:</span> {errors.registration}
                     </span>
                   )}
                 <input
-                  className={`govuk-input ${errors.registrationNumber ? 'govuk-input--error' : ''}`}
-                  id="registrationNumber"
-                  name="registrationNumber"
+                  className={`govuk-input ${errors.registration ? 'govuk-input--error' : ''}`}
+                  id="registration"
+                  name="registration"
                   type="text"
-                  value={formData.registrationNumber || ''}
+                  value={formData.registration || ''}
                   onChange={(e) => handleChange(e)}
                   onBlur={(e) => handleErrors(e, 'You must enter your registration number')}
                   onKeyPress={(e) => handleErrors(e)}
