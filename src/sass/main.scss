@@ -15,8 +15,7 @@ $govuk-font-family: 'Inter', sans-serif;
     margin-right: 10px;
 }
 
-// Force remove focus from tabs when clicked
-.govuk-tabs__list-item--selected .govuk-tabs__tab:focus {
-  background-color: white;
-  box-shadow: none;
+// Force tabs to look clickable without using a href=
+p.govuk-tabs__tab {
+  cursor: pointer;
 }

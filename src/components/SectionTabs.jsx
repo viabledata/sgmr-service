@@ -131,9 +131,6 @@ const SectionTabs = (props) => {
     },
   ];
 
-  // Get data from API
-
-
   const setActiveTab = (e) => {
     const tempArr = [...tabData];
     let tableName;
@@ -159,8 +156,6 @@ const SectionTabs = (props) => {
     setData(tabledraft);
   }, []);
 
-  console.log(data)
-
   if (!data) { return (<></>); }
   return (
     <div className="govuk-width-container">
@@ -178,9 +173,9 @@ const SectionTabs = (props) => {
                 className={elem.active === true ? 'govuk-tabs__list-item govuk-tabs__list-item--selected' : 'govuk-tabs__list-item'}
                 onClick={(e) => setActiveTab(e)}
               >
-                <a id={elem.name} className="govuk-tabs__tab" href={`#${elem.name}`}>
+                <p id={elem.name} className="govuk-tabs__tab">
                   {elem.text}
-                </a>
+                </p>
               </li>
             );
           })}
@@ -198,18 +193,20 @@ const SectionTabs = (props) => {
                 })}
                 </tr>
               </thead>
-              {data[0].items.map((elem, i) => {
-                return (
-                <tr className="govuk-table__row" key={i}>
-                  <td className="govuk-table__cell">{elem.name}</td>
-                  <td className="govuk-table__cell">{elem.departureDate}</td>
-                  <td className="govuk-table__cell">{elem.departureTime}</td>
-                  <td className="govuk-table__cell">{elem.departurePort}</td>
-                  <td className="govuk-table__cell">{elem.arrivalPort}</td>
-                  <td className="govuk-table__cell">{elem.submissionRef}</td>
-                </tr>
-                );
-              })}
+              <tbody>
+                {data[0].items.map((elem, i) => {
+                  return (
+                  <tr className="govuk-table__row" key={i}>
+                    <td className="govuk-table__cell">{elem.name}</td>
+                    <td className="govuk-table__cell">{elem.departureDate}</td>
+                    <td className="govuk-table__cell">{elem.departureTime}</td>
+                    <td className="govuk-table__cell">{elem.departurePort}</td>
+                    <td className="govuk-table__cell">{elem.arrivalPort}</td>
+                    <td className="govuk-table__cell">{elem.submissionRef}</td>
+                  </tr>
+                  );
+                })}
+              </tbody>
           </table>
         </div>
       </div>
