@@ -44,7 +44,6 @@ const FormPeople = () => {
     localStorage.setItem('errors', JSON.stringify(errors));
   }, [errors]);
 
-
   return (
     <div className="govuk-width-container ">
       <div className="govuk-breadcrumbs">
@@ -226,7 +225,224 @@ const FormPeople = () => {
                   onBlur={(e) => handleErrors(e, 'You must select your nationality')}
                   onKeyPress={(e) => handleErrors(e)}
                 >
-                  <option>Please select</option>
+                  <option selected="">Please select</option>
+                  <option>Afghans</option>
+                  <option>Albanians</option>
+                  <option>Algerians</option>
+                  <option>Americans</option>
+                  <option>Andorrans</option>
+                  <option>Angolans</option>
+                  <option>Antiguans and Barbudans</option>
+                  <option>Argentines</option>
+                  <option>Armenians</option>
+                  <option>Arubans</option>
+                  <option>Australians</option>
+                  <option>Austrians</option>
+                  <option>Azerbaijanis</option>
+                  <option>Bahamians</option>
+                  <option>Bahrainis</option>
+                  <option>Baltic Germans</option>
+                  <option>Baltic Russians</option>
+                  <option>Bangladeshis</option>
+                  <option>Barbadians</option>
+                  <option>Basques</option>
+                  <option>Belarusians</option>
+                  <option>Belgians</option>
+                  <option>Belizeans</option>
+                  <option>Beninese</option>
+                  <option>Bhutanese</option>
+                  <option>Bissau nationals</option>
+                  <option>Bolivians</option>
+                  <option>Bosniaks</option>
+                  <option>Bosnians and Herzegovinians</option>
+                  <option>Botswana</option>
+                  <option>Brazilians</option>
+                  <option>Bretons</option>
+                  <option>British Virgin Islanders</option>
+                  <option>British</option>
+                  <option>Bruneians</option>
+                  <option>Bulgarians</option>
+                  <option>Burkinabés</option>
+                  <option>Burmese</option>
+                  <option>Burundians</option>
+                  <option>Cambodians</option>
+                  <option>Cameroonians</option>
+                  <option>Canadians</option>
+                  <option>Cape Verdeans</option>
+                  <option>Catalans</option>
+                  <option>Chadians</option>
+                  <option>Chileans</option>
+                  <option>Chinese</option>
+                  <option>Colombians</option>
+                  <option>Comorians</option>
+                  <option>Congolese</option>
+                  <option>Costa Ricans</option>
+                  <option>Croatians</option>
+                  <option>Cubans</option>
+                  <option>Cypriots</option>
+                  <option>Czechs</option>
+                  <option>Danes</option>
+                  <option>Djiboutians</option>
+                  <option>Dominicans (Commonwealth)</option>
+                  <option>Dominicans (Republic)</option>
+                  <option>Dutch</option>
+                  <option>East Timorese</option>
+                  <option>Ecuadorians</option>
+                  <option>Egyptians</option>
+                  <option>Emiratis</option>
+                  <option>English</option>
+                  <option>Equatoguineans</option>
+                  <option>Eritreans</option>
+                  <option>Estonians</option>
+                  <option>Ethiopians</option>
+                  <option>Faroese</option>
+                  <option>Fijians</option>
+                  <option>Finnish Swedish</option>
+                  <option>Finns</option>
+                  <option>French</option>
+                  <option>Gabonese</option>
+                  <option>Gambians</option>
+                  <option>Georgians</option>
+                  <option>Germans</option>
+                  <option>Ghanaians</option>
+                  <option>Gibraltarians</option>
+                  <option>Greek Macedonians</option>
+                  <option>Greeks</option>
+                  <option>Greenlanders</option>
+                  <option>Grenadians</option>
+                  <option>Guatemalans</option>
+                  <option>Guianese (French)</option>
+                  <option>Guineans</option>
+                  <option>GuineansPapua New Guineans</option>
+                  <option>Guyanese</option>
+                  <option>Haitians</option>
+                  <option>Hondurans</option>
+                  <option>Hong Kong</option>
+                  <option>Hungarians</option>
+                  <option>Icelanders</option>
+                  <option>Indians</option>
+                  <option>Indonesians</option>
+                  <option>Iranians</option>
+                  <option>Iraqis</option>
+                  <option>Irish</option>
+                  <option>Islanders</option>
+                  <option>Israelis</option>
+                  <option>Italians</option>
+                  <option>Ivoirians</option>
+                  <option>Jamaicans</option>
+                  <option>Japanese</option>
+                  <option>Jordanians</option>
+                  <option>Kazakhs</option>
+                  <option>Kenyans</option>
+                  <option>Kiribati</option>
+                  <option>Koreans</option>
+                  <option>Kosovars</option>
+                  <option>Kuwaitis</option>
+                  <option>Kyrgyzs</option>
+                  <option>Lao</option>
+                  <option>Latvians</option>
+                  <option>Lebanese</option>
+                  <option>Liberians</option>
+                  <option>Libyans</option>
+                  <option>Liechtensteiners</option>
+                  <option>Lithuanians</option>
+                  <option>Luxembourgers</option>
+                  <option>Macao</option>
+                  <option>Macedonian Bulgarians</option>
+                  <option>Macedonians</option>
+                  <option>Malawians</option>
+                  <option>Malaysians</option>
+                  <option>Maldivians</option>
+                  <option>Malians</option>
+                  <option>Maltese</option>
+                  <option>Manx</option>
+                  <option>Marshallese</option>
+                  <option>Mauritanians</option>
+                  <option>Mauritians</option>
+                  <option>Mexicans</option>
+                  <option>Micronesians</option>
+                  <option>Moldovans</option>
+                  <option>Monégasque</option>
+                  <option>Mongolians</option>
+                  <option>Montenegrins</option>
+                  <option>Moroccans</option>
+                  <option>Mozambicans</option>
+                  <option>Namibians</option>
+                  <option>Naurans</option>
+                  <option>Nepalese</option>
+                  <option>New Zealanders</option>
+                  <option>Nicaraguans</option>
+                  <option>Nigerians</option>
+                  <option>Nigeriens</option>
+                  <option>Norwegians</option>
+                  <option>Omani</option>
+                  <option>Pakistanis</option>
+                  <option>Palauans</option>
+                  <option>Palestinians</option>
+                  <option>Panamanians</option>
+                  <option>Paraguayans</option>
+                  <option>Peruvians</option>
+                  <option>Poles</option>
+                  <option>Portuguese</option>
+                  <option>Puerto Ricans</option>
+                  <option>Qatari</option>
+                  <option>Quebecers</option>
+                  <option>Réunionnais</option>
+                  <option>Romanians</option>
+                  <option>Russians</option>
+                  <option>Rwandans</option>
+                  <option>Saint Kitts and Nevis</option>
+                  <option>Saint Lucians</option>
+                  <option>Salvadorans</option>
+                  <option>Sammarinese</option>
+                  <option>Samoans</option>
+                  <option>São Tomé and Príncipe</option>
+                  <option>Saudis</option>
+                  <option>Scots</option>
+                  <option>Senegalese</option>
+                  <option>Serbs</option>
+                  <option>Seychellois</option>
+                  <option>Sierra Leoneans</option>
+                  <option>Singaporeans</option>
+                  <option>Slovaks</option>
+                  <option>Slovenes</option>
+                  <option>Solomon Islanders</option>
+                  <option>Somalilanders</option>
+                  <option>Somalis</option>
+                  <option>Sotho</option>
+                  <option>South Africans</option>
+                  <option>Spaniards</option>
+                  <option>Sri Lankans</option>
+                  <option>Sudanese</option>
+                  <option>Swazi</option>
+                  <option>Swedes</option>
+                  <option>Swiss</option>
+                  <option>Syriacs</option>
+                  <option>Syrians</option>
+                  <option>Taiwanese</option>
+                  <option>Tajik</option>
+                  <option>Tamils</option>
+                  <option>Tanzanians</option>
+                  <option>Thais</option>
+                  <option>Tobagonians</option>
+                  <option>Togolese</option>
+                  <option>Tongans</option>
+                  <option>Trinidadians</option>
+                  <option>Tunisians</option>
+                  <option>Turks</option>
+                  <option>Tuvaluans</option>
+                  <option>Ugandans</option>
+                  <option>Ukrainians</option>
+                  <option>Uruguayans</option>
+                  <option>Uzbeks</option>
+                  <option>Vanuatuans</option>
+                  <option>Venezuelans</option>
+                  <option>Vietnamese</option>
+                  <option>Vincentians</option>
+                  <option>Welsh</option>
+                  <option>Yemenis</option>
+                  <option>Zambians</option>
+                  <option>Zimbabweans</option>
                 </select>
               </div>
 
