@@ -7,6 +7,7 @@ import Footer from 'Footer';
 import Header from 'Header';
 import PageContainer from 'PageContainer';
 import FormVessels from 'FormVessels';
+import FormPeople from 'FormPeople';
 
 
 const Main = () => {
@@ -26,6 +27,9 @@ const Main = () => {
         </Route>
         <Route exact path="/people">
           <PageContainer />
+        </Route>
+        <Route exact path="/people/save-person">
+          <FormPeople />
         </Route>
         <Route exact path="/account">
           <PageContainer />
