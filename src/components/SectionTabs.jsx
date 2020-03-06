@@ -22,16 +22,161 @@ const SectionTabs = (props) => {
       active: false,
     },
   ];
+  const tabledraft = [
+    {
+      section: 'draft',
+      text: 'Draft',
+      headings: [
+        'Vessel',
+        'Departure date',
+        'Departure time',
+        'Departure port',
+        'Arrival port',
+        'Submission reference',
+      ],
+      items: [
+        {
+          id: '05b21e40-cbee-46be-8d61-b24978f32b24',
+          name: 'In Deep Ship',
+          departureDate: '10/01/20',
+          departureTime: '11:00',
+          departurePort: 'GB PME',
+          arrivalPort: 'FR BOD',
+          submissionRef: '',
+          status: 'draft',
+        },
+        {
+          id: '05b21e40-cbee-46be-8d61-b24978f32b24',
+          name: 'Serenity',
+          departureDate: '10/01/20',
+          departureTime: '12:00',
+          departurePort: 'GB PME',
+          arrivalPort: 'FR BOD',
+          SubmissionRef: '',
+          status: 'draft',
+        },
+        {
+          id: '05b21e40-cbee-46be-8d61-b24978f32b24',
+          name: 'Baroness',
+          departureDate: '10/01/20',
+          departureTime: '15:00',
+          departurePort: 'GB PME',
+          arrivalPort: 'FR BOD',
+          SubmissionRef: '',
+          status: 'draft',
+        },
+        {
+          id: '05b21e40-cbee-46be-8d61-b24978f32b24',
+          name: 'Baroness',
+          departureDate: '10/01/20',
+          departureTime: '15:00',
+          departurePort: 'GB PME',
+          arrivalPort: 'FR BOD',
+          SubmissionRef: '456873fhyg9kud87',
+          status: 'submitted',
+        },
+        {
+          id: '05b21e40-cbee-46be-8d61-b24978f32b24',
+          name: 'Baroness',
+          departureDate: '10/01/20',
+          departureTime: '15:00',
+          departurePort: 'GB PME',
+          arrivalPort: 'FR BOD',
+          SubmissionRef: 'fdr5suhy798s543o',
+          status: 'submitted',
+        },
+        {
+          id: '05b21e40-cbee-46be-8d61-b24978f32b24',
+          name: 'Baroness',
+          departureDate: '10/01/20',
+          departureTime: '15:00',
+          departurePort: 'GB PME',
+          arrivalPort: 'FR BOD',
+          SubmissionRef: '',
+          status: 'cancelled',
+        },
+      ],
+    },
+  ];
+  const tablesubmitted = [
+    {
+      section: 'submitted',
+      text: 'Submitted',
+      headings: [
+        'Vessel',
+        'Departure date',
+        'Departure time',
+        'Departure port',
+        'Arrival port',
+        'Submission reference',
+      ],
+      items: [
+        {
+          id: '05b21e40-cbee-46be-8d61-b24978f32b24',
+          name: 'Baroness',
+          departureDate: '10/01/20',
+          departureTime: '15:00',
+          departurePort: 'GB PME',
+          arrivalPort: 'FR BOD',
+          SubmissionRef: '',
+          status: 'draft',
+        },
+        {
+          id: '05b21e40-cbee-46be-8d61-b24978f32b24',
+          name: 'Baroness',
+          departureDate: '10/01/20',
+          departureTime: '15:00',
+          departurePort: 'GB PME',
+          arrivalPort: 'FR BOD',
+          SubmissionRef: '456873fhyg9kud87',
+          status: 'submitted',
+        },
+      ],
+    },
+  ];
+  const tablecancelled = [
+    {
+      section: 'cancelled',
+      text: 'Cancelled',
+      headings: [
+        'Vessel',
+        'Departure date',
+        'Departure time',
+        'Departure port',
+        'Arrival port',
+        'Submission reference',
+      ],
+      items: [
+        {
+          id: '05b21e40-cbee-46be-8d61-b24978f32b24',
+          name: 'Baroness',
+          departureDate: '10/01/20',
+          departureTime: '15:00',
+          departurePort: 'GB PME',
+          arrivalPort: 'FR BOD',
+          SubmissionRef: '',
+          status: 'cancelled',
+        },
+      ],
+    },
+  ];
 
   // Get data from API
 
 
   const setActiveTab = (e) => {
     const tempArr = [...tabData];
+    let tableName;
+    switch (e.target.id) {
+      case 'draft': tableName = tabledraft; break;
+      case 'submitted': tableName = tablesubmitted; break;
+      case 'cancelled': tableName = tablecancelled; break;
+      default: tableName = tabledraft;
+    }
     tempArr.map((elem, i) => {
       if (e.target.id === elem.name) {
         elem.active = true;
-        document.activeElement.blur();
+        setData(tableName);
       } else {
         elem.active = false;
       }
@@ -41,8 +186,10 @@ const SectionTabs = (props) => {
 
   useEffect(() => {
     setTabData(tabs);
+    setData(tabledraft);
   }, []);
 
+  if (!data) { return (<></>); }
   return (
     <div className="govuk-width-container">
       <div className="govuk-tabs" data-module="govuk-tabs">
@@ -67,7 +214,11 @@ const SectionTabs = (props) => {
           })}
         </ul>
 
-{/* 
+        <div className="govuk-tabs__panel" id={data[0].section}>
+          <h2 className="govuk-heading-l">{data[0].text}</h2>
+        </div>
+
+{/*
         <div className="govuk-tabs__panel" id="past-day">
           <h2 className="govuk-heading-l">Past day</h2>
           <table className="govuk-table">
