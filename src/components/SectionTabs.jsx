@@ -52,7 +52,7 @@ const SectionTabs = (props) => {
           departureTime: '12:00',
           departurePort: 'GB PME',
           arrivalPort: 'FR BOD',
-          SubmissionRef: '',
+          submissionRef: '',
           status: 'draft',
         },
         {
@@ -62,38 +62,8 @@ const SectionTabs = (props) => {
           departureTime: '15:00',
           departurePort: 'GB PME',
           arrivalPort: 'FR BOD',
-          SubmissionRef: '',
+          submissionRef: '',
           status: 'draft',
-        },
-        {
-          id: '05b21e40-cbee-46be-8d61-b24978f32b24',
-          name: 'Baroness',
-          departureDate: '10/01/20',
-          departureTime: '15:00',
-          departurePort: 'GB PME',
-          arrivalPort: 'FR BOD',
-          SubmissionRef: '456873fhyg9kud87',
-          status: 'submitted',
-        },
-        {
-          id: '05b21e40-cbee-46be-8d61-b24978f32b24',
-          name: 'Baroness',
-          departureDate: '10/01/20',
-          departureTime: '15:00',
-          departurePort: 'GB PME',
-          arrivalPort: 'FR BOD',
-          SubmissionRef: 'fdr5suhy798s543o',
-          status: 'submitted',
-        },
-        {
-          id: '05b21e40-cbee-46be-8d61-b24978f32b24',
-          name: 'Baroness',
-          departureDate: '10/01/20',
-          departureTime: '15:00',
-          departurePort: 'GB PME',
-          arrivalPort: 'FR BOD',
-          SubmissionRef: '',
-          status: 'cancelled',
         },
       ],
     },
@@ -118,7 +88,7 @@ const SectionTabs = (props) => {
           departureTime: '15:00',
           departurePort: 'GB PME',
           arrivalPort: 'FR BOD',
-          SubmissionRef: '',
+          submissionRef: '987tdou6thr5ed41',
           status: 'draft',
         },
         {
@@ -128,7 +98,7 @@ const SectionTabs = (props) => {
           departureTime: '15:00',
           departurePort: 'GB PME',
           arrivalPort: 'FR BOD',
-          SubmissionRef: '456873fhyg9kud87',
+          submissionRef: '456873fhyg9kud87',
           status: 'submitted',
         },
       ],
@@ -154,7 +124,7 @@ const SectionTabs = (props) => {
           departureTime: '15:00',
           departurePort: 'GB PME',
           arrivalPort: 'FR BOD',
-          SubmissionRef: '',
+          submissionRef: '',
           status: 'cancelled',
         },
       ],
@@ -189,6 +159,8 @@ const SectionTabs = (props) => {
     setData(tabledraft);
   }, []);
 
+  console.log(data)
+
   if (!data) { return (<></>); }
   return (
     <div className="govuk-width-container">
@@ -216,129 +188,30 @@ const SectionTabs = (props) => {
 
         <div className="govuk-tabs__panel" id={data[0].section}>
           <h2 className="govuk-heading-l">{data[0].text}</h2>
-        </div>
-
-{/*
-        <div className="govuk-tabs__panel" id="past-day">
-          <h2 className="govuk-heading-l">Past day</h2>
           <table className="govuk-table">
             <thead className="govuk-table__head">
               <tr className="govuk-table__row">
-                <th scope="col" className="govuk-table__header">Case manager</th>
-                <th scope="col" className="govuk-table__header">Cases opened</th>
-                <th scope="col" className="govuk-table__header">Cases closed</th>
-              </tr>
-            </thead>
-            <tbody className="govuk-table__body">
-              <tr className="govuk-table__row">
-                <td className="govuk-table__cell">David Francis</td>
-                <td className="govuk-table__cell">3</td>
-                <td className="govuk-table__cell">0</td>
-              </tr>
-              <tr className="govuk-table__row">
-                <td className="govuk-table__cell">Paul Farmer</td>
-                <td className="govuk-table__cell">1</td>
-                <td className="govuk-table__cell">0</td>
-              </tr>
-              <tr className="govuk-table__row">
-                <td className="govuk-table__cell">Rita Patel</td>
-                <td className="govuk-table__cell">2</td>
-                <td className="govuk-table__cell">0</td>
-              </tr>
-            </tbody>
+                {data[0].headings.map((elem, i) => {
+                  return (
+                    <th key={i} scope="col" className="govuk-table__header">{elem}</th>
+                  );
+                })}
+                </tr>
+              </thead>
+              {data[0].items.map((elem, i) => {
+                return (
+                <tr className="govuk-table__row" key={i}>
+                  <td className="govuk-table__cell">{elem.name}</td>
+                  <td className="govuk-table__cell">{elem.departureDate}</td>
+                  <td className="govuk-table__cell">{elem.departureTime}</td>
+                  <td className="govuk-table__cell">{elem.departurePort}</td>
+                  <td className="govuk-table__cell">{elem.arrivalPort}</td>
+                  <td className="govuk-table__cell">{elem.submissionRef}</td>
+                </tr>
+                );
+              })}
           </table>
-
         </div>
-        <div className="govuk-tabs__panel govuk-tabs__panel--hidden" id="past-week">
-          <h2 className="govuk-heading-l">Past week</h2>
-          <table className="govuk-table">
-            <thead className="govuk-table__head">
-              <tr className="govuk-table__row">
-                <th scope="col" className="govuk-table__header">Case manager</th>
-                <th scope="col" className="govuk-table__header">Cases opened</th>
-                <th scope="col" className="govuk-table__header">Cases closed</th>
-              </tr>
-            </thead>
-            <tbody className="govuk-table__body">
-              <tr className="govuk-table__row">
-                <td className="govuk-table__cell">David Francis</td>
-                <td className="govuk-table__cell">24</td>
-                <td className="govuk-table__cell">18</td>
-              </tr>
-              <tr className="govuk-table__row">
-                <td className="govuk-table__cell">Paul Farmer</td>
-                <td className="govuk-table__cell">16</td>
-                <td className="govuk-table__cell">20</td>
-              </tr>
-              <tr className="govuk-table__row">
-                <td className="govuk-table__cell">Rita Patel</td>
-                <td className="govuk-table__cell">24</td>
-                <td className="govuk-table__cell">27</td>
-              </tr>
-            </tbody>
-          </table>
-
-        </div>
-        <div className="govuk-tabs__panel govuk-tabs__panel--hidden" id="past-month">
-          <h2 className="govuk-heading-l">Past month</h2>
-          <table className="govuk-table">
-            <thead className="govuk-table__head">
-              <tr className="govuk-table__row">
-                <th scope="col" className="govuk-table__header">Case manager</th>
-                <th scope="col" className="govuk-table__header">Cases opened</th>
-                <th scope="col" className="govuk-table__header">Cases closed</th>
-              </tr>
-            </thead>
-            <tbody className="govuk-table__body">
-              <tr className="govuk-table__row">
-                <td className="govuk-table__cell">David Francis</td>
-                <td className="govuk-table__cell">98</td>
-                <td className="govuk-table__cell">95</td>
-              </tr>
-              <tr className="govuk-table__row">
-                <td className="govuk-table__cell">Paul Farmer</td>
-                <td className="govuk-table__cell">122</td>
-                <td className="govuk-table__cell">131</td>
-              </tr>
-              <tr className="govuk-table__row">
-                <td className="govuk-table__cell">Rita Patel</td>
-                <td className="govuk-table__cell">126</td>
-                <td className="govuk-table__cell">142</td>
-              </tr>
-            </tbody>
-          </table>
-
-        </div>
-        <div className="govuk-tabs__panel govuk-tabs__panel--hidden" id="past-year">
-          <h2 className="govuk-heading-l">Past year</h2>
-          <table className="govuk-table">
-            <thead className="govuk-table__head">
-              <tr className="govuk-table__row">
-                <th scope="col" className="govuk-table__header">Case manager</th>
-                <th scope="col" className="govuk-table__header">Cases opened</th>
-                <th scope="col" className="govuk-table__header">Cases closed</th>
-              </tr>
-            </thead>
-            <tbody className="govuk-table__body">
-              <tr className="govuk-table__row">
-                <td className="govuk-table__cell">David Francis</td>
-                <td className="govuk-table__cell">1380</td>
-                <td className="govuk-table__cell">1472</td>
-              </tr>
-              <tr className="govuk-table__row">
-                <td className="govuk-table__cell">Paul Farmer</td>
-                <td className="govuk-table__cell">1129</td>
-                <td className="govuk-table__cell">1083</td>
-              </tr>
-              <tr className="govuk-table__row">
-                <td className="govuk-table__cell">Rita Patel</td>
-                <td className="govuk-table__cell">1539</td>
-                <td className="govuk-table__cell">1265</td>
-              </tr>
-            </tbody>
-          </table>
-
-        </div> */}
       </div>
     </div>
   );
