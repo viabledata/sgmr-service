@@ -17,9 +17,11 @@ const FormPeople = () => {
     delete tempArr[key];
     setErrors(tempArr);
   };
-  const handleErrors = (e, errorText) => {
+  const handleErrors = (e, errorText, groupField) => {
+    console.log(groupField)
     // If field value is empty, add error : if field has value, removeError
-    !e.target.value ? setErrors({ ...errors, [e.target.name]: errorText }) : removeError(e.target.name);
+    const name = !groupField ? e.target.name : groupField;
+    !e.target.value ? setErrors({ ...errors, [name]: errorText }) : removeError(name);
   };
 
   // Clear formData from localStorage
@@ -31,6 +33,7 @@ const FormPeople = () => {
 
   // Handle Submit, including clearing localStorage
   const handleSubmit = (e) => {
+    // Combine date fields into required format before submit
     e.preventDefault();
     clearFormData();
   };
@@ -43,6 +46,9 @@ const FormPeople = () => {
   useEffect(() => {
     localStorage.setItem('errors', JSON.stringify(errors));
   }, [errors]);
+
+  console.log(formData.travelDocumentType)
+
 
   return (
     <div className="govuk-width-container ">
@@ -79,7 +85,7 @@ const FormPeople = () => {
                 </div>
               )}
 
-              <div className={`govuk-form-group ${errors.givenName ? 'govuk-form-group--error' : ''}`}>
+              <div id="givenName" className={`govuk-form-group ${errors.givenName ? 'govuk-form-group--error' : ''}`}>
                 <label className="govuk-label  govuk-label--m" htmlFor="givenName">
                   Given name
                 </label>
@@ -94,12 +100,12 @@ const FormPeople = () => {
                   type="text"
                   value={formData.givenName || ''}
                   onChange={(e) => handleChange(e)}
-                  onBlur={(e) => handleErrors(e, 'You must enter your given name')}
+                  onBlur={(e) => handleErrors(e, 'You must enter a given name')}
                   onKeyPress={(e) => handleErrors(e)}
                 />
               </div>
 
-              <div className={`govuk-form-group ${errors.surname ? 'govuk-form-group--error' : ''}`}>
+              <div id="surname" className={`govuk-form-group ${errors.surname ? 'govuk-form-group--error' : ''}`}>
                 <label className="govuk-label  govuk-label--m" htmlFor="surname">
                   Surname
                 </label>
@@ -110,17 +116,16 @@ const FormPeople = () => {
                 )}
                 <input
                   className={`govuk-input ${errors.surname ? 'govuk-input--error' : ''}`}
-
                   name="surname"
                   type="text"
                   value={formData.surname || ''}
                   onChange={(e) => handleChange(e)}
-                  onBlur={(e) => handleErrors(e, 'You must enter your  surname')}
+                  onBlur={(e) => handleErrors(e, 'You must enter a surname')}
                   onKeyPress={(e) => handleErrors(e)}
                 />
               </div>
 
-              <div className={`govuk-form-group ${errors.gender ? 'govuk-form-group--error' : ''}`}>
+              <div id="gender" className={`govuk-form-group ${errors.gender ? 'govuk-form-group--error' : ''}`}>
                 <label className="govuk-label  govuk-label--m" htmlFor="gender">
                   Gender
                 </label>
@@ -131,27 +136,30 @@ const FormPeople = () => {
                 )}
                 <select
                   className={`govuk-select ${errors.gender ? 'govuk-input--error' : ''}`}
-
                   name="gender"
                   type="text"
-                  value={formData.gender || ''}
+                  value={formData.gender || 'Please select'}
                   onChange={(e) => handleChange(e)}
-                  onBlur={(e) => handleErrors(e, 'You must select your gender')}
                   onKeyPress={(e) => handleErrors(e)}
                 >
-                  <option>Please select</option>
+                  <option disabled>Please select</option>
                   <option value="female">Female</option>
                   <option value="male">Male</option>
                   <option value="unspecified">Unspecified</option>
                 </select>
               </div>
 
-              <div className={`govuk-form-group ${errors.dateOfBirth ? 'govuk-form-group--error' : ''}`}>
+              <div id="dateOfBirth" className={`govuk-form-group ${errors.dateOfBirth ? 'govuk-form-group--error' : ''}`}>
                 <fieldset className="govuk-fieldset" role="group" aria-describedby="dob-hint">
                   <legend className="govuk-fieldset__legend govuk-fieldset__legend--m">
                     <label className="govuk-label govuk-label--m" htmlFor="dateOfBirth">
                       What is your date of birth?
                     </label>
+                    {errors.dateOfBirth && (
+                        <span className="govuk-error-message">
+                          <span className="govuk-visually-hidden">Error:</span> {errors.dateOfBirth}
+                        </span>
+                    )}
                   </legend>
                   <span className="govuk-hint">
                     For example, 31 3 1980
@@ -159,33 +167,69 @@ const FormPeople = () => {
                   <div className="govuk-date-input" >
                     <div className="govuk-date-input__item">
                       <div className="govuk-form-group">
-                        <label className="govuk-label govuk-date-input__label" htmlFor="dob-day">
+                        <label className="govuk-label govuk-date-input__label" htmlFor="dobDay">
                           Day
                         </label>
-                        <input className="govuk-input govuk-date-input__input govuk-input--width-2" name="dob-day" type="text" autoComplete="bday-day" pattern="[0-9]*" inputMode="numeric" />
+                        <input
+                          className={`govuk-input govuk-date-input__input govuk-input--width-2 ${errors.dateOfBirth ? 'govuk-input--error' : ''}`}
+                          name="dobDay"
+                          type="text"
+                          maxLength="2"
+                          autoComplete="bday-day"
+                          pattern="[0-9]*"
+                          inputMode="numeric"
+                          value={formData.dobDay || ''}
+                          onChange={(e) => handleChange(e)}
+                          onBlur={(e) => handleErrors(e, 'You must enter the date of birth', 'dateOfBirth')}
+                          onKeyPress={(e) => handleErrors(e)}
+                        />
                       </div>
                     </div>
                     <div className="govuk-date-input__item">
                       <div className="govuk-form-group">
-                        <label className="govuk-label govuk-date-input__label" htmlFor="dob-month">
+                        <label className="govuk-label govuk-date-input__label" htmlFor="dobMonth">
                           Month
                         </label>
-                        <input className="govuk-input govuk-date-input__input govuk-input--width-2" name="dob-month" type="text" autoComplete="bday-month" pattern="[0-9]*" inputMode="numeric" />
+                        <input
+                          className={`govuk-input govuk-date-input__input govuk-input--width-2 ${errors.dateOfBirth ? 'govuk-input--error' : ''}`}
+                          name="dobMonth"
+                          type="text"
+                          maxLength="2"
+                          autoComplete="bday-month"
+                          pattern="[0-9]*"
+                          inputMode="numeric"
+                          value={formData.dobMonth || ''}
+                          onChange={(e) => handleChange(e)}
+                          onBlur={(e) => handleErrors(e, 'You must enter the date of birth', 'dateOfBirth')}
+                          onKeyPress={(e) => handleErrors(e)}
+                      />
                       </div>
                     </div>
                     <div className="govuk-date-input__item">
                       <div className="govuk-form-group">
-                        <label className="govuk-label govuk-date-input__label" htmlFor="dob-year">
+                        <label className="govuk-label govuk-date-input__label" htmlFor="dobYear">
                           Year
                         </label>
-                        <input className="govuk-input govuk-date-input__input govuk-input--width-4" name="dob-year" type="text" autoComplete="bday-year" pattern="[0-9]*" inputMode="numeric" />
+                        <input
+                          className={`govuk-input govuk-date-input__input govuk-input--width-4 ${errors.dateOfBirth ? 'govuk-input--error' : ''}`}
+                          name="dobYear"
+                          type="text"
+                          maxLength="4"
+                          autoComplete="bday-year"
+                          pattern="[0-9]*"
+                          inputMode="numeric"
+                          value={formData.dobYear || ''}
+                          onChange={(e) => handleChange(e)}
+                          onBlur={(e) => handleErrors(e, 'You must enter the date of birth', 'dateOfBirth')}
+                          onKeyPress={(e) => handleErrors(e)}
+                        />
                       </div>
                     </div>
                   </div>
                 </fieldset>
               </div>
 
-              <div className={`govuk-form-group ${errors.placeOfBirth ? 'govuk-form-group--error' : ''}`}>
+              <div id="placeOfBirth" className={`govuk-form-group ${errors.placeOfBirth ? 'govuk-form-group--error' : ''}`}>
                 <label className="govuk-label  govuk-label--m" htmlFor="placeOfBirth">
                   Place of birth
                 </label>
@@ -196,17 +240,16 @@ const FormPeople = () => {
                 )}
                 <input
                   className={`govuk-input ${errors.placeOfBirth ? 'govuk-input--error' : ''}`}
-
                   name="placeOfBirth"
                   type="text"
                   value={formData.placeOfBirth || ''}
                   onChange={(e) => handleChange(e)}
-                  onBlur={(e) => handleErrors(e, 'You must enter your place of birth')}
+                  onBlur={(e) => handleErrors(e, 'You must enter a place of birth')}
                   onKeyPress={(e) => handleErrors(e)}
                 />
               </div>
 
-              <div className={`govuk-form-group ${errors.nationality ? 'govuk-form-group--error' : ''}`}>
+              <div id="nationality" className={`govuk-form-group ${errors.nationality ? 'govuk-form-group--error' : ''}`}>
                 <label className="govuk-label  govuk-label--m" htmlFor="nationality">
                   Nationality
                 </label>
@@ -217,236 +260,235 @@ const FormPeople = () => {
                 )}
                 <select
                   className={`govuk-select ${errors.nationality ? 'govuk-input--error' : ''}`}
-
                   name="nationality"
                   type="text"
-                  value={formData.nationality || ''}
+                  value={formData.nationality || 'Please select'}
                   onChange={(e) => handleChange(e)}
-                  onBlur={(e) => handleErrors(e, 'You must select your nationality')}
+                  onBlur={(e) => handleErrors(e, 'You must select a nationality')}
                   onKeyPress={(e) => handleErrors(e)}
                 >
-                  <option selected="">Please select</option>
-                  <option>Afghans</option>
-                  <option>Albanians</option>
-                  <option>Algerians</option>
-                  <option>Americans</option>
-                  <option>Andorrans</option>
-                  <option>Angolans</option>
-                  <option>Antiguans and Barbudans</option>
-                  <option>Argentines</option>
-                  <option>Armenians</option>
-                  <option>Arubans</option>
-                  <option>Australians</option>
-                  <option>Austrians</option>
-                  <option>Azerbaijanis</option>
-                  <option>Bahamians</option>
-                  <option>Bahrainis</option>
-                  <option>Baltic Germans</option>
-                  <option>Baltic Russians</option>
-                  <option>Bangladeshis</option>
-                  <option>Barbadians</option>
-                  <option>Basques</option>
-                  <option>Belarusians</option>
-                  <option>Belgians</option>
-                  <option>Belizeans</option>
+                  <option disabled>Please select</option>
+                  <option>Afghan</option>
+                  <option>Albanian</option>
+                  <option>Algerian</option>
+                  <option>American</option>
+                  <option>Andorran</option>
+                  <option>Angolan</option>
+                  <option>Antiguans and Barbudan</option>
+                  <option>Argentine</option>
+                  <option>Armenian</option>
+                  <option>Aruban</option>
+                  <option>Australian</option>
+                  <option>Austrian</option>
+                  <option>Azerbaijani</option>
+                  <option>Bahamian</option>
+                  <option>Bahraini</option>
+                  <option>Baltic German</option>
+                  <option>Baltic Russian</option>
+                  <option>Bangladeshi</option>
+                  <option>Barbadian</option>
+                  <option>Basque</option>
+                  <option>Belarusian</option>
+                  <option>Belgian</option>
+                  <option>Belizean</option>
                   <option>Beninese</option>
                   <option>Bhutanese</option>
-                  <option>Bissau nationals</option>
-                  <option>Bolivians</option>
-                  <option>Bosniaks</option>
-                  <option>Bosnians and Herzegovinians</option>
+                  <option>Bissau national</option>
+                  <option>Bolivian</option>
+                  <option>Bosniak</option>
+                  <option>Bosnians and Herzegovinian</option>
                   <option>Botswana</option>
-                  <option>Brazilians</option>
-                  <option>Bretons</option>
-                  <option>British Virgin Islanders</option>
+                  <option>Brazilian</option>
+                  <option>Breton</option>
+                  <option>British Virgin Islander</option>
                   <option>British</option>
-                  <option>Bruneians</option>
-                  <option>Bulgarians</option>
-                  <option>Burkinabés</option>
+                  <option>Bruneian</option>
+                  <option>Bulgarian</option>
+                  <option>Burkinabé</option>
                   <option>Burmese</option>
-                  <option>Burundians</option>
-                  <option>Cambodians</option>
-                  <option>Cameroonians</option>
-                  <option>Canadians</option>
-                  <option>Cape Verdeans</option>
-                  <option>Catalans</option>
-                  <option>Chadians</option>
-                  <option>Chileans</option>
+                  <option>Burundian</option>
+                  <option>Cambodian</option>
+                  <option>Cameroonian</option>
+                  <option>Canadian</option>
+                  <option>Cape Verdean</option>
+                  <option>Catalan</option>
+                  <option>Chadian</option>
+                  <option>Chilean</option>
                   <option>Chinese</option>
-                  <option>Colombians</option>
-                  <option>Comorians</option>
+                  <option>Colombian</option>
+                  <option>Comorian</option>
                   <option>Congolese</option>
-                  <option>Costa Ricans</option>
-                  <option>Croatians</option>
-                  <option>Cubans</option>
-                  <option>Cypriots</option>
-                  <option>Czechs</option>
-                  <option>Danes</option>
-                  <option>Djiboutians</option>
+                  <option>Costa Rican</option>
+                  <option>Croatian</option>
+                  <option>Cuban</option>
+                  <option>Cypriot</option>
+                  <option>Czech</option>
+                  <option>Dane</option>
+                  <option>Djiboutian</option>
                   <option>Dominicans (Commonwealth)</option>
                   <option>Dominicans (Republic)</option>
                   <option>Dutch</option>
                   <option>East Timorese</option>
-                  <option>Ecuadorians</option>
-                  <option>Egyptians</option>
-                  <option>Emiratis</option>
+                  <option>Ecuadorian</option>
+                  <option>Egyptian</option>
+                  <option>Emirati</option>
                   <option>English</option>
-                  <option>Equatoguineans</option>
-                  <option>Eritreans</option>
-                  <option>Estonians</option>
-                  <option>Ethiopians</option>
+                  <option>Equatoguinean</option>
+                  <option>Eritrean</option>
+                  <option>Estonian</option>
+                  <option>Ethiopian</option>
                   <option>Faroese</option>
-                  <option>Fijians</option>
+                  <option>Fijian</option>
                   <option>Finnish Swedish</option>
-                  <option>Finns</option>
+                  <option>Finn</option>
                   <option>French</option>
                   <option>Gabonese</option>
-                  <option>Gambians</option>
-                  <option>Georgians</option>
-                  <option>Germans</option>
-                  <option>Ghanaians</option>
-                  <option>Gibraltarians</option>
-                  <option>Greek Macedonians</option>
-                  <option>Greeks</option>
-                  <option>Greenlanders</option>
-                  <option>Grenadians</option>
-                  <option>Guatemalans</option>
+                  <option>Gambian</option>
+                  <option>Georgian</option>
+                  <option>German</option>
+                  <option>Ghanaian</option>
+                  <option>Gibraltarian</option>
+                  <option>Greek Macedonian</option>
+                  <option>Greek</option>
+                  <option>Greenlander</option>
+                  <option>Grenadian</option>
+                  <option>Guatemalan</option>
                   <option>Guianese (French)</option>
-                  <option>Guineans</option>
-                  <option>GuineansPapua New Guineans</option>
+                  <option>Guinean</option>
+                  <option>GuineansPapua New Guinean</option>
                   <option>Guyanese</option>
-                  <option>Haitians</option>
-                  <option>Hondurans</option>
+                  <option>Haitian</option>
+                  <option>Honduran</option>
                   <option>Hong Kong</option>
-                  <option>Hungarians</option>
-                  <option>Icelanders</option>
-                  <option>Indians</option>
-                  <option>Indonesians</option>
-                  <option>Iranians</option>
-                  <option>Iraqis</option>
+                  <option>Hungarian</option>
+                  <option>Icelander</option>
+                  <option>Indian</option>
+                  <option>Indonesian</option>
+                  <option>Iranian</option>
+                  <option>Iraqi</option>
                   <option>Irish</option>
-                  <option>Islanders</option>
-                  <option>Israelis</option>
-                  <option>Italians</option>
-                  <option>Ivoirians</option>
-                  <option>Jamaicans</option>
+                  <option>Islander</option>
+                  <option>Israeli</option>
+                  <option>Italian</option>
+                  <option>Ivoirian</option>
+                  <option>Jamaican</option>
                   <option>Japanese</option>
-                  <option>Jordanians</option>
-                  <option>Kazakhs</option>
-                  <option>Kenyans</option>
+                  <option>Jordanian</option>
+                  <option>Kazakh</option>
+                  <option>Kenyan</option>
                   <option>Kiribati</option>
-                  <option>Koreans</option>
-                  <option>Kosovars</option>
-                  <option>Kuwaitis</option>
-                  <option>Kyrgyzs</option>
+                  <option>Korean</option>
+                  <option>Kosovar</option>
+                  <option>Kuwaiti</option>
+                  <option>Kyrgyz</option>
                   <option>Lao</option>
-                  <option>Latvians</option>
+                  <option>Latvian</option>
                   <option>Lebanese</option>
-                  <option>Liberians</option>
-                  <option>Libyans</option>
-                  <option>Liechtensteiners</option>
-                  <option>Lithuanians</option>
-                  <option>Luxembourgers</option>
+                  <option>Liberian</option>
+                  <option>Libyan</option>
+                  <option>Liechtensteiner</option>
+                  <option>Lithuanian</option>
+                  <option>Luxembourger</option>
                   <option>Macao</option>
-                  <option>Macedonian Bulgarians</option>
-                  <option>Macedonians</option>
-                  <option>Malawians</option>
-                  <option>Malaysians</option>
-                  <option>Maldivians</option>
-                  <option>Malians</option>
+                  <option>Macedonian Bulgarian</option>
+                  <option>Macedonian</option>
+                  <option>Malawian</option>
+                  <option>Malaysian</option>
+                  <option>Maldivian</option>
+                  <option>Malian</option>
                   <option>Maltese</option>
                   <option>Manx</option>
                   <option>Marshallese</option>
-                  <option>Mauritanians</option>
-                  <option>Mauritians</option>
-                  <option>Mexicans</option>
-                  <option>Micronesians</option>
-                  <option>Moldovans</option>
+                  <option>Mauritanian</option>
+                  <option>Mauritian</option>
+                  <option>Mexican</option>
+                  <option>Micronesian</option>
+                  <option>Moldovan</option>
                   <option>Monégasque</option>
-                  <option>Mongolians</option>
-                  <option>Montenegrins</option>
-                  <option>Moroccans</option>
-                  <option>Mozambicans</option>
-                  <option>Namibians</option>
-                  <option>Naurans</option>
+                  <option>Mongolian</option>
+                  <option>Montenegrin</option>
+                  <option>Moroccan</option>
+                  <option>Mozambican</option>
+                  <option>Namibian</option>
+                  <option>Nauran</option>
                   <option>Nepalese</option>
-                  <option>New Zealanders</option>
-                  <option>Nicaraguans</option>
-                  <option>Nigerians</option>
-                  <option>Nigeriens</option>
-                  <option>Norwegians</option>
+                  <option>New Zealander</option>
+                  <option>Nicaraguan</option>
+                  <option>Nigerian</option>
+                  <option>Nigerien</option>
+                  <option>Norwegian</option>
                   <option>Omani</option>
-                  <option>Pakistanis</option>
-                  <option>Palauans</option>
-                  <option>Palestinians</option>
-                  <option>Panamanians</option>
-                  <option>Paraguayans</option>
-                  <option>Peruvians</option>
-                  <option>Poles</option>
+                  <option>Pakistani</option>
+                  <option>Palauan</option>
+                  <option>Palestinian</option>
+                  <option>Panamanian</option>
+                  <option>Paraguayan</option>
+                  <option>Peruvian</option>
+                  <option>Pole</option>
                   <option>Portuguese</option>
-                  <option>Puerto Ricans</option>
+                  <option>Puerto Rican</option>
                   <option>Qatari</option>
-                  <option>Quebecers</option>
-                  <option>Réunionnais</option>
-                  <option>Romanians</option>
-                  <option>Russians</option>
-                  <option>Rwandans</option>
-                  <option>Saint Kitts and Nevis</option>
-                  <option>Saint Lucians</option>
-                  <option>Salvadorans</option>
+                  <option>Quebecer</option>
+                  <option>Réunionnai</option>
+                  <option>Romanian</option>
+                  <option>Russian</option>
+                  <option>Rwandan</option>
+                  <option>Saint Kitts and Nevi</option>
+                  <option>Saint Lucian</option>
+                  <option>Salvadoran</option>
                   <option>Sammarinese</option>
-                  <option>Samoans</option>
+                  <option>Samoan</option>
                   <option>São Tomé and Príncipe</option>
-                  <option>Saudis</option>
-                  <option>Scots</option>
+                  <option>Saudi</option>
+                  <option>Scot</option>
                   <option>Senegalese</option>
-                  <option>Serbs</option>
-                  <option>Seychellois</option>
-                  <option>Sierra Leoneans</option>
-                  <option>Singaporeans</option>
-                  <option>Slovaks</option>
-                  <option>Slovenes</option>
-                  <option>Solomon Islanders</option>
-                  <option>Somalilanders</option>
-                  <option>Somalis</option>
+                  <option>Serb</option>
+                  <option>Seychelloi</option>
+                  <option>Sierra Leonean</option>
+                  <option>Singaporean</option>
+                  <option>Slovak</option>
+                  <option>Slovene</option>
+                  <option>Solomon Islander</option>
+                  <option>Somalilander</option>
+                  <option>Somali</option>
                   <option>Sotho</option>
-                  <option>South Africans</option>
-                  <option>Spaniards</option>
-                  <option>Sri Lankans</option>
+                  <option>South African</option>
+                  <option>Spaniard</option>
+                  <option>Sri Lankan</option>
                   <option>Sudanese</option>
                   <option>Swazi</option>
-                  <option>Swedes</option>
-                  <option>Swiss</option>
-                  <option>Syriacs</option>
-                  <option>Syrians</option>
+                  <option>Swede</option>
+                  <option>Swis</option>
+                  <option>Syriac</option>
+                  <option>Syrian</option>
                   <option>Taiwanese</option>
                   <option>Tajik</option>
-                  <option>Tamils</option>
-                  <option>Tanzanians</option>
-                  <option>Thais</option>
-                  <option>Tobagonians</option>
+                  <option>Tamil</option>
+                  <option>Tanzanian</option>
+                  <option>Thai</option>
+                  <option>Tobagonian</option>
                   <option>Togolese</option>
-                  <option>Tongans</option>
-                  <option>Trinidadians</option>
-                  <option>Tunisians</option>
-                  <option>Turks</option>
-                  <option>Tuvaluans</option>
-                  <option>Ugandans</option>
-                  <option>Ukrainians</option>
-                  <option>Uruguayans</option>
-                  <option>Uzbeks</option>
-                  <option>Vanuatuans</option>
-                  <option>Venezuelans</option>
+                  <option>Tongan</option>
+                  <option>Trinidadian</option>
+                  <option>Tunisian</option>
+                  <option>Turk</option>
+                  <option>Tuvaluan</option>
+                  <option>Ugandan</option>
+                  <option>Ukrainian</option>
+                  <option>Uruguayan</option>
+                  <option>Uzbek</option>
+                  <option>Vanuatuan</option>
+                  <option>Venezuelan</option>
                   <option>Vietnamese</option>
-                  <option>Vincentians</option>
+                  <option>Vincentian</option>
                   <option>Welsh</option>
-                  <option>Yemenis</option>
-                  <option>Zambians</option>
-                  <option>Zimbabweans</option>
+                  <option>Yemeni</option>
+                  <option>Zambian</option>
+                  <option>Zimbabwean</option>
                 </select>
               </div>
 
-              <div className={`govuk-form-group ${errors.personType ? 'govuk-form-group--error' : ''}`}>
+              <div id="personType" className={`govuk-form-group ${errors.personType ? 'govuk-form-group--error' : ''}`}>
                 <fieldset className="govuk-fieldset" aria-describedby="person-type-hint">
                   <legend className="govuk-fieldset__legend govuk-fieldset__legend--m">
                     <label className="govuk-fieldset__heading">
@@ -461,12 +503,13 @@ const FormPeople = () => {
                       <input
                         className="govuk-radios__input"
                         name="personType"
-                        id="personType"
+                        id="personType-1"
                         type="radio"
                         value="skipper"
+                        checked={formData.personType === 'skipper' ? 'checked' : ''}
                         onChange={(e) => handleChange(e)}
                       />
-                      <label className="govuk-label govuk-radios__label" htmlFor="personType">
+                      <label className="govuk-label govuk-radios__label" htmlFor="personType-1">
                         Skipper
                       </label>
                     </div>
@@ -477,6 +520,7 @@ const FormPeople = () => {
                         id="personType-2"
                         type="radio"
                         value="crew"
+                        checked={formData.personType === 'crew' ? 'checked' : ''}
                         onChange={(e) => handleChange(e)}
                       />
                       <label className="govuk-label govuk-radios__label" htmlFor="personType-2">
@@ -490,6 +534,7 @@ const FormPeople = () => {
                         id="personType-3"
                         type="radio"
                         value="passenger"
+                        checked={formData.personType === 'passenger' ? 'checked' : ''}
                         onChange={(e) => handleChange(e)}
                       />
                       <label className="govuk-label govuk-radios__label" htmlFor="personType-3">
@@ -500,7 +545,7 @@ const FormPeople = () => {
                 </fieldset>
               </div>
 
-              <div className={`govuk-form-group ${errors.travelDocumentType ? 'govuk-form-group--error' : ''}`}>
+              <div id="travelDocumentType" className={`govuk-form-group ${errors.travelDocumentType ? 'govuk-form-group--error' : ''}`}>
                 <fieldset className="govuk-fieldset" aria-describedby="travel-document-type-hint">
                   <legend className="govuk-fieldset__legend govuk-fieldset__legend--m">
                     <label className="govuk-fieldset__heading">
@@ -511,13 +556,17 @@ const FormPeople = () => {
                     <div className="govuk-radios__item">
                       <input
                         className="govuk-radios__input"
-                        id="travelDocumentType"
+                        id="travelDocumentType-1"
                         name="travelDocumentType"
                         type="radio"
                         value="passport"
-                        onChange={(e) => handleChange(e)}
+                        checked={formData.travelDocumentType === 'passport' ? 'checked' : ''}
+                        onChange={(e) => {
+                          handleChange(e);
+                          handleErrors(e);
+                        }}
                       />
-                      <label className="govuk-label govuk-radios__label" htmlFor="travelDocumentType">
+                      <label className="govuk-label govuk-radios__label" htmlFor="travelDocumentType-1">
                         Passport
                       </label>
                     </div>
@@ -528,7 +577,11 @@ const FormPeople = () => {
                         name="travelDocumentType"
                         type="radio"
                         value="identityCard"
-                        onChange={(e) => handleChange(e)}
+                        checked={formData.travelDocumentType === 'identityCard' ? 'checked' : ''}
+                        onChange={(e) => {
+                          handleChange(e);
+                          handleErrors(e);
+                        }}
                       />
                       <label className="govuk-label govuk-radios__label" htmlFor="travelDocumentType-2">
                         Identity card
@@ -541,7 +594,11 @@ const FormPeople = () => {
                         name="travelDocumentType"
                         type="radio"
                         value="other"
-                        onChange={(e) => handleChange(e)}
+                        checked={(formData.travelDocumentType && (formData.travelDocumentType !== 'identityCard' && formData.travelDocumentType !== 'passport')) ? 'checked' : ''}
+                        onChange={(e) => {
+                          handleChange(e);
+                          handleErrors(e);
+                        }}
                       />
                       <label className="govuk-label govuk-radios__label" htmlFor="travelDocumentType-3">
                         Other
@@ -552,17 +609,28 @@ const FormPeople = () => {
                     <label className="govuk-label" htmlFor="travelDocumentType-other">
                       If "Other", please specify
                     </label>
+                    {errors.travelDocumentType && (
+                        <span className="govuk-error-message">
+                          <span className="govuk-visually-hidden">Error:</span> {errors.travelDocumentType}
+                        </span>
+                    )}
                     <input
-                      className="govuk-input"
+                      className={`govuk-input ${errors.travelDocumentType ? 'govuk-input--error' : ''}`}
                       name="travelDocumentType"
                       type="text"
                       onChange={(e) => handleChange(e)}
+                      onBlur={
+                        formData.travelDocumentType === 'other'
+                          ? (e) => handleErrors(e, 'You must enter the travel document type', 'travelDocumentType')
+                          : ''
+                      }
+                      onKeyPress={(e) => handleErrors(e)}
                     />
                   </div>
                 </fieldset>
               </div>
 
-              <div className={`govuk-form-group ${errors.documentNumber ? 'govuk-form-group--error' : ''}`}>
+              <div id="documentNumber" className={`govuk-form-group ${errors.documentNumber ? 'govuk-form-group--error' : ''}`}>
                 <label className="govuk-label  govuk-label--m" htmlFor="documentNumber">
                   Document number
                 </label>
@@ -577,12 +645,12 @@ const FormPeople = () => {
                   type="text"
                   value={formData.documentNumber || ''}
                   onChange={(e) => handleChange(e)}
-                  onBlur={(e) => handleErrors(e, 'You must enter your document number')}
+                  onBlur={(e) => handleErrors(e, 'You must enter the document number')}
                   onKeyPress={(e) => handleErrors(e)}
                 />
               </div>
 
-              <div className={`govuk-form-group ${errors.issuingState ? 'govuk-form-group--error' : ''}`}>
+              <div id="issuingState" className={`govuk-form-group ${errors.issuingState ? 'govuk-form-group--error' : ''}`}>
                 <label className="govuk-label  govuk-label--m" htmlFor="issuingState">
                   Issuing state
                 </label>
@@ -598,6 +666,7 @@ const FormPeople = () => {
                   className={`govuk-input govuk-input--width-3 ${errors.issuingState ? 'govuk-input--error' : ''}`}
                   name="issuingState"
                   type="text"
+                  maxLength="3"
                   value={formData.issuingState || ''}
                   onChange={(e) => handleChange(e)}
                   onBlur={(e) => handleErrors(e, 'You must enter the issuing state')}
@@ -605,12 +674,17 @@ const FormPeople = () => {
                 />
               </div>
 
-              <div className={`govuk-form-group ${errors.expiryDate ? 'govuk-form-group--error' : ''}`}>
+              <div id="expiryDate" className={`govuk-form-group ${errors.expiryDate ? 'govuk-form-group--error' : ''}`}>
                 <fieldset className="govuk-fieldset" role="group" aria-describedby="expiryDate-hint">
                   <legend className="govuk-fieldset__legend govuk-fieldset__legend--m">
                     <label className="govuk-label govuk-label--m" htmlFor="expiryDate">
                       Expiry date
                     </label>
+                    {errors.expiryDate && (
+                        <span className="govuk-error-message">
+                          <span className="govuk-visually-hidden">Error:</span> {errors.expiryDate}
+                        </span>
+                    )}
                   </legend>
                   <span className="govuk-hint">
                     For example, 31 3 2022
@@ -618,26 +692,59 @@ const FormPeople = () => {
                   <div className="govuk-date-input" >
                     <div className="govuk-date-input__item">
                       <div className="govuk-form-group">
-                        <label className="govuk-label govuk-date-input__label" htmlFor="expiryDate-day">
+                        <label className="govuk-label govuk-date-input__label" htmlFor="expiryDateDay">
                           Day
                         </label>
-                        <input className="govuk-input govuk-date-input__input govuk-input--width-2" name="expiryDate-day" type="text" pattern="[0-9]*" inputMode="numeric" />
+                        <input
+                          className={`govuk-input govuk-date-input__input govuk-input--width-2 ${errors.expiryDate ? 'govuk-input--error' : ''}`}
+                          name="expiryDateDay"
+                          type="text"
+                          pattern="[0-9]*"
+                          inputMode="numeric"
+                          maxLength="2"
+                          value={formData.expiryDateDay || ''}
+                          onChange={(e) => handleChange(e)}
+                          onBlur={(e) => handleErrors(e, 'You must enter the expiry date', 'expiryDate')}
+                          onKeyPress={(e) => handleErrors(e)}
+                        />
                       </div>
                     </div>
                     <div className="govuk-date-input__item">
                       <div className="govuk-form-group">
-                        <label className="govuk-label govuk-date-input__label" htmlFor="expiryDate-month">
+                        <label className="govuk-label govuk-date-input__label" htmlFor="expiryDateMonth">
                           Month
                         </label>
-                        <input className="govuk-input govuk-date-input__input govuk-input--width-2" name="expiryDate-month" type="text" pattern="[0-9]*" inputMode="numeric" />
-                      </div>
+                        <input
+                          className={`govuk-input govuk-date-input__input govuk-input--width-2 ${errors.expiryDate ? 'govuk-input--error' : ''}`}
+                          name="expiryDateMonth"
+                          type="text"
+                          pattern="[0-9]*"
+                          inputMode="numeric"
+                          maxLength="2"
+                          value={formData.expiryDateMonth || ''}
+                          onChange={(e) => handleChange(e)}
+                          onBlur={(e) => handleErrors(e, 'You must enter the expiry date', 'expiryDate')}
+                          onKeyPress={(e) => handleErrors(e)}
+                        />
+                        </div>
                     </div>
                     <div className="govuk-date-input__item">
                       <div className="govuk-form-group">
-                        <label className="govuk-label govuk-date-input__label" htmlFor="expiryDate-year">
+                        <label className="govuk-label govuk-date-input__label" htmlFor="expiryDateYear">
                           Year
                         </label>
-                        <input className="govuk-input govuk-date-input__input govuk-input--width-4" name="expiryDate-year" type="text" pattern="[0-9]*" inputMode="numeric" />
+                        <input
+                          className={`govuk-input govuk-date-input__input govuk-input--width-4 ${errors.expiryDate ? 'govuk-input--error' : ''}`}
+                          name="expiryDateYear"
+                          type="text"
+                          pattern="[0-9]*"
+                          inputMode="numeric"
+                          maxLength="4"
+                          value={formData.expiryDateYear || ''}
+                          onChange={(e) => handleChange(e)}
+                          onBlur={(e) => handleErrors(e, 'You must enter the expiry date', 'expiryDate')}
+                          onKeyPress={(e) => handleErrors(e)}
+                        />
                       </div>
                     </div>
                   </div>
