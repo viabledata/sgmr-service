@@ -44,20 +44,18 @@ const FormPeople = () => {
     localStorage.setItem('errors', JSON.stringify(errors));
   }, [errors]);
 
-  console.log(formData)
-  console.log(errors)
 
   return (
     <div className="govuk-width-container ">
       <div className="govuk-breadcrumbs">
         <ol className="govuk-breadcrumbs__list">
           <li className="govuk-breadcrumbs__list-item">
-            <a className="govuk-breadcrumbs__link" href="/people">Vessels</a>
+            <a className="govuk-breadcrumbs__link" href="/people">People</a>
           </li>
           <li className="govuk-breadcrumbs__list-item" aria-current="page">Save a person</li>
         </ol>
       </div>
-      <main className="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" role="main">
+      <main className="govuk-main-wrapper govuk-main-wrapper--auto-spacing" role="main">
         <div className="govuk-grid-row">
           <div className="govuk-grid-column-two-thirds">
             <h1 className="govuk-heading-xl">Save a person</h1>
@@ -66,7 +64,7 @@ const FormPeople = () => {
 
               {Object.keys(errors).length > 1 && (
                 <div className="govuk-error-summary" aria-labelledby="error-summary-title" role="alert" tabIndex="-1" data-module="govuk-error-summary">
-                  <h2 className="govuk-error-summary__title" id="error-summary-title">
+                  <h2 className="govuk-error-summary__title" >
                     There is a problem
                   </h2>
                   <div className="govuk-error-summary__body">
@@ -82,299 +80,367 @@ const FormPeople = () => {
                 </div>
               )}
 
-              <div id="form-group" className={`govuk-form-group ${errors.givenName ? 'govuk-form-group--error' : ''}`}>
-                <label className="govuk-label" htmlFor="givenName">
+              <div className={`govuk-form-group ${errors.givenName ? 'govuk-form-group--error' : ''}`}>
+                <label className="govuk-label  govuk-label--m" htmlFor="givenName">
                   Given name
                 </label>
-                {errors.givenName
-
-                  && (
-                    <span id="errorname" className="govuk-error-message">
-                      <span className="govuk-visually-hidden">Error:</span> {errors.givenName
-                      }
+                {errors.givenName && (
+                    <span className="govuk-error-message">
+                      <span className="govuk-visually-hidden">Error:</span> {errors.givenName}
                     </span>
-                  )}
-                  <span className="govuk-hint">For example Baroness</span>
+                )}
                 <input
                   className={`govuk-input ${errors.givenName ? 'govuk-input--error' : ''}`}
-                  id="givenName"
                   name="givenName"
                   type="text"
-                  value={formData.givenName
-                     || ''}
+                  value={formData.givenName || ''}
                   onChange={(e) => handleChange(e)}
                   onBlur={(e) => handleErrors(e, 'You must enter your given name')}
                   onKeyPress={(e) => handleErrors(e)}
                 />
               </div>
 
-              {/* <div id="form-group" className={`govuk-form-group ${errors.vesselType ? 'govuk-form-group--error' : ''}`}>
-                <label className="govuk-label" htmlFor="vesselType">
-                  Vessel type
+              <div className={`govuk-form-group ${errors.surname ? 'govuk-form-group--error' : ''}`}>
+                <label className="govuk-label  govuk-label--m" htmlFor="surname">
+                  Surname
                 </label>
-                {errors.vesselType
-                  && (
-                    <span id="errorvesselType" className="govuk-error-message">
-                      <span className="govuk-visually-hidden">Error:</span> {errors.vesselType}
+                {errors.surname && (
+                    <span className="govuk-error-message">
+                      <span className="govuk-visually-hidden">Error:</span> {errors.surname}
                     </span>
-                  )}
-                  <span className="govuk-hint">For example Yacht or Sailboat</span>
+                )}
                 <input
-                  className={`govuk-input ${errors.vesselType ? 'govuk-input--error' : ''}`}
-                  id="vesselType"
-                  name="vesselType"
+                  className={`govuk-input ${errors.surname ? 'govuk-input--error' : ''}`}
+
+                  name="surname"
                   type="text"
-                  value={formData.vesselType || ''}
+                  value={formData.surname || ''}
                   onChange={(e) => handleChange(e)}
-                  onBlur={(e) => handleErrors(e, 'You must enter your vessel type')}
+                  onBlur={(e) => handleErrors(e, 'You must enter your  surname')}
                   onKeyPress={(e) => handleErrors(e)}
                 />
               </div>
 
-              <div id="form-group" className={`govuk-form-group ${errors.usualMoorings ? 'govuk-form-group--error' : ''}`}>
-                <label className="govuk-label" htmlFor="usualMoorings">
-                   Usual moorings
+              <div className={`govuk-form-group ${errors.gender ? 'govuk-form-group--error' : ''}`}>
+                <label className="govuk-label  govuk-label--m" htmlFor="gender">
+                  Gender
                 </label>
-                {errors.usualMoorings
-                  && (
-                    <span id="errorusualMoorings" className="govuk-error-message">
-                      <span className="govuk-visually-hidden">Error:</span> {errors.usualMoorings}
+                {errors.gender && (
+                    <span className="govuk-error-message">
+                      <span className="govuk-visually-hidden">Error:</span> {errors.gender}
                     </span>
-                  )}
-                  <span className="govuk-hint">A description, UNLOCODE or set of Coordinates for where the vessel is usually moored</span>
-                <input
-                  className={`govuk-input ${errors.usualMoorings ? 'govuk-input--error' : ''}`}
-                  id="usualMoorings"
-                  name="usualMoorings"
+                )}
+                <select
+                  className={`govuk-select ${errors.gender ? 'govuk-input--error' : ''}`}
+
+                  name="gender"
                   type="text"
-                  value={formData.usualMoorings || ''}
+                  value={formData.gender || ''}
                   onChange={(e) => handleChange(e)}
-                  onBlur={(e) => handleErrors(e, 'You must enter your usual mooring')}
+                  onBlur={(e) => handleErrors(e, 'You must select your gender')}
                   onKeyPress={(e) => handleErrors(e)}
-                />
+                >
+                  <option>Please select</option>
+                  <option value="female">Female</option>
+                  <option value="male">Male</option>
+                  <option value="unspecified">Unspecified</option>
+                </select>
               </div>
 
-              <div id="form-group" className={`govuk-form-group ${errors.registration ? 'govuk-form-group--error' : ''}`}>
-                <label className="govuk-label" htmlFor="registration">
-                  Registration number
-                </label>
-                {errors.registration
-                  && (
-                    <span id="errorregistration" className="govuk-error-message">
-                      <span className="govuk-visually-hidden">Error:</span> {errors.registration}
-                    </span>
-                  )}
-                <input
-                  className={`govuk-input ${errors.registration ? 'govuk-input--error' : ''}`}
-                  id="registration"
-                  name="registration"
-                  type="text"
-                  value={formData.registration || ''}
-                  onChange={(e) => handleChange(e)}
-                  onBlur={(e) => handleErrors(e, 'You must enter your registration number')}
-                  onKeyPress={(e) => handleErrors(e)}
-                />
-              </div>
-
-              <div id="form-group" className={`govuk-form-group ${errors.hullId ? 'govuk-form-group--error' : ''}`}>
-                <label className="govuk-label" htmlFor="hullId">
-                  Hull identification number
-                </label>
-                {errors.hullId
-                  && (
-                    <span id="errorhullId" className="govuk-error-message">
-                      <span className="govuk-visually-hidden">Error:</span> {errors.hullId}
-                    </span>
-                  )}
-                <input
-                  className={`govuk-input ${errors.hullId ? 'govuk-input--error' : ''}`}
-                  id="hullId"
-                  name="hullId"
-                  type="text"
-                  value={formData.hullId || ''}
-                  onChange={(e) => handleChange(e)}
-                  onBlur={(e) => handleErrors(e, 'You must enter your hull identification number')}
-                  onKeyPress={(e) => handleErrors(e)}
-                />
-              </div>
-
-              <div id="form-group" className={`govuk-form-group ${errors.callsign ? 'govuk-form-group--error' : ''}`}>
-                <label className="govuk-label" htmlFor="callsign">
-                  Callsign
-                </label>
-                {errors.callsign
-                  && (
-                    <span id="errorcallsign" className="govuk-error-message">
-                      <span className="govuk-visually-hidden">Error:</span> {errors.callsign}
-                    </span>
-                  )}
-                <input
-                  className={`govuk-input ${errors.callsign ? 'govuk-input--error' : ''}`}
-                  id="callsign"
-                  name="callsign"
-                  type="text"
-                  value={formData.callsign || ''}
-                  onChange={(e) => handleChange(e)}
-                  onBlur={(e) => handleErrors(e, 'You must enter your callsign')}
-                  onKeyPress={(e) => handleErrors(e)}
-                />
-              </div>
-
-              <div id="form-group" className={`govuk-form-group ${errors.vesselNationality ? 'govuk-form-group--error' : ''}`}>
-                <label className="govuk-label" htmlFor="vesselNationality">
-                  Vessel nationality
-                </label>
-                {errors.vesselNationality
-                  && (
-                    <span id="errorvesselNationality" className="govuk-error-message">
-                      <span className="govuk-visually-hidden">Error:</span> {errors.vesselNationality}
-                    </span>
-                  )}
-                <input
-                  className={`govuk-input ${errors.vesselNationality ? 'govuk-input--error' : ''}`}
-                  id="vesselNationality"
-                  name="vesselNationality"
-                  type="text"
-                  value={formData.vesselNationality || ''}
-                  onChange={(e) => handleChange(e)}
-                  onBlur={(e) => handleErrors(e, 'You must enter your vessel nationality')}
-                  onKeyPress={(e) => handleErrors(e)}
-                />
-              </div>
-
-              <div id="form-group" className={`govuk-form-group ${errors.colourOfHull ? 'govuk-form-group--error' : ''}`}>
-                <label className="govuk-label" htmlFor="colourOfHull">
-                  Colour of hull
-                </label>
-                {errors.colourOfHull
-                  && (
-                    <span id="errorcolourOfHull" className="govuk-error-message">
-                      <span className="govuk-visually-hidden">Error:</span> {errors.colourOfHull}
-                    </span>
-                  )}
-                <input
-                  className={`govuk-input ${errors.colourOfHull ? 'govuk-input--error' : ''}`}
-                  id="colourOfHull"
-                  name="colourOfHull"
-                  type="text"
-                  value={formData.colourOfHull || ''}
-                  onChange={(e) => handleChange(e)}
-                  onBlur={(e) => handleErrors(e, 'You must enter the colour of your hull')}
-                  onKeyPress={(e) => handleErrors(e)}
-                />
-              </div>
-
-              <div id="form-group" className={`govuk-form-group ${errors.lengthMeters ? 'govuk-form-group--error' : ''}`}>
-                <label className="govuk-label" htmlFor="lengthMeters">
-                  Length (meters)
-                </label>
-                {errors.lengthMeters
-                  && (
-                    <span id="errorlengthMeters" className="govuk-error-message">
-                      <span className="govuk-visually-hidden">Error:</span> {errors.lengthMeters}
-                    </span>
-                  )}
-                <input
-                  className={`govuk-input ${errors.lengthMeters ? 'govuk-input--error' : ''}`}
-                  id="lengthMeters"
-                  name="lengthMeters"
-                  type="text"
-                  value={formData.lengthMetres || ''}
-                  onChange={(e) => handleChange(e)}
-                  onBlur={(e) => handleErrors(e, 'You must enter the length in meters')}
-                  onKeyPress={(e) => handleErrors(e)}
-                />
-              </div>
-
-              <div id="form-group" className={`govuk-form-group ${errors.portOfRegistry ? 'govuk-form-group--error' : ''}`}>
-                <label className="govuk-label" htmlFor="portOfRegistry">
-                  Port of registry
-                </label>
-                {errors.portOfRegistry
-                  && (
-                    <span id="errorportOfRegistry" className="govuk-error-message">
-                      <span className="govuk-visually-hidden">Error:</span> {errors.portOfRegistry}
-                    </span>
-                  )}
-                <input
-                  className={`govuk-input ${errors.portOfRegistry ? 'govuk-input--error' : ''}`}
-                  id="portOfRegistry"
-                  name="portOfRegistry"
-                  type="text"
-                  value={formData.portOfRegistry || ''}
-                  onChange={(e) => handleChange(e)}
-                  onBlur={(e) => handleErrors(e, 'You must enter your port of registry')}
-                  onKeyPress={(e) => handleErrors(e)}
-                />
-              </div>
-
-              <div id="form-group" className={`govuk-form-group ${errors.vesselBuiltDate ? 'govuk-form-group--error' : ''}`}>
-                <label className="govuk-label" htmlFor="vesselBuiltDate">
-                  What year was the vessel built?
-                </label>
-                {errors.vesselBuiltDate
-                  && (
-                    <span id="errorvesselBuiltDate" className="govuk-error-message">
-                      <span className="govuk-visually-hidden">Error:</span> {errors.vesselBuiltDate}
-                    </span>
-                  )}
-                  <span className="govuk-hint">For example, 2007</span>
-                  <div className="govuk-date-input">
+              <div className={`govuk-form-group ${errors.dateOfBirth ? 'govuk-form-group--error' : ''}`}>
+                <fieldset className="govuk-fieldset" role="group" aria-describedby="dob-hint">
+                  <legend className="govuk-fieldset__legend govuk-fieldset__legend--m">
+                    <label className="govuk-label govuk-label--m" htmlFor="dateOfBirth">
+                      What is your date of birth?
+                    </label>
+                  </legend>
+                  <span className="govuk-hint">
+                    For example, 31 3 1980
+                  </span>
+                  <div className="govuk-date-input" >
                     <div className="govuk-date-input__item">
                       <div className="govuk-form-group">
-                        <label className="govuk-label govuk-date-input__label" htmlFor="vesselBuiltDate">
+                        <label className="govuk-label govuk-date-input__label" htmlFor="dob-day">
+                          Day
+                        </label>
+                        <input className="govuk-input govuk-date-input__input govuk-input--width-2" name="dob-day" type="text" autoComplete="bday-day" pattern="[0-9]*" inputMode="numeric" />
+                      </div>
+                    </div>
+                    <div className="govuk-date-input__item">
+                      <div className="govuk-form-group">
+                        <label className="govuk-label govuk-date-input__label" htmlFor="dob-month">
+                          Month
+                        </label>
+                        <input className="govuk-input govuk-date-input__input govuk-input--width-2" name="dob-month" type="text" autoComplete="bday-month" pattern="[0-9]*" inputMode="numeric" />
+                      </div>
+                    </div>
+                    <div className="govuk-date-input__item">
+                      <div className="govuk-form-group">
+                        <label className="govuk-label govuk-date-input__label" htmlFor="dob-year">
                           Year
                         </label>
-                        <input
-                          className={`govuk-input govuk-date-input__input govuk-input--width-4 ${errors.vesselBuiltDate ? 'govuk-input--error' : ''}`}
-                          id="vesselBuiltDate"
-                          name="vesselBuiltDate"
-                          type="text"
-                          pattern="[0-9]*"
-                          inputMode="numeric"
-                          value={formData.vesselBuiltDate || ''}
-                          onChange={(e) => handleChange(e)}
-                          onBlur={(e) => handleErrors(e, 'You must enter the year your vessel was built')}
-                          onKeyPress={(e) => handleErrors(e)}
-                        />
+                        <input className="govuk-input govuk-date-input__input govuk-input--width-4" name="dob-year" type="text" autoComplete="bday-year" pattern="[0-9]*" inputMode="numeric" />
                       </div>
                     </div>
                   </div>
+                </fieldset>
               </div>
 
-              <div id="form-group" className={`govuk-form-group ${errors.vesselBuiltIn ? 'govuk-form-group--error' : ''}`}>
-                <label className="govuk-label" htmlFor="vesselBuiltIn">
-                  Where was the vessel built?
+              <div className={`govuk-form-group ${errors.placeOfBirth ? 'govuk-form-group--error' : ''}`}>
+                <label className="govuk-label  govuk-label--m" htmlFor="placeOfBirth">
+                  Place of birth
                 </label>
-                {errors.vesselBuiltIn
-                  && (
-                    <span id="errorvesselBuiltIn" className="govuk-error-message">
-                      <span className="govuk-visually-hidden">Error:</span> {errors.vesselBuiltIn}
+                {errors.placeOfBirth && (
+                    <span className="govuk-error-message">
+                      <span className="govuk-visually-hidden">Error:</span> {errors.placeOfBirth}
                     </span>
-                  )}
-                  <span className="govuk-hint">Where was the vessel constructed</span>
+                )}
                 <input
-                  className={`govuk-input ${errors.vesselBuiltIn ? 'govuk-input--error' : ''}`}
-                  id="vesselBuiltIn"
-                  name="vesselBuiltIn"
+                  className={`govuk-input ${errors.placeOfBirth ? 'govuk-input--error' : ''}`}
+
+                  name="placeOfBirth"
                   type="text"
-                  value={formData.vesselBuiltIn || ''}
+                  value={formData.placeOfBirth || ''}
                   onChange={(e) => handleChange(e)}
-                  onBlur={(e) => handleErrors(e, 'You must enter where your vessel was built')}
+                  onBlur={(e) => handleErrors(e, 'You must enter your place of birth')}
                   onKeyPress={(e) => handleErrors(e)}
                 />
-              </div> */}
+              </div>
+
+              <div className={`govuk-form-group ${errors.nationality ? 'govuk-form-group--error' : ''}`}>
+                <label className="govuk-label  govuk-label--m" htmlFor="nationality">
+                  Nationality
+                </label>
+                {errors.nationality && (
+                    <span className="govuk-error-message">
+                      <span className="govuk-visually-hidden">Error:</span> {errors.nationality}
+                    </span>
+                )}
+                <select
+                  className={`govuk-select ${errors.nationality ? 'govuk-input--error' : ''}`}
+
+                  name="nationality"
+                  type="text"
+                  value={formData.nationality || ''}
+                  onChange={(e) => handleChange(e)}
+                  onBlur={(e) => handleErrors(e, 'You must select your nationality')}
+                  onKeyPress={(e) => handleErrors(e)}
+                >
+                  <option>Please select</option>
+                </select>
+              </div>
+
+              <div className={`govuk-form-group ${errors.personType ? 'govuk-form-group--error' : ''}`}>
+                <fieldset className="govuk-fieldset" aria-describedby="person-type-hint">
+                  <legend className="govuk-fieldset__legend govuk-fieldset__legend--m">
+                    <label className="govuk-fieldset__heading">
+                      Person type
+                    </label>
+                  </legend>
+                  <span className="govuk-hint">
+                    For example Skipper, Crew or Passenger
+                  </span>
+                  <div className="govuk-radios govuk-radios">
+                    <div className="govuk-radios__item">
+                      <input
+                        className="govuk-radios__input"
+                        name="personType"
+                        id="personType"
+                        type="radio"
+                        value="skipper"
+                        onChange={(e) => handleChange(e)}
+                      />
+                      <label className="govuk-label govuk-radios__label" htmlFor="personType">
+                        Skipper
+                      </label>
+                    </div>
+                    <div className="govuk-radios__item">
+                      <input
+                        className="govuk-radios__input"
+                        name="personType"
+                        id="personType-2"
+                        type="radio"
+                        value="crew"
+                        onChange={(e) => handleChange(e)}
+                      />
+                      <label className="govuk-label govuk-radios__label" htmlFor="personType-2">
+                        Crew
+                      </label>
+                    </div>
+                    <div className="govuk-radios__item">
+                      <input
+                        className="govuk-radios__input"
+                        name="personType"
+                        id="personType-3"
+                        type="radio"
+                        value="passenger"
+                        onChange={(e) => handleChange(e)}
+                      />
+                      <label className="govuk-label govuk-radios__label" htmlFor="personType-3">
+                        Passenger
+                      </label>
+                    </div>
+                  </div>
+                </fieldset>
+              </div>
+
+              <div className={`govuk-form-group ${errors.travelDocumentType ? 'govuk-form-group--error' : ''}`}>
+                <fieldset className="govuk-fieldset" aria-describedby="travel-document-type-hint">
+                  <legend className="govuk-fieldset__legend govuk-fieldset__legend--m">
+                    <label className="govuk-fieldset__heading">
+                      Travel document type
+                    </label>
+                  </legend>
+                  <div className="govuk-radios govuk-radios govuk-form-group">
+                    <div className="govuk-radios__item">
+                      <input
+                        className="govuk-radios__input"
+                        id="travelDocumentType"
+                        name="travelDocumentType"
+                        type="radio"
+                        value="passport"
+                        onChange={(e) => handleChange(e)}
+                      />
+                      <label className="govuk-label govuk-radios__label" htmlFor="travelDocumentType">
+                        Passport
+                      </label>
+                    </div>
+                    <div className="govuk-radios__item">
+                      <input
+                        className="govuk-radios__input"
+                        id="travelDocumentType-2"
+                        name="travelDocumentType"
+                        type="radio"
+                        value="identityCard"
+                        onChange={(e) => handleChange(e)}
+                      />
+                      <label className="govuk-label govuk-radios__label" htmlFor="travelDocumentType-2">
+                        Identity card
+                      </label>
+                    </div>
+                    <div className="govuk-radios__item">
+                      <input
+                        className="govuk-radios__input"
+                        id="travelDocumentType-3"
+                        name="travelDocumentType"
+                        type="radio"
+                        value="other"
+                        onChange={(e) => handleChange(e)}
+                      />
+                      <label className="govuk-label govuk-radios__label" htmlFor="travelDocumentType-3">
+                        Other
+                      </label>
+                    </div>
+                  </div>
+                  <div className="govuk-form-group">
+                    <label className="govuk-label" htmlFor="travelDocumentType-other">
+                      If "Other", please specify
+                    </label>
+                    <input
+                      className="govuk-input"
+                      name="travelDocumentType"
+                      type="text"
+                      onChange={(e) => handleChange(e)}
+                    />
+                  </div>
+                </fieldset>
+              </div>
+
+              <div className={`govuk-form-group ${errors.documentNumber ? 'govuk-form-group--error' : ''}`}>
+                <label className="govuk-label  govuk-label--m" htmlFor="documentNumber">
+                  Document number
+                </label>
+                {errors.documentNumber && (
+                    <span className="govuk-error-message">
+                      <span className="govuk-visually-hidden">Error:</span> {errors.documentNumber}
+                    </span>
+                )}
+                <input
+                  className={`govuk-input ${errors.documentNumber ? 'govuk-input--error' : ''}`}
+                  name="documentNumber"
+                  type="text"
+                  value={formData.documentNumber || ''}
+                  onChange={(e) => handleChange(e)}
+                  onBlur={(e) => handleErrors(e, 'You must enter your document number')}
+                  onKeyPress={(e) => handleErrors(e)}
+                />
+              </div>
+
+              <div className={`govuk-form-group ${errors.issuingState ? 'govuk-form-group--error' : ''}`}>
+                <label className="govuk-label  govuk-label--m" htmlFor="issuingState">
+                  Issuing state
+                </label>
+                {errors.issuingState && (
+                    <span className="govuk-error-message">
+                      <span className="govuk-visually-hidden">Error:</span> {errors.issuingState}
+                    </span>
+                )}
+                  <span className="govuk-hint">
+                    Please enter 3 letter ISO country code, for example GBR
+                  </span>
+                <input
+                  className={`govuk-input govuk-input--width-3 ${errors.issuingState ? 'govuk-input--error' : ''}`}
+                  name="issuingState"
+                  type="text"
+                  value={formData.issuingState || ''}
+                  onChange={(e) => handleChange(e)}
+                  onBlur={(e) => handleErrors(e, 'You must enter the issuing state')}
+                  onKeyPress={(e) => handleErrors(e)}
+                />
+              </div>
+
+              <div className={`govuk-form-group ${errors.expiryDate ? 'govuk-form-group--error' : ''}`}>
+                <fieldset className="govuk-fieldset" role="group" aria-describedby="expiryDate-hint">
+                  <legend className="govuk-fieldset__legend govuk-fieldset__legend--m">
+                    <label className="govuk-label govuk-label--m" htmlFor="expiryDate">
+                      Expiry date
+                    </label>
+                  </legend>
+                  <span className="govuk-hint">
+                    For example, 31 3 2022
+                  </span>
+                  <div className="govuk-date-input" >
+                    <div className="govuk-date-input__item">
+                      <div className="govuk-form-group">
+                        <label className="govuk-label govuk-date-input__label" htmlFor="expiryDate-day">
+                          Day
+                        </label>
+                        <input className="govuk-input govuk-date-input__input govuk-input--width-2" name="expiryDate-day" type="text" pattern="[0-9]*" inputMode="numeric" />
+                      </div>
+                    </div>
+                    <div className="govuk-date-input__item">
+                      <div className="govuk-form-group">
+                        <label className="govuk-label govuk-date-input__label" htmlFor="expiryDate-month">
+                          Month
+                        </label>
+                        <input className="govuk-input govuk-date-input__input govuk-input--width-2" name="expiryDate-month" type="text" pattern="[0-9]*" inputMode="numeric" />
+                      </div>
+                    </div>
+                    <div className="govuk-date-input__item">
+                      <div className="govuk-form-group">
+                        <label className="govuk-label govuk-date-input__label" htmlFor="expiryDate-year">
+                          Year
+                        </label>
+                        <input className="govuk-input govuk-date-input__input govuk-input--width-4" name="expiryDate-year" type="text" pattern="[0-9]*" inputMode="numeric" />
+                      </div>
+                    </div>
+                  </div>
+                </fieldset>
+              </div>
 
               <button
                 className="govuk-button"
                 data-module="govuk-button"
                 onClick={(e) => handleSubmit(e)}
               >
-                Save
+                Add to saved people list
               </button>
-              <div>
-                <a href="/vessels" className="govuk-link govuk-link--no-visited-state" onClick={(e) => clearFormData(e)}>Exit without saving</a>
-              </div>
+              <p>
+                <a href="/people" className="govuk-link govuk-link--no-visited-state" onClick={(e) => clearFormData(e)}>Save and come back later</a>
+              </p>
+              <p>
+                <a href="/people" className="govuk-link govuk-link--no-visited-state" onClick={(e) => clearFormData(e)}>Exit without saving</a>
+              </p>
             </form>
           </div>
         </div>
