@@ -14,3 +14,9 @@ $govuk-font-family: 'Inter', sans-serif;
 .govuk-header__logotype-crown {
     margin-right: 10px;
 }
+
+// Force remove focus from tabs when clicked
+.govuk-tabs__list-item--selected .govuk-tabs__tab:focus {
+  background-color: white;
+  box-shadow: none;
+}

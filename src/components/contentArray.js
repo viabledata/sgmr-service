@@ -1,10 +1,12 @@
 const contentArray = [
   {
     urlStub: '/reports',
-    pageHeading: 'Reports',
-    pageBlurb: 'something',
+    pageHeading: 'Submit an Advanced Voyage Report',
+    pageBlurb: 'You can use the online form to create and submit an Advanced Voyage Report to UK Border Force.',
+    formIntroHeading: null,
+    formIntroBlurb: null,
     buttonText: 'Start now',
-    buttonLink: 'somewhere.html',
+    buttonLink: 'create-gmr-departure',
     reportType: 'tabs',
   },
   {
