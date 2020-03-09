@@ -81,7 +81,7 @@ const FormVessels = () => {
               )}
 
               <div id="name" className={`govuk-form-group ${errors.name ? 'govuk-form-group--error' : ''}`}>
-                <label className="govuk-label govuk-label--m" htmlFor="name">
+                <label className="govuk-label" htmlFor="name">
                   Vessel name
                 </label>
                 {errors.name
@@ -103,7 +103,7 @@ const FormVessels = () => {
               </div>
 
               <div id="vesselType" className={`govuk-form-group ${errors.vesselType ? 'govuk-form-group--error' : ''}`}>
-                <label className="govuk-label govuk-label--m" htmlFor="vesselType">
+                <label className="govuk-label" htmlFor="vesselType">
                   Vessel type
                 </label>
                 {errors.vesselType
@@ -125,7 +125,7 @@ const FormVessels = () => {
               </div>
 
               <div id="usualMoorings" className={`govuk-form-group ${errors.usualMoorings ? 'govuk-form-group--error' : ''}`}>
-                <label className="govuk-label govuk-label--m" htmlFor="usualMoorings">
+                <label className="govuk-label" htmlFor="usualMoorings">
                    Usual moorings
                 </label>
                 {errors.usualMoorings
@@ -147,7 +147,7 @@ const FormVessels = () => {
               </div>
 
               <div id="registration" className={`govuk-form-group ${errors.registration ? 'govuk-form-group--error' : ''}`}>
-                <label className="govuk-label govuk-label--m" htmlFor="registration">
+                <label className="govuk-label" htmlFor="registration">
                   Registration number
                 </label>
                 {errors.registration
@@ -168,7 +168,7 @@ const FormVessels = () => {
               </div>
 
               <div id="hullId" className={`govuk-form-group ${errors.hullId ? 'govuk-form-group--error' : ''}`}>
-                <label className="govuk-label govuk-label--m" htmlFor="hullId">
+                <label className="govuk-label" htmlFor="hullId">
                   Hull identification number
                 </label>
                 {errors.hullId
@@ -189,7 +189,7 @@ const FormVessels = () => {
               </div>
 
               <div id="callsign" className={`govuk-form-group ${errors.callsign ? 'govuk-form-group--error' : ''}`}>
-                <label className="govuk-label govuk-label--m" htmlFor="callsign">
+                <label className="govuk-label" htmlFor="callsign">
                   Callsign
                 </label>
                 {errors.callsign
@@ -210,7 +210,7 @@ const FormVessels = () => {
               </div>
 
               <div id="vesselNationality" className={`govuk-form-group ${errors.vesselNationality ? 'govuk-form-group--error' : ''}`}>
-                <label className="govuk-label govuk-label--m" htmlFor="vesselNationality">
+                <label className="govuk-label" htmlFor="vesselNationality">
                   Vessel nationality
                 </label>
                 {errors.vesselNationality
@@ -231,7 +231,7 @@ const FormVessels = () => {
               </div>
 
               <div id="colourOfHull" className={`govuk-form-group ${errors.colourOfHull ? 'govuk-form-group--error' : ''}`}>
-                <label className="govuk-label govuk-label--m" htmlFor="colourOfHull">
+                <label className="govuk-label" htmlFor="colourOfHull">
                   Colour of hull
                 </label>
                 {errors.colourOfHull
@@ -252,7 +252,7 @@ const FormVessels = () => {
               </div>
 
               <div id="lengthMeters" className={`govuk-form-group ${errors.lengthMeters ? 'govuk-form-group--error' : ''}`}>
-                <label className="govuk-label govuk-label--m" htmlFor="lengthMeters">
+                <label className="govuk-label" htmlFor="lengthMeters">
                   Length (meters)
                 </label>
                 {errors.lengthMeters
@@ -273,7 +273,7 @@ const FormVessels = () => {
               </div>
 
               <div id="portOfRegistry" className={`govuk-form-group ${errors.portOfRegistry ? 'govuk-form-group--error' : ''}`}>
-                <label className="govuk-label govuk-label--m" htmlFor="portOfRegistry">
+                <label className="govuk-label" htmlFor="portOfRegistry">
                   Port of registry
                 </label>
                 {errors.portOfRegistry
@@ -294,7 +294,7 @@ const FormVessels = () => {
               </div>
 
               <div id="vesselBuiltDate" className={`govuk-form-group ${errors.vesselBuiltDate ? 'govuk-form-group--error' : ''}`}>
-                <label className="govuk-label govuk-label--m" htmlFor="vesselBuiltDate">
+                <label className="govuk-label" htmlFor="vesselBuiltDate">
                   What year was the vessel built?
                 </label>
                 {errors.vesselBuiltDate
@@ -328,7 +328,7 @@ const FormVessels = () => {
               </div>
 
               <div id="vesselBuiltIn" className={`govuk-form-group ${errors.vesselBuiltIn ? 'govuk-form-group--error' : ''}`}>
-                <label className="govuk-label govuk-label--m" htmlFor="vesselBuiltIn">
+                <label className="govuk-label" htmlFor="vesselBuiltIn">
                   Where was the vessel built?
                 </label>
                 {errors.vesselBuiltIn

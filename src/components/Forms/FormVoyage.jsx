@@ -10,7 +10,7 @@ import FormVoyagePage2 from 'FormVoyagePage2';
 const FormVoyage = () => {
   const location = useLocation();
   const history = useHistory();
-  const maxPages = 2;
+  const maxPages = 5;
   let [pageNum, setPageNum] = useState();
   const [formData, setFormData] = useState(JSON.parse(localStorage.getItem('formData')) || [{}]);
   const [errors, setErrors] = useState(JSON.parse(localStorage.getItem('errors')) || { title: null });
@@ -53,7 +53,7 @@ const FormVoyage = () => {
   });
 
   return (
-    <div className="govuk-width-container ">
+    <div id="pageContainer" className="govuk-width-container ">
       <a className="govuk-back-link" onClick={(e) => {
         e.preventDefault();
         history.goBack();
