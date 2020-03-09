@@ -37,7 +37,6 @@ const FormVoyage = () => {
     e.preventDefault();
     // Note, if page isn't the last page don't clear localstorage on commit, as user should be able to go back and forth without needing a GET
     setNextPage();
-    alert('submit voyage form');
   };
 
   // Update localStorage to hold page data

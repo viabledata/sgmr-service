@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
-//app imports
-import FormVesselsNewVessel from 'FormVesselsNewVessel'
+// app imports
+import FormVesselsNewVessel from 'FormVesselsNewVessel';
 
 const FormVessels = () => {
   // Update data from localStorage if it exists

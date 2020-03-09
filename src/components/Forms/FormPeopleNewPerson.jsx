@@ -6,7 +6,7 @@ const FormVesselsNewVessel = ({
   return (
     <section>
       <div id="givenName" className="govuk-form-group">
-        <label className="govuk-label  govuk-label--m" htmlFor="givenName">
+        <label className="govuk-label" htmlFor="givenName">
           Given name
         </label>
         <input
@@ -19,7 +19,7 @@ const FormVesselsNewVessel = ({
       </div>
 
       <div id="surname" className="govuk-form-group">
-        <label className="govuk-label  govuk-label--m" htmlFor="surname">
+        <label className="govuk-label" htmlFor="surname">
           Surname
         </label>
        <input
@@ -32,7 +32,7 @@ const FormVesselsNewVessel = ({
       </div>
 
       <div id="gender" className="govuk-form-group">
-        <label className="govuk-label  govuk-label--m" htmlFor="gender">
+        <label className="govuk-label" htmlFor="gender">
           Gender
         </label>
         <select
@@ -51,8 +51,8 @@ const FormVesselsNewVessel = ({
 
       <div id="dateOfBirth" className="govuk-form-group">
         <fieldset className="govuk-fieldset" role="group" aria-describedby="dob-hint">
-          <legend className="govuk-fieldset__legend govuk-fieldset__legend--m">
-            <label className="govuk-label govuk-label--m" htmlFor="dateOfBirth">
+          <legend className="govuk-fieldset__legend">
+            <label className="govuk-label" htmlFor="dateOfBirth">
               What is your date of birth?
             </label>
           </legend>
@@ -119,7 +119,7 @@ const FormVesselsNewVessel = ({
       </div>
 
       <div id="placeOfBirth" className="govuk-form-group">
-        <label className="govuk-label  govuk-label--m" htmlFor="placeOfBirth">
+        <label className="govuk-label" htmlFor="placeOfBirth">
           Place of birth
         </label>
         <input
@@ -132,7 +132,7 @@ const FormVesselsNewVessel = ({
       </div>
 
       <div id="nationality" className="govuk-form-group">
-        <label className="govuk-label  govuk-label--m" htmlFor="nationality">
+        <label className="govuk-label" htmlFor="nationality">
           Nationality
         </label>
         <select
@@ -365,7 +365,7 @@ const FormVesselsNewVessel = ({
 
       <div id="personType" className="govuk-form-group">
         <fieldset className="govuk-fieldset" aria-describedby="person-type-hint">
-          <legend className="govuk-fieldset__legend govuk-fieldset__legend--m">
+          <legend className="govuk-fieldset__legend">
             <label className="govuk-fieldset__heading">
               Person type
             </label>
@@ -422,7 +422,7 @@ const FormVesselsNewVessel = ({
 
       <div id="travelDocumentType" className="govuk-form-group">
         <fieldset className="govuk-fieldset" aria-describedby="travel-document-type-hint">
-          <legend className="govuk-fieldset__legend govuk-fieldset__legend--m">
+          <legend className="govuk-fieldset__legend">
             <label className="govuk-fieldset__heading">
               Travel document type
             </label>
@@ -492,7 +492,7 @@ const FormVesselsNewVessel = ({
       </div>
 
       <div id="documentNumber" className="govuk-form-group">
-        <label className="govuk-label  govuk-label--m" htmlFor="documentNumber">
+        <label className="govuk-label" htmlFor="documentNumber">
           Document number
         </label>
          <input
@@ -505,7 +505,7 @@ const FormVesselsNewVessel = ({
       </div>
 
       <div id="issuingState" className="govuk-form-group">
-        <label className="govuk-label  govuk-label--m" htmlFor="issuingState">
+        <label className="govuk-label" htmlFor="issuingState">
           Issuing state
         </label>
         <span className="govuk-hint">
@@ -523,8 +523,8 @@ const FormVesselsNewVessel = ({
 
       <div id="expiryDate" className="govuk-form-group">
         <fieldset className="govuk-fieldset" role="group" aria-describedby="expiryDate-hint">
-          <legend className="govuk-fieldset__legend govuk-fieldset__legend--m">
-            <label className="govuk-label govuk-label--m" htmlFor="expiryDate">
+          <legend className="govuk-fieldset__legend">
+            <label className="govuk-label" htmlFor="expiryDate">
               Expiry date
             </label>
           </legend>
