@@ -10,7 +10,7 @@ import FormVoyagePage2 from 'FormVoyagePage2';
 const FormVoyage = () => {
   const location = useLocation();
   const history = useHistory();
-  const maxPages = 5;
+  const maxPages = 2;
   let [pageNum, setPageNum] = useState();
   const [formData, setFormData] = useState(JSON.parse(localStorage.getItem('formData')) || [{}]);
   const [errors, setErrors] = useState(JSON.parse(localStorage.getItem('errors')) || { title: null });
@@ -33,8 +33,7 @@ const FormVoyage = () => {
   const handleSubmit = (e) => {
     // Combine date fields into required format before submit
     e.preventDefault();
-    // Clear local storage on commit as we have passed details to API
-    clearFormData();
+    // Note, if page isn't the last page don't clear localstorage on commit, as user should be able to go back and forth without needing a GET
     setNextPage();
   };
 
