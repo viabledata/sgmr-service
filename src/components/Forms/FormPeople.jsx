@@ -18,7 +18,6 @@ const FormPeople = () => {
     setErrors(tempArr);
   };
   const handleErrors = (e, errorText, groupField) => {
-    console.log(groupField)
     // If field value is empty, add error : if field has value, removeError
     const name = !groupField ? e.target.name : groupField;
     !e.target.value ? setErrors({ ...errors, [name]: errorText }) : removeError(name);
@@ -46,8 +45,6 @@ const FormPeople = () => {
   useEffect(() => {
     localStorage.setItem('errors', JSON.stringify(errors));
   }, [errors]);
-
-  console.log(formData.travelDocumentType)
 
 
   return (
