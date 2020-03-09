@@ -1,17 +1,17 @@
 import React from 'react';
 // currently no error handling on Voyage forms, can replicate what Vessels have if needed
 
-const FormVoyagePage1 = ({ handleSubmit, handleChange, data }) => {
+const FormVoyageArrival = ({ handleSubmit, handleChange, data }) => {
   return (
     <section>
-      <h1 className="govuk-heading-xl">Departure details</h1>
-      <p className="govuk-body-l">Provide the departure details of the voyage</p>
+      <h1 className="govuk-heading-xl">Arrival details</h1>
+      <p className="govuk-body-l">Provide the arrival details of the voyage</p>
 
-      <div id="departureDate" className="govuk-form-group">
-        <fieldset className="govuk-fieldset" role="group" aria-describedby="departureDate-hint">
+      <div id="arrivalDate" className="govuk-form-group">
+        <fieldset className="govuk-fieldset" role="group" aria-describedby="arrivalDate-hint">
           <legend className="govuk-fieldset__legend govuk-fieldset__legend--m">
-            <label className="govuk-label govuk-label--m" htmlFor="departureDate">
-              Departure date
+            <label className="govuk-label govuk-label--m" htmlFor="arrivalDate">
+              Arrival date
             </label>
           </legend>
           <span className="govuk-hint">
@@ -20,51 +20,51 @@ const FormVoyagePage1 = ({ handleSubmit, handleChange, data }) => {
           <div className="govuk-date-input" >
             <div className="govuk-date-input__item">
               <div className="govuk-form-group">
-                <label className="govuk-label govuk-date-input__label" htmlFor="departureDateDay">
+                <label className="govuk-label govuk-date-input__label" htmlFor="arrivalDateDay">
                   Day
                 </label>
                 <input
                   className="govuk-input govuk-date-input__input govuk-input--width-2"
-                  name="departureDateDay"
+                  name="arrivalDateDay"
                   type="text"
                   pattern="[0-9]*"
                   inputMode="numeric"
                   maxLength="2"
-                  value={data.departureDateDay || ''}
+                  value={data.arrivalDateDay || ''}
                   onChange={(e) => handleChange(e)}
                 />
               </div>
             </div>
             <div className="govuk-date-input__item">
               <div className="govuk-form-group">
-              <label className="govuk-label govuk-date-input__label" htmlFor="departureDateMonth">
+              <label className="govuk-label govuk-date-input__label" htmlFor="arrivalDateMonth">
                   Month
                 </label>
                 <input
                   className="govuk-input govuk-date-input__input govuk-input--width-2"
-                  name="departureDateMonth"
+                  name="arrivalDateMonth"
                   type="text"
                   pattern="[0-9]*"
                   inputMode="numeric"
                   maxLength="2"
-                  value={data.departureDateMonth || ''}
+                  value={data.arrivalDateMonth || ''}
                   onChange={(e) => handleChange(e)}
                 />
               </div>
             </div>
             <div className="govuk-date-input__item">
               <div className="govuk-form-group">
-                <label className="govuk-label govuk-date-input__label" htmlFor="departureDateYear">
+                <label className="govuk-label govuk-date-input__label" htmlFor="arrivalDateYear">
                   Year
                 </label>
                 <input
                   className="govuk-input govuk-date-input__input govuk-input--width-4"
-                  name="departureDateYear"
+                  name="arrivalDateYear"
                   type="text"
                   pattern="[0-9]*"
                   inputMode="numeric"
                   maxLength="4"
-                  value={data.departureDateYear || ''}
+                  value={data.arrivalDateYear || ''}
                   onChange={(e) => handleChange(e)}
                 />
               </div>
@@ -73,11 +73,11 @@ const FormVoyagePage1 = ({ handleSubmit, handleChange, data }) => {
         </fieldset>
       </div>
 
-      <div id="departureTime" className="govuk-form-group">
-        <fieldset className="govuk-fieldset" role="group" aria-describedby="departureTime-hint">
+      <div id="arrivalTime" className="govuk-form-group">
+        <fieldset className="govuk-fieldset" role="group" aria-describedby="arrivalTime-hint">
           <legend className="govuk-fieldset__legend govuk-fieldset__legend--m">
-            <label className="govuk-label govuk-label--m" htmlFor="departureTime">
-              Departure time
+            <label className="govuk-label govuk-label--m" htmlFor="arrivalTime">
+              Arrival time
             </label>
           </legend>
           <span className="govuk-hint">
@@ -86,34 +86,34 @@ const FormVoyagePage1 = ({ handleSubmit, handleChange, data }) => {
           <div className="govuk-date-input" >
             <div className="govuk-date-input__item">
               <div className="govuk-form-group">
-                <label className="govuk-label govuk-date-input__label" htmlFor="departureTimeHour">
+                <label className="govuk-label govuk-date-input__label" htmlFor="arrivalTimeHour">
                   Hour
                 </label>
                 <input
                   className="govuk-input govuk-date-input__input govuk-input--width-2"
-                  name="departureTimeHour"
+                  name="arrivalTimeHour"
                   type="text"
                   pattern="[0-9]*"
                   inputMode="numeric"
                   maxLength="2"
-                  value={data.departureTimeHour || ''}
+                  value={data.arrivalTimeHour || ''}
                   onChange={(e) => handleChange(e)}
                 />
               </div>
             </div>
             <div className="govuk-date-input__item">
               <div className="govuk-form-group">
-              <label className="govuk-label govuk-date-input__label" htmlFor="departureTimeMinute">
+              <label className="govuk-label govuk-date-input__label" htmlFor="arrivalTimeMinute">
                   Minute
                 </label>
                 <input
                   className="govuk-input govuk-date-input__input govuk-input--width-2"
-                  name="departureTimeMinute"
+                  name="arrivalTimeMinute"
                   type="text"
                   pattern="[0-9]*"
                   inputMode="numeric"
                   maxLength="2"
-                  value={data.departureTimeMinute || ''}
+                  value={data.arrivalTimeMinute || ''}
                   onChange={(e) => handleChange(e)}
                 />
               </div>
@@ -122,34 +122,34 @@ const FormVoyagePage1 = ({ handleSubmit, handleChange, data }) => {
         </fieldset>
       </div>
 
-      <div id="departurePort" className="govuk-form-group">
-        <label className="govuk-label govuk-label--m" htmlFor="departurePort">
-          Departure port
+      <div id="arrivalPort" className="govuk-form-group">
+        <label className="govuk-label govuk-label--m" htmlFor="arrivalPort">
+          Arrival port
         </label>
           <span className="govuk-hint">
             The name or UNLOCODE of the port, for example Monaco or MC MON. Enter ‘ZZZZ’ if not known
           </span>
         <input
           className="govuk-input"
-          name="departurePort"
+          name="arrivalPort"
           type="text"
-          value={data.departurePort || ''}
+          value={data.arrivalPort || ''}
           onChange={(e) => handleChange(e)}
         />
       </div>
 
-      <div id="departureCoordinates" className="govuk-form-group">
-        <fieldset className="govuk-fieldset" role="group" aria-describedby="departureCoordinates-hint">
+      <div id="arrivalCoordinates" className="govuk-form-group">
+        <fieldset className="govuk-fieldset" role="group" aria-describedby="arrivalCoordinates-hint">
           <legend className="govuk-fieldset__legend govuk-fieldset__legend--m">
-            <label className="govuk-label govuk-label--m" htmlFor="departureCoordinates">
-              Departure coordinates
+            <label className="govuk-label govuk-label--m" htmlFor="arrivalCoordinates">
+              Arrival coordinates
             </label>
             <span className="govuk-hint">
               If port is ‘ZZZZ’, provide decimal coordinates to 6 places
             </span>
           </legend>
           <div className="govuk-form-group">
-            <label className="govuk-label govuk-date-input__label" htmlFor="departureCoordinatesLat">
+            <label className="govuk-label govuk-date-input__label" htmlFor="arrivalCoordinatesLat">
               Latitude
             </label>
             <span className="govuk-hint">
@@ -157,16 +157,16 @@ const FormVoyagePage1 = ({ handleSubmit, handleChange, data }) => {
             </span>
             <input
               className="govuk-input govuk-date-input__input"
-              name="departureCoordinatesLat"
+              name="arrivalCoordinatesLat"
               type="text"
               pattern="[0-9]*"
               inputMode="numeric"
-              value={data.departureCoordinatesLat || ''}
+              value={data.arrivalCoordinatesLat || ''}
               onChange={(e) => handleChange(e)}
             />
           </div>
           <div className="govuk-form-group">
-            <label className="govuk-label govuk-date-input__label" htmlFor="departureCoordinatesLong">
+            <label className="govuk-label govuk-date-input__label" htmlFor="arrivalCoordinatesLong">
               Longitude
             </label>
             <span className="govuk-hint">
@@ -174,11 +174,11 @@ const FormVoyagePage1 = ({ handleSubmit, handleChange, data }) => {
             </span>
             <input
               className="govuk-input govuk-date-input__input"
-              name="departureCoordinatesLong"
+              name="arrivalCoordinatesLong"
               type="text"
               pattern="[0-9]*"
               inputMode="numeric"
-              value={data.departureCoordinatesLong || ''}
+              value={data.arrivalCoordinatesLong || ''}
               onChange={(e) => handleChange(e)}
             />
           </div>
@@ -196,4 +196,4 @@ const FormVoyagePage1 = ({ handleSubmit, handleChange, data }) => {
   );
 };
 
-export default FormVoyagePage1;
+export default FormVoyageArrival;
