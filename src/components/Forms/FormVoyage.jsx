@@ -65,8 +65,6 @@ const FormVoyage = () => {
         <div className="govuk-grid-row">
           <div className="govuk-grid-column-two-thirds">
             <span className="govuk-caption-xl">{`Page ${pageNum} of ${maxPages}`}</span>
-            <h1 className="govuk-heading-xl">Departure details</h1>
-            <p className="govuk-body-l">Provide the departure details of the voyage</p>
             <form>
 
               {pageNum === 1 && <FormVoyagePage1
