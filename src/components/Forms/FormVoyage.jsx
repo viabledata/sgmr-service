@@ -6,7 +6,8 @@ import { useLocation, useHistory } from 'react-router-dom';
 // app imports
 import FormVoyageDeparture from 'FormVoyageDeparture';
 import FormVoyageArrival from 'FormVoyageArrival';
-import FormVoyageVessel from 'FormVoyageVessel'
+import FormVoyageVessel from 'FormVoyageVessel';
+import FormVoyagePeople from 'FormVoyagePeople';
 
 const FormVoyage = () => {
   const location = useLocation();
@@ -79,6 +80,11 @@ const FormVoyage = () => {
                 data={formData}
               />}
               {pageNum === 3 && <FormVoyageVessel
+                handleSubmit={(e) => handleSubmit(e)}
+                handleChange={(e) => handleChange(e)}
+                data={formData}
+              />}
+              {pageNum === 4 && <FormVoyagePeople
                 handleSubmit={(e) => handleSubmit(e)}
                 handleChange={(e) => handleChange(e)}
                 data={formData}

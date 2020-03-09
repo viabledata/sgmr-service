@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-// version for use within the voyage journey -- will refactor the vessel journey to use this later
 
 const FormVesselsNewVessel = ({ handleSubmit, handleChange, data }) => {
   return (
@@ -172,9 +171,6 @@ const FormVesselsNewVessel = ({ handleSubmit, handleChange, data }) => {
           >
             Save
           </button>
-          <div>
-            <a href="/vessels" className="govuk-link govuk-link--no-visited-state" onClick={(e) => cleardata(e)}>Exit without saving</a>
-          </div>
         </div>
       }
     </section>

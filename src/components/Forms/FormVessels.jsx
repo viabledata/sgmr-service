@@ -87,6 +87,9 @@ const FormVessels = () => {
                 handleChange={(e) => handleChange(e)}
                 data={formData}
               />
+              <p>
+                <a href="/vessels" className="govuk-link govuk-link--no-visited-state" onClick={(e) => clearFormData(e)}>Exit without saving</a>
+              </p>
             </form>
           </div>
         </div>
