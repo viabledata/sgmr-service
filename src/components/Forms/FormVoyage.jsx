@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation, useHistory } from 'react-router-dom';
 
+// NOTE: form does not handle errors for now, can replicate what is done on Voyage when needed
+
 // app imports
 import FormVoyagePage1 from 'FormVoyagePage1';
 import FormVoyagePage2 from 'FormVoyagePage2';
@@ -13,26 +15,10 @@ const FormVoyage = () => {
   const [formData, setFormData] = useState(JSON.parse(localStorage.getItem('formData')) || [{}]);
   const [errors, setErrors] = useState(JSON.parse(localStorage.getItem('errors')) || { title: null });
 
-  // Update form info to state
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  // Handle errors [for empty fields]
-  // const removeError = (fieldName) => {
-  //   const tempArr = { ...errors };
-  //   const key = fieldName;
-  //   delete tempArr[key];
-  //   setErrors(tempArr);
-  // };
-  // const handleErrors = (e, errorText, groupField) => {
-  //   // If field value is empty, add error : if field has value, removeError
-  //   const name = !groupField ? e.target.name : groupField;
-  //   !e.target.value ? setErrors({ ...errors, [name]: errorText }) : removeError(name);
-  // };
-
-  // Clear formData from localStorage
-  // As localStorage updates whenever there is a change to the value of formData or errors, it clears the field data as part of the set function
   const clearFormData = (e) => {
     setFormData({});
     setErrors({ title: null });
@@ -44,10 +30,10 @@ const FormVoyage = () => {
     history.push(`/save-voyage?page=${nextPage}`);
   };
 
-  // Handle Submit, including clearing localStorage
   const handleSubmit = (e) => {
     // Combine date fields into required format before submit
     e.preventDefault();
+    // Clear local storage on commit as we have passed details to API
     clearFormData();
     setNextPage();
   };
@@ -61,6 +47,7 @@ const FormVoyage = () => {
     localStorage.setItem('errors', JSON.stringify(errors));
   }, [errors]);
 
+  // Set page number based on current URL
   useEffect(() => {
     const thisPage = location.search.split('page=');
     setPageNum(parseInt(thisPage[1], 10));
@@ -68,12 +55,12 @@ const FormVoyage = () => {
 
   return (
     <div className="govuk-width-container ">
-      {/* <a className="govuk-back-link" onClick={(e) => {
+      <a className="govuk-back-link" onClick={(e) => {
         e.preventDefault();
         history.goBack();
       }}>
         Back
-      </a> */}
+      </a>
       <main className="govuk-main-wrapper govuk-main-wrapper--auto-spacing" role="main">
         <div className="govuk-grid-row">
           <div className="govuk-grid-column-two-thirds">
@@ -82,17 +69,16 @@ const FormVoyage = () => {
             <p className="govuk-body-l">Provide the departure details of the voyage</p>
             <form>
 
-              {pageNum === 1
-                && <FormVoyagePage1
+              {pageNum === 1 && <FormVoyagePage1
                   handleSubmit={(e) => handleSubmit(e)}
                   handleChange={(e) => handleChange(e)}
                   data={formData}
-                />
-              }
-              {pageNum === 2 && <FormVoyagePage2 />}
-              {pageNum === 3 && <FormVoyagePage3 />}
-              {pageNum === 4 && <FormVoyagePage4 />}
-              {pageNum === 5 && <FormVoyagePage5 />}
+              />}
+              {pageNum === 2 && <FormVoyagePage2
+                handleSubmit={(e) => handleSubmit(e)}
+                handleChange={(e) => handleChange(e)}
+                data={formData}
+              />}
 
               <p>
                 <a href="/reports" className="govuk-link govuk-link--no-visited-state" onClick={(e) => clearFormData(e)}>Exit without saving</a>
