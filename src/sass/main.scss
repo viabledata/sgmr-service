@@ -15,7 +15,17 @@ $govuk-font-family: 'Inter', sans-serif;
     margin-right: 10px;
 }
 
-// Force tabs to look clickable without using a href=
+// Force tabs & breadcrumb links to look clickable without using a href=
 p.govuk-tabs__tab {
   cursor: pointer;
+}
+
+.govuk-back-link {
+  border-bottom: 1px solid #0b0c0c;
+  text-decoration: none;
+  cursor: pointer;
+}
+.govuk-back-link:before {
+  top: 0;
+  bottom: 0;
 }
