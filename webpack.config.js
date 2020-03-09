@@ -25,7 +25,7 @@ module.exports = {
       SectionTabs: path.resolve(__dirname, 'src/components/SectionTabs.jsx'),
       SectionTable: path.resolve(__dirname, 'src/components/SectionTable.jsx'),
       FormVessels: path.resolve(__dirname, 'src/components/Forms/FormVessels.jsx'),
-      FormVessels2: path.resolve(__dirname, 'src/components/Forms/FormVessels2.jsx'),
+      FormVesselsNewVessel: path.resolve(__dirname, 'src/components/Forms/FormVesselsNewVessel.jsx'),
       FormPeople: path.resolve(__dirname, 'src/components/Forms/FormPeople.jsx'),
       FormVoyage: path.resolve(__dirname, 'src/components/Forms/FormVoyage.jsx'),
       FormVoyageDeparture: path.resolve(__dirname, 'src/components/Forms/FormVoyageDeparture.jsx'),

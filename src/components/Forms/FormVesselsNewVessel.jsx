@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 // version for use within the voyage journey -- will refactor the vessel journey to use this later
 
-const FormVessels2 = ({ handleSubmit, handleChange, data }) => {
+const FormVesselsNewVessel = ({ handleSubmit, handleChange, data }) => {
   return (
     <section>
       <div id="vesselType" className="govuk-form-group">
@@ -181,4 +181,4 @@ const FormVessels2 = ({ handleSubmit, handleChange, data }) => {
   );
 };
 
-export default FormVessels2;
+export default FormVesselsNewVessel;
