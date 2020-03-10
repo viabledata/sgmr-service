@@ -2,9 +2,13 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 // app imports
-import CreateNewPerson from 'CreateNewPerson';
+import SectionTable from 'SectionTable';
 
 const FormVoyagePeople = ({ handleSubmit, handleChange, data }) => {
+  const getPeopleList = () => {
+    // api call to get data to pass to page
+  };
+
   const linkTo = {
     pathname: '/people/save-person',
     sourcePage: '/save-voyage/page-4',
@@ -17,8 +21,10 @@ const FormVoyagePeople = ({ handleSubmit, handleChange, data }) => {
       <hr className="govuk-section-break govuk-section-break--m govuk-section-break--visible" />
 
       <h2 className="govuk-heading-l">New person</h2>
-      <Link to='/people/save-person'>Add a new person to the report</Link>
+      <p><Link to='/people/save-person'>Add a new person to the report</Link></p>
       <hr className="govuk-section-break govuk-section-break--m govuk-section-break--visible" />
+
+      {/* <SectionTable page={'/people'} /> */}
 
       <button
         className="govuk-button"
