@@ -42,6 +42,9 @@ const Main = () => {
         <Route exact path="/account">
           <PageContainer />
         </Route>
+        <Route exact path="/register">
+          <UserRegister />
+        </Route>
         <Route exact path="/signout">
           <PageContainer />
         </Route>

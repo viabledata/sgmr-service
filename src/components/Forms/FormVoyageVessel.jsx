@@ -1,7 +1,7 @@
 import React from 'react';
 
 // app imports
-import CreateNewVessel from 'CreateNewVessel';
+import CreateVessel from 'CreateVessel';
 
 const FormVoyageVessel = ({ handleSubmit, handleChange, data }) => {
   return (
@@ -13,7 +13,7 @@ const FormVoyageVessel = ({ handleSubmit, handleChange, data }) => {
 
       <h2 className="govuk-heading-l">New vessel</h2>
       <p className="govuk-body-l">Add the details of a new vessel you have not already saved</p>
-      <CreateNewVessel
+      <CreateVessel
         handleSubmit={(e) => handleSubmit(e)}
         handleChange={(e) => handleChange(e)}
         data={data}

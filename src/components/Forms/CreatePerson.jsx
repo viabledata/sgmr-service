@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-const CreateNewPerson = ({ handleSubmit, handleChange, data }) => {
+const CreatePerson = ({ handleSubmit, handleChange, data }) => {
   const checkIfVoyageForm = location.pathname.toLowerCase().indexOf('voyage') === -1;
 
   return (
@@ -603,4 +603,4 @@ const CreateNewPerson = ({ handleSubmit, handleChange, data }) => {
   );
 };
 
-export default CreateNewPerson;
+export default CreatePerson;

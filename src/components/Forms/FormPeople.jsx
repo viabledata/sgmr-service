@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 
 // app imports
-import CreateNewPerson from 'CreateNewPerson';
+import CreatePerson from 'CreatePerson';
 
 const FormPeople = (props) => {
   const history = useHistory();
@@ -87,7 +87,7 @@ const FormPeople = (props) => {
                 </div>
               )}
 
-              <CreateNewPerson
+              <CreatePerson
                 handleSubmit={(e) => handleSubmit(e)}
                 handleChange={(e) => handleChange(e)}
                 data={formData}
