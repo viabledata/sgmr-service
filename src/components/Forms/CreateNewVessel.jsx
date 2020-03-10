@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 
 const CreateNewVessel = ({ handleSubmit, handleChange, data }) => {
+  const checkIfVoyageForm = location.pathname.toLowerCase().indexOf('voyage') === -1;
+
   return (
     <section>
       <div id="vesselType" className="govuk-form-group">
@@ -162,7 +165,7 @@ const CreateNewVessel = ({ handleSubmit, handleChange, data }) => {
         />
       </div>
 
-      {location.pathname !== '/save-voyage/'
+      {checkIfVoyageForm
         && <div id="submitBlock">
           <button
             className="govuk-button"

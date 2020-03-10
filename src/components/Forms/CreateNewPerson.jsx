@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 
 const CreateNewPerson = ({ handleSubmit, handleChange, data }) => {
+  const checkIfVoyageForm = location.pathname.toLowerCase().indexOf('voyage') === -1;
+
   return (
     <section>
       <div id="givenName" className="govuk-form-group">
@@ -586,7 +588,7 @@ const CreateNewPerson = ({ handleSubmit, handleChange, data }) => {
       </div>
 
 
-      {location.pathname !== '/save-voyage/'
+      {checkIfVoyageForm
         && <div id="submitBlock">
           <button
             className="govuk-button"
