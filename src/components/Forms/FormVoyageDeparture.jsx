@@ -1,5 +1,4 @@
 import React from 'react';
-// currently no error handling on Voyage forms, can replicate what Vessels have if needed
 
 const FormVoyageDeparture = ({ handleSubmit, handleChange, data }) => {
   return (

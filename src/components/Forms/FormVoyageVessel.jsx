@@ -1,8 +1,7 @@
 import React from 'react';
-// currently no error handling on Voyage forms, can replicate what Vessels have if needed
 
 // app imports
-import FormVesselsNewVessel from 'FormVesselsNewVessel';
+import CreateNewVessel from 'CreateNewVessel';
 
 const FormVoyageVessel = ({ handleSubmit, handleChange, data }) => {
   return (
@@ -14,7 +13,7 @@ const FormVoyageVessel = ({ handleSubmit, handleChange, data }) => {
 
       <h2 className="govuk-heading-l">New vessel</h2>
       <p className="govuk-body-l">Add the details of a new vessel you have not already saved</p>
-      <FormVesselsNewVessel
+      <CreateNewVessel
         handleSubmit={(e) => handleSubmit(e)}
         handleChange={(e) => handleChange(e)}
         data={data}

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 // app imports
-import FormPeopleNewPerson from 'FormPeopleNewPerson';
+import CreateNewPerson from 'CreateNewPerson';
 
 const FormPeople = () => {
   const [formData, setFormData] = useState(JSON.parse(localStorage.getItem('formData')) || {});
@@ -37,6 +37,7 @@ const FormPeople = () => {
     // Combine date fields into required format before submit
     e.preventDefault();
     clearFormData();
+    history.push('/people');
   };
 
   // Update localStorage to hold page data
@@ -84,7 +85,7 @@ const FormPeople = () => {
                 </div>
               )}
 
-              <FormPeopleNewPerson
+              <CreateNewPerson
                 handleSubmit={(e) => handleSubmit(e)}
                 handleChange={(e) => handleChange(e)}
                 data={formData}

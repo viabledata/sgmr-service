@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation, useHistory } from 'react-router-dom';
 
-// NOTE: form does not handle errors for now, can replicate what is done on Voyage when needed
-
 // app imports
 import FormVoyageDeparture from 'FormVoyageDeparture';
 import FormVoyageArrival from 'FormVoyageArrival';
@@ -29,7 +27,7 @@ const FormVoyage = () => {
   const setNextPage = () => {
     const nextPage = pageNum < maxPages ? pageNum + 1 : pageNum;
     setPageNum(nextPage);
-    history.push(`/save-voyage?page=${nextPage}`);
+    history.push(`/save-voyage/page-${nextPage}`);
   };
 
   const handleSubmit = (e) => {
@@ -50,9 +48,9 @@ const FormVoyage = () => {
 
   // Set page number based on current URL
   useEffect(() => {
-    const thisPage = location.search.split('page=');
+    const thisPage = location.pathname.split('page-');
     setPageNum(parseInt(thisPage[1], 10));
-  });
+  }, [location]);
 
   return (
     <div id="pageContainer" className="govuk-width-container ">

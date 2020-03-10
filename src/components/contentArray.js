@@ -6,7 +6,7 @@ const contentArray = [
     formIntroHeading: null,
     formIntroBlurb: null,
     buttonText: 'Start now',
-    buttonLink: 'save-voyage?page=1',
+    buttonLink: 'save-voyage/page-1',
     reportType: 'tabs',
   },
   {

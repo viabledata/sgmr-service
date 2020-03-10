@@ -7,7 +7,7 @@ import Nav from 'Nav';
 
 export default function Header() {
   const serviceName = 'Submit an Advanced Voyage Report';
-  const serviceHome = '/';
+  const serviceHome = '';
 
   return (
     <header className="govuk-header" role="banner" data-module="header">

@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 
-const FormVesselsNewVessel = ({
-  handleSubmit, handleChange, handleErrors, data,
-}) => {
+const CreateNewPerson = ({ handleSubmit, handleChange, data }) => {
+  const checkIfVoyageForm = location.pathname.toLowerCase().indexOf('voyage') === -1;
+
   return (
     <section>
       <div id="givenName" className="govuk-form-group">
@@ -588,7 +588,7 @@ const FormVesselsNewVessel = ({
       </div>
 
 
-      {location.pathname !== '/save-voyage'
+      {checkIfVoyageForm
         && <div id="submitBlock">
           <button
             className="govuk-button"
@@ -603,4 +603,4 @@ const FormVesselsNewVessel = ({
   );
 };
 
-export default FormVesselsNewVessel;
+export default CreateNewPerson;
