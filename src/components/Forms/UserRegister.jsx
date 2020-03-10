@@ -24,6 +24,11 @@ const UserRegister = () => {
     !e.target.value ? setErrors({ ...errors, [name]: errorText }) : removeError(name);
   };
 
+  // Validate email addresses match
+
+  // Validate password is at least 8 characters long
+  // Validate passwords match
+
   // Handle Submit, including clearing localStorage
   const handleSubmit = (e) => {
     // Combine date fields into required format before submit
@@ -47,9 +52,8 @@ const UserRegister = () => {
       <main className="govuk-main-wrapper govuk-main-wrapper--auto-spacing" role="main">
         <div className="govuk-grid-row">
           <div className="govuk-grid-column-two-thirds">
-            <h1 className="govuk-heading-xl">Save a person</h1>
-            <p className="govuk-body-l">Provide the details of the person you want to add to your list of saved people.</p>
-            <form>
+            <h1 className="govuk-heading-xl">Create an account</h1>
+             <form>
 
               {Object.keys(errors).length > 1 && (
                 <div className="govuk-error-summary" aria-labelledby="error-summary-title" role="alert" tabIndex="-1" data-module="govuk-error-summary">
@@ -73,6 +77,13 @@ const UserRegister = () => {
                 <label className="govuk-label govuk-label--m" htmlFor="givenName">
                   Given name
                 </label>
+                {errors.givenName
+                  && (
+                  <span className="govuk-error-message">
+                    <span className="govuk-visually-hidden">Error:</span> {errors.givenName}
+                  </span>
+                  )
+                }
                 <input
                   className="govuk-input"
                   name="givenName"
@@ -88,6 +99,13 @@ const UserRegister = () => {
                 <label className="govuk-label govuk-label--m" htmlFor="surname">
                   Surname
                 </label>
+                {errors.surname
+                  && (
+                  <span className="govuk-error-message">
+                    <span className="govuk-visually-hidden">Error:</span> {errors.surname}
+                  </span>
+                  )
+                }
               <input
                   className="govuk-input"
                   name="surname"
@@ -99,9 +117,95 @@ const UserRegister = () => {
                 />
               </div>
 
-              <p>
-                <a href="/people" className="govuk-link govuk-link--no-visited-state" onClick={(e) => clearFormData(e)}>Exit without saving</a>
-              </p>
+              <div id="email" className={`govuk-form-group ${errors.email ? 'govuk-form-group--error' : ''}`}>
+                <label className="govuk-label govuk-label--m" htmlFor="email">
+                  Email address
+                </label>
+                {errors.email
+                  && (
+                  <span className="govuk-error-message">
+                    <span className="govuk-visually-hidden">Error:</span> {errors.email}
+                  </span>
+                  )
+                }
+                <span className="govuk-hint">You will use this email to sign in to the Submit an Advanced Voyage Report service</span>
+              <input
+                  className="govuk-input"
+                  name="email"
+                  type="text"
+                  value={formData.email || ''}
+                  onChange={(e) => handleChange(e)}
+                  onBlur={(e) => handleErrors(e, 'You must enter your email')}
+                  onKeyPress={(e) => handleErrors(e)}
+                />
+              </div>
+
+              <div id="confirmEmail" className={`govuk-form-group ${errors.confirmEmail ? 'govuk-form-group--error' : ''}`}>
+                <label className="govuk-label govuk-label--m" htmlFor="confirmEmail">
+                  Confirm email address
+                </label>
+                {errors.confirmEmail
+                  && (
+                  <span className="govuk-error-message">
+                    <span className="govuk-visually-hidden">Error:</span> {errors.confirmEmail}
+                  </span>
+                  )
+                }
+              <input
+                  className="govuk-input"
+                  name="confirmEmail"
+                  type="text"
+                  value={formData.confirmEmail || ''}
+                  onChange={(e) => handleChange(e)}
+                  onBlur={(e) => handleErrors(e, 'Your email addresses do not match')}
+                  onKeyPress={(e) => handleErrors(e)}
+                />
+              </div>
+
+              <div id="password" className={`govuk-form-group ${errors.password ? 'govuk-form-group--error' : ''}`}>
+                <label className="govuk-label govuk-label--m" htmlFor="password">
+                  Password
+                </label>
+                {errors.password
+                  && (
+                  <span className="govuk-error-message">
+                    <span className="govuk-visually-hidden">Error:</span> {errors.password}
+                  </span>
+                  )
+                }
+              <input
+                  className="govuk-input"
+                  name="password"
+                  type="text"
+                  value={formData.password || ''}
+                  onChange={(e) => handleChange(e)}
+                  onBlur={(e) => handleErrors(e, 'Your password must be at least 8 characters long')}
+                  onKeyPress={(e) => handleErrors(e)}
+                />
+              </div>
+
+              <div id="confirmPassword" className={`govuk-form-group ${errors.confirmPassword ? 'govuk-form-group--error' : ''}`}>
+                <label className="govuk-label govuk-label--m" htmlFor="confirmPassword">
+                  Confirm password
+                </label>
+                {errors.confirmPassword
+                  && (
+                  <span className="govuk-error-message">
+                    <span className="govuk-visually-hidden">Error:</span> {errors.confirmPassword}
+                  </span>
+                  )
+                }
+              <input
+                  className="govuk-input"
+                  name="confirmPassword"
+                  type="text"
+                  value={formData.confirmPassword || ''}
+                  onChange={(e) => handleChange(e)}
+                  onBlur={(e) => handleErrors(e, 'Your passwords do not match')}
+                  onKeyPress={(e) => handleErrors(e)}
+                />
+              </div>
+
             </form>
           </div>
         </div>
