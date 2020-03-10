@@ -27,7 +27,6 @@ const FormVoyage = () => {
   const setNextPage = () => {
     const nextPage = pageNum < maxPages ? pageNum + 1 : pageNum;
     setPageNum(nextPage);
-    // history.push(`/save-voyage/?page=${nextPage}`);
     history.push(`/save-voyage/page-${nextPage}`);
   };
 
@@ -49,7 +48,6 @@ const FormVoyage = () => {
 
   // Set page number based on current URL
   useEffect(() => {
-    // const thisPage = location.search.split('page=');
     const thisPage = location.pathname.split('page-');
     setPageNum(parseInt(thisPage[1], 10));
   }, [location]);
