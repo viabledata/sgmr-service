@@ -4,8 +4,10 @@ import { useLocation, useHistory } from 'react-router-dom';
 // NOTE: form does not handle errors for now, can replicate what is done on Voyage when needed
 
 // app imports
-import FormVoyagePage1 from 'FormVoyagePage1';
-import FormVoyagePage2 from 'FormVoyagePage2';
+import FormVoyageDeparture from 'FormVoyageDeparture';
+import FormVoyageArrival from 'FormVoyageArrival';
+import FormVoyageVessel from 'FormVoyageVessel';
+import FormVoyagePeople from 'FormVoyagePeople';
 
 const FormVoyage = () => {
   const location = useLocation();
@@ -33,8 +35,7 @@ const FormVoyage = () => {
   const handleSubmit = (e) => {
     // Combine date fields into required format before submit
     e.preventDefault();
-    // Clear local storage on commit as we have passed details to API
-    clearFormData();
+    // Note, if page isn't the last page don't clear localstorage on commit, as user should be able to go back and forth without needing a GET
     setNextPage();
   };
 
@@ -54,7 +55,7 @@ const FormVoyage = () => {
   });
 
   return (
-    <div className="govuk-width-container ">
+    <div id="pageContainer" className="govuk-width-container ">
       <a className="govuk-back-link" onClick={(e) => {
         e.preventDefault();
         history.goBack();
@@ -65,16 +66,24 @@ const FormVoyage = () => {
         <div className="govuk-grid-row">
           <div className="govuk-grid-column-two-thirds">
             <span className="govuk-caption-xl">{`Page ${pageNum} of ${maxPages}`}</span>
-            <h1 className="govuk-heading-xl">Departure details</h1>
-            <p className="govuk-body-l">Provide the departure details of the voyage</p>
             <form>
 
-              {pageNum === 1 && <FormVoyagePage1
+              {pageNum === 1 && <FormVoyageDeparture
                   handleSubmit={(e) => handleSubmit(e)}
                   handleChange={(e) => handleChange(e)}
                   data={formData}
               />}
-              {pageNum === 2 && <FormVoyagePage2
+              {pageNum === 2 && <FormVoyageArrival
+                handleSubmit={(e) => handleSubmit(e)}
+                handleChange={(e) => handleChange(e)}
+                data={formData}
+              />}
+              {pageNum === 3 && <FormVoyageVessel
+                handleSubmit={(e) => handleSubmit(e)}
+                handleChange={(e) => handleChange(e)}
+                data={formData}
+              />}
+              {pageNum === 4 && <FormVoyagePeople
                 handleSubmit={(e) => handleSubmit(e)}
                 handleChange={(e) => handleChange(e)}
                 data={formData}
