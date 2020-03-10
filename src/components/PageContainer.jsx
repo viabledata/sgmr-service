@@ -50,7 +50,7 @@ const PageContainer = (props) => {
       <main className="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" role="main">
         <div className="govuk-grid-row">
           <PageIntro pageData={pageData} />
-          <PageIntroToForm pageData={pageData} />
+          {pageData.formIntroHeading && <PageIntroToForm pageData={pageData} />}
           {sectionReport}
         </div>
       </main>

@@ -14,3 +14,8 @@ $govuk-font-family: 'Inter', sans-serif;
 .govuk-header__logotype-crown {
     margin-right: 10px;
 }
+
+// Force tabs to look clickable without using a href=
+p.govuk-tabs__tab {
+  cursor: pointer;
+}
