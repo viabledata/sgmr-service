@@ -2,7 +2,7 @@ import React from 'react';
 // currently no error handling on Voyage forms, can replicate what Vessels have if needed
 
 // app imports
-import FormPeopleNewPerson from 'FormPeopleNewPerson';
+import CreateNewPerson from 'CreateNewPerson';
 
 const FormVoyagePeople = ({ handleSubmit, handleChange, data }) => {
   return (
@@ -13,12 +13,12 @@ const FormVoyagePeople = ({ handleSubmit, handleChange, data }) => {
 
 
       <h2 className="govuk-heading-l">New person</h2>
-      <FormPeopleNewPerson
+      <CreateNewPerson
         handleSubmit={(e) => handleSubmit(e)}
         handleChange={(e) => handleChange(e)}
         data={data}
         className="govuk-body-l"
-      >Add a new person to the report</FormPeopleNewPerson>
+      >Add a new person to the report</CreateNewPerson>
 
       <button
         className="govuk-button"

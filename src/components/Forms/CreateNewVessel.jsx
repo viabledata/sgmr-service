@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-const FormVesselsNewVessel = ({ handleSubmit, handleChange, data }) => {
+const CreateNewVessel = ({ handleSubmit, handleChange, data }) => {
   return (
     <section>
       <div id="vesselType" className="govuk-form-group">
@@ -177,4 +177,4 @@ const FormVesselsNewVessel = ({ handleSubmit, handleChange, data }) => {
   );
 };
 
-export default FormVesselsNewVessel;
+export default CreateNewVessel;
