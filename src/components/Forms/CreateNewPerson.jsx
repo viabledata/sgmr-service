@@ -586,7 +586,7 @@ const CreateNewPerson = ({ handleSubmit, handleChange, data }) => {
       </div>
 
 
-      {location.pathname !== '/save-voyage'
+      {location.pathname !== '/save-voyage/'
         && <div id="submitBlock">
           <button
             className="govuk-button"

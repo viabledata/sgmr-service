@@ -18,6 +18,7 @@ module.exports = {
       Header: path.resolve(__dirname, 'src/components/Header.jsx'),
       Nav: path.resolve(__dirname, 'src/components/Nav.jsx'),
       Main: path.resolve(__dirname, 'src/components/Main.jsx'),
+      ScrollToTop: path.resolve(__dirname, 'src/components/ScrollToTop.jsx'),
       contentArray: path.resolve(__dirname, 'src/components/contentArray.js'),
       PageContainer: path.resolve(__dirname, 'src/components/PageContainer.jsx'),
       PageIntro: path.resolve(__dirname, 'src/components/PageIntro.jsx'),

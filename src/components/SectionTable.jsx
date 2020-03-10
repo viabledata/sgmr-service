@@ -118,7 +118,7 @@ const SectionTable = ({ page, pageData }) => {
                   return (
                     <tr className="govuk-table__row" key={i}>
                       <td className="govuk-table__cell" scope="row">
-                        {page === '/vessels' && <a href={`${elem.id}`} className="govuk-link" title={`Edit details for ${elem.id}`}>{elem.name}</a>}
+                        {page === '/vessels' && <p>{elem.name}</p>}
                         {page === '/people' && <a href={`${elem.id}`} className="govuk-link" title={`Edit details for ${elem.id}`}>{elem.surname}</a>}
                       </td>
                       {page === '/vessels' && <td className="govuk-table__cell">{elem.vesselType}</td>}

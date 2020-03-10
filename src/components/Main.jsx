@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 // app imports
+import ScrollToTop from 'ScrollToTop';
 import Banner from 'Banner';
 import Footer from 'Footer';
 import Header from 'Header';
@@ -14,15 +15,18 @@ import FormVoyage from 'FormVoyage';
 const Main = () => {
   return (
     <Router>
+      <ScrollToTop />
       <Header />
       <Banner />
       <Switch>
         <Route exact path="/reports">
           <PageContainer />
         </Route>
-        <Route exact path="/save-voyage">
-          <FormVoyage />
-        </Route>
+        <Route exact path="/save-voyage/page-1"><FormVoyage /></Route>
+        <Route exact path="/save-voyage/page-2"><FormVoyage /></Route>
+        <Route exact path="/save-voyage/page-3"><FormVoyage /></Route>
+        <Route exact path="/save-voyage/page-4"><FormVoyage /></Route>
+        <Route exact path="/save-voyage/page-5"><FormVoyage /></Route>
         <Route exact path="/vessels">
           <PageContainer />
         </Route>
