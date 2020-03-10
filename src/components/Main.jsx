@@ -8,6 +8,7 @@ import Header from 'Header';
 import PageContainer from 'PageContainer';
 import FormVessels from 'FormVessels';
 import FormPeople from 'FormPeople';
+import FormVoyage from 'FormVoyage';
 
 
 const Main = () => {
@@ -18,6 +19,9 @@ const Main = () => {
       <Switch>
         <Route exact path="/reports">
           <PageContainer />
+        </Route>
+        <Route exact path="/save-voyage">
+          <FormVoyage />
         </Route>
         <Route exact path="/vessels">
           <PageContainer />
