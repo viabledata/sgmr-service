@@ -7,31 +7,31 @@ import CreatePerson from 'CreatePerson';
 const FormPeople = (props) => {
   const history = useHistory();
   const [formData, setFormData] = useState(JSON.parse(localStorage.getItem('formData')) || {});
-  const [errors, setErrors] = useState(JSON.parse(localStorage.getItem('errors')) || { title: null });
+  // const [errors, setErrors] = useState(JSON.parse(localStorage.getItem('errors')) || { title: null });
 
   // Update form info to state
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  // Handle errors [for empty fields]
-  const removeError = (fieldName) => {
-    const tempArr = { ...errors };
-    const key = fieldName;
-    delete tempArr[key];
-    setErrors(tempArr);
-  };
-  const handleErrors = (e, errorText, groupField) => {
-    // If field value is empty, add error : if field has value, removeError
-    const name = !groupField ? e.target.name : groupField;
-    !e.target.value ? setErrors({ ...errors, [name]: errorText }) : removeError(name);
-  };
+  // // Handle errors [for empty fields]
+  // const removeError = (fieldName) => {
+  //   const tempArr = { ...errors };
+  //   const key = fieldName;
+  //   delete tempArr[key];
+  //   setErrors(tempArr);
+  // };
+  // const handleErrors = (e, errorText, groupField) => {
+  //   // If field value is empty, add error : if field has value, removeError
+  //   const name = !groupField ? e.target.name : groupField;
+  //   !e.target.value ? setErrors({ ...errors, [name]: errorText }) : removeError(name);
+  // };
 
   // Clear formData from localStorage
   // As localStorage updates whenever there is a change to the value of formData or errors, it clears the field data as part of the set function
   const clearFormData = (e) => {
     setFormData({});
-    setErrors({ title: null });
+    // setErrors({ title: null });
   };
 
   // Handle Submit, including clearing localStorage
@@ -47,9 +47,9 @@ const FormPeople = (props) => {
     localStorage.setItem('formData', JSON.stringify(formData));
   }, [formData]);
 
-  useEffect(() => {
-    localStorage.setItem('errors', JSON.stringify(errors));
-  }, [errors]);
+  // useEffect(() => {
+  //   localStorage.setItem('errors', JSON.stringify(errors));
+  // }, [errors]);
 
 
   return (
@@ -69,7 +69,7 @@ const FormPeople = (props) => {
             <p className="govuk-body-l">Provide the details of the person you want to add to your list of saved people.</p>
             <form>
 
-              {Object.keys(errors).length > 1 && (
+              {/* {Object.keys(errors).length > 1 && (
                 <div className="govuk-error-summary" aria-labelledby="error-summary-title" role="alert" tabIndex="-1" data-module="govuk-error-summary">
                   <h2 className="govuk-error-summary__title" >
                     There is a problem
@@ -85,7 +85,7 @@ const FormPeople = (props) => {
                     </ul>
                   </div>
                 </div>
-              )}
+              )} */}
 
               <CreatePerson
                 handleSubmit={(e) => handleSubmit(e)}

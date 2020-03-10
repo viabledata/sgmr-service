@@ -7,6 +7,7 @@ import Banner from 'Banner';
 import Footer from 'Footer';
 import Header from 'Header';
 import PageContainer from 'PageContainer';
+import UserRegister from 'UserRegister';
 import FormVessels from 'FormVessels';
 import FormPeople from 'FormPeople';
 import FormVoyage from 'FormVoyage';
