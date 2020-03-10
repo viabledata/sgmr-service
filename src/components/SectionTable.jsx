@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
+// app imports
+import contentArray from 'contentArray';
+
 const SectionTable = ({ page, pageData }) => {
   // temp data to setup page before connecting api, data & return() need refactor based on API call
   const fixtureVessels = {
