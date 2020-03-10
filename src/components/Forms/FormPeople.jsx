@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 
 // app imports
 import CreateNewPerson from 'CreateNewPerson';
 
-const FormPeople = () => {
+const FormPeople = (props) => {
+  const history = useHistory();
   const [formData, setFormData] = useState(JSON.parse(localStorage.getItem('formData')) || {});
   const [errors, setErrors] = useState(JSON.parse(localStorage.getItem('errors')) || { title: null });
 
@@ -37,7 +39,7 @@ const FormPeople = () => {
     // Combine date fields into required format before submit
     e.preventDefault();
     clearFormData();
-    history.push('/people');
+    history.goBack(); // Return to page you came from
   };
 
   // Update localStorage to hold page data
