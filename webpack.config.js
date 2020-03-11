@@ -36,7 +36,7 @@ module.exports = {
       FormVoyagePeople: path.resolve(__dirname, 'src/components/Forms/FormVoyagePeople.jsx'),
       UserRegister: path.resolve(__dirname, 'src/components/Forms/UserRegister.jsx'),
       Auth: path.resolve(__dirname, 'src/lib/Auth.js'),
-      SecureRoutes: path.resolve(__dirname, 'src/lib/SecureRoutes.jsx'),
+      SecureRoute: path.resolve(__dirname, 'src/lib/SecureRoute.jsx'),
     },
     extensions: ['.js', '.jsx'],
   },
