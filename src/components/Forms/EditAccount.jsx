@@ -84,15 +84,57 @@ const EditAccount = (props) => {
                   </div>
                 </div>
               )} */}
+              <div id="givenName" className="govuk-form-group">
+                <label className="govuk-label govuk-label--m" htmlFor="givenName">
+                  Given name
+                </label>
+                <input
+                  className="govuk-input"
+                  name="givenName"
+                  type="text"
+                  value={formData.givenName || ''}
+                  onChange={(e) => handleChange(e)}
+                />
+              </div>
 
-              <CreatePerson
-                handleSubmit={(e) => handleSubmit(e)}
-                handleChange={(e) => handleChange(e)}
-                data={formData}
-              />
+              <div id="surname" className="govuk-form-group">
+                <label className="govuk-label govuk-label--m" htmlFor="surname">
+                  Surname
+                </label>
+              <input
+                  className="govuk-input"
+                  name="surname"
+                  type="text"
+                  value={formData.surname || ''}
+                  onChange={(e) => handleChange(e)}
+                />
+              </div>
+
+              <div id="email" className="govuk-form-group">
+                <label className="govuk-label govuk-label--m" htmlFor="email">
+                  Email
+                </label>
+              <input
+                  className="govuk-input"
+                  name="email"
+                  type="text"
+                  value={formData.email || ''}
+                  onChange={(e) => handleChange(e)}
+                />
+              </div>
+
+              <div id="submitBlock">
+                <button
+                  className="govuk-button"
+                  data-module="govuk-button"
+                  onClick={(e) => handleSubmit(e)}
+                >
+                  Save changes
+                </button>
+              </div>
 
               <p>
-                <a href="/people" className="govuk-link govuk-link--no-visited-state" onClick={(e) => clearFormData(e)}>Exit without saving</a>
+                <a href="/account" className="govuk-link govuk-link--no-visited-state" onClick={(e) => clearFormData(e)}>Exit without saving</a>
               </p>
             </form>
           </div>
