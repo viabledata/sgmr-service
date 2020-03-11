@@ -6,8 +6,6 @@ import Nav from 'Nav';
 
 
 export default function Header() {
-  const serviceName = 'Submit an Advanced Voyage Report';
-  const serviceHome = '';
 
   return (
     <header className="govuk-header" role="banner" data-module="header">
@@ -22,12 +20,8 @@ export default function Header() {
               <span>GOV.UK</span>
             </span>
           </Link>
-      </div>
-        <div className="govuk-header__content">
-          <a className="govuk-header__link govuk-header__link--service-name" href={serviceHome}>{serviceName}</a>
-          <button type="button" role="button" className="govuk-header__menu-button js-header-toggle" aria-controls="navigation" aria-label="Show or hide Top Level Navigation">Menu</button>
-          <Nav />
         </div>
+        <Nav />
       </div>
     </header>
   );

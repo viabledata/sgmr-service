@@ -48,12 +48,13 @@ const Main = () => {
         <SecureRoute exact path="/account/edit">
           <EditAccount />
         </SecureRoute>
-        <SecureRoute exact path="/register">
-          <UserRegister />
-        </SecureRoute>
         <SecureRoute exact path="/signout">
           <PageContainer />
         </SecureRoute>
+
+        <Route exact path="/register">
+          <UserRegister />
+        </Route>
       </Switch>
       <Footer />
     </Router>

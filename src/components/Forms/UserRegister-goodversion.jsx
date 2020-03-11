@@ -12,45 +12,26 @@ const UserRegister = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  // Handle errors [for empty fields]
-  const removeError = (fieldName) => {
-    const tempArr = { ...errors };
-    const key = fieldName;
-    delete tempArr[key];
-    setErrors(tempArr);
-  };
-  const handleErrors = (e, errorText, groupField) => {
-    // If field value is empty, add error : if field has value, removeError
-    const name = !groupField ? e.target.name : groupField;
-    !e.target.value ? setErrors({ ...errors, [name]: errorText }) : removeError(name);
-  };
-
-  // const handleEmailErrors = () => {
-  //   const data = { ...formData };
-  //   data.email.toLowerCase() === data.confirmEmail.toLowerCase() ? null : setErrors({ ...errors, confirmEmail: 'Email addresses do not match' });
-  // };
-  // const handlePwdErrors = () => {
-  //   const data = { ...formData };
-  //   data.password === data.confirmPassword ? null : setErrors({ ...errors, confirmPassword: 'Passwords do not match' });
-  // };
-
   // Handle Submit, including clearing localStorage
   const handleSubmit = (e) => {
     e.preventDefault();
     const dataLower = { ...formData };
     // Make email addresses all lower case
     dataLower.email = dataLower.email.toLowerCase();
-    // axios.post('/api/register/', dataLower)
-    //   .then(() => history.push('/login'))
-    //   .catch((err) => {
-    //     setErrors(err.response.data);
-    //   });
-  };
 
-  // Update localStorage to hold page data (errors only on this form)
-  useEffect(() => {
-    localStorage.setItem('errors', JSON.stringify(errors));
-  }, [errors]);
+    axios.post('http://localhost:5000/v1/user/register', {
+      mode: 'cors',
+      headers: {
+        'Content-type': 'application/json',
+        // 'Authorization': `Bearer ${this.props.kc.token}`,
+      },
+      body: dataLower,
+    })
+      .then(() => history.push('/login'))
+      .catch((err) => {
+        setErrors(err.response.data);
+      });
+  };
 
 
   return (
@@ -67,23 +48,6 @@ const UserRegister = () => {
             <h1 className="govuk-heading-xl">Create an account</h1>
              <form>
 
-              {Object.keys(errors).length > 1 && (
-                <div className="govuk-error-summary" aria-labelledby="error-summary-title" role="alert" tabIndex="-1" data-module="govuk-error-summary">
-                  <h2 className="govuk-error-summary__title" >
-                    There is a problem
-                  </h2>
-                  <div className="govuk-error-summary__body">
-                    <ul className="govuk-list govuk-error-summary__list">
-                      {Object.entries(errors).map((elem, i) => (
-                        <li key={i}>
-                          {elem[0] !== 'title'
-                              && <a href={`#${elem[0]}`}>{elem[1]}</a>}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                </div>
-              )}
 
               <div id="givenName" className={`govuk-form-group ${errors.givenName ? 'govuk-form-group--error' : ''}`}>
                 <label className="govuk-label govuk-label--m" htmlFor="givenName">
@@ -102,8 +66,6 @@ const UserRegister = () => {
                   type="text"
                   value={formData.givenName || ''}
                   onChange={(e) => handleChange(e)}
-                  onBlur={(e) => handleErrors(e, 'You must enter your given name')}
-                  onKeyPress={(e) => handleErrors(e)}
                 />
               </div>
 
@@ -124,8 +86,6 @@ const UserRegister = () => {
                   type="text"
                   value={formData.surname || ''}
                   onChange={(e) => handleChange(e)}
-                  onBlur={(e) => handleErrors(e, 'You must enter your surname')}
-                  onKeyPress={(e) => handleErrors(e)}
                 />
               </div>
 
@@ -147,8 +107,6 @@ const UserRegister = () => {
                   type="text"
                   value={formData.email || ''}
                   onChange={(e) => handleChange(e)}
-                  onBlur={(e) => handleErrors(e, 'You must enter your email')}
-                  onKeyPress={(e) => handleErrors(e)}
                 />
               </div>
 
@@ -169,8 +127,6 @@ const UserRegister = () => {
                   type="text"
                   value={formData.confirmEmail || ''}
                   onChange={(e) => handleChange(e)}
-                  // onBlur={(e) => handleEmailErrors(e, 'Your email addresses do not match')}
-                  onKeyPress={(e) => handleErrors(e)}
                 />
               </div>
 
@@ -191,8 +147,6 @@ const UserRegister = () => {
                   type="password"
                   value={formData.password || ''}
                   onChange={(e) => handleChange(e)}
-                  onBlur={(e) => handleErrors(e, 'Your password must be at least 8 characters long')}
-                  onKeyPress={(e) => handleErrors(e)}
                 />
               </div>
 
@@ -213,8 +167,6 @@ const UserRegister = () => {
                   type="password"
                   value={formData.confirmPassword || ''}
                   onChange={(e) => handleChange(e)}
-                  // onBlur={(e) => handlePwdErrors(e, 'Your passwords do not match')}
-                  onKeyPress={(e) => handleErrors(e)}
                 />
               </div>
 
@@ -226,25 +178,13 @@ const UserRegister = () => {
               </ul>
 
 
-              {(Object.keys(errors).length > 1)
-                && <button
-                  disabled="disabled"
-                  aria-disabled="true"
-                  className="govuk-button govuk-button--disabled"
-                  data-module="govuk-button"
-                >
-                  Agree and submit
-                </button>
-              }
-              {(Object.keys(errors).length === 1 && Object.values(formData).length === 6)
-                && <button
+             <button
                   className="govuk-button"
                   data-module="govuk-button"
                   onClick={(e) => handleSubmit(e)}
                 >
                   Agree and submit
                 </button>
-              }
 
             </form>
           </div>
