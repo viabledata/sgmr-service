@@ -18,9 +18,8 @@ const UserRegister = () => {
   const handleErrors = (e, errorText, groupField) => {
     // For fields with multiple inputs in a single group
     const name = !groupField ? e.target.name : groupField;
-    // Error onBlur if field is blank
-    if (!e.target.value) { setErrors({ ...errors, [name]: errorText }); }
     // Error onBlur if condition not met
+    if (!e.target.value) { setErrors({ ...errors, [name]: errorText }); }
     switch (e.target.name) {
       case 'email': (/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(formData.email)) ? removeError('email') : setErrors({ ...errors, email: errorText }); break;
       case 'confirmEmail': formData.email.toLowerCase() === formData.confirmEmail.toLowerCase() ? removeError('confirmEmail') : setErrors({ ...errors, confirmEmail: errorText }); break;
