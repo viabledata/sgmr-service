@@ -1,8 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { useLocation, Link } from 'react-router-dom';
+import { useLocation, useHistory, Link } from 'react-router-dom';
+
+// app imports
+import Auth from 'Auth';
 
 const Nav = () => {
   const location = useLocation();
+  const history = useHistory();
   const [navArray, setNavArray] = useState([]);
 
   const navData = [
@@ -26,11 +30,6 @@ const Nav = () => {
       text: 'Account',
       active: false,
     },
-    {
-      urlStem: '/signout',
-      text: 'Sign out',
-      active: false,
-    },
   ];
 
   const setActivePage = (url) => {
@@ -47,24 +46,31 @@ const Nav = () => {
     setNavArray(tempArr);
   };
 
+  const handleSignout = () => {
+    Auth.logout();
+    history.push('/');
+  };
+
   useEffect(() => {
     setActivePage();
   }, []);
 
   return (
     <nav>
-      <ul id="navigation" className="govuk-header__navigation " aria-label="Top Level Navigation">
+      {Auth.isAuthorized() && <ul id="navigation" className="govuk-header__navigation " aria-label="Top Level Navigation">
 
         {navArray.map((elem, i) => {
           const activeState = elem.active === true ? 'govuk-header__navigation-item govuk-header__navigation-item--active' : 'govuk-header__navigation-item';
           return (
           <li className={activeState} key={i}>
-            <Link to={elem.urlStem} className="govuk-header__link" onClick={(e) => setActivePage(elem.urlStem)}>{elem.text}</Link>
+           <Link to={elem.urlStem} className="govuk-header__link" onClick={(e) => setActivePage(elem.urlStem)}>{elem.text}</Link>
           </li>
           );
         })}
-
-      </ul>
+        <li className='govuk-header__navigation-item'>
+          <a className="govuk-header__link" onClick={() => handleSignout()}>Signout</a>
+        </li>
+      </ul>}
     </nav>
   );
 };

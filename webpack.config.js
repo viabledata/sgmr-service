@@ -35,7 +35,7 @@ module.exports = {
       FormVoyageVessel: path.resolve(__dirname, 'src/components/Forms/FormVoyageVessel.jsx'),
       FormVoyagePeople: path.resolve(__dirname, 'src/components/Forms/FormVoyagePeople.jsx'),
       UserRegister: path.resolve(__dirname, 'src/components/Forms/UserRegister.jsx'),
-      Auth: path.resolve(__dirname, 'src/lib/Auth.jsx'),
+      Auth: path.resolve(__dirname, 'src/lib/Auth.js'),
       SecureRoutes: path.resolve(__dirname, 'src/lib/SecureRoutes.jsx'),
     },
     extensions: ['.js', '.jsx'],
@@ -79,5 +79,9 @@ module.exports = {
     // in order to use `<Router>`, historyApiFallback needs to be enabled
     historyApiFallback: true,
     hot: true,
+    port: 8080,
+    proxy: {
+      '/api': 'http://localhost:5000',
+    },
   },
 };
