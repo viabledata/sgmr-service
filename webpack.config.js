@@ -20,6 +20,7 @@ module.exports = {
       Main: path.resolve(__dirname, 'src/components/Main.jsx'),
       ScrollToTop: path.resolve(__dirname, 'src/components/ScrollToTop.jsx'),
       contentArray: path.resolve(__dirname, 'src/components/contentArray.js'),
+      PageAccount: path.resolve(__dirname, 'src/components/PageAccount.jsx'),
       PageContainer: path.resolve(__dirname, 'src/components/PageContainer.jsx'),
       PageIntro: path.resolve(__dirname, 'src/components/PageIntro.jsx'),
       PageIntroToForm: path.resolve(__dirname, 'src/components/PageIntroToForm.jsx'),
