@@ -89,6 +89,8 @@ pipeline:
       target: SGMR_SERVICE_PORT
     - source: SGMR_SERVICE_URL
       target: SGMR_SERVICE_URL
+    - source: DEV_WHITELIST
+      target: WHITELIST
     commands:
       - export SGMR_SERVICE_TAG=$${DRONE_COMMIT_SHA}
       - kd --insecure-skip-tls-verify -f kube/cert.yml
