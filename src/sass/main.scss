@@ -15,11 +15,10 @@ $govuk-font-family: 'Inter', sans-serif;
     margin-right: 10px;
 }
 
-// Force tabs & breadcrumb links to look clickable without using a href=
+// Force tabs & back links to look clickable without using a href=
 p.govuk-tabs__tab {
   cursor: pointer;
 }
-
 .govuk-back-link {
   border-bottom: 1px solid #0b0c0c;
   text-decoration: none;
@@ -30,7 +29,7 @@ p.govuk-tabs__tab {
   bottom: 0;
 }
 
-// Apply styles based on GDS inline styles for these components
+// Apply styles that are applied as inline styles in GDS
 .govuk-summary-list__key, .govuk-summary-list__value, .govuk-summary-list__actions  {
   border-bottom: none;
 }

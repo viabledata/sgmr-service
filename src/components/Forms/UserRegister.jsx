@@ -7,7 +7,6 @@ const UserRegister = () => {
   const [formData, setFormData] = useState({});
   const [errors, setErrors] = useState(JSON.parse(localStorage.getItem('errors')) || { title: null });
 
-
   const removeError = (fieldName) => {
     const tempArr = { ...errors };
     const key = fieldName;
@@ -45,7 +44,7 @@ const UserRegister = () => {
       mode: 'cors',
       headers: {
         'Content-type': 'application/json',
-        // 'Authorization': `Bearer ${this.props.kc.token}`,
+        // 'Authorization': `Bearer ${token}`,
       },
       body: dataLower,
     })
@@ -54,7 +53,6 @@ const UserRegister = () => {
         setErrors(err.response.data);
       });
   };
-
 
   // Update localStorage to hold page data (errors only on this form)
   useEffect(() => {

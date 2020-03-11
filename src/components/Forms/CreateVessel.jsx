@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import React from 'react';
 
 const CreateVessel = ({ handleSubmit, handleChange, data }) => {
   const checkIfVoyageForm = location.pathname.toLowerCase().indexOf('voyage') === -1;
@@ -130,25 +129,25 @@ const CreateVessel = ({ handleSubmit, handleChange, data }) => {
           What year was the vessel built?
         </label>
         <span className="govuk-hint">For example, 2007</span>
-          <div className="govuk-date-input">
-            <div className="govuk-date-input__item">
-              <div className="govuk-form-group">
-                <label className="govuk-label govuk-date-input__label" htmlFor="vesselBuiltDate">
-                  Year
-                </label>
-                <input
-                  className="govuk-input govuk-date-input__input govuk-input--width-4"
-                  name="vesselBuiltDate"
-                  type="text"
-                  pattern="[0-9]*"
-                  inputMode="numeric"
-                  maxLength="4"
-                  value={data.vesselBuiltDate || ''}
-                  onChange={(e) => handleChange(e)}
-                />
-              </div>
+        <div className="govuk-date-input">
+          <div className="govuk-date-input__item">
+            <div className="govuk-form-group">
+              <label className="govuk-label govuk-date-input__label" htmlFor="vesselBuiltDate">
+                Year
+              </label>
+              <input
+                className="govuk-input govuk-date-input__input govuk-input--width-4"
+                name="vesselBuiltDate"
+                type="text"
+                pattern="[0-9]*"
+                inputMode="numeric"
+                maxLength="4"
+                value={data.vesselBuiltDate || ''}
+                onChange={(e) => handleChange(e)}
+              />
             </div>
           </div>
+        </div>
       </div>
 
       <div id="vesselBuiltIn" className="govuk-form-group">

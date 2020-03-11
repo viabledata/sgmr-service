@@ -1,8 +1,8 @@
 import React from 'react';
 
 // app imports
-import StartButton from 'StartButton';
 import PageAccount from 'PageAccount';
+import StartButton from 'StartButton';
 
 const PageIntro = ({ pageData }) => {
   return (

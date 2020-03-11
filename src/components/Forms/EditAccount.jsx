@@ -1,32 +1,40 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 
-
 const EditAccount = (props) => {
   const history = useHistory();
   const [formData, setFormData] = useState(JSON.parse(localStorage.getItem('formData')) || {});
   // const [errors, setErrors] = useState(JSON.parse(localStorage.getItem('errors')) || { title: null });
 
-  // Update form info to state
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
-  // // Handle errors [for empty fields]
+  // Handle errors
   // const removeError = (fieldName) => {
   //   const tempArr = { ...errors };
   //   const key = fieldName;
   //   delete tempArr[key];
   //   setErrors(tempArr);
   // };
+
   // const handleErrors = (e, errorText, groupField) => {
-  //   // If field value is empty, add error : if field has value, removeError
+  // // For fields with multiple inputs in a single group
   //   const name = !groupField ? e.target.name : groupField;
-  //   !e.target.value ? setErrors({ ...errors, [name]: errorText }) : removeError(name);
+  //   // Error onBlur if field is blank
+  //   if (!e.target.value) { setErrors({ ...errors, [name]: errorText }); }
+  //   // Error onBlur if condition not met
+  //   switch (e.target.name) {
+  //     case 'email': (/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(formData.email)) ? removeError('email') : setErrors({ ...errors, email: errorText }); break;
+  //     case 'confirmEmail': formData.email.toLowerCase() === formData.confirmEmail.toLowerCase() ? removeError('confirmEmail') : setErrors({ ...errors, confirmEmail: errorText }); break;
+  //     case 'confirmPassword': formData.password === formData.confirmPassword ? removeError('confirmPassword') : setErrors({ ...errors, confirmPassword: errorText }); break;
+  //     default: null;
+  //   }
   // };
 
+  // Update form info to state
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+    // removeError(e.target.name);
+  };
+
   // Clear formData from localStorage
-  // As localStorage updates whenever there is a change to the value of formData or errors, it clears the field data as part of the set function
   const clearFormData = (e) => {
     setFormData({});
     // setErrors({ title: null });
@@ -45,7 +53,7 @@ const EditAccount = (props) => {
     // send DELETE
     // clear localStorage
     // call signout
-    alert('delete')
+    alert('delete');
   };
 
   // Update localStorage to hold page data
@@ -56,7 +64,6 @@ const EditAccount = (props) => {
   // useEffect(() => {
   //   localStorage.setItem('errors', JSON.stringify(errors));
   // }, [errors]);
-
 
   return (
     <div className="govuk-width-container ">

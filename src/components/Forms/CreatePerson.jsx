@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 
 const CreatePerson = ({ handleSubmit, handleChange, data }) => {
   const checkIfVoyageForm = location.pathname.toLowerCase().indexOf('voyage') === -1;
@@ -586,7 +586,6 @@ const CreatePerson = ({ handleSubmit, handleChange, data }) => {
           </div>
         </fieldset>
       </div>
-
 
       {checkIfVoyageForm
         && <div id="submitBlock">
