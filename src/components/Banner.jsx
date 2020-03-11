@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function Banner() {
+const Banner = () => {
   return (
     <div className="govuk-width-container app-width-container--wide">
       <div className="govuk-phase-banner">
@@ -13,4 +13,6 @@ export default function Banner() {
       </div>
     </div>
   );
-}
+};
+
+export default Banner;

@@ -5,6 +5,20 @@ const CreateVessel = ({ handleSubmit, handleChange, data }) => {
 
   return (
     <section>
+      <div id="vesselName" className="govuk-form-group">
+        <label className="govuk-label" htmlFor="vesselName">
+          Vessel name
+        </label>
+        <span className="govuk-hint">For example Baroness</span>
+        <input
+          className="govuk-input"
+          name="vesselName"
+          type="text"
+          value={data.vesselName || ''}
+          onChange={(e) => handleChange(e)}
+        />
+      </div>
+
       <div id="vesselType" className="govuk-form-group">
         <label className="govuk-label" htmlFor="vesselType">
           Vessel type

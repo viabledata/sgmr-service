@@ -2,7 +2,6 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 const FormVoyagePeople = ({ handleSubmit, handleChange, data }) => {
-
   return (
     <section>
       <h1 className="govuk-heading-xl">Manifest details</h1>
@@ -11,7 +10,7 @@ const FormVoyagePeople = ({ handleSubmit, handleChange, data }) => {
       <hr className="govuk-section-break govuk-section-break--m govuk-section-break--visible" />
 
       <h2 className="govuk-heading-l">New person</h2>
-      <p><Link to='/people/save-person'>Add a new person to the report</Link></p>
+      <p><Link to='/people/save-person?source=voyage'>Add a new person to the report</Link></p>
       <hr className="govuk-section-break govuk-section-break--m govuk-section-break--visible" />
 
       <button

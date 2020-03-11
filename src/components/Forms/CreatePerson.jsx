@@ -1,7 +1,9 @@
 import React from 'react';
+import { useLocation } from 'react-router-dom';
 
 const CreatePerson = ({ handleSubmit, handleChange, data }) => {
-  const checkIfVoyageForm = location.pathname.toLowerCase().indexOf('voyage') === -1;
+  const urlParams = location.search.split('source=');
+  const source = urlParams[1];
 
   return (
     <section>
@@ -420,6 +422,7 @@ const CreatePerson = ({ handleSubmit, handleChange, data }) => {
         </fieldset>
       </div>
 
+      <h2 className="govuk-heading-l">Travel document details</h2>
       <div id="travelDocumentType" className="govuk-form-group">
         <fieldset className="govuk-fieldset" aria-describedby="travel-document-type-hint">
           <legend className="govuk-fieldset__legend">
@@ -587,17 +590,15 @@ const CreatePerson = ({ handleSubmit, handleChange, data }) => {
         </fieldset>
       </div>
 
-      {checkIfVoyageForm
-        && <div id="submitBlock">
-          <button
-            className="govuk-button"
-            data-module="govuk-button"
-            onClick={(e) => handleSubmit(e)}
-          >
-            Save
-          </button>
-        </div>
-      }
+      <div id="submitBlock">
+        <button
+          className="govuk-button"
+          data-module="govuk-button"
+          onClick={(e) => handleSubmit(e)}
+        >
+          {source === 'voyage' ? 'Add to manifest' : 'Add to saved people list'}
+        </button>
+      </div>
     </section>
   );
 };
