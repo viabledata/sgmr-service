@@ -40,6 +40,14 @@ const EditAccount = (props) => {
     history.goBack(); // Return to page you came from
   };
 
+  const deleteUser = (e) => {
+    // show warning
+    // send DELETE
+    // clear localStorage
+    // call signout
+    alert('delete')
+  };
+
   // Update localStorage to hold page data
   useEffect(() => {
     localStorage.setItem('formData', JSON.stringify(formData));
@@ -84,6 +92,7 @@ const EditAccount = (props) => {
                   </div>
                 </div>
               )} */}
+
               <div id="givenName" className="govuk-form-group">
                 <label className="govuk-label govuk-label--m" htmlFor="givenName">
                   Given name
@@ -139,6 +148,17 @@ const EditAccount = (props) => {
             </form>
           </div>
         </div>
+        <div className="govuk-grid-row">
+          <div className="govuk-grid-column-full">
+            <hr className="govuk-section-break govuk-section-break--visible govuk-section-break--xl govuk-!-margin-top-0" />
+          </div>
+        </div>
+
+        <h2 className="govuk-heading-m">Delete account</h2>
+        <p className="govuk-body-l">Delete this account and stop using the service.</p>
+        <p>
+          <a href="/" className="govuk-link govuk-link--no-visited-state" onClick={(e) => deleteUser(e)}>Delete this account</a>
+        </p>
       </main>
     </div>
 
