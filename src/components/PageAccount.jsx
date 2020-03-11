@@ -3,7 +3,13 @@ import React from 'react';
 const PageAccount = () => {
   return (
     <section>
-HELLO
+      
+Given name
+Alex
+Surname
+Lowe
+Email
+alex.lowe@email.com
     </section>
   );
 };
