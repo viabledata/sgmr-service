@@ -9,12 +9,6 @@ const UserRegister = () => {
 
 
   // Handle errors
-  const handleErrors = (e, errorText, groupField) => {
-    // If field value is empty, add error : if field has value, removeError
-    const name = !groupField ? e.target.name : groupField;
-    if (!e.target.value) { setErrors({ ...errors, [name]: errorText }); }
-  };
-
   const removeError = (fieldName) => {
     const tempArr = { ...errors };
     const key = fieldName;
@@ -22,19 +16,21 @@ const UserRegister = () => {
     setErrors(tempArr);
   };
 
+  const handleErrors = (e, errorText, groupField) => {
+    const name = !groupField ? e.target.name : groupField;
+    if (!e.target.value) { setErrors({ ...errors, [name]: errorText }); }
+    switch (e.target.name) {
+      case 'email': (/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(formData.email)) ? removeError('email') : setErrors({ ...errors, email: errorText }); break;
+      case 'confirmEmail': formData.email.toLowerCase() === formData.confirmEmail.toLowerCase() ? removeError('confirmEmail') : setErrors({ ...errors, confirmEmail: errorText }); break;
+      case 'confirmPassword': formData.password === formData.confirmPassword ? removeError('confirmPassword') : setErrors({ ...errors, confirmPassword: errorText }); break;
+      default: null;
+    }
+  };
+
   // Update form info to state
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
     removeError(name);
-  };
-
-  const handleEmailErrors = () => {
-    const data = { ...formData };
-    data.email.toLowerCase() === data.confirmEmail.toLowerCase() ? null : setErrors({ ...errors, confirmEmail: 'Email addresses do not match' });
-  };
-  const handlePwdErrors = () => {
-    const data = { ...formData };
-    data.password === data.confirmPassword ? null : setErrors({ ...errors, confirmPassword: 'Passwords do not match' });
   };
 
   // Handle Submit, including clearing localStorage
@@ -54,7 +50,6 @@ const UserRegister = () => {
   useEffect(() => {
     localStorage.setItem('errors', JSON.stringify(errors));
   }, [errors]);
-
 
   return (
     <div id="pageContainer" className="govuk-width-container ">
@@ -169,7 +164,7 @@ const UserRegister = () => {
                   type="text"
                   value={formData.confirmEmail || ''}
                   onChange={(e) => handleChange(e)}
-                  // onBlur={(e) => handleEmailErrors(e, 'Your email addresses do not match')}
+                  onBlur={(e) => handleErrors(e, 'Your email addresses do not match')}
                 />
               </div>
 
@@ -211,7 +206,7 @@ const UserRegister = () => {
                   type="password"
                   value={formData.confirmPassword || ''}
                   onChange={(e) => handleChange(e)}
-                  // onBlur={(e) => handlePwdErrors(e, 'Your passwords do not match')}
+                  onBlur={(e) => handleErrors(e, 'Your passwords do not match')}
                 />
               </div>
 
@@ -233,7 +228,7 @@ const UserRegister = () => {
                   Agree and submit
                 </button>
               }
-              {(Object.keys(errors).length === 1 && Object.values(formData).length === 6)
+              {(Object.keys(errors).length === 1)
                 && <button
                   className="govuk-button"
                   data-module="govuk-button"
