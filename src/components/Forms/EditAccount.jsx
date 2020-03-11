@@ -63,7 +63,7 @@ const EditAccount = (props) => {
       <div className="govuk-breadcrumbs">
         <ol className="govuk-breadcrumbs__list">
           <li className="govuk-breadcrumbs__list-item">
-            <a className="govuk-breadcrumbs__link" href="/people">Account</a>
+            <a className="govuk-breadcrumbs__link" href="/account">Account</a>
           </li>
           <li className="govuk-breadcrumbs__list-item" aria-current="page">Edit account</li>
         </ol>
