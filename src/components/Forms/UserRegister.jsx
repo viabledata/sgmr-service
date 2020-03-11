@@ -40,12 +40,21 @@ const UserRegister = () => {
     const dataLower = { ...formData };
     // Make email addresses all lower case
     dataLower.email = dataLower.email.toLowerCase();
-    // axios.post('/api/register/', dataLower)
-    //   .then(() => history.push('/login'))
-    //   .catch((err) => {
-    //     setErrors(err.response.data);
-    //   });
+
+    axios.post('http://localhost:5000/v1/user/register', {
+      mode: 'cors',
+      headers: {
+        'Content-type': 'application/json',
+        // 'Authorization': `Bearer ${this.props.kc.token}`,
+      },
+      body: dataLower,
+    })
+      .then(() => history.push('/login'))
+      .catch((err) => {
+        setErrors(err.response.data);
+      });
   };
+
 
   // Update localStorage to hold page data (errors only on this form)
   useEffect(() => {
