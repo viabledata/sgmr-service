@@ -17,8 +17,11 @@ const UserRegister = () => {
   };
 
   const handleErrors = (e, errorText, groupField) => {
+    // For fields with multiple inputs in a single group
     const name = !groupField ? e.target.name : groupField;
+    // Error onBlur if field is blank
     if (!e.target.value) { setErrors({ ...errors, [name]: errorText }); }
+    // Error onBlur if condition not met
     switch (e.target.name) {
       case 'email': (/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(formData.email)) ? removeError('email') : setErrors({ ...errors, email: errorText }); break;
       case 'confirmEmail': formData.email.toLowerCase() === formData.confirmEmail.toLowerCase() ? removeError('confirmEmail') : setErrors({ ...errors, confirmEmail: errorText }); break;
@@ -30,7 +33,7 @@ const UserRegister = () => {
   // Update form info to state
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
-    removeError(name);
+    removeError(e.target.name);
   };
 
   // Handle Submit, including clearing localStorage
@@ -185,7 +188,7 @@ const UserRegister = () => {
                   type="password"
                   value={formData.password || ''}
                   onChange={(e) => handleChange(e)}
-                  onBlur={(e) => handleErrors(e, 'Your password must be at least 8 characters long')}
+                  onBlur={(e) => handleErrors(e, 'Your must enter a password')}
                 />
               </div>
 
