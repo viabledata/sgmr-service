@@ -7,10 +7,9 @@ import Auth from 'Auth';
 const Nav = () => {
   const location = useLocation();
   const history = useHistory();
-  const [navArray, setNavArray] = useState([]);
-  const [mobileMenuOpen, setMobileMenu] = useState({ mobileMenuOpen: false });
   const serviceName = 'Submit an Advanced Voyage Report';
-  const serviceHome = '';
+  const serviceHome = '/';
+  const [navArray, setNavArray] = useState([]);
 
   const navData = [
     {
@@ -49,12 +48,6 @@ const Nav = () => {
     setNavArray(tempArr);
   };
 
-  const toggleMobileMenu = () => {
-    // mobileMenuOpen === false ? setMobileMenu({ mobileMenuOpen: true }) : false;
-    // console.log(newState)
-    // setMobileMenu({ mobileMenuOpen: newState });
-  };
-
   const handleSignout = () => {
     Auth.logout();
     history.push('/');
@@ -64,34 +57,21 @@ const Nav = () => {
     setActivePage();
   }, []);
 
-  console.log(mobileMenuOpen);
-
   return (
     <nav>
       <div className="govuk-header__content">
-          <a className="govuk-header__link govuk-header__link--service-name" href={serviceHome}>{serviceName}</a>
-          <button
-            type="button"
-            role="button"
-            className={`govuk-header__menu-button js-header-toggle ${mobileMenuOpen ? 'is-active' : ''}`}
-            aria-controls="navigation"
-            aria-label="Show or hide Top Level Navigation"
-            onClick={() => toggleMobileMenu()}>
-            Menu
-              <span aria-hidden="true"></span>
-              <span aria-hidden="true"></span>
-              <span aria-hidden="true"></span>
-          </button>
+        <a className="govuk-header__link govuk-header__link--service-name" href={serviceHome}>{serviceName}</a>
+        <button type="button" role="button" className="govuk-header__menu-button js-header-toggle" aria-controls="navigation" aria-label="Show or hide Top Level Navigation">
+          Menu
+        </button>
 
-
-      {Auth.isAuthorized() && <ul id="navigation" className="govuk-header__navigation " aria-label="Top Level Navigation">
-
+        {Auth.isAuthorized() && <ul id="navigation" className="govuk-header__navigation " aria-label="Top Level Navigation">
         {navArray.map((elem, i) => {
           const activeState = elem.active === true ? 'govuk-header__navigation-item govuk-header__navigation-item--active' : 'govuk-header__navigation-item';
           return (
-          <li className={activeState} key={i}>
-           <Link to={elem.urlStem} className="govuk-header__link" onClick={(e) => setActivePage(elem.urlStem)}>{elem.text}</Link>
-          </li>
+            <li className={activeState} key={i}>
+              <Link to={elem.urlStem} className="govuk-header__link" onClick={(e) => setActivePage(elem.urlStem)}>{elem.text}</Link>
+            </li>
           );
         })}
         <li className='govuk-header__navigation-item'>
