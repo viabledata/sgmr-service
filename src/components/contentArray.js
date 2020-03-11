@@ -8,6 +8,7 @@ const contentArray = [
     buttonText: 'Start now',
     buttonLink: 'save-voyage/page-1',
     buttonClass: 'govuk-button--start',
+    buttonLocation: 'intro',
     reportType: 'tabs',
   },
   {
@@ -19,6 +20,7 @@ const contentArray = [
     buttonText: 'Save a vessel',
     buttonLink: 'vessels/save-vessel',
     buttonClass: 'govuk-button--start',
+    buttonLocation: 'formIntro',
     reportType: 'tables',
     reportTitles: ['Vessel name', 'Vessel type', 'Usual moorings'],
   },
@@ -31,6 +33,7 @@ const contentArray = [
     buttonText: 'Save a person',
     buttonLink: 'people/save-person',
     buttonClass: 'govuk-button--start',
+    buttonLocation: 'formIntro',
     reportType: 'tables',
     reportTitles: ['Surname', 'Given name', 'Type'],
   },
@@ -40,6 +43,7 @@ const contentArray = [
     pageBlurb: 'Manage your account details',
     buttonText: 'Edit details',
     buttonLink: '/account/edit',
+    buttonLocation: 'intro',
   },
 ];
 

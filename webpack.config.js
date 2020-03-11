@@ -37,6 +37,7 @@ module.exports = {
       UserRegister: path.resolve(__dirname, 'src/components/Forms/UserRegister.jsx'),
       Auth: path.resolve(__dirname, 'src/lib/Auth.js'),
       SecureRoute: path.resolve(__dirname, 'src/lib/SecureRoute.jsx'),
+      StartButton: path.resolve(__dirname, 'src/components/StartButton.jsx'),
     },
     extensions: ['.js', '.jsx'],
   },

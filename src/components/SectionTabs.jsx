@@ -159,6 +159,9 @@ const SectionTabs = (props) => {
   if (!data) { return (<></>); }
   return (
     <div className="govuk-width-container">
+      <div className="govuk-grid-column-full">
+        <hr className="govuk-section-break govuk-section-break--visible govuk-section-break--xl govuk-!-margin-top-0" />
+      </div>
       <div className="govuk-tabs" data-module="govuk-tabs">
         {/* The h2 is only visible on small screens (GDS controlled) */}
         <h2 className="govuk-tabs__title">

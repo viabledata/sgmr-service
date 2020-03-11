@@ -102,40 +102,45 @@ const SectionTable = ({ page, pageData }) => {
 
   if (!data) { return (null); }
   return (
-    <div className="govuk-width-container">
-      <div className="govuk-grid-row">
-        <div className="govuk-grid-column-full">
-          <h2 className="govuk-heading-l">Saved {pageData.pageHeading}</h2>
-          <table className="govuk-table">
-            <thead className="govuk-table__head">
-              <tr className="govuk-table__row">
-                {titles.map((elem, i) => {
-                  return (
-                    <th className="govuk-table__header" scope="col" key={i}>{elem}</th>
-                  );
-                })}
-              </tr>
-              </thead>
-              <tbody className="govuk-table__body">
-                {data.items.map((elem, i) => {
-                  return (
-                    <tr className="govuk-table__row" key={i}>
-                      <td className="govuk-table__cell" scope="row">
-                        {page === '/vessels' && <p>{elem.name}</p>}
-                        {page === '/people' && <p>{elem.surname}</p>}
-                      </td>
-                      {page === '/vessels' && <td className="govuk-table__cell">{elem.vesselType}</td>}
-                      {page === '/vessels' && <td className="govuk-table__cell">{elem.mooring}</td>}
-                      {page === '/people' && <td className="govuk-table__cell">{elem.givenName}</td>}
-                      {page === '/people' && <td className="govuk-table__cell">{elem.type}</td>}
-                    </tr>
-                  );
-                })}
-              </tbody>
-          </table>
+    <section>
+      <div className="govuk-grid-column-full">
+        <hr className="govuk-section-break govuk-section-break--visible govuk-section-break--xl govuk-!-margin-top-0" />
+      </div>
+      <div className="govuk-width-container">
+        <div className="govuk-grid-row">
+          <div className="govuk-grid-column-full">
+            <h2 className="govuk-heading-l">Saved {pageData.pageHeading}</h2>
+            <table className="govuk-table">
+              <thead className="govuk-table__head">
+                <tr className="govuk-table__row">
+                  {titles.map((elem, i) => {
+                    return (
+                      <th className="govuk-table__header" scope="col" key={i}>{elem}</th>
+                    );
+                  })}
+                </tr>
+                </thead>
+                <tbody className="govuk-table__body">
+                  {data.items.map((elem, i) => {
+                    return (
+                      <tr className="govuk-table__row" key={i}>
+                        <td className="govuk-table__cell" scope="row">
+                          {page === '/vessels' && <p>{elem.name}</p>}
+                          {page === '/people' && <p>{elem.surname}</p>}
+                        </td>
+                        {page === '/vessels' && <td className="govuk-table__cell">{elem.vesselType}</td>}
+                        {page === '/vessels' && <td className="govuk-table__cell">{elem.mooring}</td>}
+                        {page === '/people' && <td className="govuk-table__cell">{elem.givenName}</td>}
+                        {page === '/people' && <td className="govuk-table__cell">{elem.type}</td>}
+                      </tr>
+                    );
+                  })}
+                </tbody>
+            </table>
+          </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 
