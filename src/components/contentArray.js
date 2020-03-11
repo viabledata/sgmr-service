@@ -7,6 +7,7 @@ const contentArray = [
     formIntroBlurb: null,
     buttonText: 'Start now',
     buttonLink: 'save-voyage/page-1',
+    buttonClass: 'govuk-button--start',
     reportType: 'tabs',
   },
   {
@@ -17,6 +18,7 @@ const contentArray = [
     formIntroBlurb: 'Save the details of vessels that you regularly submit Advanced Voyage Reports for.',
     buttonText: 'Save a vessel',
     buttonLink: 'vessels/save-vessel',
+    buttonClass: 'govuk-button--start',
     reportType: 'tables',
     reportTitles: ['Vessel name', 'Vessel type', 'Usual moorings'],
   },
@@ -28,16 +30,16 @@ const contentArray = [
     formIntroBlurb: 'Save the details of people that you regularly sail with.',
     buttonText: 'Save a person',
     buttonLink: 'people/save-person',
+    buttonClass: 'govuk-button--start',
     reportType: 'tables',
     reportTitles: ['Surname', 'Given name', 'Type'],
   },
   {
     urlStub: '/account',
     pageHeading: 'Account',
-    pageBlurb: 'something',
-    buttonText: 'Start now',
-    buttonLink: 'somewhere.html',
-    reportType: 'none',
+    pageBlurb: 'Manage your account details',
+    buttonText: 'Edit details',
+    buttonLink: '/account/edit',
   },
 ];
 
