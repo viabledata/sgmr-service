@@ -159,9 +159,7 @@ const SectionTabs = (props) => {
   if (!data) { return (<></>); }
   return (
     <div className="govuk-width-container">
-      <div className="govuk-grid-column-full">
-        <hr className="govuk-section-break govuk-section-break--visible govuk-section-break--xl govuk-!-margin-top-0" />
-      </div>
+      <hr className="govuk-section-break govuk-section-break--visible govuk-section-break--xl govuk-!-margin-top-0" />
       <h2 className="govuk-heading-l">Manage Advanced Voyage Reports</h2>
       <p>You can view, edit, cancel or delete reports dependant on the status of the report.</p>
       <div className="govuk-tabs" data-module="govuk-tabs">

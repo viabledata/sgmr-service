@@ -17,7 +17,7 @@ const PageAccount = () => {
             Surname
           </dt>
           <dd className="govuk-summary-list__value">
-            Lowe
+            Sam
           </dd>
         </div>
         <div className="govuk-summary-list__row">
@@ -25,7 +25,7 @@ const PageAccount = () => {
             Email
           </dt>
           <dd className="govuk-summary-list__value">
-            alex.lowe@gmail.com
+            email@email.com
           </dd>
         </div>
       </dl>

@@ -231,7 +231,6 @@ const UserRegister = () => {
                 <li>that you have read and accept our <a target="_blank" href="https://www.gov.uk/government/publications/personal-information-use-in-borders-immigration-and-citizenship">privacy policy</a></li>
               </ul>
 
-
               {(Object.keys(errors).length > 1)
                 && <button
                   disabled="disabled"
