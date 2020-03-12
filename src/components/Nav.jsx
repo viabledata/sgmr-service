@@ -60,7 +60,7 @@ const Nav = () => {
   return (
     <nav>
       <div className="govuk-header__content">
-        <a className="govuk-header__link govuk-header__link--service-name" href={serviceHome}>{serviceName}</a>
+        <p className="govuk-header__link govuk-header__link--service-name">{serviceName}</p>
         <button type="button" role="button" className="govuk-header__menu-button js-header-toggle" aria-controls="navigation" aria-label="Show or hide Top Level Navigation">
           Menu
         </button>

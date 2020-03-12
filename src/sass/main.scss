@@ -33,3 +33,23 @@ p.govuk-tabs__tab {
 .govuk-summary-list__key, .govuk-summary-list__value, .govuk-summary-list__actions  {
   border-bottom: none;
 }
+
+// Replicate govuk-header__link styling without the link
+p.govuk-header__link {
+  text-decoration: none;
+  color: #FFFFFF;
+}
+p.govuk-header__link--service-name {
+  display: inline-block;
+  margin-bottom: 10px;
+  font-family: "Inter", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 1.11111;
+}
+p.govuk-header__link:hover {
+  text-decoration: none;
+  color: #FFFFFF;
+}
