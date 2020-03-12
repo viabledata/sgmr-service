@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 // app imports
-import CreateNewVessel from 'CreateNewVessel';
+import CreateVessel from 'CreateVessel';
 
 const FormVessels = () => {
   // Update data from localStorage if it exists
@@ -82,7 +82,7 @@ const FormVessels = () => {
                 </div>
               )}
 
-             <CreateNewVessel
+             <CreateVessel
                 handleSubmit={(e) => handleSubmit(e)}
                 handleChange={(e) => handleChange(e)}
                 data={formData}

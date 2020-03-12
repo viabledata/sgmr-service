@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 
-const CreateNewVessel = ({ handleSubmit, handleChange, data }) => {
+const CreateVessel = ({ handleSubmit, handleChange, data }) => {
   const checkIfVoyageForm = location.pathname.toLowerCase().indexOf('voyage') === -1;
 
   return (
@@ -180,4 +180,4 @@ const CreateNewVessel = ({ handleSubmit, handleChange, data }) => {
   );
 };
 
-export default CreateNewVessel;
+export default CreateVessel;

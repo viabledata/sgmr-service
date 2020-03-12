@@ -7,9 +7,11 @@ import Banner from 'Banner';
 import Footer from 'Footer';
 import Header from 'Header';
 import PageContainer from 'PageContainer';
+import UserRegister from 'UserRegister';
 import FormVessels from 'FormVessels';
 import FormPeople from 'FormPeople';
 import FormVoyage from 'FormVoyage';
+import SecureRoute from 'SecureRoute';
 
 
 const Main = () => {
@@ -19,32 +21,35 @@ const Main = () => {
       <Header />
       <Banner />
       <Switch>
-        <Route exact path="/reports">
+        <SecureRoute exact path="/reports">
           <PageContainer />
-        </Route>
-        <Route exact path="/save-voyage/page-1"><FormVoyage /></Route>
-        <Route exact path="/save-voyage/page-2"><FormVoyage /></Route>
-        <Route exact path="/save-voyage/page-3"><FormVoyage /></Route>
-        <Route exact path="/save-voyage/page-4"><FormVoyage /></Route>
-        <Route exact path="/save-voyage/page-5"><FormVoyage /></Route>
-        <Route exact path="/vessels">
+        </SecureRoute>
+        <SecureRoute exact path="/save-voyage/page-1"><FormVoyage /></SecureRoute>
+        <SecureRoute exact path="/save-voyage/page-2"><FormVoyage /></SecureRoute>
+        <SecureRoute exact path="/save-voyage/page-3"><FormVoyage /></SecureRoute>
+        <SecureRoute exact path="/save-voyage/page-4"><FormVoyage /></SecureRoute>
+        <SecureRoute exact path="/save-voyage/page-5"><FormVoyage /></SecureRoute>
+        <SecureRoute exact path="/vessels">
           <PageContainer />
-        </Route>
-        <Route exact path="/vessels/save-vessel">
+        </SecureRoute>
+        <SecureRoute exact path="/vessels/save-vessel">
           <FormVessels />
-        </Route>
-        <Route exact path="/people">
+        </SecureRoute>
+        <SecureRoute exact path="/people">
           <PageContainer />
-        </Route>
-        <Route exact path="/people/save-person">
+        </SecureRoute>
+        <SecureRoute exact path="/people/save-person">
           <FormPeople />
-        </Route>
-        <Route exact path="/account">
+        </SecureRoute>
+        <SecureRoute exact path="/account">
           <PageContainer />
-        </Route>
-        <Route exact path="/signout">
+        </SecureRoute>
+        <SecureRoute exact path="/register">
+          <UserRegister />
+        </SecureRoute>
+        <SecureRoute exact path="/signout">
           <PageContainer />
-        </Route>
+        </SecureRoute>
       </Switch>
       <Footer />
     </Router>
