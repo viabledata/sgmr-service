@@ -1,27 +1,26 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+
+// app imports
+import StartButton from 'StartButton';
 
 const PageIntroToForm = ({ pageData }) => {
   return (
-    <div className="govuk-width-container">
+    <section>
       <div className="govuk-grid-row">
         <div className="govuk-grid-column-full">
-          <h2 className="govuk-heading-l">{pageData.formIntroHeading}</h2>
-          <p className="govuk-body-l">{pageData.formIntroBlurb}</p>
-          <Link to={pageData.buttonLink} role="button" draggable="false" className="govuk-button govuk-button--start" data-module="govuk-button">
-            {pageData.buttonText}
-            <svg className="govuk-button__start-icon" xmlns="http://www.w3.org/2000/svg" width="17.5" height="19" viewBox="0 0 33 40" role="presentation" focusable="false">
-              <path fill="currentColor" d="M0 0h13l20 20-20 20H0l20-20z" />
-            </svg>
-          </Link>
+          <hr className="govuk-section-break govuk-section-break--visible govuk-section-break--xl govuk-!-margin-top-0" />
         </div>
       </div>
-      <div className="govuk-grid-row">
-        <div className="govuk-grid-column-full">
-        <hr className="govuk-section-break govuk-section-break--visible govuk-section-break--xl govuk-!-margin-top-0" />
+      <div className="govuk-width-container">
+        <div className="govuk-grid-row">
+          <div className="govuk-grid-column-full">
+            <h2 className="govuk-heading-l">{pageData.formIntroHeading}</h2>
+            <p className="govuk-body-l">{pageData.formIntroBlurb}</p>
+            <StartButton pageData={pageData} />
+          </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 

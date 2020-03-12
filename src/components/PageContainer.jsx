@@ -51,7 +51,7 @@ const PageContainer = (props) => {
         <div className="govuk-grid-row">
           <PageIntro pageData={pageData} />
           {pageData.formIntroHeading && <PageIntroToForm pageData={pageData} />}
-          {sectionReport}
+          {pageData.reportType && sectionReport}
         </div>
       </main>
     </div>
