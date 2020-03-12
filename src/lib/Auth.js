@@ -1,9 +1,9 @@
 class Auth {
-  static setToken(token) {
+  static storeToken(token) {
     localStorage.setItem('token', token);
   }
 
-  static getToken() {
+  static retrieveToken() {
     return localStorage.getItem('token');
   }
 
@@ -12,7 +12,7 @@ class Auth {
   }
 
   static isAuthorized() {
-    return this.getToken();
+    return this.retrieveToken();
   }
 }
 
