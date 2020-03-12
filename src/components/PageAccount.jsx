@@ -2,7 +2,7 @@ import React from 'react';
 
 const PageAccount = () => {
   return (
-    <div className="govuk-grid-column-full">
+    <div>
       <dl className="govuk-summary-list govuk-!-margin-bottom-9">
         <div className="govuk-summary-list__row">
           <dt className="govuk-summary-list__key">

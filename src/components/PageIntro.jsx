@@ -11,9 +11,9 @@ const PageIntro = ({ pageData }) => {
           <div className="govuk-grid-column-full">
             <h1 className="govuk-heading-xl">{pageData.pageHeading}</h1>
             <p className="govuk-body-l">{pageData.pageBlurb}</p>
+            {pageData.urlStub === '/account' && <PageAccount pageData={pageData} />}
+            {pageData.buttonLocation === 'intro' && <StartButton pageData={pageData} />}
           </div>
-          {pageData.urlStub === '/account' && <PageAccount pageData={pageData} />}
-          {pageData.buttonLocation === 'intro' && <StartButton pageData={pageData} />}
         </div>
     </div>
   );
