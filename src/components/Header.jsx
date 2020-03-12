@@ -4,9 +4,7 @@ import { Link } from 'react-router-dom';
 // app imports
 import Nav from 'Nav';
 
-
-export default function Header() {
-
+const Header = () => {
   return (
     <header className="govuk-header" role="banner" data-module="header">
       <div className="govuk-header__container govuk-width-container">
@@ -25,4 +23,6 @@ export default function Header() {
       </div>
     </header>
   );
-}
+};
+
+export default Header;

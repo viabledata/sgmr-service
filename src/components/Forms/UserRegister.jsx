@@ -7,8 +7,6 @@ const UserRegister = () => {
   const [formData, setFormData] = useState({});
   const [errors, setErrors] = useState(JSON.parse(localStorage.getItem('errors')) || { title: null });
 
-
-  // Handle errors
   const removeError = (fieldName) => {
     const tempArr = { ...errors };
     const key = fieldName;
@@ -19,9 +17,8 @@ const UserRegister = () => {
   const handleErrors = (e, errorText, groupField) => {
     // For fields with multiple inputs in a single group
     const name = !groupField ? e.target.name : groupField;
-    // Error onBlur if field is blank
-    if (!e.target.value) { setErrors({ ...errors, [name]: errorText }); }
     // Error onBlur if condition not met
+    if (!e.target.value) { setErrors({ ...errors, [name]: errorText }); }
     switch (e.target.name) {
       case 'email': (/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(formData.email)) ? removeError('email') : setErrors({ ...errors, email: errorText }); break;
       case 'confirmEmail': formData.email.toLowerCase() === formData.confirmEmail.toLowerCase() ? removeError('confirmEmail') : setErrors({ ...errors, confirmEmail: errorText }); break;
@@ -47,7 +44,7 @@ const UserRegister = () => {
       mode: 'cors',
       headers: {
         'Content-type': 'application/json',
-        // 'Authorization': `Bearer ${this.props.kc.token}`,
+        // 'Authorization': `Bearer ${token}`,
       },
       body: dataLower,
     })
@@ -56,6 +53,11 @@ const UserRegister = () => {
         setErrors(err.response.data);
       });
   };
+
+  // Update localStorage to hold page data (errors only on this form)
+  useEffect(() => {
+    localStorage.setItem('errors', JSON.stringify(errors));
+  }, [errors]);
 
 
   // Update localStorage to hold page data (errors only on this form)
@@ -95,45 +97,45 @@ const UserRegister = () => {
                 </div>
               )}
 
-              <div id="givenName" className={`govuk-form-group ${errors.givenName ? 'govuk-form-group--error' : ''}`}>
-                <label className="govuk-label govuk-label--m" htmlFor="givenName">
+              <div id="firstName" className={`govuk-form-group ${errors.firstName ? 'govuk-form-group--error' : ''}`}>
+                <label className="govuk-label govuk-label--m" htmlFor="firstName">
                   Given name
                 </label>
-                {errors.givenName
+                {errors.firstName
                   && (
                   <span className="govuk-error-message">
-                    <span className="govuk-visually-hidden">Error:</span> {errors.givenName}
+                    <span className="govuk-visually-hidden">Error:</span> {errors.firstName}
                   </span>
                   )
                 }
                 <input
                   className="govuk-input"
-                  name="givenName"
+                  name="firstName"
                   type="text"
-                  value={formData.givenName || ''}
+                  value={formData.firstName || ''}
                   onChange={(e) => handleChange(e)}
                   onBlur={(e) => handleErrors(e, 'You must enter your given name')}
                 />
               </div>
 
-              <div id="surname" className={`govuk-form-group ${errors.surname ? 'govuk-form-group--error' : ''}`}>
-                <label className="govuk-label govuk-label--m" htmlFor="surname">
-                  Surname
+              <div id="lastName" className={`govuk-form-group ${errors.lastName ? 'govuk-form-group--error' : ''}`}>
+                <label className="govuk-label govuk-label--m" htmlFor="lastName">
+                  lastName
                 </label>
-                {errors.surname
+                {errors.lastName
                   && (
                   <span className="govuk-error-message">
-                    <span className="govuk-visually-hidden">Error:</span> {errors.surname}
+                    <span className="govuk-visually-hidden">Error:</span> {errors.lastName}
                   </span>
                   )
                 }
               <input
                   className="govuk-input"
-                  name="surname"
+                  name="lastName"
                   type="text"
-                  value={formData.surname || ''}
+                  value={formData.lastName || ''}
                   onChange={(e) => handleChange(e)}
-                  onBlur={(e) => handleErrors(e, 'You must enter your surname')}
+                  onBlur={(e) => handleErrors(e, 'You must enter your lastName')}
                 />
               </div>
 
@@ -228,7 +230,6 @@ const UserRegister = () => {
                 <li>that the information you have provided is correct to the best of your knowledge</li>
                 <li>that you have read and accept our <a target="_blank" href="https://www.gov.uk/government/publications/personal-information-use-in-borders-immigration-and-citizenship">privacy policy</a></li>
               </ul>
-
 
               {(Object.keys(errors).length > 1)
                 && <button

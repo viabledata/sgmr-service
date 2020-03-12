@@ -4,14 +4,16 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 // app imports
 import ScrollToTop from 'ScrollToTop';
 import SecureRoute from 'SecureRoute';
+
 import Banner from 'Banner';
 import Footer from 'Footer';
 import Header from 'Header';
+import PageContainer from 'PageContainer';
+
 import EditAccount from 'EditAccount';
 import FormPeople from 'FormPeople';
 import FormVessels from 'FormVessels';
 import FormVoyage from 'FormVoyage';
-import PageContainer from 'PageContainer';
 import UserRegister from 'UserRegister';
 
 
@@ -51,7 +53,6 @@ const Main = () => {
         <SecureRoute exact path="/signout">
           <PageContainer />
         </SecureRoute>
-
         <Route exact path="/register">
           <UserRegister />
         </Route>

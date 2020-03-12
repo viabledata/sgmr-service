@@ -2,7 +2,7 @@ import React from 'react';
 
 const PageAccount = () => {
   return (
-    <div className="govuk-grid-column-full">
+    <div>
       <dl className="govuk-summary-list govuk-!-margin-bottom-9">
         <div className="govuk-summary-list__row">
           <dt className="govuk-summary-list__key">
@@ -17,7 +17,7 @@ const PageAccount = () => {
             Surname
           </dt>
           <dd className="govuk-summary-list__value">
-            Lowe
+            Sam
           </dd>
         </div>
         <div className="govuk-summary-list__row">
@@ -25,7 +25,7 @@ const PageAccount = () => {
             Email
           </dt>
           <dd className="govuk-summary-list__value">
-            alex.lowe@gmail.com
+            email@email.com
           </dd>
         </div>
       </dl>

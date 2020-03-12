@@ -6,30 +6,40 @@ import CreateVessel from 'CreateVessel';
 const FormVessels = () => {
   // Update data from localStorage if it exists
   const [formData, setFormData] = useState(JSON.parse(localStorage.getItem('formData')) || {});
-  const [errors, setErrors] = useState(JSON.parse(localStorage.getItem('errors')) || { title: null });
+  // const [errors, setErrors] = useState(JSON.parse(localStorage.getItem('errors')) || { title: null });
+
+  // // Handle errors
+  // const removeError = (fieldName) => {
+  //   const tempArr = { ...errors };
+  //   const key = fieldName;
+  //   delete tempArr[key];
+  //   setErrors(tempArr);
+  // };
+
+  // const handleErrors = (e, errorText, groupField) => {
+  //   // For fields with multiple inputs in a single group
+  //   const name = !groupField ? e.target.name : groupField;
+  //   // Error onBlur if field is blank
+  //   if (!e.target.value) { setErrors({ ...errors, [name]: errorText }); }
+  //   // Error onBlur if condition not met
+  //   switch (e.target.name) {
+  //     case 'email': (/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(formData.email)) ? removeError('email') : setErrors({ ...errors, email: errorText }); break;
+  //     case 'confirmEmail': formData.email.toLowerCase() === formData.confirmEmail.toLowerCase() ? removeError('confirmEmail') : setErrors({ ...errors, confirmEmail: errorText }); break;
+  //     case 'confirmPassword': formData.password === formData.confirmPassword ? removeError('confirmPassword') : setErrors({ ...errors, confirmPassword: errorText }); break;
+  //     default: null;
+  //   }
+  // };
 
   // Update form info to state
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
-  // Handle errors [for empty fields]
-  const removeError = (fieldName) => {
-    const tempArr = { ...errors };
-    const key = fieldName;
-    delete tempArr[key];
-    setErrors(tempArr);
-  };
-  const handleErrors = (e, errorText) => {
-    // If field value is empty, add error : if field has value, removeError
-    !e.target.value ? setErrors({ ...errors, [e.target.name]: errorText }) : removeError(e.target.name);
+    // removeError(e.target.name);
   };
 
   // Clear formData from localStorage
-  // As localStorage updates whenever there is a change to the value of formData or errors, it clears the field data as part of the set function
   const clearFormData = (e) => {
     setFormData({});
-    setErrors({ title: null });
+    // setErrors({ title: null });
   };
 
   // Handle Submit, including clearing localStorage
@@ -43,9 +53,9 @@ const FormVessels = () => {
     localStorage.setItem('formData', JSON.stringify(formData));
   }, [formData]);
 
-  useEffect(() => {
-    localStorage.setItem('errors', JSON.stringify(errors));
-  }, [errors]);
+  // useEffect(() => {
+  //   localStorage.setItem('errors', JSON.stringify(errors));
+  // }, [errors]);
 
   return (
     <div className="govuk-width-container ">
@@ -64,7 +74,7 @@ const FormVessels = () => {
             <p className="govuk-body-l">Please enter the following information. This information can be re-used when submitting an Advanced Voyage Report.</p>
             <form>
 
-              {Object.keys(errors).length > 1 && (
+              {/* {Object.keys(errors).length > 1 && (
                 <div className="govuk-error-summary" aria-labelledby="error-summary-title" role="alert" tabIndex="-1" data-module="govuk-error-summary">
                   <h2 className="govuk-error-summary__title" id="error-summary-title">
                     There is a problem
@@ -80,7 +90,7 @@ const FormVessels = () => {
                     </ul>
                   </div>
                 </div>
-              )}
+              )} */}
 
              <CreateVessel
                 handleSubmit={(e) => handleSubmit(e)}
@@ -95,7 +105,6 @@ const FormVessels = () => {
         </div>
       </main>
     </div>
-
   );
 };
 

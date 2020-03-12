@@ -10,7 +10,6 @@ const FormVoyageVessel = ({ handleSubmit, handleChange, data }) => {
       <h2 className="govuk-heading-l">Saved vessels</h2>
       <p className="govuk-body-l">Add the details of a vessel you have saved previously to the report</p>
 
-
       <h2 className="govuk-heading-l">New vessel</h2>
       <p className="govuk-body-l">Add the details of a new vessel you have not already saved</p>
       <CreateVessel

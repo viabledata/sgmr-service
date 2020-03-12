@@ -30,6 +30,7 @@ module.exports = {
     "no-restricted-globals": "off",
     "no-restricted-syntax": "off",
     "no-unused-expressions": "off",
+    "import/no-unresolved": "off",
     "no-unused-vars": "off",
     "prefer-const": "off",
     "prefer-destructuring": "off"

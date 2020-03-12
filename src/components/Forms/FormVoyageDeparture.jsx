@@ -76,7 +76,7 @@ const FormVoyageDeparture = ({ handleSubmit, handleChange, data }) => {
         <fieldset className="govuk-fieldset" role="group" aria-describedby="departureTime-hint">
           <legend className="govuk-fieldset__legend govuk-fieldset__legend--m">
             <label className="govuk-label govuk-label--m" htmlFor="departureTime">
-              Departure time
+              Departure time (UTC)
             </label>
           </legend>
           <span className="govuk-hint">
