@@ -97,45 +97,45 @@ const UserRegister = () => {
                 </div>
               )}
 
-              <div id="givenName" className={`govuk-form-group ${errors.givenName ? 'govuk-form-group--error' : ''}`}>
-                <label className="govuk-label govuk-label--m" htmlFor="givenName">
+              <div id="firstName" className={`govuk-form-group ${errors.firstName ? 'govuk-form-group--error' : ''}`}>
+                <label className="govuk-label govuk-label--m" htmlFor="firstName">
                   Given name
                 </label>
-                {errors.givenName
+                {errors.firstName
                   && (
                   <span className="govuk-error-message">
-                    <span className="govuk-visually-hidden">Error:</span> {errors.givenName}
+                    <span className="govuk-visually-hidden">Error:</span> {errors.firstName}
                   </span>
                   )
                 }
                 <input
                   className="govuk-input"
-                  name="givenName"
+                  name="firstName"
                   type="text"
-                  value={formData.givenName || ''}
+                  value={formData.firstName || ''}
                   onChange={(e) => handleChange(e)}
                   onBlur={(e) => handleErrors(e, 'You must enter your given name')}
                 />
               </div>
 
-              <div id="surname" className={`govuk-form-group ${errors.surname ? 'govuk-form-group--error' : ''}`}>
-                <label className="govuk-label govuk-label--m" htmlFor="surname">
-                  Surname
+              <div id="lastName" className={`govuk-form-group ${errors.lastName ? 'govuk-form-group--error' : ''}`}>
+                <label className="govuk-label govuk-label--m" htmlFor="lastName">
+                  lastName
                 </label>
-                {errors.surname
+                {errors.lastName
                   && (
                   <span className="govuk-error-message">
-                    <span className="govuk-visually-hidden">Error:</span> {errors.surname}
+                    <span className="govuk-visually-hidden">Error:</span> {errors.lastName}
                   </span>
                   )
                 }
               <input
                   className="govuk-input"
-                  name="surname"
+                  name="lastName"
                   type="text"
-                  value={formData.surname || ''}
+                  value={formData.lastName || ''}
                   onChange={(e) => handleChange(e)}
-                  onBlur={(e) => handleErrors(e, 'You must enter your surname')}
+                  onBlur={(e) => handleErrors(e, 'You must enter your lastName')}
                 />
               </div>
 
