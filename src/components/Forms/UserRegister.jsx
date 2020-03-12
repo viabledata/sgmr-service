@@ -7,9 +7,33 @@ const UserRegister = () => {
   const [formData, setFormData] = useState({});
   const [errors, setErrors] = useState(JSON.parse(localStorage.getItem('errors')) || { title: null });
 
+
+  // Handle errors
+  const removeError = (fieldName) => {
+    const tempArr = { ...errors };
+    const key = fieldName;
+    delete tempArr[key];
+    setErrors(tempArr);
+  };
+
+  const handleErrors = (e, errorText, groupField) => {
+    // For fields with multiple inputs in a single group
+    const name = !groupField ? e.target.name : groupField;
+    // Error onBlur if field is blank
+    if (!e.target.value) { setErrors({ ...errors, [name]: errorText }); }
+    // Error onBlur if condition not met
+    switch (e.target.name) {
+      case 'email': (/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(formData.email)) ? removeError('email') : setErrors({ ...errors, email: errorText }); break;
+      case 'confirmEmail': formData.email.toLowerCase() === formData.confirmEmail.toLowerCase() ? removeError('confirmEmail') : setErrors({ ...errors, confirmEmail: errorText }); break;
+      case 'confirmPassword': formData.password === formData.confirmPassword ? removeError('confirmPassword') : setErrors({ ...errors, confirmPassword: errorText }); break;
+      default: null;
+    }
+  };
+
   // Update form info to state
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+    removeError(e.target.name);
   };
 
   // Handle Submit, including clearing localStorage
@@ -34,6 +58,11 @@ const UserRegister = () => {
   };
 
 
+  // Update localStorage to hold page data (errors only on this form)
+  useEffect(() => {
+    localStorage.setItem('errors', JSON.stringify(errors));
+  }, [errors]);
+
   return (
     <div id="pageContainer" className="govuk-width-container ">
       <a className="govuk-back-link" onClick={(e) => {
@@ -48,6 +77,23 @@ const UserRegister = () => {
             <h1 className="govuk-heading-xl">Create an account</h1>
              <form>
 
+              {Object.keys(errors).length > 1 && (
+                <div className="govuk-error-summary" aria-labelledby="error-summary-title" role="alert" tabIndex="-1" data-module="govuk-error-summary">
+                  <h2 className="govuk-error-summary__title" >
+                    There is a problem
+                  </h2>
+                  <div className="govuk-error-summary__body">
+                    <ul className="govuk-list govuk-error-summary__list">
+                      {Object.entries(errors).map((elem, i) => (
+                        <li key={i}>
+                          {elem[0] !== 'title'
+                              && <a href={`#${elem[0]}`}>{elem[1]}</a>}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              )}
 
               <div id="givenName" className={`govuk-form-group ${errors.givenName ? 'govuk-form-group--error' : ''}`}>
                 <label className="govuk-label govuk-label--m" htmlFor="givenName">
@@ -66,6 +112,7 @@ const UserRegister = () => {
                   type="text"
                   value={formData.givenName || ''}
                   onChange={(e) => handleChange(e)}
+                  onBlur={(e) => handleErrors(e, 'You must enter your given name')}
                 />
               </div>
 
@@ -86,6 +133,7 @@ const UserRegister = () => {
                   type="text"
                   value={formData.surname || ''}
                   onChange={(e) => handleChange(e)}
+                  onBlur={(e) => handleErrors(e, 'You must enter your surname')}
                 />
               </div>
 
@@ -107,6 +155,7 @@ const UserRegister = () => {
                   type="text"
                   value={formData.email || ''}
                   onChange={(e) => handleChange(e)}
+                  onBlur={(e) => handleErrors(e, 'You must enter your email')}
                 />
               </div>
 
@@ -127,6 +176,7 @@ const UserRegister = () => {
                   type="text"
                   value={formData.confirmEmail || ''}
                   onChange={(e) => handleChange(e)}
+                  onBlur={(e) => handleErrors(e, 'Your email addresses do not match')}
                 />
               </div>
 
@@ -147,6 +197,7 @@ const UserRegister = () => {
                   type="password"
                   value={formData.password || ''}
                   onChange={(e) => handleChange(e)}
+                  onBlur={(e) => handleErrors(e, 'Your must enter a password')}
                 />
               </div>
 
@@ -167,6 +218,7 @@ const UserRegister = () => {
                   type="password"
                   value={formData.confirmPassword || ''}
                   onChange={(e) => handleChange(e)}
+                  onBlur={(e) => handleErrors(e, 'Your passwords do not match')}
                 />
               </div>
 
@@ -178,13 +230,25 @@ const UserRegister = () => {
               </ul>
 
 
-             <button
+              {(Object.keys(errors).length > 1)
+                && <button
+                  disabled="disabled"
+                  aria-disabled="true"
+                  className="govuk-button govuk-button--disabled"
+                  data-module="govuk-button"
+                >
+                  Agree and submit
+                </button>
+              }
+              {(Object.keys(errors).length === 1)
+                && <button
                   className="govuk-button"
                   data-module="govuk-button"
                   onClick={(e) => handleSubmit(e)}
                 >
                   Agree and submit
                 </button>
+              }
 
             </form>
           </div>

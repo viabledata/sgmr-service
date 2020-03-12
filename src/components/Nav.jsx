@@ -7,6 +7,8 @@ import Auth from 'Auth';
 const Nav = () => {
   const location = useLocation();
   const history = useHistory();
+  const serviceName = 'Submit an Advanced Voyage Report';
+  const serviceHome = '/';
   const [navArray, setNavArray] = useState([]);
 
   const navData = [
@@ -57,20 +59,26 @@ const Nav = () => {
 
   return (
     <nav>
-      {Auth.isAuthorized() && <ul id="navigation" className="govuk-header__navigation " aria-label="Top Level Navigation">
+      <div className="govuk-header__content">
+        <a className="govuk-header__link govuk-header__link--service-name" href={serviceHome}>{serviceName}</a>
+        <button type="button" role="button" className="govuk-header__menu-button js-header-toggle" aria-controls="navigation" aria-label="Show or hide Top Level Navigation">
+          Menu
+        </button>
 
+        {Auth.isAuthorized() && <ul id="navigation" className="govuk-header__navigation " aria-label="Top Level Navigation">
         {navArray.map((elem, i) => {
           const activeState = elem.active === true ? 'govuk-header__navigation-item govuk-header__navigation-item--active' : 'govuk-header__navigation-item';
           return (
-          <li className={activeState} key={i}>
-           <Link to={elem.urlStem} className="govuk-header__link" onClick={(e) => setActivePage(elem.urlStem)}>{elem.text}</Link>
-          </li>
+            <li className={activeState} key={i}>
+              <Link to={elem.urlStem} className="govuk-header__link" onClick={(e) => setActivePage(elem.urlStem)}>{elem.text}</Link>
+            </li>
           );
         })}
         <li className='govuk-header__navigation-item'>
           <a className="govuk-header__link" onClick={() => handleSignout()}>Signout</a>
         </li>
       </ul>}
+      </div>
     </nav>
   );
 };
