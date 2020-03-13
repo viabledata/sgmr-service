@@ -49,13 +49,11 @@ const UserRegister = () => {
     // If there are no errors, format data and submit to api
     if (Object.keys(errors).length === 1) {
       const dataSubmit = {
-        email: formData.email,
+        email: formData.email.toLowerCase(),
         firstName: formData.firstName,
         lastName: formData.lastName,
         password: formData.password,
       };
-      // Make email addresses all lower case
-      dataSubmit.email = dataSubmit.email.toLowerCase();
 
       axios.post('http://localhost:5000/v1/register', dataSubmit)
         .then(() => history.push('/signin'))
