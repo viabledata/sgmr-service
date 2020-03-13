@@ -5,11 +5,11 @@ import axios from 'axios';
 // app imports
 import Auth from 'Auth';
 
-const Login = () => {
+const SignIn = () => {
   const history = useHistory();
   const [sourcePage, setSourcePage] = useState('/reports');
   const [formData, setFormData] = useState({});
-  const [errors, setErrors] = useState(JSON.parse(localStorage.getItem('errors')) || { field: '' });
+  const [errors, setErrors] = useState({});
 
 
   const removeError = (fieldName) => {
@@ -34,7 +34,7 @@ const Login = () => {
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
     removeError(e.target.name);
-    // For login page, always remove 'main' error if it exists
+    // For SignIn page, always remove 'main' error if it exists
     removeError('main');
   };
   // Ensure all required fields have a value
@@ -140,4 +140,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default SignIn;
