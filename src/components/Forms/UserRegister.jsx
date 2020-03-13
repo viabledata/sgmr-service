@@ -5,7 +5,7 @@ import axios from 'axios';
 const UserRegister = () => {
   const history = useHistory();
   const [formData, setFormData] = useState({});
-  const [errors, setErrors] = useState(JSON.parse(localStorage.getItem('errors')) || { title: null });
+  const [errors, setErrors] = useState(JSON.parse(localStorage.getItem('errors')) || { field: '' });
 
   const removeError = (fieldName) => {
     const tempArr = { ...errors };
@@ -36,29 +36,25 @@ const UserRegister = () => {
   // Handle Submit, including clearing localStorage
   const handleSubmit = (e) => {
     e.preventDefault();
-    const dataLower = { ...formData };
+    const dataSubmit = {
+      email: formData.email,
+      firstName: formData.firstName,
+      lastName: formData.lastName,
+      password: formData.password,
+    };
     // Make email addresses all lower case
-    dataLower.email = dataLower.email.toLowerCase();
+    dataSubmit.email = dataSubmit.email.toLowerCase();
 
-    axios.post('http://localhost:5000/v1/user/register', {
-      mode: 'cors',
-      headers: {
-        'Content-type': 'application/json',
-        // 'Authorization': `Bearer ${token}`,
-      },
-      body: dataLower,
-    })
-      .then(() => history.push('/login'))
+    axios.post('http://localhost:5000/v1/register', dataSubmit)
+      // .then(() => history.push('/login'))
+      .then((resp) => console.log('resp', resp))
       .catch((err) => {
-        setErrors(err.response.data);
+        switch (err.response.data.message) {
+          case 'User already registered': setErrors({ ...errors, email: 'Email address already registered' }); break;
+          default: setErrors(err.response.data);
+        }
       });
   };
-
-  // Update localStorage to hold page data (errors only on this form)
-  useEffect(() => {
-    localStorage.setItem('errors', JSON.stringify(errors));
-  }, [errors]);
-
 
   // Update localStorage to hold page data (errors only on this form)
   useEffect(() => {
@@ -231,7 +227,7 @@ const UserRegister = () => {
                 <li>that you have read and accept our <a target="_blank" href="https://www.gov.uk/government/publications/personal-information-use-in-borders-immigration-and-citizenship">privacy policy</a></li>
               </ul>
 
-              {(Object.keys(errors).length > 1)
+              {/* {!submitButton
                 && <button
                   disabled="disabled"
                   aria-disabled="true"
@@ -241,15 +237,14 @@ const UserRegister = () => {
                   Agree and submit
                 </button>
               }
-              {(Object.keys(errors).length === 1)
-                && <button
+              {submitButton && */}
+                <button
                   className="govuk-button"
                   data-module="govuk-button"
                   onClick={(e) => handleSubmit(e)}
                 >
                   Agree and submit
                 </button>
-              }
 
             </form>
           </div>
