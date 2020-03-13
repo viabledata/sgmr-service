@@ -239,24 +239,13 @@ const UserRegister = () => {
                 <li>that you have read and accept our <a target="_blank" href="https://www.gov.uk/government/publications/personal-information-use-in-borders-immigration-and-citizenship">privacy policy</a></li>
               </ul>
 
-              {/* {!submitButton
-                && <button
-                  disabled="disabled"
-                  aria-disabled="true"
-                  className="govuk-button govuk-button--disabled"
-                  data-module="govuk-button"
-                >
-                  Agree and submit
-                </button>
-              }
-              {submitButton && */}
-                <button
-                  className="govuk-button"
-                  data-module="govuk-button"
-                  onClick={(e) => handleSubmit(e)}
-                >
-                  Agree and submit
-                </button>
+              <button
+                className="govuk-button"
+                data-module="govuk-button"
+                onClick={(e) => handleSubmit(e)}
+              >
+                Agree and submit
+              </button>
 
             </form>
           </div>
