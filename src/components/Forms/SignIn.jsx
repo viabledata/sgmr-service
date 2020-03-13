@@ -11,7 +11,6 @@ const SignIn = () => {
   const [formData, setFormData] = useState({});
   const [errors, setErrors] = useState({});
 
-
   const removeError = (fieldName) => {
     const tempArr = { ...errors };
     const key = fieldName;
@@ -78,7 +77,7 @@ const SignIn = () => {
             <form>
               <h1 className="govuk-heading-xl">Sign in</h1>
 
-              {Object.keys(errors).length > 1 && (
+              {Object.keys(errors).length > 0 && (
                 <div className="govuk-error-summary" aria-labelledby="error-summary-title" role="alert" tabIndex="-1" data-module="govuk-error-summary">
                   <h2 className="govuk-error-summary__title" >
                     There is a problem

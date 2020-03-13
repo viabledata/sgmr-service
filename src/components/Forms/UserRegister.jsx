@@ -6,7 +6,7 @@ import axios from 'axios';
 const UserRegister = () => {
   const history = useHistory();
   const [formData, setFormData] = useState({});
-  const [errors, setErrors] = useState(JSON.parse(localStorage.getItem('errors')) || { field: '' });
+  const [errors, setErrors] = useState(JSON.parse(localStorage.getItem('errors')) || {});
 
   const removeError = (fieldName) => {
     const tempArr = { ...errors };
@@ -87,7 +87,7 @@ const UserRegister = () => {
             <h1 className="govuk-heading-xl">Create an account</h1>
              <form>
 
-              {Object.keys(errors).length > 1 && (
+              {Object.keys(errors).length > 0 && (
                 <div className="govuk-error-summary" aria-labelledby="error-summary-title" role="alert" tabIndex="-1" data-module="govuk-error-summary">
                   <h2 className="govuk-error-summary__title" >
                     There is a problem
