@@ -2,8 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 
-// app imports
-import Validate from 'Validate';
 
 const UserRegister = () => {
   const history = useHistory();
@@ -60,8 +58,7 @@ const UserRegister = () => {
       dataSubmit.email = dataSubmit.email.toLowerCase();
 
       axios.post('http://localhost:5000/v1/register', dataSubmit)
-        // .then(() => history.push('/login'))
-        .then((resp) => console.log('resp', resp))
+        .then(() => history.push('/signin'))
         .catch((err) => {
           switch (err.response.data.message) {
             case 'User already registered': setErrors({ ...errors, email: 'Email address already registered' }); break;
