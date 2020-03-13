@@ -2,6 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 
+// app imports
+import { apiPath } from 'config';
+
 
 const UserRegister = () => {
   const history = useHistory();
@@ -59,7 +62,7 @@ const UserRegister = () => {
     }
 
     // If there are no errors, format data and submit to api
-    if (Object.keys(errors).length === 1) {
+    if (Object.keys(errors).length === 0) {
       const dataSubmit = {
         email: formData.email.toLowerCase(),
         firstName: formData.firstName,
@@ -67,8 +70,8 @@ const UserRegister = () => {
         password: formData.password,
       };
 
-      axios.post('http://localhost:5000/v1/register', dataSubmit)
-        .then(() => history.push('/signin'))
+      axios.post(`${apiPath}/register`, dataSubmit)
+        .then(() => history.push('/sign-in'))
         .catch((err) => {
           switch (err.response.data.message) {
             case 'User already registered':

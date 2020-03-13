@@ -4,6 +4,7 @@ import axios from 'axios';
 
 // app imports
 import Auth from 'Auth';
+import { apiPath } from 'config';
 
 const SignIn = () => {
   const history = useHistory();
@@ -57,7 +58,7 @@ const SignIn = () => {
     e.preventDefault();
     // Ensure required fields have a value
     if (checkRequiredFields() === true) {
-      axios.post('http://localhost:5000/v1/login', formData)
+      axios.post(`${apiPath}/login`, formData)
         .then((resp) => {
           Auth.storeToken(resp.data.token);
           history.push(sourcePage);

@@ -14,6 +14,7 @@ module.exports = {
   resolve: {
     alias: {
       // Page common items
+      config: path.resolve(__dirname, 'src/lib/config.js'),
       Banner: path.resolve(__dirname, 'src/components/Banner.jsx'),
       Footer: path.resolve(__dirname, 'src/components/Footer.jsx'),
       Header: path.resolve(__dirname, 'src/components/Header.jsx'),
