@@ -21,9 +21,21 @@ const UserRegister = () => {
     // Error onBlur if condition not met
     if (!e.target.value) { setErrors({ ...errors, [name]: errorText }); }
     switch (name) {
-      case 'email': (/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(formData.email)) ? removeError('email') : setErrors({ ...errors, email: errorText }); break;
-      case 'confirmEmail': formData.email.toLowerCase() === formData.confirmEmail.toLowerCase() ? removeError('confirmEmail') : setErrors({ ...errors, confirmEmail: errorText }); break;
-      case 'confirmPassword': formData.password === formData.confirmPassword ? removeError('confirmPassword') : setErrors({ ...errors, confirmPassword: errorText }); break;
+      case 'email':
+        (/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(formData.email))
+          ? removeError('email')
+          : setErrors({ ...errors, email: errorText });
+        break;
+      case 'confirmEmail':
+        formData.email.toLowerCase() === formData.confirmEmail.toLowerCase()
+          ? removeError('confirmEmail')
+          : setErrors({ ...errors, confirmEmail: errorText });
+        break;
+      case 'confirmPassword':
+        formData.password === formData.confirmPassword
+          ? removeError('confirmPassword')
+          : setErrors({ ...errors, confirmPassword: errorText });
+        break;
       default: null;
     }
   };
@@ -59,7 +71,9 @@ const UserRegister = () => {
         .then(() => history.push('/signin'))
         .catch((err) => {
           switch (err.response.data.message) {
-            case 'User already registered': setErrors({ ...errors, email: 'Email address already registered' }); break;
+            case 'User already registered':
+              setErrors({ ...errors, email: 'Email address already registered' });
+              break;
             default: setErrors(err.response.data);
           }
         });

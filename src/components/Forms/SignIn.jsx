@@ -24,7 +24,11 @@ const SignIn = () => {
     // Error onBlur if condition not met
     if (!e.target.value) { setErrors({ ...errors, [name]: errorText }); }
     switch (name) {
-      case 'email': (/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(formData.email)) ? removeError('email') : setErrors({ ...errors, email: errorText }); break;
+      case 'email':
+        (/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(formData.email))
+          ? removeError('email')
+          : setErrors({ ...errors, email: errorText });
+        break;
       default: null;
     }
   };
