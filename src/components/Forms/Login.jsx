@@ -5,7 +5,7 @@ import axios from 'axios';
 const Login = () => {
   const history = useHistory();
   const [formData, setFormData] = useState({});
-  const [errors, setErrors] = useState({ field: '' });
+  const [errors, setErrors] = useState(JSON.parse(localStorage.getItem('errors')) || { field: '' });
 
 
   const removeError = (fieldName) => {
@@ -15,6 +15,17 @@ const Login = () => {
     setErrors(tempArr);
   };
 
+  const handleErrors = (e, errorText, groupField) => {
+    // For fields with multiple inputs in a single group
+    const name = !groupField ? e.target.name : groupField;
+    // Error onBlur if condition not met
+    if (!e.target.value) { setErrors({ ...errors, [name]: errorText }); }
+    switch (name) {
+      case 'email': (/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(formData.email)) ? removeError('email') : setErrors({ ...errors, email: errorText }); break;
+      default: null;
+    }
+  };
+
   // Update form info to state
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -22,19 +33,33 @@ const Login = () => {
     // For login page, always remove 'main' error if it exists
     removeError('main');
   };
+  // Ensure all required fields have a value
+  const checkRequiredFields = () => {
+    if (!formData.email || !formData.password) {
+      setErrors({ ...errors, main: 'You must enter an email address and password' });
+      return false;
+    }
+    if (/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(formData.email) === false) {
+      setErrors({ ...errors, email: 'Enter a valid email address' });
+      return false;
+    }
+    return true;
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios.post('http://localhost:5000/v1/login', formData)
-      .then((resp) => console.log(resp))
-      .catch((err) => {
-        switch (err.response.data.message) {
-          case 'Email or password invalid': setErrors({ ...errors, main: 'Email or password invalid' }); break;
-          default: setErrors(err.response.data);
-        }
-      });
+    // Ensure required fields have a value
+    if (checkRequiredFields() === true) {
+      axios.post('http://localhost:5000/v1/login', formData)
+        .then((resp) => console.log(resp))
+        .catch((err) => {
+          switch (err.response.status) {
+            case 401: setErrors({ ...errors, main: 'Email and password combination is invalid' }); break;
+            default: setErrors(err.response.data);
+          }
+        });
+    }
   };
-
 
   return (
     <div className="govuk-width-container">
@@ -72,6 +97,7 @@ const Login = () => {
                   name="email"
                   type="text"
                   onChange={(e) => handleChange(e)}
+                  onBlur={(e) => handleErrors(e, 'Enter a valid email address')}
                 />
               </div>
 
@@ -84,6 +110,7 @@ const Login = () => {
                   name="password"
                   type="password"
                   onChange={(e) => handleChange(e)}
+                  onBlur={(e) => handleErrors(e, 'You must enter your password')}
                 />
               </div>
 
