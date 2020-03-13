@@ -7,6 +7,7 @@ import Auth from 'Auth';
 
 const Login = () => {
   const history = useHistory();
+  const [sourcePage, setSourcePage] = useState('/reports');
   const [formData, setFormData] = useState({});
   const [errors, setErrors] = useState(JSON.parse(localStorage.getItem('errors')) || { field: '' });
 
@@ -56,6 +57,7 @@ const Login = () => {
       axios.post('http://localhost:5000/v1/login', formData)
         .then((resp) => {
           Auth.storeToken(resp.data.token);
+          history.push(sourcePage);
         })
         .catch((err) => {
           if (err.response) {
