@@ -2,6 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import axios from 'axios';
 
+// app imports
+import Auth from 'Auth';
+
 const Login = () => {
   const history = useHistory();
   const [formData, setFormData] = useState({});
@@ -51,11 +54,15 @@ const Login = () => {
     // Ensure required fields have a value
     if (checkRequiredFields() === true) {
       axios.post('http://localhost:5000/v1/login', formData)
-        .then((resp) => console.log(resp))
+        .then((resp) => {
+          Auth.storeToken(resp.data.token);
+        })
         .catch((err) => {
-          switch (err.response.status) {
-            case 401: setErrors({ ...errors, main: 'Email and password combination is invalid' }); break;
-            default: setErrors(err.response.data);
+          if (err.response) {
+            switch (err.response.status) {
+              case 401: setErrors({ ...errors, main: 'Email and password combination is invalid' }); break;
+              default: false;
+            }
           }
         });
     }
