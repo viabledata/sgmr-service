@@ -14,6 +14,7 @@ module.exports = {
   resolve: {
     alias: {
       // Page common items
+      config: path.resolve(__dirname, 'src/lib/config.js'),
       Banner: path.resolve(__dirname, 'src/components/Banner.jsx'),
       Footer: path.resolve(__dirname, 'src/components/Footer.jsx'),
       Header: path.resolve(__dirname, 'src/components/Header.jsx'),
@@ -23,8 +24,8 @@ module.exports = {
       Nav: path.resolve(__dirname, 'src/components/Nav.jsx'),
       ScrollToTop: path.resolve(__dirname, 'src/components/ScrollToTop.jsx'),
       SecureRoute: path.resolve(__dirname, 'src/lib/SecureRoute.jsx'),
-      // User registration & login
-      Login: path.resolve(__dirname, 'src/components/Forms/Login.jsx'),
+      // User registration & signin
+      SignIn: path.resolve(__dirname, 'src/components/Forms/SignIn.jsx'),
       UserRegister: path.resolve(__dirname, 'src/components/Forms/UserRegister.jsx'),
       // Page structures & common components
       PageContainer: path.resolve(__dirname, 'src/components/PageContainer.jsx'),

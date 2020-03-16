@@ -10,7 +10,7 @@ import Footer from 'Footer';
 import Header from 'Header';
 import PageContainer from 'PageContainer';
 
-import Login from 'Login';
+import SignIn from 'SignIn';
 import UserRegister from 'UserRegister';
 
 import EditAccount from 'EditAccount';
@@ -55,8 +55,8 @@ const Main = () => {
         <SecureRoute exact path="/signout">
           <PageContainer />
         </SecureRoute>
-        <Route exact path="/signin">
-          <Login />
+        <Route exact path="/sign-in">
+          <SignIn />
         </Route>
         <Route exact path="/register">
           <UserRegister />

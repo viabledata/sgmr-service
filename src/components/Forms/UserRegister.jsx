@@ -2,11 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 
+// app imports
+import { apiPath } from 'config';
+
 
 const UserRegister = () => {
   const history = useHistory();
   const [formData, setFormData] = useState({});
-  const [errors, setErrors] = useState(JSON.parse(localStorage.getItem('errors')) || { field: '' });
+  const [errors, setErrors] = useState(JSON.parse(localStorage.getItem('errors')) || {});
 
   const removeError = (fieldName) => {
     const tempArr = { ...errors };
@@ -21,9 +24,21 @@ const UserRegister = () => {
     // Error onBlur if condition not met
     if (!e.target.value) { setErrors({ ...errors, [name]: errorText }); }
     switch (name) {
-      case 'email': (/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(formData.email)) ? removeError('email') : setErrors({ ...errors, email: errorText }); break;
-      case 'confirmEmail': formData.email.toLowerCase() === formData.confirmEmail.toLowerCase() ? removeError('confirmEmail') : setErrors({ ...errors, confirmEmail: errorText }); break;
-      case 'confirmPassword': formData.password === formData.confirmPassword ? removeError('confirmPassword') : setErrors({ ...errors, confirmPassword: errorText }); break;
+      case 'email':
+        (/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(formData.email))
+          ? removeError('email')
+          : setErrors({ ...errors, email: errorText });
+        break;
+      case 'confirmEmail':
+        formData.email.toLowerCase() === formData.confirmEmail.toLowerCase()
+          ? removeError('confirmEmail')
+          : setErrors({ ...errors, confirmEmail: errorText });
+        break;
+      case 'confirmPassword':
+        formData.password === formData.confirmPassword
+          ? removeError('confirmPassword')
+          : setErrors({ ...errors, confirmPassword: errorText });
+        break;
       default: null;
     }
   };
@@ -47,21 +62,21 @@ const UserRegister = () => {
     }
 
     // If there are no errors, format data and submit to api
-    if (Object.keys(errors).length === 1) {
+    if (Object.keys(errors).length === 0) {
       const dataSubmit = {
-        email: formData.email,
+        email: formData.email.toLowerCase(),
         firstName: formData.firstName,
         lastName: formData.lastName,
         password: formData.password,
       };
-      // Make email addresses all lower case
-      dataSubmit.email = dataSubmit.email.toLowerCase();
 
-      axios.post('http://localhost:5000/v1/register', dataSubmit)
-        .then(() => history.push('/signin'))
+      axios.post(`${apiPath}/register`, dataSubmit)
+        .then(() => history.push('/sign-in'))
         .catch((err) => {
           switch (err.response.data.message) {
-            case 'User already registered': setErrors({ ...errors, email: 'Email address already registered' }); break;
+            case 'User already registered':
+              setErrors({ ...errors, email: 'Email address already registered' });
+              break;
             default: setErrors(err.response.data);
           }
         });
@@ -87,7 +102,7 @@ const UserRegister = () => {
             <h1 className="govuk-heading-xl">Create an account</h1>
              <form>
 
-              {Object.keys(errors).length > 1 && (
+              {Object.keys(errors).length > 0 && (
                 <div className="govuk-error-summary" aria-labelledby="error-summary-title" role="alert" tabIndex="-1" data-module="govuk-error-summary">
                   <h2 className="govuk-error-summary__title" >
                     There is a problem
@@ -239,24 +254,13 @@ const UserRegister = () => {
                 <li>that you have read and accept our <a target="_blank" href="https://www.gov.uk/government/publications/personal-information-use-in-borders-immigration-and-citizenship">privacy policy</a></li>
               </ul>
 
-              {/* {!submitButton
-                && <button
-                  disabled="disabled"
-                  aria-disabled="true"
-                  className="govuk-button govuk-button--disabled"
-                  data-module="govuk-button"
-                >
-                  Agree and submit
-                </button>
-              }
-              {submitButton && */}
-                <button
-                  className="govuk-button"
-                  data-module="govuk-button"
-                  onClick={(e) => handleSubmit(e)}
-                >
-                  Agree and submit
-                </button>
+              <button
+                className="govuk-button"
+                data-module="govuk-button"
+                onClick={(e) => handleSubmit(e)}
+              >
+                Agree and submit
+              </button>
 
             </form>
           </div>
