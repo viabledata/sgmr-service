@@ -44,7 +44,6 @@ const UserInputCode = () => {
         })
         .catch((err) => {
           if (err.response) {
-            console.log(err.response);
             switch (err.response.status) {
               case 400: setErrors({ ...errors, twoFactorToken: 'Code is invalid' }); break;
               default: false;
@@ -83,7 +82,7 @@ const UserInputCode = () => {
                   onChange={(e) => handleChange(e)}
                 />
                 <p className="govuk-body">
-                  <Link to='/resend-verification-code'>Didn't receive a code?</Link>
+                  <Link to='/resend-code'>Didn't receive a code?</Link>
                 </p>
               </div>
               <button
