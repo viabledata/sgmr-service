@@ -44,9 +44,9 @@ const UserInputCode = () => {
         })
         .catch((err) => {
           if (err.response) {
-            console.log(err);
+            console.log(err.response);
             switch (err.response.status) {
-              case 401: setErrors({ ...errors, main: 'Code is invalid' }); break;
+              case 400: setErrors({ ...errors, twoFactorToken: 'Code is invalid' }); break;
               default: false;
             }
           }
@@ -64,11 +64,18 @@ const UserInputCode = () => {
               Due to the nature of the data used and transmitted by the Submit an Advanced Voyage Report Service, we require users to register for multi-factor authentication to ensure the security of the system.
             </p>
             <form>
-              <div id="twoFactorToken" className="govuk-form-group">
+              <div id="twoFactorToken" className={`govuk-form-group ${errors.twoFactorToken ? 'govuk-form-group--error' : ''}`}>
                 <label className="govuk-label govuk-label--m" htmlFor="twoFactorToken">
                   Authentication code
                 </label>
                 <span className="govuk-hint">Please enter the code you received</span>
+                {errors.twoFactorToken
+                  && (
+                  <span className="govuk-error-message">
+                    <span className="govuk-visually-hidden">Error:</span> {errors.twoFactorToken}
+                  </span>
+                  )
+                }
                 <input
                   className="govuk-input"
                   name="twoFactorToken"
