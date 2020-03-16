@@ -10,11 +10,13 @@ import Footer from 'Footer';
 import Header from 'Header';
 import PageContainer from 'PageContainer';
 
+import Login from 'Login';
+import UserRegister from 'UserRegister';
+
 import EditAccount from 'EditAccount';
 import FormPeople from 'FormPeople';
 import FormVessels from 'FormVessels';
 import FormVoyage from 'FormVoyage';
-import UserRegister from 'UserRegister';
 
 
 const Main = () => {
@@ -53,6 +55,9 @@ const Main = () => {
         <SecureRoute exact path="/signout">
           <PageContainer />
         </SecureRoute>
+        <Route exact path="/signin">
+          <Login />
+        </Route>
         <Route exact path="/register">
           <UserRegister />
         </Route>

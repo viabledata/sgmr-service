@@ -24,6 +24,7 @@ module.exports = {
       ScrollToTop: path.resolve(__dirname, 'src/components/ScrollToTop.jsx'),
       SecureRoute: path.resolve(__dirname, 'src/lib/SecureRoute.jsx'),
       // User registration & login
+      Login: path.resolve(__dirname, 'src/components/Forms/Login.jsx'),
       UserRegister: path.resolve(__dirname, 'src/components/Forms/UserRegister.jsx'),
       // Page structures & common components
       PageContainer: path.resolve(__dirname, 'src/components/PageContainer.jsx'),

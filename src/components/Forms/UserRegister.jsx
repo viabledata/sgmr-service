@@ -2,10 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 
+
 const UserRegister = () => {
   const history = useHistory();
   const [formData, setFormData] = useState({});
-  const [errors, setErrors] = useState(JSON.parse(localStorage.getItem('errors')) || { title: null });
+  const [errors, setErrors] = useState(JSON.parse(localStorage.getItem('errors')) || { field: '' });
 
   const removeError = (fieldName) => {
     const tempArr = { ...errors };
@@ -19,7 +20,7 @@ const UserRegister = () => {
     const name = !groupField ? e.target.name : groupField;
     // Error onBlur if condition not met
     if (!e.target.value) { setErrors({ ...errors, [name]: errorText }); }
-    switch (e.target.name) {
+    switch (name) {
       case 'email': (/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(formData.email)) ? removeError('email') : setErrors({ ...errors, email: errorText }); break;
       case 'confirmEmail': formData.email.toLowerCase() === formData.confirmEmail.toLowerCase() ? removeError('confirmEmail') : setErrors({ ...errors, confirmEmail: errorText }); break;
       case 'confirmPassword': formData.password === formData.confirmPassword ? removeError('confirmPassword') : setErrors({ ...errors, confirmPassword: errorText }); break;
@@ -36,29 +37,36 @@ const UserRegister = () => {
   // Handle Submit, including clearing localStorage
   const handleSubmit = (e) => {
     e.preventDefault();
-    const dataLower = { ...formData };
-    // Make email addresses all lower case
-    dataLower.email = dataLower.email.toLowerCase();
+    // Check if email addresses still match in our data, if they don't, set error
+    if (formData.email.toLowerCase() !== formData.confirmEmail.toLowerCase()) {
+      setErrors({ ...errors, confirmEmail: 'Your email addresses do not match' });
+    }
+    // Check if passwords still match in our data, if they don't, set error
+    if (formData.password !== formData.confirmPassword) {
+      setErrors({ ...errors, confirmPassword: 'Your passwords do not match' });
+    }
 
-    axios.post('http://localhost:5000/v1/user/register', {
-      mode: 'cors',
-      headers: {
-        'Content-type': 'application/json',
-        // 'Authorization': `Bearer ${token}`,
-      },
-      body: dataLower,
-    })
-      .then(() => history.push('/login'))
-      .catch((err) => {
-        setErrors(err.response.data);
-      });
+    // If there are no errors, format data and submit to api
+    if (Object.keys(errors).length === 1) {
+      const dataSubmit = {
+        email: formData.email,
+        firstName: formData.firstName,
+        lastName: formData.lastName,
+        password: formData.password,
+      };
+      // Make email addresses all lower case
+      dataSubmit.email = dataSubmit.email.toLowerCase();
+
+      axios.post('http://localhost:5000/v1/register', dataSubmit)
+        .then(() => history.push('/signin'))
+        .catch((err) => {
+          switch (err.response.data.message) {
+            case 'User already registered': setErrors({ ...errors, email: 'Email address already registered' }); break;
+            default: setErrors(err.response.data);
+          }
+        });
+    }
   };
-
-  // Update localStorage to hold page data (errors only on this form)
-  useEffect(() => {
-    localStorage.setItem('errors', JSON.stringify(errors));
-  }, [errors]);
-
 
   // Update localStorage to hold page data (errors only on this form)
   useEffect(() => {
@@ -120,7 +128,7 @@ const UserRegister = () => {
 
               <div id="lastName" className={`govuk-form-group ${errors.lastName ? 'govuk-form-group--error' : ''}`}>
                 <label className="govuk-label govuk-label--m" htmlFor="lastName">
-                  lastName
+                  Surname
                 </label>
                 {errors.lastName
                   && (
@@ -199,7 +207,7 @@ const UserRegister = () => {
                   type="password"
                   value={formData.password || ''}
                   onChange={(e) => handleChange(e)}
-                  onBlur={(e) => handleErrors(e, 'Your must enter a password')}
+                  onBlur={(e) => handleErrors(e, 'You must enter a password')}
                 />
               </div>
 
@@ -231,7 +239,7 @@ const UserRegister = () => {
                 <li>that you have read and accept our <a target="_blank" href="https://www.gov.uk/government/publications/personal-information-use-in-borders-immigration-and-citizenship">privacy policy</a></li>
               </ul>
 
-              {(Object.keys(errors).length > 1)
+              {/* {!submitButton
                 && <button
                   disabled="disabled"
                   aria-disabled="true"
@@ -241,15 +249,14 @@ const UserRegister = () => {
                   Agree and submit
                 </button>
               }
-              {(Object.keys(errors).length === 1)
-                && <button
+              {submitButton && */}
+                <button
                   className="govuk-button"
                   data-module="govuk-button"
                   onClick={(e) => handleSubmit(e)}
                 >
                   Agree and submit
                 </button>
-              }
 
             </form>
           </div>
