@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import axios from 'axios';
 
@@ -7,6 +7,8 @@ import { apiPath } from 'config';
 
 const UserResendCode = () => {
   const history = useHistory();
+  const urlParams = location.search.split('source=');
+  const [source, setSource] = useState();
   const [formData, setFormData] = useState({ email: JSON.parse(localStorage.getItem('email')) });
   const [errors, setErrors] = useState({});
 
@@ -33,12 +35,27 @@ const UserResendCode = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    // const submitType = source === 'registration' ? 'patch' : 'post';
     // Ensure required fields have a value
-    if (checkRequiredFields() === true) {
+    if (checkRequiredFields() === true && source === 'registration') {
       axios.patch(`${apiPath}/resend-verification-code`, formData)
         .then((resp) => {
-          console.log(resp);
-          history.push('/verify');
+          history.push(`/verify?source=${source}`);
+        })
+        .catch((err) => {
+          if (err.response) {
+            switch (err.response.status) {
+              case 400: setErrors({ ...errors, twoFactorToken: 'Something is wrong' }); break;
+              case 401: setErrors({ ...errors, twoFactorToken: 'Code is invalid' }); break;
+              case 409: setErrors({ ...errors, twoFactorToken: 'Already verified, login' }); break;
+              default: false;
+            }
+          }
+        });
+    } else {
+      axios.post(`${apiPath}/resend-verification-code`, formData)
+        .then((resp) => {
+          history.push(`/verify?source=${source}`);
         })
         .catch((err) => {
           if (err.response) {
@@ -52,6 +69,13 @@ const UserResendCode = () => {
         });
     }
   };
+
+  useEffect(() => {
+    // setFormData({ email: JSON.parse(localStorage.getItem('email')) });
+    setSource(urlParams[1]);
+  }, []);
+
+
   return (
     <div className="govuk-width-container">
     <main className="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" role="main">

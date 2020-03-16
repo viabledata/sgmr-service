@@ -9,6 +9,7 @@ import { apiPath } from 'config';
 const UserInputCode = () => {
   const history = useHistory();
   const urlParams = location.search.split('source=');
+  const [source, setSource] = useState();
   const [formData, setFormData] = useState({});
   const [errors, setErrors] = useState({});
 
@@ -39,10 +40,9 @@ const UserInputCode = () => {
     if (checkRequiredFields() === true) {
       axios.patch(`${apiPath}/submit-verification-code`, formData)
         .then((resp) => {
-          console.log(resp);
           resp.data.token ? Auth.storeToken(resp.data.token) : null;
           localStorage.clear();
-          history.push('/sign-in');
+          history.push(`/sign-in?source=${source}`);
         })
         .catch((err) => {
           if (err.response) {
@@ -59,6 +59,7 @@ const UserInputCode = () => {
 
   useEffect(() => {
     setFormData({ email: JSON.parse(localStorage.getItem('email')) });
+    setSource(urlParams[1]);
   }, []);
 
   return (
@@ -90,7 +91,7 @@ const UserInputCode = () => {
                   onChange={(e) => handleChange(e)}
                 />
                 <p className="govuk-body">
-                  <Link to='/resend-code'>Didn't receive a code?</Link>
+                  <Link to={`/resend-code?source=${source}`}>Didn't receive a code?</Link>
                 </p>
               </div>
               <button

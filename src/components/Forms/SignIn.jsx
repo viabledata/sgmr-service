@@ -8,7 +8,8 @@ import { apiPath } from 'config';
 
 const SignIn = () => {
   const history = useHistory();
-  const [sourcePage, setSourcePage] = useState('/reports?source=sign-in');
+  const urlParams = location.search.split('source=');
+  const [source, setSource] = useState(urlParams[1]);
   const [formData, setFormData] = useState({});
   const [errors, setErrors] = useState({});
 
@@ -60,8 +61,9 @@ const SignIn = () => {
     if (checkRequiredFields() === true) {
       axios.post(`${apiPath}/login`, formData)
         .then((resp) => {
-          Auth.storeToken(resp.data.token);
-          history.push(sourcePage);
+          // Auth.storeToken(resp.data.token);
+          // history.push(sourcePage);
+          history.push(`/verify?source=${source}`);
         })
         .catch((err) => {
           if (err.response) {
