@@ -87,6 +87,12 @@ const UserRegister = () => {
     }
   };
 
+  // Clear local storage of formData & errors on pageload just incase
+  useEffect(() => {
+    localStorage.removeItem('formData');
+    localStorage.removeItem('errors');
+  }, []);
+
 
   return (
     <div id="pageContainer" className="govuk-width-container ">

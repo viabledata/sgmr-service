@@ -91,6 +91,7 @@ const UserResendCode = () => {
                 onChange={(e) => handleChange(e)}
               />
             </div>
+            </div>
             <button
               type="submit"
               className="govuk-button"

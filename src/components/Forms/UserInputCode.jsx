@@ -40,6 +40,7 @@ const UserInputCode = () => {
         .then((resp) => {
           console.log(resp);
           Auth.storeToken(resp.data.token);
+          localStorage.remove('email');
           history.push('/reports');
         })
         .catch((err) => {
