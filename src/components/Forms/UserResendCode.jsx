@@ -1,8 +1,12 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import axios from 'axios';
 
+// app imports
+import { apiPath } from 'config';
+
 const UserResendCode = () => {
+  const history = useHistory();
   const [formData, setFormData] = useState({ email: JSON.parse(localStorage.getItem('email')) });
   const [errors, setErrors] = useState({});
 
@@ -31,7 +35,7 @@ const UserResendCode = () => {
     e.preventDefault();
     // Ensure required fields have a value
     if (checkRequiredFields() === true) {
-      axios.patch(`${apiPath}/submit-verification-code`, formData)
+      axios.patch(`${apiPath}/resend-verification-code`, formData)
         .then((resp) => {
           console.log(resp);
           history.push('/verify');
@@ -39,7 +43,9 @@ const UserResendCode = () => {
         .catch((err) => {
           if (err.response) {
             switch (err.response.status) {
-              case 400: setErrors({ ...errors, email: 'Code is invalid' }); break;
+              case 400: setErrors({ ...errors, twoFactorToken: 'Something is wrong' }); break;
+              case 401: setErrors({ ...errors, twoFactorToken: 'Code is invalid' }); break;
+              case 409: setErrors({ ...errors, twoFactorToken: 'Already verified, login' }); break;
               default: false;
             }
           }
@@ -55,42 +61,50 @@ const UserResendCode = () => {
           <p className="govuk-body-l">
             Due to the nature of the data used and transmitted by the Submit an Advanced Voyage Report Service, we require users to register for multi-factor authentication to ensure the security of the system.
           </p>
+
+          {Object.keys(errors).length > 0 && (
+            <div className="govuk-error-summary" aria-labelledby="error-summary-title" role="alert" tabIndex="-1" data-module="govuk-error-summary">
+              <h2 className="govuk-error-summary__title" >
+                There is a problem
+              </h2>
+              <div className="govuk-error-summary__body">
+                <ul className="govuk-list govuk-error-summary__list">
+                  {Object.entries(errors).map((elem, i) => (
+                    <li key={i}>
+                      {elem[0] !== 'title'
+                          && <a href={`#${elem[0]}`}>{elem[1]}</a>}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          )}
+
+
           <form>
-            <div id="email" className={`govuk-form-group ${errors.email ? 'govuk-form-group--error' : ''}`}>
+            <div id="email" className="govuk-form-group">
               <label className="govuk-label govuk-label--m" htmlFor="email">
                 Email address
-              </label>{errors.email
-                && (
-                <span className="govuk-error-message">
-                  <span className="govuk-visually-hidden">Error:</span> {errors.email}
-                </span>
-                )
-              }
+              </label>
               <input
                 className="govuk-input"
                 name="email"
                 type="text"
-                value={formData.email ? formData.email : null}
+                value={formData.email ? formData.email : ''}
                 onChange={(e) => handleChange(e)}
               />
-            <div id="mobileNumber" className={`govuk-form-group ${errors.mobileNumber ? 'govuk-form-group--error' : ''}`}>
+            </div>
+            <div id="mobileNumber" className="govuk-form-group">
               <label className="govuk-label govuk-label--m" htmlFor="mobileNumber">
-                mobileNumber address
-              </label>{errors.mobileNumber
-                && (
-                <span className="govuk-error-message">
-                  <span className="govuk-visually-hidden">Error:</span> {errors.mobileNumber}
-                </span>
-                )
-              }
+                Mobile number
+              </label>
               <input
                 className="govuk-input"
                 name="mobileNumber"
                 type="text"
-                value={formData.mobileNumber ? formData.mobileNumber : null}
+                value={formData.mobileNumber ? formData.mobileNumber : ''}
                 onChange={(e) => handleChange(e)}
               />
-            </div>
             </div>
             <button
               type="submit"

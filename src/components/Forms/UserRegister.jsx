@@ -72,7 +72,6 @@ const UserRegister = () => {
       };
       axios.post(`${apiPath}/registration`, dataSubmit)
         .then((resp) => {
-          console.log(resp);
           history.push('/verify?source=registration');
           localStorage.setItem('email', JSON.stringify(formData.email));
         })
@@ -91,6 +90,7 @@ const UserRegister = () => {
   useEffect(() => {
     localStorage.removeItem('formData');
     localStorage.removeItem('errors');
+    localStorage.removeItem('email');
   }, []);
 
 

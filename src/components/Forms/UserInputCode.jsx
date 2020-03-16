@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useHistory, Link } from 'react-router-dom';
 import axios from 'axios';
 
@@ -7,8 +7,9 @@ import Auth from 'Auth';
 import { apiPath } from 'config';
 
 const UserInputCode = () => {
+  const history = useHistory();
   const urlParams = location.search.split('source=');
-  const [formData, setFormData] = useState({ email: JSON.parse(localStorage.getItem('email')) });
+  const [formData, setFormData] = useState({});
   const [errors, setErrors] = useState({});
 
   const removeError = (fieldName) => {
@@ -39,20 +40,26 @@ const UserInputCode = () => {
       axios.patch(`${apiPath}/submit-verification-code`, formData)
         .then((resp) => {
           console.log(resp);
-          Auth.storeToken(resp.data.token);
-          localStorage.remove('email');
-          history.push('/reports');
+          resp.data.token ? Auth.storeToken(resp.data.token) : null;
+          localStorage.clear();
+          history.push('/sign-in');
         })
         .catch((err) => {
           if (err.response) {
             switch (err.response.status) {
-              case 400: setErrors({ ...errors, twoFactorToken: 'Code is invalid' }); break;
+              case 400: setErrors({ ...errors, twoFactorToken: 'Something is wrong' }); break;
+              case 401: setErrors({ ...errors, twoFactorToken: 'Code is invalid' }); break;
+              case 409: setErrors({ ...errors, twoFactorToken: 'Already verified, login' }); break;
               default: false;
             }
           }
         });
     }
   };
+
+  useEffect(() => {
+    setFormData({ email: JSON.parse(localStorage.getItem('email')) });
+  }, []);
 
   return (
     <div className="govuk-width-container">
