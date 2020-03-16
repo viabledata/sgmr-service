@@ -71,7 +71,11 @@ const UserRegister = () => {
         password: formData.password,
       };
       axios.post(`${apiPath}/registration`, dataSubmit)
-        .then(() => history.push('/sign-in'))
+        .then((resp) => {
+          console.log(resp);
+          history.push('/verify?source=registration');
+          localStorage.setItem('email', JSON.stringify(formData.email));
+        })
         .catch((err) => {
           switch (err.response.data.message) {
             case 'User already registered':
@@ -83,10 +87,6 @@ const UserRegister = () => {
     }
   };
 
-  // Update localStorage to hold page data (errors only on this form)
-  useEffect(() => {
-    localStorage.setItem('errors', JSON.stringify(errors));
-  }, [errors]);
 
   return (
     <div id="pageContainer" className="govuk-width-container ">
