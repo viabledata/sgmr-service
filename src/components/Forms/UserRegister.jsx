@@ -67,10 +67,10 @@ const UserRegister = () => {
         email: formData.email.toLowerCase(),
         firstName: formData.firstName,
         lastName: formData.lastName,
+        mobileNumber: formData.mobileNumber,
         password: formData.password,
       };
-
-      axios.post(`${apiPath}/register`, dataSubmit)
+      axios.post(`${apiPath}/registration`, dataSubmit)
         .then(() => history.push('/sign-in'))
         .catch((err) => {
           switch (err.response.data.message) {
@@ -162,6 +162,27 @@ const UserRegister = () => {
                 />
               </div>
 
+              <div id="mobileNumber" className={`govuk-form-group ${errors.mobileNumber ? 'govuk-form-group--error' : ''}`}>
+                <label className="govuk-label govuk-label--m" htmlFor="mobileNumber">
+                  Mobile number
+                </label>
+                {errors.mobileNumber
+                  && (
+                  <span className="govuk-error-message">
+                    <span className="govuk-visually-hidden">Error:</span> {errors.mobileNumber}
+                  </span>
+                  )
+                }
+                <span className="govuk-hint">You will be sent a verification token to this number.</span>
+              <input
+                  className="govuk-input"
+                  name="mobileNumber"
+                  type="text"
+                  value={formData.mobileNumber || ''}
+                  onChange={(e) => handleChange(e)}
+                  onBlur={(e) => handleErrors(e, 'You must enter your mobile number')}
+                />
+              </div>
               <div id="email" className={`govuk-form-group ${errors.email ? 'govuk-form-group--error' : ''}`}>
                 <label className="govuk-label govuk-label--m" htmlFor="email">
                   Email address
