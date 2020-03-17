@@ -7,28 +7,28 @@ const CreatePerson = ({ handleSubmit, handleChange, data }) => {
 
   return (
     <section>
-      <div id="givenName" className="govuk-form-group">
-        <label className="govuk-label" htmlFor="givenName">
+      <div id="firstName" className="govuk-form-group">
+        <label className="govuk-label" htmlFor="firstName">
           Given name
         </label>
         <input
           className="govuk-input"
-          name="givenName"
+          name="firstName"
           type="text"
-          value={data.givenName || ''}
+          value={data.firstName || ''}
           onChange={(e) => handleChange(e)}
         />
       </div>
 
-      <div id="surname" className="govuk-form-group">
-        <label className="govuk-label" htmlFor="surname">
+      <div id="lastName" className="govuk-form-group">
+        <label className="govuk-label" htmlFor="lastName">
           Surname
         </label>
        <input
           className="govuk-input"
-          name="surname"
+          name="lastName"
           type="text"
-          value={data.surname || ''}
+          value={data.lastName || ''}
           onChange={(e) => handleChange(e)}
         />
       </div>
