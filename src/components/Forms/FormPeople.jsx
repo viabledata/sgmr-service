@@ -5,6 +5,7 @@ import moment from 'moment';
 
 // app imports
 import { apiPath } from 'config';
+import Auth from 'Auth';
 import CreatePerson from 'CreatePerson';
 
 const FormPeople = (props) => {
@@ -97,8 +98,21 @@ const FormPeople = (props) => {
     e.preventDefault();
     // Format date
     formatDateField(formData.documentExpiryDateYear, formData.documentExpiryDateMonth, formData.documentExpiryDateDay);
+    // Get fields for submitting
+    const dataSubmit = {
+      firstName: formData.firstName,
+      lastName: formData.lastName,
+      documentType: formData.documentType,
+      documentNumber: formData.documentNumber,
+      documentExpiryDate: formData.documentExpiryDate,
+      documentIssuingState: formData.documentIssuingState,
+      peopleType: formData.peopleType,
+    };
+    console.log(dataSubmit)
     if (checkRequiredFields() === false) {
-      axios.patch(`${apiPath}/user/people`, formData)
+      axios.post(`${apiPath}/user/people`, dataSubmit, {
+        headers: { Authorization: `Bearer ${Auth.retrieveToken()}` },
+      })
         .then((resp) => {
           console.log(resp);
           history.goBack(); // Return to page you came from
