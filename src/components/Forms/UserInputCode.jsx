@@ -9,6 +9,7 @@ import { apiPath } from 'config';
 const UserInputCode = () => {
   const history = useHistory();
   const urlParams = location.search.split('source=');
+  const [source, setSource] = useState();
   const [formData, setFormData] = useState({});
   const [errors, setErrors] = useState({});
 
@@ -36,13 +37,32 @@ const UserInputCode = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     // Ensure required fields have a value
-    if (checkRequiredFields() === true) {
+    if (checkRequiredFields() === true && source === 'registration') {
+      console.log(source, 'patch')
       axios.patch(`${apiPath}/submit-verification-code`, formData)
         .then((resp) => {
-          console.log(resp);
+          // console.log(resp)
+          // resp.data.token ? Auth.storeToken(resp.data.token) : null;
+          // localStorage.clear();
+          history.push(`/sign-in?source=${source}`);
+        })
+        .catch((err) => {
+          if (err.response) {
+            switch (err.response.status) {
+              case 400: setErrors({ ...errors, twoFactorToken: 'Something is wrong' }); break;
+              case 401: setErrors({ ...errors, twoFactorToken: 'Code is invalid' }); break;
+              case 409: setErrors({ ...errors, twoFactorToken: 'Already verified, login' }); break;
+              default: false;
+            }
+          }
+        });
+    } else {
+      console.log(source, 'post')
+      axios.post(`${apiPath}/submit-verification-code`, formData)
+        .then((resp) => {
+          console.log(resp)
           resp.data.token ? Auth.storeToken(resp.data.token) : null;
-          localStorage.clear();
-          history.push('/sign-in');
+          history.push(`/${source}`);
         })
         .catch((err) => {
           if (err.response) {
@@ -59,6 +79,7 @@ const UserInputCode = () => {
 
   useEffect(() => {
     setFormData({ email: JSON.parse(localStorage.getItem('email')) });
+    setSource(urlParams[1]);
   }, []);
 
   return (
@@ -90,7 +111,7 @@ const UserInputCode = () => {
                   onChange={(e) => handleChange(e)}
                 />
                 <p className="govuk-body">
-                  <Link to='/resend-code'>Didn't receive a code?</Link>
+                  <Link to={`/resend-code?source=${source}`}>Didn't receive a code?</Link>
                 </p>
               </div>
               <button
