@@ -1,28 +1,42 @@
 import React from 'react';
 
-const CreateVessel = ({ handleSubmit, handleChange, data }) => {
+const CreateVessel = ({ handleSubmit, handleChange, data, errors }) => {
   const checkIfVoyageForm = location.pathname.toLowerCase().indexOf('voyage') === -1;
 
   return (
     <section>
-      <div id="vesselName" className="govuk-form-group">
-        <label className="govuk-label" htmlFor="vesselName">
+      <div id="name" className={`govuk-form-group ${errors.name ? 'govuk-form-group--error' : ''}`}>
+        <label className="govuk-label" htmlFor="name">
           Vessel name
         </label>
         <span className="govuk-hint">For example Baroness</span>
+        {errors.name
+          && (
+          <span className="govuk-error-message">
+            <span className="govuk-visually-hidden">Error:</span> {errors.name}
+          </span>
+          )
+        }
         <input
           className="govuk-input"
-          name="vesselName"
+          name="name"
           type="text"
-          value={data.vesselName || ''}
+          value={data.name || ''}
           onChange={(e) => handleChange(e)}
         />
       </div>
 
-      <div id="vesselType" className="govuk-form-group">
+      <div id="vesselType" className={`govuk-form-group ${errors.vesselType ? 'govuk-form-group--error' : ''}`}>
         <label className="govuk-label" htmlFor="vesselType">
           Vessel type
         </label>
+        {errors.vesselType
+          && (
+          <span className="govuk-error-message">
+            <span className="govuk-visually-hidden">Error:</span> {errors.vesselType}
+          </span>
+          )
+        }
         <span className="govuk-hint">For example Yacht or Sailboat</span>
         <input
           className="govuk-input"
@@ -33,24 +47,38 @@ const CreateVessel = ({ handleSubmit, handleChange, data }) => {
         />
       </div>
 
-      <div id="usualMoorings" className="govuk-form-group">
-        <label className="govuk-label" htmlFor="usualMoorings">
+      <div id="vesselBase" className={`govuk-form-group ${errors.vesselBase ? 'govuk-form-group--error' : ''}`}>
+        <label className="govuk-label" htmlFor="vesselBase">
             Usual moorings
         </label>
         <span className="govuk-hint">A description, UNLOCODE or set of Coordinates for where the vessel is usually moored</span>
+        {errors.vesselBase
+          && (
+          <span className="govuk-error-message">
+            <span className="govuk-visually-hidden">Error:</span> {errors.vesselBase}
+          </span>
+          )
+        }
         <input
           className="govuk-input"
-          name="usualMoorings"
+          name="vesselBase"
           type="text"
-          value={data.usualMoorings || ''}
+          value={data.vesselBase || ''}
           onChange={(e) => handleChange(e)}
         />
       </div>
 
-      <div id="registration" className="govuk-form-group">
+      <div id="registration" className={`govuk-form-group ${errors.registration ? 'govuk-form-group--error' : ''}`}>
         <label className="govuk-label" htmlFor="registration">
           Registration number
         </label>
+        {errors.registration
+          && (
+          <span className="govuk-error-message">
+            <span className="govuk-visually-hidden">Error:</span> {errors.registration}
+          </span>
+          )
+        }
         <input
           className="govuk-input"
           name="registration"
