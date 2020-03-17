@@ -43,11 +43,11 @@ const FormPeople = (props) => {
       rule: 'required',
       message: 'You must enter the document issuing state',
     },
-    // {
-    //   field: 'documentExpiryDate',
-    //   rule: 'required',
-    //   message: 'You must enter an expiry date',
-    // },
+    {
+      field: 'documentExpiryDate',
+      rule: 'required',
+      message: 'You must enter an expiry date',
+    },
   ];
 
   // Validation
@@ -77,9 +77,13 @@ const FormPeople = (props) => {
 
   // Format date fields
   const formatDateField = (year, month, day) => {
-    const newDate = moment(`${year}-${month}-${day}`, 'YYYY-MM-DD').format('YYYY-M-D');
-    setFormData({ ...formData, documentExpiryDate: newDate });
-    console.log(newDate)
+    if (!year || !month || !day || year.length < 4 || month > 12 || month < 1 || day > 31 || day < 1) {
+      setErrors({ ...errors, documentExpiryDate: 'You must enter a valid date' });
+    } else {
+      const newDate = moment(`${year}-${month}-${day}`, 'YYYY-MM-DD').format('YYYY-M-D');
+      setFormData({ ...formData, documentExpiryDate: newDate });
+      removeError('documentExpiryDate');
+    }
   };
 
   // Clear formData from localStorage
@@ -94,7 +98,7 @@ const FormPeople = (props) => {
     // Format date
     formatDateField(formData.documentExpiryDateYear, formData.documentExpiryDateMonth, formData.documentExpiryDateDay);
     if (checkRequiredFields() === false) {
-      axios.patch(`${apiPath}//user/people`, formData)
+      axios.patch(`${apiPath}/user/people`, formData)
         .then((resp) => {
           console.log(resp);
           history.goBack(); // Return to page you came from

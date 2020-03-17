@@ -566,7 +566,7 @@ const CreatePerson = ({ handleSubmit, handleChange, data, errors }) => {
         />
       </div>
 
-      <div id="documentExpiryDate" className={`govuk-form-group ${errors.documentIssuingState ? 'govuk-form-group--error' : ''}`}>
+      <div id="documentExpiryDate" className={`govuk-form-group ${errors.documentExpiryDate ? 'govuk-form-group--error' : ''}`}>
         <fieldset className="govuk-fieldset" role="group" aria-describedby="documentExpiryDate-hint">
           <legend className="govuk-fieldset__legend">
             <label className="govuk-label" htmlFor="documentExpiryDate">
