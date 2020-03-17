@@ -1,16 +1,24 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom';
 
-const CreatePerson = ({ handleSubmit, handleChange, data }) => {
+const CreatePerson = ({ handleSubmit, handleChange, data, errors }) => {
   const urlParams = location.search.split('source=');
   const source = urlParams[1];
+  console.log(errors)
 
   return (
     <section>
-      <div id="firstName" className="govuk-form-group">
+      <div id="firstName" className={`govuk-form-group ${errors.firstName ? 'govuk-form-group--error' : ''}`}>
         <label className="govuk-label" htmlFor="firstName">
           Given name
         </label>
+        {errors.firstName
+          && (
+          <span className="govuk-error-message">
+            <span className="govuk-visually-hidden">Error:</span> {errors.firstName}
+          </span>
+          )
+        }
         <input
           className="govuk-input"
           name="firstName"
@@ -20,10 +28,17 @@ const CreatePerson = ({ handleSubmit, handleChange, data }) => {
         />
       </div>
 
-      <div id="lastName" className="govuk-form-group">
+      <div id="lastName" className={`govuk-form-group ${errors.lastName ? 'govuk-form-group--error' : ''}`}>
         <label className="govuk-label" htmlFor="lastName">
           Surname
         </label>
+        {errors.lastName
+          && (
+          <span className="govuk-error-message">
+            <span className="govuk-visually-hidden">Error:</span> {errors.lastName}
+          </span>
+          )
+        }
        <input
           className="govuk-input"
           name="lastName"
@@ -365,7 +380,7 @@ const CreatePerson = ({ handleSubmit, handleChange, data }) => {
         </select>
       </div>
 
-      <div id="personType" className="govuk-form-group">
+      <div id="peopleType" className={`govuk-form-group ${errors.peopleType ? 'govuk-form-group--error' : ''}`}>
         <fieldset className="govuk-fieldset" aria-describedby="person-type-hint">
           <legend className="govuk-fieldset__legend">
             <label className="govuk-fieldset__heading">
@@ -376,45 +391,52 @@ const CreatePerson = ({ handleSubmit, handleChange, data }) => {
             For example Skipper, Crew or Passenger
           </span>
           <div className="govuk-radios govuk-radios">
+            {errors.peopleType
+            && (
+            <span className="govuk-error-message">
+              <span className="govuk-visually-hidden">Error:</span> {errors.peopleType}
+            </span>
+            )
+          }
             <div className="govuk-radios__item">
               <input
                 className="govuk-radios__input"
-                name="personType"
-                id="personType-1"
+                name="peopleType"
+                id="peopleType-1"
                 type="radio"
                 value="skipper"
-                checked={data.personType === 'skipper' ? 'checked' : ''}
+                checked={data.peopleType === 'skipper' ? 'checked' : ''}
                 onChange={(e) => handleChange(e)}
               />
-              <label className="govuk-label govuk-radios__label" htmlFor="personType-1">
+              <label className="govuk-label govuk-radios__label" htmlFor="peopleType-1">
                 Skipper
               </label>
             </div>
             <div className="govuk-radios__item">
               <input
                 className="govuk-radios__input"
-                name="personType"
-                id="personType-2"
+                name="peopleType"
+                id="peopleType-2"
                 type="radio"
                 value="crew"
-                checked={data.personType === 'crew' ? 'checked' : ''}
+                checked={data.peopleType === 'crew' ? 'checked' : ''}
                 onChange={(e) => handleChange(e)}
               />
-              <label className="govuk-label govuk-radios__label" htmlFor="personType-2">
+              <label className="govuk-label govuk-radios__label" htmlFor="peopleType-2">
                 Crew
               </label>
             </div>
             <div className="govuk-radios__item">
               <input
                 className="govuk-radios__input"
-                name="personType"
-                id="personType-3"
+                name="peopleType"
+                id="peopleType-3"
                 type="radio"
                 value="passenger"
-                checked={data.personType === 'passenger' ? 'checked' : ''}
+                checked={data.peopleType === 'passenger' ? 'checked' : ''}
                 onChange={(e) => handleChange(e)}
               />
-              <label className="govuk-label govuk-radios__label" htmlFor="personType-3">
+              <label className="govuk-label govuk-radios__label" htmlFor="peopleType-3">
                 Passenger
               </label>
             </div>
@@ -423,7 +445,7 @@ const CreatePerson = ({ handleSubmit, handleChange, data }) => {
       </div>
 
       <h2 className="govuk-heading-l">Travel document details</h2>
-      <div id="travelDocumentType" className="govuk-form-group">
+      <div id="documentType" className={`govuk-form-group ${errors.documentType ? 'govuk-form-group--error' : ''}`}>
         <fieldset className="govuk-fieldset" aria-describedby="travel-document-type-hint">
           <legend className="govuk-fieldset__legend">
             <label className="govuk-fieldset__heading">
@@ -431,62 +453,69 @@ const CreatePerson = ({ handleSubmit, handleChange, data }) => {
             </label>
           </legend>
           <div className="govuk-radios govuk-radios govuk-form-group">
+            {errors.documentType
+              && (
+              <span className="govuk-error-message">
+                <span className="govuk-visually-hidden">Error:</span> {errors.documentType}
+              </span>
+              )
+            }
             <div className="govuk-radios__item">
               <input
                 className="govuk-radios__input"
-                id="travelDocumentType-1"
-                name="travelDocumentType"
+                id="documentType-1"
+                name="documentType"
                 type="radio"
                 value="passport"
-                checked={data.travelDocumentType === 'passport' ? 'checked' : ''}
+                checked={data.documentType === 'passport' ? 'checked' : ''}
                 onChange={(e) => {
                   handleChange(e);
                 }}
               />
-              <label className="govuk-label govuk-radios__label" htmlFor="travelDocumentType-1">
+              <label className="govuk-label govuk-radios__label" htmlFor="documentType-1">
                 Passport
               </label>
             </div>
             <div className="govuk-radios__item">
               <input
                 className="govuk-radios__input"
-                id="travelDocumentType-2"
-                name="travelDocumentType"
+                id="documentType-2"
+                name="documentType"
                 type="radio"
                 value="identityCard"
-                checked={data.travelDocumentType === 'identityCard' ? 'checked' : ''}
+                checked={data.documentType === 'identityCard' ? 'checked' : ''}
                 onChange={(e) => {
                   handleChange(e);
                 }}
               />
-              <label className="govuk-label govuk-radios__label" htmlFor="travelDocumentType-2">
+              <label className="govuk-label govuk-radios__label" htmlFor="documentType-2">
                 Identity card
               </label>
             </div>
             <div className="govuk-radios__item">
               <input
                 className="govuk-radios__input"
-                id="travelDocumentType-3"
-                name="travelDocumentType"
+                id="documentType-3"
+                name="documentType"
                 type="radio"
                 value="other"
-                checked={(data.travelDocumentType && (data.travelDocumentType !== 'identityCard' && data.travelDocumentType !== 'passport')) ? 'checked' : ''}
+                checked={(data.documentType && (data.documentType !== 'identityCard' && data.documentType !== 'passport')) ? 'checked' : ''}
                 onChange={(e) => {
                   handleChange(e);
                 }}
               />
-              <label className="govuk-label govuk-radios__label" htmlFor="travelDocumentType-3">
+              <label className="govuk-label govuk-radios__label" htmlFor="documentType-3">
                 Other
               </label>
             </div>
           </div>
           <div className="govuk-form-group">
-            <label className="govuk-label" htmlFor="travelDocumentType-other">
+            <label className="govuk-label" htmlFor="documentType-other">
               If "Other", please specify
             </label>
             <input
               className="govuk-input"
-              name="travelDocumentType"
+              name="documentType"
               type="text"
               onChange={(e) => handleChange(e)}
             />
@@ -494,10 +523,17 @@ const CreatePerson = ({ handleSubmit, handleChange, data }) => {
         </fieldset>
       </div>
 
-      <div id="documentNumber" className="govuk-form-group">
+      <div id="documentNumber"  className={`govuk-form-group ${errors.documentNumber ? 'govuk-form-group--error' : ''}`}>
         <label className="govuk-label" htmlFor="documentNumber">
           Document number
         </label>
+        {errors.documentNumber
+          && (
+          <span className="govuk-error-message">
+            <span className="govuk-visually-hidden">Error:</span> {errors.documentNumber}
+          </span>
+          )
+        }
          <input
           className="govuk-input"
           name="documentNumber"
@@ -507,19 +543,26 @@ const CreatePerson = ({ handleSubmit, handleChange, data }) => {
         />
       </div>
 
-      <div id="issuingState" className="govuk-form-group">
-        <label className="govuk-label" htmlFor="issuingState">
+      <div id="documentIssuingState" className={`govuk-form-group ${errors.documentIssuingState ? 'govuk-form-group--error' : ''}`}>
+        <label className="govuk-label" htmlFor="documentIssuingState">
           Issuing state
         </label>
         <span className="govuk-hint">
           Please enter 3 letter ISO country code, for example GBR
           </span>
+          {errors.documentIssuingState
+            && (
+            <span className="govuk-error-message">
+              <span className="govuk-visually-hidden">Error:</span> {errors.documentIssuingState}
+            </span>
+            )
+          }
         <input
           className="govuk-input govuk-input--width-3"
-          name="issuingState"
+          name="documentIssuingState"
           type="text"
           maxLength="3"
-          value={data.issuingState || ''}
+          value={data.documentIssuingState || ''}
           onChange={(e) => handleChange(e)}
         />
       </div>
