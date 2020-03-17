@@ -1,52 +1,103 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
 // app imports
+import Auth from 'Auth';
+import { apiPath } from 'config';
 import CreateVessel from 'CreateVessel';
 
 const FormVessels = () => {
   // Update data from localStorage if it exists
   const [formData, setFormData] = useState(JSON.parse(localStorage.getItem('formData')) || {});
-  // const [errors, setErrors] = useState(JSON.parse(localStorage.getItem('errors')) || { title: null });
+  const [errors, setErrors] = useState(JSON.parse(localStorage.getItem('errors')) || { });
 
-  // // Handle errors
-  // const removeError = (fieldName) => {
-  //   const tempArr = { ...errors };
-  //   const key = fieldName;
-  //   delete tempArr[key];
-  //   setErrors(tempArr);
-  // };
+  const validationRules = [
+    {
+      field: 'name',
+      rule: 'required',
+      message: 'You must enter a name',
+    },
+    {
+      field: 'vesselType',
+      rule: 'required',
+      message: 'You must enter a vessel type',
+    },
+    {
+      field: 'vesselBase',
+      rule: 'required',
+      message: 'You must enter a usual mooring',
+    },
+    {
+      field: 'registration',
+      rule: 'required',
+      message: 'You must enter the registration',
+    },
+  ];
 
-  // const handleErrors = (e, errorText, groupField) => {
-  //   // For fields with multiple inputs in a single group
-  //   const name = !groupField ? e.target.name : groupField;
-  //   // Error onBlur if field is blank
-  //   if (!e.target.value) { setErrors({ ...errors, [name]: errorText }); }
-  //   // Error onBlur if condition not met
-  //   switch (e.target.name) {
-  //     case 'email': (/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(formData.email)) ? removeError('email') : setErrors({ ...errors, email: errorText }); break;
-  //     case 'confirmEmail':
-  // formData.email.toLowerCase() === formData.confirmEmail.toLowerCase() ? removeError('confirmEmail') : setErrors({ ...errors, confirmEmail: errorText }); break;
-  //     case 'confirmPassword': formData.password === formData.confirmPassword ? removeError('confirmPassword') : setErrors({ ...errors, confirmPassword: errorText }); break;
-  //     default: null;
-  //   }
-  // };
+  // Validation
+  const removeError = (fieldName) => {
+    const tempArr = { ...errors };
+    const key = fieldName;
+    delete tempArr[key];
+    setErrors(tempArr);
+  };
+  // Handle missing required fields
+  const checkRequiredFields = () => {
+    const tempObj = {};
+    validationRules.map((elem) => {
+      (!(elem.field in formData) || formData[elem.field] === '')
+        ? tempObj[elem.field] = elem.message
+        : null;
+    });
+    setErrors(tempObj);
+    return Object.keys(tempObj).length > 0;
+  };
 
   // Update form info to state
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
-    // removeError(e.target.name);
+    removeError(e.target.name);
   };
 
   // Clear formData from localStorage
   const clearFormData = (e) => {
     setFormData({});
-    // setErrors({ title: null });
+    setErrors({ });
+  };
+
+  // Ensure we have correct formatting
+  const getFieldsToSubmit = () => {
+    const dataSubmit = {
+      name: formData.name,
+      vesselType: formData.vesselType,
+      vesselBase: formData.vesselBase,
+      registration: formData.registration,
+    };
+    return dataSubmit;
   };
 
   // Handle Submit, including clearing localStorage
   const handleSubmit = (e) => {
     e.preventDefault();
-    clearFormData();
+    if (checkRequiredFields() === false) {
+      axios.post(`${apiPath}/user/vessels`, getFieldsToSubmit(), {
+        headers: { Authorization: `Bearer ${Auth.retrieveToken()}` },
+      })
+        .then(() => {
+          history.goBack(); // Return to page you came from
+          clearFormData();
+        })
+        .catch((err) => {
+          if (err.response) {
+            if (err.response) {
+              switch (err.response.status) {
+                case 400: setErrors({ ...errors, CreateVessel: 'This vessel already exists' }); break;
+                default: setErrors({ ...errors, CreateVessel: 'Something went wrong' });
+              }
+            }
+          }
+        });
+    }
   };
 
   // Update localStorage to hold page data
@@ -54,9 +105,9 @@ const FormVessels = () => {
     localStorage.setItem('formData', JSON.stringify(formData));
   }, [formData]);
 
-  // useEffect(() => {
-  //   localStorage.setItem('errors', JSON.stringify(errors));
-  // }, [errors]);
+  useEffect(() => {
+    localStorage.setItem('errors', JSON.stringify(errors));
+  }, [errors]);
 
   return (
     <div className="govuk-width-container ">
@@ -73,9 +124,9 @@ const FormVessels = () => {
           <div className="govuk-grid-column-two-thirds">
             <h1 className="govuk-heading-xl">Save vessel</h1>
             <p className="govuk-body-l">Please enter the following information. This information can be re-used when submitting an Advanced Voyage Report.</p>
-            <form>
+            <form id="CreateVessel">
 
-              {/* {Object.keys(errors).length > 1 && (
+              {Object.keys(errors).length > 0 && (
                 <div className="govuk-error-summary" aria-labelledby="error-summary-title" role="alert" tabIndex="-1" data-module="govuk-error-summary">
                   <h2 className="govuk-error-summary__title" id="error-summary-title">
                     There is a problem
@@ -91,12 +142,13 @@ const FormVessels = () => {
                     </ul>
                   </div>
                 </div>
-              )} */}
+              )}
 
              <CreateVessel
                 handleSubmit={(e) => handleSubmit(e)}
                 handleChange={(e) => handleChange(e)}
                 data={formData}
+                errors={errors}
               />
               <p>
                 <a href="/vessels" className="govuk-link govuk-link--no-visited-state" onClick={(e) => clearFormData(e)}>Exit without saving</a>
