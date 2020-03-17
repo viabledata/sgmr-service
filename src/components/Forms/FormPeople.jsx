@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
+import moment from 'moment';
 
 // app imports
-import { apiPath } from 'config'
+import { apiPath } from 'config';
 import CreatePerson from 'CreatePerson';
 
 const FormPeople = (props) => {
@@ -74,10 +75,12 @@ const FormPeople = (props) => {
     removeError(e.target.name);
   };
 
-  // // Format date fields
-  // const formatDateField = (year, month, day) => {
-  //   setFormData({ ...formData, documentExpiryDate: `${year}-${newMonth}-${newDay}` });
-  // };
+  // Format date fields
+  const formatDateField = (year, month, day) => {
+    const newDate = moment(`${year}-${month}-${day}`, 'YYYY-MM-DD').format('YYYY-M-D');
+    setFormData({ ...formData, documentExpiryDate: newDate });
+    console.log(newDate)
+  };
 
   // Clear formData from localStorage
   const clearFormData = (e) => {
@@ -88,7 +91,8 @@ const FormPeople = (props) => {
   // Handle Submit, including clearing localStorage
   const handleSubmit = (e) => {
     e.preventDefault();
-    // formatDateField(formData.documentExpiryYear, formData.documentExpiryMonth, formData.documentExpiryDay);
+    // Format date
+    formatDateField(formData.documentExpiryDateYear, formData.documentExpiryDateMonth, formData.documentExpiryDateDay);
     if (checkRequiredFields() === false) {
       axios.patch(`${apiPath}//user/people`, formData)
         .then((resp) => {
