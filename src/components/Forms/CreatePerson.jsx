@@ -387,7 +387,7 @@ const CreatePerson = ({ handleSubmit, handleChange, data, errors }) => {
             </label>
           </legend>
           <span className="govuk-hint">
-            For example Skipper, Crew or Passenger
+            For example Skipper, Crew
           </span>
           <div className="govuk-radios govuk-radios">
             {errors.peopleType
@@ -403,8 +403,8 @@ const CreatePerson = ({ handleSubmit, handleChange, data, errors }) => {
                 name="peopleType"
                 id="peopleType-1"
                 type="radio"
-                value="skipper"
-                checked={data.peopleType === 'skipper' ? 'checked' : ''}
+                value="Skipper"
+                checked={data.peopleType === 'Skipper' ? 'checked' : ''}
                 onChange={(e) => handleChange(e)}
               />
               <label className="govuk-label govuk-radios__label" htmlFor="peopleType-1">
@@ -417,8 +417,8 @@ const CreatePerson = ({ handleSubmit, handleChange, data, errors }) => {
                 name="peopleType"
                 id="peopleType-2"
                 type="radio"
-                value="crew"
-                checked={data.peopleType === 'crew' ? 'checked' : ''}
+                value="Crew"
+                checked={data.peopleType === 'Crew' ? 'checked' : ''}
                 onChange={(e) => handleChange(e)}
               />
               <label className="govuk-label govuk-radios__label" htmlFor="peopleType-2">
@@ -465,8 +465,8 @@ const CreatePerson = ({ handleSubmit, handleChange, data, errors }) => {
                 id="documentType-1"
                 name="documentType"
                 type="radio"
-                value="passport"
-                checked={data.documentType === 'passport' ? 'checked' : ''}
+                value="Passport"
+                checked={data.documentType === 'Passport' ? 'checked' : ''}
                 onChange={(e) => {
                   handleChange(e);
                 }}
@@ -481,8 +481,8 @@ const CreatePerson = ({ handleSubmit, handleChange, data, errors }) => {
                 id="documentType-2"
                 name="documentType"
                 type="radio"
-                value="identityCard"
-                checked={data.documentType === 'identityCard' ? 'checked' : ''}
+                value="IdentityCard"
+                checked={data.documentType === 'IdentityCard' ? 'checked' : ''}
                 onChange={(e) => {
                   handleChange(e);
                 }}
@@ -497,8 +497,8 @@ const CreatePerson = ({ handleSubmit, handleChange, data, errors }) => {
                 id="documentType-3"
                 name="documentType"
                 type="radio"
-                value="other"
-                checked={(data.documentType && (data.documentType !== 'identityCard' && data.documentType !== 'passport')) ? 'checked' : ''}
+                value="Other"
+                checked={data.documentType === 'Other' ? 'checked' : ''}
                 onChange={(e) => {
                   handleChange(e);
                 }}
