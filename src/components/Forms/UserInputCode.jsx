@@ -37,12 +37,32 @@ const UserInputCode = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     // Ensure required fields have a value
-    if (checkRequiredFields() === true) {
+    if (checkRequiredFields() === true && source === 'registration') {
+      console.log(source, 'patch')
       axios.patch(`${apiPath}/submit-verification-code`, formData)
         .then((resp) => {
-          resp.data.token ? Auth.storeToken(resp.data.token) : null;
-          localStorage.clear();
+          // console.log(resp)
+          // resp.data.token ? Auth.storeToken(resp.data.token) : null;
+          // localStorage.clear();
           history.push(`/sign-in?source=${source}`);
+        })
+        .catch((err) => {
+          if (err.response) {
+            switch (err.response.status) {
+              case 400: setErrors({ ...errors, twoFactorToken: 'Something is wrong' }); break;
+              case 401: setErrors({ ...errors, twoFactorToken: 'Code is invalid' }); break;
+              case 409: setErrors({ ...errors, twoFactorToken: 'Already verified, login' }); break;
+              default: false;
+            }
+          }
+        });
+    } else {
+      console.log(source, 'post')
+      axios.post(`${apiPath}/submit-verification-code`, formData)
+        .then((resp) => {
+          console.log(resp)
+          resp.data.token ? Auth.storeToken(resp.data.token) : null;
+          history.push(`/${source}`);
         })
         .catch((err) => {
           if (err.response) {

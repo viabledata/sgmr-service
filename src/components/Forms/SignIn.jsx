@@ -9,7 +9,7 @@ import { apiPath } from 'config';
 const SignIn = () => {
   const history = useHistory();
   const urlParams = location.search.split('source=');
-  const [source, setSource] = useState(urlParams[1]);
+  const [source, setSource] = useState(urlParams[1] || 'reports');
   const [formData, setFormData] = useState({});
   const [errors, setErrors] = useState({});
 
@@ -63,7 +63,8 @@ const SignIn = () => {
         .then((resp) => {
           // Auth.storeToken(resp.data.token);
           // history.push(sourcePage);
-          history.push(`/verify?source=${source}`);
+          localStorage.setItem('email', JSON.stringify(formData.email));
+          source === 'registration' ? history.push('/verify?source=reports') : history.push(`/verify?source=${source}`);
         })
         .catch((err) => {
           if (err.response) {

@@ -35,14 +35,16 @@ const UserResendCode = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // const submitType = source === 'registration' ? 'patch' : 'post';
+    console.log(source)
     // Ensure required fields have a value
     if (checkRequiredFields() === true && source === 'registration') {
+      console.log('patch')
       axios.patch(`${apiPath}/resend-verification-code`, formData)
         .then((resp) => {
           history.push(`/verify?source=${source}`);
         })
         .catch((err) => {
+          console.log(err.response)
           if (err.response) {
             switch (err.response.status) {
               case 400: setErrors({ ...errors, twoFactorToken: 'Something is wrong' }); break;
@@ -53,11 +55,13 @@ const UserResendCode = () => {
           }
         });
     } else {
+      console.log('post')
       axios.post(`${apiPath}/resend-verification-code`, formData)
         .then((resp) => {
           history.push(`/verify?source=${source}`);
         })
         .catch((err) => {
+          console.log(err.response)
           if (err.response) {
             switch (err.response.status) {
               case 400: setErrors({ ...errors, twoFactorToken: 'Something is wrong' }); break;
