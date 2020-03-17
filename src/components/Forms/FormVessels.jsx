@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link, useHistory, useLocation } from 'react-router-dom';
 import axios from 'axios';
 
 // app imports
@@ -7,6 +8,8 @@ import { apiPath } from 'config';
 import CreateVessel from 'CreateVessel';
 
 const FormVessels = () => {
+  const history = useHistory();
+  const location = useLocation();
   // Update data from localStorage if it exists
   const [formData, setFormData] = useState(JSON.parse(localStorage.getItem('formData')) || {});
   const [errors, setErrors] = useState(JSON.parse(localStorage.getItem('errors')) || { });
@@ -97,6 +100,8 @@ const FormVessels = () => {
             }
           }
         });
+    } else {
+      history.push('#CreateVessel');
     }
   };
 
