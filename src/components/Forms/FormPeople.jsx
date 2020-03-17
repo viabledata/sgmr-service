@@ -119,6 +119,12 @@ const FormPeople = (props) => {
         .catch((err) => {
           if (err.response) {
             console.log(err.response);
+            if (err.response) {
+              switch (err.response.status) {
+                case 400: setErrors({ ...errors, CreatePerson: 'This person already exists' }); break;
+                default: false;
+              }
+            }
           }
         });
     }
@@ -149,7 +155,7 @@ const FormPeople = (props) => {
           <div className="govuk-grid-column-two-thirds">
             <h1 className="govuk-heading-xl">Save a person</h1>
             <p className="govuk-body-l">Provide the details of the person you want to add to your list of saved people.</p>
-            <form>
+            <form id="CreatePerson">
 
               {Object.keys(errors).length > 0 && (
                 <div className="govuk-error-summary" aria-labelledby="error-summary-title" role="alert" tabIndex="-1" data-module="govuk-error-summary">
