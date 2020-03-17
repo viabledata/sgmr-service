@@ -108,13 +108,11 @@ const FormPeople = (props) => {
       documentIssuingState: formData.documentIssuingState,
       peopleType: formData.peopleType,
     };
-    console.log(dataSubmit)
     if (checkRequiredFields() === false) {
       axios.post(`${apiPath}/user/people`, dataSubmit, {
         headers: { Authorization: `Bearer ${Auth.retrieveToken()}` },
       })
         .then((resp) => {
-          console.log(resp);
           history.goBack(); // Return to page you came from
           clearFormData();
         })
@@ -123,7 +121,7 @@ const FormPeople = (props) => {
             console.log(err.response);
           }
         });
-    };
+    }
   };
 
   // Update localStorage to hold page data
