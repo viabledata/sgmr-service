@@ -8,7 +8,7 @@ import { apiPath } from 'config';
 
 const SignIn = () => {
   const history = useHistory();
-  const [sourcePage, setSourcePage] = useState('/reports');
+  const [sourcePage, setSourcePage] = useState('/reports?source=sign-in');
   const [formData, setFormData] = useState({});
   const [errors, setErrors] = useState({});
 

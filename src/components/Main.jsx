@@ -11,7 +11,9 @@ import Header from 'Header';
 import PageContainer from 'PageContainer';
 
 import SignIn from 'SignIn';
+import UserInputCode from 'UserInputCode';
 import UserRegister from 'UserRegister';
+import UserResendCode from 'UserResendCode';
 
 import EditAccount from 'EditAccount';
 import FormPeople from 'FormPeople';
@@ -60,6 +62,12 @@ const Main = () => {
         </Route>
         <Route exact path="/register">
           <UserRegister />
+        </Route>
+        <Route exact path="/verify">
+          <UserInputCode />
+        </Route>
+        <Route exact path="/resend-code">
+          <UserResendCode />
         </Route>
       </Switch>
       <Footer />
