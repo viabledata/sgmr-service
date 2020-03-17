@@ -11,7 +11,7 @@ const FormVessels = () => {
   const history = useHistory();
   const location = useLocation();
   const path = location.pathname.slice(1);
-  const source = (location.search.split('source='));
+  const urlParams = location.search.split('source=');
   // Update data from localStorage if it exists
   const [formData, setFormData] = useState(JSON.parse(localStorage.getItem('formData')) || {});
   const [errors, setErrors] = useState(JSON.parse(localStorage.getItem('errors')) || { });
@@ -89,8 +89,8 @@ const FormVessels = () => {
         headers: { Authorization: `Bearer ${Auth.retrieveToken()}` },
       })
         .then(() => {
-          !source ? history.push('vessels') : history.push(source[1]);
           clearFormData();
+          history.push('/vessels');
         })
         .catch((err) => {
           if (err.response) {
@@ -110,7 +110,7 @@ const FormVessels = () => {
     }
   };
 
-  // Update localStorage to hold page data
+  // Update localStorage/states
   useEffect(() => {
     localStorage.setItem('formData', JSON.stringify(formData));
   }, [formData]);
