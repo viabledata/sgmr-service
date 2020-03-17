@@ -567,10 +567,10 @@ const CreatePerson = ({ handleSubmit, handleChange, data, errors }) => {
         />
       </div>
 
-      <div id="expiryDate" className="govuk-form-group">
-        <fieldset className="govuk-fieldset" role="group" aria-describedby="expiryDate-hint">
+      <div id="documentExpiryDate" className={`govuk-form-group ${errors.documentIssuingState ? 'govuk-form-group--error' : ''}`}>
+        <fieldset className="govuk-fieldset" role="group" aria-describedby="documentExpiryDate-hint">
           <legend className="govuk-fieldset__legend">
-            <label className="govuk-label" htmlFor="expiryDate">
+            <label className="govuk-label" htmlFor="documentExpiryDate">
               Expiry date
             </label>
           </legend>
@@ -578,53 +578,60 @@ const CreatePerson = ({ handleSubmit, handleChange, data, errors }) => {
             For example, 31 3 2022
           </span>
           <div className="govuk-date-input" >
+            {errors.documentExpiryDate
+              && (
+              <span className="govuk-error-message">
+                <span className="govuk-visually-hidden">Error:</span> {errors.documentExpiryDate}
+              </span>
+              )
+            }
             <div className="govuk-date-input__item">
               <div className="govuk-form-group">
-                <label className="govuk-label govuk-date-input__label" htmlFor="expiryDateDay">
+                <label className="govuk-label govuk-date-input__label" htmlFor="documentExpiryDateDay">
                   Day
                 </label>
                 <input
                   className="govuk-input govuk-date-input__input govuk-input--width-2"
-                  name="expiryDateDay"
+                  name="documentExpiryDateDay"
                   type="text"
                   pattern="[0-9]*"
                   inputMode="numeric"
                   maxLength="2"
-                  value={data.expiryDateDay || ''}
+                  value={data.documentExpiryDateDay || ''}
                   onChange={(e) => handleChange(e)}
                 />
               </div>
             </div>
             <div className="govuk-date-input__item">
               <div className="govuk-form-group">
-                <label className="govuk-label govuk-date-input__label" htmlFor="expiryDateMonth">
+                <label className="govuk-label govuk-date-input__label" htmlFor="documentExpiryDateMonth">
                   Month
                 </label>
                 <input
                   className="govuk-input govuk-date-input__input govuk-input--width-2"
-                  name="expiryDateMonth"
+                  name="documentExpiryDateMonth"
                   type="text"
                   pattern="[0-9]*"
                   inputMode="numeric"
                   maxLength="2"
-                  value={data.expiryDateMonth || ''}
+                  value={data.documentExpiryDateMonth || ''}
                   onChange={(e) => handleChange(e)}
                 />
                 </div>
             </div>
             <div className="govuk-date-input__item">
               <div className="govuk-form-group">
-                <label className="govuk-label govuk-date-input__label" htmlFor="expiryDateYear">
+                <label className="govuk-label govuk-date-input__label" htmlFor="documentExpiryDateYear">
                   Year
                 </label>
                 <input
                   className="govuk-input govuk-date-input__input govuk-input--width-4"
-                  name="expiryDateYear"
+                  name="documentExpiryDateYear"
                   type="text"
                   pattern="[0-9]*"
                   inputMode="numeric"
                   maxLength="4"
-                  value={data.expiryDateYear || ''}
+                  value={data.documentExpiryDateYear || ''}
                   onChange={(e) => handleChange(e)}
                 />
               </div>
