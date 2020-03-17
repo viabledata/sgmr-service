@@ -4,7 +4,6 @@ import { useLocation } from 'react-router-dom';
 const CreatePerson = ({ handleSubmit, handleChange, data, errors }) => {
   const urlParams = location.search.split('source=');
   const source = urlParams[1];
-  console.log(errors)
 
   return (
     <section>
