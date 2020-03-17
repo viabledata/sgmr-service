@@ -10,6 +10,8 @@ import CreateVessel from 'CreateVessel';
 const FormVessels = () => {
   const history = useHistory();
   const location = useLocation();
+  const path = location.pathname.slice(1);
+  const source = (location.search.split('source='));
   // Update data from localStorage if it exists
   const [formData, setFormData] = useState(JSON.parse(localStorage.getItem('formData')) || {});
   const [errors, setErrors] = useState(JSON.parse(localStorage.getItem('errors')) || { });
@@ -87,7 +89,7 @@ const FormVessels = () => {
         headers: { Authorization: `Bearer ${Auth.retrieveToken()}` },
       })
         .then(() => {
-          history.goBack(); // Return to page you came from
+          !source ? history.push('vessels') : history.push(source[1]);
           clearFormData();
         })
         .catch((err) => {
@@ -95,12 +97,15 @@ const FormVessels = () => {
             if (err.response) {
               switch (err.response.status) {
                 case 400: setErrors({ ...errors, CreateVessel: 'This vessel already exists' }); break;
+                case 422: history.push(`/sign-in?source=${path}`); break;
+                case 405: history.push(`/sign-in?source=${path}`); break;
                 default: setErrors({ ...errors, CreateVessel: 'Something went wrong' });
               }
             }
           }
         });
     } else {
+      // This means there are errors, so jump user to the error box
       history.push('#CreateVessel');
     }
   };

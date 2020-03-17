@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import moment from 'moment';
 
@@ -10,6 +10,7 @@ import CreatePerson from 'CreatePerson';
 
 const FormPeople = (props) => {
   const history = useHistory();
+  const location = useLocation().pathname.slice(1);
   const [formData, setFormData] = useState(JSON.parse(localStorage.getItem('formData')) || {});
   const [errors, setErrors] = useState(JSON.parse(localStorage.getItem('errors')) || {});
 
@@ -76,7 +77,6 @@ const FormPeople = (props) => {
       setErrors({ ...errors, documentExpiryDate: 'You must enter a valid date' });
     } else {
       const newDate = moment(`${year}-${month}-${day}`, 'YYYY-MM-DD').format('YYYY-M-D');
-      // setFormData({ ...formData, documentExpiryDate: newDate });
       removeError('documentExpiryDate');
       return newDate;
     }
@@ -124,11 +124,16 @@ const FormPeople = (props) => {
             if (err.response) {
               switch (err.response.status) {
                 case 400: setErrors({ ...errors, CreatePerson: 'This person already exists' }); break;
+                case 422: history.push(`/sign-in?source=${location}`); break;
+                case 405: history.push(`/sign-in?source=${location}`); break;
                 default: setErrors({ ...errors, CreatePerson: 'Something went wrong' });
               }
             }
           }
         });
+    } else {
+      // This means there are errors, so jump user to the error box
+      history.push('#CreatePerson');
     }
   };
 
