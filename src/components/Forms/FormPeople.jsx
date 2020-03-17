@@ -1,55 +1,129 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
+import axios from 'axios';
+import moment from 'moment';
 
 // app imports
+import { apiPath } from 'config';
+import Auth from 'Auth';
 import CreatePerson from 'CreatePerson';
 
 const FormPeople = (props) => {
   const history = useHistory();
   const [formData, setFormData] = useState(JSON.parse(localStorage.getItem('formData')) || {});
-  // const [errors, setErrors] = useState(JSON.parse(localStorage.getItem('errors')) || { title: null });
+  const [errors, setErrors] = useState(JSON.parse(localStorage.getItem('errors')) || {});
 
-  // // Handle errors
-  // const removeError = (fieldName) => {
-  //   const tempArr = { ...errors };
-  //   const key = fieldName;
-  //   delete tempArr[key];
-  //   setErrors(tempArr);
-  // };
+  const validationRules = [
+    {
+      field: 'firstName',
+      rule: 'required',
+      message: 'You must enter a first name',
+    },
+    {
+      field: 'lastName',
+      rule: 'required',
+      message: 'You must enter a last name',
+    },
+    {
+      field: 'peopleType',
+      rule: 'required',
+      message: 'You must enter a person type',
+    },
+    {
+      field: 'documentType',
+      rule: 'required',
+      message: 'You must select a document type',
+    },
+    {
+      field: 'documentNumber',
+      rule: 'required',
+      message: 'You must enter a document number',
+    },
+    {
+      field: 'documentIssuingState',
+      rule: 'required',
+      message: 'You must enter the document issuing state',
+    },
+    {
+      field: 'documentExpiryDate',
+      rule: 'required',
+      message: 'You must enter an expiry date',
+    },
+  ];
 
-  // const handleErrors = (e, errorText, groupField) => {
-  // // For fields with multiple inputs in a single group
-  //   const name = !groupField ? e.target.name : groupField;
-  //   // Error onBlur if field is blank
-  //   if (!e.target.value) { setErrors({ ...errors, [name]: errorText }); }
-  //   // Error onBlur if condition not met
-  //   switch (e.target.name) {
-  //     case 'email': (/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(formData.email)) ? removeError('email') : setErrors({ ...errors, email: errorText }); break;
-  //     case 'confirmEmail':
-  // formData.email.toLowerCase() === formData.confirmEmail.toLowerCase() ? removeError('confirmEmail') : setErrors({ ...errors, confirmEmail: errorText }); break;
-  //     case 'confirmPassword': formData.password === formData.confirmPassword ? removeError('confirmPassword') : setErrors({ ...errors, confirmPassword: errorText }); break;
-  //     default: null;
-  //   }
-  // };
+  // Validation
+  const removeError = (fieldName) => {
+    const tempArr = { ...errors };
+    const key = fieldName;
+    delete tempArr[key];
+    setErrors(tempArr);
+  };
+  // Handle missing required fields
+  const checkRequiredFields = () => {
+    const tempObj = {};
+    validationRules.map((elem) => {
+      (!(elem.field in formData) || formData[elem.field] === '')
+        ? tempObj[elem.field] = elem.message
+        : null;
+    });
+    setErrors(tempObj);
+    return Object.keys(tempObj).length > 0;
+  };
 
   // Update form info to state
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
-    // removeError(e.target.name);
+    removeError(e.target.name);
+  };
+
+  // Format date fields
+  const formatDateField = (year, month, day) => {
+    if (!year || !month || !day || year.length < 4 || month > 12 || month < 1 || day > 31 || day < 1) {
+      setErrors({ ...errors, documentExpiryDate: 'You must enter a valid date' });
+    } else {
+      const newDate = moment(`${year}-${month}-${day}`, 'YYYY-MM-DD').format('YYYY-M-D');
+      setFormData({ ...formData, documentExpiryDate: newDate });
+      removeError('documentExpiryDate');
+    }
   };
 
   // Clear formData from localStorage
   const clearFormData = (e) => {
     setFormData({});
-    // setErrors({ title: null });
+    setErrors({ });
   };
 
   // Handle Submit, including clearing localStorage
   const handleSubmit = (e) => {
-    // Combine date fields into required format before submit
     e.preventDefault();
-    clearFormData();
-    history.goBack(); // Return to page you came from
+    // Format date
+    formatDateField(formData.documentExpiryDateYear, formData.documentExpiryDateMonth, formData.documentExpiryDateDay);
+    // Get fields for submitting
+    const dataSubmit = {
+      firstName: formData.firstName,
+      lastName: formData.lastName,
+      documentType: formData.documentType,
+      documentNumber: formData.documentNumber,
+      documentExpiryDate: formData.documentExpiryDate,
+      documentIssuingState: formData.documentIssuingState,
+      peopleType: formData.peopleType,
+    };
+    console.log(dataSubmit)
+    if (checkRequiredFields() === false) {
+      axios.post(`${apiPath}/user/people`, dataSubmit, {
+        headers: { Authorization: `Bearer ${Auth.retrieveToken()}` },
+      })
+        .then((resp) => {
+          console.log(resp);
+          history.goBack(); // Return to page you came from
+          clearFormData();
+        })
+        .catch((err) => {
+          if (err.response) {
+            console.log(err.response);
+          }
+        });
+    };
   };
 
   // Update localStorage to hold page data
@@ -57,9 +131,9 @@ const FormPeople = (props) => {
     localStorage.setItem('formData', JSON.stringify(formData));
   }, [formData]);
 
-  // useEffect(() => {
-  //   localStorage.setItem('errors', JSON.stringify(errors));
-  // }, [errors]);
+  useEffect(() => {
+    localStorage.setItem('errors', JSON.stringify(errors));
+  }, [errors]);
 
 
   return (
@@ -79,7 +153,7 @@ const FormPeople = (props) => {
             <p className="govuk-body-l">Provide the details of the person you want to add to your list of saved people.</p>
             <form>
 
-              {/* {Object.keys(errors).length > 1 && (
+              {Object.keys(errors).length > 0 && (
                 <div className="govuk-error-summary" aria-labelledby="error-summary-title" role="alert" tabIndex="-1" data-module="govuk-error-summary">
                   <h2 className="govuk-error-summary__title" >
                     There is a problem
@@ -95,12 +169,13 @@ const FormPeople = (props) => {
                     </ul>
                   </div>
                 </div>
-              )} */}
+              )}
 
               <CreatePerson
                 handleSubmit={(e) => handleSubmit(e)}
                 handleChange={(e) => handleChange(e)}
                 data={formData}
+                errors={errors}
               />
 
               <p>

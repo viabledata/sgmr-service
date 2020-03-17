@@ -38,12 +38,8 @@ const UserInputCode = () => {
     e.preventDefault();
     // Ensure required fields have a value
     if (checkRequiredFields() === true && source === 'registration') {
-      console.log(source, 'patch')
       axios.patch(`${apiPath}/submit-verification-code`, formData)
         .then((resp) => {
-          // console.log(resp)
-          // resp.data.token ? Auth.storeToken(resp.data.token) : null;
-          // localStorage.clear();
           history.push(`/sign-in?source=${source}`);
         })
         .catch((err) => {
@@ -57,10 +53,8 @@ const UserInputCode = () => {
           }
         });
     } else {
-      console.log(source, 'post')
       axios.post(`${apiPath}/submit-verification-code`, formData)
         .then((resp) => {
-          console.log(resp)
           resp.data.token ? Auth.storeToken(resp.data.token) : null;
           history.push(`/${source}`);
         })
