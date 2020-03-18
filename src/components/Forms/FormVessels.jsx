@@ -10,6 +10,7 @@ import CreateVessel from 'CreateVessel';
 const FormVessels = () => {
   const history = useHistory();
   const location = useLocation();
+  const checkIfNotVoyageForm = location.pathname.toLowerCase().indexOf('voyage') === -1;
   const path = location.pathname.slice(1);
   const urlParams = location.search.split('source=');
   // Update data from localStorage if it exists
@@ -70,14 +71,14 @@ const FormVessels = () => {
     setErrors({ });
   };
 
-  // Ensure we have correct formatting
+  // // Get fields to submit
   // const getFieldsToSubmit = () => {
   //   const dataSubmit = {
   //     name: formData.name,
   //     vesselType: formData.vesselType,
   //     vesselBase: formData.vesselBase,
   //     registration: formData.registration,
-  //   };
+  //   }
   //   return dataSubmit;
   // };
 
@@ -89,8 +90,8 @@ const FormVessels = () => {
         headers: { Authorization: `Bearer ${Auth.retrieveToken()}` },
       })
         .then(() => {
-          // If this is the new vessel form then take user to vessels page, otherwise leave the user here
-          if (urlParams[1] === 'vessels') {
+          // If this is not the voyage form then take user to vessels page, otherwise leave the user here
+          if (checkIfNotVoyageForm) {
             clearFormData();
             history.push('/vessels');
           }
