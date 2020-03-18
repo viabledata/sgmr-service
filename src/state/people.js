@@ -10,17 +10,24 @@ import { apiPath } from 'config';
 export const fetchPeopleRoutine = createRoutine('FETCH_PEOPLE');
 
 export const initialState = Object.freeze({
-  loading: false,
+  isLoading: false,
+  hasLoaded: false,
   list: [],
   error: null,
 });
 
 export const peopleReducer = (state = initialState, action) => {
   switch (action.type) {
+    case fetchPeopleRoutine.TRIGGER:
+      return { ...state, isLoading: true, hasLoaded: false };
     case fetchPeopleRoutine.SUCCESS:
-      return { ...state, list: action.payload };
+      return {
+        ...state, hasLoaded: true, isLoading: false, list: action.payload,
+      };
     case fetchPeopleRoutine.FAILURE:
-      return { ...state, error: action.payload };
+      return {
+        ...state, isLoading: false, hasLoaded: false, error: action.payload,
+      };
     default: {
       return state;
     }
