@@ -39,7 +39,22 @@ const FormVoyage = () => {
 
   // Update form info to state
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, type, value, checked } = e.target;
+
+    switch (type) {
+      case 'checkbox': {
+        formData[name] = [...formData[name], value]; // Create array, add current values and new value
+
+        if (!checked) {
+          formData[name] = formData[name].filter((formDataValue) => formDataValue !== value); // Remove the current value if it is not checked
+        }
+
+        setFormData({ ...formData });
+        break;
+      }
+      default: setFormData({ ...formData, [name]: value }); break;
+    }
+
     // removeError(e.target.name);
   };
 
