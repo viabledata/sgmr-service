@@ -98,13 +98,11 @@ const FormVessels = () => {
         })
         .catch((err) => {
           if (err.response) {
-            if (err.response) {
-              switch (err.response.status) {
-                case 400: setErrors({ ...errors, CreateVessel: 'This vessel already exists' }); break;
-                case 422: history.push(`/sign-in?source=${path}`); break;
-                case 405: history.push(`/sign-in?source=${path}`); break;
-                default: setErrors({ ...errors, CreateVessel: 'Something went wrong' });
-              }
+            switch (err.response.status) {
+              case 400: setErrors({ ...errors, CreateVessel: 'This vessel already exists' }); break;
+              case 422: history.push(`/sign-in?source=${path}`); break;
+              case 405: history.push(`/sign-in?source=${path}`); break;
+              default: setErrors({ ...errors, CreateVessel: 'Something went wrong' });
             }
           }
         });

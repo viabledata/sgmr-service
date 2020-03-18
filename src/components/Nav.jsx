@@ -52,14 +52,23 @@ const Nav = () => {
   };
 
   const handleSignout = () => {
-    console.log('signout')
-    axios.post(`${apiPath}/logout`, {
+    axios({
+      method: 'post',
+      url: `${apiPath}/logout`,
       headers: { Authorization: `Bearer ${Auth.retrieveToken()}` },
     })
       .then((resp) => {
-        console.log(resp);
+        Auth.logout();
+        history.push('/sign-in');
       })
-      .catch((err) => console.log(err.data));
+      .catch((err) => {
+        if (err.response) {
+          switch (err.response.status) {
+            case 401: history.push('/sign-in'); break;
+            default: history.push('/sign-in');
+          }
+        }
+      });
   };
 
   useEffect(() => {
