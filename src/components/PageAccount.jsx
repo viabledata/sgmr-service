@@ -1,6 +1,39 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+
+// App imports
+import { apiPath } from 'config';
+import Auth from 'Auth';
 
 const PageAccount = () => {
+  const [data, setData] = useState({});
+  const [errors, setErrors] = useState({});
+
+  const getData = () => {
+    axios.get(`${apiPath}/user`, {
+      headers: { Authorization: `Bearer ${Auth.retrieveToken()}` },
+    })
+      .then((resp) => {
+        setData(resp.data);
+      })
+      .catch((err) => {
+        if (err.response) {
+          switch (err.response.status) {
+            case 401: history.push(`/sign-in?source=${location}`); break;
+            case 422: history.push(`/sign-in?source=${location}`); break;
+            case 405: history.push(`/sign-in?source=${location}`); break;
+            default: history.push(`/sign-in?source=${location}`);
+          }
+        }
+      });
+  };
+
+  useEffect(() => {
+    getData();
+  }, []);
+
+  console.log(data)
+
   return (
     <div>
       <dl className="govuk-summary-list govuk-!-margin-bottom-9">
@@ -9,7 +42,7 @@ const PageAccount = () => {
             Given name
           </dt>
           <dd className="govuk-summary-list__value">
-            Alex
+            {data.firstName}
           </dd>
         </div>
         <div className="govuk-summary-list__row">
@@ -17,7 +50,7 @@ const PageAccount = () => {
             Surname
           </dt>
           <dd className="govuk-summary-list__value">
-            Sam
+            {data.lastName}
           </dd>
         </div>
         <div className="govuk-summary-list__row">
@@ -25,7 +58,15 @@ const PageAccount = () => {
             Email
           </dt>
           <dd className="govuk-summary-list__value">
-            email@email.com
+            {data.email}
+          </dd>
+        </div>
+        <div className="govuk-summary-list__row">
+          <dt className="govuk-summary-list__key">
+            Mobile number
+          </dt>
+          <dd className="govuk-summary-list__value">
+            {data.mobileNumber}
           </dd>
         </div>
       </dl>
