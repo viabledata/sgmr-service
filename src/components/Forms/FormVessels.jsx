@@ -28,7 +28,7 @@ const FormVessels = () => {
       message: 'You must enter a vessel type',
     },
     {
-      field: 'vesselBase',
+      field: 'moorings',
       rule: 'required',
       message: 'You must enter a usual mooring',
     },
@@ -71,21 +71,21 @@ const FormVessels = () => {
   };
 
   // Ensure we have correct formatting
-  const getFieldsToSubmit = () => {
-    const dataSubmit = {
-      name: formData.name,
-      vesselType: formData.vesselType,
-      vesselBase: formData.vesselBase,
-      registration: formData.registration,
-    };
-    return dataSubmit;
-  };
+  // const getFieldsToSubmit = () => {
+  //   const dataSubmit = {
+  //     name: formData.name,
+  //     vesselType: formData.vesselType,
+  //     vesselBase: formData.vesselBase,
+  //     registration: formData.registration,
+  //   };
+  //   return dataSubmit;
+  // };
 
   // Handle Submit, including clearing localStorage
   const handleSubmit = (e) => {
     e.preventDefault();
     if (checkRequiredFields() === false) {
-      axios.post(`${apiPath}/user/vessels`, getFieldsToSubmit(), {
+      axios.post(`${apiPath}/user/vessels`, formData, {
         headers: { Authorization: `Bearer ${Auth.retrieveToken()}` },
       })
         .then(() => {
