@@ -36,6 +36,7 @@ module.exports = {
       SectionTabs: path.resolve(__dirname, 'src/components/SectionTabs.jsx'),
       SectionTable: path.resolve(__dirname, 'src/components/SectionTable.jsx'),
       StartButton: path.resolve(__dirname, 'src/components/StartButton.jsx'),
+      Vessels: path.resolve(__dirname, 'src/components/Vessels.jsx'),
       // Page content
       contentArray: path.resolve(__dirname, 'src/components/contentArray.js'),
       PageAccount: path.resolve(__dirname, 'src/components/PageAccount.jsx'),

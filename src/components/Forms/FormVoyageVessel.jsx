@@ -40,6 +40,10 @@ const FormVoyageVessel = () => {
       });
   };
 
+  // Details for creating a new vessel -- success does not take you to a new page as this is just one step within the Voyage creation
+  
+
+
   useEffect(() => {
     getTitles();
     getData();
