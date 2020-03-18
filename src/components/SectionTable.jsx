@@ -64,12 +64,12 @@ const SectionTable = ({ page, pageData }) => {
                       <tr className="govuk-table__row" key={i}>
                         <td className="govuk-table__cell" scope="row">
                           {page === '/vessels' && <p>{elem.name}</p>}
-                          {page === '/people' && <p>{elem.surname}</p>}
+                          {/* {page === '/people' && <p>{elem.surname}</p>} */}
                         </td>
                         {page === '/vessels' && <td className="govuk-table__cell">{elem.vesselType}</td>}
                         {page === '/vessels' && <td className="govuk-table__cell">{elem.vesselBase}</td>}
-                        {page === '/people' && <td className="govuk-table__cell">{elem.givenName}</td>}
-                        {page === '/people' && <td className="govuk-table__cell">{elem.type}</td>}
+                        {/* {page === '/people' && <td className="govuk-table__cell">{elem.givenName}</td>} */}
+                        {/* {page === '/people' && <td className="govuk-table__cell">{elem.type}</td>} */}
                       </tr>
                     );
                   })}
