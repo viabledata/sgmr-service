@@ -12,11 +12,11 @@ const FormVoyageVessel = ({ handleSubmit, handleChange, data }) => {
 
       <h2 className="govuk-heading-l">New vessel</h2>
       <p className="govuk-body-l">Add the details of a new vessel you have not already saved</p>
-      <CreateVessel
+      {/* <CreateVessel
         handleSubmit={(e) => handleSubmit(e)}
         handleChange={(e) => handleChange(e)}
         data={data}
-      />
+      /> */}
 
       <button
         className="govuk-button"
