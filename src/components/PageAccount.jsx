@@ -32,8 +32,6 @@ const PageAccount = () => {
     getData();
   }, []);
 
-  console.log(data)
-
   return (
     <div>
       <dl className="govuk-summary-list govuk-!-margin-bottom-9">
