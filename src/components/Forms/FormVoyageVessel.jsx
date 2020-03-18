@@ -23,11 +23,11 @@ const FormVoyageVessel = ({ handleSubmit, data }) => {
   };
 
   const getData = () => {
-    axios.get(`${apiPath}/user/vessels`, {
+    axios.get(`${apiPath}/user/vessels?pagination=false`, {
       headers: { Authorization: `Bearer ${Auth.retrieveToken()}` },
     })
       .then((resp) => {
-        setVessels(resp.data);
+        setVessels(resp.data.vessels);
       })
       .catch((err) => {
         if (err.response) {
@@ -68,7 +68,7 @@ const FormVoyageVessel = ({ handleSubmit, data }) => {
           </tr>
           </thead>
           <tbody className="govuk-table__body">
-            {vessels.items.map((elem, i) => {
+            {vessels.map((elem, i) => {
               return (
                 <tr className="govuk-table__row" key={i}>
                   <td className="govuk-table__cell multiple-choice--hod">
@@ -95,9 +95,7 @@ const FormVoyageVessel = ({ handleSubmit, data }) => {
       <h2 className="govuk-heading-l">New vessel</h2>
       <p className="govuk-body-l">Add the details of a new vessel you have not already saved</p>
 
-      <FormVessels
-        data={formData}
-      />
+      <FormVessels />
 
       <button
         className="govuk-button"
