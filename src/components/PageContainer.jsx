@@ -37,6 +37,8 @@ const PageContainer = (props) => {
 
   useEffect(() => {
     checkPageReportsSection();
+    localStorage.removeItem('errors');
+    localStorage.removeItem('formData');
   }, [pageData]);
 
   if (!sectionReport) { return (null); }

@@ -522,7 +522,7 @@ const CreatePerson = ({ handleSubmit, handleChange, data, errors }) => {
         </fieldset>
       </div>
 
-      <div id="documentNumber"  className={`govuk-form-group ${errors.documentNumber ? 'govuk-form-group--error' : ''}`}>
+      <div id="documentNumber" className={`govuk-form-group ${errors.documentNumber ? 'govuk-form-group--error' : ''}`}>
         <label className="govuk-label" htmlFor="documentNumber">
           Document number
         </label>
