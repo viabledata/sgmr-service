@@ -8,10 +8,11 @@ import contentArray from 'contentArray';
 import FormVessels from 'FormVessels';
 
 
-const FormVoyageVessel = ({ handleSubmit, handleChange, data }) => {
+const FormVoyageVessel = ({ handleSubmit, data }) => {
   const [titles, setTitles] = useState();
   const [vessels, setVessels] = useState();
   const [apiErrors, setApiErrors] = useState();
+  const [formData, setFormData] = useState();
   const arr = contentArray;
 
   const getTitles = () => {
@@ -40,11 +41,14 @@ const FormVoyageVessel = ({ handleSubmit, handleChange, data }) => {
       });
   };
 
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
   useEffect(() => {
     getTitles();
     getData();
   }, []);
-
 
   if (!titles || !vessels) { return (null); }
   return (
@@ -69,8 +73,15 @@ const FormVoyageVessel = ({ handleSubmit, handleChange, data }) => {
                 <tr className="govuk-table__row" key={i}>
                   <td className="govuk-table__cell multiple-choice--hod">
                     <div className="govuk-checkboxes__item">
-                      <input type="checkbox" className="govuk-checkboxes__input jsCheckbox" id="radio-1" />
-                      <label className="govuk-label govuk-checkboxes__label" htmlFor="radio-1">&nbsp;</label>
+                      <input
+                        type="checkbox"
+                        className="govuk-checkboxes__input jsCheckbox"
+                        id={elem.id}
+                        name={elem.name}
+                        value={elem.name}
+                        onChange={(e) => handleChange(e)}
+                      />
+                      <label className="govuk-label govuk-checkboxes__label" htmlFor={elem.id}>&nbsp;</label>
                     </div>
                   </td>
                   <td className="govuk-table__cell" scope="row">{elem.name}</td>
@@ -84,7 +95,9 @@ const FormVoyageVessel = ({ handleSubmit, handleChange, data }) => {
       <h2 className="govuk-heading-l">New vessel</h2>
       <p className="govuk-body-l">Add the details of a new vessel you have not already saved</p>
 
-      <FormVessels />
+      <FormVessels
+        data={formData}
+      />
 
       <button
         className="govuk-button"
