@@ -1,18 +1,24 @@
 import React, { useEffect, useState } from 'react';
+import { useLocation, useHistory } from 'react-router-dom';
 import axios from 'axios';
 
 // app imports
 import { apiPath } from 'config';
 import Auth from 'Auth';
 import contentArray from 'contentArray';
-import FormVessels from 'FormVessels';
+import CreateVessel from 'CreateVessel';
 
 
-const FormVoyageVessel = ({ handleSubmit, data }) => {
+const FormVoyageVessel = () => {
+  const history = useHistory();
+  const location = useLocation();
+  const path = location.pathname.slice(1);
+  const urlParams = location.search.split('source=');
   const [titles, setTitles] = useState();
   const [vessels, setVessels] = useState();
   const [apiErrors, setApiErrors] = useState();
-  const [formData, setFormData] = useState();
+  const [formData, setFormData] = useState({});
+  const [errors, setErrors] = useState({});
   const arr = contentArray;
 
   const getTitles = () => {
@@ -43,6 +49,88 @@ const FormVoyageVessel = ({ handleSubmit, data }) => {
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  // Handle create vessel
+  const validationRules = [
+    {
+      field: 'name',
+      rule: 'required',
+      message: 'You must enter a name',
+    },
+    {
+      field: 'vesselType',
+      rule: 'required',
+      message: 'You must enter a vessel type',
+    },
+    {
+      field: 'vesselBase',
+      rule: 'required',
+      message: 'You must enter a usual mooring',
+    },
+    {
+      field: 'registration',
+      rule: 'required',
+      message: 'You must enter the registration',
+    },
+  ];
+  // Handle missing required fields
+  const checkRequiredFields = () => {
+    const tempObj = {};
+    validationRules.map((elem) => {
+      (!(elem.field in formData) || formData[elem.field] === '')
+        ? tempObj[elem.field] = elem.message
+        : null;
+    });
+    setErrors(tempObj);
+    return Object.keys(tempObj).length > 0;
+  };// Validation
+  const removeError = (fieldName) => {
+    const tempArr = { ...errors };
+    const key = fieldName;
+    delete tempArr[key];
+    setErrors(tempArr);
+  };
+  // Ensure we have correct formatting
+  const getFieldsToSubmit = () => {
+    const dataSubmit = {
+      name: formData.name,
+      vesselType: formData.vesselType,
+      vesselBase: formData.vesselBase,
+      registration: formData.registration,
+    };
+    return dataSubmit;
+  };
+
+  const handleCreateVessel = () => {
+    if (checkRequiredFields() === false) {
+      axios.post(`${apiPath}/user/vessels`, getFieldsToSubmit(), {
+        headers: { Authorization: `Bearer ${Auth.retrieveToken()}` },
+      })
+        .then(() => {
+          console.log('vessel added');
+        })
+        .catch((err) => {
+          if (err.response) {
+            if (err.response) {
+              switch (err.response.status) {
+                case 400: setErrors({ ...errors, CreateVessel: 'This vessel already exists' }); break;
+                case 422: history.push(`/sign-in?source=${path}`); break;
+                case 405: history.push(`/sign-in?source=${path}`); break;
+                default: setErrors({ ...errors, CreateVessel: 'Something went wrong' });
+              }
+            }
+          }
+        });
+    } else {
+      // This means there are errors, so jump user to the error box
+      history.push('#CreateVessel');
+    }
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    handleCreateVessel();
   };
 
   useEffect(() => {
@@ -95,7 +183,12 @@ const FormVoyageVessel = ({ handleSubmit, data }) => {
       <h2 className="govuk-heading-l">New vessel</h2>
       <p className="govuk-body-l">Add the details of a new vessel you have not already saved</p>
 
-      <FormVessels />
+      <CreateVessel
+        // handleSubmit={(e) => handleCreateVessel(e)}
+        handleChange={(e) => handleChange(e)}
+        data={formData}
+        errors={errors}
+      />
 
       <button
         className="govuk-button"
