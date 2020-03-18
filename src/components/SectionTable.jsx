@@ -15,11 +15,11 @@ const SectionTable = ({ page, pageData, fetchPeopleTriggerAction, people }) => {
 
   const getData = () => {
     if (page === '/vessels') {
-      axios.get(`${apiPath}/user/vessels`, {
+      axios.get(`${apiPath}/user/vessels?pagination=false`, {
         headers: { Authorization: `Bearer ${Auth.retrieveToken()}` },
       })
         .then((resp) => {
-          setData(resp.data);
+          setData(resp.data.vessels);
         })
         .catch((err) => {
           if (err.response) {
@@ -69,7 +69,7 @@ const SectionTable = ({ page, pageData, fetchPeopleTriggerAction, people }) => {
                 </tr>
                 </thead>
                 <tbody className="govuk-table__body">
-                  {data.items.map((elem, i) => {
+                  {data.map((elem, i) => {
                     return (
                       <tr className="govuk-table__row" key={i}>
                         <td className="govuk-table__cell" scope="row">

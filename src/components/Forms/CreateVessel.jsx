@@ -47,23 +47,23 @@ const CreateVessel = ({ handleSubmit, handleChange, data, errors }) => {
         />
       </div>
 
-      <div id="vesselBase" className={`govuk-form-group ${errors.vesselBase ? 'govuk-form-group--error' : ''}`}>
-        <label className="govuk-label" htmlFor="vesselBase">
+      <div id="moorings" className={`govuk-form-group ${errors.moorings ? 'govuk-form-group--error' : ''}`}>
+        <label className="govuk-label" htmlFor="moorings">
             Usual moorings
         </label>
         <span className="govuk-hint">A description, UNLOCODE or set of Coordinates for where the vessel is usually moored</span>
-        {errors.vesselBase
+        {errors.moorings
           && (
           <span className="govuk-error-message">
-            <span className="govuk-visually-hidden">Error:</span> {errors.vesselBase}
+            <span className="govuk-visually-hidden">Error:</span> {errors.moorings}
           </span>
           )
         }
         <input
           className="govuk-input"
-          name="vesselBase"
+          name="moorings"
           type="text"
-          value={data.vesselBase || ''}
+          value={data.moorings || ''}
           onChange={(e) => handleChange(e)}
         />
       </div>
@@ -88,15 +88,15 @@ const CreateVessel = ({ handleSubmit, handleChange, data, errors }) => {
         />
       </div>
 
-      <div id="hullId" className="govuk-form-group">
-        <label className="govuk-label" htmlFor="hullId">
+      <div id="hullIdentificationNumber" className="govuk-form-group">
+        <label className="govuk-label" htmlFor="hullIdentificationNumber">
           Hull identification number
         </label>
         <input
           className="govuk-input"
-          name="hullId"
+          name="hullIdentificationNumber"
           type="text"
-          value={data.hullId || ''}
+          value={data.hullIdentificationNumber || ''}
           onChange={(e) => handleChange(e)}
         />
       </div>
@@ -127,7 +127,7 @@ const CreateVessel = ({ handleSubmit, handleChange, data, errors }) => {
         />
       </div>
 
-      <div id="colourOfHull" className="govuk-form-group">
+      {/* <div id="colourOfHull" className="govuk-form-group">
         <label className="govuk-label" htmlFor="colourOfHull">
           Colour of hull
         </label>
@@ -204,7 +204,7 @@ const CreateVessel = ({ handleSubmit, handleChange, data, errors }) => {
           value={data.vesselBuiltIn || ''}
           onChange={(e) => handleChange(e)}
         />
-      </div>
+      </div> */}
 
       {checkIfVoyageForm
         && <div id="submitBlock">
