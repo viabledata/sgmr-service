@@ -1,52 +1,97 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
+import axios from 'axios';
+
+// App imports
+import { apiPath } from 'config';
+import Auth from 'Auth';
 
 const EditAccount = (props) => {
   const history = useHistory();
   const [formData, setFormData] = useState(JSON.parse(localStorage.getItem('formData')) || {});
-  // const [errors, setErrors] = useState(JSON.parse(localStorage.getItem('errors')) || { title: null });
+  const [errors, setErrors] = useState(JSON.parse(localStorage.getItem('errors')) || {});
 
-  // Handle errors
-  // const removeError = (fieldName) => {
-  //   const tempArr = { ...errors };
-  //   const key = fieldName;
-  //   delete tempArr[key];
-  //   setErrors(tempArr);
-  // };
+  const validationRules = [
+    {
+      field: 'firstName',
+      rule: 'required',
+      message: 'You must enter your first name',
+    },
+    {
+      field: 'lastName',
+      rule: 'required',
+      message: 'You must enter your last name',
+    },
+    {
+      field: 'email',
+      rule: 'required',
+      message: 'You must enter your email',
+    },
+    {
+      field: 'mobileNumber',
+      rule: 'required',
+      message: 'You must enter your mobile number',
+    },
+  ];
 
-  // const handleErrors = (e, errorText, groupField) => {
-  // // For fields with multiple inputs in a single group
-  //   const name = !groupField ? e.target.name : groupField;
-  //   // Error onBlur if field is blank
-  //   if (!e.target.value) { setErrors({ ...errors, [name]: errorText }); }
-  //   // Error onBlur if condition not met
-  //   switch (e.target.name) {
-  //     case 'email': (/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(formData.email)) ? removeError('email') : setErrors({ ...errors, email: errorText }); break;
-  //     case 'confirmEmail': formData.email.toLowerCase() === formData.confirmEmail.toLowerCase() ? removeError('confirmEmail') : setErrors({ ...errors, confirmEmail: errorText }); break;
-  //     case 'confirmPassword': formData.password === formData.confirmPassword ? removeError('confirmPassword') : setErrors({ ...errors, confirmPassword: errorText }); break;
-  //     default: null;
-  //   }
-  // };
+  // Validation
+  const removeError = (fieldName) => {
+    const tempArr = { ...errors };
+    const key = fieldName;
+    delete tempArr[key];
+    setErrors(tempArr);
+  };
+  // Handle missing required fields
+  const checkRequiredFields = () => {
+    const tempObj = {};
+    validationRules.map((elem) => {
+      (!(elem.field in formData) || formData[elem.field] === '')
+        ? tempObj[elem.field] = elem.message
+        : null;
+    });
+    setErrors(tempObj);
+    return Object.keys(tempObj).length > 0;
+  };
 
   // Update form info to state
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
-    // removeError(e.target.name);
+    removeError(e.target.name);
   };
 
   // Clear formData from localStorage
   const clearFormData = (e) => {
     setFormData({});
-    // setErrors({ title: null });
+    setErrors({ });
   };
 
   // Handle Submit, including clearing localStorage
   const handleSubmit = (e) => {
-    // Combine date fields into required format before submit
     e.preventDefault();
-    clearFormData();
-    history.goBack(); // Return to page you came from
+    if (checkRequiredFields() === false) {
+      axios.post(`${apiPath}/user/vessels`, formData, {
+        headers: { Authorization: `Bearer ${Auth.retrieveToken()}` },
+      })
+        .then(() => {
+          clearFormData();
+          history.push('/account');
+        })
+        .catch((err) => {
+          if (err.response) {
+            switch (err.response.status) {
+              case 400: setErrors({ ...errors, CreateVessel: 'This vessel already exists' }); break;
+              case 422: history.push('/sign-in?source=account'); break;
+              case 405: history.push('/sign-in?source=account'); break;
+              default: setErrors({ ...errors, CreateVessel: 'Something went wrong' });
+            }
+          }
+        });
+    } else {
+      // This means there are errors, so jump user to the error box
+      history.push('#CreateVessel');
+    }
   };
+
 
   const deleteUser = (e) => {
     // show warning
@@ -56,14 +101,14 @@ const EditAccount = (props) => {
     alert('delete');
   };
 
-  // Update localStorage to hold page data
+  // Update localStorage/states
   useEffect(() => {
     localStorage.setItem('formData', JSON.stringify(formData));
   }, [formData]);
 
-  // useEffect(() => {
-  //   localStorage.setItem('errors', JSON.stringify(errors));
-  // }, [errors]);
+  useEffect(() => {
+    localStorage.setItem('errors', JSON.stringify(errors));
+  }, [errors]);
 
   return (
     <div className="govuk-width-container ">
