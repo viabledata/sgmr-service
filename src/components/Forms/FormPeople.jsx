@@ -45,7 +45,7 @@ const FormPeople = (props) => {
       message: 'You must enter the document issuing state',
     },
     {
-      field: 'documentExpiryDate',
+      field: 'documentExpiryDateYear', // testing against year as it's the last piece of the date field
       rule: 'required',
       message: 'You must enter an expiry date',
     },
@@ -70,21 +70,21 @@ const FormPeople = (props) => {
     return Object.keys(tempObj).length > 0;
   };
 
-  // Update form info to state
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-    removeError(e.target.name);
-  };
-
   // Format date fields
   const formatDateField = (year, month, day) => {
     if (!year || !month || !day || year.length < 4 || month > 12 || month < 1 || day > 31 || day < 1) {
       setErrors({ ...errors, documentExpiryDate: 'You must enter a valid date' });
     } else {
       const newDate = moment(`${year}-${month}-${day}`, 'YYYY-MM-DD').format('YYYY-M-D');
-      setFormData({ ...formData, documentExpiryDate: newDate });
+      // setFormData({ ...formData, documentExpiryDate: newDate });
       removeError('documentExpiryDate');
+      return newDate;
     }
+  };
+  // Update form info to state
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+    removeError(e.target.name);
   };
 
   // Clear formData from localStorage
@@ -93,37 +93,43 @@ const FormPeople = (props) => {
     setErrors({ });
   };
 
-  // Handle Submit, including clearing localStorage
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Format date
-    formatDateField(formData.documentExpiryDateYear, formData.documentExpiryDateMonth, formData.documentExpiryDateDay);
-    // Get fields for submitting
+  // Ensure we have correct formatting
+  const getFieldsToSubmit = () => {
     const dataSubmit = {
       firstName: formData.firstName,
       lastName: formData.lastName,
       documentType: formData.documentType,
       documentNumber: formData.documentNumber,
-      documentExpiryDate: formData.documentExpiryDate,
+      documentExpiryDate: formatDateField(formData.documentExpiryDateYear, formData.documentExpiryDateMonth, formData.documentExpiryDateDay),
       documentIssuingState: formData.documentIssuingState,
       peopleType: formData.peopleType,
     };
-    console.log(dataSubmit)
+    return dataSubmit;
+  };
+
+
+  // Handle Submit, including clearing localStorage
+  const handleSubmit = (e) => {
+    e.preventDefault();
     if (checkRequiredFields() === false) {
-      axios.post(`${apiPath}/user/people`, dataSubmit, {
+      axios.post(`${apiPath}/user/people`, getFieldsToSubmit(), {
         headers: { Authorization: `Bearer ${Auth.retrieveToken()}` },
       })
-        .then((resp) => {
-          console.log(resp);
+        .then(() => {
           history.goBack(); // Return to page you came from
           clearFormData();
         })
         .catch((err) => {
           if (err.response) {
-            console.log(err.response);
+            if (err.response) {
+              switch (err.response.status) {
+                case 400: setErrors({ ...errors, CreatePerson: 'This person already exists' }); break;
+                default: setErrors({ ...errors, CreatePerson: 'Something went wrong' });
+              }
+            }
           }
         });
-    };
+    }
   };
 
   // Update localStorage to hold page data
@@ -151,7 +157,7 @@ const FormPeople = (props) => {
           <div className="govuk-grid-column-two-thirds">
             <h1 className="govuk-heading-xl">Save a person</h1>
             <p className="govuk-body-l">Provide the details of the person you want to add to your list of saved people.</p>
-            <form>
+            <form id="CreatePerson">
 
               {Object.keys(errors).length > 0 && (
                 <div className="govuk-error-summary" aria-labelledby="error-summary-title" role="alert" tabIndex="-1" data-module="govuk-error-summary">
