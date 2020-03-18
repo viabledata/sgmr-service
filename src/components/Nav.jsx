@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useHistory, Link } from 'react-router-dom';
+import axios from 'axios';
 
-// app imports
+// App imports
+import { apiPath } from 'config';
 import Auth from 'Auth';
+
 
 const Nav = () => {
   const location = useLocation();
@@ -49,8 +52,14 @@ const Nav = () => {
   };
 
   const handleSignout = () => {
-    Auth.logout();
-    history.push('/');
+    console.log('signout')
+    axios.post(`${apiPath}/logout`, {
+      headers: { Authorization: `Bearer ${Auth.retrieveToken()}` },
+    })
+      .then((resp) => {
+        console.log(resp);
+      })
+      .catch((err) => console.log(err.data));
   };
 
   useEffect(() => {

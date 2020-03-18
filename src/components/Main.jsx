@@ -56,7 +56,7 @@ const Main = () => {
         <SecureRoute exact path="/account/edit">
           <EditAccount />
         </SecureRoute>
-        <SecureRoute exact path="/signout">
+        <SecureRoute exact path="/sign-out">
           <SignOut />
         </SecureRoute>
         <Route exact path="/sign-in">
