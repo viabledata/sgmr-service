@@ -151,22 +151,22 @@ const CreateVessel = ({ handleSubmit, handleChange, data, errors }) => {
           value={data.lengthMeters || ''}
           onChange={(e) => handleChange(e)}
         />
-      </div>
+      </div> */}
 
-      <div id="portOfRegistry" className="govuk-form-group">
-        <label className="govuk-label" htmlFor="portOfRegistry">
+      <div id="vesselBase" className="govuk-form-group">
+        <label className="govuk-label" htmlFor="vesselBase">
           Port of registry
         </label>
         <input
           className="govuk-input"
-          name="portOfRegistry"
+          name="vesselBase"
           type="text"
-          value={data.portOfRegistry || ''}
+          value={data.vesselBase || ''}
           onChange={(e) => handleChange(e)}
         />
       </div>
 
-      <div id="vesselBuiltDate" className="govuk-form-group">
+      {/* <div id="vesselBuiltDate" className="govuk-form-group">
         <label className="govuk-label" htmlFor="vesselBuiltDate">
           What year was the vessel built?
         </label>

@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useHistory, Link } from 'react-router-dom';
+import axios from 'axios';
 
-// app imports
+// App imports
+import { apiPath } from 'config';
 import Auth from 'Auth';
+
 
 const Nav = () => {
   const location = useLocation();
@@ -49,8 +52,23 @@ const Nav = () => {
   };
 
   const handleSignout = () => {
-    Auth.logout();
-    history.push('/');
+    axios({
+      method: 'post',
+      url: `${apiPath}/logout`,
+      headers: { Authorization: `Bearer ${Auth.retrieveToken()}` },
+    })
+      .then((resp) => {
+        Auth.logout();
+        history.push('/sign-in');
+      })
+      .catch((err) => {
+        if (err.response) {
+          switch (err.response.status) {
+            case 401: history.push('/sign-in'); break;
+            default: history.push('/sign-in');
+          }
+        }
+      });
   };
 
   useEffect(() => {
