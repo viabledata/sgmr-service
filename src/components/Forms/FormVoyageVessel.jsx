@@ -5,10 +5,10 @@ import axios from 'axios';
 import { apiPath } from 'config';
 import Auth from 'Auth';
 import contentArray from 'contentArray';
-import CreateVessel from 'CreateVessel';
+import FormVessels from 'FormVessels';
 
 
-const FormVoyageVessel = () => {
+const FormVoyageVessel = ({ handleSubmit, handleChange, data }) => {
   const [titles, setTitles] = useState();
   const [vessels, setVessels] = useState();
   const [apiErrors, setApiErrors] = useState();
@@ -84,12 +84,7 @@ const FormVoyageVessel = () => {
       <h2 className="govuk-heading-l">New vessel</h2>
       <p className="govuk-body-l">Add the details of a new vessel you have not already saved</p>
 
-      {/* <CreateVessel
-        handleSubmit={(e) => handleSubmit(e)}
-        handleChange={(e) => handleChange(e)}
-        data={formData}
-        errors={errors}
-      /> */}
+      <FormVessels />
 
       <button
         className="govuk-button"
