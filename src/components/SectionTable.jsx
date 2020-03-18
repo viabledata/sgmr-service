@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { connect } from 'react-redux';
 
 // app imports
 import { apiPath } from 'config';
 import Auth from 'Auth';
 
-const SectionTable = ({ page, pageData }) => {
+import { fetchPeopleRoutine } from 'state/people';
+
+const SectionTable = ({ page, pageData, fetchPeopleTriggerAction, people }) => {
   const [data, setData] = useState();
   const [errors, setErrors] = useState();
   const [titles, setTitles] = useState([]);
@@ -30,6 +33,10 @@ const SectionTable = ({ page, pageData }) => {
           }
         });
     }
+
+    if (page === '/people') {
+      fetchPeopleTriggerAction();
+    }
   };
 
   useEffect(() => {
@@ -38,7 +45,10 @@ const SectionTable = ({ page, pageData }) => {
   }, [pageData]);
 
 
-  if (!data) { return (null); }
+  if (!data) {
+    return null;
+  }
+
   return (
     <section>
       <div className="govuk-grid-column-full">
@@ -82,4 +92,8 @@ const SectionTable = ({ page, pageData }) => {
   );
 };
 
-export default SectionTable;
+const mapDispatchToProps = (dispatch) => ({
+  fetchPeopleTriggerAction: () => dispatch(fetchPeopleRoutine.trigger()),
+});
+const mapStateToProps = ({ people }) => ({ people });
+export default connect(mapStateToProps, mapDispatchToProps)(SectionTable);
