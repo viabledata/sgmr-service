@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 // app imports
 import { apiPath } from 'config';
@@ -9,12 +10,14 @@ import Auth from 'Auth';
 import { fetchPeopleRoutine } from 'State/people';
 
 const SectionTable = ({ page, pageData, fetchPeopleTriggerAction, people }) => {
+  const isPageVessels = page === '/vessels';
+  const isPagePeople = page === '/people';
   const [data, setData] = useState();
   const [errors, setErrors] = useState();
   const [titles, setTitles] = useState([]);
 
   const getData = () => {
-    if (page === '/vessels') {
+    if (isPageVessels) {
       axios.get(`${apiPath}/user/vessels?pagination=false`, {
         headers: { Authorization: `Bearer ${Auth.retrieveToken()}` },
       })
@@ -34,7 +37,7 @@ const SectionTable = ({ page, pageData, fetchPeopleTriggerAction, people }) => {
         });
     }
 
-    if (page === '/people') {
+    if (isPagePeople) {
       fetchPeopleTriggerAction();
     }
   };
@@ -45,7 +48,7 @@ const SectionTable = ({ page, pageData, fetchPeopleTriggerAction, people }) => {
   }, [pageData]);
 
 
-  if (!data) {
+  if ((isPageVessels && !data) || (isPagePeople && !people.list)) {
     return null;
   }
 
@@ -69,17 +72,25 @@ const SectionTable = ({ page, pageData, fetchPeopleTriggerAction, people }) => {
                 </tr>
                 </thead>
                 <tbody className="govuk-table__body">
-                  {data.map((elem, i) => {
+                  {isPageVessels && data.map((elem, i) => {
                     return (
                       <tr className="govuk-table__row" key={i}>
                         <td className="govuk-table__cell" scope="row">
-                          {page === '/vessels' && <p>{elem.name}</p>}
-                          {/* {page === '/people' && <p>{elem.surname}</p>} */}
+                          <p>{elem.name}</p>
                         </td>
-                        {page === '/vessels' && <td className="govuk-table__cell">{elem.vesselType}</td>}
-                        {page === '/vessels' && <td className="govuk-table__cell">{elem.vesselBase}</td>}
-                        {/* {page === '/people' && <td className="govuk-table__cell">{elem.givenName}</td>} */}
-                        {/* {page === '/people' && <td className="govuk-table__cell">{elem.type}</td>} */}
+                        <td className="govuk-table__cell">{elem.vesselType}</td>
+                        <td className="govuk-table__cell">{elem.vesselBase}</td>
+                      </tr>
+                    );
+                  })}
+                  {isPagePeople && people.list.map((person) => {
+                    return (
+                      <tr className="govuk-table__row" key={person.id}>
+                        <td className="govuk-table__cell" scope="row">
+                          <p><Link to={`/people/${person.id}`}>{person.lastName}</Link></p>
+                        </td>
+                        <td className="govuk-table__cell">{person.firstName}</td>
+                        <td className="govuk-table__cell">{person.peopleType.name}</td>
                       </tr>
                     );
                   })}
