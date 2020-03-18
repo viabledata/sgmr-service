@@ -34,6 +34,11 @@ const UserRegister = () => {
           ? removeError('confirmEmail')
           : setErrors({ ...errors, confirmEmail: errorText });
         break;
+      case 'password':
+        formData.password.length < 8
+          ? setErrors({ ...errors, password: 'Password is too short' })
+          : removeError('password');
+        break;
       case 'confirmPassword':
         formData.password === formData.confirmPassword
           ? removeError('confirmPassword')
