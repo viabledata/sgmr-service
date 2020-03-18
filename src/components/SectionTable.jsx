@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { apiPath } from 'config';
 import Auth from 'Auth';
 
-import { fetchPeopleRoutine } from 'state/people';
+import { fetchPeopleRoutine } from 'State/people';
 
 const SectionTable = ({ page, pageData, fetchPeopleTriggerAction, people }) => {
   const [data, setData] = useState();
