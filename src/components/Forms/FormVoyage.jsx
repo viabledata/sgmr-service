@@ -5,8 +5,9 @@ import { useLocation, useHistory } from 'react-router-dom';
 import FormVoyageArrival from 'FormVoyageArrival';
 import FormVoyageCheckDetails from 'FormVoyageCheckDetails';
 import FormVoyageDeparture from 'FormVoyageDeparture';
-import FormVoyageVessel from 'FormVoyageVessel';
 import FormVoyagePeople from 'FormVoyagePeople';
+import FormVoyageSubmitted from 'FormVoyageSubmitted';
+import FormVoyageVessel from 'FormVoyageVessel';
 
 const FormVoyage = () => {
   const location = useLocation();
@@ -65,7 +66,7 @@ const FormVoyage = () => {
   };
 
   const setNextPage = () => {
-    const nextPage = pageNum < maxPages ? pageNum + 1 : pageNum;
+    const nextPage = pageNum < maxPages + 1 ? pageNum + 1 : pageNum;
     setPageNum(nextPage);
     history.push(`/save-voyage/page-${nextPage}`);
   };
@@ -128,8 +129,8 @@ const FormVoyage = () => {
               />}
               {pageNum === 5 && <FormVoyageCheckDetails
                 handleSubmit={(e) => handleSubmit(e)}
-                handleChange={(e) => handleChange(e)}
-                data={formData}
+              />}
+              {pageNum === 6 && <FormVoyageSubmitted
               />}
 
               <p>
