@@ -4,7 +4,7 @@ import axios from 'axios';
 
 // app imports
 import Auth from 'Auth';
-import { apiPath } from 'config';
+import { apiUrl } from 'config';
 
 const SignIn = () => {
   const history = useHistory();
@@ -59,7 +59,7 @@ const SignIn = () => {
     e.preventDefault();
     // Ensure required fields have a value
     if (checkRequiredFields() === true) {
-      axios.post(`${apiPath}/login`, formData)
+      axios.post(`${apiUrl}/login`, formData)
         .then((resp) => {
           localStorage.setItem('email', JSON.stringify(formData.email));
           source === 'registration' ? history.push('/verify?source=reports') : history.push(`/verify?source=${source}`);

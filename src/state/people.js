@@ -5,7 +5,7 @@ import {
 import { createRoutine } from 'redux-saga-routines';
 
 import Auth from 'Auth';
-import { apiPath } from 'config';
+import { apiUrl } from 'config';
 
 export const fetchPeopleRoutine = createRoutine('FETCH_PEOPLE');
 
@@ -35,7 +35,7 @@ export const peopleReducer = (state = initialState, action) => {
 };
 
 const fetchPeopleRequest = async () => {
-  const data = await axios.get(`${apiPath}/user/people`, {
+  const data = await axios.get(`${apiUrl}/user/people`, {
     headers: { Authorization: `Bearer ${Auth.retrieveToken()}` },
   });
 

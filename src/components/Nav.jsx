@@ -3,7 +3,7 @@ import { useLocation, useHistory, Link } from 'react-router-dom';
 import axios from 'axios';
 
 // App imports
-import { apiPath } from 'config';
+import { apiUrl } from 'config';
 import Auth from 'Auth';
 
 
@@ -54,7 +54,7 @@ const Nav = () => {
   const handleSignout = () => {
     axios({
       method: 'post',
-      url: `${apiPath}/logout`,
+      url: `${apiUrl}/logout`,
       headers: { Authorization: `Bearer ${Auth.retrieveToken()}` },
     })
       .then((resp) => {

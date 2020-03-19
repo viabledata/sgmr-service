@@ -3,7 +3,7 @@ import { Link, useHistory } from 'react-router-dom';
 import axios from 'axios';
 
 // app imports
-import { apiPath } from 'config';
+import { apiUrl } from 'config';
 
 const UserResendCode = () => {
   const history = useHistory();
@@ -37,7 +37,7 @@ const UserResendCode = () => {
     e.preventDefault();
     // Ensure required fields have a value
     if (checkRequiredFields() === true && source === 'registration') {
-      axios.patch(`${apiPath}/resend-verification-code`, formData)
+      axios.patch(`${apiUrl}/resend-verification-code`, formData)
         .then((resp) => {
           history.push(`/verify?source=${source}`);
         })
@@ -52,7 +52,7 @@ const UserResendCode = () => {
           }
         });
     } else {
-      axios.post(`${apiPath}/resend-verification-code`, formData)
+      axios.post(`${apiUrl}/resend-verification-code`, formData)
         .then((resp) => {
           history.push(`/verify?source=${source}`);
         })
