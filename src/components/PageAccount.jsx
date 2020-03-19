@@ -37,7 +37,7 @@ const PageAccount = () => {
 
   return (
     <div>
-      <dl className="govuk-summary-list govuk-!-margin-bottom-9">
+      <dl className="govuk-summary-list govuk-!-margin-bottom-9 govuk-summary-list--no-border">
         <div className="govuk-summary-list__row">
           <dt className="govuk-summary-list__key">
             Given name
