@@ -91,7 +91,8 @@ module.exports = {
     ]),
     new webpack.DefinePlugin({
       'process.env': {
-        SGMR_DATA_API_BASE_URL: JSON.stringify(process.env.SGMR_DATA_API_BASE_URL)
+        SGMR_DATA_API_BASE_URL: JSON.stringify(process.env.SGMR_DATA_API_BASE_URL),
+        ENVIRONMENT: JSON.stringify(process.env.ENVIRONMENT)
       }
     }),
   ],
