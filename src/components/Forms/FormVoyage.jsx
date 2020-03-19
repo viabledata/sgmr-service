@@ -2,8 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { useLocation, useHistory } from 'react-router-dom';
 
 // app imports
-import FormVoyageDeparture from 'FormVoyageDeparture';
 import FormVoyageArrival from 'FormVoyageArrival';
+import FormVoyageCheckDetails from 'FormVoyageCheckDetails';
+import FormVoyageDeparture from 'FormVoyageDeparture';
 import FormVoyageVessel from 'FormVoyageVessel';
 import FormVoyagePeople from 'FormVoyagePeople';
 
