@@ -73,6 +73,8 @@ pipeline:
       target: KUBE_NAMESPACE
     - source: DEV_KUBE_SERVER
       target: KUBE_SERVER
+    - source: DEV_SGMR_DATA_API_BASE_URL
+      target: SGMR_API_URL
     - source: DEV_SGMR_SERVICE_URL
       target: SGMR_SERVICE_URL
     - source: DEV_SGMR_KUBE_TOKEN
@@ -96,7 +98,7 @@ pipeline:
       - kd --insecure-skip-tls-verify -f kube/cert.yml
       - kd --insecure-skip-tls-verify -f kube/network-policy.yml
       - kd --insecure-skip-tls-verify -f kube/service.yml
-#      - kd --insecure-skip-tls-verify -f kube/deployment.yml
+      - kd --insecure-skip-tls-verify -f kube/deployment.yml
       - kd --insecure-skip-tls-verify -f kube/ingress.yml
     when:
       branch: master
