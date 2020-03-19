@@ -125,6 +125,11 @@ const FormVoyage = () => {
                 handleChange={(e) => handleChange(e)}
                 data={formData}
               />}
+              {pageNum === 5 && <FormVoyageCheckDetails
+                handleSubmit={(e) => handleSubmit(e)}
+                handleChange={(e) => handleChange(e)}
+                data={formData}
+              />}
 
               <p>
                 <a href="/reports" className="govuk-link govuk-link--no-visited-state" onClick={(e) => clearFormData(e)}>Exit without saving</a>

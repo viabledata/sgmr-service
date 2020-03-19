@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import { Link, useHistory } from 'react-router-dom';
 import axios from 'axios';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
 
 // app imports
 import { apiPath } from 'config';
@@ -10,6 +10,7 @@ import Auth from 'Auth';
 import { fetchPeopleRoutine } from 'State/people';
 
 const SectionTable = ({ page, pageData, fetchPeopleTriggerAction, people }) => {
+  const history = useHistory();
   const isPageVessels = page === '/vessels';
   const isPagePeople = page === '/people';
   const [data, setData] = useState();

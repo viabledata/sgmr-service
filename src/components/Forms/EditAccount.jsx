@@ -68,7 +68,7 @@ const EditAccount = (data) => {
   // Handle Submit, including clearing localStorage
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (checkRequiredFields() === false) {
+    if (!checkRequiredFields()) {
       axios.patch(`${apiPath}/user`, formData, {
         headers: { Authorization: `Bearer ${Auth.retrieveToken()}` },
       })

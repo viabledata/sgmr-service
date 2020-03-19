@@ -9,7 +9,7 @@ import contentArray from 'contentArray';
 import CreateVessel from 'CreateVessel';
 
 
-const FormVoyageVessel = () => {
+const FormVoyageVessel = ({ handleSubmit, handleChange, data, }) => {
   const history = useHistory();
   const location = useLocation();
   const path = location.pathname.slice(1);
@@ -41,42 +41,10 @@ const FormVoyageVessel = () => {
             case 401: history.push(`/sign-in?source=${location}`); break;
             case 422: history.push(`/sign-in?source=${location}`); break;
             case 405: history.push(`/sign-in?source=${location}`); break;
-            default: setApiErrors({ ...apiErrors, main: 'Something went wrong' });
+            default: history.push(`/sign-in?source=${location}`);
           }
         }
       });
-  };
-
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
-
-  const handleCreateVessel = () => {
-    axios.post(`${apiPath}/user/vessels`, formData, {
-      headers: { Authorization: `Bearer ${Auth.retrieveToken()}` },
-    })
-      .then(() => {
-        console.log('vessel added');
-        history.push('/save-voyage/page-4');
-      })
-      .catch((err) => {
-        if (err.response) {
-          if (err.response) {
-            switch (err.response.status) {
-              case 400: setErrors({ ...errors, CreateVessel: 'This vessel already exists' }); break;
-              case 422: history.push(`/sign-in?source=${path}`); break;
-              case 405: history.push(`/sign-in?source=${path}`); break;
-              default: setErrors({ ...errors, CreateVessel: 'Something went wrong' });
-            }
-          }
-        }
-      });
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    handleCreateVessel();
   };
 
   useEffect(() => {
@@ -126,6 +94,13 @@ const FormVoyageVessel = () => {
             })}
           </tbody>
       </table>
+      <button
+        className="govuk-button"
+        data-module="govuk-button"
+        onClick={(e) => handleSubmit(e)}
+      >
+        Add to report
+      </button>
       <h2 className="govuk-heading-l">New vessel</h2>
       <p className="govuk-body-l">Add the details of a new vessel you have not already saved</p>
 
