@@ -83,7 +83,6 @@ module.exports = {
   },
   plugins: [
     new CopyPlugin([
-      { from: 'src/assets/javascript', to: 'javascript' },
       { from: 'src/assets/images', to: 'assets/images' },
       { from: 'src/assets/fonts', to: 'assets/fonts' },
       { from: 'node_modules/govuk-frontend/govuk/all.js', to: 'javascript/all.js' },
@@ -97,7 +96,6 @@ module.exports = {
     }),
   ],
   node: { fs: 'empty' },
-  watch: true,
   devServer: {
     // in order to use `<Router>`, historyApiFallback needs to be enabled
     historyApiFallback: true,
