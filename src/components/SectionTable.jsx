@@ -4,7 +4,7 @@ import axios from 'axios';
 import { connect } from 'react-redux';
 
 // app imports
-import { apiPath } from 'config';
+import { apiUrl } from 'config';
 import Auth from 'Auth';
 
 import { fetchPeopleRoutine } from 'State/people';
@@ -19,7 +19,7 @@ const SectionTable = ({ page, pageData, fetchPeopleTriggerAction, people }) => {
 
   const getData = () => {
     if (isPageVessels) {
-      axios.get(`${apiPath}/user/vessels?pagination=false`, {
+      axios.get(`${apiUrl}/user/vessels?pagination=false`, {
         headers: { Authorization: `Bearer ${Auth.retrieveToken()}` },
       })
         .then((resp) => {

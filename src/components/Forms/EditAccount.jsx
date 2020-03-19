@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 
 // App imports
-import { apiPath } from 'config';
+import { apiUrl } from 'config';
 import Auth from 'Auth';
 
 const EditAccount = (data) => {
@@ -69,7 +69,7 @@ const EditAccount = (data) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!checkRequiredFields()) {
-      axios.patch(`${apiPath}/user`, formData, {
+      axios.patch(`${apiUrl}/user`, formData, {
         headers: { Authorization: `Bearer ${Auth.retrieveToken()}` },
       })
         .then(() => {

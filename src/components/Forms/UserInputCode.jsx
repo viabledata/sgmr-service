@@ -4,7 +4,7 @@ import axios from 'axios';
 
 // app imports
 import Auth from 'Auth';
-import { apiPath } from 'config';
+import { apiUrl } from 'config';
 
 const UserInputCode = () => {
   const history = useHistory();
@@ -38,7 +38,7 @@ const UserInputCode = () => {
     e.preventDefault();
     // Ensure required fields have a value
     if (checkRequiredFields() === true && source === 'registration') {
-      axios.patch(`${apiPath}/submit-verification-code`, formData)
+      axios.patch(`${apiUrl}/submit-verification-code`, formData)
         .then((resp) => {
           history.push(`/sign-in?source=${source}`);
         })
@@ -53,7 +53,7 @@ const UserInputCode = () => {
           }
         });
     } else {
-      axios.post(`${apiPath}/submit-verification-code`, formData)
+      axios.post(`${apiUrl}/submit-verification-code`, formData)
         .then((resp) => {
           resp.data.token ? Auth.storeToken(resp.data.token) : null;
           history.push(`/${source}`);

@@ -4,7 +4,7 @@ import axios from 'axios';
 import moment from 'moment';
 
 // app imports
-import { apiPath } from 'config';
+import { apiUrl } from 'config';
 import Auth from 'Auth';
 import CreatePerson from 'CreatePerson';
 
@@ -112,7 +112,7 @@ const FormPeople = (props) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (checkRequiredFields() === false) {
-      axios.post(`${apiPath}/user/people`, getFieldsToSubmit(), {
+      axios.post(`${apiUrl}/user/people`, getFieldsToSubmit(), {
         headers: { Authorization: `Bearer ${Auth.retrieveToken()}` },
       })
         .then(() => {
