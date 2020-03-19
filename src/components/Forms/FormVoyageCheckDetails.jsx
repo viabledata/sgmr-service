@@ -50,27 +50,27 @@ const FormVoyageCheckDetails = ({ handleSubmit }) => {
       <dl className="govuk-summary-list govuk-!-margin-bottom-9">
         <div className="govuk-summary-list__row">
           <dt className="govuk-summary-list__key">Departure date</dt>
-          <dd className="govuk-summary-list__value">20 01 2020</dd>
+          <dd className="govuk-summary-list__value">{data.departureDate}</dd>
 
         </div>
         <div className="govuk-summary-list__row">
           <dt className="govuk-summary-list__key">Departure time</dt>
-          <dd className="govuk-summary-list__value">14:30</dd>
+          <dd className="govuk-summary-list__value">{data.departureTime}</dd>
 
         </div>
-        <div className="govuk-summary-list__row">
+        {/* <div className="govuk-summary-list__row">
           <dt className="govuk-summary-list__key">Departure port</dt>
-          <dd className="govuk-summary-list__value">MC MON</dd>
+          <dd className="govuk-summary-list__value"></dd>
+        </div> */}
 
-        </div>
         <div className="govuk-summary-list__row">
           <dt className="govuk-summary-list__key">Departure port latitude</dt>
-          <dd className="govuk-summary-list__value">N/A</dd>
+          <dd className="govuk-summary-list__value">{data.departureLat}</dd>
 
         </div>
         <div className="govuk-summary-list__row">
           <dt className="govuk-summary-list__key">Departure port longitude</dt>
-          <dd className="govuk-summary-list__value">N/A</dd>
+          <dd className="govuk-summary-list__value">{data.departureLong}</dd>
 
         </div>
       </dl>
@@ -85,7 +85,7 @@ const FormVoyageCheckDetails = ({ handleSubmit }) => {
       <dl className="govuk-summary-list govuk-!-margin-bottom-9">
         <div className="govuk-summary-list__row">
           <dt className="govuk-summary-list__key">Arrival date</dt>
-          <dd className="govuk-summary-list__value">21 01 2020</dd>
+          <dd className="govuk-summary-list__value">{data.arrivalDate}</dd>
 
         </div>
         <div className="govuk-summary-list__row">
