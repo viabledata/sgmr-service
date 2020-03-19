@@ -43,7 +43,7 @@ const FormVoyage = () => {
 
     switch (type) {
       case 'checkbox': {
-        formData[name] = [...formData[name], value]; // Create array, add current values and new value
+        formData[name] = [...formData[name] || [], value]; // Create array, add current values and new value
 
         if (!checked) {
           formData[name] = formData[name].filter((formDataValue) => formDataValue !== value); // Remove the current value if it is not checked

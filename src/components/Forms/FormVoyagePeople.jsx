@@ -25,6 +25,8 @@ const FormVoyagePeople = ({ handleSubmit, handleChange, data, fetchPeopleTrigger
           </thead>
           <tbody className="govuk-table__body">
             {people.list.map((person) => {
+              const isChecked = (data.people && data.people.indexOf(person.id) >= 0) || false;
+
               return (
                 <tr className="govuk-table__row" key={person.id}>
                   <td className="govuk-table__cell multiple-choice--hod">
@@ -36,7 +38,7 @@ const FormVoyagePeople = ({ handleSubmit, handleChange, data, fetchPeopleTrigger
                         id={person.id}
                         value={person.id}
                         onChange={(e) => handleChange(e)}
-                        checked={data.people.indexOf(person.id) >= 0}
+                        checked={isChecked}
                       />
                       <label className="govuk-label govuk-checkboxes__label" htmlFor={person.id}>&nbsp;</label>
                     </div>
