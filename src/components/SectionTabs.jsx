@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 
 // App imports
-import { apiPath } from 'config';
+import { apiUrl } from 'config';
 import Auth from 'Auth';
 
 
@@ -159,7 +159,7 @@ const SectionTabs = (props) => {
   };
 
   // const getData = () => {
-  //   axios.get(`${apiPath}/user/voyagereport?pagination=false`, {
+  //   axios.get(`${apiUrl}/user/voyagereport?pagination=false`, {
   //     headers: { Authorization: `Bearer ${Auth.retrieveToken()}` },
   //   })
   //     .then((resp) => {

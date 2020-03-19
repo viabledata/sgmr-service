@@ -3,7 +3,7 @@ import { useLocation, useHistory } from 'react-router-dom';
 import axios from 'axios';
 
 // app imports
-import { apiPath } from 'config';
+import { apiUrl } from 'config';
 import Auth from 'Auth';
 import contentArray from 'contentArray';
 import CreateVessel from 'CreateVessel';
@@ -29,7 +29,7 @@ const FormVoyageVessel = ({ handleSubmit, handleChange, data, }) => {
   };
 
   const getData = () => {
-    axios.get(`${apiPath}/user/vessels?pagination=false`, {
+    axios.get(`${apiUrl}/user/vessels?pagination=false`, {
       headers: { Authorization: `Bearer ${Auth.retrieveToken()}` },
     })
       .then((resp) => {

@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 
 // app imports
-import { apiPath } from 'config';
+import { apiUrl } from 'config';
 
 
 const UserRegister = () => {
@@ -75,7 +75,7 @@ const UserRegister = () => {
         mobileNumber: formData.mobileNumber,
         password: formData.password,
       };
-      axios.post(`${apiPath}/registration`, dataSubmit)
+      axios.post(`${apiUrl}/registration`, dataSubmit)
         .then((resp) => {
           history.push('/verify?source=registration');
           localStorage.setItem('email', JSON.stringify(formData.email));

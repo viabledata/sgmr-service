@@ -69,6 +69,9 @@ spec:
           limits:
             memory: "2304Mi"
             cpu: "1000m"
+        env:
+          - name: SGMR_API_URL
+            value: {{.SGMR_API_URL}}
         readinessProbe:
           httpGet:
             path: /readiness

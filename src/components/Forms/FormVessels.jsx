@@ -4,7 +4,7 @@ import axios from 'axios';
 
 // app imports
 import Auth from 'Auth';
-import { apiPath } from 'config';
+import { apiUrl } from 'config';
 import CreateVessel from 'CreateVessel';
 
 const FormVessels = () => {
@@ -75,7 +75,7 @@ const FormVessels = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (checkRequiredFields() === false) {
-      axios.post(`${apiPath}/user/vessels`, formData, {
+      axios.post(`${apiUrl}/user/vessels`, formData, {
         headers: { Authorization: `Bearer ${Auth.retrieveToken()}` },
       })
         .then(() => {
