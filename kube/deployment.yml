@@ -14,19 +14,13 @@ spec:
       labels:
         name: "{{.SGMR_SERVICE_NAME}}"
     spec:
-      securityContext:
-        runAsUser: 1000
-        fsGroup: 1000
       containers:
       - name: {{.SGMR_SERVICE_NAME}}-proxy
         image: "{{.NGINX_IMAGE}}:{{.NGINX_TAG}}"
         imagePullPolicy: Always
         securityContext:
           runAsNonRoot: true
-          capabilities:
-            drop:
-             - SETUID
-             - SETGID
+          runAsUser: 100
         resources:
          limits:
           memory: "100Mi"
