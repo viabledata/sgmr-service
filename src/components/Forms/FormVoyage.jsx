@@ -2,10 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { useLocation, useHistory } from 'react-router-dom';
 
 // app imports
-import FormVoyageDeparture from 'FormVoyageDeparture';
 import FormVoyageArrival from 'FormVoyageArrival';
-import FormVoyageVessel from 'FormVoyageVessel';
+import FormVoyageCheckDetails from 'FormVoyageCheckDetails';
+import FormVoyageDeparture from 'FormVoyageDeparture';
 import FormVoyagePeople from 'FormVoyagePeople';
+import FormVoyageSubmitted from 'FormVoyageSubmitted';
+import FormVoyageVessel from 'FormVoyageVessel';
 
 const FormVoyage = () => {
   const location = useLocation();
@@ -64,7 +66,7 @@ const FormVoyage = () => {
   };
 
   const setNextPage = () => {
-    const nextPage = pageNum < maxPages ? pageNum + 1 : pageNum;
+    const nextPage = pageNum < maxPages + 1 ? pageNum + 1 : pageNum;
     setPageNum(nextPage);
     history.push(`/save-voyage/page-${nextPage}`);
   };
@@ -72,7 +74,6 @@ const FormVoyage = () => {
   const handleSubmit = (e) => {
     // Combine date fields into required format before submit
     e.preventDefault();
-    // Note, if page isn't the last page don't clear localstorage on commit, as user should be able to go back and forth without needing a GET
     setNextPage();
   };
 
@@ -130,7 +131,6 @@ const FormVoyage = () => {
                 handleChange={(e) => handleChange(e)}
                 data={formData}
               />}
-
               <p>
                 <a href="/reports" className="govuk-link govuk-link--no-visited-state" onClick={(e) => clearFormData(e)}>Exit without saving</a>
               </p>

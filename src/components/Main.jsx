@@ -20,6 +20,7 @@ import EditAccount from 'EditAccount';
 import FormPeople from 'FormPeople';
 import FormVessels from 'FormVessels';
 import FormVoyage from 'FormVoyage';
+import FormVoyageSubmitted from 'FormVoyageSubmitted';
 import Vessels from 'Vessels';
 
 
@@ -38,6 +39,7 @@ const Main = () => {
         <SecureRoute exact path="/save-voyage/page-3"><FormVoyage /></SecureRoute>
         <SecureRoute exact path="/save-voyage/page-4"><FormVoyage /></SecureRoute>
         <SecureRoute exact path="/save-voyage/page-5"><FormVoyage /></SecureRoute>
+        <SecureRoute exact path="/save-voyage/page-6"><FormVoyageSubmitted /></SecureRoute>
         <SecureRoute exact path="/vessels">
           <PageContainer />
         </SecureRoute>

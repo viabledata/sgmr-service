@@ -29,11 +29,6 @@ p.govuk-tabs__tab {
   bottom: 0;
 }
 
-// Apply styles that are applied as inline styles in GDS
-.govuk-summary-list__key, .govuk-summary-list__value, .govuk-summary-list__actions  {
-  border-bottom: none;
-}
-
 // Replicate govuk-header__link styling without the link for the title, and with the link for signout (has no href)
 p.govuk-header__link {
   text-decoration: none;
@@ -58,3 +53,7 @@ li a.govuk-header__link {
   cursor: pointer;
 }
 
+// Replicate inline styles on dt
+.govuk-heading-m + .govuk-summary-list__value {
+ border-bottom: none;
+}
