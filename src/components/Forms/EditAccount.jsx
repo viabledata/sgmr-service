@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 
 // App imports
-import { apiUrl } from 'config';
+import { USER_URL } from 'Constants/ApiConstants';
 import Auth from 'Auth';
 
 const EditAccount = (data) => {
@@ -62,14 +62,14 @@ const EditAccount = (data) => {
   // Clear formData from localStorage
   const clearFormData = (e) => {
     setFormData({});
-    setErrors({ });
+    setErrors({});
   };
 
   // Handle Submit, including clearing localStorage
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!checkRequiredFields()) {
-      axios.patch(`${apiUrl}/user`, formData, {
+      axios.patch(USER_URL, formData, {
         headers: { Authorization: `Bearer ${Auth.retrieveToken()}` },
       })
         .then(() => {
@@ -109,7 +109,7 @@ const EditAccount = (data) => {
 
               {Object.keys(errors).length > 1 && (
                 <div className="govuk-error-summary" aria-labelledby="error-summary-title" role="alert" tabIndex="-1" data-module="govuk-error-summary">
-                  <h2 className="govuk-error-summary__title" >
+                  <h2 className="govuk-error-summary__title">
                     There is a problem
                   </h2>
                   <div className="govuk-error-summary__body">
@@ -117,7 +117,7 @@ const EditAccount = (data) => {
                       {Object.entries(errors).map((elem, i) => (
                         <li key={i}>
                           {elem[0] !== 'title'
-                              && <a href={`#${elem[0]}`}>{elem[1]}</a>}
+                            && <a href={`#${elem[0]}`}>{elem[1]}</a>}
                         </li>
                       ))}
                     </ul>
@@ -134,7 +134,7 @@ const EditAccount = (data) => {
                   name="firstName"
                   type="text"
                   value={formData.firstName || ''}
-                  onChange={(e) => handleChange(e)}
+                  onChange={handleChange}
                 />
               </div>
 
@@ -142,12 +142,12 @@ const EditAccount = (data) => {
                 <label className="govuk-label govuk-label--m" htmlFor="lastName">
                   Surname
                 </label>
-              <input
+                <input
                   className="govuk-input"
                   name="lastName"
                   type="text"
                   value={formData.lastName || ''}
-                  onChange={(e) => handleChange(e)}
+                  onChange={handleChange}
                 />
               </div>
 
@@ -155,12 +155,12 @@ const EditAccount = (data) => {
                 <label className="govuk-label govuk-label--m" htmlFor="email">
                   Email
                 </label>
-              <input
+                <input
                   className="govuk-input"
                   name="email"
                   type="text"
                   value={formData.email || ''}
-                  onChange={(e) => handleChange(e)}
+                  onChange={handleChange}
                 />
               </div>
 
@@ -168,12 +168,12 @@ const EditAccount = (data) => {
                 <label className="govuk-label govuk-label--m" htmlFor="mobileNumber">
                   Mobile number
                 </label>
-              <input
+                <input
                   className="govuk-input"
                   name="mobileNumber"
                   type="text"
                   value={formData.mobileNumber || ''}
-                  onChange={(e) => handleChange(e)}
+                  onChange={handleChange}
                 />
               </div>
 
@@ -181,14 +181,14 @@ const EditAccount = (data) => {
                 <button
                   className="govuk-button"
                   data-module="govuk-button"
-                  onClick={(e) => handleSubmit(e)}
+                  onClick={handleSubmit}
                 >
                   Save changes
                 </button>
               </div>
 
               <p>
-                <a href="/account" className="govuk-link govuk-link--no-visited-state" onClick={(e) => clearFormData(e)}>Exit without saving</a>
+                <a href="/account" className="govuk-link govuk-link--no-visited-state" onClick={clearFormData}>Exit without saving</a>
               </p>
             </form>
           </div>

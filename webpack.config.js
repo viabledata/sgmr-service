@@ -55,7 +55,9 @@ module.exports = {
       FormVoyageResponsiblePerson: path.resolve(__dirname, 'src/components/Forms/FormVoyageResponsiblePerson.jsx'),
       FormVoyageSubmitted: path.resolve(__dirname, 'src/components/Forms/FormVoyageSubmitted.jsx'),
       FormVoyageVessel: path.resolve(__dirname, 'src/components/Forms/FormVoyageVessel.jsx'),
+      Constants: path.resolve(__dirname, 'src/constants'),
       State: path.resolve(__dirname, 'src/state'),
+      Utils: path.resolve(__dirname, 'src/utils'),
     },
     extensions: ['.js', '.jsx'],
   },
@@ -104,7 +106,7 @@ module.exports = {
     hot: true,
     port: 8080,
     proxy: {
-      '/api': 'http://localhost:5000',
+      '/api': 'http://0.0.0.0:5000',
     },
   },
 };

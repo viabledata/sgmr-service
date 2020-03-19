@@ -4,7 +4,7 @@ import axios from 'axios';
 
 // app imports
 import Auth from 'Auth';
-import { apiUrl } from 'config';
+import { VESSELS_URL } from 'Constants/ApiConstants';
 import CreateVessel from 'CreateVessel';
 
 const FormVessels = () => {
@@ -13,7 +13,6 @@ const FormVessels = () => {
   const checkIfNotVoyageForm = location.pathname.toLowerCase().indexOf('voyage') === -1;
   const path = location.pathname.slice(1);
   const urlParams = location.search.split('source=');
-  // Update data from localStorage if it exists
   const [formData, setFormData] = useState(JSON.parse(localStorage.getItem('formData')) || {});
   const [errors, setErrors] = useState(JSON.parse(localStorage.getItem('errors')) || { });
 
@@ -75,7 +74,7 @@ const FormVessels = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (checkRequiredFields() === false) {
-      axios.post(`${apiUrl}/user/vessels`, formData, {
+      axios.post(VESSELS_URL, formData, {
         headers: { Authorization: `Bearer ${Auth.retrieveToken()}` },
       })
         .then(() => {
@@ -131,16 +130,17 @@ const FormVessels = () => {
       )}
 
       <CreateVessel
-        handleSubmit={(e) => handleSubmit(e)}
-        handleChange={(e) => handleChange(e)}
+        handleSubmit={handleSubmit}
+        handleChange={handleChange}
         data={formData}
         errors={errors}
       />
       {urlParams[1] === 'vessels'
-        && <p>
-          <a href="/vessels" className="govuk-link govuk-link--no-visited-state" onClick={(e) => clearFormData(e)}>Exit without saving</a>
+        && (
+        <p>
+          <a href="/vessels" className="govuk-link govuk-link--no-visited-state" onClick={clearFormData}>Exit without saving</a>
         </p>
-      }
+        )}
     </>
   );
 };

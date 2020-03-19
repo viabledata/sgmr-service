@@ -1,11 +1,11 @@
 import axios from 'axios';
 import {
-  all, fork, call, put, takeLatest,
+  call, put, takeLatest,
 } from 'redux-saga/effects';
 import { createRoutine } from 'redux-saga-routines';
 
 import Auth from 'Auth';
-import { apiUrl } from 'config';
+import { PEOPLE_URL } from 'Constants/ApiConstants';
 
 export const fetchPeopleRoutine = createRoutine('FETCH_PEOPLE');
 
@@ -35,7 +35,7 @@ export const peopleReducer = (state = initialState, action) => {
 };
 
 const fetchPeopleRequest = async () => {
-  const data = await axios.get(`${apiUrl}/user/people`, {
+  const data = await axios.get(PEOPLE_URL, {
     headers: { Authorization: `Bearer ${Auth.retrieveToken()}` },
   });
 
@@ -44,7 +44,6 @@ const fetchPeopleRequest = async () => {
 
 export function* fetchPeople() {
   try {
-    yield put(fetchPeopleRoutine.request());
     const { data } = yield call(fetchPeopleRequest);
 
     yield put(fetchPeopleRoutine.success(data));
@@ -56,8 +55,3 @@ export function* fetchPeople() {
 export function* watchPeople() {
   yield takeLatest(fetchPeopleRoutine.TRIGGER, fetchPeople);
 }
-
-export default {
-  peopleReducer,
-  watchPeople,
-};

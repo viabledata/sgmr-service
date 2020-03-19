@@ -4,12 +4,14 @@ import axios from 'axios';
 import { connect } from 'react-redux';
 
 // app imports
-import { apiUrl } from 'config';
+import { VESSELS_URL } from 'Constants/ApiConstants';
 import Auth from 'Auth';
 
 import { fetchPeopleRoutine } from 'State/people';
 
-const SectionTable = ({ page, pageData, fetchPeopleTriggerAction, people }) => {
+const SectionTable = ({
+  page, pageData, fetchPeopleTriggerAction, people,
+}) => {
   const history = useHistory();
   const isPageVessels = page === '/vessels';
   const isPagePeople = page === '/people';
@@ -19,7 +21,7 @@ const SectionTable = ({ page, pageData, fetchPeopleTriggerAction, people }) => {
 
   const getData = () => {
     if (isPageVessels) {
-      axios.get(`${apiUrl}/user/vessels?pagination=false`, {
+      axios.get(`${VESSELS_URL}?pagination=false`, {
         headers: { Authorization: `Bearer ${Auth.retrieveToken()}` },
       })
         .then((resp) => {
@@ -61,7 +63,10 @@ const SectionTable = ({ page, pageData, fetchPeopleTriggerAction, people }) => {
       <div className="govuk-width-container">
         <div className="govuk-grid-row">
           <div className="govuk-grid-column-full">
-            <h2 className="govuk-heading-l">Saved {pageData.pageHeading}</h2>
+            <h2 className="govuk-heading-l">
+              Saved
+              {pageData.pageHeading}
+            </h2>
             <table className="govuk-table">
               <thead className="govuk-table__head">
                 <tr className="govuk-table__row">

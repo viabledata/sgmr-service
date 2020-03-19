@@ -7,7 +7,7 @@ import Auth from 'Auth';
 // Create a secure route you can only see when logged in
 const SecureRoute = (props) => {
   if (Auth.isAuthorized()) return <Route {...props} />;
-  return <Redirect to='/sign-in' />;
+  return <Redirect to="/sign-in" />;
 };
 
 export default SecureRoute;

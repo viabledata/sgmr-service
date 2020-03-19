@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 
 // app imports
-import { apiUrl } from 'config';
+import { REGISTRATION_URL } from 'Constants/ApiConstants';
 
 
 const UserRegister = () => {
@@ -75,7 +75,7 @@ const UserRegister = () => {
         mobileNumber: formData.mobileNumber,
         password: formData.password,
       };
-      axios.post(`${apiUrl}/registration`, dataSubmit)
+      axios.post(REGISTRATION_URL, dataSubmit)
         .then((resp) => {
           history.push('/verify?source=registration');
           localStorage.setItem('email', JSON.stringify(formData.email));
@@ -101,34 +101,37 @@ const UserRegister = () => {
 
   return (
     <div id="pageContainer" className="govuk-width-container ">
-      <a className="govuk-back-link" onClick={(e) => {
-        e.preventDefault();
-        history.goBack();
-      }}>
+      <a
+        className="govuk-back-link"
+        onClick={(e) => {
+          e.preventDefault();
+          history.goBack();
+        }}
+      >
         Back
       </a>
       <main className="govuk-main-wrapper govuk-main-wrapper--auto-spacing" role="main">
         <div className="govuk-grid-row">
           <div className="govuk-grid-column-two-thirds">
             <h1 className="govuk-heading-xl">Create an account</h1>
-             <form>
+            <form>
 
               {Object.keys(errors).length > 0 && (
-                <div className="govuk-error-summary" aria-labelledby="error-summary-title" role="alert" tabIndex="-1" data-module="govuk-error-summary">
-                  <h2 className="govuk-error-summary__title" >
-                    There is a problem
-                  </h2>
-                  <div className="govuk-error-summary__body">
-                    <ul className="govuk-list govuk-error-summary__list">
-                      {Object.entries(errors).map((elem, i) => (
-                        <li key={i}>
-                          {elem[0] !== 'title'
+              <div className="govuk-error-summary" aria-labelledby="error-summary-title" role="alert" tabIndex="-1" data-module="govuk-error-summary">
+                <h2 className="govuk-error-summary__title">
+                  There is a problem
+                </h2>
+                <div className="govuk-error-summary__body">
+                  <ul className="govuk-list govuk-error-summary__list">
+                    {Object.entries(errors).map((elem, i) => (
+                      <li key={i}>
+                        {elem[0] !== 'title'
                               && <a href={`#${elem[0]}`}>{elem[1]}</a>}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
+              </div>
               )}
 
               <div id="firstName" className={`govuk-form-group ${errors.firstName ? 'govuk-form-group--error' : ''}`}>
@@ -138,16 +141,17 @@ const UserRegister = () => {
                 {errors.firstName
                   && (
                   <span className="govuk-error-message">
-                    <span className="govuk-visually-hidden">Error:</span> {errors.firstName}
+                    <span className="govuk-visually-hidden">Error:</span>
+                    {' '}
+                    {errors.firstName}
                   </span>
-                  )
-                }
+                  )}
                 <input
                   className="govuk-input"
                   name="firstName"
                   type="text"
                   value={formData.firstName || ''}
-                  onChange={(e) => handleChange(e)}
+                  onChange={handleChange}
                   onBlur={(e) => handleErrors(e, 'You must enter your given name')}
                 />
               </div>
@@ -159,16 +163,17 @@ const UserRegister = () => {
                 {errors.lastName
                   && (
                   <span className="govuk-error-message">
-                    <span className="govuk-visually-hidden">Error:</span> {errors.lastName}
+                    <span className="govuk-visually-hidden">Error:</span>
+                    {' '}
+                    {errors.lastName}
                   </span>
-                  )
-                }
-              <input
+                  )}
+                <input
                   className="govuk-input"
                   name="lastName"
                   type="text"
                   value={formData.lastName || ''}
-                  onChange={(e) => handleChange(e)}
+                  onChange={handleChange}
                   onBlur={(e) => handleErrors(e, 'You must enter your lastName')}
                 />
               </div>
@@ -180,17 +185,18 @@ const UserRegister = () => {
                 {errors.mobileNumber
                   && (
                   <span className="govuk-error-message">
-                    <span className="govuk-visually-hidden">Error:</span> {errors.mobileNumber}
+                    <span className="govuk-visually-hidden">Error:</span>
+                    {' '}
+                    {errors.mobileNumber}
                   </span>
-                  )
-                }
+                  )}
                 <span className="govuk-hint">You will be sent a verification token to this number.</span>
-              <input
+                <input
                   className="govuk-input"
                   name="mobileNumber"
                   type="text"
                   value={formData.mobileNumber || ''}
-                  onChange={(e) => handleChange(e)}
+                  onChange={handleChange}
                   onBlur={(e) => handleErrors(e, 'You must enter your mobile number')}
                 />
               </div>
@@ -201,17 +207,18 @@ const UserRegister = () => {
                 {errors.email
                   && (
                   <span className="govuk-error-message">
-                    <span className="govuk-visually-hidden">Error:</span> {errors.email}
+                    <span className="govuk-visually-hidden">Error:</span>
+                    {' '}
+                    {errors.email}
                   </span>
-                  )
-                }
+                  )}
                 <span className="govuk-hint">You will use this email to sign in to the Submit an Advanced Voyage Report service</span>
-              <input
+                <input
                   className="govuk-input"
                   name="email"
                   type="text"
                   value={formData.email || ''}
-                  onChange={(e) => handleChange(e)}
+                  onChange={handleChange}
                   onBlur={(e) => handleErrors(e, 'You must enter your email')}
                 />
               </div>
@@ -223,16 +230,17 @@ const UserRegister = () => {
                 {errors.confirmEmail
                   && (
                   <span className="govuk-error-message">
-                    <span className="govuk-visually-hidden">Error:</span> {errors.confirmEmail}
+                    <span className="govuk-visually-hidden">Error:</span>
+                    {' '}
+                    {errors.confirmEmail}
                   </span>
-                  )
-                }
-              <input
+                  )}
+                <input
                   className="govuk-input"
                   name="confirmEmail"
                   type="text"
                   value={formData.confirmEmail || ''}
-                  onChange={(e) => handleChange(e)}
+                  onChange={handleChange}
                   onBlur={(e) => handleErrors(e, 'Your email addresses do not match')}
                 />
               </div>
@@ -244,16 +252,17 @@ const UserRegister = () => {
                 {errors.password
                   && (
                   <span className="govuk-error-message">
-                    <span className="govuk-visually-hidden">Error:</span> {errors.password}
+                    <span className="govuk-visually-hidden">Error:</span>
+                    {' '}
+                    {errors.password}
                   </span>
-                  )
-                }
-              <input
+                  )}
+                <input
                   className="govuk-input"
                   name="password"
                   type="password"
                   value={formData.password || ''}
-                  onChange={(e) => handleChange(e)}
+                  onChange={handleChange}
                   onBlur={(e) => handleErrors(e, 'You must enter a password')}
                 />
               </div>
@@ -265,16 +274,17 @@ const UserRegister = () => {
                 {errors.confirmPassword
                   && (
                   <span className="govuk-error-message">
-                    <span className="govuk-visually-hidden">Error:</span> {errors.confirmPassword}
+                    <span className="govuk-visually-hidden">Error:</span>
+                    {' '}
+                    {errors.confirmPassword}
                   </span>
-                  )
-                }
-              <input
+                  )}
+                <input
                   className="govuk-input"
                   name="confirmPassword"
                   type="password"
                   value={formData.confirmPassword || ''}
-                  onChange={(e) => handleChange(e)}
+                  onChange={handleChange}
                   onBlur={(e) => handleErrors(e, 'Your passwords do not match')}
                 />
               </div>
@@ -283,13 +293,16 @@ const UserRegister = () => {
               <p className="govuk-body">By creating this account, you agree:</p>
               <ul className="govuk-list govuk-list--bullet">
                 <li>that the information you have provided is correct to the best of your knowledge</li>
-                <li>that you have read and accept our <a target="_blank" href="https://www.gov.uk/government/publications/personal-information-use-in-borders-immigration-and-citizenship">privacy policy</a></li>
+                <li>
+                  that you have read and accept our
+                  <a target="_blank" href="https://www.gov.uk/government/publications/personal-information-use-in-borders-immigration-and-citizenship">privacy policy</a>
+                </li>
               </ul>
 
               <button
                 className="govuk-button"
                 data-module="govuk-button"
-                onClick={(e) => handleSubmit(e)}
+                onClick={handleSubmit}
               >
                 Agree and submit
               </button>
