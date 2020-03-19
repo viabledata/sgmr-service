@@ -7,7 +7,6 @@ import Auth from 'Auth';
 
 const PageAccount = () => {
   const [data, setData] = useState({});
-  const [errors, setErrors] = useState({});
 
   const getData = () => {
     axios.get(`${apiPath}/user`, {
@@ -15,6 +14,8 @@ const PageAccount = () => {
     })
       .then((resp) => {
         setData(resp.data);
+        // Set data into local storage for use on Edit page until we connect this to Redux
+        localStorage.setItem('data', JSON.stringify(resp.data));
       })
       .catch((err) => {
         if (err.response) {

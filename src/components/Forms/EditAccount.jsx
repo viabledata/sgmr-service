@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 
@@ -6,10 +6,10 @@ import axios from 'axios';
 import { apiPath } from 'config';
 import Auth from 'Auth';
 
-const EditAccount = (props) => {
+const EditAccount = (data) => {
   const history = useHistory();
-  const [formData, setFormData] = useState(JSON.parse(localStorage.getItem('formData')) || {});
-  const [errors, setErrors] = useState(JSON.parse(localStorage.getItem('errors')) || {});
+  const [formData, setFormData] = useState(JSON.parse(localStorage.getItem('data')) || {});
+  const [errors, setErrors] = useState({});
 
   const validationRules = [
     {
@@ -69,46 +69,26 @@ const EditAccount = (props) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (checkRequiredFields() === false) {
-      axios.post(`${apiPath}/user/vessels`, formData, {
+      axios.patch(`${apiPath}/user`, formData, {
         headers: { Authorization: `Bearer ${Auth.retrieveToken()}` },
       })
         .then(() => {
-          clearFormData();
           history.push('/account');
         })
         .catch((err) => {
           if (err.response) {
             switch (err.response.status) {
-              case 400: setErrors({ ...errors, CreateVessel: 'This vessel already exists' }); break;
-              case 422: history.push('/sign-in?source=account'); break;
-              case 405: history.push('/sign-in?source=account'); break;
-              default: setErrors({ ...errors, CreateVessel: 'Something went wrong' });
+              case 401: history.push('/sign-in?source=account'); break;
+              default: history.push('/sign-in?source=account'); break;
             }
           }
         });
     } else {
       // This means there are errors, so jump user to the error box
-      history.push('#CreateVessel');
+      history.push('#EditUser');
     }
   };
 
-
-  const deleteUser = (e) => {
-    // show warning
-    // send DELETE
-    // clear localStorage
-    // call signout
-    alert('delete');
-  };
-
-  // Update localStorage/states
-  useEffect(() => {
-    localStorage.setItem('formData', JSON.stringify(formData));
-  }, [formData]);
-
-  useEffect(() => {
-    localStorage.setItem('errors', JSON.stringify(errors));
-  }, [errors]);
 
   return (
     <div className="govuk-width-container ">
@@ -125,9 +105,9 @@ const EditAccount = (props) => {
           <div className="govuk-grid-column-two-thirds">
             <h1 className="govuk-heading-xl">Edit account</h1>
             <p className="govuk-body-l">Edit the details of your account</p>
-            <form>
+            <form id="EditUser">
 
-              {/* {Object.keys(errors).length > 1 && (
+              {Object.keys(errors).length > 1 && (
                 <div className="govuk-error-summary" aria-labelledby="error-summary-title" role="alert" tabIndex="-1" data-module="govuk-error-summary">
                   <h2 className="govuk-error-summary__title" >
                     There is a problem
@@ -143,30 +123,30 @@ const EditAccount = (props) => {
                     </ul>
                   </div>
                 </div>
-              )} */}
+              )}
 
-              <div id="givenName" className="govuk-form-group">
-                <label className="govuk-label govuk-label--m" htmlFor="givenName">
+              <div id="firstName" className="govuk-form-group">
+                <label className="govuk-label govuk-label--m" htmlFor="firstName">
                   Given name
                 </label>
                 <input
                   className="govuk-input"
-                  name="givenName"
+                  name="firstName"
                   type="text"
-                  value={formData.givenName || ''}
+                  value={formData.firstName || ''}
                   onChange={(e) => handleChange(e)}
                 />
               </div>
 
-              <div id="surname" className="govuk-form-group">
-                <label className="govuk-label govuk-label--m" htmlFor="surname">
+              <div id="lastName" className="govuk-form-group">
+                <label className="govuk-label govuk-label--m" htmlFor="lastName">
                   Surname
                 </label>
               <input
                   className="govuk-input"
-                  name="surname"
+                  name="lastName"
                   type="text"
-                  value={formData.surname || ''}
+                  value={formData.lastName || ''}
                   onChange={(e) => handleChange(e)}
                 />
               </div>
@@ -180,6 +160,19 @@ const EditAccount = (props) => {
                   name="email"
                   type="text"
                   value={formData.email || ''}
+                  onChange={(e) => handleChange(e)}
+                />
+              </div>
+
+              <div id="mobileNumber" className="govuk-form-group">
+                <label className="govuk-label govuk-label--m" htmlFor="mobileNumber">
+                  Mobile number
+                </label>
+              <input
+                  className="govuk-input"
+                  name="mobileNumber"
+                  type="text"
+                  value={formData.mobileNumber || ''}
                   onChange={(e) => handleChange(e)}
                 />
               </div>
