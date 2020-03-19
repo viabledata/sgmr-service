@@ -1,6 +1,10 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
-const FormVoyageArrival = ({ handleSubmit, handleChange, data }) => {
+import { updateVoyageReportRoutine } from 'State/voyage';
+
+const FormVoyageArrival = ({ handleSubmit, handleChange, data, updateVoyageReportAction }) => {
   return (
     <section>
       <h1 className="govuk-heading-xl">Arrival details</h1>
@@ -148,7 +152,7 @@ const FormVoyageArrival = ({ handleSubmit, handleChange, data }) => {
             </span>
           </legend>
           <div className="govuk-form-group">
-            <label className="govuk-label govuk-date-input__label" htmlFor="arrivalCoordinatesLat">
+            <label className="govuk-label govuk-date-input__label" htmlFor="arrivalLat">
               Latitude
             </label>
             <span className="govuk-hint">
@@ -156,16 +160,16 @@ const FormVoyageArrival = ({ handleSubmit, handleChange, data }) => {
             </span>
             <input
               className="govuk-input govuk-date-input__input"
-              name="arrivalCoordinatesLat"
+              name="arrivalLat"
               type="text"
               pattern="[0-9]*"
               inputMode="numeric"
-              value={data.arrivalCoordinatesLat || ''}
+              value={data.arrivalLat || ''}
               onChange={handleChange}
             />
           </div>
           <div className="govuk-form-group">
-            <label className="govuk-label govuk-date-input__label" htmlFor="arrivalCoordinatesLong">
+            <label className="govuk-label govuk-date-input__label" htmlFor="arrivalLong">
               Longitude
             </label>
             <span className="govuk-hint">
@@ -173,11 +177,11 @@ const FormVoyageArrival = ({ handleSubmit, handleChange, data }) => {
             </span>
             <input
               className="govuk-input govuk-date-input__input"
-              name="arrivalCoordinatesLong"
+              name="arrivalLong"
               type="text"
               pattern="[0-9]*"
               inputMode="numeric"
-              value={data.arrivalCoordinatesLong || ''}
+              value={data.arrivalLong || ''}
               onChange={handleChange}
             />
           </div>
@@ -187,7 +191,7 @@ const FormVoyageArrival = ({ handleSubmit, handleChange, data }) => {
       <button
         className="govuk-button"
         data-module="govuk-button"
-        onClick={handleSubmit}
+        onClick={(e) => handleSubmit(e, updateVoyageReportAction)}
       >
         Save and continue
       </button>
@@ -195,4 +199,17 @@ const FormVoyageArrival = ({ handleSubmit, handleChange, data }) => {
   );
 };
 
-export default FormVoyageArrival;
+FormVoyageArrival.propTypes = {
+  handleChange: PropTypes.func.isRequired,
+  handleSubmit: PropTypes.func.isRequired,
+  setErrors: PropTypes.func.isRequired,
+  removeError: PropTypes.func.isRequired,
+  data: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
+  errors: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
+  updateVoyageReportAction: PropTypes.func.isRequired,
+};
+
+const mapDispatchToProps = (dispatch) => ({
+  updateVoyageReportAction: (formData) => dispatch(updateVoyageReportRoutine.request(formData)),
+});
+export default connect(null, mapDispatchToProps)(FormVoyageArrival);

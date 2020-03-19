@@ -6,7 +6,7 @@ import { isDateValid } from 'Utils/date';
 import { updateVoyageReportRoutine } from 'State/voyage';
 
 const FormVoyageDeparture = ({
-  handleSubmit, handleChange, data, createVoyageReportAction, setErrors, removeError, errors,
+  handleSubmit, handleChange, data, updateVoyageReportAction, setErrors, removeError, errors,
 }) => {
   useEffect(() => {
     if (isDateValid(data.documentExpiryDateYear, data.documentExpiryDateMonth, data.documentExpiryDateDay)) {
@@ -14,7 +14,7 @@ const FormVoyageDeparture = ({
     } else {
       setErrors({ ...errors, documentExpiryDate: 'You must enter a valid date' });
     }
-  }, [])
+  }, []);
 
   return (
     <section>
@@ -203,7 +203,7 @@ const FormVoyageDeparture = ({
         type="button"
         className="govuk-button"
         data-module="govuk-button"
-        onClick={(e) => handleSubmit(e, createVoyageReportAction)}
+        onClick={(e) => handleSubmit(e, updateVoyageReportAction)}
       >
         Save and continue
       </button>
@@ -218,10 +218,10 @@ FormVoyageDeparture.propTypes = {
   removeError: PropTypes.func.isRequired,
   data: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   errors: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
-  createVoyageReportAction: PropTypes.func.isRequired,
+  updateVoyageReportAction: PropTypes.func.isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  createVoyageReportAction: (formData) => dispatch(updateVoyageReportRoutine.request(formData)),
+  updateVoyageReportAction: (formData) => dispatch(updateVoyageReportRoutine.request(formData)),
 });
 export default connect(null, mapDispatchToProps)(FormVoyageDeparture);

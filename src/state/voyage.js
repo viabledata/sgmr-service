@@ -56,7 +56,8 @@ export function* createVoyageReport() {
   }
 }
 
-const updateVoyageReportRequest = async (payload, voyageId) => {
+
+const getDepartureInfo = (payload) => {
   let dataToSubmit = { departurePort: payload.departurePort, departureLat: payload.departureLat, departureLong: payload.departureLong };
   const shouldFormatDate = payload.departureDateYear && payload.departureDateMonth && payload.departureDateDay;
   const shouldFormatTime = payload.departureTimeHour && payload.departureTimeMinute;
@@ -73,6 +74,78 @@ const updateVoyageReportRequest = async (payload, voyageId) => {
     dataToSubmit = { ...dataToSubmit, departureTime };
   }
 
+  return dataToSubmit;
+};
+
+const getArrivalInfo = (payload) => {
+  let dataToSubmit = { arrivalPort: payload.arrivalPort, arrivalLat: payload.arrivalLat, arrivalLong: payload.arrivalLong };
+  const shouldFormatDate = payload.arrivalDateYear && payload.arrivalDateMonth && payload.arrivalDateDay;
+  const shouldFormatTime = payload.arrivalTimeHour && payload.arrivalTimeMinute;
+
+  if (shouldFormatDate) {
+    const arrivalDate = formatDate(payload.arrivalDateYear, payload.arrivalDateMonth, payload.arrivalDateDay);
+
+    dataToSubmit = { ...dataToSubmit, status: 'Draft', arrivalDate };
+  }
+
+  if (shouldFormatTime) {
+    const arrivalTime = `${payload.arrivalTimeHour}:${payload.arrivalTimeMinute}`;
+
+    dataToSubmit = { ...dataToSubmit, arrivalTime };
+  }
+
+  return dataToSubmit;
+};
+
+const getVesselInfo = ({
+  vesselName,
+  vesselType,
+  moorings,
+  registration,
+  callsign,
+  hullIdentificationNumber,
+  vesselNationality,
+  vesselBase,
+}) => ({
+  status: 'Draft',
+  vesselName,
+  vesselType,
+  moorings,
+  registration,
+  callsign,
+  hullIdentificationNumber,
+  vesselNationality,
+  vesselBase,
+});
+
+const getPeopleInfo = ({ people }, peopleList) => {
+  return {
+    status: 'Draft',
+    people: peopleList.filter((person) => people.find((chosenPerson) => person.id === chosenPerson)),
+  };
+};
+
+const updateVoyageReportRequest = async (payload, voyageId, peopleList) => {
+  const isDeparture = 'departureLat' in payload;
+  const isArrival = 'arrivalLat' in payload;
+  const isVessel = 'vesselName' in payload;
+  const isPeople = 'people' in payload;
+  let dataToSubmit = {};
+
+  if (isDeparture) {
+    dataToSubmit = getDepartureInfo(payload);
+  }
+  if (isArrival) {
+    dataToSubmit = getArrivalInfo(payload);
+  }
+  if (isVessel) {
+    dataToSubmit = getVesselInfo(payload);
+  }
+  if (isPeople) {
+    dataToSubmit = getPeopleInfo(payload, peopleList);
+  }
+
+
   const data = await axios.patch(`${VOYAGE_REPORT_URL}/${voyageId}`, dataToSubmit, {
     headers: { Authorization: `Bearer ${Auth.retrieveToken()}` },
   });
@@ -83,8 +156,9 @@ const updateVoyageReportRequest = async (payload, voyageId) => {
 export function* updateVoyageReport({ payload }) {
   try {
     const voyageId = yield select(({ voyage }) => voyage.id);
+    const peopleList = yield select(({ people }) => people.list);
 
-    const { data } = yield call(updateVoyageReportRequest, payload, voyageId);
+    const { data } = yield call(updateVoyageReportRequest, payload, voyageId, peopleList);
 
     yield put(updateVoyageReportRoutine.success(data));
   } catch (error) {

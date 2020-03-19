@@ -2,6 +2,7 @@ import { all, fork } from 'redux-saga/effects';
 import {
   createStore, applyMiddleware, compose, combineReducers,
 } from 'redux';
+import persistState from 'redux-localstorage';
 import createSagaMiddleware from 'redux-saga';
 
 import { peopleReducer, watchPeople } from './people';
@@ -26,7 +27,7 @@ const configureStore = () => {
   const sagaMiddleware = createSagaMiddleware();
   const middlewares = [sagaMiddleware];
   const middlewareEnhancer = applyMiddleware(...middlewares);
-  const enhancers = [middlewareEnhancer];
+  const enhancers = [middlewareEnhancer, persistState()];
   const composedEnhancers = composeEnhancers(...enhancers);
   const store = createStore(combinedReducers, composedEnhancers);
 

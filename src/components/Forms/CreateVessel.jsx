@@ -132,32 +132,6 @@ const CreateVessel = ({
         />
       </div>
 
-      {/* <div id="colourOfHull" className="govuk-form-group">
-        <label className="govuk-label" htmlFor="colourOfHull">
-          Colour of hull
-        </label>
-        <input
-          className="govuk-input"
-          name="colourOfHull"
-          type="text"
-          value={data.colourOfHull || ''}
-          onChange={handleChange}
-        />
-      </div>
-
-      <div id="lengthMeters" className="govuk-form-group">
-        <label className="govuk-label" htmlFor="lengthMeters">
-          Length (meters)
-        </label>
-        <input
-          className="govuk-input"
-          name="lengthMeters"
-          type="text"
-          value={data.lengthMeters || ''}
-          onChange={handleChange}
-        />
-      </div> */}
-
       <div id="vesselBase" className="govuk-form-group">
         <label className="govuk-label" htmlFor="vesselBase">
           Port of registry
@@ -170,46 +144,6 @@ const CreateVessel = ({
           onChange={handleChange}
         />
       </div>
-
-      {/* <div id="vesselBuiltDate" className="govuk-form-group">
-        <label className="govuk-label" htmlFor="vesselBuiltDate">
-          What year was the vessel built?
-        </label>
-        <span className="govuk-hint">For example, 2007</span>
-        <div className="govuk-date-input">
-          <div className="govuk-date-input__item">
-            <div className="govuk-form-group">
-              <label className="govuk-label govuk-date-input__label" htmlFor="vesselBuiltDate">
-                Year
-              </label>
-              <input
-                className="govuk-input govuk-date-input__input govuk-input--width-4"
-                name="vesselBuiltDate"
-                type="text"
-                pattern="[0-9]*"
-                inputMode="numeric"
-                maxLength="4"
-                value={data.vesselBuiltDate || ''}
-                onChange={handleChange}
-              />
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div id="vesselBuiltIn" className="govuk-form-group">
-        <label className="govuk-label" htmlFor="vesselBuiltIn">
-          Where was the vessel built?
-        </label>
-        <span className="govuk-hint">Where was the vessel constructed</span>
-        <input
-          className="govuk-input"
-          name="vesselBuiltIn"
-          type="text"
-          value={data.vesselBuiltIn || ''}
-          onChange={handleChange}
-        />
-      </div> */}
 
       {checkIfVoyageForm
         && (
