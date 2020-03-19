@@ -70,8 +70,8 @@ spec:
             memory: "2304Mi"
             cpu: "1000m"
         env:
-          - name: SGMR_API_URL
-            value: {{.SGMR_API_URL}}
+          - name: SGMR_DATA_API_BASE_URL
+            value: {{.SGMR_DATA_API_BASE_URL}}
         readinessProbe:
           httpGet:
             path: /readiness

@@ -84,15 +84,19 @@ module.exports = {
   },
   plugins: [
     new CopyPlugin([
-      { from: 'src/assets/javascript', to: 'javascript' },
       { from: 'src/assets/images', to: 'assets/images' },
       { from: 'src/assets/fonts', to: 'assets/fonts' },
       { from: 'node_modules/govuk-frontend/govuk/all.js', to: 'javascript/all.js' },
       { from: 'node_modules/govuk-frontend/govuk/assets', to: 'assets' },
     ]),
+    new webpack.DefinePlugin({
+      'process.env': {
+        SGMR_DATA_API_BASE_URL: JSON.stringify(process.env.SGMR_DATA_API_BASE_URL),
+        ENVIRONMENT: JSON.stringify(process.env.ENVIRONMENT),
+      },
+    }),
   ],
   node: { fs: 'empty' },
-  watch: true,
   devServer: {
     // in order to use `<Router>`, historyApiFallback needs to be enabled
     historyApiFallback: true,
