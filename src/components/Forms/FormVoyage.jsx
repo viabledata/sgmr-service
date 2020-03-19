@@ -74,7 +74,6 @@ const FormVoyage = () => {
   const handleSubmit = (e) => {
     // Combine date fields into required format before submit
     e.preventDefault();
-    // Note, if page isn't the last page don't clear localstorage on commit, as user should be able to go back and forth without needing a GET
     setNextPage();
   };
 
@@ -130,9 +129,6 @@ const FormVoyage = () => {
               {pageNum === 5 && <FormVoyageCheckDetails
                 handleSubmit={(e) => handleSubmit(e)}
               />}
-              {pageNum === 6 && <FormVoyageSubmitted
-              />}
-
               <p>
                 <a href="/reports" className="govuk-link govuk-link--no-visited-state" onClick={(e) => clearFormData(e)}>Exit without saving</a>
               </p>
