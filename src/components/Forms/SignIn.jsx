@@ -61,8 +61,6 @@ const SignIn = () => {
     if (checkRequiredFields() === true) {
       axios.post(`${apiPath}/login`, formData)
         .then((resp) => {
-          // Auth.storeToken(resp.data.token);
-          // history.push(sourcePage);
           localStorage.setItem('email', JSON.stringify(formData.email));
           source === 'registration' ? history.push('/verify?source=reports') : history.push(`/verify?source=${source}`);
         })
@@ -76,6 +74,11 @@ const SignIn = () => {
         });
     }
   };
+
+  // Drop token when arriving at sign-in page
+  useEffect(() => {
+    localStorage.removeItem('token');
+  }, []);
 
   return (
     <div className="govuk-width-container">
