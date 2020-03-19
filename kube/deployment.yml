@@ -69,6 +69,11 @@ spec:
           limits:
             memory: "2304Mi"
             cpu: "1000m"
+        env:
+          - name: API_BASE_URL
+            value: {{.PROTOCOL_HTTPS}}{{.SGMR_API_URL}}
+          - name: ENVIRONMENT
+            value: '{{.ENVIRONMENT}}'
         readinessProbe:
           httpGet:
             path: /readiness
