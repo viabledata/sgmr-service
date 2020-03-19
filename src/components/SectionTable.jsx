@@ -93,7 +93,7 @@ const SectionTable = ({
                     return (
                       <tr className="govuk-table__row" key={person.id}>
                         <td className="govuk-table__cell" scope="row">
-                          <p><Link to={`/people/${person.id}`}>{person.lastName}</Link></p>
+                          <p>{person.lastName}</p>
                         </td>
                         <td className="govuk-table__cell">{person.firstName}</td>
                         <td className="govuk-table__cell">{person.peopleType.name}</td>
