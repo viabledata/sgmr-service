@@ -33,9 +33,8 @@ const FormVoyageCheckDetails = () => {
   }, []);
 
   return (
-    <main className="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" role="main">
+    <section>
 
-      <div className="govuk-grid-row">
         <h1 className="govuk-heading-xl">
           Check all the information provided before submitting your Advanced Voyage Report
         </h1>
@@ -229,8 +228,8 @@ const FormVoyageCheckDetails = () => {
           </table>
           <h2 className="govuk-heading-m">Submit your Advanced Voyage Report</h2>
           <p>By submitting this Advanced Voyage Report you are confirming that, to the best of your knowledge, the information you are providing is correct and you have the explicit permission of the persons named in this report to submit information on their behalf.</p>
-      </div>
-    </main>
+
+    </section>
   );
 };
 
