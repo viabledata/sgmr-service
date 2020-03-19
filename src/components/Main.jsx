@@ -39,7 +39,7 @@ const Main = () => {
         <SecureRoute exact path="/save-voyage/page-3"><FormVoyage /></SecureRoute>
         <SecureRoute exact path="/save-voyage/page-4"><FormVoyage /></SecureRoute>
         <SecureRoute exact path="/save-voyage/page-5"><FormVoyage /></SecureRoute>
-        <SecureRoute exact path="/save-voyage/page-6"><FormVoyageSubmitted /></SecureRoute>
+        <SecureRoute exact path="/save-voyage/voyage-submitted"><FormVoyageSubmitted /></SecureRoute>
         <SecureRoute exact path="/vessels">
           <PageContainer />
         </SecureRoute>

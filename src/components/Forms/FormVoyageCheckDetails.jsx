@@ -6,13 +6,15 @@ import moment from 'moment';
 // App imports
 import { apiPath } from 'config';
 import Auth from 'Auth';
+import FormVoyageSubmitted from 'FormVoyageSubmitted';
 
-const FormVoyageCheckDetails = ({ handleSubmit }) => {
+const FormVoyageCheckDetails = () => {
   const location = useLocation();
   const history = useHistory();
   const voyageId = 'a9f36018-be05-4205-adb3-89a47aee0373';
   const [voyageData, setVoyageData] = useState([]);
   const [peopleData, setPeopleData] = useState([]);
+  const [voyageReference, setVoyageReference] = useState([]);
 
   const getVoyageData = () => {
     axios.get(`${apiPath}/voyagereport/${voyageId}`, {
@@ -37,6 +39,26 @@ const FormVoyageCheckDetails = ({ handleSubmit }) => {
     })
       .then((resp) => {
         setPeopleData(resp.data.people);
+      })
+      .catch((err) => {
+        if (err.response) {
+          switch (err.response.status) {
+            case 422: history.push(`/sign-in?source=${location}`); break;
+            default: history.push(`/sign-in?source=${location}`); break;
+          }
+        }
+      });
+  };
+
+  const handleVoyageSubmit = (e) => {
+    e.preventDefault();
+    const submitData = { status: 'Submitted' };
+    axios.patch(`${apiPath}/voyagereport/${voyageId}`, submitData, {
+      headers: { Authorization: `Bearer ${Auth.retrieveToken()}` },
+    })
+      .then((resp) => {
+        setVoyageReference(resp.data);
+        history.push('/save-voyage/voyage-submitted');
       })
       .catch((err) => {
         if (err.response) {
@@ -257,7 +279,7 @@ const FormVoyageCheckDetails = ({ handleSubmit }) => {
       <button
         className="govuk-button"
         data-module="govuk-button"
-        onClick={(e) => handleSubmit(e)}
+        onClick={(e) => handleVoyageSubmit(e)}
       >
         Accept and submit report
       </button>
