@@ -101,10 +101,6 @@ const FormVoyageCheckDetails = () => {
           <dd className="govuk-summary-list__value">{voyageData.departureTime}</dd>
 
         </div>
-        {/* <div className="govuk-summary-list__row">
-          <dt className="govuk-summary-list__key">Departure port</dt>
-          <dd className="govuk-summary-list__value"></dd>
-        </div> */}
 
         <div className="govuk-summary-list__row">
           <dt className="govuk-summary-list__key">Departure port latitude</dt>
@@ -136,11 +132,6 @@ const FormVoyageCheckDetails = () => {
           <dd className="govuk-summary-list__value">{voyageData.arrivalTime}</dd>
 
         </div>
-        {/* <div className="govuk-summary-list__row">
-          <dt className="govuk-summary-list__key">Arrival port</dt>
-          <dd className="govuk-summary-list__value">GB PME</dd>
-
-        </div> */}
         <div className="govuk-summary-list__row">
           <dt className="govuk-summary-list__key">Arrival port latitude</dt>
           <dd className="govuk-summary-list__value">{voyageData.arrivalLat}</dd>
@@ -274,6 +265,40 @@ const FormVoyageCheckDetails = () => {
             );
           })}
       </table>
+
+      <dl class="govuk-summary-list govuk-!-margin-bottom-9">
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-heading-m">
+            Responsible person details
+          </dt>
+          <dd class="govuk-summary-list__value">
+            <a href="create-report-responsible-person.html">Change<span class="govuk-visually-hidden"> Change</span></a>
+          </dd>
+        </div>
+      </dl>
+      <dl class="govuk-summary-list govuk-!-margin-bottom-9">
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">Given name</dt>
+          <dd class="govuk-summary-list__value">{voyageData.responsibleGivenName}</dd>
+        </div>
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">Surname</dt>
+          <dd class="govuk-summary-list__value">{voyageData.responsibleSurname}</dd>
+        </div>
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            Contact telephone number
+          </dt>
+          <dd class="govuk-summary-list__value">{voyageData.responsibleContactNo}</dd>
+        </div>
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">Address</dt>
+          <dd class="govuk-summary-list__value">
+            {`${voyageData.responsibleAddressLine1}, ${voyageData.responsibleAddressLine2}, ${voyageData.responsibleTown}, ${voyageData.responsiblePostcode}`}
+          </dd>
+        </div>
+      </dl>
+      
       <h2 className="govuk-heading-m">Submit your Advanced Voyage Report</h2>
       <p>By submitting this Advanced Voyage Report you are confirming that, to the best of your knowledge, the information you are providing is correct and you have the explicit permission of the persons named in this report to submit information on their behalf.</p>
       <button

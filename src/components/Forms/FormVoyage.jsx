@@ -6,38 +6,16 @@ import FormVoyageArrival from 'FormVoyageArrival';
 import FormVoyageCheckDetails from 'FormVoyageCheckDetails';
 import FormVoyageDeparture from 'FormVoyageDeparture';
 import FormVoyagePeople from 'FormVoyagePeople';
-import FormVoyageSubmitted from 'FormVoyageSubmitted';
+import FormVoyageResponsiblePerson from 'FormVoyageResponsiblePerson';
 import FormVoyageVessel from 'FormVoyageVessel';
 
 const FormVoyage = () => {
   const location = useLocation();
   const history = useHistory();
-  const maxPages = 5;
+  const maxPages = 6;
   let [pageNum, setPageNum] = useState();
   const [formData, setFormData] = useState(JSON.parse(localStorage.getItem('formData')) || [{}]);
-  // const [errors, setErrors] = useState(JSON.parse(localStorage.getItem('errors')) || { title: null });
-
-  // // Handle errors
-  // const removeError = (fieldName) => {
-  //   const tempArr = { ...errors };
-  //   const key = fieldName;
-  //   delete tempArr[key];
-  //   setErrors(tempArr);
-  // };
-
-  // const handleErrors = (e, errorText, groupField) => {
-  //   // For fields with multiple inputs in a single group
-  //   const name = !groupField ? e.target.name : groupField;
-  //   // Error onBlur if field is blank
-  //   if (!e.target.value) { setErrors({ ...errors, [name]: errorText }); }
-  //   // Error onBlur if condition not met
-  //   switch (e.target.name) {
-  //     case 'email': (/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(formData.email)) ? removeError('email') : setErrors({ ...errors, email: errorText }); break;
-  //     case 'confirmEmail': formData.email.toLowerCase() === formData.confirmEmail.toLowerCase() ? removeError('confirmEmail') : setErrors({ ...errors, confirmEmail: errorText }); break;
-  //     case 'confirmPassword': formData.password === formData.confirmPassword ? removeError('confirmPassword') : setErrors({ ...errors, confirmPassword: errorText }); break;
-  //     default: null;
-  //   }
-  // };
+  
 
   // Update form info to state
   const handleChange = (e) => {
@@ -66,7 +44,7 @@ const FormVoyage = () => {
   };
 
   const setNextPage = () => {
-    const nextPage = pageNum < maxPages + 1 ? pageNum + 1 : pageNum;
+    const nextPage = pageNum < maxPages ? pageNum + 1 : pageNum;
     setPageNum(nextPage);
     history.push(`/save-voyage/page-${nextPage}`);
   };
@@ -126,7 +104,12 @@ const FormVoyage = () => {
                 handleChange={(e) => handleChange(e)}
                 data={formData}
               />}
-              {pageNum === 5 && <FormVoyageCheckDetails
+              {pageNum === 5 && <FormVoyageResponsiblePerson
+                handleSubmit={(e) => handleSubmit(e)}
+                handleChange={(e) => handleChange(e)}
+                data={formData}
+              />}
+              {pageNum === 6 && <FormVoyageCheckDetails
               />}
               <p>
                 <a href="/reports" className="govuk-link govuk-link--no-visited-state" onClick={(e) => clearFormData(e)}>Exit without saving</a>
