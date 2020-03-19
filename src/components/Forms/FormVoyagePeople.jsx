@@ -8,7 +8,7 @@ const FormVoyagePeople = ({ handleSubmit, handleChange, data, fetchPeopleTrigger
   useEffect(() => {
     fetchPeopleTriggerAction();
   }, []);
-
+  
   return (
     <section>
       <h1 className="govuk-heading-xl">Manifest details</h1>

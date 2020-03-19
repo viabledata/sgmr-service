@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 
 // App imports
@@ -6,6 +7,7 @@ import { apiPath } from 'config';
 import Auth from 'Auth';
 
 const PageAccount = () => {
+  const history = useHistory();
   const [data, setData] = useState({});
 
   const getData = () => {

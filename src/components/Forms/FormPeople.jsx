@@ -126,7 +126,7 @@ const FormPeople = (props) => {
               case 401: history.push(`/sign-in?source=${location}`); break;
               case 422: history.push(`/sign-in?source=${location}`); break;
               case 405: history.push(`/sign-in?source=${location}`); break;
-              default: setErrors({ ...errors, CreatePerson: 'Something went wrong' });
+              default: history.push(`/sign-in?source=${location}`);
             }
           }
         });
