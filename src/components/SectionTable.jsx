@@ -77,10 +77,10 @@ const SectionTable = ({ page, pageData, fetchPeopleTriggerAction, people }) => {
                     return (
                       <tr className="govuk-table__row" key={i}>
                         <td className="govuk-table__cell" scope="row">
-                          <p>{elem.name}</p>
+                          <p>{elem.vesselName}</p>
                         </td>
                         <td className="govuk-table__cell">{elem.vesselType}</td>
-                        <td className="govuk-table__cell">{elem.vesselBase}</td>
+                        <td className="govuk-table__cell">{elem.moorings}</td>
                       </tr>
                     );
                   })}

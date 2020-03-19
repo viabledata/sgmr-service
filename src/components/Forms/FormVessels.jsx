@@ -19,7 +19,7 @@ const FormVessels = () => {
 
   const validationRules = [
     {
-      field: 'name',
+      field: 'vesselName',
       rule: 'required',
       message: 'You must enter a name',
     },
@@ -70,17 +70,6 @@ const FormVessels = () => {
     setFormData({});
     setErrors({ });
   };
-
-  // // Get fields to submit
-  // const getFieldsToSubmit = () => {
-  //   const dataSubmit = {
-  //     name: formData.name,
-  //     vesselType: formData.vesselType,
-  //     vesselBase: formData.vesselBase,
-  //     registration: formData.registration,
-  //   }
-  //   return dataSubmit;
-  // };
 
   // Handle Submit, including clearing localStorage
   const handleSubmit = (e) => {

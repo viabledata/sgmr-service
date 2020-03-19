@@ -86,7 +86,7 @@ const FormVoyageVessel = ({ handleSubmit, handleChange, data, }) => {
                       <label className="govuk-label govuk-checkboxes__label" htmlFor={elem.id}>&nbsp;</label>
                     </div>
                   </td>
-                  <td className="govuk-table__cell" scope="row">{elem.name}</td>
+                  <td className="govuk-table__cell" scope="row">{elem.vesselName}</td>
                   <td className="govuk-table__cell">{elem.vesselType}</td>
                   <td className="govuk-table__cell">{elem.vesselBase}</td>
                 </tr>
@@ -105,7 +105,6 @@ const FormVoyageVessel = ({ handleSubmit, handleChange, data, }) => {
       <p className="govuk-body-l">Add the details of a new vessel you have not already saved</p>
 
       <CreateVessel
-        // handleSubmit={(e) => handleCreateVessel(e)}
         handleChange={(e) => handleChange(e)}
         data={formData}
         errors={errors}

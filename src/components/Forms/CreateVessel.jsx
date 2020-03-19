@@ -5,23 +5,23 @@ const CreateVessel = ({ handleSubmit, handleChange, data, errors }) => {
 
   return (
     <section>
-      <div id="name" className={`govuk-form-group ${errors.name ? 'govuk-form-group--error' : ''}`}>
-        <label className="govuk-label" htmlFor="name">
+      <div id="vesselName" className={`govuk-form-group ${errors.vesselName ? 'govuk-form-group--error' : ''}`}>
+        <label className="govuk-label" htmlFor="vesselName">
           Vessel name
         </label>
-        <span className="govuk-hint">For example Baroness</span>
-        {errors.name
+        {errors.vesselName
           && (
           <span className="govuk-error-message">
-            <span className="govuk-visually-hidden">Error:</span> {errors.name}
+            <span className="govuk-visually-hidden">Error:</span> {errors.vesselName}
           </span>
           )
         }
+        <span className="govuk-hint">For example Baroness</span>
         <input
           className="govuk-input"
-          name="name"
+          name="vesselName"
           type="text"
-          value={data.name || ''}
+          value={data.vesselName || ''}
           onChange={(e) => handleChange(e)}
         />
       </div>
