@@ -19,9 +19,9 @@ const Vessels = () => {
           <div className="govuk-grid-column-two-thirds">
             <h1 className="govuk-heading-xl">Save vessel</h1>
             <p className="govuk-body-l">Please enter the following information. This information can be re-used when submitting an Advanced Voyage Report.</p>
-              <form>
-                <FormVessels />
-              </form>
+            <form>
+              <FormVessels />
+            </form>
           </div>
         </div>
       </main>

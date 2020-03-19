@@ -1,6 +1,8 @@
 import React from 'react';
 
-const CreateVessel = ({ handleSubmit, handleChange, data, errors }) => {
+const CreateVessel = ({
+  handleSubmit, handleChange, data, errors,
+}) => {
   const checkIfVoyageForm = location.pathname.toLowerCase().indexOf('voyage') === -1;
 
   return (
@@ -22,7 +24,7 @@ const CreateVessel = ({ handleSubmit, handleChange, data, errors }) => {
           name="vesselName"
           type="text"
           value={data.vesselName || ''}
-          onChange={(e) => handleChange(e)}
+          onChange={ handleChange}
         />
       </div>
 
@@ -33,38 +35,40 @@ const CreateVessel = ({ handleSubmit, handleChange, data, errors }) => {
         {errors.vesselType
           && (
           <span className="govuk-error-message">
-            <span className="govuk-visually-hidden">Error:</span> {errors.vesselType}
+            <span className="govuk-visually-hidden">Error:</span>
+            {' '}
+            {errors.vesselType}
           </span>
-          )
-        }
+          )}
         <span className="govuk-hint">For example Yacht or Sailboat</span>
         <input
           className="govuk-input"
           name="vesselType"
           type="text"
           value={data.vesselType || ''}
-          onChange={(e) => handleChange(e)}
+          onChange={handleChange}
         />
       </div>
 
       <div id="moorings" className={`govuk-form-group ${errors.moorings ? 'govuk-form-group--error' : ''}`}>
         <label className="govuk-label" htmlFor="moorings">
-            Usual moorings
+          Usual moorings
         </label>
         <span className="govuk-hint">A description, UNLOCODE or set of Coordinates for where the vessel is usually moored</span>
         {errors.moorings
           && (
           <span className="govuk-error-message">
-            <span className="govuk-visually-hidden">Error:</span> {errors.moorings}
+            <span className="govuk-visually-hidden">Error:</span>
+            {' '}
+            {errors.moorings}
           </span>
-          )
-        }
+          )}
         <input
           className="govuk-input"
           name="moorings"
           type="text"
           value={data.moorings || ''}
-          onChange={(e) => handleChange(e)}
+          onChange={handleChange}
         />
       </div>
 
@@ -75,16 +79,17 @@ const CreateVessel = ({ handleSubmit, handleChange, data, errors }) => {
         {errors.registration
           && (
           <span className="govuk-error-message">
-            <span className="govuk-visually-hidden">Error:</span> {errors.registration}
+            <span className="govuk-visually-hidden">Error:</span>
+            {' '}
+            {errors.registration}
           </span>
-          )
-        }
+          )}
         <input
           className="govuk-input"
           name="registration"
           type="text"
           value={data.registration || ''}
-          onChange={(e) => handleChange(e)}
+          onChange={handleChange}
         />
       </div>
 
@@ -97,7 +102,7 @@ const CreateVessel = ({ handleSubmit, handleChange, data, errors }) => {
           name="hullIdentificationNumber"
           type="text"
           value={data.hullIdentificationNumber || ''}
-          onChange={(e) => handleChange(e)}
+          onChange={handleChange}
         />
       </div>
 
@@ -110,7 +115,7 @@ const CreateVessel = ({ handleSubmit, handleChange, data, errors }) => {
           name="callsign"
           type="text"
           value={data.callsign || ''}
-          onChange={(e) => handleChange(e)}
+          onChange={handleChange}
         />
       </div>
 
@@ -123,7 +128,7 @@ const CreateVessel = ({ handleSubmit, handleChange, data, errors }) => {
           name="vesselNationality"
           type="text"
           value={data.vesselNationality || ''}
-          onChange={(e) => handleChange(e)}
+          onChange={handleChange}
         />
       </div>
 
@@ -136,7 +141,7 @@ const CreateVessel = ({ handleSubmit, handleChange, data, errors }) => {
           name="colourOfHull"
           type="text"
           value={data.colourOfHull || ''}
-          onChange={(e) => handleChange(e)}
+          onChange={handleChange}
         />
       </div>
 
@@ -149,7 +154,7 @@ const CreateVessel = ({ handleSubmit, handleChange, data, errors }) => {
           name="lengthMeters"
           type="text"
           value={data.lengthMeters || ''}
-          onChange={(e) => handleChange(e)}
+          onChange={handleChange}
         />
       </div> */}
 
@@ -162,7 +167,7 @@ const CreateVessel = ({ handleSubmit, handleChange, data, errors }) => {
           name="vesselBase"
           type="text"
           value={data.vesselBase || ''}
-          onChange={(e) => handleChange(e)}
+          onChange={handleChange}
         />
       </div>
 
@@ -185,7 +190,7 @@ const CreateVessel = ({ handleSubmit, handleChange, data, errors }) => {
                 inputMode="numeric"
                 maxLength="4"
                 value={data.vesselBuiltDate || ''}
-                onChange={(e) => handleChange(e)}
+                onChange={handleChange}
               />
             </div>
           </div>
@@ -202,21 +207,22 @@ const CreateVessel = ({ handleSubmit, handleChange, data, errors }) => {
           name="vesselBuiltIn"
           type="text"
           value={data.vesselBuiltIn || ''}
-          onChange={(e) => handleChange(e)}
+          onChange={handleChange}
         />
       </div> */}
 
       {checkIfVoyageForm
-        && <div id="submitBlock">
+        && (
+        <div id="submitBlock">
           <button
             className="govuk-button"
             data-module="govuk-button"
-            onClick={(e) => handleSubmit(e)}
+            onClick={handleSubmit}
           >
             Save
           </button>
         </div>
-      }
+        )}
     </section>
   );
 };

@@ -4,9 +4,8 @@ import axios from 'axios';
 import moment from 'moment';
 
 // App imports
-import { apiPath } from 'config';
+import { VOYAGE_REPORT_URL } from 'Constants/ApiConstants';
 import Auth from 'Auth';
-import FormVoyageSubmitted from 'FormVoyageSubmitted';
 
 const FormVoyageCheckDetails = () => {
   const location = useLocation();
@@ -17,7 +16,7 @@ const FormVoyageCheckDetails = () => {
   const [voyageReference, setVoyageReference] = useState([]);
 
   const getVoyageData = () => {
-    axios.get(`${apiPath}/voyagereport/${voyageId}`, {
+    axios.get(`${VOYAGE_REPORT_URL}/${voyageId}`, {
       headers: { Authorization: `Bearer ${Auth.retrieveToken()}` },
     })
       .then((resp) => {
@@ -34,7 +33,7 @@ const FormVoyageCheckDetails = () => {
   };
 
   const getPeopleData = () => {
-    axios.get(`${apiPath}/voyagereport/${voyageId}/people?pagination=false`, {
+    axios.get(`${VOYAGE_REPORT_URL}/${voyageId}/people?pagination=false`, {
       headers: { Authorization: `Bearer ${Auth.retrieveToken()}` },
     })
       .then((resp) => {
@@ -53,7 +52,7 @@ const FormVoyageCheckDetails = () => {
   const handleVoyageSubmit = (e) => {
     e.preventDefault();
     const submitData = { status: 'Submitted' };
-    axios.patch(`${apiPath}/voyagereport/${voyageId}`, submitData, {
+    axios.patch(`${VOYAGE_REPORT_URL}/${voyageId}`, submitData, {
       headers: { Authorization: `Bearer ${Auth.retrieveToken()}` },
     })
       .then((resp) => {

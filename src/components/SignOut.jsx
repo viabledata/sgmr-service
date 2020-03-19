@@ -2,14 +2,13 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 
-// App imports
-import { apiUrl } from 'config';
+import { LOGOUT_URL } from 'Constants/ApiConstants';
 import Auth from 'Auth';
 
 function SignOut() {
   const history = useHistory();
 
-  axios.post(`${apiUrl}/logout`)
+  axios.post(LOGOUT_URL)
     .then((resp) => {
       console.log(resp);
       Auth.logout();

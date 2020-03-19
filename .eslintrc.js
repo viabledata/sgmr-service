@@ -4,7 +4,15 @@ module.exports = {
     "es6": true,
     "jest": true
   },
-  "extends": "airbnb/base",
+  "extends": [
+    "airbnb",
+    "plugin:import/errors",
+    "plugin:import/warnings",
+    "plugin:jsx-a11y/recommended",
+    "plugin:jest/recommended",
+    "plugin:react/recommended"
+  ],
+  "parser": "babel-eslint",
   "globals": {
     "Atomics": "readonly",
     "SharedArrayBuffer": "readonly"
@@ -17,7 +25,13 @@ module.exports = {
     "sourceType": "module"
   },
   "plugins": [
-    "react"
+    "babel",
+    "filenames",
+    "import",
+    "jest",
+    "jsx-a11y",
+    "react",
+    "react-hooks"
   ],
   "rules": {
     "array-callback-return": "off",
@@ -29,9 +43,7 @@ module.exports = {
     "no-param-reassign": "off",
     "no-restricted-globals": "off",
     "no-restricted-syntax": "off",
-    "no-unused-expressions": "off",
     "import/no-unresolved": "off",
-    "no-unused-vars": "off",
     "prefer-const": "off",
     "prefer-destructuring": "off"
   }

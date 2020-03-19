@@ -1,7 +1,9 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom';
 
-const CreatePerson = ({ handleSubmit, handleChange, data, errors }) => {
+const CreatePerson = ({
+  handleSubmit, handleChange, data, errors,
+}) => {
   const urlParams = location.search.split('source=');
   const source = urlParams[1];
 
@@ -14,16 +16,17 @@ const CreatePerson = ({ handleSubmit, handleChange, data, errors }) => {
         {errors.firstName
           && (
           <span className="govuk-error-message">
-            <span className="govuk-visually-hidden">Error:</span> {errors.firstName}
+            <span className="govuk-visually-hidden">Error:</span>
+            {' '}
+            {errors.firstName}
           </span>
-          )
-        }
+          )}
         <input
           className="govuk-input"
           name="firstName"
           type="text"
           value={data.firstName || ''}
-          onChange={(e) => handleChange(e)}
+          onChange={handleChange}
         />
       </div>
 
@@ -34,16 +37,17 @@ const CreatePerson = ({ handleSubmit, handleChange, data, errors }) => {
         {errors.lastName
           && (
           <span className="govuk-error-message">
-            <span className="govuk-visually-hidden">Error:</span> {errors.lastName}
+            <span className="govuk-visually-hidden">Error:</span>
+            {' '}
+            {errors.lastName}
           </span>
-          )
-        }
-       <input
+          )}
+        <input
           className="govuk-input"
           name="lastName"
           type="text"
           value={data.lastName || ''}
-          onChange={(e) => handleChange(e)}
+          onChange={handleChange}
         />
       </div>
 
@@ -56,7 +60,7 @@ const CreatePerson = ({ handleSubmit, handleChange, data, errors }) => {
           name="gender"
           type="text"
           value={data.gender || 'Please select'}
-          onChange={(e) => handleChange(e)}
+          onChange={handleChange}
         >
           <option disabled>Please select</option>
           <option value="female">Female</option>
@@ -75,7 +79,7 @@ const CreatePerson = ({ handleSubmit, handleChange, data, errors }) => {
           <span className="govuk-hint">
             For example, 31 3 1980
           </span>
-          <div className="govuk-date-input" >
+          <div className="govuk-date-input">
             <div className="govuk-date-input__item">
               <div className="govuk-form-group">
                 <label className="govuk-label govuk-date-input__label" htmlFor="dobDay">
@@ -85,12 +89,12 @@ const CreatePerson = ({ handleSubmit, handleChange, data, errors }) => {
                   className="govuk-input govuk-date-input__input govuk-input--width-2"
                   name="dobDay"
                   type="text"
-                  maxLength="2"
+                  maxLength={2}
                   autoComplete="bday-day"
                   pattern="[0-9]*"
                   inputMode="numeric"
                   value={data.dobDay || ''}
-                  onChange={(e) => handleChange(e)}
+                  onChange={handleChange}
                 />
               </div>
             </div>
@@ -103,13 +107,13 @@ const CreatePerson = ({ handleSubmit, handleChange, data, errors }) => {
                   className="govuk-input govuk-date-input__input govuk-input--width-2"
                   name="dobMonth"
                   type="text"
-                  maxLength="2"
+                  maxLength={2}
                   autoComplete="bday-month"
                   pattern="[0-9]*"
                   inputMode="numeric"
                   value={data.dobMonth || ''}
-                  onChange={(e) => handleChange(e)}
-              />
+                  onChange={handleChange}
+                />
               </div>
             </div>
             <div className="govuk-date-input__item">
@@ -121,12 +125,12 @@ const CreatePerson = ({ handleSubmit, handleChange, data, errors }) => {
                   className="govuk-input govuk-date-input__input govuk-input--width-4"
                   name="dobYear"
                   type="text"
-                  maxLength="4"
+                  maxLength={4}
                   autoComplete="bday-year"
                   pattern="[0-9]*"
                   inputMode="numeric"
                   value={data.dobYear || ''}
-                  onChange={(e) => handleChange(e)}
+                  onChange={handleChange}
                 />
               </div>
             </div>
@@ -143,7 +147,7 @@ const CreatePerson = ({ handleSubmit, handleChange, data, errors }) => {
           name="placeOfBirth"
           type="text"
           value={data.placeOfBirth || ''}
-          onChange={(e) => handleChange(e)}
+          onChange={handleChange}
         />
       </div>
 
@@ -156,7 +160,7 @@ const CreatePerson = ({ handleSubmit, handleChange, data, errors }) => {
           name="nationality"
           type="text"
           value={data.nationality || 'Please select'}
-          onChange={(e) => handleChange(e)}
+          onChange={handleChange}
         >
           <option disabled>Please select</option>
           <option>Afghan</option>
@@ -393,10 +397,11 @@ const CreatePerson = ({ handleSubmit, handleChange, data, errors }) => {
             {errors.peopleType
             && (
             <span className="govuk-error-message">
-              <span className="govuk-visually-hidden">Error:</span> {errors.peopleType}
+              <span className="govuk-visually-hidden">Error:</span>
+              {' '}
+              {errors.peopleType}
             </span>
-            )
-          }
+            )}
             <div className="govuk-radios__item">
               <input
                 className="govuk-radios__input"
@@ -405,7 +410,7 @@ const CreatePerson = ({ handleSubmit, handleChange, data, errors }) => {
                 type="radio"
                 value="Skipper"
                 checked={data.peopleType === 'Skipper' ? 'checked' : ''}
-                onChange={(e) => handleChange(e)}
+                onChange={handleChange}
               />
               <label className="govuk-label govuk-radios__label" htmlFor="peopleType-1">
                 Skipper
@@ -419,7 +424,7 @@ const CreatePerson = ({ handleSubmit, handleChange, data, errors }) => {
                 type="radio"
                 value="Crew"
                 checked={data.peopleType === 'Crew' ? 'checked' : ''}
-                onChange={(e) => handleChange(e)}
+                onChange={handleChange}
               />
               <label className="govuk-label govuk-radios__label" htmlFor="peopleType-2">
                 Crew
@@ -433,7 +438,7 @@ const CreatePerson = ({ handleSubmit, handleChange, data, errors }) => {
                 type="radio"
                 value="passenger"
                 checked={data.peopleType === 'passenger' ? 'checked' : ''}
-                onChange={(e) => handleChange(e)}
+                onChange={handleChange}
               />
               <label className="govuk-label govuk-radios__label" htmlFor="peopleType-3">
                 Passenger
@@ -455,10 +460,11 @@ const CreatePerson = ({ handleSubmit, handleChange, data, errors }) => {
             {errors.documentType
               && (
               <span className="govuk-error-message">
-                <span className="govuk-visually-hidden">Error:</span> {errors.documentType}
+                <span className="govuk-visually-hidden">Error:</span>
+                {' '}
+                {errors.documentType}
               </span>
-              )
-            }
+              )}
             <div className="govuk-radios__item">
               <input
                 className="govuk-radios__input"
@@ -516,7 +522,7 @@ const CreatePerson = ({ handleSubmit, handleChange, data, errors }) => {
               className="govuk-input"
               name="documentType"
               type="text"
-              onChange={(e) => handleChange(e)}
+              onChange={handleChange}
             />
           </div>
         </fieldset>
@@ -529,16 +535,17 @@ const CreatePerson = ({ handleSubmit, handleChange, data, errors }) => {
         {errors.documentNumber
           && (
           <span className="govuk-error-message">
-            <span className="govuk-visually-hidden">Error:</span> {errors.documentNumber}
+            <span className="govuk-visually-hidden">Error:</span>
+            {' '}
+            {errors.documentNumber}
           </span>
-          )
-        }
-         <input
+          )}
+        <input
           className="govuk-input"
           name="documentNumber"
           type="text"
           value={data.documentNumber || ''}
-          onChange={(e) => handleChange(e)}
+          onChange={handleChange}
         />
       </div>
 
@@ -548,21 +555,22 @@ const CreatePerson = ({ handleSubmit, handleChange, data, errors }) => {
         </label>
         <span className="govuk-hint">
           Please enter 3 letter ISO country code, for example GBR
-          </span>
-          {errors.documentIssuingState
+        </span>
+        {errors.documentIssuingState
             && (
             <span className="govuk-error-message">
-              <span className="govuk-visually-hidden">Error:</span> {errors.documentIssuingState}
+              <span className="govuk-visually-hidden">Error:</span>
+              {' '}
+              {errors.documentIssuingState}
             </span>
-            )
-          }
+            )}
         <input
           className="govuk-input govuk-input--width-3"
           name="documentIssuingState"
           type="text"
-          maxLength="3"
+          maxLength={3}
           value={data.documentIssuingState || ''}
-          onChange={(e) => handleChange(e)}
+          onChange={handleChange}
         />
       </div>
 
@@ -576,14 +584,15 @@ const CreatePerson = ({ handleSubmit, handleChange, data, errors }) => {
           <span className="govuk-hint">
             For example, 31 3 2022
           </span>
-          <div className="govuk-date-input" >
+          <div className="govuk-date-input">
             {errors.documentExpiryDate
               && (
               <span className="govuk-error-message">
-                <span className="govuk-visually-hidden">Error:</span> {errors.documentExpiryDate}
+                <span className="govuk-visually-hidden">Error:</span>
+                {' '}
+                {errors.documentExpiryDate}
               </span>
-              )
-            }
+              )}
             <div className="govuk-date-input__item">
               <div className="govuk-form-group">
                 <label className="govuk-label govuk-date-input__label" htmlFor="documentExpiryDateDay">
@@ -595,9 +604,9 @@ const CreatePerson = ({ handleSubmit, handleChange, data, errors }) => {
                   type="text"
                   pattern="[0-9]*"
                   inputMode="numeric"
-                  maxLength="2"
+                  maxLength={2}
                   value={data.documentExpiryDateDay || ''}
-                  onChange={(e) => handleChange(e)}
+                  onChange={handleChange}
                 />
               </div>
             </div>
@@ -612,11 +621,11 @@ const CreatePerson = ({ handleSubmit, handleChange, data, errors }) => {
                   type="text"
                   pattern="[0-9]*"
                   inputMode="numeric"
-                  maxLength="2"
+                  maxLength={2}
                   value={data.documentExpiryDateMonth || ''}
-                  onChange={(e) => handleChange(e)}
+                  onChange={handleChange}
                 />
-                </div>
+              </div>
             </div>
             <div className="govuk-date-input__item">
               <div className="govuk-form-group">
@@ -629,9 +638,9 @@ const CreatePerson = ({ handleSubmit, handleChange, data, errors }) => {
                   type="text"
                   pattern="[0-9]*"
                   inputMode="numeric"
-                  maxLength="4"
+                  maxLength={4}
                   value={data.documentExpiryDateYear || ''}
-                  onChange={(e) => handleChange(e)}
+                  onChange={handleChange}
                 />
               </div>
             </div>
@@ -643,7 +652,7 @@ const CreatePerson = ({ handleSubmit, handleChange, data, errors }) => {
         <button
           className="govuk-button"
           data-module="govuk-button"
-          onClick={(e) => handleSubmit(e)}
+          onClick={handleSubmit}
         >
           {source === 'voyage' ? 'Add to manifest' : 'Add to saved people list'}
         </button>

@@ -1,24 +1,20 @@
 import React, { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 import { useLocation, useHistory } from 'react-router-dom';
 import axios from 'axios';
 
 // app imports
-import { apiUrl } from 'config';
+import { VESSELS_URL } from 'Constants/ApiConstants';
 import Auth from 'Auth';
 import contentArray from 'contentArray';
 import CreateVessel from 'CreateVessel';
 
 
-const FormVoyageVessel = ({ handleSubmit, handleChange, data, }) => {
+const FormVoyageVessel = ({ handleSubmit, handleChange, data, errors }) => {
   const history = useHistory();
   const location = useLocation();
-  const path = location.pathname.slice(1);
-  const urlParams = location.search.split('source=');
   const [titles, setTitles] = useState();
   const [vessels, setVessels] = useState();
-  const [apiErrors, setApiErrors] = useState();
-  const [formData, setFormData] = useState({});
-  const [errors, setErrors] = useState({});
   const arr = contentArray;
 
   const getTitles = () => {
@@ -29,7 +25,7 @@ const FormVoyageVessel = ({ handleSubmit, handleChange, data, }) => {
   };
 
   const getData = () => {
-    axios.get(`${apiUrl}/user/vessels?pagination=false`, {
+    axios.get(`${VESSELS_URL}?pagination=false`, {
       headers: { Authorization: `Bearer ${Auth.retrieveToken()}` },
     })
       .then((resp) => {
@@ -95,6 +91,7 @@ const FormVoyageVessel = ({ handleSubmit, handleChange, data, }) => {
           </tbody>
       </table>
       <button
+        type="button"
         className="govuk-button"
         data-module="govuk-button"
         onClick={(e) => handleSubmit(e)}
@@ -105,20 +102,31 @@ const FormVoyageVessel = ({ handleSubmit, handleChange, data, }) => {
       <p className="govuk-body-l">Add the details of a new vessel you have not already saved</p>
 
       <CreateVessel
-        handleChange={(e) => handleChange(e)}
-        data={formData}
+        handleChange={handleChange}
+        data={data}
         errors={errors}
       />
 
       <button
+        type="button"
         className="govuk-button"
         data-module="govuk-button"
-        onClick={(e) => handleSubmit(e)}
+        onClick={handleSubmit}
       >
         Save and continue
       </button>
     </section>
   );
+};
+
+FormVoyageVessel.propTypes = {
+  handleChange: PropTypes.func.isRequired,
+  handleSubmit: PropTypes.func.isRequired,
+  setErrors: PropTypes.func.isRequired,
+  removeError: PropTypes.func.isRequired,
+  data: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
+  errors: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
+  createVoyageReportAction: PropTypes.func.isRequired,
 };
 
 export default FormVoyageVessel;

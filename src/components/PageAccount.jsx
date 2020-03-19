@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 
 // App imports
-import { apiUrl } from 'config';
+import { USER_URL } from 'Constants/ApiConstants';
 import Auth from 'Auth';
 
 const PageAccount = () => {
@@ -11,7 +11,7 @@ const PageAccount = () => {
   const [data, setData] = useState({});
 
   const getData = () => {
-    axios.get(`${apiUrl}/user`, {
+    axios.get(USER_URL, {
       headers: { Authorization: `Bearer ${Auth.retrieveToken()}` },
     })
       .then((resp) => {

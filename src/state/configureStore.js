@@ -5,10 +5,11 @@ import {
 import createSagaMiddleware from 'redux-saga';
 
 import { peopleReducer, watchPeople } from './people';
+import { voyageReducer, watchVoyage } from './voyage';
 
 const composeEnhancers = (typeof window !== 'undefined' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) || compose;
 
-const watchSagas = [watchPeople];
+const watchSagas = [watchPeople, watchVoyage];
 
 function* rootSaga() {
   yield all(watchSagas.map(fork));
@@ -16,6 +17,7 @@ function* rootSaga() {
 
 const reducers = {
   people: peopleReducer,
+  voyage: voyageReducer,
 };
 
 const combinedReducers = combineReducers(reducers);

@@ -221,11 +221,11 @@ const SectionTabs = (props) => {
                     <th key={i} scope="col" className="govuk-table__header">{elem}</th>
                   );
                 })}
-                </tr>
-              </thead>
-              <tbody>
-                {data[0].items.map((elem, i) => {
-                  return (
+              </tr>
+            </thead>
+            <tbody>
+              {data[0].items.map((elem, i) => {
+                return (
                   <tr className="govuk-table__row" key={i}>
                     <td className="govuk-table__cell">{elem.name}</td>
                     <td className="govuk-table__cell">{elem.departureDate}</td>
@@ -234,9 +234,9 @@ const SectionTabs = (props) => {
                     <td className="govuk-table__cell">{elem.arrivalPort}</td>
                     <td className="govuk-table__cell">{elem.submissionRef}</td>
                   </tr>
-                  );
-                })}
-              </tbody>
+                );
+              })}
+            </tbody>
           </table>
         </div>
       </div>
