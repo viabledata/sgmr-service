@@ -1,7 +1,14 @@
 import React, { useState, useEffect } from 'react';
-// This page is currently hard coded for /reports only
+import { useHistory } from 'react-router-dom';
+import axios from 'axios';
+
+// App imports
+import { apiPath } from 'config';
+import Auth from 'Auth';
+
 
 const SectionTabs = (props) => {
+  const history = useHistory();
   const [data, setData] = useState();
   const [tabData, setTabData] = useState([]);
 
@@ -151,10 +158,30 @@ const SectionTabs = (props) => {
     setTabData(tempArr);
   };
 
+  // const getData = () => {
+  //   axios.get(`${apiPath}/user/voyagereport?pagination=false`, {
+  //     headers: { Authorization: `Bearer ${Auth.retrieveToken()}` },
+  //   })
+  //     .then((resp) => {
+  //       setData(resp.data);
+  //     })
+  //     .catch((err) => {
+  //       if (err.response) {
+  //         switch (err.response.status) {
+  //           case 422: history.push(`/sign-in?source=${location}`); break;
+  //           default: history.push(`/sign-in?source=${location}`);
+  //         }
+  //       }
+  //     });
+  // };
+
   useEffect(() => {
     setTabData(tabs);
     setData(tabledraft);
+    // getData();
   }, []);
+
+  // console.log(data)
 
   if (!data) { return (<></>); }
   return (
