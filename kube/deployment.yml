@@ -4,23 +4,46 @@ kind: Deployment
 metadata:
   name: "{{.SGMR_SERVICE_NAME}}"
 spec:
+  replicas: 3
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 33%
+      maxSurge: 1
+  revisionHistoryLimit: 3
   selector:
     matchLabels:
       name: "{{.SGMR_SERVICE_NAME}}"
-  replicas: 1
-  revisionHistoryLimit: 1
   template:
     metadata:
       labels:
         name: "{{.SGMR_SERVICE_NAME}}"
     spec:
       containers:
-      - name: {{.SGMR_SERVICE_NAME}}-proxy
-        image: "{{.NGINX_IMAGE}}:{{.NGINX_TAG}}"
+      - name: frontend
+        image: "{{.SGMR_SERVICE_IMAGE}}:{{.SGMR_SERVICE_TAG}}"
         imagePullPolicy: Always
         securityContext:
           runAsNonRoot: true
           runAsUser: 100
+        resources:
+          requests:
+            cpu: 100m
+            memory: 200Mi
+          limits:
+            cpu: 200m
+            memory: 500Mi
+        ports:
+          - name: frontend
+            containerPort: "{{.SGMR_SERVICE_PORT}}"
+        env:
+          - name: SGMR_DATA_API_BASE_URL
+            value: {{.SGMR_DATA_API_BASE_URL}}
+      - name: proxy
+        image: "{{.NGINX_IMAGE}}:{{.NGINX_TAG}}"
+        imagePullPolicy: Always
+        securityContext:
+          runAsNonRoot: true
         resources:
          limits:
           memory: "100Mi"
@@ -51,21 +74,6 @@ spec:
         volumeMounts:
           - name: certs
             mountPath: /certs
-      - name: "{{.SGMR_SERVICE_NAME}}"
-        image: "{{.SGMR_SERVICE_IMAGE}}:{{.SGMR_SERVICE_TAG}}"
-        imagePullPolicy: Always
-        securityContext:
-          runAsNonRoot: true
-        resources:
-          requests:
-            memory: "2304Mi"
-            cpu: "1000m"
-          limits:
-            memory: "2304Mi"
-            cpu: "1000m"
-        env:
-          - name: SGMR_DATA_API_BASE_URL
-            value: {{.SGMR_DATA_API_BASE_URL}}
       volumes:
       - name: certs
         secret:
