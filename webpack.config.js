@@ -89,6 +89,11 @@ module.exports = {
       { from: 'node_modules/govuk-frontend/govuk/all.js', to: 'javascript/all.js' },
       { from: 'node_modules/govuk-frontend/govuk/assets', to: 'assets' },
     ]),
+    new webpack.DefinePlugin({
+      'process.env': {
+        SGMR_DATA_API_BASE_URL: JSON.stringify(process.env.SGMR_DATA_API_BASE_URL)
+      }
+    }),
   ],
   node: { fs: 'empty' },
   watch: true,
