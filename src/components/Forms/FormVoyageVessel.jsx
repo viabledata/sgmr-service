@@ -51,81 +51,27 @@ const FormVoyageVessel = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  // Handle create vessel
-  const validationRules = [
-    {
-      field: 'name',
-      rule: 'required',
-      message: 'You must enter a name',
-    },
-    {
-      field: 'vesselType',
-      rule: 'required',
-      message: 'You must enter a vessel type',
-    },
-    {
-      field: 'vesselBase',
-      rule: 'required',
-      message: 'You must enter a usual mooring',
-    },
-    {
-      field: 'registration',
-      rule: 'required',
-      message: 'You must enter the registration',
-    },
-  ];
-  // Handle missing required fields
-  const checkRequiredFields = () => {
-    const tempObj = {};
-    validationRules.map((elem) => {
-      (!(elem.field in formData) || formData[elem.field] === '')
-        ? tempObj[elem.field] = elem.message
-        : null;
-    });
-    setErrors(tempObj);
-    return Object.keys(tempObj).length > 0;
-  };// Validation
-  const removeError = (fieldName) => {
-    const tempArr = { ...errors };
-    const key = fieldName;
-    delete tempArr[key];
-    setErrors(tempArr);
-  };
-  // Ensure we have correct formatting
-  const getFieldsToSubmit = () => {
-    const dataSubmit = {
-      name: formData.name,
-      vesselType: formData.vesselType,
-      vesselBase: formData.vesselBase,
-      registration: formData.registration,
-    };
-    return dataSubmit;
-  };
 
   const handleCreateVessel = () => {
-    if (checkRequiredFields() === false) {
-      axios.post(`${apiPath}/user/vessels`, getFieldsToSubmit(), {
-        headers: { Authorization: `Bearer ${Auth.retrieveToken()}` },
+    axios.post(`${apiPath}/user/vessels`, formData, {
+      headers: { Authorization: `Bearer ${Auth.retrieveToken()}` },
+    })
+      .then(() => {
+        console.log('vessel added');
+        history.push('/save-voyage/page-4');
       })
-        .then(() => {
-          console.log('vessel added');
-        })
-        .catch((err) => {
+      .catch((err) => {
+        if (err.response) {
           if (err.response) {
-            if (err.response) {
-              switch (err.response.status) {
-                case 400: setErrors({ ...errors, CreateVessel: 'This vessel already exists' }); break;
-                case 422: history.push(`/sign-in?source=${path}`); break;
-                case 405: history.push(`/sign-in?source=${path}`); break;
-                default: setErrors({ ...errors, CreateVessel: 'Something went wrong' });
-              }
+            switch (err.response.status) {
+              case 400: setErrors({ ...errors, CreateVessel: 'This vessel already exists' }); break;
+              case 422: history.push(`/sign-in?source=${path}`); break;
+              case 405: history.push(`/sign-in?source=${path}`); break;
+              default: setErrors({ ...errors, CreateVessel: 'Something went wrong' });
             }
           }
-        });
-    } else {
-      // This means there are errors, so jump user to the error box
-      history.push('#CreateVessel');
-    }
+        }
+      });
   };
 
   const handleSubmit = (e) => {
