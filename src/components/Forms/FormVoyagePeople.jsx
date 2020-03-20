@@ -78,7 +78,7 @@ const FormVoyagePeople = ({
         type="button"
         className="govuk-button"
         data-module="govuk-button"
-        onClick={handleSubmit}
+        onClick={(e) => handleSubmit(e, updateVoyageReportAction)}
       >
         Save and continue
       </button>
