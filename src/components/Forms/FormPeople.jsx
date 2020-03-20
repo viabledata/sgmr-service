@@ -6,6 +6,7 @@ import moment from 'moment';
 // app imports
 import { PEOPLE_URL } from 'Constants/ApiConstants';
 import { formatDate, isDateValid } from 'Utils/date';
+import { PEOPLE_PAGE_URL, SAVE_VOYAGE_PEOPLE_URL } from 'Constants/UrlConstants';
 import Auth from 'Auth';
 import CreatePerson from 'CreatePerson';
 
@@ -140,7 +141,7 @@ const FormPeople = (props) => {
       })
         .then(() => {
           clearFormData();
-          history.push(source[1] === 'voyage' ? '/save-voyage/page-4' : '/people');
+          history.push(source[1] === 'voyage' ? SAVE_VOYAGE_PEOPLE_URL : PEOPLE_PAGE_URL);
         })
         .catch((err) => {
           if (err.response) {
