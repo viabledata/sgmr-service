@@ -82,54 +82,54 @@ const CreatePerson = ({
           <div className="govuk-date-input">
             <div className="govuk-date-input__item">
               <div className="govuk-form-group">
-                <label className="govuk-label govuk-date-input__label" htmlFor="dobDay">
+                <label className="govuk-label govuk-date-input__label" htmlFor="dateOfBirthDay">
                   Day
                 </label>
                 <input
                   className="govuk-input govuk-date-input__input govuk-input--width-2"
-                  name="dobDay"
+                  name="dateOfBirthDay"
                   type="text"
                   maxLength={2}
                   autoComplete="bday-day"
                   pattern="[0-9]*"
                   inputMode="numeric"
-                  value={data.dobDay || ''}
+                  value={data.dateOfBirthDay || ''}
                   onChange={handleChange}
                 />
               </div>
             </div>
             <div className="govuk-date-input__item">
               <div className="govuk-form-group">
-                <label className="govuk-label govuk-date-input__label" htmlFor="dobMonth">
+                <label className="govuk-label govuk-date-input__label" htmlFor="dateOfBirthMonth">
                   Month
                 </label>
                 <input
                   className="govuk-input govuk-date-input__input govuk-input--width-2"
-                  name="dobMonth"
+                  name="dateOfBirthMonth"
                   type="text"
                   maxLength={2}
                   autoComplete="bday-month"
                   pattern="[0-9]*"
                   inputMode="numeric"
-                  value={data.dobMonth || ''}
+                  value={data.dateOfBirthMonth || ''}
                   onChange={handleChange}
                 />
               </div>
             </div>
             <div className="govuk-date-input__item">
               <div className="govuk-form-group">
-                <label className="govuk-label govuk-date-input__label" htmlFor="dobYear">
+                <label className="govuk-label govuk-date-input__label" htmlFor="dateOfBirthYear">
                   Year
                 </label>
                 <input
                   className="govuk-input govuk-date-input__input govuk-input--width-4"
-                  name="dobYear"
+                  name="dateOfBirthYear"
                   type="text"
                   maxLength={4}
                   autoComplete="bday-year"
                   pattern="[0-9]*"
                   inputMode="numeric"
-                  value={data.dobYear || ''}
+                  value={data.dateOfBirthYear || ''}
                   onChange={handleChange}
                 />
               </div>
@@ -163,223 +163,9 @@ const CreatePerson = ({
           onChange={handleChange}
         >
           <option disabled>Please select</option>
-          <option>Afghan</option>
-          <option>Albanian</option>
-          <option>Algerian</option>
-          <option>American</option>
-          <option>Andorran</option>
-          <option>Angolan</option>
-          <option>Antiguans and Barbudan</option>
-          <option>Argentine</option>
-          <option>Armenian</option>
-          <option>Aruban</option>
-          <option>Australian</option>
-          <option>Austrian</option>
-          <option>Azerbaijani</option>
-          <option>Bahamian</option>
-          <option>Bahraini</option>
-          <option>Baltic German</option>
-          <option>Baltic Russian</option>
-          <option>Bangladeshi</option>
-          <option>Barbadian</option>
-          <option>Basque</option>
-          <option>Belarusian</option>
-          <option>Belgian</option>
-          <option>Belizean</option>
-          <option>Beninese</option>
-          <option>Bhutanese</option>
-          <option>Bissau national</option>
-          <option>Bolivian</option>
-          <option>Bosniak</option>
-          <option>Bosnians and Herzegovinian</option>
-          <option>Botswana</option>
-          <option>Brazilian</option>
-          <option>Breton</option>
-          <option>British Virgin Islander</option>
-          <option>British</option>
-          <option>Bruneian</option>
-          <option>Bulgarian</option>
-          <option>Burkinabé</option>
-          <option>Burmese</option>
-          <option>Burundian</option>
-          <option>Cambodian</option>
-          <option>Cameroonian</option>
-          <option>Canadian</option>
-          <option>Cape Verdean</option>
-          <option>Catalan</option>
-          <option>Chadian</option>
-          <option>Chilean</option>
-          <option>Chinese</option>
-          <option>Colombian</option>
-          <option>Comorian</option>
-          <option>Congolese</option>
-          <option>Costa Rican</option>
-          <option>Croatian</option>
-          <option>Cuban</option>
-          <option>Cypriot</option>
-          <option>Czech</option>
-          <option>Dane</option>
-          <option>Djiboutian</option>
-          <option>Dominicans (Commonwealth)</option>
-          <option>Dominicans (Republic)</option>
-          <option>Dutch</option>
-          <option>East Timorese</option>
-          <option>Ecuadorian</option>
-          <option>Egyptian</option>
-          <option>Emirati</option>
-          <option>English</option>
-          <option>Equatoguinean</option>
-          <option>Eritrean</option>
-          <option>Estonian</option>
-          <option>Ethiopian</option>
-          <option>Faroese</option>
-          <option>Fijian</option>
-          <option>Finnish Swedish</option>
-          <option>Finn</option>
-          <option>French</option>
-          <option>Gabonese</option>
-          <option>Gambian</option>
-          <option>Georgian</option>
-          <option>German</option>
-          <option>Ghanaian</option>
-          <option>Gibraltarian</option>
-          <option>Greek Macedonian</option>
-          <option>Greek</option>
-          <option>Greenlander</option>
-          <option>Grenadian</option>
-          <option>Guatemalan</option>
-          <option>Guianese (French)</option>
-          <option>Guinean</option>
-          <option>GuineansPapua New Guinean</option>
-          <option>Guyanese</option>
-          <option>Haitian</option>
-          <option>Honduran</option>
-          <option>Hong Kong</option>
-          <option>Hungarian</option>
-          <option>Icelander</option>
-          <option>Indian</option>
-          <option>Indonesian</option>
-          <option>Iranian</option>
-          <option>Iraqi</option>
-          <option>Irish</option>
-          <option>Islander</option>
-          <option>Israeli</option>
-          <option>Italian</option>
-          <option>Ivoirian</option>
-          <option>Jamaican</option>
-          <option>Japanese</option>
-          <option>Jordanian</option>
-          <option>Kazakh</option>
-          <option>Kenyan</option>
-          <option>Kiribati</option>
-          <option>Korean</option>
-          <option>Kosovar</option>
-          <option>Kuwaiti</option>
-          <option>Kyrgyz</option>
-          <option>Lao</option>
-          <option>Latvian</option>
-          <option>Lebanese</option>
-          <option>Liberian</option>
-          <option>Libyan</option>
-          <option>Liechtensteiner</option>
-          <option>Lithuanian</option>
-          <option>Luxembourger</option>
-          <option>Macao</option>
-          <option>Macedonian Bulgarian</option>
-          <option>Macedonian</option>
-          <option>Malawian</option>
-          <option>Malaysian</option>
-          <option>Maldivian</option>
-          <option>Malian</option>
-          <option>Maltese</option>
-          <option>Manx</option>
-          <option>Marshallese</option>
-          <option>Mauritanian</option>
-          <option>Mauritian</option>
-          <option>Mexican</option>
-          <option>Micronesian</option>
-          <option>Moldovan</option>
-          <option>Monégasque</option>
-          <option>Mongolian</option>
-          <option>Montenegrin</option>
-          <option>Moroccan</option>
-          <option>Mozambican</option>
-          <option>Namibian</option>
-          <option>Nauran</option>
-          <option>Nepalese</option>
-          <option>New Zealander</option>
-          <option>Nicaraguan</option>
-          <option>Nigerian</option>
-          <option>Nigerien</option>
-          <option>Norwegian</option>
-          <option>Omani</option>
-          <option>Pakistani</option>
-          <option>Palauan</option>
-          <option>Palestinian</option>
-          <option>Panamanian</option>
-          <option>Paraguayan</option>
-          <option>Peruvian</option>
-          <option>Pole</option>
-          <option>Portuguese</option>
-          <option>Puerto Rican</option>
-          <option>Qatari</option>
-          <option>Quebecer</option>
-          <option>Réunionnai</option>
-          <option>Romanian</option>
-          <option>Russian</option>
-          <option>Rwandan</option>
-          <option>Saint Kitts and Nevi</option>
-          <option>Saint Lucian</option>
-          <option>Salvadoran</option>
-          <option>Sammarinese</option>
-          <option>Samoan</option>
-          <option>São Tomé and Príncipe</option>
-          <option>Saudi</option>
-          <option>Scot</option>
-          <option>Senegalese</option>
-          <option>Serb</option>
-          <option>Seychelloi</option>
-          <option>Sierra Leonean</option>
-          <option>Singaporean</option>
-          <option>Slovak</option>
-          <option>Slovene</option>
-          <option>Solomon Islander</option>
-          <option>Somalilander</option>
-          <option>Somali</option>
-          <option>Sotho</option>
-          <option>South African</option>
-          <option>Spaniard</option>
-          <option>Sri Lankan</option>
-          <option>Sudanese</option>
-          <option>Swazi</option>
-          <option>Swede</option>
-          <option>Swis</option>
-          <option>Syriac</option>
-          <option>Syrian</option>
-          <option>Taiwanese</option>
-          <option>Tajik</option>
-          <option>Tamil</option>
-          <option>Tanzanian</option>
-          <option>Thai</option>
-          <option>Tobagonian</option>
-          <option>Togolese</option>
-          <option>Tongan</option>
-          <option>Trinidadian</option>
-          <option>Tunisian</option>
-          <option>Turk</option>
-          <option>Tuvaluan</option>
-          <option>Ugandan</option>
-          <option>Ukrainian</option>
-          <option>Uruguayan</option>
-          <option>Uzbek</option>
-          <option>Vanuatuan</option>
-          <option>Venezuelan</option>
-          <option>Vietnamese</option>
-          <option>Vincentian</option>
-          <option>Welsh</option>
-          <option>Yemeni</option>
-          <option>Zambian</option>
-          <option>Zimbabwean</option>
+          <option value="GBP">United Kingdom</option>
+          <option value="AUS">Australia</option>
+          <option value="USA">United States</option>
         </select>
       </div>
 
