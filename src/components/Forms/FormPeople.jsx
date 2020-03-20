@@ -6,7 +6,7 @@ import moment from 'moment';
 // app imports
 import { PEOPLE_URL } from 'Constants/ApiConstants';
 import { formatDate, isDateValid } from 'Utils/date';
-import { PEOPLE_PAGE_URL, SAVE_VOYAGE_PEOPLE_URL } from 'Constants/UrlConstants';
+import { PEOPLE_PAGE_URL, SAVE_VOYAGE_PEOPLE_URL } from 'Constants/ClientConstants';
 import Auth from 'Auth';
 import CreatePerson from 'CreatePerson';
 
