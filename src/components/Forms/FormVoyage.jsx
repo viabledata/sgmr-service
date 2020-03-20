@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation, useHistory } from 'react-router-dom';
 
-// app imports
 import FormVoyageArrival from 'FormVoyageArrival';
 import FormVoyageCheckDetails from 'FormVoyageCheckDetails';
 import FormVoyageDeparture from 'FormVoyageDeparture';
@@ -13,13 +12,22 @@ const FormVoyage = () => {
   const location = useLocation();
   const history = useHistory();
   const maxPages = 6;
-  let [pageNum, setPageNum] = useState();
-  const [formData, setFormData] = useState(JSON.parse(localStorage.getItem('formData')) || [{}]);
-  
+  let [pageNum, setPageNum] = useState(1);
+  const [formData, setFormData] = useState(JSON.parse(localStorage.getItem('formData')) || {});
+  const [errors, setErrors] = useState(JSON.parse(localStorage.getItem('errors')) || {});
+  // Validation
+  const removeError = (fieldName) => {
+    const tempArr = { ...errors };
+    const key = fieldName;
+    delete tempArr[key];
+    setErrors(tempArr);
+  };
 
-  // Update form info to state
+
   const handleChange = (e) => {
-    const { name, type, value, checked } = e.target;
+    const {
+      name, type, value, checked,
+    } = e.target;
 
     switch (type) {
       case 'checkbox': {
@@ -34,13 +42,10 @@ const FormVoyage = () => {
       }
       default: setFormData({ ...formData, [name]: value }); break;
     }
-
-    // removeError(e.target.name);
   };
 
-  const clearFormData = (e) => {
+  const clearFormData = () => {
     setFormData({});
-    // setErrors({ title: null });
   };
 
   const setNextPage = () => {
@@ -49,9 +54,11 @@ const FormVoyage = () => {
     history.push(`/save-voyage/page-${nextPage}`);
   };
 
-  const handleSubmit = (e) => {
-    // Combine date fields into required format before submit
+  const handleSubmit = (e, submitAction) => {
     e.preventDefault();
+
+    submitAction && submitAction(formData);
+
     setNextPage();
   };
 
@@ -72,10 +79,13 @@ const FormVoyage = () => {
 
   return (
     <div id="pageContainer" className="govuk-width-container ">
-      <a className="govuk-back-link" onClick={(e) => {
-        e.preventDefault();
-        history.goBack();
-      }}>
+      <a
+        className="govuk-back-link"
+        onClick={(e) => {
+          e.preventDefault();
+          history.goBack();
+        }}
+      >
         Back
       </a>
       <main className="govuk-main-wrapper govuk-main-wrapper--auto-spacing" role="main">
@@ -83,36 +93,65 @@ const FormVoyage = () => {
           <div className="govuk-grid-column-two-thirds">
             <span className="govuk-caption-xl">{`Page ${pageNum} of ${maxPages}`}</span>
             <form>
-
-              {pageNum === 1 && <FormVoyageDeparture
-                  handleSubmit={(e) => handleSubmit(e)}
-                  handleChange={(e) => handleChange(e)}
+              {pageNum === 1 && (
+                <FormVoyageDeparture
+                  handleSubmit={handleSubmit}
+                  handleChange={handleChange}
                   data={formData}
-              />}
-              {pageNum === 2 && <FormVoyageArrival
-                handleSubmit={(e) => handleSubmit(e)}
-                handleChange={(e) => handleChange(e)}
-                data={formData}
-              />}
-              {pageNum === 3 && <FormVoyageVessel
-                handleSubmit={(e) => handleSubmit(e)}
-                handleChange={(e) => handleChange(e)}
-                data={formData}
-              />}
-              {pageNum === 4 && <FormVoyagePeople
-                handleSubmit={(e) => handleSubmit(e)}
-                handleChange={(e) => handleChange(e)}
-                data={formData}
-              />}
-              {pageNum === 5 && <FormVoyageResponsiblePerson
-                handleSubmit={(e) => handleSubmit(e)}
-                handleChange={(e) => handleChange(e)}
-                data={formData}
-              />}
-              {pageNum === 6 && <FormVoyageCheckDetails
-              />}
+                  setErrors={setErrors}
+                  removeError={removeError}
+                  errors={errors}
+                  setFormData={setFormData}
+                />
+              )}
+              {pageNum === 2 && (
+                <FormVoyageArrival
+                  handleSubmit={handleSubmit}
+                  handleChange={handleChange}
+                  data={formData}
+                  setErrors={setErrors}
+                  removeError={removeError}
+                  errors={errors}
+                  setFormData={setFormData}
+                />
+              )}
+              {pageNum === 3 && (
+                <FormVoyageVessel
+                  handleSubmit={handleSubmit}
+                  handleChange={handleChange}
+                  data={formData}
+                  setErrors={setErrors}
+                  removeError={removeError}
+                  errors={errors}
+                  setFormData={setFormData}
+                />
+              )}
+              {pageNum === 4 && (
+                <FormVoyagePeople
+                  handleSubmit={handleSubmit}
+                  handleChange={handleChange}
+                  data={formData}
+                  setErrors={setErrors}
+                  removeError={removeError}
+                  errors={errors}
+                  setFormData={setFormData}
+                />
+              )}
+              {pageNum === 5 && (
+                <FormVoyageResponsiblePerson
+                  handleSubmit={handleSubmit}
+                  handleChange={handleChange}
+                  data={formData}
+                  setErrors={setErrors}
+                  removeError={removeError}
+                  errors={errors}
+                  setFormData={setFormData}
+                />
+              )}
+              {pageNum === 6 && <FormVoyageCheckDetails />}
+              
               <p>
-                <a href="/reports" className="govuk-link govuk-link--no-visited-state" onClick={(e) => clearFormData(e)}>Exit without saving</a>
+                <a href="/reports" className="govuk-link govuk-link--no-visited-state" onClick={clearFormData}>Exit without saving</a>
               </p>
             </form>
           </div>

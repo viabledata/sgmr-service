@@ -3,7 +3,7 @@ import { Link, useHistory } from 'react-router-dom';
 import axios from 'axios';
 
 // app imports
-import { apiPath } from 'config';
+import { RESEND_VERIFICATION_CODE_URL } from 'Constants/ApiConstants';
 
 const UserResendCode = () => {
   const history = useHistory();
@@ -37,7 +37,7 @@ const UserResendCode = () => {
     e.preventDefault();
     // Ensure required fields have a value
     if (checkRequiredFields() === true && source === 'registration') {
-      axios.patch(`${apiPath}/resend-verification-code`, formData)
+      axios.patch(RESEND_VERIFICATION_CODE_URL, formData)
         .then((resp) => {
           history.push(`/verify?source=${source}`);
         })
@@ -52,7 +52,7 @@ const UserResendCode = () => {
           }
         });
     } else {
-      axios.post(`${apiPath}/resend-verification-code`, formData)
+      axios.post(RESEND_VERIFICATION_CODE_URL, formData)
         .then((resp) => {
           history.push(`/verify?source=${source}`);
         })
@@ -77,17 +77,17 @@ const UserResendCode = () => {
 
   return (
     <div className="govuk-width-container">
-    <main className="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" role="main">
-      <div className="govuk-grid-row">
-        <div className="govuk-grid-column-two-thirds">
-          <h1 className="govuk-heading-xl">Request a new multi-factor authentication code</h1>
-          <p className="govuk-body-l">
-            Due to the nature of the data used and transmitted by the Submit an Advanced Voyage Report Service, we require users to register for multi-factor authentication to ensure the security of the system.
-          </p>
+      <main className="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" role="main">
+        <div className="govuk-grid-row">
+          <div className="govuk-grid-column-two-thirds">
+            <h1 className="govuk-heading-xl">Request a new multi-factor authentication code</h1>
+            <p className="govuk-body-l">
+              Due to the nature of the data used and transmitted by the Submit an Advanced Voyage Report Service, we require users to register for multi-factor authentication to ensure the security of the system.
+            </p>
 
-          {Object.keys(errors).length > 0 && (
+            {Object.keys(errors).length > 0 && (
             <div className="govuk-error-summary" aria-labelledby="error-summary-title" role="alert" tabIndex="-1" data-module="govuk-error-summary">
-              <h2 className="govuk-error-summary__title" >
+              <h2 className="govuk-error-summary__title">
                 There is a problem
               </h2>
               <div className="govuk-error-summary__body">
@@ -101,46 +101,46 @@ const UserResendCode = () => {
                 </ul>
               </div>
             </div>
-          )}
+            )}
 
 
-          <form>
-            <div id="email" className="govuk-form-group">
-              <label className="govuk-label govuk-label--m" htmlFor="email">
-                Email address
-              </label>
-              <input
-                className="govuk-input"
-                name="email"
-                type="text"
-                value={formData.email ? formData.email : ''}
-                onChange={(e) => handleChange(e)}
-              />
-            </div>
-            <div id="mobileNumber" className="govuk-form-group">
-              <label className="govuk-label govuk-label--m" htmlFor="mobileNumber">
-                Mobile number
-              </label>
-              <input
-                className="govuk-input"
-                name="mobileNumber"
-                type="text"
-                value={formData.mobileNumber ? formData.mobileNumber : ''}
-                onChange={(e) => handleChange(e)}
-              />
-            </div>
-            <button
-              type="submit"
-              className="govuk-button"
-              onClick={(e) => handleSubmit(e)}
-            >
-              Sign in
-            </button>
-          </form>
+            <form>
+              <div id="email" className="govuk-form-group">
+                <label className="govuk-label govuk-label--m" htmlFor="email">
+                  Email address
+                </label>
+                <input
+                  className="govuk-input"
+                  name="email"
+                  type="text"
+                  value={formData.email ? formData.email : ''}
+                  onChange={handleChange}
+                />
+              </div>
+              <div id="mobileNumber" className="govuk-form-group">
+                <label className="govuk-label govuk-label--m" htmlFor="mobileNumber">
+                  Mobile number
+                </label>
+                <input
+                  className="govuk-input"
+                  name="mobileNumber"
+                  type="text"
+                  value={formData.mobileNumber ? formData.mobileNumber : ''}
+                  onChange={handleChange}
+                />
+              </div>
+              <button
+                type="submit"
+                className="govuk-button"
+                onClick={handleSubmit}
+              >
+                Sign in
+              </button>
+            </form>
+          </div>
         </div>
-      </div>
-    </main>
-  </div>
+      </main>
+    </div>
   );
 };
 

@@ -4,7 +4,7 @@ import axios from 'axios';
 
 // app imports
 import Auth from 'Auth';
-import { apiPath } from 'config';
+import { LOGIN_URL } from 'Constants/ApiConstants';
 
 const SignIn = () => {
   const history = useHistory();
@@ -59,7 +59,7 @@ const SignIn = () => {
     e.preventDefault();
     // Ensure required fields have a value
     if (checkRequiredFields() === true) {
-      axios.post(`${apiPath}/login`, formData)
+      axios.post(LOGIN_URL, formData)
         .then((resp) => {
           localStorage.setItem('email', JSON.stringify(formData.email));
           source === 'registration' ? history.push('/verify?source=reports') : history.push(`/verify?source=${source}`);
@@ -90,7 +90,7 @@ const SignIn = () => {
 
               {Object.keys(errors).length > 0 && (
                 <div className="govuk-error-summary" aria-labelledby="error-summary-title" role="alert" tabIndex="-1" data-module="govuk-error-summary">
-                  <h2 className="govuk-error-summary__title" >
+                  <h2 className="govuk-error-summary__title">
                     There is a problem
                   </h2>
                   <div className="govuk-error-summary__body">
@@ -115,7 +115,7 @@ const SignIn = () => {
                   className="govuk-input"
                   name="email"
                   type="text"
-                  onChange={(e) => handleChange(e)}
+                  onChange={handleChange}
                   onBlur={(e) => handleErrors(e, 'Enter a valid email address')}
                 />
               </div>
@@ -124,11 +124,11 @@ const SignIn = () => {
                 <label className="govuk-label govuk-label--m" htmlFor="password">
                   Password
                 </label>
-              <input
+                <input
                   className="govuk-input"
                   name="password"
                   type="password"
-                  onChange={(e) => handleChange(e)}
+                  onChange={handleChange}
                   onBlur={(e) => handleErrors(e, 'You must enter your password')}
                 />
               </div>
@@ -136,7 +136,7 @@ const SignIn = () => {
               <button
                 type="submit"
                 className="govuk-button"
-                onClick={(e) => handleSubmit(e)}
+                onClick={handleSubmit}
               >
                 Sign in
               </button>

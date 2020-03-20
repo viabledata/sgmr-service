@@ -3,8 +3,8 @@ import { useLocation, useHistory, Link } from 'react-router-dom';
 import axios from 'axios';
 
 // App imports
-import { apiPath } from 'config';
 import Auth from 'Auth';
+import { LOGOUT_URL } from 'Constants/ApiConstants';
 
 
 const Nav = () => {
@@ -54,7 +54,7 @@ const Nav = () => {
   const handleSignout = () => {
     axios({
       method: 'post',
-      url: `${apiPath}/logout`,
+      url: LOGOUT_URL,
       headers: { Authorization: `Bearer ${Auth.retrieveToken()}` },
     })
       .then((resp) => {
@@ -83,19 +83,21 @@ const Nav = () => {
           Menu
         </button>
 
-        {Auth.isAuthorized() && <ul id="navigation" className="govuk-header__navigation " aria-label="Top Level Navigation">
-        {navArray.map((elem, i) => {
-          const activeState = elem.active === true ? 'govuk-header__navigation-item govuk-header__navigation-item--active' : 'govuk-header__navigation-item';
-          return (
-            <li className={activeState} key={i}>
-              <Link to={elem.urlStem} className="govuk-header__link" onClick={(e) => setActivePage(elem.urlStem)}>{elem.text}</Link>
-            </li>
-          );
-        })}
-        <li className='govuk-header__navigation-item'>
-          <a className="govuk-header__link" onClick={() => handleSignout()}>Signout</a>
-        </li>
-      </ul>}
+        {Auth.isAuthorized() && (
+        <ul id="navigation" className="govuk-header__navigation " aria-label="Top Level Navigation">
+          {navArray.map((elem, i) => {
+            const activeState = elem.active === true ? 'govuk-header__navigation-item govuk-header__navigation-item--active' : 'govuk-header__navigation-item';
+            return (
+              <li className={activeState} key={i}>
+                <Link to={elem.urlStem} className="govuk-header__link" onClick={(e) => setActivePage(elem.urlStem)}>{elem.text}</Link>
+              </li>
+            );
+          })}
+          <li className="govuk-header__navigation-item">
+            <a className="govuk-header__link" onClick={() => handleSignout()}>Signout</a>
+          </li>
+        </ul>
+        )}
       </div>
     </nav>
   );

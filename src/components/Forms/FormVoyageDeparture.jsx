@@ -1,6 +1,21 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
-const FormVoyageDeparture = ({ handleSubmit, handleChange, data }) => {
+import { isDateValid } from 'Utils/date';
+import { updateVoyageReportRoutine } from 'State/voyage';
+
+const FormVoyageDeparture = ({
+  handleSubmit, handleChange, data, updateVoyageReportAction, setErrors, removeError, errors,
+}) => {
+  useEffect(() => {
+    if (isDateValid(data.documentExpiryDateYear, data.documentExpiryDateMonth, data.documentExpiryDateDay)) {
+      removeError('documentExpiryDate');
+    } else {
+      setErrors({ ...errors, documentExpiryDate: 'You must enter a valid date' });
+    }
+  }, []);
+
   return (
     <section>
       <h1 className="govuk-heading-xl">Departure details</h1>
@@ -16,7 +31,7 @@ const FormVoyageDeparture = ({ handleSubmit, handleChange, data }) => {
           <span className="govuk-hint">
             For example, 20 2 2020
           </span>
-          <div className="govuk-date-input" >
+          <div className="govuk-date-input">
             <div className="govuk-date-input__item">
               <div className="govuk-form-group">
                 <label className="govuk-label govuk-date-input__label" htmlFor="departureDateDay">
@@ -28,15 +43,15 @@ const FormVoyageDeparture = ({ handleSubmit, handleChange, data }) => {
                   type="text"
                   pattern="[0-9]*"
                   inputMode="numeric"
-                  maxLength="2"
+                  maxLength={2}
                   value={data.departureDateDay || ''}
-                  onChange={(e) => handleChange(e)}
+                  onChange={handleChange}
                 />
               </div>
             </div>
             <div className="govuk-date-input__item">
               <div className="govuk-form-group">
-              <label className="govuk-label govuk-date-input__label" htmlFor="departureDateMonth">
+                <label className="govuk-label govuk-date-input__label" htmlFor="departureDateMonth">
                   Month
                 </label>
                 <input
@@ -45,9 +60,9 @@ const FormVoyageDeparture = ({ handleSubmit, handleChange, data }) => {
                   type="text"
                   pattern="[0-9]*"
                   inputMode="numeric"
-                  maxLength="2"
+                  maxLength={2}
                   value={data.departureDateMonth || ''}
-                  onChange={(e) => handleChange(e)}
+                  onChange={handleChange}
                 />
               </div>
             </div>
@@ -62,9 +77,9 @@ const FormVoyageDeparture = ({ handleSubmit, handleChange, data }) => {
                   type="text"
                   pattern="[0-9]*"
                   inputMode="numeric"
-                  maxLength="4"
+                  maxLength={4}
                   value={data.departureDateYear || ''}
-                  onChange={(e) => handleChange(e)}
+                  onChange={handleChange}
                 />
               </div>
             </div>
@@ -82,7 +97,7 @@ const FormVoyageDeparture = ({ handleSubmit, handleChange, data }) => {
           <span className="govuk-hint">
             For example, 17 30
           </span>
-          <div className="govuk-date-input" >
+          <div className="govuk-date-input">
             <div className="govuk-date-input__item">
               <div className="govuk-form-group">
                 <label className="govuk-label govuk-date-input__label" htmlFor="departureTimeHour">
@@ -94,15 +109,15 @@ const FormVoyageDeparture = ({ handleSubmit, handleChange, data }) => {
                   type="text"
                   pattern="[0-9]*"
                   inputMode="numeric"
-                  maxLength="2"
+                  maxLength={2}
                   value={data.departureTimeHour || ''}
-                  onChange={(e) => handleChange(e)}
+                  onChange={handleChange}
                 />
               </div>
             </div>
             <div className="govuk-date-input__item">
               <div className="govuk-form-group">
-              <label className="govuk-label govuk-date-input__label" htmlFor="departureTimeMinute">
+                <label className="govuk-label govuk-date-input__label" htmlFor="departureTimeMinute">
                   Minute
                 </label>
                 <input
@@ -111,9 +126,9 @@ const FormVoyageDeparture = ({ handleSubmit, handleChange, data }) => {
                   type="text"
                   pattern="[0-9]*"
                   inputMode="numeric"
-                  maxLength="2"
+                  maxLength={2}
                   value={data.departureTimeMinute || ''}
-                  onChange={(e) => handleChange(e)}
+                  onChange={handleChange}
                 />
               </div>
             </div>
@@ -125,15 +140,15 @@ const FormVoyageDeparture = ({ handleSubmit, handleChange, data }) => {
         <label className="govuk-label govuk-label--m" htmlFor="departurePort">
           Departure port
         </label>
-          <span className="govuk-hint">
-            The name or UNLOCODE of the port, for example Monaco or MC MON. Enter ‘ZZZZ’ if not known
-          </span>
+        <span className="govuk-hint">
+          The name or UNLOCODE of the port, for example Monaco or MC MON. Enter ‘ZZZZ’ if not known
+        </span>
         <input
           className="govuk-input"
           name="departurePort"
           type="text"
           value={data.departurePort || ''}
-          onChange={(e) => handleChange(e)}
+          onChange={handleChange}
         />
       </div>
 
@@ -148,7 +163,7 @@ const FormVoyageDeparture = ({ handleSubmit, handleChange, data }) => {
             </span>
           </legend>
           <div className="govuk-form-group">
-            <label className="govuk-label govuk-date-input__label" htmlFor="departureCoordinatesLat">
+            <label className="govuk-label govuk-date-input__label" htmlFor="departureLat">
               Latitude
             </label>
             <span className="govuk-hint">
@@ -156,16 +171,16 @@ const FormVoyageDeparture = ({ handleSubmit, handleChange, data }) => {
             </span>
             <input
               className="govuk-input govuk-date-input__input"
-              name="departureCoordinatesLat"
+              name="departureLat"
               type="text"
               pattern="[0-9]*"
               inputMode="numeric"
-              value={data.departureCoordinatesLat || ''}
-              onChange={(e) => handleChange(e)}
+              value={data.departureLat || ''}
+              onChange={handleChange}
             />
           </div>
           <div className="govuk-form-group">
-            <label className="govuk-label govuk-date-input__label" htmlFor="departureCoordinatesLong">
+            <label className="govuk-label govuk-date-input__label" htmlFor="departureLong">
               Longitude
             </label>
             <span className="govuk-hint">
@@ -173,21 +188,22 @@ const FormVoyageDeparture = ({ handleSubmit, handleChange, data }) => {
             </span>
             <input
               className="govuk-input govuk-date-input__input"
-              name="departureCoordinatesLong"
+              name="departureLong"
               type="text"
               pattern="[0-9]*"
               inputMode="numeric"
-              value={data.departureCoordinatesLong || ''}
-              onChange={(e) => handleChange(e)}
+              value={data.departureLong || ''}
+              onChange={handleChange}
             />
           </div>
         </fieldset>
       </div>
 
       <button
+        type="button"
         className="govuk-button"
         data-module="govuk-button"
-        onClick={(e) => handleSubmit(e)}
+        onClick={(e) => handleSubmit(e, updateVoyageReportAction)}
       >
         Save and continue
       </button>
@@ -195,4 +211,17 @@ const FormVoyageDeparture = ({ handleSubmit, handleChange, data }) => {
   );
 };
 
-export default FormVoyageDeparture;
+FormVoyageDeparture.propTypes = {
+  handleChange: PropTypes.func.isRequired,
+  handleSubmit: PropTypes.func.isRequired,
+  setErrors: PropTypes.func.isRequired,
+  removeError: PropTypes.func.isRequired,
+  data: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
+  errors: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
+  updateVoyageReportAction: PropTypes.func.isRequired,
+};
+
+const mapDispatchToProps = (dispatch) => ({
+  updateVoyageReportAction: (formData) => dispatch(updateVoyageReportRoutine.request(formData)),
+});
+export default connect(null, mapDispatchToProps)(FormVoyageDeparture);

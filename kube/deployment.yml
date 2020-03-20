@@ -4,29 +4,46 @@ kind: Deployment
 metadata:
   name: "{{.SGMR_SERVICE_NAME}}"
 spec:
+  replicas: 3
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 33%
+      maxSurge: 1
+  revisionHistoryLimit: 3
   selector:
     matchLabels:
       name: "{{.SGMR_SERVICE_NAME}}"
-  replicas: 1
-  revisionHistoryLimit: 1
   template:
     metadata:
       labels:
         name: "{{.SGMR_SERVICE_NAME}}"
     spec:
-      securityContext:
-        runAsUser: 1000
-        fsGroup: 1000
       containers:
-      - name: {{.SGMR_SERVICE_NAME}}-proxy
+      - name: frontend
+        image: "{{.SGMR_SERVICE_IMAGE}}:{{.SGMR_SERVICE_TAG}}"
+        imagePullPolicy: Always
+        securityContext:
+          runAsNonRoot: true
+          runAsUser: 100
+        resources:
+          requests:
+            cpu: 100m
+            memory: 200Mi
+          limits:
+            cpu: 200m
+            memory: 500Mi
+        ports:
+          - name: frontend
+            containerPort: {{.SGMR_SERVICE_PORT}}
+        env:
+          - name: SGMR_DATA_API_BASE_URL
+            value: {{.SGMR_DATA_API_BASE_URL}}
+      - name: proxy
         image: "{{.NGINX_IMAGE}}:{{.NGINX_TAG}}"
         imagePullPolicy: Always
         securityContext:
           runAsNonRoot: true
-          capabilities:
-            drop:
-             - SETUID
-             - SETGID
         resources:
          limits:
           memory: "100Mi"
@@ -57,33 +74,6 @@ spec:
         volumeMounts:
           - name: certs
             mountPath: /certs
-      - name: "{{.SGMR_SERVICE_NAME}}"
-        image: "{{.SGMR_SERVICE_IMAGE}}:{{.SGMR_SERVICE_TAG}}"
-        imagePullPolicy: Always
-        securityContext:
-          runAsNonRoot: true
-        resources:
-          requests:
-            memory: "2304Mi"
-            cpu: "1000m"
-          limits:
-            memory: "2304Mi"
-            cpu: "1000m"
-        readinessProbe:
-          httpGet:
-            path: /readiness
-            port: {{.SGMR_SERVICE_PORT}}
-            scheme: HTTP
-          initialDelaySeconds: 30
-          periodSeconds: 20
-        livenessProbe:
-          httpGet:
-            path: /healthz
-            port: {{.SGMR_SERVICE_PORT}}
-            scheme: HTTP
-          initialDelaySeconds: 30
-          periodSeconds: 20
-        env:
       volumes:
       - name: certs
         secret:

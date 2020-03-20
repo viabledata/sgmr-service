@@ -4,7 +4,7 @@ import axios from 'axios';
 
 // app imports
 import Auth from 'Auth';
-import { apiPath } from 'config';
+import { SUBMIT_VERIFICATION_CODE_URL } from 'Constants/ApiConstants';
 
 const UserInputCode = () => {
   const history = useHistory();
@@ -38,7 +38,7 @@ const UserInputCode = () => {
     e.preventDefault();
     // Ensure required fields have a value
     if (checkRequiredFields() === true && source === 'registration') {
-      axios.patch(`${apiPath}/submit-verification-code`, formData)
+      axios.patch(SUBMIT_VERIFICATION_CODE_URL, formData)
         .then((resp) => {
           history.push(`/sign-in?source=${source}`);
         })
@@ -53,7 +53,7 @@ const UserInputCode = () => {
           }
         });
     } else {
-      axios.post(`${apiPath}/submit-verification-code`, formData)
+      axios.post(SUBMIT_VERIFICATION_CODE_URL, formData)
         .then((resp) => {
           resp.data.token ? Auth.storeToken(resp.data.token) : null;
           history.push(`/${source}`);
@@ -94,15 +94,16 @@ const UserInputCode = () => {
                 {errors.twoFactorToken
                   && (
                   <span className="govuk-error-message">
-                    <span className="govuk-visually-hidden">Error:</span> {errors.twoFactorToken}
+                    <span className="govuk-visually-hidden">Error:</span>
+                    {' '}
+                    {errors.twoFactorToken}
                   </span>
-                  )
-                }
+                  )}
                 <input
                   className="govuk-input"
                   name="twoFactorToken"
                   type="text"
-                  onChange={(e) => handleChange(e)}
+                  onChange={handleChange}
                 />
                 <p className="govuk-body">
                   <Link to={`/resend-code?source=${source}`}>Didn't receive a code?</Link>
@@ -111,7 +112,7 @@ const UserInputCode = () => {
               <button
                 type="submit"
                 className="govuk-button"
-                onClick={(e) => handleSubmit(e)}
+                onClick={handleSubmit}
               >
                 Sign in
               </button>

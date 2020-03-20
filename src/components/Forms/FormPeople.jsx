@@ -4,7 +4,8 @@ import axios from 'axios';
 import moment from 'moment';
 
 // app imports
-import { apiPath } from 'config';
+import { PEOPLE_URL } from 'Constants/ApiConstants';
+import { formatDate, isDateValid } from 'Utils/date';
 import Auth from 'Auth';
 import CreatePerson from 'CreatePerson';
 
@@ -50,6 +51,26 @@ const FormPeople = (props) => {
       rule: 'required',
       message: 'You must enter an expiry date',
     },
+    {
+      field: 'gender',
+      rule: 'required',
+      message: 'You must select a gender',
+    },
+    {
+      field: 'dateOfBirthYear',
+      rule: 'required',
+      message: 'You must enter a date of birth',
+    },
+    {
+      field: 'placeOfBirth',
+      rule: 'required',
+      message: 'You must enter a place of birth',
+    },
+    {
+      field: 'nationality',
+      rule: 'required',
+      message: 'You must enter a nationality',
+    },
   ];
 
   // Validation
@@ -71,16 +92,6 @@ const FormPeople = (props) => {
     return Object.keys(tempObj).length > 0;
   };
 
-  // Format date fields
-  const formatDateField = (year, month, day) => {
-    if (!year || !month || !day || year.length < 4 || month > 12 || month < 1 || day > 31 || day < 1) {
-      setErrors({ ...errors, documentExpiryDate: 'You must enter a valid date' });
-    } else {
-      const newDate = moment(`${year}-${month}-${day}`, 'YYYY-MM-DD').format('YYYY-M-D');
-      removeError('documentExpiryDate');
-      return newDate;
-    }
-  };
   // Update form info to state
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -100,9 +111,13 @@ const FormPeople = (props) => {
       lastName: formData.lastName,
       documentType: formData.documentType,
       documentNumber: formData.documentNumber,
-      documentExpiryDate: formatDateField(formData.documentExpiryDateYear, formData.documentExpiryDateMonth, formData.documentExpiryDateDay),
+      documentExpiryDate: formatDate(formData.documentExpiryDateYear, formData.documentExpiryDateMonth, formData.documentExpiryDateDay),
       documentIssuingState: formData.documentIssuingState,
       peopleType: formData.peopleType,
+      gender: formData.gender,
+      dateOfBirth: formatDate(formData.dateOfBirthYear, formData.dateOfBirthMonth, formData.dateOfBirthDay),
+      placeOfBirth: formData.placeOfBirth,
+      nationality: formData.nationality,
     };
     return dataSubmit;
   };
@@ -111,8 +126,15 @@ const FormPeople = (props) => {
   // Handle Submit, including clearing localStorage
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (checkRequiredFields() === false) {
-      axios.post(`${apiPath}/user/people`, getFieldsToSubmit(), {
+    if (isDateValid(formData.documentExpiryDateYear, formData.documentExpiryDateMonth, formData.documentExpiryDateDay)) {
+      removeError('documentExpiryDate');
+    } else {
+      setErrors({ ...errors, documentExpiryDate: 'You must enter a valid date' });
+    }
+    const fields = getFieldsToSubmit();
+
+    if (!checkRequiredFields()) {
+      axios.post(PEOPLE_URL, fields, {
         headers: { Authorization: `Bearer ${Auth.retrieveToken()}` },
       })
         .then(() => {
@@ -122,7 +144,7 @@ const FormPeople = (props) => {
         .catch((err) => {
           if (err.response) {
             switch (err.response.status) {
-              case 400: setErrors({ ...errors, CreatePerson: 'This person already exists' }); break;
+              case 400: console.log(err.data); break;
               case 401: history.push(`/sign-in?source=${location}`); break;
               case 422: history.push(`/sign-in?source=${location}`); break;
               case 405: history.push(`/sign-in?source=${location}`); break;
@@ -165,7 +187,7 @@ const FormPeople = (props) => {
 
               {Object.keys(errors).length > 0 && (
                 <div className="govuk-error-summary" aria-labelledby="error-summary-title" role="alert" tabIndex="-1" data-module="govuk-error-summary">
-                  <h2 className="govuk-error-summary__title" >
+                  <h2 className="govuk-error-summary__title">
                     There is a problem
                   </h2>
                   <div className="govuk-error-summary__body">
@@ -182,8 +204,8 @@ const FormPeople = (props) => {
               )}
 
               <CreatePerson
-                handleSubmit={(e) => handleSubmit(e)}
-                handleChange={(e) => handleChange(e)}
+                handleSubmit={handleSubmit}
+                handleChange={handleChange}
                 data={formData}
                 errors={errors}
               />

@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 
 // App imports
-import { apiPath } from 'config';
+import { apiUrl } from 'config';
 import Auth from 'Auth';
 
 
@@ -159,7 +159,7 @@ const SectionTabs = (props) => {
   };
 
   // const getData = () => {
-  //   axios.get(`${apiPath}/user/voyagereport?pagination=false`, {
+  //   axios.get(`${apiUrl}/user/voyagereport?pagination=false`, {
   //     headers: { Authorization: `Bearer ${Auth.retrieveToken()}` },
   //   })
   //     .then((resp) => {
@@ -221,11 +221,11 @@ const SectionTabs = (props) => {
                     <th key={i} scope="col" className="govuk-table__header">{elem}</th>
                   );
                 })}
-                </tr>
-              </thead>
-              <tbody>
-                {data[0].items.map((elem, i) => {
-                  return (
+              </tr>
+            </thead>
+            <tbody>
+              {data[0].items.map((elem, i) => {
+                return (
                   <tr className="govuk-table__row" key={i}>
                     <td className="govuk-table__cell">{elem.name}</td>
                     <td className="govuk-table__cell">{elem.departureDate}</td>
@@ -234,9 +234,9 @@ const SectionTabs = (props) => {
                     <td className="govuk-table__cell">{elem.arrivalPort}</td>
                     <td className="govuk-table__cell">{elem.submissionRef}</td>
                   </tr>
-                  );
-                })}
-              </tbody>
+                );
+              })}
+            </tbody>
           </table>
         </div>
       </div>

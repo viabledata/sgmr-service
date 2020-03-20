@@ -4,20 +4,19 @@ import axios from 'axios';
 import moment from 'moment';
 
 // App imports
-import { apiPath } from 'config';
+import { VOYAGE_REPORT_URL } from 'Constants/ApiConstants';
 import Auth from 'Auth';
-import FormVoyageSubmitted from 'FormVoyageSubmitted';
 
 const FormVoyageCheckDetails = () => {
   const location = useLocation();
   const history = useHistory();
-  const voyageId = 'a9f36018-be05-4205-adb3-89a47aee0373';
+  const voyageId = '';
   const [voyageData, setVoyageData] = useState([]);
   const [peopleData, setPeopleData] = useState([]);
   const [voyageReference, setVoyageReference] = useState([]);
 
   const getVoyageData = () => {
-    axios.get(`${apiPath}/voyagereport/${voyageId}`, {
+    axios.get(`${VOYAGE_REPORT_URL}/${voyageId}`, {
       headers: { Authorization: `Bearer ${Auth.retrieveToken()}` },
     })
       .then((resp) => {
@@ -34,7 +33,7 @@ const FormVoyageCheckDetails = () => {
   };
 
   const getPeopleData = () => {
-    axios.get(`${apiPath}/voyagereport/${voyageId}/people?pagination=false`, {
+    axios.get(`${VOYAGE_REPORT_URL}/${voyageId}/people?pagination=false`, {
       headers: { Authorization: `Bearer ${Auth.retrieveToken()}` },
     })
       .then((resp) => {
@@ -53,7 +52,7 @@ const FormVoyageCheckDetails = () => {
   const handleVoyageSubmit = (e) => {
     e.preventDefault();
     const submitData = { status: 'Submitted' };
-    axios.patch(`${apiPath}/voyagereport/${voyageId}`, submitData, {
+    axios.patch(`${VOYAGE_REPORT_URL}/${voyageId}`, submitData, {
       headers: { Authorization: `Bearer ${Auth.retrieveToken()}` },
     })
       .then((resp) => {
@@ -63,8 +62,8 @@ const FormVoyageCheckDetails = () => {
       .catch((err) => {
         if (err.response) {
           switch (err.response.status) {
-            case 422: history.push(`/sign-in?source=${location}`); break;
-            default: history.push(`/sign-in?source=${location}`); break;
+            case 422: history.push(`/sign-in?source=${location.pathname}`); break;
+            default: history.push(`/sign-in?source=${location.pathname}`); break;
           }
         }
       });
@@ -266,39 +265,39 @@ const FormVoyageCheckDetails = () => {
           })}
       </table>
 
-      <dl class="govuk-summary-list govuk-!-margin-bottom-9">
-        <div class="govuk-summary-list__row">
-          <dt class="govuk-heading-m">
+
+      <dl className="govuk-summary-list govuk-!-margin-bottom-9">
+        <div className="govuk-summary-list__row">
+          <dt className="govuk-heading-m">
             Responsible person details
           </dt>
-          <dd class="govuk-summary-list__value">
-            <a href="create-report-responsible-person.html">Change<span class="govuk-visually-hidden"> Change</span></a>
+          <dd className="govuk-summary-list__value">
+            <a href="create-report-responsible-person.html">Change<span className="govuk-visually-hidden"> Change</span></a>
           </dd>
         </div>
       </dl>
-      <dl class="govuk-summary-list govuk-!-margin-bottom-9">
-        <div class="govuk-summary-list__row">
-          <dt class="govuk-summary-list__key">Given name</dt>
-          <dd class="govuk-summary-list__value">{voyageData.responsibleGivenName}</dd>
+      <dl className="govuk-summary-list govuk-!-margin-bottom-9">
+        <div className="govuk-summary-list__row">
+          <dt className="govuk-summary-list__key">Given name</dt>
+          <dd className="govuk-summary-list__value">{voyageData.responsibleGivenName}</dd>
         </div>
-        <div class="govuk-summary-list__row">
-          <dt class="govuk-summary-list__key">Surname</dt>
-          <dd class="govuk-summary-list__value">{voyageData.responsibleSurname}</dd>
+        <div className="govuk-summary-list__row">
+          <dt className="govuk-summary-list__key">Surname</dt>
+          <dd className="govuk-summary-list__value">{voyageData.responsibleSurname}</dd>
         </div>
-        <div class="govuk-summary-list__row">
-          <dt class="govuk-summary-list__key">
+        <div className="govuk-summary-list__row">
+          <dt className="govuk-summary-list__key">
             Contact telephone number
           </dt>
-          <dd class="govuk-summary-list__value">{voyageData.responsibleContactNo}</dd>
+          <dd className="govuk-summary-list__value">{voyageData.responsibleContactNo}</dd>
         </div>
-        <div class="govuk-summary-list__row">
-          <dt class="govuk-summary-list__key">Address</dt>
-          <dd class="govuk-summary-list__value">
+        <div className="govuk-summary-list__row">
+          <dt className="govuk-summary-list__key">Address</dt>
+          <dd className="govuk-summary-list__value">
             {`${voyageData.responsibleAddressLine1}, ${voyageData.responsibleAddressLine2}, ${voyageData.responsibleTown}, ${voyageData.responsiblePostcode}`}
           </dd>
         </div>
       </dl>
-      
       <h2 className="govuk-heading-m">Submit your Advanced Voyage Report</h2>
       <p>By submitting this Advanced Voyage Report you are confirming that, to the best of your knowledge, the information you are providing is correct and you have the explicit permission of the persons named in this report to submit information on their behalf.</p>
       <button
