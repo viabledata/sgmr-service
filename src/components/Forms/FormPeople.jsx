@@ -6,12 +6,14 @@ import moment from 'moment';
 // app imports
 import { PEOPLE_URL } from 'Constants/ApiConstants';
 import { formatDate, isDateValid } from 'Utils/date';
+import { PEOPLE_PAGE_URL, SAVE_VOYAGE_PEOPLE_URL } from 'Constants/ClientConstants';
 import Auth from 'Auth';
 import CreatePerson from 'CreatePerson';
 
 const FormPeople = (props) => {
   const history = useHistory();
   const location = useLocation().pathname.slice(1);
+  const source = useLocation().search.split('=');
   const [formData, setFormData] = useState(JSON.parse(localStorage.getItem('formData')) || {});
   const [errors, setErrors] = useState(JSON.parse(localStorage.getItem('errors')) || {});
 
@@ -138,8 +140,8 @@ const FormPeople = (props) => {
         headers: { Authorization: `Bearer ${Auth.retrieveToken()}` },
       })
         .then(() => {
-          history.goBack(); // Return to page you came from
           clearFormData();
+          history.push(source[1] === 'voyage' ? SAVE_VOYAGE_PEOPLE_URL : PEOPLE_PAGE_URL);
         })
         .catch((err) => {
           if (err.response) {

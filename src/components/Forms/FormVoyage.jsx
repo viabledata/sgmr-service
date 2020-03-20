@@ -59,7 +59,6 @@ const FormVoyage = () => {
 
   const handleSubmit = (e, submitAction, formStep) => {
     e.preventDefault();
-
     submitAction && submitAction({ ...formData, formStep });
 
     setNextPage();
@@ -79,6 +78,9 @@ const FormVoyage = () => {
     const thisPage = location.pathname.split('page-');
     setPageNum(parseInt(thisPage[1], 10));
   }, [location]);
+
+
+
 
   return (
     <div id="pageContainer" className="govuk-width-container ">
