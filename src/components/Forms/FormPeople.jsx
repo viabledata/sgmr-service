@@ -51,6 +51,26 @@ const FormPeople = (props) => {
       rule: 'required',
       message: 'You must enter an expiry date',
     },
+    {
+      field: 'gender',
+      rule: 'required',
+      message: 'You must select a gender',
+    },
+    {
+      field: 'dateOfBirthYear',
+      rule: 'required',
+      message: 'You must enter a date of birth',
+    },
+    {
+      field: 'placeOfBirth',
+      rule: 'required',
+      message: 'You must enter a place of birth',
+    },
+    {
+      field: 'nationality',
+      rule: 'required',
+      message: 'You must enter a nationality',
+    },
   ];
 
   // Validation
@@ -94,6 +114,10 @@ const FormPeople = (props) => {
       documentExpiryDate: formatDate(formData.documentExpiryDateYear, formData.documentExpiryDateMonth, formData.documentExpiryDateDay),
       documentIssuingState: formData.documentIssuingState,
       peopleType: formData.peopleType,
+      gender: formData.gender,
+      dateOfBirth: formatDate(formData.dateOfBirthDay, formData.dateOfBirthMonth, formData.dateOfBirthYear),
+      placeOfBirth: formData.placeOfBirth,
+      nationality: formData.nationality,
     };
     return dataSubmit;
   };
@@ -120,7 +144,7 @@ const FormPeople = (props) => {
         .catch((err) => {
           if (err.response) {
             switch (err.response.status) {
-              case 400: setErrors({ ...errors, CreatePerson: 'This person already exists' }); break;
+              case 400: console.log(err.data); break;
               case 401: history.push(`/sign-in?source=${location}`); break;
               case 422: history.push(`/sign-in?source=${location}`); break;
               case 405: history.push(`/sign-in?source=${location}`); break;
