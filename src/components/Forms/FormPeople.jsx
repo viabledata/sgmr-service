@@ -138,7 +138,7 @@ const FormPeople = (props) => {
         headers: { Authorization: `Bearer ${Auth.retrieveToken()}` },
       })
         .then(() => {
-          history.goBack(); // Return to page you came from
+          history.push('/people');
           clearFormData();
         })
         .catch((err) => {
