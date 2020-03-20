@@ -10,7 +10,7 @@ import Auth from 'Auth';
 const FormVoyageCheckDetails = () => {
   const location = useLocation();
   const history = useHistory();
-  const voyageId = 'a9f36018-be05-4205-adb3-89a47aee0373';
+  const voyageId = '';
   const [voyageData, setVoyageData] = useState([]);
   const [peopleData, setPeopleData] = useState([]);
   const [voyageReference, setVoyageReference] = useState([]);
@@ -62,8 +62,8 @@ const FormVoyageCheckDetails = () => {
       .catch((err) => {
         if (err.response) {
           switch (err.response.status) {
-            case 422: history.push(`/sign-in?source=${location}`); break;
-            default: history.push(`/sign-in?source=${location}`); break;
+            case 422: history.push(`/sign-in?source=${location.pathname}`); break;
+            default: history.push(`/sign-in?source=${location.pathname}`); break;
           }
         }
       });
