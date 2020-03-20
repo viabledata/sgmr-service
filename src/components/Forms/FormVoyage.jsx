@@ -25,15 +25,19 @@ const FormVoyage = () => {
 
   const handleChange = (e) => {
     const {
-      name, type, value, checked,
+      name, type, value, checked, dataset,
     } = e.target;
 
     switch (type) {
       case 'checkbox': {
-        formData[name] = [...formData[name] || [], value]; // Create array, add current values and new value
+        if (dataset.singleOrMulti && dataset.singleOrMulti === 'single') {
+          formData[name] = checked && value; // Create array, add current values and new value
+        } else {
+          formData[name] = [...formData[name] || [], value]; // Create array, add current values and new value
 
-        if (!checked) {
-          formData[name] = formData[name].filter((formDataValue) => formDataValue !== value); // Remove the current value if it is not checked
+          if (!checked) {
+            formData[name] = formData[name].filter((formDataValue) => formDataValue !== value); // Remove the current value if it is not checked
+          }
         }
 
         setFormData({ ...formData });
@@ -53,11 +57,10 @@ const FormVoyage = () => {
     history.push(`/save-voyage/page-${nextPage}`);
   };
 
-  const handleSubmit = (e, submitAction) => {
+  const handleSubmit = (e, submitAction, formStep) => {
     e.preventDefault();
+    submitAction && submitAction({ ...formData, formStep });
 
-    submitAction && submitAction(formData);
-    console.log(formData)
     setNextPage();
   };
 

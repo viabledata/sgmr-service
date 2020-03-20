@@ -203,7 +203,7 @@ const FormVoyageDeparture = ({
         type="button"
         className="govuk-button"
         data-module="govuk-button"
-        onClick={(e) => handleSubmit(e, updateVoyageReportAction)}
+        onClick={(e) => handleSubmit(e, updateVoyageReportAction, 'departure')}
       >
         Save and continue
       </button>

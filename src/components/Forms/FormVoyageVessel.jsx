@@ -5,18 +5,20 @@ import { useLocation, useHistory } from 'react-router-dom';
 import axios from 'axios';
 
 import { updateVoyageReportRoutine } from 'State/voyage';
-import { VESSELS_URL } from 'Constants/ApiConstants';
-import Auth from 'Auth';
+import { fetchVesselsRoutine } from 'State/vessels';
 import contentArray from 'contentArray';
 import CreateVessel from 'CreateVessel';
 
 
-const FormVoyageVessel = ({ handleSubmit, handleChange, data, errors, updateVoyageReportAction }) => {
-  const history = useHistory();
-  const location = useLocation();
+const FormVoyageVessel = ({
+  handleSubmit, handleChange, data, errors, updateVoyageReportAction, fetchVesselsTriggerAction, vessels,
+}) => {
   const [titles, setTitles] = useState();
-  const [vessels, setVessels] = useState();
   const arr = contentArray;
+
+  useEffect(() => {
+    fetchVesselsTriggerAction();
+  }, []);
 
   const getTitles = () => {
     const page = arr.find((obj) => {
@@ -25,28 +27,8 @@ const FormVoyageVessel = ({ handleSubmit, handleChange, data, errors, updateVoya
     setTitles(page.reportTitles);
   };
 
-  const getData = () => {
-    axios.get(`${VESSELS_URL}?pagination=false`, {
-      headers: { Authorization: `Bearer ${Auth.retrieveToken()}` },
-    })
-      .then((resp) => {
-        setVessels(resp.data.vessels);
-      })
-      .catch((err) => {
-        if (err.response) {
-          switch (err.response.status) {
-            case 401: history.push(`/sign-in?source=${location}`); break;
-            case 422: history.push(`/sign-in?source=${location}`); break;
-            case 405: history.push(`/sign-in?source=${location}`); break;
-            default: history.push(`/sign-in?source=${location}`);
-          }
-        }
-      });
-  };
-
   useEffect(() => {
     getTitles();
-    getData();
   }, []);
 
   if (!titles || !vessels) {
@@ -57,7 +39,7 @@ const FormVoyageVessel = ({ handleSubmit, handleChange, data, errors, updateVoya
     <section>
       <h1 className="govuk-heading-xl">Vessel details</h1>
       {
-        vessels.length > 0 && (
+        vessels.list.length > 0 && (
           <>
             <h2 className="govuk-heading-l">Saved vessels</h2>
             <p className="govuk-body-l">Add the details of a vessel you have saved previously to the report</p>
@@ -71,42 +53,47 @@ const FormVoyageVessel = ({ handleSubmit, handleChange, data, errors, updateVoya
                     );
                   })}
                 </tr>
-                </thead>
-                <tbody className="govuk-table__body">
-                  {vessels.map((elem, i) => {
-                    return (
-                      <tr className="govuk-table__row" key={i}>
-                        <td className="govuk-table__cell multiple-choice--hod">
-                          <div className="govuk-checkboxes__item">
-                            <input
-                              type="checkbox"
-                              className="govuk-checkboxes__input jsCheckbox"
-                              id={elem.id}
-                              name={elem.name}
-                              value={elem.name}
-                              onChange={(e) => handleChange(e)}
-                            />
-                            <label className="govuk-label govuk-checkboxes__label" htmlFor={elem.id}>&nbsp;</label>
-                          </div>
-                        </td>
-                        <td className="govuk-table__cell" scope="row">{elem.vesselName}</td>
-                        <td className="govuk-table__cell">{elem.vesselType}</td>
-                        <td className="govuk-table__cell">{elem.vesselBase}</td>
-                      </tr>
-                    );
-                  })}
-                </tbody>
+              </thead>
+              <tbody className="govuk-table__body">
+                {vessels.list.map((vessel) => {
+                  const isChecked = (data.vessels && data.vessels.indexOf(vessel.id) >= 0) || false;
+
+                  return (
+                    <tr className="govuk-table__row" key={vessel.id}>
+                      <td className="govuk-table__cell multiple-choice--hod">
+                        <div className="govuk-checkboxes__item">
+                          <input
+                            type="checkbox"
+                            className="govuk-checkboxes__input jsCheckbox"
+                            id={vessel.id}
+                            name="vessels"
+                            value={vessel.id}
+                            onChange={handleChange}
+                            checked={isChecked}
+                            data-single-or-multi="single"
+                          />
+                          <label className="govuk-label govuk-checkboxes__label" htmlFor={vessel.id}>&nbsp;</label>
+                        </div>
+                      </td>
+                      <td className="govuk-table__cell" scope="row">{vessel.vesselName}</td>
+                      <td className="govuk-table__cell">{vessel.vesselType}</td>
+                      <td className="govuk-table__cell">{vessel.vesselBase}</td>
+                    </tr>
+                  );
+                })}
+              </tbody>
             </table>
             <button
               type="button"
               className="govuk-button"
               data-module="govuk-button"
-              onClick={(e) => handleSubmit(e)}
+              onClick={(e) => handleSubmit(e, updateVoyageReportAction, 'vessel')}
             >
               Add to report
             </button>
           </>
-        )}
+        )
+}
       <h2 className="govuk-heading-l">New vessel</h2>
       <p className="govuk-body-l">Add the details of a new vessel you have not already saved</p>
 
@@ -120,7 +107,7 @@ const FormVoyageVessel = ({ handleSubmit, handleChange, data, errors, updateVoya
         type="button"
         className="govuk-button"
         data-module="govuk-button"
-        onClick={(e) => handleSubmit(e, updateVoyageReportAction)}
+        onClick={(e) => handleSubmit(e, updateVoyageReportAction, 'vessel')}
       >
         Save and continue
       </button>
@@ -135,10 +122,15 @@ FormVoyageVessel.propTypes = {
   removeError: PropTypes.func.isRequired,
   data: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   errors: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
+  vessels: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
+  fetchVesselsTriggerAction: PropTypes.func.isRequired,
   updateVoyageReportAction: PropTypes.func.isRequired,
 };
 
+const mapStateToProps = ({ vessels }) => ({ vessels });
+
 const mapDispatchToProps = (dispatch) => ({
+  fetchVesselsTriggerAction: () => dispatch(fetchVesselsRoutine.trigger()),
   updateVoyageReportAction: (formData) => dispatch(updateVoyageReportRoutine.request(formData)),
 });
-export default connect(null, mapDispatchToProps)(FormVoyageVessel);
+export default connect(mapStateToProps, mapDispatchToProps)(FormVoyageVessel);

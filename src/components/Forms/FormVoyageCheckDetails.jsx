@@ -86,7 +86,10 @@ const FormVoyageCheckDetails = () => {
         <div className="govuk-summary-list__row">
           <dt className="govuk-heading-m">Departure details</dt>
           <dd className="govuk-summary-list__value">
-            <Link to="page-1">Change<span className="govuk-visually-hidden"> Change</span></Link>
+            <Link to="page-1">
+              Change
+              <span className="govuk-visually-hidden"> Change</span>
+            </Link>
           </dd>
         </div>
       </dl>
@@ -116,7 +119,10 @@ const FormVoyageCheckDetails = () => {
         <div className="govuk-summary-list__row">
           <dt className="govuk-heading-m">Arrival details</dt>
           <dd className="govuk-summary-list__value">
-            <Link to="page-2">Change<span className="govuk-visually-hidden"> Change</span></Link>
+            <Link to="page-2">
+              Change
+              <span className="govuk-visually-hidden"> Change</span>
+            </Link>
           </dd>
         </div>
       </dl>
@@ -146,7 +152,10 @@ const FormVoyageCheckDetails = () => {
         <div className="govuk-summary-list__row">
           <dt className="govuk-heading-m">Vessel details</dt>
           <dd className="govuk-summary-list__value">
-            <Link to="page-3">Change<span className="govuk-visually-hidden"> Change</span></Link>
+            <Link to="page-3">
+              Change
+              <span className="govuk-visually-hidden"> Change</span>
+            </Link>
           </dd>
         </div>
       </dl>
@@ -196,43 +205,46 @@ const FormVoyageCheckDetails = () => {
         <div className="govuk-summary-list__row">
           <dt className="govuk-heading-m">Manifest details</dt>
           <dd className="govuk-summary-list__value">
-            <Link to="page-4">Change<span className="govuk-visually-hidden"> Change</span></Link>
+            <Link to="page-4">
+              Change
+              <span className="govuk-visually-hidden"> Change</span>
+            </Link>
           </dd>
         </div>
       </dl>
       <table className="govuk-table">
         <thead className="govuk-table__head">
-            <tr className="govuk-table__row">
-              <th className="govuk-table__header" scope="col">Surname</th>
-              <th className="govuk-table__header" scope="col">Given name</th>
-              <th className="govuk-table__header" scope="col">Date of birth</th>
-              <th className="govuk-table__header" scope="col">Travel document number</th>
-              <th className="govuk-table__header" scope="col">Nationality</th>
-              <th className="govuk-table__header" scope="col">Type</th>
-            </tr>
+          <tr className="govuk-table__row">
+            <th className="govuk-table__header" scope="col">Surname</th>
+            <th className="govuk-table__header" scope="col">Given name</th>
+            <th className="govuk-table__header" scope="col">Date of birth</th>
+            <th className="govuk-table__header" scope="col">Travel document number</th>
+            <th className="govuk-table__header" scope="col">Nationality</th>
+            <th className="govuk-table__header" scope="col">Type</th>
+          </tr>
         </thead>
-          {peopleData.map((elem) => {
-            return (
-              <tbody className="govuk-table__body" key={elem.id}>
-                <tr className="govuk-table__row">
-                  <td className="govuk-table__cell">{elem.firstName}</td>
-                  <td className="govuk-table__cell">{elem.lastName}</td>
-                  <td className="govuk-table__cell">{moment(elem.dateOfBirth, 'YYYY-M-D').format('DD/MM/YYYY')}</td>
-                  <td className="govuk-table__cell">{elem.documentNumber}</td>
-                  <td className="govuk-table__cell">{elem.nationality}</td>
-                  <td className="govuk-table__cell">{elem.peopleType.name}</td>
-                </tr>
+        {peopleData.map((elem) => {
+          return (
+            <tbody className="govuk-table__body" key={elem.id}>
+              <tr className="govuk-table__row">
+                <td className="govuk-table__cell">{elem.firstName}</td>
+                <td className="govuk-table__cell">{elem.lastName}</td>
+                <td className="govuk-table__cell">{moment(elem.dateOfBirth, 'YYYY-M-D').format('DD/MM/YYYY')}</td>
+                <td className="govuk-table__cell">{elem.documentNumber}</td>
+                <td className="govuk-table__cell">{elem.nationality}</td>
+                <td className="govuk-table__cell">{elem.peopleType.name}</td>
+              </tr>
 
-                <tr className="govuk-table__row">
-                  <td className="govuk-table__cell" colSpan="6">
-                    <div>
-                      <details role="group">
-                        <summary role="button" aria-controls="details-content-2" aria-expanded="false" title={`Further information for ${elem.firstName} ${elem.lastName}`}>
-                          <span className="summary">Further information</span>
-                        </summary>
-                        <div className="panel panel-border-narrow" id="details-content-2" aria-hidden="true">
-                          <table className="govuk-table" width="100%">
-                            <tbody className="govuk-table__body">
+              <tr className="govuk-table__row">
+                <td className="govuk-table__cell" colSpan="6">
+                  <div>
+                    <details role="group">
+                      <summary role="button" aria-controls="details-content-2" aria-expanded="false" title={`Further information for ${elem.firstName} ${elem.lastName}`}>
+                        <span className="summary">Further information</span>
+                      </summary>
+                      <div className="panel panel-border-narrow" id="details-content-2" aria-hidden="true">
+                        <table className="govuk-table" width="100%">
+                          <tbody className="govuk-table__body">
                               <tr className="govuk-table__row">
                                 <td className="govuk-table__cell">Gender</td>
                                 <td className="govuk-table__cell">{elem.gender}</td>
@@ -254,15 +266,15 @@ const FormVoyageCheckDetails = () => {
                                 <td className="govuk-table__cell">{moment(elem.documentExpiryDate, 'YYYY-M-D').format('DD/MM/YYYY')}</td>
                               </tr>
                             </tbody>
-                          </table>
-                        </div>
-                      </details>
-                    </div>
-                  </td>
-                </tr>
+                        </table>
+                      </div>
+                    </details>
+                  </div>
+                </td>
+              </tr>
             </tbody>
-            );
-          })}
+          );
+        })}
       </table>
 
       <dl className="govuk-summary-list govuk-!-margin-bottom-9">
@@ -271,7 +283,10 @@ const FormVoyageCheckDetails = () => {
             Responsible person details
           </dt>
           <dd className="govuk-summary-list__value">
-            <a href="create-report-responsible-person.html">Change<span className="govuk-visually-hidden"> Change</span></a>
+            <a href="create-report-responsible-person.html">
+              Change
+              <span className="govuk-visually-hidden"> Change</span>
+            </a>
           </dd>
         </div>
       </dl>
