@@ -12,6 +12,7 @@ import CreatePerson from 'CreatePerson';
 const FormPeople = (props) => {
   const history = useHistory();
   const location = useLocation().pathname.slice(1);
+  const source = useLocation().search.split('=');
   const [formData, setFormData] = useState(JSON.parse(localStorage.getItem('formData')) || {});
   const [errors, setErrors] = useState(JSON.parse(localStorage.getItem('errors')) || {});
 
@@ -138,8 +139,8 @@ const FormPeople = (props) => {
         headers: { Authorization: `Bearer ${Auth.retrieveToken()}` },
       })
         .then(() => {
-          history.push('/people');
           clearFormData();
+          history.push(source[1] === 'voyage' ? '/save-voyage/page-4' : '/people');
         })
         .catch((err) => {
           if (err.response) {
