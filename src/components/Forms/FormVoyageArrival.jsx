@@ -4,7 +4,9 @@ import { connect } from 'react-redux';
 
 import { updateVoyageReportRoutine } from 'State/voyage';
 
-const FormVoyageArrival = ({ handleSubmit, handleChange, data, updateVoyageReportAction }) => {
+const FormVoyageArrival = ({
+  handleSubmit, handleChange, data, updateVoyageReportAction,
+}) => {
   return (
     <section>
       <h1 className="govuk-heading-xl">Arrival details</h1>
@@ -191,7 +193,7 @@ const FormVoyageArrival = ({ handleSubmit, handleChange, data, updateVoyageRepor
       <button
         className="govuk-button"
         data-module="govuk-button"
-        onClick={(e) => handleSubmit(e, updateVoyageReportAction)}
+        onClick={(e) => handleSubmit(e, updateVoyageReportAction, 'arrival')}
       >
         Save and continue
       </button>

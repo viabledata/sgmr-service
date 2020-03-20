@@ -63,7 +63,7 @@ const FormVoyagePeople = ({
             type="button"
             className="govuk-button"
             data-module="govuk-button"
-            onClick={(e) => handleSubmit(e, updateVoyageReportAction)}
+            onClick={(e) => handleSubmit(e, updateVoyageReportAction, 'people')}
           >
             Add to report
           </button>
@@ -78,7 +78,7 @@ const FormVoyagePeople = ({
         type="button"
         className="govuk-button"
         data-module="govuk-button"
-        onClick={handleSubmit}
+        onClick={(e) => handleSubmit(e, updateVoyageReportAction, 'people')}
       >
         Save and continue
       </button>

@@ -14,17 +14,18 @@ const CreateVessel = ({
         {errors.vesselName
           && (
           <span className="govuk-error-message">
-            <span className="govuk-visually-hidden">Error:</span> {errors.vesselName}
+            <span className="govuk-visually-hidden">Error:</span>
+            {' '}
+            {errors.vesselName}
           </span>
-          )
-        }
+          )}
         <span className="govuk-hint">For example Baroness</span>
         <input
           className="govuk-input"
           name="vesselName"
           type="text"
           value={data.vesselName || ''}
-          onChange={ handleChange}
+          onChange={handleChange}
         />
       </div>
 

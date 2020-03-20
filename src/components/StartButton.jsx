@@ -9,7 +9,8 @@ const StartButton = ({ pageData, onClick }) => {
       draggable="false"
       className={`govuk-button ${pageData.buttonClass}`}
       data-module="govuk-button"
-      onClick={onClick}>
+      onClick={onClick}
+    >
       {pageData.buttonText}
       {pageData.buttonClass
         && (

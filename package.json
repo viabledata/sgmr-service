@@ -57,6 +57,7 @@
     "react-dom": "^16.12.0",
     "react-redux": "^7.2.0",
     "react-router-dom": "^5.1.2",
+    "react-router-redux": "^4.0.8",
     "redux": "^4.0.5",
     "redux-localstorage": "^0.4.1",
     "redux-saga": "^1.1.3",

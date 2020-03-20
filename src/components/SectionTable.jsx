@@ -76,31 +76,31 @@ const SectionTable = ({
                     );
                   })}
                 </tr>
-                </thead>
-                <tbody className="govuk-table__body">
-                  {isPageVessels && data.map((elem, i) => {
-                    return (
-                      <tr className="govuk-table__row" key={i}>
-                        <td className="govuk-table__cell" scope="row">
-                          <p>{elem.vesselName}</p>
-                        </td>
-                        <td className="govuk-table__cell">{elem.vesselType}</td>
-                        <td className="govuk-table__cell">{elem.moorings}</td>
-                      </tr>
-                    );
-                  })}
-                  {isPagePeople && people.list.map((person) => {
-                    return (
-                      <tr className="govuk-table__row" key={person.id}>
-                        <td className="govuk-table__cell" scope="row">
-                          <p>{person.lastName}</p>
-                        </td>
-                        <td className="govuk-table__cell">{person.firstName}</td>
-                        <td className="govuk-table__cell">{person.peopleType.name}</td>
-                      </tr>
-                    );
-                  })}
-                </tbody>
+              </thead>
+              <tbody className="govuk-table__body">
+                {isPageVessels && data.map((elem, i) => {
+                  return (
+                    <tr className="govuk-table__row" key={i}>
+                      <td className="govuk-table__cell" scope="row">
+                        <p>{elem.vesselName}</p>
+                      </td>
+                      <td className="govuk-table__cell">{elem.vesselType}</td>
+                      <td className="govuk-table__cell">{elem.moorings}</td>
+                    </tr>
+                  );
+                })}
+                {isPagePeople && people.list.map((person) => {
+                  return (
+                    <tr className="govuk-table__row" key={person.id}>
+                      <td className="govuk-table__cell" scope="row">
+                        <p>{person.lastName}</p>
+                      </td>
+                      <td className="govuk-table__cell">{person.firstName}</td>
+                      <td className="govuk-table__cell">{person.peopleType.name}</td>
+                    </tr>
+                  );
+                })}
+              </tbody>
             </table>
           </div>
         </div>

@@ -35,9 +35,9 @@ const FormVoyageResponsiblePerson = ({ handleSubmit, handleChange, data }) => {
         <label className="govuk-label govuk-label--m" htmlFor="responsibleContactNo">
           Contact telephone number
         </label>
-          <span className="govuk-hint">
+        <span className="govuk-hint">
           Include international dialling code, for example +44
-          </span>
+        </span>
         <input
           className="govuk-input"
           name="responsibleContactNo"

@@ -75,11 +75,6 @@ const SignIn = () => {
     }
   };
 
-  // Drop token when arriving at sign-in page
-  useEffect(() => {
-    localStorage.removeItem('token');
-  }, []);
-
   return (
     <div className="govuk-width-container">
       <main className="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" role="main">
