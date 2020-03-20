@@ -115,7 +115,7 @@ const FormPeople = (props) => {
       documentIssuingState: formData.documentIssuingState,
       peopleType: formData.peopleType,
       gender: formData.gender,
-      dateOfBirth: formatDate(formData.dateOfBirthDay, formData.dateOfBirthMonth, formData.dateOfBirthYear),
+      dateOfBirth: formatDate(formData.dateOfBirthYear, formData.dateOfBirthMonth, formData.dateOfBirthDay),
       placeOfBirth: formData.placeOfBirth,
       nationality: formData.nationality,
     };
