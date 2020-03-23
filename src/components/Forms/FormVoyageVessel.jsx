@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { useLocation, useHistory } from 'react-router-dom';
-import axios from 'axios';
 
 import { updateVoyageReportRoutine } from 'State/voyage';
 import { fetchVesselsRoutine } from 'State/vessels';
@@ -93,24 +91,30 @@ const FormVoyageVessel = ({
             </button>
           </>
         )
-}
-      <h2 className="govuk-heading-l">New vessel</h2>
-      <p className="govuk-body-l">Add the details of a new vessel you have not already saved</p>
+      }
+      {
+          (!data.vessels || (data.vessels && data.vessels.length === 0)) && (
+            <>
+              <h2 className="govuk-heading-l">New vessel</h2>
+              <p className="govuk-body-l">Add the details of a new vessel you have not already saved</p>
 
-      <CreateVessel
-        handleChange={handleChange}
-        data={data}
-        errors={errors}
-      />
+              <CreateVessel
+                handleChange={handleChange}
+                data={data}
+                errors={errors}
+              />
 
-      <button
-        type="button"
-        className="govuk-button"
-        data-module="govuk-button"
-        onClick={(e) => handleSubmit(e, updateVoyageReportAction, 'vessel')}
-      >
-        Save and continue
-      </button>
+              <button
+                type="button"
+                className="govuk-button"
+                data-module="govuk-button"
+                onClick={(e) => handleSubmit(e, updateVoyageReportAction, 'vessel')}
+              >
+                Save and continue
+              </button>
+            </>
+          )
+      }
     </section>
   );
 };

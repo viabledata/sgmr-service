@@ -81,8 +81,6 @@ const FormVoyage = () => {
   }, [location]);
 
 
-
-
   return (
     <div id="pageContainer" className="govuk-width-container ">
       <a
@@ -154,8 +152,11 @@ const FormVoyage = () => {
                   setFormData={setFormData}
                 />
               )}
-              {pageNum === 6 && <FormVoyageCheckDetails />}
-              
+              {pageNum === 6 && (
+                <FormVoyageCheckDetails
+                  data={formData}
+                />
+              )}
               <p>
                 <a href="/reports" className="govuk-link govuk-link--no-visited-state" onClick={clearFormData}>Exit without saving</a>
               </p>

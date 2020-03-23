@@ -1,6 +1,12 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
-const FormVoyageResponsiblePerson = ({ handleSubmit, handleChange, data }) => {
+import { updateVoyageReportRoutine } from 'State/voyage';
+
+const FormVoyageResponsiblePerson = ({
+  handleSubmit, handleChange, data, updateVoyageReportAction,
+}) => {
   return (
     <section>
       <h1 className="govuk-heading-xl">Responsible person</h1>
@@ -15,7 +21,7 @@ const FormVoyageResponsiblePerson = ({ handleSubmit, handleChange, data }) => {
           name="responsibleGivenName"
           type="text"
           value={data.responsibleGivenName || ''}
-          onChange={(e) => handleChange(e)}
+          onChange={handleChange}
         />
       </div>
 
@@ -28,7 +34,7 @@ const FormVoyageResponsiblePerson = ({ handleSubmit, handleChange, data }) => {
           name="responsibleSurname"
           type="text"
           value={data.responsibleSurname || ''}
-          onChange={(e) => handleChange(e)}
+          onChange={handleChange}
         />
       </div>
       <div id="responsibleContactNo" className="govuk-form-group">
@@ -43,7 +49,7 @@ const FormVoyageResponsiblePerson = ({ handleSubmit, handleChange, data }) => {
           name="responsibleContactNo"
           type="text"
           value={data.responsibleContactNo || ''}
-          onChange={(e) => handleChange(e)}
+          onChange={handleChange}
         />
       </div>
 
@@ -59,7 +65,7 @@ const FormVoyageResponsiblePerson = ({ handleSubmit, handleChange, data }) => {
             name="responsibleAddressLine1"
             type="text"
             value={data.responsibleAddressLine1 || ''}
-            onChange={(e) => handleChange(e)}
+            onChange={handleChange}
           />
         </div>
         <div id="responsibleAddressLine2" className="govuk-form-group">
@@ -71,7 +77,7 @@ const FormVoyageResponsiblePerson = ({ handleSubmit, handleChange, data }) => {
             name="responsibleAddressLine2"
             type="text"
             value={data.responsibleAddressLine2 || ''}
-            onChange={(e) => handleChange(e)}
+            onChange={handleChange}
           />
         </div>
         <div id="responsibleTown" className="govuk-form-group">
@@ -81,7 +87,17 @@ const FormVoyageResponsiblePerson = ({ handleSubmit, handleChange, data }) => {
             name="responsibleTown"
             type="text"
             value={data.responsibleTown || ''}
-            onChange={(e) => handleChange(e)}
+            onChange={handleChange}
+          />
+        </div>
+        <div id="responsibleCounty" className="govuk-form-group">
+          <label className="govuk-label" htmlFor="responsibleCounty">County</label>
+          <input
+            className="govuk-input govuk-!-width-two-thirds"
+            name="responsibleCounty"
+            type="text"
+            value={data.responsibleCounty || ''}
+            onChange={handleChange}
           />
         </div>
         <div id="responsiblePostcode" className="govuk-form-group">
@@ -91,15 +107,16 @@ const FormVoyageResponsiblePerson = ({ handleSubmit, handleChange, data }) => {
             name="responsiblePostcode"
             type="text"
             value={data.responsiblePostcode || ''}
-            onChange={(e) => handleChange(e)}
+            onChange={handleChange}
           />
         </div>
       </fieldset>
 
       <button
+        type="button"
         className="govuk-button"
         data-module="govuk-button"
-        onClick={(e) => handleSubmit(e)}
+        onClick={(e) => handleSubmit(e, updateVoyageReportAction, 'responsible')}
       >
         Save and continue
       </button>
@@ -107,4 +124,15 @@ const FormVoyageResponsiblePerson = ({ handleSubmit, handleChange, data }) => {
   );
 };
 
-export default FormVoyageResponsiblePerson;
+FormVoyageResponsiblePerson.propTypes = {
+  handleChange: PropTypes.func.isRequired,
+  handleSubmit: PropTypes.func.isRequired,
+  data: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
+  updateVoyageReportAction: PropTypes.func.isRequired,
+};
+
+const mapDispatchToProps = (dispatch) => ({
+  updateVoyageReportAction: (formData) => dispatch(updateVoyageReportRoutine.request(formData)),
+});
+
+export default connect(null, mapDispatchToProps)(FormVoyageResponsiblePerson);

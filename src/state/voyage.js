@@ -2,14 +2,17 @@ import axios from 'axios';
 import {
   call, put, takeLatest, select,
 } from 'redux-saga/effects';
+import { push } from 'react-router-redux';
 import { createRoutine } from 'redux-saga-routines';
 
 import Auth from 'Auth';
 import { USER_VOYAGE_REPORT_URL, VOYAGE_REPORT_URL } from 'Constants/ApiConstants';
 import { formatDate } from 'Utils/date';
+import { redirectToSignIn } from './redirectToSignIn';
 
 export const createVoyageReportRoutine = createRoutine('CREATE_VOYAGE_REPORT');
 export const updateVoyageReportRoutine = createRoutine('UPDATE_VOYAGE_REPORT');
+export const submitVoyageReportRoutine = createRoutine('SUBMIT_VOYAGE_REPORT');
 
 export const initialState = Object.freeze({
   isLoading: false,
@@ -53,18 +56,21 @@ export function* createVoyageReport() {
     yield put(createVoyageReportRoutine.success(data));
   } catch (error) {
     yield put(createVoyageReportRoutine.failure(error));
+    yield call(redirectToSignIn, error);
   }
 }
 
 const getDepartureInfo = (payload) => {
-  let dataToSubmit = { departurePort: payload.departurePort, departureLat: payload.departureLat, departureLong: payload.departureLong };
+  let dataToSubmit = {
+    status: 'Draft', departurePort: payload.departurePort, departureLat: payload.departureLat, departureLong: payload.departureLong,
+  };
   const shouldFormatDate = payload.departureDateYear && payload.departureDateMonth && payload.departureDateDay;
   const shouldFormatTime = payload.departureTimeHour && payload.departureTimeMinute;
 
   if (shouldFormatDate) {
     const departureDate = formatDate(payload.departureDateYear, payload.departureDateMonth, payload.departureDateDay);
 
-    dataToSubmit = { ...dataToSubmit, status: 'Draft', departureDate };
+    dataToSubmit = { ...dataToSubmit, departureDate };
   }
 
   if (shouldFormatTime) {
@@ -77,14 +83,16 @@ const getDepartureInfo = (payload) => {
 };
 
 const getArrivalInfo = (payload) => {
-  let dataToSubmit = { arrivalPort: payload.arrivalPort, arrivalLat: payload.arrivalLat, arrivalLong: payload.arrivalLong };
+  let dataToSubmit = {
+    status: 'Draft', arrivalPort: payload.arrivalPort, arrivalLat: payload.arrivalLat, arrivalLong: payload.arrivalLong,
+  };
   const shouldFormatDate = payload.arrivalDateYear && payload.arrivalDateMonth && payload.arrivalDateDay;
   const shouldFormatTime = payload.arrivalTimeHour && payload.arrivalTimeMinute;
 
   if (shouldFormatDate) {
     const arrivalDate = formatDate(payload.arrivalDateYear, payload.arrivalDateMonth, payload.arrivalDateDay);
 
-    dataToSubmit = { ...dataToSubmit, status: 'Draft', arrivalDate };
+    dataToSubmit = { ...dataToSubmit, arrivalDate };
   }
 
   if (shouldFormatTime) {
@@ -143,6 +151,27 @@ const getVesselsInfo = ({ vessels }, vesselsList) => {
   return getVesselInfo(chosenVessel);
 };
 
+const getResponsiblePersonInfo = ({
+  responsibleGivenName,
+  responsibleSurname,
+  responsibleContactNo,
+  responsibleAddressLine1,
+  responsibleAddressLine2,
+  responsibleTown,
+  responsibleCounty,
+  responsiblePostcode,
+}) => ({
+  status: 'Draft',
+  responsibleGivenName,
+  responsibleSurname,
+  responsibleContactNo,
+  responsibleAddressLine1,
+  responsibleAddressLine2,
+  responsibleTown,
+  responsibleCounty,
+  responsiblePostcode,
+});
+
 const updateVoyageReportRequest = async (payload, voyageId, peopleList, vesselsList) => {
   let dataToSubmit = {};
 
@@ -163,9 +192,13 @@ const updateVoyageReportRequest = async (payload, voyageId, peopleList, vesselsL
     case 'people':
       dataToSubmit = getPeopleInfo(payload, peopleList);
       break;
+    case 'responsible':
+      dataToSubmit = getResponsiblePersonInfo(payload);
+      break;
     default: break;
   }
   Object.keys(dataToSubmit).forEach((key) => (dataToSubmit[key] === null) && delete dataToSubmit[key]);
+
 
   const data = await axios.patch(`${VOYAGE_REPORT_URL}/${voyageId}`, dataToSubmit, {
     headers: { Authorization: `Bearer ${Auth.retrieveToken()}` },
@@ -185,10 +218,33 @@ export function* updateVoyageReport({ payload }) {
     yield put(updateVoyageReportRoutine.success(data));
   } catch (error) {
     yield put(updateVoyageReportRoutine.failure(error));
+    yield call(redirectToSignIn, error);
+  }
+}
+
+const submitVoyageReportRequest = async (voyageId) => {
+  const data = await axios.patch(`${VOYAGE_REPORT_URL}/${voyageId}`, { status: 'Draft' }, {
+    headers: { Authorization: `Bearer ${Auth.retrieveToken()}` },
+  });
+
+  return data;
+};
+export function* submitVoyageReport() {
+  try {
+    const voyageId = yield select(({ voyage }) => voyage.id);
+
+    const { data } = yield call(submitVoyageReportRequest, voyageId);
+
+    yield put(submitVoyageReportRoutine.success(data));
+    yield put(push('/save-voyage/voyage-submitted'));
+  } catch (error) {
+    yield put(submitVoyageReportRoutine.failure(error));
+    yield call(redirectToSignIn, error);
   }
 }
 
 export function* watchVoyage() {
   yield takeLatest(createVoyageReportRoutine.REQUEST, createVoyageReport);
   yield takeLatest(updateVoyageReportRoutine.REQUEST, updateVoyageReport);
+  yield takeLatest(submitVoyageReportRoutine.REQUEST, submitVoyageReport);
 }

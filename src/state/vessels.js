@@ -2,11 +2,12 @@ import axios from 'axios';
 import {
   call, put, takeLatest,
 } from 'redux-saga/effects';
-import { push } from 'react-router-redux';
 import { createRoutine } from 'redux-saga-routines';
 
 import Auth from 'Auth';
 import { VESSELS_URL } from 'Constants/ApiConstants';
+
+import { redirectToSignIn } from './redirectToSignIn';
 
 export const fetchVesselsRoutine = createRoutine('FETCH_VESSELS');
 
@@ -42,19 +43,6 @@ const fetchVesselsRequest = async () => {
 
   return data;
 };
-
-function* redirectToSignIn({ response }) {
-  if (response) {
-    switch (response.status) {
-      case 401:
-      case 422:
-      case 405:
-        yield put(push(`/sign-in?source=${window.location.pathname}`));
-        break;
-      default: break;
-    }
-  }
-}
 
 export function* fetchVessels() {
   try {
