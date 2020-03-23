@@ -1,10 +1,9 @@
 {
     "presets": [
         ["@babel/preset-env", {
-            // // specifies what kind of ES6 is transpile
-            // "targets": {
-            //     "node": "current"
-            // }
+            // corejs version must match package.json version
+            "corejs": "3.6.4",
+            // allows the polyfills to work
             "useBuiltIns": "entry"
         }],
           "@babel/preset-react"
