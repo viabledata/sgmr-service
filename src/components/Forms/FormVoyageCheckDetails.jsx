@@ -277,6 +277,7 @@ const FormVoyageCheckDetails = () => {
         })}
       </table>
 
+
       <dl className="govuk-summary-list govuk-!-margin-bottom-9">
         <div className="govuk-summary-list__row">
           <dt className="govuk-heading-m">
@@ -312,7 +313,6 @@ const FormVoyageCheckDetails = () => {
           </dd>
         </div>
       </dl>
-
       <h2 className="govuk-heading-m">Submit your Advanced Voyage Report</h2>
       <p>By submitting this Advanced Voyage Report you are confirming that, to the best of your knowledge, the information you are providing is correct and you have the explicit permission of the persons named in this report to submit information on their behalf.</p>
       <button

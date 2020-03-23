@@ -23,6 +23,7 @@ const FormVoyage = () => {
     setErrors(tempArr);
   };
 
+
   const handleChange = (e) => {
     const {
       name, type, value, checked, dataset,
@@ -154,6 +155,7 @@ const FormVoyage = () => {
                 />
               )}
               {pageNum === 6 && <FormVoyageCheckDetails />}
+              
               <p>
                 <a href="/reports" className="govuk-link govuk-link--no-visited-state" onClick={clearFormData}>Exit without saving</a>
               </p>
