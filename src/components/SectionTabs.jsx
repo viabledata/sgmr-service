@@ -12,6 +12,7 @@ const SectionTabs = ({
   fetchReportsTriggerAction, reports
 }) => {
   const [tabData, setTabData] = useState([]);
+  const [tableName, setTableName] = useState('Draft');
   const tabs = [
     {
       name: 'draft',
@@ -34,6 +35,7 @@ const SectionTabs = ({
     tempArr.map((elem) => {
       if (e.target.id === elem.name) {
         elem.active = true;
+        setTableName(e.target.id.charAt(0).toUpperCase() + e.target.id.slice(1));
       } else {
         elem.active = false;
       }
@@ -76,7 +78,7 @@ const SectionTabs = ({
         </ul>
 
         <div className="govuk-tabs__panel">
-          <h2 className="govuk-heading-l">heading</h2>
+          <h2 className="govuk-heading-l">{tableName}</h2>
           <table className="govuk-table">
             <thead className="govuk-table__head">
               <tr className="govuk-table__row">
