@@ -10,7 +10,7 @@ import { fetchReportsRoutine } from 'State/reports';
 
 
 const SectionTabs = ({
-  fetchReportsTriggerAction, reports
+  fetchReportsTriggerAction, reports,
 }) => {
   const [tabData, setTabData] = useState([]);
   const [tableName, setTableName] = useState('Draft');
@@ -93,16 +93,18 @@ const SectionTabs = ({
             </thead>
             <tbody>
               {reports.list.items.map((voyage) => {
-                return (
-                  <tr className="govuk-table__row" key={voyage.id}>
-                    <td className="govuk-table__cell">{voyage.vesselName}</td>
-                    <td className="govuk-table__cell">{formatUIDate(voyage.departureDate)}</td>
-                    <td className="govuk-table__cell">{voyage.departureTime}</td>
-                    <td className="govuk-table__cell">{voyage.departurePort}</td>
-                    <td className="govuk-table__cell">{voyage.arrivalPort}</td>
-                    <td className="govuk-table__cell">{voyage.submissionRef}</td>
-                  </tr>
-                );
+                if (voyage.status.name === tableName) {
+                  return (
+                    <tr className="govuk-table__row" key={voyage.id}>
+                      <td className="govuk-table__cell">{voyage.vesselName}</td>
+                      <td className="govuk-table__cell">{formatUIDate(voyage.departureDate)}</td>
+                      <td className="govuk-table__cell">{voyage.departureTime}</td>
+                      <td className="govuk-table__cell">{voyage.departurePort}</td>
+                      <td className="govuk-table__cell">{voyage.arrivalPort}</td>
+                      <td className="govuk-table__cell">{voyage.submissionRef}</td>
+                    </tr>
+                  );
+                }
               })}
             </tbody>
           </table>
