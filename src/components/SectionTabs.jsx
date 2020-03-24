@@ -48,7 +48,7 @@ const SectionTabs = ({
     fetchReportsTriggerAction();
   }, []);
 
-  if (!reports.list) { return null; }
+  if (tabData.length === 0 || !reports.list) { return null; }
 
   return (
     <div className="govuk-width-container">
