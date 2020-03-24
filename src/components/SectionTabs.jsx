@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
 // App imports
 import { formatUIDate } from 'Utils/date';
@@ -109,6 +110,12 @@ const SectionTabs = ({
       </div>
     </div>
   );
+};
+
+SectionTabs.propTypes = {
+  fetchReportsTriggerAction: PropTypes.func.isRequired,
+  // eslint-disable-next-line react/forbid-prop-types
+  reports: PropTypes.object.isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => ({
