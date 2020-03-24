@@ -1,18 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-import axios from 'axios';
+import { connect } from 'react-redux';
 
 // App imports
-import { apiUrl } from 'config';
+import { USER_VOYAGE_REPORT_URL } from 'Constants/ApiConstants';
 import Auth from 'Auth';
+import { fetchReportsRoutine } from 'State/reports';
 
 
-const SectionTabs = (props) => {
-  const history = useHistory();
-  const [data, setData] = useState();
+const SectionTabs = ({
+  fetchReportsTriggerAction, reports
+}) => {
+
   const [tabData, setTabData] = useState([]);
-
-  // Temp data until connect to API
   const tabs = [
     {
       name: 'draft',
@@ -29,128 +29,12 @@ const SectionTabs = (props) => {
       active: false,
     },
   ];
-  const tabledraft = [
-    {
-      section: 'draft',
-      text: 'Draft',
-      headings: [
-        'Vessel',
-        'Departure date',
-        'Departure time',
-        'Departure port',
-        'Arrival port',
-        'Submission reference',
-      ],
-      items: [
-        {
-          id: '05b21e40-cbee-46be-8d61-b24978f32b24',
-          name: 'In Deep Ship',
-          departureDate: '10/01/20',
-          departureTime: '11:00',
-          departurePort: 'GB PME',
-          arrivalPort: 'FR BOD',
-          submissionRef: '',
-          status: 'draft',
-        },
-        {
-          id: '05b21e40-cbee-46be-8d61-b24978f32b24',
-          name: 'Serenity',
-          departureDate: '10/01/20',
-          departureTime: '12:00',
-          departurePort: 'GB PME',
-          arrivalPort: 'FR BOD',
-          submissionRef: '',
-          status: 'draft',
-        },
-        {
-          id: '05b21e40-cbee-46be-8d61-b24978f32b24',
-          name: 'Baroness',
-          departureDate: '10/01/20',
-          departureTime: '15:00',
-          departurePort: 'GB PME',
-          arrivalPort: 'FR BOD',
-          submissionRef: '',
-          status: 'draft',
-        },
-      ],
-    },
-  ];
-  const tablesubmitted = [
-    {
-      section: 'submitted',
-      text: 'Submitted',
-      headings: [
-        'Vessel',
-        'Departure date',
-        'Departure time',
-        'Departure port',
-        'Arrival port',
-        'Submission reference',
-      ],
-      items: [
-        {
-          id: '05b21e40-cbee-46be-8d61-b24978f32b24',
-          name: 'Baroness',
-          departureDate: '10/01/20',
-          departureTime: '15:00',
-          departurePort: 'GB PME',
-          arrivalPort: 'FR BOD',
-          submissionRef: '987tdou6thr5ed41',
-          status: 'draft',
-        },
-        {
-          id: '05b21e40-cbee-46be-8d61-b24978f32b24',
-          name: 'Baroness',
-          departureDate: '10/01/20',
-          departureTime: '15:00',
-          departurePort: 'GB PME',
-          arrivalPort: 'FR BOD',
-          submissionRef: '456873fhyg9kud87',
-          status: 'submitted',
-        },
-      ],
-    },
-  ];
-  const tablecancelled = [
-    {
-      section: 'cancelled',
-      text: 'Cancelled',
-      headings: [
-        'Vessel',
-        'Departure date',
-        'Departure time',
-        'Departure port',
-        'Arrival port',
-        'Submission reference',
-      ],
-      items: [
-        {
-          id: '05b21e40-cbee-46be-8d61-b24978f32b24',
-          name: 'Baroness',
-          departureDate: '10/01/20',
-          departureTime: '15:00',
-          departurePort: 'GB PME',
-          arrivalPort: 'FR BOD',
-          submissionRef: '',
-          status: 'cancelled',
-        },
-      ],
-    },
-  ];
 
   const setActiveTab = (e) => {
     const tempArr = [...tabData];
-    let tableName;
-    switch (e.target.id) {
-      case 'draft': tableName = tabledraft; break;
-      case 'submitted': tableName = tablesubmitted; break;
-      case 'cancelled': tableName = tablecancelled; break;
-      default: tableName = tabledraft;
-    }
-    tempArr.map((elem, i) => {
+    tempArr.map((elem) => {
       if (e.target.id === elem.name) {
         elem.active = true;
-        setData(tableName);
       } else {
         elem.active = false;
       }
@@ -158,32 +42,14 @@ const SectionTabs = (props) => {
     setTabData(tempArr);
   };
 
-  // const getData = () => {
-  //   axios.get(`${apiUrl}/user/voyagereport?pagination=false`, {
-  //     headers: { Authorization: `Bearer ${Auth.retrieveToken()}` },
-  //   })
-  //     .then((resp) => {
-  //       setData(resp.data);
-  //     })
-  //     .catch((err) => {
-  //       if (err.response) {
-  //         switch (err.response.status) {
-  //           case 422: history.push(`/sign-in?source=${location}`); break;
-  //           default: history.push(`/sign-in?source=${location}`);
-  //         }
-  //       }
-  //     });
-  // };
-
   useEffect(() => {
     setTabData(tabs);
-    setData(tabledraft);
-    // getData();
+    fetchReportsTriggerAction();
   }, []);
 
-  // console.log(data)
 
-  if (!data) { return (<></>); }
+  // if (!reports.list) { return null; }
+
   return (
     <div className="govuk-width-container">
       <hr className="govuk-section-break govuk-section-break--visible govuk-section-break--xl govuk-!-margin-top-0" />
@@ -211,7 +77,7 @@ const SectionTabs = (props) => {
           })}
         </ul>
 
-        <div className="govuk-tabs__panel" id={data[0].section}>
+        {/* <div className="govuk-tabs__panel" id={data[0].section}>
           <h2 className="govuk-heading-l">{data[0].text}</h2>
           <table className="govuk-table">
             <thead className="govuk-table__head">
@@ -238,10 +104,14 @@ const SectionTabs = (props) => {
               })}
             </tbody>
           </table>
-        </div>
+        </div> */}
       </div>
     </div>
   );
 };
 
-export default SectionTabs;
+const mapDispatchToProps = (dispatch) => ({
+  fetchReportsTriggerAction: () => dispatch(fetchReportsRoutine.trigger()),
+});
+const mapStateToProps = ({ reports }) => ({ reports });
+export default connect(mapStateToProps, mapDispatchToProps)(SectionTabs);

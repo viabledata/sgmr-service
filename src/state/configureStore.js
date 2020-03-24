@@ -8,10 +8,11 @@ import createSagaMiddleware from 'redux-saga';
 import { peopleReducer, watchPeople } from './people';
 import { vesselsReducer, watchVessels } from './vessels';
 import { voyageReducer, watchVoyage } from './voyage';
+import { reportsReducer, watchReports } from './reports';
 
 const composeEnhancers = (typeof window !== 'undefined' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) || compose;
 
-const watchSagas = [watchPeople, watchVessels, watchVoyage];
+const watchSagas = [watchPeople, watchVessels, watchVoyage, watchReports];
 
 function* rootSaga() {
   yield all(watchSagas.map(fork));
@@ -21,6 +22,7 @@ const reducers = {
   people: peopleReducer,
   voyage: voyageReducer,
   vessels: vesselsReducer,
+  reports: reportsReducer,
 };
 
 const combinedReducers = combineReducers(reducers);
