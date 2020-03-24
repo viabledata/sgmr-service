@@ -9,11 +9,11 @@ import { redirectToSignIn } from './redirectToSignIn';
 
 // /reports pageload triggers fetchReportsTriggerAction which dispatches fetchReportsRoutine.trigger
 // fetchReportsRoutine runs createRoutine FETCH_REPORTS
-// createRoutine FETCH_REPORTS triggers watchReports?
-// watchReportss calls reportsReducer with .TRIGGER & fetchReports
-// fetchReportss tries fetchReportsRequest to get data from the API then calls reportsReducer with either .SUCCESS or .FAILURE & the payload from the api
+// createRoutine FETCH_REPORTS triggers watchReports
+// watchReports calls reportsReducer with .TRIGGER & fetchReports
+// fetchReports tries fetchReportsRequest to get data from the API then calls reportsReducer with either .SUCCESS or .FAILURE & the payload from the api
 // reducer updates the state with the data & returns it to the client
-// mapStateToProps takes the report data and sets it to props for use in the page?
+// mapStateToProps takes the report data and sets it to props for use in the page
 
 // ROUTINE
 export const fetchReportsRoutine = createRoutine('FETCH_REPORTS');

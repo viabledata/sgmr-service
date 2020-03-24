@@ -11,7 +11,6 @@ import { fetchReportsRoutine } from 'State/reports';
 const SectionTabs = ({
   fetchReportsTriggerAction, reports
 }) => {
-
   const [tabData, setTabData] = useState([]);
   const tabs = [
     {
@@ -61,43 +60,44 @@ const SectionTabs = ({
         </h3>
 
         <ul className="govuk-tabs__list">
-          {tabData.map((elem, i) => {
+          {tabData.map((tab) => {
             return (
               <li
-                key={i}
-                className={elem.active === true ? 'govuk-tabs__list-item govuk-tabs__list-item--selected' : 'govuk-tabs__list-item'}
+                key={tab.name}
+                className={tab.active === true ? 'govuk-tabs__list-item govuk-tabs__list-item--selected' : 'govuk-tabs__list-item'}
                 onClick={(e) => setActiveTab(e)}
               >
-                <p id={elem.name} className="govuk-tabs__tab">
-                  {elem.text}
+                <p id={tab.name} className="govuk-tabs__tab">
+                  {tab.text}
                 </p>
               </li>
             );
           })}
         </ul>
 
-        <div className="govuk-tabs__panel" id='id'>
+        <div className="govuk-tabs__panel">
           <h2 className="govuk-heading-l">heading</h2>
           <table className="govuk-table">
-            {/* <thead className="govuk-table__head">
+            <thead className="govuk-table__head">
               <tr className="govuk-table__row">
-                {data[0].headings.map((elem, i) => {
-                  return (
-                    <th key={i} scope="col" className="govuk-table__header">{elem}</th>
-                  );
-                })}
+                <th scope="col" className="govuk-table__header">Vessel</th>
+                <th scope="col" className="govuk-table__header">Departure date</th>
+                <th scope="col" className="govuk-table__header">Departure time</th>
+                <th scope="col" className="govuk-table__header">Departure port</th>
+                <th scope="col" className="govuk-table__header">Arrival port</th>
+                <th scope="col" className="govuk-table__header">Submission reference</th>
               </tr>
-            </thead> */}
+            </thead>
             <tbody>
-              {reports.list.items.map((elem) => {
+              {reports.list.items.map((voyage) => {
                 return (
-                  <tr className="govuk-table__row" key={elem.id}>
-                    <td className="govuk-table__cell">{elem.name}</td>
-                    <td className="govuk-table__cell">{elem.departureDate}</td>
-                    <td className="govuk-table__cell">{elem.departureTime}</td>
-                    <td className="govuk-table__cell">{elem.departurePort}</td>
-                    <td className="govuk-table__cell">{elem.arrivalPort}</td>
-                    <td className="govuk-table__cell">{elem.submissionRef}</td>
+                  <tr className="govuk-table__row" key={voyage.id}>
+                    <td className="govuk-table__cell">{voyage.vesselName}</td>
+                    <td className="govuk-table__cell">{voyage.departureDate}</td>
+                    <td className="govuk-table__cell">{voyage.departureTime}</td>
+                    <td className="govuk-table__cell">{voyage.departurePort}</td>
+                    <td className="govuk-table__cell">{voyage.arrivalPort}</td>
+                    <td className="govuk-table__cell">{voyage.submissionRef}</td>
                   </tr>
                 );
               })}
