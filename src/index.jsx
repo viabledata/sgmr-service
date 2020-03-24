@@ -2,15 +2,15 @@ import './lib/polyfills';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { ConnectedRouter } from 'connected-react-router';
 
 // app imports
 import Main from 'Main';
-import configureStore from 'State/configureStore';
+import configureStore, { history } from 'State/configureStore';
 
 const store = configureStore();
 
 ReactDOM.render(
-  <Provider store={store}><Main /></Provider>,
+  <Provider store={store}><ConnectedRouter history={history}><Main /></ConnectedRouter></Provider>,
   document.getElementById('main'),
 );

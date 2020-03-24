@@ -2,13 +2,17 @@ import { all, fork } from 'redux-saga/effects';
 import {
   createStore, applyMiddleware, compose, combineReducers,
 } from 'redux';
+import { createBrowserHistory } from 'history';
 import persistState from 'redux-localstorage';
 import createSagaMiddleware from 'redux-saga';
+import { connectRouter, routerMiddleware } from 'connected-react-router';
 
 import { peopleReducer, watchPeople } from './people';
 import { vesselsReducer, watchVessels } from './vessels';
 import { voyageReducer, watchVoyage } from './voyage';
 import { reportsReducer, watchReports } from './reports';
+
+export const history = createBrowserHistory();
 
 const composeEnhancers = (typeof window !== 'undefined' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) || compose;
 
@@ -22,14 +26,18 @@ const reducers = {
   people: peopleReducer,
   voyage: voyageReducer,
   vessels: vesselsReducer,
+<<<<<<< HEAD
   reports: reportsReducer,
+=======
+  router: connectRouter(history),
+>>>>>>> CG-152: Add routing history fix for sagas (#76)
 };
 
 const combinedReducers = combineReducers(reducers);
 
 const configureStore = () => {
   const sagaMiddleware = createSagaMiddleware();
-  const middlewares = [sagaMiddleware];
+  const middlewares = [sagaMiddleware, routerMiddleware(history)];
   const middlewareEnhancer = applyMiddleware(...middlewares);
   const enhancers = [middlewareEnhancer, persistState()];
   const composedEnhancers = composeEnhancers(...enhancers);
