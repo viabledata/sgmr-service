@@ -26,11 +26,8 @@ const reducers = {
   people: peopleReducer,
   voyage: voyageReducer,
   vessels: vesselsReducer,
-<<<<<<< HEAD
   reports: reportsReducer,
-=======
   router: connectRouter(history),
->>>>>>> CG-152: Add routing history fix for sagas (#76)
 };
 
 const combinedReducers = combineReducers(reducers);
