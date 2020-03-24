@@ -47,8 +47,7 @@ const SectionTabs = ({
     fetchReportsTriggerAction();
   }, []);
 
-console.log(reports)
-  // if (!reports.list) { return null; }
+  if (!reports.list) { return null; }
 
   return (
     <div className="govuk-width-container">
@@ -77,10 +76,10 @@ console.log(reports)
           })}
         </ul>
 
-        {/* <div className="govuk-tabs__panel" id={data[0].section}>
-          <h2 className="govuk-heading-l">{data[0].text}</h2>
+        <div className="govuk-tabs__panel" id='id'>
+          <h2 className="govuk-heading-l">heading</h2>
           <table className="govuk-table">
-            <thead className="govuk-table__head">
+            {/* <thead className="govuk-table__head">
               <tr className="govuk-table__row">
                 {data[0].headings.map((elem, i) => {
                   return (
@@ -88,11 +87,11 @@ console.log(reports)
                   );
                 })}
               </tr>
-            </thead>
+            </thead> */}
             <tbody>
-              {data[0].items.map((elem, i) => {
+              {reports.list.items.map((elem) => {
                 return (
-                  <tr className="govuk-table__row" key={i}>
+                  <tr className="govuk-table__row" key={elem.id}>
                     <td className="govuk-table__cell">{elem.name}</td>
                     <td className="govuk-table__cell">{elem.departureDate}</td>
                     <td className="govuk-table__cell">{elem.departureTime}</td>
@@ -104,7 +103,7 @@ console.log(reports)
               })}
             </tbody>
           </table>
-        </div> */}
+        </div>
       </div>
     </div>
   );

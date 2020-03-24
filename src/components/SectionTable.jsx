@@ -50,7 +50,6 @@ const SectionTable = ({
     setTitles(pageData.reportTitles);
   }, [pageData]);
 
-
   if ((isPageVessels && !data) || (isPagePeople && !people.list)) {
     return null;
   }
