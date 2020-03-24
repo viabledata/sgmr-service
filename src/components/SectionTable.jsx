@@ -63,8 +63,7 @@ const SectionTable = ({
         <div className="govuk-grid-row">
           <div className="govuk-grid-column-full">
             <h2 className="govuk-heading-l">
-              Saved
-              {pageData.pageHeading}
+              {`Saved ${pageData.pageHeading}`}
             </h2>
             <table className="govuk-table">
               <thead className="govuk-table__head">
