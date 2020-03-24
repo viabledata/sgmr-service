@@ -5,7 +5,6 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 
-
 import { submitVoyageReportRoutine } from 'State/voyage';
 
 const getVesselInfo = ({
@@ -148,15 +147,15 @@ const FormVoyageCheckDetails = ({
           <dt className="govuk-summary-list__key">Vessel name</dt>
           <dd className="govuk-summary-list__value">{vessel.vesselName}</dd>
 
-          </div>
-          <div className="govuk-summary-list__row">
-            <dt className="govuk-summary-list__key">Usual moorings</dt>
-            <dd className="govuk-summary-list__value">{vessel.moorings}</dd>
+        </div>
+        <div className="govuk-summary-list__row">
+          <dt className="govuk-summary-list__key">Usual moorings</dt>
+          <dd className="govuk-summary-list__value">{vessel.moorings}</dd>
 
-          </div>
-          <div className="govuk-summary-list__row">
-            <dt className="govuk-summary-list__key">Registration number</dt>
-            <dd className="govuk-summary-list__value">{vessel.registration}</dd>
+        </div>
+        <div className="govuk-summary-list__row">
+          <dt className="govuk-summary-list__key">Registration number</dt>
+          <dd className="govuk-summary-list__value">{vessel.registration}</dd>
 
         </div>
         <div className="govuk-summary-list__row">
