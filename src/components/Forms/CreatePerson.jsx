@@ -216,20 +216,6 @@ const CreatePerson = ({
                 Crew
               </label>
             </div>
-            <div className="govuk-radios__item">
-              <input
-                className="govuk-radios__input"
-                name="peopleType"
-                id="peopleType-3"
-                type="radio"
-                value="passenger"
-                checked={data.peopleType === 'passenger' ? 'checked' : ''}
-                onChange={handleChange}
-              />
-              <label className="govuk-label govuk-radios__label" htmlFor="peopleType-3">
-                Passenger
-              </label>
-            </div>
           </div>
         </fieldset>
       </div>
