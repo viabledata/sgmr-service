@@ -1,11 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 // App imports
-import { USER_VOYAGE_REPORT_URL } from 'Constants/ApiConstants';
 import { formatUIDate } from 'Utils/date';
-import Auth from 'Auth';
 import { fetchReportsRoutine } from 'State/reports';
 
 
