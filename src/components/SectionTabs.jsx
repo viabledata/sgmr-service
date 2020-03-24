@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 
 // App imports
 import { USER_VOYAGE_REPORT_URL } from 'Constants/ApiConstants';
+import { formatUIDate } from 'Utils/date';
 import Auth from 'Auth';
 import { fetchReportsRoutine } from 'State/reports';
 
@@ -95,7 +96,7 @@ const SectionTabs = ({
                 return (
                   <tr className="govuk-table__row" key={voyage.id}>
                     <td className="govuk-table__cell">{voyage.vesselName}</td>
-                    <td className="govuk-table__cell">{voyage.departureDate}</td>
+                    <td className="govuk-table__cell">{formatUIDate(voyage.departureDate)}</td>
                     <td className="govuk-table__cell">{voyage.departureTime}</td>
                     <td className="govuk-table__cell">{voyage.departurePort}</td>
                     <td className="govuk-table__cell">{voyage.arrivalPort}</td>
