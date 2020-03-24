@@ -1,4 +1,3 @@
-/* eslint-disable import/prefer-default-export */
 import axios from 'axios';
 import { call, put, takeLatest } from 'redux-saga/effects';
 import { createRoutine } from 'redux-saga-routines';
