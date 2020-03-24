@@ -35,7 +35,7 @@ export const reportsReducer = (state = initialState, action) => {
     // When fetchreports has finished, update loading states and data
     case fetchReportsRoutine.SUCCESS:
       return {
-        ...state, isLoading: false, hasLoaded: true, list: action.payload.reportss, id: action.payload.id,
+        ...state, isLoading: false, hasLoaded: true, list: action.payload.reports, id: action.payload.id,
       };
     // When fetchreports returns an error update error details
     case fetchReportsRoutine.FAILURE:

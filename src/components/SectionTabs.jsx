@@ -47,7 +47,7 @@ const SectionTabs = ({
     fetchReportsTriggerAction();
   }, []);
 
-
+console.log(reports)
   // if (!reports.list) { return null; }
 
   return (
