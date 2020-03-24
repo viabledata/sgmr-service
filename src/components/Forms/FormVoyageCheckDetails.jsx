@@ -270,10 +270,10 @@ const FormVoyageCheckDetails = ({
             Responsible person details
           </dt>
           <dd className="govuk-summary-list__value">
-            <a href="create-report-responsible-person.html">
+            <Link to="page-5">
               Change
               <span className="govuk-visually-hidden"> Change</span>
-            </a>
+            </Link>
           </dd>
         </div>
       </dl>
