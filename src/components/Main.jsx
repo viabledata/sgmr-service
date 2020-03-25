@@ -11,7 +11,6 @@ import Header from 'Header';
 import PageContainer from 'PageContainer';
 
 import SignIn from 'SignIn';
-import SignOut from 'SignOut';
 import UserInputCode from 'UserInputCode';
 import UserRegister from 'UserRegister';
 import UserResendCode from 'UserResendCode';
@@ -60,9 +59,6 @@ const Main = () => {
         </SecureRoute>
         <SecureRoute exact path="/account/edit">
           <EditAccount />
-        </SecureRoute>
-        <SecureRoute exact path="/sign-out">
-          <SignOut />
         </SecureRoute>
         <Route exact path="/sign-in">
           <SignIn />

@@ -11,7 +11,6 @@ const Nav = () => {
   const location = useLocation();
   const history = useHistory();
   const serviceName = 'Submit an Advanced Voyage Report';
-  const serviceHome = '/';
   const [navArray, setNavArray] = useState([]);
 
   const navData = [
@@ -39,7 +38,7 @@ const Nav = () => {
 
   const setActivePage = (url) => {
     const tempArr = [...navData];
-    tempArr.map((elem, i) => {
+    tempArr.map((elem) => {
       const currentUrl = !url ? location.pathname : url;
       if (currentUrl === elem.urlStem) {
         elem.active = true;
@@ -57,17 +56,15 @@ const Nav = () => {
       url: LOGOUT_URL,
       headers: { Authorization: `Bearer ${Auth.retrieveToken()}` },
     })
-      .then((resp) => {
+      .then(() => {
         Auth.logout();
+        localStorage.clear();
         history.push('/sign-in');
       })
-      .catch((err) => {
-        if (err.response) {
-          switch (err.response.status) {
-            case 401: history.push('/sign-in'); break;
-            default: history.push('/sign-in');
-          }
-        }
+      .catch(() => {
+        Auth.logout();
+        localStorage.clear();
+        history.push('/sign-in');
       });
   };
 
@@ -79,17 +76,17 @@ const Nav = () => {
     <nav>
       <div className="govuk-header__content">
         <p className="govuk-header__link govuk-header__link--service-name">{serviceName}</p>
-        <button type="button" role="button" className="govuk-header__menu-button js-header-toggle" aria-controls="navigation" aria-label="Show or hide Top Level Navigation">
+        <button type="button" className="govuk-header__menu-button js-header-toggle" aria-controls="navigation" aria-label="Show or hide Top Level Navigation">
           Menu
         </button>
 
         {Auth.isAuthorized() && (
         <ul id="navigation" className="govuk-header__navigation " aria-label="Top Level Navigation">
-          {navArray.map((elem, i) => {
+          {navArray.map((elem) => {
             const activeState = elem.active === true ? 'govuk-header__navigation-item govuk-header__navigation-item--active' : 'govuk-header__navigation-item';
             return (
-              <li className={activeState} key={i}>
-                <Link to={elem.urlStem} className="govuk-header__link" onClick={(e) => setActivePage(elem.urlStem)}>{elem.text}</Link>
+              <li className={activeState} key={elem.urlStem}>
+                <Link to={elem.urlStem} className="govuk-header__link" onClick={() => setActivePage(elem.urlStem)}>{elem.text}</Link>
               </li>
             );
           })}

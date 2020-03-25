@@ -26,7 +26,6 @@ module.exports = {
       SecureRoute: path.resolve(__dirname, 'src/lib/SecureRoute.jsx'),
       // User registration & signin/out
       SignIn: path.resolve(__dirname, 'src/components/Forms/SignIn.jsx'),
-      SignOut: path.resolve(__dirname, 'src/components/SignOut.jsx'),
       UserInputCode: path.resolve(__dirname, 'src/components/Forms/UserInputCode.jsx'),
       UserRegister: path.resolve(__dirname, 'src/components/Forms/UserRegister.jsx'),
       UserResendCode: path.resolve(__dirname, 'src/components/Forms/UserResendCode.jsx'),
