@@ -11,7 +11,6 @@ const Nav = () => {
   const location = useLocation();
   const history = useHistory();
   const serviceName = 'Submit an Advanced Voyage Report';
-  const serviceHome = '/';
   const [navArray, setNavArray] = useState([]);
 
   const navData = [
@@ -39,7 +38,7 @@ const Nav = () => {
 
   const setActivePage = (url) => {
     const tempArr = [...navData];
-    tempArr.map((elem, i) => {
+    tempArr.map((elem) => {
       const currentUrl = !url ? location.pathname : url;
       if (currentUrl === elem.urlStem) {
         elem.active = true;
@@ -83,11 +82,11 @@ const Nav = () => {
 
         {Auth.isAuthorized() && (
         <ul id="navigation" className="govuk-header__navigation " aria-label="Top Level Navigation">
-          {navArray.map((elem, i) => {
+          {navArray.map((elem) => {
             const activeState = elem.active === true ? 'govuk-header__navigation-item govuk-header__navigation-item--active' : 'govuk-header__navigation-item';
             return (
-              <li className={activeState} key={i}>
-                <Link to={elem.urlStem} className="govuk-header__link" onClick={(e) => setActivePage(elem.urlStem)}>{elem.text}</Link>
+              <li className={activeState} key={elem.urlStem}>
+                <Link to={elem.urlStem} className="govuk-header__link" onClick={() => setActivePage(elem.urlStem)}>{elem.text}</Link>
               </li>
             );
           })}
