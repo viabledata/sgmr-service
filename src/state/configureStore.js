@@ -22,6 +22,7 @@ function* rootSaga() {
   yield all(watchSagas.map(fork));
 }
 
+
 const reducers = {
   people: peopleReducer,
   voyage: voyageReducer,
