@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 
 // app imports
 import ScrollToTop from 'ScrollToTop';
@@ -18,7 +18,6 @@ import UserResendCode from 'UserResendCode';
 
 import EditAccount from 'EditAccount';
 import FormPeople from 'FormPeople';
-import FormVessels from 'FormVessels';
 import FormVoyage from 'FormVoyage';
 import FormVoyageSubmitted from 'FormVoyageSubmitted';
 import Vessels from 'Vessels';
@@ -26,7 +25,7 @@ import Vessels from 'Vessels';
 
 const Main = () => {
   return (
-    <Router>
+    <>
       <ScrollToTop />
       <Header />
       <Banner />
@@ -79,7 +78,7 @@ const Main = () => {
         </Route>
       </Switch>
       <Footer />
-    </Router>
+    </>
   );
 };
 
