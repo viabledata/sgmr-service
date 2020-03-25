@@ -57,17 +57,15 @@ const Nav = () => {
       url: LOGOUT_URL,
       headers: { Authorization: `Bearer ${Auth.retrieveToken()}` },
     })
-      .then((resp) => {
+      .then(() => {
         Auth.logout();
+        localStorage.clear();
         history.push('/sign-in');
       })
-      .catch((err) => {
-        if (err.response) {
-          switch (err.response.status) {
-            case 401: history.push('/sign-in'); break;
-            default: history.push('/sign-in');
-          }
-        }
+      .catch(() => {
+        Auth.logout();
+        localStorage.clear();
+        history.push('/sign-in');
       });
   };
 
