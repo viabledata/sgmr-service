@@ -8,7 +8,7 @@ import { fetchReportsRoutine } from 'State/reports';
 
 
 const SectionTabs = ({
-  fetchReportsTriggerAction, reports,
+  pageData, fetchReportsTriggerAction, reports,
 }) => {
   const [tabData, setTabData] = useState([]);
   const [tableName, setTableName] = useState('Draft');
@@ -45,9 +45,10 @@ const SectionTabs = ({
   useEffect(() => {
     setTabData(tabs);
     fetchReportsTriggerAction();
-  }, []);
+  }, [pageData]);
 
-  if (tabData.length === 0 || !reports.list) { return null; }
+
+  if (!pageData || !tabData || tabData.length === 0 || !reports.list) { return null; }
 
   return (
     <div className="govuk-width-container">
