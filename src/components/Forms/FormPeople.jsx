@@ -141,8 +141,12 @@ const FormPeople = (props) => {
       })
         .then(() => {
           // Only clear data if this is the people form;
-          if (source[1] === 'people') { clearFormData(); }
-          history.push(source[1] === 'voyage' ? SAVE_VOYAGE_PEOPLE_URL : PEOPLE_PAGE_URL);
+          if (source[1] === 'voyage') {
+            history.push(SAVE_VOYAGE_PEOPLE_URL);
+          } else {
+            clearFormData();
+            history.push(PEOPLE_PAGE_URL);
+          }
         })
         .catch((err) => {
           if (err.response) {
@@ -155,9 +159,6 @@ const FormPeople = (props) => {
             }
           }
         });
-    } else {
-      // This means there are errors, so jump user to the error box
-      history.push('#CreatePerson');
     }
   };
 
