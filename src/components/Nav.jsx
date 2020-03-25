@@ -77,7 +77,7 @@ const Nav = () => {
     <nav>
       <div className="govuk-header__content">
         <p className="govuk-header__link govuk-header__link--service-name">{serviceName}</p>
-        <button type="button" role="button" className="govuk-header__menu-button js-header-toggle" aria-controls="navigation" aria-label="Show or hide Top Level Navigation">
+        <button type="button" className="govuk-header__menu-button js-header-toggle" aria-controls="navigation" aria-label="Show or hide Top Level Navigation">
           Menu
         </button>
 
