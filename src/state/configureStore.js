@@ -10,12 +10,13 @@ import { connectRouter, routerMiddleware } from 'connected-react-router';
 import { peopleReducer, watchPeople } from './people';
 import { vesselsReducer, watchVessels } from './vessels';
 import { voyageReducer, watchVoyage } from './voyage';
+import { reportsReducer, watchReports } from './reports';
 
 export const history = createBrowserHistory();
 
 const composeEnhancers = (typeof window !== 'undefined' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) || compose;
 
-const watchSagas = [watchPeople, watchVessels, watchVoyage];
+const watchSagas = [watchPeople, watchVessels, watchVoyage, watchReports];
 
 function* rootSaga() {
   yield all(watchSagas.map(fork));
@@ -25,6 +26,7 @@ const reducers = {
   people: peopleReducer,
   voyage: voyageReducer,
   vessels: vesselsReducer,
+  reports: reportsReducer,
   router: connectRouter(history),
 };
 

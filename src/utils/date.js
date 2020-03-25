@@ -13,3 +13,9 @@ export const formatDate = (year, month, day) => {
 
   return newDate;
 };
+
+export const formatUIDate = (date) => {
+  const uiDate = moment(date, 'YYYY-M-D').format('DD/MM/YYYY');
+
+  return uiDate;
+};
