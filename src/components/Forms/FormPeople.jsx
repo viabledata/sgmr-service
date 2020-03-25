@@ -140,7 +140,8 @@ const FormPeople = (props) => {
         headers: { Authorization: `Bearer ${Auth.retrieveToken()}` },
       })
         .then(() => {
-          clearFormData();
+          // Only clear data if this is the people form;
+          if (source[1] === 'people') { clearFormData(); }
           history.push(source[1] === 'voyage' ? SAVE_VOYAGE_PEOPLE_URL : PEOPLE_PAGE_URL);
         })
         .catch((err) => {
