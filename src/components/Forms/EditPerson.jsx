@@ -19,25 +19,25 @@ const EditPerson = (props) => {
 
   // reformat dates & peopleType into individual items for form field display
   const reformatFields = (data) => {
-    const tempObj = data;
-    const splitDoB = data.dateOfBirth.split('-');
-    const splitDocumentExpiryDate = data.documentExpiryDate.split('-');
-    tempObj.peopleType = data.peopleType.name;
-    tempObj.dateOfBirthYear = splitDoB[0];
-    tempObj.dateOfBirthMonth = splitDoB[1];
-    tempObj.dateOfBirthDay = splitDoB[2];
-    tempObj.documentExpiryDateYear = splitDocumentExpiryDate[0];
-    tempObj.documentExpiryDateMonth = splitDocumentExpiryDate[1];
-    tempObj.documentExpiryDateDay = splitDocumentExpiryDate[2];
-    setPersonData(tempObj);
+    const [dateOfBirthYear, dateOfBirthMonth, dateOfBirthDay] = data.dateOfBirth.split('-');
+    const [documentExpiryDateYear, documentExpiryDateMonth, documentExpiryDateDay] = data.documentExpiryDate.split('-');
+
+    const formattedFields = {
+      dateOfBirthYear,
+      dateOfBirthMonth,
+      dateOfBirthDay,
+      documentExpiryDateYear,
+      documentExpiryDateMonth,
+      documentExpiryDateDay,
+      peopleType: data.peopleType.name,
+    };
+    setPersonData({ ...data, ...formattedFields });
   };
 
   // reformat dates for api
   const reformatDate = () => {
-    if (!formData) {
-      return null;
-    }
-    const tempObj = formData;
+    
+    const tempObj = { ...formData };
     // If a date field has changed, reformat date from personData and save back to personData
     if (personData.documentExpiryDateYear || personData.documentExpiryDateMonth || personData.documentExpiryDateDay) {
       tempObj.documentExpiryDate = formatDate(personData.documentExpiryDateYear, personData.documentExpiryDateMonth, personData.documentExpiryDateDay);
@@ -61,8 +61,8 @@ const EditPerson = (props) => {
       headers: { Authorization: `Bearer ${Auth.retrieveToken()}` },
     })
       .then((resp) => {
-        reformatFields(resp.data);
         setPersonData(resp.data);
+        reformatFields(resp.data);
         localStorage.setItem('data', JSON.stringify(resp.data));
       })
       .catch((err) => {
@@ -120,7 +120,6 @@ const EditPerson = (props) => {
       });
   };
 
-
   // Get person data to pass to prepopulate the form
   useEffect(() => {
     getPersonData();
@@ -134,7 +133,6 @@ const EditPerson = (props) => {
     localStorage.setItem('errors', JSON.stringify(errors));
   }, [errors]);
 
-  // console.log(formData);
 
   return (
     <div className="govuk-width-container ">
@@ -153,7 +151,8 @@ const EditPerson = (props) => {
             <p className="govuk-body-l">Update the details of the person you want to edit.</p>
             <form id="CreatePerson">
 
-              {/* {Object.keys(errors).length > 0 && (
+              {/* //TODO: add validation & error handling - Jen 26/3/2020
+              {Object.keys(errors).length > 0 && (
                 <div className="govuk-error-summary" aria-labelledby="error-summary-title" role="alert" tabIndex="-1" data-module="govuk-error-summary">
                   <h2 className="govuk-error-summary__title">
                     There is a problem
