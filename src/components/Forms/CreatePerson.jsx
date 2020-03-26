@@ -7,6 +7,10 @@ const CreatePerson = ({
   const urlParams = location.search.split('source=');
   const source = urlParams[1];
 
+  // console.log(data)
+  // console.log(errors)
+
+  if (!data) { return (null); }
   return (
     <section>
       <div id="firstName" className={`govuk-form-group ${errors.firstName ? 'govuk-form-group--error' : ''}`}>
