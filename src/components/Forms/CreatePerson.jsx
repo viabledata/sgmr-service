@@ -8,7 +8,6 @@ const CreatePerson = ({
   const source = urlParams[1];
 
   // console.log(data)
-  // console.log(errors)
 
   if (!data) { return (null); }
   return (

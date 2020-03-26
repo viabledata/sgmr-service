@@ -11,7 +11,23 @@ import { PEOPLE_URL } from 'Constants/ApiConstants';
 const EditPerson = (props) => {
   const personId = props.location.state.peopleId;
   const [personData, setPersonData] = useState();
+  const [formData, setFormData] = useState();
   const [errors, setErrors] = useState({});
+
+  // reformat dates & peopleType into individual items for form
+  const reformatFields = (data) => {
+    const tempObj = data;
+    const splitDoB = data.dateOfBirth.split('-');
+    const splitDocumentExpiryDate = data.documentExpiryDate.split('-');
+    tempObj.peopleType = data.peopleType.name;
+    tempObj.dateOfBirthYear = splitDoB[0];
+    tempObj.dateOfBirthMonth = splitDoB[1];
+    tempObj.dateOfBirthDay = splitDoB[2];
+    tempObj.documentExpiryDateYear = splitDocumentExpiryDate[0];
+    tempObj.documentExpiryDateMonth = splitDocumentExpiryDate[1];
+    tempObj.documentExpiryDateDay = splitDocumentExpiryDate[2];
+    setPersonData(tempObj);
+  };
 
   // Get data to prepopulate the form for this person
   const getPersonData = () => {
@@ -19,6 +35,7 @@ const EditPerson = (props) => {
       headers: { Authorization: `Bearer ${Auth.retrieveToken()}` },
     })
       .then((resp) => {
+        reformatFields(resp.data);
         setPersonData(resp.data);
         localStorage.setItem('data', JSON.stringify(resp.data));
       })
@@ -36,7 +53,10 @@ const EditPerson = (props) => {
 
   // Update form info to state
   const handleChange = (e) => {
+    // original data
     setPersonData({ ...personData, [e.target.name]: e.target.value });
+    // updated data
+    setFormData({ ...formData, [e.target.name]: e.target.value });
     // removeError(e.target.name);
   };
 
@@ -44,6 +64,24 @@ const EditPerson = (props) => {
   const clearLocalStorage = () => {
     setPersonData({});
     setErrors({ });
+  };
+
+  // Get any fields that changed
+  const getFieldsToSubmit = () => {
+    const dataSubmit = {
+      firstName: formData.firstName,
+      lastName: formData.lastName,
+      documentType: formData.documentType,
+      documentNumber: formData.documentNumber,
+      documentExpiryDate: formatDate(formData.documentExpiryDateYear, formData.documentExpiryDateMonth, formData.documentExpiryDateDay),
+      documentIssuingState: formData.documentIssuingState,
+      peopleType: formData.peopleType,
+      gender: formData.gender,
+      dateOfBirth: formatDate(formData.dateOfBirthYear, formData.dateOfBirthMonth, formData.dateOfBirthDay),
+      placeOfBirth: formData.placeOfBirth,
+      nationality: formData.nationality,
+    };
+    return dataSubmit;
   };
 
 
@@ -61,6 +99,8 @@ const EditPerson = (props) => {
     localStorage.setItem('errors', JSON.stringify(errors));
   }, [errors]);
 
+  console.log(formData)
+
   return (
     <div className="govuk-width-container ">
       <div className="govuk-breadcrumbs">
@@ -68,14 +108,14 @@ const EditPerson = (props) => {
           <li className="govuk-breadcrumbs__list-item">
             <a className="govuk-breadcrumbs__link" href="/people">People</a>
           </li>
-          <li className="govuk-breadcrumbs__list-item" aria-current="page">Save a person</li>
+          <li className="govuk-breadcrumbs__list-item" aria-current="page">Edit person</li>
         </ol>
       </div>
       <main className="govuk-main-wrapper govuk-main-wrapper--auto-spacing" role="main">
         <div className="govuk-grid-row">
           <div className="govuk-grid-column-two-thirds">
             <h1 className="govuk-heading-xl">Save a person</h1>
-            <p className="govuk-body-l">Provide the details of the person you want to add to your list of saved people.</p>
+            <p className="govuk-body-l">Update the details of the person you want to edit.</p>
             <form id="CreatePerson">
 
               {/* {Object.keys(errors).length > 0 && (
