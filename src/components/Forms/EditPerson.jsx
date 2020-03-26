@@ -34,24 +34,22 @@ const EditPerson = (props) => {
     setPersonData({ ...data, ...formattedFields });
   };
 
-  // reformat dates for api
-  const reformatDate = () => {
-    
-    const tempObj = { ...formData };
-    // If a date field has changed, reformat date from personData and save back to personData
-    if (personData.documentExpiryDateYear || personData.documentExpiryDateMonth || personData.documentExpiryDateDay) {
-      tempObj.documentExpiryDate = formatDate(personData.documentExpiryDateYear, personData.documentExpiryDateMonth, personData.documentExpiryDateDay);
-    }
-    if (personData.dateOfBirthYear || personData.dateOfBirthMonth || personData.dateOfBirthDay) {
-      tempObj.dateOfBirth = formatDate(personData.dateOfBirthYear, personData.dateOfBirthMonth, personData.dateOfBirthDay);
-    }
-    delete tempObj.documentExpiryDateYear;
-    delete tempObj.documentExpiryDateMonth;
-    delete tempObj.documentExpiryDateDay;
-    delete tempObj.dateOfBirthYear;
-    delete tempObj.dateOfBirthMonth;
-    delete tempObj.dateOfBirthDay;
-    setFormData(tempObj);
+  // Reformat dates for api & remove field level keys
+  const reformatDate = (data) => {
+    const fieldLevelDates = ['documentExpiryDateYear', 'documentExpiryDateMonth', 'documentExpiryDateDay', 'dateOfBirthYear', 'dateOfBirthMonth', 'dateOfBirthDay'];
+    const cleanedData = { ...data };
+
+    Object.keys(cleanedData).map((itemKey) => {
+      return fieldLevelDates.indexOf(itemKey) >= 0 ? delete cleanedData[itemKey] : null;
+    });
+
+    const dataToSubmit = ({
+      ...cleanedData,
+      documentExpiryDate: formatDate(personData.documentExpiryDateYear, personData.documentExpiryDateMonth, personData.documentExpiryDateDay),
+      dateOfBirth: formatDate(personData.dateOfBirthYear, personData.dateOfBirthMonth, personData.dateOfBirthDay),
+    });
+
+    return dataToSubmit;
   };
 
 
@@ -79,11 +77,10 @@ const EditPerson = (props) => {
 
   // Update form info to state
   const handleChange = (e) => {
-    // // original data
+    // Original data
     setPersonData({ ...personData, [e.target.name]: e.target.value });
-    // updated data
+    // Updated data
     setFormData({ ...formData, [e.target.name]: e.target.value });
-    // removeError(e.target.name);
   };
 
   // Clear formData from localStorage
@@ -97,10 +94,9 @@ const EditPerson = (props) => {
   // Handle Submit, including clearing localStorage
   const handleSubmit = (e) => {
     e.preventDefault();
-    // if date fields exist, format them
-    reformatDate();
-
-    axios.patch(`${PEOPLE_URL}/${personId}`, formData, {
+    // If date fields exist, format them
+    const dataToSubmit = reformatDate(formData);
+    axios.patch(`${PEOPLE_URL}/${personId}`, dataToSubmit, {
       headers: { Authorization: `Bearer ${Auth.retrieveToken()}` },
     })
       .then(() => {
@@ -150,25 +146,6 @@ const EditPerson = (props) => {
             <h1 className="govuk-heading-xl">Save a person</h1>
             <p className="govuk-body-l">Update the details of the person you want to edit.</p>
             <form id="CreatePerson">
-
-              {/* //TODO: add validation & error handling - Jen 26/3/2020
-              {Object.keys(errors).length > 0 && (
-                <div className="govuk-error-summary" aria-labelledby="error-summary-title" role="alert" tabIndex="-1" data-module="govuk-error-summary">
-                  <h2 className="govuk-error-summary__title">
-                    There is a problem
-                  </h2>
-                  <div className="govuk-error-summary__body">
-                    <ul className="govuk-list govuk-error-summary__list">
-                      {Object.entries(errors).map((elem, i) => (
-                        <li key={i}>
-                          {elem[0] !== 'title'
-                              && <a href={`#${elem[0]}`}>{elem[1]}</a>}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                </div>
-              )} */}
 
               <CreatePerson
                 handleChange={handleChange}
