@@ -66,25 +66,6 @@ const EditPerson = (props) => {
     setErrors({ });
   };
 
-  // Get any fields that changed
-  const getFieldsToSubmit = () => {
-    const dataSubmit = {
-      firstName: formData.firstName,
-      lastName: formData.lastName,
-      documentType: formData.documentType,
-      documentNumber: formData.documentNumber,
-      documentExpiryDate: formatDate(formData.documentExpiryDateYear, formData.documentExpiryDateMonth, formData.documentExpiryDateDay),
-      documentIssuingState: formData.documentIssuingState,
-      peopleType: formData.peopleType,
-      gender: formData.gender,
-      dateOfBirth: formatDate(formData.dateOfBirthYear, formData.dateOfBirthMonth, formData.dateOfBirthDay),
-      placeOfBirth: formData.placeOfBirth,
-      nationality: formData.nationality,
-    };
-    return dataSubmit;
-  };
-
-
   // Get person data to pass to prepopulate the form
   useEffect(() => {
     getPersonData();
