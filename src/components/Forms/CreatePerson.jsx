@@ -7,8 +7,6 @@ const CreatePerson = ({
   const urlParams = location.search.split('source=');
   const source = urlParams[1];
 
-  // console.log(data)
-
   if (!data) { return (null); }
   return (
     <section>
