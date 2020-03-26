@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { withRouter } from 'react-router-dom';
+import { withRouter, useHistory } from 'react-router-dom';
 import axios from 'axios';
 
 // App imports
@@ -11,6 +11,7 @@ import { PEOPLE_PAGE_URL } from 'Constants/ClientConstants';
 
 
 const EditPerson = (props) => {
+  const history = useHistory();
   const personId = props.location.state.peopleId;
   const [personData, setPersonData] = useState();
   const [formData, setFormData] = useState();
