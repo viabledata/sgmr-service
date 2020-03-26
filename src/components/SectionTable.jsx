@@ -91,7 +91,13 @@ const SectionTable = ({
                   return (
                     <tr className="govuk-table__row" key={person.id}>
                       <td className="govuk-table__cell" scope="row">
-                        <p>{person.lastName}</p>
+                        <Link to={{
+                          pathname: '/people/edit-person',
+                          state: { peopleId: person.id },
+                        }}
+                        >
+                          {person.lastName}
+                        </Link>
                       </td>
                       <td className="govuk-table__cell">{person.firstName}</td>
                       <td className="govuk-table__cell">{person.peopleType.name}</td>
