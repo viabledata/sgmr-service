@@ -70,10 +70,6 @@ const FormVoyage = () => {
     localStorage.setItem('formData', JSON.stringify(formData));
   }, [formData]);
 
-  // useEffect(() => {
-  //   localStorage.setItem('errors', JSON.stringify(errors));
-  // }, [errors]);
-
   // Set page number based on current URL
   useEffect(() => {
     const thisPage = location.pathname.split('page-');

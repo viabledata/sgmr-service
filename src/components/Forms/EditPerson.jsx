@@ -17,7 +17,7 @@ const EditPerson = (props) => {
   const [formData, setFormData] = useState();
   const [errors, setErrors] = useState({});
 
-  // reformat dates & peopleType into individual items for form field display
+  // Reformat dates & peopleType into individual items for form field display
   const reformatFields = (data) => {
     const [dateOfBirthYear, dateOfBirthMonth, dateOfBirthDay] = data.dateOfBirth.split('-');
     const [documentExpiryDateYear, documentExpiryDateMonth, documentExpiryDateDay] = data.documentExpiryDate.split('-');
