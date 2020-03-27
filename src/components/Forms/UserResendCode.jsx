@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 
 // app imports
@@ -38,7 +38,7 @@ const UserResendCode = () => {
     // Ensure required fields have a value
     if (checkRequiredFields() === true && source === 'registration') {
       axios.patch(RESEND_VERIFICATION_CODE_URL, formData)
-        .then((resp) => {
+        .then(() => {
           history.push(`/verify?source=${source}`);
         })
         .catch((err) => {
@@ -53,7 +53,7 @@ const UserResendCode = () => {
         });
     } else {
       axios.post(RESEND_VERIFICATION_CODE_URL, formData)
-        .then((resp) => {
+        .then(() => {
           history.push(`/verify?source=${source}`);
         })
         .catch((err) => {
@@ -70,7 +70,6 @@ const UserResendCode = () => {
   };
 
   useEffect(() => {
-    // setFormData({ email: JSON.parse(localStorage.getItem('email')) });
     setSource(urlParams[1]);
   }, []);
 
@@ -92,8 +91,8 @@ const UserResendCode = () => {
               </h2>
               <div className="govuk-error-summary__body">
                 <ul className="govuk-list govuk-error-summary__list">
-                  {Object.entries(errors).map((elem, i) => (
-                    <li key={i}>
+                  {Object.entries(errors).map((elem) => (
+                    <li key={elem}>
                       {elem[0] !== 'title'
                           && <a href={`#${elem[0]}`}>{elem[1]}</a>}
                     </li>

@@ -68,18 +68,18 @@ const SectionTable = ({
             <table className="govuk-table">
               <thead className="govuk-table__head">
                 <tr className="govuk-table__row">
-                  {titles.map((elem, i) => {
+                  {titles.map((elem) => {
                     return (
-                      <th className="govuk-table__header" scope="col" key={i}>{elem}</th>
+                      <th className="govuk-table__header" scope="col" key={elem}>{elem}</th>
                     );
                   })}
                 </tr>
               </thead>
               <tbody className="govuk-table__body">
-                {isPageVessels && data.map((elem, i) => {
+                {isPageVessels && data.map((elem) => {
                   return (
-                    <tr className="govuk-table__row" key={i}>
-                      <td className="govuk-table__cell" scope="row">
+                    <tr className="govuk-table__row" key={elem}>
+                      <td className="govuk-table__cell">
                         <p>{elem.vesselName}</p>
                       </td>
                       <td className="govuk-table__cell">{elem.vesselType}</td>
@@ -90,7 +90,7 @@ const SectionTable = ({
                 {isPagePeople && people.list.map((person) => {
                   return (
                     <tr className="govuk-table__row" key={person.id}>
-                      <td className="govuk-table__cell" scope="row">
+                      <td className="govuk-table__cell">
                         <Link to={{
                           pathname: '/people/edit-person',
                           state: { peopleId: person.id },

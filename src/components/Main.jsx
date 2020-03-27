@@ -49,9 +49,6 @@ const Main = () => {
         <SecureRoute exact path="/people">
           <PageContainer />
         </SecureRoute>
-        {/* <SecureRoute exact path="/people/:id">
-          <FormPeople />
-        </SecureRoute> */}
         <SecureRoute exact path="/people/save-person">
           <FormPeople />
         </SecureRoute>
