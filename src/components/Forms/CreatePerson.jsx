@@ -307,7 +307,7 @@ const CreatePerson = ({
           </div>
           <div className="govuk-form-group">
             <label className="govuk-label" htmlFor="documentType-other">
-              If `&quot;`Other`&quot;`, please specify
+              If &quot;Other&quot;, please specify
             </label>
             <input
               className="govuk-input"
