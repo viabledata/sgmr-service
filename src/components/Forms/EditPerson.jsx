@@ -1,5 +1,8 @@
+/* eslint-disable react/destructuring-assignment */
+/* eslint-disable react/prop-types */
+/* eslint-disable no-unused-expressions */
 import React, { useState, useEffect } from 'react';
-import { withRouter, useHistory } from 'react-router-dom';
+import { withRouter, useHistory, Link } from 'react-router-dom';
 import axios from 'axios';
 
 // App imports
@@ -8,6 +11,7 @@ import CreatePerson from 'CreatePerson';
 import { formatDate } from 'Utils/date';
 import { PEOPLE_URL } from 'Constants/ApiConstants';
 import { PEOPLE_PAGE_URL } from 'Constants/ClientConstants';
+import { personValidationRules } from 'validation';
 
 
 const EditPerson = (props) => {
@@ -75,19 +79,51 @@ const EditPerson = (props) => {
       });
   };
 
+  // Clear formData from localStorage
+  const clearLocalStorage = () => {
+    setPersonData({});
+    setFormData({});
+    setErrors({ });
+  };
+
+  // Clear errors
+  const removeError = (fieldName) => {
+    const tempArr = { ...errors };
+    const key = fieldName;
+    delete tempArr[key];
+    setErrors(tempArr);
+  };
+
   // Update form info to state
   const handleChange = (e) => {
     // Original data
     setPersonData({ ...personData, [e.target.name]: e.target.value });
     // Updated data
     setFormData({ ...formData, [e.target.name]: e.target.value });
+    // Clear any errors
+    removeError(e.target.name);
   };
 
-  // Clear formData from localStorage
-  const clearLocalStorage = () => {
-    setPersonData({});
-    setFormData({});
-    setErrors({ });
+  // Handle missing required fields
+  const checkRequiredFields = (data) => {
+    const fieldsErroring = {};
+    personValidationRules.map((rule) => {
+      (!(rule.field in data) || data[rule.field] === '')
+        ? fieldsErroring[rule.field] = rule.message
+        : null;
+    });
+    setErrors(fieldsErroring);
+    return Object.keys(fieldsErroring).length > 0;
+  };
+
+  // Handle fields with special validation
+  const areFieldsValid = (fieldValue, fieldName, userFriendlyFieldName) => {
+    if (fieldValue === 'Invalid date') {
+      setErrors({ ...errors, [fieldName]: `You must enter a valid ${userFriendlyFieldName}` });
+      // return false as fields are not validated
+      return false;
+    }
+    return true;
   };
 
 
@@ -96,9 +132,15 @@ const EditPerson = (props) => {
     e.preventDefault();
     // If date fields exist, format them
     const dataToSubmit = reformatDate(formData);
-    axios.patch(`${PEOPLE_URL}/${personId}`, dataToSubmit, {
-      headers: { Authorization: `Bearer ${Auth.retrieveToken()}` },
-    })
+
+    if (
+      !checkRequiredFields(personData) // No empty required fields
+        && areFieldsValid(dataToSubmit.documentExpiryDate, 'documentExpiryDate', 'document expiry date') // Field is valid
+        && areFieldsValid(dataToSubmit.dateOfBirth, 'dateOfBirth', 'date of birth') // Field is valid
+    ) {
+      axios.patch(`${PEOPLE_URL}/${personId}`, dataToSubmit, {
+        headers: { Authorization: `Bearer ${Auth.retrieveToken()}` },
+      })
       .then(() => {
         clearLocalStorage();
         history.push(PEOPLE_PAGE_URL);
@@ -111,9 +153,7 @@ const EditPerson = (props) => {
             case 422: history.push('/sign-in?source=people'); break;
             case 405: history.push('/sign-in?source=people'); break;
             default: console.log(err.response.status); break;
-          }
-        }
-      });
+    }
   };
 
   // Get person data to pass to prepopulate the form
@@ -145,7 +185,34 @@ const EditPerson = (props) => {
           <div className="govuk-grid-column-two-thirds">
             <h1 className="govuk-heading-xl">Save a person</h1>
             <p className="govuk-body-l">Update the details of the person you want to edit.</p>
-            <form id="CreatePerson">
+            <form id="EditPerson">
+
+              {Object.keys(errors).length > 0 && (
+              <div className="govuk-error-summary" aria-labelledby="error-summary-title" role="alert" tabIndex="-1" data-module="govuk-error-summary">
+                <h2 className="govuk-error-summary__title">
+                  There is a problem
+                </h2>
+                <div className="govuk-error-summary__body">
+                  <ul className="govuk-list govuk-error-summary__list">
+                    {Object.entries(errors).map((elem) => (
+                      <li key={elem}>
+                        {elem[0] !== 'title'
+                              && (
+                              <Link to={{
+                                pathname: '/people/edit-person',
+                                state: { peopleId: personId },
+                                hash: `#${elem[0]}`,
+                              }}
+                              >
+                                {elem[1]}
+                              </Link>
+                              )}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+              )}
 
               <CreatePerson
                 handleChange={handleChange}

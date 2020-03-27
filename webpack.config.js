@@ -58,6 +58,7 @@ module.exports = {
       Constants: path.resolve(__dirname, 'src/constants'),
       State: path.resolve(__dirname, 'src/state'),
       Utils: path.resolve(__dirname, 'src/utils'),
+      validation: path.resolve(__dirname, 'src/components/Forms/validationRules.js'),
     },
     extensions: ['.js', '.jsx'],
   },
