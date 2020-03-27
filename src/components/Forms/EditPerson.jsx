@@ -147,18 +147,21 @@ const EditPerson = (props) => {
       axios.patch(`${PEOPLE_URL}/${personId}`, dataToSubmit, {
         headers: { Authorization: `Bearer ${Auth.retrieveToken()}` },
       })
-      .then(() => {
-        clearLocalStorage();
-        history.push(PEOPLE_PAGE_URL);
-      })
-      .catch((err) => {
-        if (err.response) {
-          switch (err.response.status) {
-            case 400: console.log(err.response.status); break;
-            case 401: history.push('/sign-in?source=people'); break;
-            case 422: history.push('/sign-in?source=people'); break;
-            case 405: history.push('/sign-in?source=people'); break;
-            default: console.log(err.response.status); break;
+        .then(() => {
+          clearLocalStorage();
+          history.push(PEOPLE_PAGE_URL);
+        })
+        .catch((err) => {
+          if (err.response) {
+            switch (err.response.status) {
+              case 400: console.log(err.response.status); break;
+              case 401: history.push('/sign-in?source=people'); break;
+              case 422: history.push('/sign-in?source=people'); break;
+              case 405: history.push('/sign-in?source=people'); break;
+              default: console.log(err.response.status); break;
+            }
+          }
+        });
     }
   };
 
