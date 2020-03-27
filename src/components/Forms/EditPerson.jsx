@@ -66,10 +66,10 @@ const EditPerson = (props) => {
       .catch((err) => {
         if (err.response) {
           switch (err.response.status) {
-            case 401: history.push(`/sign-in?source=${location}`); break;
-            case 422: history.push(`/sign-in?source=${location}`); break;
-            case 405: history.push(`/sign-in?source=${location}`); break;
-            default: history.push(`/sign-in?source=${location}`);
+            case 401: history.push('/sign-in?source=people'); break;
+            case 422: history.push('/sign-in?source=people'); break;
+            case 405: history.push('/sign-in?source=people'); break;
+            default: history.push('/sign-in?source=people');
           }
         }
       });
@@ -107,10 +107,10 @@ const EditPerson = (props) => {
         if (err.response) {
           switch (err.response.status) {
             case 400: console.log(err.response.status); break;
-            case 401: history.push(`/sign-in?source=${location}`); break;
-            case 422: history.push(`/sign-in?source=${location}`); break;
-            case 405: history.push(`/sign-in?source=${location}`); break;
-            default: history.push(`/sign-in?source=${location}`);
+            case 401: history.push('/sign-in?source=people'); break;
+            case 422: history.push('/sign-in?source=people'); break;
+            case 405: history.push('/sign-in?source=people'); break;
+            default: console.log(err.response.status); break;
           }
         }
       });
