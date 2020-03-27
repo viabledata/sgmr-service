@@ -9,6 +9,7 @@ import { formatDate } from 'Utils/date';
 import { PEOPLE_URL } from 'Constants/ApiConstants';
 import { PEOPLE_PAGE_URL } from 'Constants/ClientConstants';
 import { personValidationRules } from 'validation';
+import ScrollToTop from 'ScrollToTop';
 
 
 const EditPerson = (props) => {
@@ -176,6 +177,7 @@ const EditPerson = (props) => {
   }, [personData]);
   useEffect(() => {
     localStorage.setItem('errors', JSON.stringify(errors));
+    window.scrollTo(0, 0);
   }, [errors]);
 
 
