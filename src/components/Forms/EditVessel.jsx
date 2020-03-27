@@ -94,7 +94,6 @@ const EditVessel = (props) => {
   // Handle Submit, including clearing localStorage
   const handleSubmit = (e) => {
     e.preventDefault();
-    // createSubmitData(formData, vesselData);
 
     if (!checkRequiredFields(vesselData)) {
       axios.patch(`${VESSELS_URL}/${vesselId}`, createSubmitData(formData, vesselData), {
