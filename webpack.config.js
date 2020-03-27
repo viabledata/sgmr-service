@@ -45,6 +45,7 @@ module.exports = {
       CreateVessel: path.resolve(__dirname, 'src/components/Forms/CreateVessel.jsx'),
       EditAccount: path.resolve(__dirname, 'src/components/Forms/EditAccount.jsx'),
       EditPerson: path.resolve(__dirname, 'src/components/Forms/EditPerson.jsx'),
+      EditVessel: path.resolve(__dirname, 'src/components/Forms/EditVessel.jsx'),
       FormPeople: path.resolve(__dirname, 'src/components/Forms/FormPeople.jsx'),
       FormVessels: path.resolve(__dirname, 'src/components/Forms/FormVessels.jsx'),
       FormVoyage: path.resolve(__dirname, 'src/components/Forms/FormVoyage.jsx'),

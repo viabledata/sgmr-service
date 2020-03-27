@@ -76,14 +76,20 @@ const SectionTable = ({
                 </tr>
               </thead>
               <tbody className="govuk-table__body">
-                {isPageVessels && data.map((elem) => {
+                {isPageVessels && data.map((vessel) => {
                   return (
-                    <tr className="govuk-table__row" key={elem.id}>
+                    <tr className="govuk-table__row" key={vessel.id}>
                       <td className="govuk-table__cell">
-                        <p>{elem.vesselName}</p>
+                        <Link to={{
+                          pathname: '/vessels/edit-vessel',
+                          state: { vesselId: vessel.id },
+                        }}
+                        >
+                          {vessel.vesselName}
+                        </Link>
                       </td>
-                      <td className="govuk-table__cell">{elem.vesselType}</td>
-                      <td className="govuk-table__cell">{elem.moorings}</td>
+                      <td className="govuk-table__cell">{vessel.vesselType}</td>
+                      <td className="govuk-table__cell">{vessel.moorings}</td>
                     </tr>
                   );
                 })}
