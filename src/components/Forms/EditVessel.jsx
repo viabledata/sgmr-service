@@ -128,6 +128,7 @@ const EditVessel = (props) => {
   }, [vesselData]);
   useEffect(() => {
     localStorage.setItem('errors', JSON.stringify(errors));
+    window.scrollTo(0, 0);
   }, [errors]);
 
   if (!vesselData) { return null; }
