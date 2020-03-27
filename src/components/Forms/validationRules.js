@@ -31,7 +31,7 @@ export const personValidationRules = [
     message: 'You must enter the document issuing state',
   },
   {
-    field: 'documentExpiryDateYear', // testing against year as it's the last piece of the date field
+    field: 'documentExpiryDate',
     rule: 'required',
     message: 'You must enter an expiry date',
   },
@@ -41,7 +41,7 @@ export const personValidationRules = [
     message: 'You must select a gender',
   },
   {
-    field: 'dateOfBirthYear',
+    field: 'dateOfBirth',
     rule: 'required',
     message: 'You must enter a date of birth',
   },

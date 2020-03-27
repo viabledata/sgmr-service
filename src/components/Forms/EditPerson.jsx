@@ -1,8 +1,5 @@
-/* eslint-disable react/destructuring-assignment */
-/* eslint-disable react/prop-types */
-/* eslint-disable no-unused-expressions */
 import React, { useState, useEffect } from 'react';
-import { withRouter, useHistory, Link } from 'react-router-dom';
+import { withRouter, useHistory } from 'react-router-dom';
 import axios from 'axios';
 
 // App imports
@@ -56,7 +53,6 @@ const EditPerson = (props) => {
     return dataToSubmit;
   };
 
-
   // Get data to prepopulate the form for this person
   const getPersonData = () => {
     axios.get(`${PEOPLE_URL}/${personId}`, {
@@ -89,7 +85,17 @@ const EditPerson = (props) => {
   // Clear errors
   const removeError = (fieldName) => {
     const tempArr = { ...errors };
-    const key = fieldName;
+    // Check for grouped fields
+    let thisFieldName = '';
+    if (fieldName.includes('dateOfBirth')) {
+      thisFieldName = 'dateOfBirth';
+    } else if (fieldName.includes('documentExpiryDate')) {
+      thisFieldName = 'documentExpiryDate';
+    } else {
+      thisFieldName = fieldName;
+    }
+    // Delete the error
+    const key = thisFieldName;
     delete tempArr[key];
     setErrors(tempArr);
   };
@@ -186,33 +192,6 @@ const EditPerson = (props) => {
             <h1 className="govuk-heading-xl">Save a person</h1>
             <p className="govuk-body-l">Update the details of the person you want to edit.</p>
             <form id="EditPerson">
-
-              {Object.keys(errors).length > 0 && (
-              <div className="govuk-error-summary" aria-labelledby="error-summary-title" role="alert" tabIndex="-1" data-module="govuk-error-summary">
-                <h2 className="govuk-error-summary__title">
-                  There is a problem
-                </h2>
-                <div className="govuk-error-summary__body">
-                  <ul className="govuk-list govuk-error-summary__list">
-                    {Object.entries(errors).map((elem) => (
-                      <li key={elem}>
-                        {elem[0] !== 'title'
-                              && (
-                              <Link to={{
-                                pathname: '/people/edit-person',
-                                state: { peopleId: personId },
-                                hash: `#${elem[0]}`,
-                              }}
-                              >
-                                {elem[1]}
-                              </Link>
-                              )}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
-              )}
 
               <CreatePerson
                 handleChange={handleChange}
