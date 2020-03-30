@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-expressions */
 import React, { useState, useEffect } from 'react';
 import { withRouter, useHistory } from 'react-router-dom';
 import axios from 'axios';
@@ -5,7 +6,7 @@ import axios from 'axios';
 // App imports
 import Auth from 'Auth';
 import CreatePerson from 'CreatePerson';
-import { formatDate, isDateValid } from 'Utils/date';
+import { formatDate } from 'Utils/date';
 import { PEOPLE_URL } from 'Constants/ApiConstants';
 import { PEOPLE_PAGE_URL } from 'Constants/ClientConstants';
 import { personValidationRules } from 'validation';
@@ -94,6 +95,43 @@ const EditPerson = (props) => {
     removeError(e.target.name);
   };
 
+  const handleErrors = (e) => {
+    // Error onBlur if condition not met
+    switch (e.target.name) {
+      case 'documentExpiryDateYear':
+        (/^[0-9]+$/i.test(formData.documentExpiryDateYear))
+          ? removeError('documentExpiryDateYear')
+          : setErrors({ ...errors, documentExpiryDate: 'Enter a valid date' });
+        break;
+      case 'documentExpiryDateMonth':
+        (/^([0-1]\d|[1-9]\d{2,})$/i.test(formData.documentExpiryDateMonth))
+          ? removeError('documentExpiryDate')
+          : setErrors({ ...errors, documentExpiryDate: 'Enter a valid date' });
+        break;
+      case 'documentExpiryDateDay':
+        (/^(0?[1-9]|[12][0-9]|3[01])$/i.test(formData.documentExpiryDateDay))
+          ? removeError('documentExpiryDate')
+          : setErrors({ ...errors, documentExpiryDate: 'Enter a valid date' });
+        break;
+      case 'dateOfBirthYear':
+        (/^[0-9]+$/i.test(formData.dateOfBirthYear))
+          ? removeError('dateOfBirthYear')
+          : setErrors({ ...errors, dateOfBirth: 'Enter a valid date' });
+        break;
+      case 'dateOfBirthMonth':
+        (/^[0-9]+$/i.test(formData.dateOfBirthMonth))
+          ? removeError('dateOfBirth')
+          : setErrors({ ...errors, dateOfBirth: 'Enter a valid date' });
+        break;
+      case 'dateOfBirthDay':
+        (/^[0-9]+$/i.test(formData.dateOfBirthDay))
+          ? removeError('dateOfBirth')
+          : setErrors({ ...errors, dateOfBirth: 'Enter a valid date' });
+        break;
+      default: '';
+    }
+  };
+
   // Handle missing required fields
   const checkRequiredFields = (data) => {
     const fieldsErroring = {};
@@ -105,17 +143,6 @@ const EditPerson = (props) => {
     setErrors(fieldsErroring);
     return Object.keys(fieldsErroring).length > 0;
   };
-
-  // Handle fields with special validation
-  const areFieldsValid = (fieldValue, fieldName, userFriendlyFieldName) => {
-    if (fieldValue === 'Invalid date') {
-      setErrors({ ...errors, [fieldName]: `You must enter a valid ${userFriendlyFieldName}` });
-      // return false as fields are not validated
-      return false;
-    }
-    return true;
-  };
-
 
   // Reformat dates for api & remove field level keys
   const reformatDate = (data) => {
@@ -135,7 +162,6 @@ const EditPerson = (props) => {
     return dataToSubmit;
   };
 
-
   // Handle Submit, including clearing localStorage
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -144,8 +170,6 @@ const EditPerson = (props) => {
 
     if (
       !checkRequiredFields(personData) // No empty required fields
-        && areFieldsValid(dataToSubmit.documentExpiryDate, 'documentExpiryDate', 'document expiry date') // Field is valid
-        && areFieldsValid(dataToSubmit.dateOfBirth, 'dateOfBirth', 'date of birth') // Field is valid
     ) {
       axios.patch(`${PEOPLE_URL}/${personId}`, dataToSubmit, {
         headers: { Authorization: `Bearer ${Auth.retrieveToken()}` },
@@ -182,7 +206,6 @@ const EditPerson = (props) => {
     window.scrollTo(0, 0);
   }, [errors]);
 
-
   return (
     <div className="govuk-width-container ">
       <div className="govuk-breadcrumbs">
@@ -203,6 +226,7 @@ const EditPerson = (props) => {
               <CreatePerson
                 handleChange={handleChange}
                 handleSubmit={handleSubmit}
+                handleErrors={handleErrors}
                 data={personData}
                 errors={errors}
               />

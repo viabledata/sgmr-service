@@ -11,9 +11,7 @@ export const isDateValid = (year, month, day) => {
 };
 
 export const formatDate = (year, month, day) => {
-  const newDate = moment(`${year}-${month}-${day}`, 'YYYY-MM-DD').format('YYYY-M-D');
-
-  return newDate;
+  moment(`${year}-${month}-${day}`, 'YYYY-MM-DD').format('YYYY-M-D');
 };
 
 export const formatUIDate = (date) => {
@@ -21,3 +19,4 @@ export const formatUIDate = (date) => {
 
   return uiDate;
 };
+
