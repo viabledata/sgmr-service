@@ -1,16 +1,14 @@
-/* eslint-disable no-unused-expressions */
 import React, { useState, useEffect } from 'react';
 import { withRouter, useHistory } from 'react-router-dom';
 import axios from 'axios';
+import moment from 'moment';
 
 // App imports
 import Auth from 'Auth';
 import CreatePerson from 'CreatePerson';
-import { formatDate } from 'Utils/date';
 import { PEOPLE_URL } from 'Constants/ApiConstants';
 import { PEOPLE_PAGE_URL } from 'Constants/ClientConstants';
 import { dateValidation, personValidationRules } from 'validation';
-import ScrollToTop from 'ScrollToTop';
 
 
 const EditPerson = (props) => {
@@ -95,8 +93,8 @@ const EditPerson = (props) => {
     removeError(e.target.name);
   };
 
-  // Handle missing required fields
-  const checkRequiredFields = (data) => {
+  // Handle validation
+  const areFieldsValid = (data) => {
     const fieldsErroring = {};
     // Check required fields are not empty
     personValidationRules.map((rule) => {
@@ -119,14 +117,31 @@ const EditPerson = (props) => {
     return Object.keys(fieldsErroring).length > 0;
   };
 
+  const formatData = (dataPerson, dataForm) => {
+    if (!areFieldsValid(dataPerson)) {
+      // Clean any field level date fields from the submit data
+      const fieldLevelDates = ['documentExpiryDateYear', 'documentExpiryDateMonth', 'documentExpiryDateDay', 'dateOfBirthYear', 'dateOfBirthMonth', 'dateOfBirthDay'];
+      const cleanedData = { ...dataForm };
+
+      Object.keys(cleanedData).map((itemKey) => {
+        return fieldLevelDates.indexOf(itemKey) >= 0 ? delete cleanedData[itemKey] : null;
+      });
+
+      const dataToSubmit = ({
+        ...cleanedData,
+        documentExpiryDate: moment(`${personData.documentExpiryDateYear}-${personData.documentExpiryDateMonth}-${personData.documentExpiryDateDay}`, 'YYYY-MM-DD').format('YYYY-M-D'),
+        dateOfBirth: moment(`${personData.dateOfBirthYear}-${personData.dateOfBirthMonth}-${personData.dateOfBirthDay}`, 'YYYY-MM-DD').format('YYYY-M-D'),
+      });
+      return dataToSubmit;
+    }
+  };
+
   // Handle Submit, including clearing localStorage
   const handleSubmit = (e) => {
     e.preventDefault();
-    // If date fields exist, format them
+    const submitData = formatData(personData, formData);
 
-    if (
-      !checkRequiredFields(personData) // No empty required fields
-    ) {
+    if (submitData) {
       axios.patch(`${PEOPLE_URL}/${personId}`, submitData, {
         headers: { Authorization: `Bearer ${Auth.retrieveToken()}` },
       })
