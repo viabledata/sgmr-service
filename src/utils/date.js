@@ -19,4 +19,3 @@ export const formatUIDate = (date) => {
 
   return uiDate;
 };
-
