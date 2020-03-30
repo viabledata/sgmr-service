@@ -103,21 +103,6 @@ export const personValidationRules = [
   },
 ];
 
-export const dateValidationRules = [
-  {
-    inputField: 'documentExpiryDateYear',
-    errorDisplayId: 'documentExpiryDate',
-    rule: /^(19|20)\d{2}$/i,
-    message: 'You must enter a valid date',
-  },
-  {
-    inputField: 'documentExpiryDateMonth',
-    errorDisplayId: 'documentExpiryDate',
-    rule: /^(19|20)\d{2}$/i,
-    message: 'You must enter a valid date',
-  },
-];
-
 export const dateValidation = (name, value) => {
   switch (name) {
     case 'documentExpiryDateYear':
