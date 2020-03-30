@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-expressions */
 // eslint-disable-next-line import/prefer-default-export
 export const personValidationRules = [
   {
@@ -103,3 +104,48 @@ export const personValidationRules = [
     message: 'You must enter a nationality',
   },
 ];
+
+export const dateValidationRules = [
+  {
+    inputField: 'documentExpiryDateYear',
+    errorDisplayId: 'documentExpiryDate',
+    rule: /^(19|20)\d{2}$/i,
+    message: 'You must enter a valid date',
+  },
+  {
+    inputField: 'documentExpiryDateMonth',
+    errorDisplayId: 'documentExpiryDate',
+    rule: /^(19|20)\d{2}$/i,
+    message: 'You must enter a valid date',
+  },
+];
+
+export const dateValidation = (name, value) => {
+  switch (name) {
+    case 'documentExpiryDateYear':
+      return /^(19|20)\d{2}$/i.test(value)
+        ? { documentExpiryDateYear: value }
+        : 'error';
+    case 'documentExpiryDateMonth':
+      return /^([0-1]\d|[1-9]\d{2,})$/i.test(value)
+        ? { documentExpiryDateMonth: value }
+        : 'error';
+    case 'documentExpiryDateDay':
+      return /^(0?[1-9]|[12][0-9]|3[01])$/i.test(value)
+        ? { documentExpiryDateDay: value }
+        : 'error';
+    case 'dateOfBirthYear':
+      return /^(19|20)\d{2}$/i.test(value)
+        ? { dateOfBirthYear: value }
+        : 'error';
+    case 'dateOfBirthMonth':
+      return /^([0-1]\d|[1-9]\d{2,})$/i.test(value)
+        ? { dateOfBirthMonth: value }
+        : 'error';
+    case 'dateOfBirthDay':
+      return /^(0?[1-9]|[12][0-9]|3[01])$/i.test(value)
+        ? { dateOfBirthDay: value }
+        : 'error';
+    default: '';
+  }
+};

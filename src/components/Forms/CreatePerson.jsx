@@ -1,7 +1,7 @@
 import React from 'react';
 
 const CreatePerson = ({
-  handleSubmit, handleChange, handleErrors, data, errors,
+  handleSubmit, handleChange, data, errors,
 }) => {
   const urlParams = location.search.split('source=');
   const source = urlParams[1];
@@ -107,7 +107,6 @@ const CreatePerson = ({
                   inputMode="numeric"
                   value={data.dateOfBirthDay || ''}
                   onChange={(handleChange)}
-                  onBlur={handleErrors}
                 />
               </div>
             </div>
@@ -126,7 +125,6 @@ const CreatePerson = ({
                   inputMode="numeric"
                   value={data.dateOfBirthMonth || ''}
                   onChange={handleChange}
-                  onBlur={handleErrors}
                 />
               </div>
             </div>
@@ -145,7 +143,6 @@ const CreatePerson = ({
                   inputMode="numeric"
                   value={data.dateOfBirthYear || ''}
                   onChange={handleChange}
-                  onBlur={handleErrors}
                 />
               </div>
             </div>
@@ -401,7 +398,6 @@ const CreatePerson = ({
                   maxLength={2}
                   value={data.documentExpiryDateDay || ''}
                   onChange={handleChange}
-                  onBlur={handleErrors}
                 />
               </div>
             </div>
@@ -419,7 +415,6 @@ const CreatePerson = ({
                   maxLength={2}
                   value={data.documentExpiryDateMonth || ''}
                   onChange={handleChange}
-                  onBlur={handleErrors}
                 />
               </div>
             </div>
@@ -437,7 +432,6 @@ const CreatePerson = ({
                   maxLength={4}
                   value={data.documentExpiryDateYear || ''}
                   onChange={handleChange}
-                  onBlur={handleErrors}
                 />
               </div>
             </div>

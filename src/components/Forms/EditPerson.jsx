@@ -9,7 +9,7 @@ import CreatePerson from 'CreatePerson';
 import { formatDate } from 'Utils/date';
 import { PEOPLE_URL } from 'Constants/ApiConstants';
 import { PEOPLE_PAGE_URL } from 'Constants/ClientConstants';
-import { personValidationRules } from 'validation';
+import { dateValidation, personValidationRules } from 'validation';
 import ScrollToTop from 'ScrollToTop';
 
 
@@ -18,6 +18,7 @@ const EditPerson = (props) => {
   const personId = props.location.state.peopleId;
   const [personData, setPersonData] = useState();
   const [formData, setFormData] = useState();
+  const [submitData, setSubmitData] = useState();
   const [errors, setErrors] = useState({});
 
   // Reformat dates & peopleType into individual items for form field display
@@ -95,83 +96,41 @@ const EditPerson = (props) => {
     removeError(e.target.name);
   };
 
-  const handleErrors = (e) => {
-    // Error onBlur if condition not met
-    switch (e.target.name) {
-      case 'documentExpiryDateYear':
-        (/^[0-9]+$/i.test(formData.documentExpiryDateYear))
-          ? removeError('documentExpiryDateYear')
-          : setErrors({ ...errors, documentExpiryDate: 'Enter a valid date' });
-        break;
-      case 'documentExpiryDateMonth':
-        (/^([0-1]\d|[1-9]\d{2,})$/i.test(formData.documentExpiryDateMonth))
-          ? removeError('documentExpiryDate')
-          : setErrors({ ...errors, documentExpiryDate: 'Enter a valid date' });
-        break;
-      case 'documentExpiryDateDay':
-        (/^(0?[1-9]|[12][0-9]|3[01])$/i.test(formData.documentExpiryDateDay))
-          ? removeError('documentExpiryDate')
-          : setErrors({ ...errors, documentExpiryDate: 'Enter a valid date' });
-        break;
-      case 'dateOfBirthYear':
-        (/^[0-9]+$/i.test(formData.dateOfBirthYear))
-          ? removeError('dateOfBirthYear')
-          : setErrors({ ...errors, dateOfBirth: 'Enter a valid date' });
-        break;
-      case 'dateOfBirthMonth':
-        (/^[0-9]+$/i.test(formData.dateOfBirthMonth))
-          ? removeError('dateOfBirth')
-          : setErrors({ ...errors, dateOfBirth: 'Enter a valid date' });
-        break;
-      case 'dateOfBirthDay':
-        (/^[0-9]+$/i.test(formData.dateOfBirthDay))
-          ? removeError('dateOfBirth')
-          : setErrors({ ...errors, dateOfBirth: 'Enter a valid date' });
-        break;
-      default: '';
-    }
-  };
-
   // Handle missing required fields
   const checkRequiredFields = (data) => {
     const fieldsErroring = {};
+    // Check required fields are not empty
     personValidationRules.map((rule) => {
       (!(rule.inputField in data) || data[rule.inputField] === '')
         ? fieldsErroring[rule.errorDisplayId] = rule.message
         : null;
     });
+    // Check date fields have valid data
+    Object.entries(data).map((field) => {
+      const fieldName = field[0];
+      const fieldValue = field[1];
+
+      dateValidation(fieldName, fieldValue) === 'error'
+        ? fieldsErroring['dateOfBirth'] = 'Enter valid date'
+        : null;
+    });
+
     setErrors(fieldsErroring);
     return Object.keys(fieldsErroring).length > 0;
   };
 
-  // Reformat dates for api & remove field level keys
-  const reformatDate = (data) => {
-    const fieldLevelDates = ['documentExpiryDateYear', 'documentExpiryDateMonth', 'documentExpiryDateDay', 'dateOfBirthYear', 'dateOfBirthMonth', 'dateOfBirthDay'];
-    const cleanedData = { ...data };
-
-    Object.keys(cleanedData).map((itemKey) => {
-      return fieldLevelDates.indexOf(itemKey) >= 0 ? delete cleanedData[itemKey] : null;
-    });
-
-    const dataToSubmit = ({
-      ...cleanedData,
-      documentExpiryDate: formatDate(personData.documentExpiryDateYear, personData.documentExpiryDateMonth, personData.documentExpiryDateDay),
-      dateOfBirth: formatDate(personData.dateOfBirthYear, personData.dateOfBirthMonth, personData.dateOfBirthDay),
-    });
-
-    return dataToSubmit;
-  };
+console.log(errors)
 
   // Handle Submit, including clearing localStorage
   const handleSubmit = (e) => {
     e.preventDefault();
     // If date fields exist, format them
-    const dataToSubmit = reformatDate(formData);
+
 
     if (
       !checkRequiredFields(personData) // No empty required fields
     ) {
-      axios.patch(`${PEOPLE_URL}/${personId}`, dataToSubmit, {
+      axios.patch(`${PEOPLE_URL}/${personId}`, formData, {
         headers: { Authorization: `Bearer ${Auth.retrieveToken()}` },
       })
         .then(() => {
@@ -226,7 +185,6 @@ const EditPerson = (props) => {
               <CreatePerson
                 handleChange={handleChange}
                 handleSubmit={handleSubmit}
-                handleErrors={handleErrors}
                 data={personData}
                 errors={errors}
               />
