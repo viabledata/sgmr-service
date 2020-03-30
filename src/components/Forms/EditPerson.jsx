@@ -36,21 +36,6 @@ const EditPerson = (props) => {
     setPersonData({ ...data, ...formattedFields });
   };
 
-  // Reformat dates for api & remove field level keys
-  const reformatDate = (data) => {
-    const fieldLevelDates = ['documentExpiryDateYear', 'documentExpiryDateMonth', 'documentExpiryDateDay', 'dateOfBirthYear', 'dateOfBirthMonth', 'dateOfBirthDay'];
-    const cleanedData = { ...data };
-
-    Object.keys(cleanedData).map((itemKey) => {
-      return fieldLevelDates.indexOf(itemKey) >= 0 ? delete cleanedData[itemKey] : null;
-    });
-
-    const dataToSubmit = ({
-      ...cleanedData,
-    });
-
-    return dataToSubmit;
-  };
 
   // Get data to prepopulate the form for this person
   const getPersonData = () => {
@@ -129,6 +114,25 @@ const EditPerson = (props) => {
       return false;
     }
     return true;
+  };
+
+
+  // Reformat dates for api & remove field level keys
+  const reformatDate = (data) => {
+    const fieldLevelDates = ['documentExpiryDateYear', 'documentExpiryDateMonth', 'documentExpiryDateDay', 'dateOfBirthYear', 'dateOfBirthMonth', 'dateOfBirthDay'];
+    const cleanedData = { ...data };
+
+    Object.keys(cleanedData).map((itemKey) => {
+      return fieldLevelDates.indexOf(itemKey) >= 0 ? delete cleanedData[itemKey] : null;
+    });
+
+    const dataToSubmit = ({
+      ...cleanedData,
+      documentExpiryDate: formatDate(personData.documentExpiryDateYear, personData.documentExpiryDateMonth, personData.documentExpiryDateDay),
+      dateOfBirth: formatDate(personData.dateOfBirthYear, personData.dateOfBirthMonth, personData.dateOfBirthDay),
+    });
+
+    return dataToSubmit;
   };
 
 
