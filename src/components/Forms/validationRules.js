@@ -129,6 +129,6 @@ export const dateValidation = (name, value) => {
       return /^(0?[1-9]|[12][0-9]|3[01])$/i.test(value)
         ? { dateOfBirthDay: value }
         : 'error';
-    default: '';
+    default: return null;
   }
 };
