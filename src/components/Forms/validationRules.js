@@ -127,7 +127,7 @@ export const dateValidation = (name, value) => {
         ? { documentExpiryDateYear: value }
         : 'error';
     case 'documentExpiryDateMonth':
-      return /^([0-1]\d|[1-9]\d{2,})$/i.test(value)
+      return /^(0?[1-9]|1[012])$/i.test(value)
         ? { documentExpiryDateMonth: value }
         : 'error';
     case 'documentExpiryDateDay':
@@ -139,7 +139,7 @@ export const dateValidation = (name, value) => {
         ? { dateOfBirthYear: value }
         : 'error';
     case 'dateOfBirthMonth':
-      return /^([0-1]\d|[1-9]\d{2,})$/i.test(value)
+      return /^(0?[1-9]|1[012])$/i.test(value)
         ? { dateOfBirthMonth: value }
         : 'error';
     case 'dateOfBirthDay':

@@ -18,7 +18,6 @@ const EditPerson = (props) => {
   const personId = props.location.state.peopleId;
   const [personData, setPersonData] = useState();
   const [formData, setFormData] = useState();
-  const [submitData, setSubmitData] = useState();
   const [errors, setErrors] = useState({});
 
   // Reformat dates & peopleType into individual items for form field display
@@ -120,18 +119,15 @@ const EditPerson = (props) => {
     return Object.keys(fieldsErroring).length > 0;
   };
 
-console.log(errors)
-
   // Handle Submit, including clearing localStorage
   const handleSubmit = (e) => {
     e.preventDefault();
     // If date fields exist, format them
 
-
     if (
       !checkRequiredFields(personData) // No empty required fields
     ) {
-      axios.patch(`${PEOPLE_URL}/${personId}`, formData, {
+      axios.patch(`${PEOPLE_URL}/${personId}`, submitData, {
         headers: { Authorization: `Bearer ${Auth.retrieveToken()}` },
       })
         .then(() => {
