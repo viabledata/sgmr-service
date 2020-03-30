@@ -109,9 +109,10 @@ const EditPerson = (props) => {
     Object.entries(data).map((field) => {
       const fieldName = field[0];
       const fieldValue = field[1];
+      const fieldGroup = field[0].toLowerCase().indexOf('birth') !== -1 ? 'dateOfBirth' : 'documentExpiryDate';
 
       dateValidation(fieldName, fieldValue) === 'error'
-        ? fieldsErroring['dateOfBirth'] = 'Enter valid date'
+        ? fieldsErroring[fieldGroup] = 'Enter valid date'
         : null;
     });
 
