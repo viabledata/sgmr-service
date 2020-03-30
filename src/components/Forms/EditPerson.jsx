@@ -5,7 +5,7 @@ import axios from 'axios';
 // App imports
 import Auth from 'Auth';
 import CreatePerson from 'CreatePerson';
-import { formatDate } from 'Utils/date';
+import { formatDate, isDateValid } from 'Utils/date';
 import { PEOPLE_URL } from 'Constants/ApiConstants';
 import { PEOPLE_PAGE_URL } from 'Constants/ClientConstants';
 import { personValidationRules } from 'validation';
@@ -47,8 +47,6 @@ const EditPerson = (props) => {
 
     const dataToSubmit = ({
       ...cleanedData,
-      documentExpiryDate: formatDate(personData.documentExpiryDateYear, personData.documentExpiryDateMonth, personData.documentExpiryDateDay),
-      dateOfBirth: formatDate(personData.dateOfBirthYear, personData.dateOfBirthMonth, personData.dateOfBirthDay),
     });
 
     return dataToSubmit;
@@ -115,8 +113,8 @@ const EditPerson = (props) => {
   const checkRequiredFields = (data) => {
     const fieldsErroring = {};
     personValidationRules.map((rule) => {
-      (!(rule.field in data) || data[rule.field] === '')
-        ? fieldsErroring[rule.field] = rule.message
+      (!(rule.inputField in data) || data[rule.inputField] === '')
+        ? fieldsErroring[rule.errorDisplayId] = rule.message
         : null;
     });
     setErrors(fieldsErroring);

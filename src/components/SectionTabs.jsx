@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link, useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
@@ -10,6 +11,7 @@ import { fetchReportsRoutine } from 'State/reports';
 const SectionTabs = ({
   pageData, fetchReportsTriggerAction, reports,
 }) => {
+  const history = useHistory();
   const [tabData, setTabData] = useState([]);
   const [tableName, setTableName] = useState('Draft');
   const tabs = [
