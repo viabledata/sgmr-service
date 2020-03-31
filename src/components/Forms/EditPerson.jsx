@@ -61,7 +61,7 @@ const EditPerson = (props) => {
             case 401: history.push('/sign-in?source=people'); break;
             case 422: history.push('/sign-in?source=people'); break;
             case 405: history.push('/sign-in?source=people'); break;
-            default: console.log('400', err.response.data);
+            default: history.push('/sign-in?source=people');
           }
         }
       });

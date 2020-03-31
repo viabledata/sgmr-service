@@ -30,11 +30,10 @@ const SectionTable = ({
         .catch((err) => {
           if (err.response) {
             switch (err.response.status) {
-              case 400: setErrors({ ...errors, CreatePerson: 'This person already exists' }); break;
               case 401: history.push(`/sign-in?source=${location}`); break;
               case 422: history.push(`/sign-in?source=${location}`); break;
               case 405: history.push(`/sign-in?source=${location}`); break;
-              default: setErrors({ ...errors, CreatePerson: 'Something went wrong' });
+              default: history.push(`/sign-in?source=${location}`);
             }
           }
         });
