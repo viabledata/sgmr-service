@@ -15,24 +15,35 @@ const EditPerson = (props) => {
   const history = useHistory();
   const personId = props.location.state.peopleId;
   const [personData, setPersonData] = useState();
+  const [formattedData, setFormattedData] = useState();
   const [formData, setFormData] = useState();
   const [errors, setErrors] = useState({});
 
   // Reformat dates & peopleType into individual items for form field display
   const reformatFields = (data) => {
+    let formattedFields = {};
+
     const [dateOfBirthYear, dateOfBirthMonth, dateOfBirthDay] = data.dateOfBirth.split('-');
     const [documentExpiryDateYear, documentExpiryDateMonth, documentExpiryDateDay] = data.documentExpiryDate.split('-');
 
-    const formattedFields = {
-      dateOfBirthYear,
-      dateOfBirthMonth,
-      dateOfBirthDay,
-      documentExpiryDateYear,
-      documentExpiryDateMonth,
-      documentExpiryDateDay,
-      peopleType: data.peopleType.name,
-    };
-    setPersonData({ ...data, ...formattedFields });
+    if (data.dateOfBirth) {
+      formattedFields = {
+        ...formattedFields,
+        dateOfBirthYear,
+        dateOfBirthMonth,
+        dateOfBirthDay,
+      };
+    }
+    if (data.documentExpiryDate) {
+      formattedFields = {
+        ...formattedFields,
+        documentExpiryDateYear,
+        documentExpiryDateMonth,
+        documentExpiryDateDay,
+      };
+    }
+
+    setPersonData({ ...data, ...formattedFields, peopleType: data.peopleType.name });
   };
 
 
