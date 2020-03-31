@@ -39,6 +39,9 @@ const PageContainer = (props) => {
     checkPageReportsSection();
     localStorage.removeItem('errors');
     localStorage.removeItem('formData');
+    localStorage.removeItem('accountData');
+    localStorage.removeItem('data');
+    localStorage.removeItem('email');
   }, [pageData]);
 
   if (!sectionReport) { return (null); }

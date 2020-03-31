@@ -4,11 +4,12 @@ import axios from 'axios';
 import moment from 'moment';
 
 // app imports
+import Auth from 'Auth';
+import CreatePerson from 'CreatePerson';
 import { PEOPLE_URL } from 'Constants/ApiConstants';
 import { formatDate, isDateValid } from 'Utils/date';
 import { PEOPLE_PAGE_URL, SAVE_VOYAGE_PEOPLE_URL } from 'Constants/ClientConstants';
-import Auth from 'Auth';
-import CreatePerson from 'CreatePerson';
+
 
 const FormPeople = (props) => {
   const history = useHistory();
@@ -101,7 +102,7 @@ const FormPeople = (props) => {
   };
 
   // Clear formData from localStorage
-  const clearFormData = (e) => {
+  const clearFormData = () => {
     setFormData({});
     setErrors({ });
   };
@@ -151,6 +152,7 @@ const FormPeople = (props) => {
         .catch((err) => {
           if (err.response) {
             switch (err.response.status) {
+              case 400: setErrors({ ...errors, CreatePerson: err.response.data.message }); break;
               case 401: history.push(`/sign-in?source=${location}`); break;
               case 422: history.push(`/sign-in?source=${location}`); break;
               case 405: history.push(`/sign-in?source=${location}`); break;
@@ -189,21 +191,18 @@ const FormPeople = (props) => {
             <form id="CreatePerson">
 
               {Object.keys(errors).length > 0 && (
-                <div className="govuk-error-summary" aria-labelledby="error-summary-title" role="alert" tabIndex="-1" data-module="govuk-error-summary">
-                  <h2 className="govuk-error-summary__title">
-                    There is a problem
-                  </h2>
-                  <div className="govuk-error-summary__body">
-                    <ul className="govuk-list govuk-error-summary__list">
-                      {Object.entries(errors).map((elem, i) => (
-                        <li key={i}>
-                          {elem[0] !== 'title'
-                              && <a href={`#${elem[0]}`}>{elem[1]}</a>}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                </div>
+              <div className="govuk-error-summary" aria-labelledby="error-summary-title" role="alert" tabIndex="-1" data-module="govuk-error-summary">
+                <h2 className="govuk-error-summary__title">
+                  There is a problem
+                </h2>
+                {errors.CreatePerson
+                    && (
+                    <span className="govuk-error-message">
+                      <span className="govuk-visually-hidden">Error:</span>
+                      {errors.CreatePerson}
+                    </span>
+                    )}
+              </div>
               )}
 
               <CreatePerson

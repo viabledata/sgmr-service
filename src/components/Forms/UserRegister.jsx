@@ -294,7 +294,7 @@ const UserRegister = () => {
               <ul className="govuk-list govuk-list--bullet">
                 <li>that the information you have provided is correct to the best of your knowledge</li>
                 <li>
-                  that you have read and accept our
+                  that you have read and accept our&nbsp;
                   <a target="_blank" href="https://www.gov.uk/government/publications/personal-information-use-in-borders-immigration-and-citizenship">privacy policy</a>
                 </li>
               </ul>
