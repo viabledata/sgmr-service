@@ -45,9 +45,6 @@ const EditPerson = (props) => {
     setPersonData({ ...data, ...formattedFields });
   };
 
-  // console.log(personData)
-
-
   // Get data to prepopulate the form for this person
   const getPersonData = () => {
     axios.get(`${PEOPLE_URL}/${personId}`, {
