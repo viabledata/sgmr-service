@@ -21,12 +21,10 @@ const EditPerson = (props) => {
 
   // Reformat dates & peopleType into individual items for form field display
   const reformatFields = (data) => {
-    let formattedFields = {};
-
-    const [dateOfBirthYear, dateOfBirthMonth, dateOfBirthDay] = data.dateOfBirth.split('-');
-    const [documentExpiryDateYear, documentExpiryDateMonth, documentExpiryDateDay] = data.documentExpiryDate.split('-');
+    let formattedFields = { peopleType: data.peopleType.name };
 
     if (data.dateOfBirth) {
+      const [dateOfBirthYear, dateOfBirthMonth, dateOfBirthDay] = data.dateOfBirth.split('-');
       formattedFields = {
         ...formattedFields,
         dateOfBirthYear,
@@ -35,6 +33,7 @@ const EditPerson = (props) => {
       };
     }
     if (data.documentExpiryDate) {
+      const [documentExpiryDateYear, documentExpiryDateMonth, documentExpiryDateDay] = data.documentExpiryDate.split('-');
       formattedFields = {
         ...formattedFields,
         documentExpiryDateYear,
@@ -43,8 +42,10 @@ const EditPerson = (props) => {
       };
     }
 
-    setPersonData({ ...data, ...formattedFields, peopleType: data.peopleType.name });
+    setPersonData({ ...data, ...formattedFields });
   };
+
+  // console.log(personData)
 
 
   // Get data to prepopulate the form for this person
