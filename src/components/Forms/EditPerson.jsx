@@ -152,7 +152,7 @@ const EditPerson = (props) => {
         .catch((err) => {
           if (err.response) {
             switch (err.response.status) {
-              case 400: console.log(err.response.status); break;
+              case 400: setErrors({ ...errors, EditPerson: err.response.data.message }); break;
               case 401: history.push('/sign-in?source=people'); break;
               case 422: history.push('/sign-in?source=people'); break;
               case 405: history.push('/sign-in?source=people'); break;
@@ -193,6 +193,22 @@ const EditPerson = (props) => {
             <h1 className="govuk-heading-xl">Save a person</h1>
             <p className="govuk-body-l">Update the details of the person you want to edit.</p>
             <form id="EditPerson">
+
+              {Object.keys(errors).length > 0 && (
+                <div className="govuk-error-summary" aria-labelledby="error-summary-title" role="alert" tabIndex="-1" data-module="govuk-error-summary">
+                  <h2 className="govuk-error-summary__title">
+                    There is a problem
+                  </h2>
+                  {errors.EditPerson
+                    && (
+                    <span className="govuk-error-message">
+                      <span className="govuk-visually-hidden">Error:</span>
+                      {errors.EditPerson}
+                    </span>
+                    )}
+                </div>
+              )}
+
 
               <CreatePerson
                 handleChange={handleChange}
