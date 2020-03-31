@@ -32,7 +32,7 @@ const EditVessel = (props) => {
             case 401: history.push('/sign-in?source=vessels'); break;
             case 422: history.push('/sign-in?source=vessels'); break;
             case 405: history.push('/sign-in?source=vessels'); break;
-            default: console.log('400', err.response.data);
+            default: history.push('/sign-in?source=vessels');
           }
         }
       });
@@ -76,9 +76,10 @@ const EditVessel = (props) => {
     return Object.keys(fieldsErroring).length > 0;
   };
 
-  // Create submit data, all required fields, even if unedited, must be passed on the patc
+  // Create submit data, all required fields, even if unedited, must be passed on the patch
   const createSubmitData = (editedData, fullData) => {
-    if (!editedData) { return fullData; }
+    // If there are no edited fields, return user to vessel page with no changes
+    if (!editedData) { history.push(VESSELS_PAGE_URL); }
     return {
       vesselName: editedData.vesselName ? editedData.vesselName : fullData.vesselName,
       vesselType: editedData.vesselType ? editedData.vesselType : fullData.vesselType,
@@ -106,11 +107,11 @@ const EditVessel = (props) => {
         .catch((err) => {
           if (err.response) {
             switch (err.response.status) {
-              case 400: console.log('400', err.response.data); break;
+              case 400: setErrors({ ...errors, EditVessel: err.response.data.message }); break;
               case 401: history.push('/sign-in?source=vessels'); break;
               case 422: history.push('/sign-in?source=vessels'); break;
               case 405: history.push('/sign-in?source=vessels'); break;
-              default: console.log('400', err.response.data);
+              default: console.log(err.response.data);
             }
           }
         });
@@ -148,7 +149,22 @@ const EditVessel = (props) => {
           <div className="govuk-grid-column-two-thirds">
             <h1 className="govuk-heading-xl">Edit a vessel</h1>
             <p className="govuk-body-l">Update the details of the vessel you want to edit.</p>
-            <form id="EditPerson">
+            <form id="EditVessel">
+
+              {Object.keys(errors).length > 0 && (
+              <div className="govuk-error-summary" aria-labelledby="error-summary-title" role="alert" tabIndex="-1" data-module="govuk-error-summary">
+                <h2 className="govuk-error-summary__title">
+                  There is a problem
+                </h2>
+                {errors.EditVessel
+                    && (
+                    <span className="govuk-error-message">
+                      <span className="govuk-visually-hidden">Error:</span>
+                      {errors.EditVessel}
+                    </span>
+                    )}
+              </div>
+              )}
 
               <CreateVessel
                 handleChange={handleChange}
