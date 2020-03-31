@@ -87,7 +87,7 @@ export const personValidationRules = [
     inputField: 'dateOfBirthDay',
     errorDisplayId: 'dateOfBirth',
     rule: 'required',
-    message: 'You must enter an expiry date',
+    message: 'You must enter a date of birth',
   },
   {
     inputField: 'placeOfBirth',

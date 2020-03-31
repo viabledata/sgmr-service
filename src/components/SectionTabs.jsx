@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
@@ -11,7 +10,6 @@ import { fetchReportsRoutine } from 'State/reports';
 const SectionTabs = ({
   pageData, fetchReportsTriggerAction, reports,
 }) => {
-  const history = useHistory();
   const [tabData, setTabData] = useState([]);
   const [tableName, setTableName] = useState('Draft');
   const tabs = [
@@ -49,7 +47,7 @@ const SectionTabs = ({
     fetchReportsTriggerAction();
   }, [pageData]);
 
-
+  console.log((!pageData || !tabData || tabData.length === 0 || !reports.list))
   if (!pageData || !tabData || tabData.length === 0 || !reports.list) { return null; }
 
   return (
@@ -64,7 +62,7 @@ const SectionTabs = ({
         </h3>
 
         <ul className="govuk-tabs__list">
-          {tabData.map((tab) => {
+          {tabData && tabData.map((tab) => {
             return (
               <li
                 key={tab.name}
@@ -93,7 +91,7 @@ const SectionTabs = ({
               </tr>
             </thead>
             <tbody>
-              {reports.list.items.map((voyage) => {
+              {reports.list.items && reports.list.items.map((voyage) => {
                 if (voyage.status.name === tableName) {
                   return (
                     <tr className="govuk-table__row" key={voyage.id}>
