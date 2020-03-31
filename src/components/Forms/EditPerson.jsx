@@ -15,7 +15,6 @@ const EditPerson = (props) => {
   const history = useHistory();
   const personId = props.location.state.peopleId;
   const [personData, setPersonData] = useState();
-  const [formattedData, setFormattedData] = useState();
   const [formData, setFormData] = useState();
   const [errors, setErrors] = useState({});
 

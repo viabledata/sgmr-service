@@ -17,7 +17,6 @@ const SectionTable = ({
   const isPageVessels = page === '/vessels';
   const isPagePeople = page === '/people';
   const [data, setData] = useState();
-  const [errors, setErrors] = useState();
   const [titles, setTitles] = useState([]);
 
   const getData = () => {

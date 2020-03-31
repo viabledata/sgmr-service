@@ -137,7 +137,7 @@ export const vesselValidationRules = [
   {
     field: 'vesselName',
     rule: 'required',
-    message: 'You must enter a name',
+    message: 'You must enter a vessel name',
   },
   {
     field: 'vesselType',
@@ -147,11 +147,11 @@ export const vesselValidationRules = [
   {
     field: 'moorings',
     rule: 'required',
-    message: 'You must enter a usual mooring',
+    message: 'You must enter the vessel usual mooring',
   },
   {
     field: 'registration',
     rule: 'required',
-    message: 'You must enter the registration',
+    message: 'You must enter the vessel registration',
   },
 ];

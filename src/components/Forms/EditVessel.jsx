@@ -17,7 +17,7 @@ const EditVessel = (props) => {
   const [formData, setFormData] = useState();
   const [errors, setErrors] = useState({});
 
-  // Get data to prepopulate the form for this vessel
+  // Populate form using vessel data
   const getVesselData = () => {
     axios.get(`${VESSELS_URL}/${vesselId}`, {
       headers: { Authorization: `Bearer ${Auth.retrieveToken()}` },
@@ -65,7 +65,7 @@ const EditVessel = (props) => {
   };
 
   // Handle missing required fields
-  const checkRequiredFields = (data) => {
+  const areFieldsValid = (data) => {
     const fieldsErroring = {};
     vesselValidationRules.map((rule) => {
       (!(rule.field in data) || data[rule.field] === '')
@@ -76,28 +76,32 @@ const EditVessel = (props) => {
     return Object.keys(fieldsErroring).length > 0;
   };
 
-  // Create submit data, all required fields, even if unedited, must be passed on the patch
-  const createSubmitData = (editedData, fullData) => {
-    // If there are no edited fields, return user to vessel page with no changes
-    if (!editedData) { history.push(VESSELS_PAGE_URL); }
-    return {
-      vesselName: editedData.vesselName ? editedData.vesselName : fullData.vesselName,
-      vesselType: editedData.vesselType ? editedData.vesselType : fullData.vesselType,
-      registration: editedData.registration ? editedData.registration : fullData.registration,
-      moorings: editedData.moorings ? editedData.moorings : fullData.moorings,
-      hullIdentificationNumber: editedData.hullIdentificationNumber ? editedData.hullIdentificationNumber : fullData.hullIdentificationNumber,
-      callsign: editedData.callsign ? editedData.callsign : fullData.callsign,
-      vesselNationality: editedData.vesselNationality ? editedData.vesselNationality : fullData.vesselNationality,
-      vesselBase: editedData.vesselBase ? editedData.vesselBase : fullData.vesselBase,
-    };
+  const formatData = (dataVessel, dataForm) => {
+    if (dataForm) {
+      if (!areFieldsValid(dataVessel)) {
+        const dataToSubmit = {
+          ...formData,
+          vesselName: dataForm.vesselName ? dataForm.vesselName : dataVessel.vesselName,
+          vesselType: dataForm.vesselType ? dataForm.vesselType : dataVessel.vesselType,
+          registration: dataForm.registration ? dataForm.registration : dataVessel.registration,
+          moorings: dataForm.moorings ? dataForm.moorings : dataVessel.moorings,
+        };
+        return dataToSubmit;
+      }
+    }
+    history.push(VESSELS_PAGE_URL);
   };
+
 
   // Handle Submit, including clearing localStorage
   const handleSubmit = (e) => {
     e.preventDefault();
+    const submitData = formatData(vesselData, formData);
 
-    if (!checkRequiredFields(vesselData)) {
-      axios.patch(`${VESSELS_URL}/${vesselId}`, createSubmitData(formData, vesselData), {
+    if (!formData) {
+      history.push(VESSELS_PAGE_URL);
+    } else if (!areFieldsValid(vesselData)) {
+      axios.patch(`${VESSELS_URL}/${vesselId}`, submitData, {
         headers: { Authorization: `Bearer ${Auth.retrieveToken()}` },
       })
         .then(() => {
@@ -111,14 +115,14 @@ const EditVessel = (props) => {
               case 401: history.push('/sign-in?source=vessels'); break;
               case 422: history.push('/sign-in?source=vessels'); break;
               case 405: history.push('/sign-in?source=vessels'); break;
-              default: console.log(err.response.data);
+              default: history.push('/sign-in?source=vessels'); break;
             }
           }
         });
     }
   };
 
-  // Get person data to pass to prepopulate the form
+  // Get vesselData from API for use on this form
   useEffect(() => {
     getVesselData();
   }, []);
@@ -150,7 +154,6 @@ const EditVessel = (props) => {
             <h1 className="govuk-heading-xl">Edit a vessel</h1>
             <p className="govuk-body-l">Update the details of the vessel you want to edit.</p>
             <form id="EditVessel">
-
               {Object.keys(errors).length > 0 && (
               <div className="govuk-error-summary" aria-labelledby="error-summary-title" role="alert" tabIndex="-1" data-module="govuk-error-summary">
                 <h2 className="govuk-error-summary__title">
@@ -165,14 +168,12 @@ const EditVessel = (props) => {
                     )}
               </div>
               )}
-
               <CreateVessel
                 handleChange={handleChange}
                 handleSubmit={handleSubmit}
                 data={vesselData}
                 errors={errors}
               />
-
               <p>
                 <a href="/vessels" className="govuk-link govuk-link--no-visited-state" onClick={(e) => clearLocalStorage(e)}>Exit without saving</a>
               </p>
