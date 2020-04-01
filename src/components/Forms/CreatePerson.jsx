@@ -1,5 +1,4 @@
 import React from 'react';
-import { useLocation } from 'react-router-dom';
 
 const CreatePerson = ({
   handleSubmit, handleChange, data, errors,
@@ -18,7 +17,6 @@ const CreatePerson = ({
           && (
           <span className="govuk-error-message">
             <span className="govuk-visually-hidden">Error:</span>
-            {' '}
             {errors.firstName}
           </span>
           )}
@@ -39,7 +37,6 @@ const CreatePerson = ({
           && (
           <span className="govuk-error-message">
             <span className="govuk-visually-hidden">Error:</span>
-            {' '}
             {errors.lastName}
           </span>
           )}
@@ -52,10 +49,17 @@ const CreatePerson = ({
         />
       </div>
 
-      <div id="gender" className="govuk-form-group">
+      <div id="gender" className={`govuk-form-group ${errors.gender ? 'govuk-form-group--error' : ''}`}>
         <label className="govuk-label" htmlFor="gender">
           Gender
         </label>
+        {errors.gender
+          && (
+          <span className="govuk-error-message">
+            <span className="govuk-visually-hidden">Error:</span>
+            {errors.gender}
+          </span>
+          )}
         <select
           className="govuk-select"
           name="gender"
@@ -70,12 +74,19 @@ const CreatePerson = ({
         </select>
       </div>
 
-      <div id="dateOfBirth" className="govuk-form-group">
+      <div id="dateOfBirth" className={`govuk-form-group ${errors.dateOfBirth ? 'govuk-form-group--error' : ''}`}>
         <fieldset className="govuk-fieldset" role="group" aria-describedby="dob-hint">
           <legend className="govuk-fieldset__legend">
             <label className="govuk-label" htmlFor="dateOfBirth">
               What is your date of birth?
             </label>
+            {errors.dateOfBirth
+              && (
+              <span className="govuk-error-message">
+                <span className="govuk-visually-hidden">Error:</span>
+                {errors.dateOfBirth}
+              </span>
+              )}
           </legend>
           <span className="govuk-hint">
             For example, 31 3 1980
@@ -95,7 +106,7 @@ const CreatePerson = ({
                   pattern="[0-9]*"
                   inputMode="numeric"
                   value={data.dateOfBirthDay || ''}
-                  onChange={handleChange}
+                  onChange={(handleChange)}
                 />
               </div>
             </div>
@@ -139,20 +150,27 @@ const CreatePerson = ({
         </fieldset>
       </div>
 
-      <div id="placeOfBirth" className="govuk-form-group">
+      <div id="placeOfBirth" className={`govuk-form-group ${errors.placeOfBirth ? 'govuk-form-group--error' : ''}`}>
         <label className="govuk-label" htmlFor="placeOfBirth">
           Place of birth
         </label>
+        {errors.placeOfBirth
+          && (
+          <span className="govuk-error-message">
+            <span className="govuk-visually-hidden">Error:</span>
+            {errors.placeOfBirth}
+          </span>
+          )}
         <input
           className="govuk-input"
           name="placeOfBirth"
           type="text"
           value={data.placeOfBirth || ''}
-          onChange={handleChange}
+          onChange={(handleChange)}
         />
       </div>
 
-      <div id="nationality" className="govuk-form-group">
+      <div id="nationality" className={`govuk-form-group ${errors.nationality ? 'govuk-form-group--error' : ''}`}>
         <label className="govuk-label" htmlFor="nationality">
           Nationality
         </label>
@@ -289,7 +307,7 @@ const CreatePerson = ({
           </div>
           <div className="govuk-form-group">
             <label className="govuk-label" htmlFor="documentType-other">
-              If "Other", please specify
+              If &quot;Other&quot;, please specify
             </label>
             <input
               className="govuk-input"
@@ -423,6 +441,7 @@ const CreatePerson = ({
 
       <div id="submitBlock">
         <button
+          type="submit"
           className="govuk-button"
           data-module="govuk-button"
           onClick={handleSubmit}

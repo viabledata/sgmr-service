@@ -57,3 +57,8 @@ li a.govuk-header__link {
 .govuk-heading-m + .govuk-summary-list__value {
  border-bottom: none;
 }
+
+// Make table cells clickable
+.govuk-table__cell .govuk-link:link, .govuk-table__cell a:link {
+  display: block;
+}

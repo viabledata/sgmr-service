@@ -47,7 +47,6 @@ const SectionTabs = ({
     fetchReportsTriggerAction();
   }, [pageData]);
 
-
   if (!pageData || !tabData || tabData.length === 0 || !reports.list) { return null; }
 
   return (
@@ -62,7 +61,7 @@ const SectionTabs = ({
         </h3>
 
         <ul className="govuk-tabs__list">
-          {tabData.map((tab) => {
+          {tabData && tabData.map((tab) => {
             return (
               <li
                 key={tab.name}
@@ -91,7 +90,7 @@ const SectionTabs = ({
               </tr>
             </thead>
             <tbody>
-              {reports.list.items.map((voyage) => {
+              {reports.list.items && reports.list.items.map((voyage) => {
                 if (voyage.status.name === tableName) {
                   return (
                     <tr className="govuk-table__row" key={voyage.id}>

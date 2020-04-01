@@ -78,7 +78,7 @@ const SectionTable = ({
               <tbody className="govuk-table__body">
                 {isPageVessels && data.map((elem) => {
                   return (
-                    <tr className="govuk-table__row" key={elem}>
+                    <tr className="govuk-table__row" key={elem.id}>
                       <td className="govuk-table__cell">
                         <p>{elem.vesselName}</p>
                       </td>
