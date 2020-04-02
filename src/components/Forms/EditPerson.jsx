@@ -168,6 +168,8 @@ const EditPerson = (props) => {
             }
           }
         });
+    } else {
+      history.push(PEOPLE_PAGE_URL);
     }
   };
 

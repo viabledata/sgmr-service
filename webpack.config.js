@@ -56,10 +56,12 @@ module.exports = {
       FormVoyageResponsiblePerson: path.resolve(__dirname, 'src/components/Forms/FormVoyageResponsiblePerson.jsx'),
       FormVoyageSubmitted: path.resolve(__dirname, 'src/components/Forms/FormVoyageSubmitted.jsx'),
       FormVoyageVessel: path.resolve(__dirname, 'src/components/Forms/FormVoyageVessel.jsx'),
+      validation: path.resolve(__dirname, 'src/components/Forms/validationRules.js'),
+      // Utils
       Constants: path.resolve(__dirname, 'src/constants'),
       State: path.resolve(__dirname, 'src/state'),
       Utils: path.resolve(__dirname, 'src/utils'),
-      validation: path.resolve(__dirname, 'src/components/Forms/validationRules.js'),
+      scrollToTopOnError: path.resolve(__dirname, 'src/utils/scrollToTopOnError'),
     },
     extensions: ['.js', '.jsx'],
   },

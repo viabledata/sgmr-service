@@ -135,22 +135,22 @@ export const dateValidation = (name, value) => {
 
 export const vesselValidationRules = [
   {
-    field: 'vesselName',
+    inputField: 'vesselName',
     rule: 'required',
     message: 'You must enter a vessel name',
   },
   {
-    field: 'vesselType',
+    inputField: 'vesselType',
     rule: 'required',
     message: 'You must enter a vessel type',
   },
   {
-    field: 'moorings',
+    inputField: 'moorings',
     rule: 'required',
     message: 'You must enter the vessel usual mooring',
   },
   {
-    field: 'registration',
+    inputField: 'registration',
     rule: 'required',
     message: 'You must enter the vessel registration',
   },

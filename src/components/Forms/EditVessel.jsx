@@ -5,10 +5,10 @@ import axios from 'axios';
 // App imports
 import Auth from 'Auth';
 import CreateVessel from 'CreateVessel';
+import scrollToTopOnError from 'scrollToTopOnError';
 import { VESSELS_URL } from 'Constants/ApiConstants';
 import { VESSELS_PAGE_URL } from 'Constants/ClientConstants';
 import { vesselValidationRules } from 'validation';
-
 
 const EditVessel = (props) => {
   const history = useHistory();
@@ -17,7 +17,8 @@ const EditVessel = (props) => {
   const [formData, setFormData] = useState();
   const [errors, setErrors] = useState({});
 
-  // Populate form using vessel data
+
+  // Populate the form with this vessel's data
   const getVesselData = () => {
     axios.get(`${VESSELS_URL}/${vesselId}`, {
       headers: { Authorization: `Bearer ${Auth.retrieveToken()}` },
@@ -38,70 +39,78 @@ const EditVessel = (props) => {
       });
   };
 
-  // Clear formData from localStorage
-  const clearLocalStorage = () => {
-    setVesselData({});
-    setFormData({});
-    setErrors({ });
-  };
 
-  // Clear errors
+  // Clear form field errors
   const removeError = (fieldName) => {
-    const tempArr = { ...errors };
+    const errorList = { ...errors };
     // Delete the error
     const key = fieldName;
-    delete tempArr[key];
-    setErrors(tempArr);
+    delete errorList[key];
+    setErrors(errorList);
   };
 
-  // Update form info to state
+
+  // Update form and vessel data if user changes any field
   const handleChange = (e) => {
-    // Original data
     setVesselData({ ...vesselData, [e.target.name]: e.target.value });
-    // Updated data
     setFormData({ ...formData, [e.target.name]: e.target.value });
-    // Clear any errors
     removeError(e.target.name);
   };
 
-  // Handle missing required fields
-  const areFieldsValid = (data) => {
+
+  // Check fields that have been changed are valid
+  const areFieldsValid = (dataToValidate) => {
     const fieldsErroring = {};
-    vesselValidationRules.map((rule) => {
-      (!(rule.field in data) || data[rule.field] === '')
-        ? fieldsErroring[rule.field] = rule.message
-        : null;
+
+    Object.entries(dataToValidate).map((field) => {
+      const fieldName = field[0];
+      const fieldValue = field[1];
+
+      // Test for empty required fields
+      vesselValidationRules.find((object) => {
+        (!fieldValue && object.inputField === fieldName)
+          ? fieldsErroring[fieldName] = object.message
+          : null;
+      });
     });
+
     setErrors(fieldsErroring);
+    scrollToTopOnError(fieldsErroring);
     return Object.keys(fieldsErroring).length > 0;
   };
 
+
+  // Format the data so it matches API requirements
   const formatData = (dataVessel, dataForm) => {
-    if (dataForm) {
-      if (!areFieldsValid(dataVessel)) {
-        const dataToSubmit = {
-          ...formData,
-          vesselName: dataForm.vesselName ? dataForm.vesselName : dataVessel.vesselName,
-          vesselType: dataForm.vesselType ? dataForm.vesselType : dataVessel.vesselType,
-          registration: dataForm.registration ? dataForm.registration : dataVessel.registration,
-          moorings: dataForm.moorings ? dataForm.moorings : dataVessel.moorings,
-        };
-        return dataToSubmit;
-      }
-    }
-    history.push(VESSELS_PAGE_URL);
+    const dataToSubmit = {
+      ...dataForm,
+      vesselName: dataForm.vesselName ? dataForm.vesselName : dataVessel.vesselName,
+      vesselType: dataForm.vesselType ? dataForm.vesselType : dataVessel.vesselType,
+      registration: dataForm.registration ? dataForm.registration : dataVessel.registration,
+      moorings: dataForm.moorings ? dataForm.moorings : dataVessel.moorings,
+    };
+    return dataToSubmit;
   };
 
 
-  // Handle Submit, including clearing localStorage
+  // Clear vesselData from localStorage
+  const clearLocalStorage = () => {
+    setVesselData({});
+  };
+
+
+  // Handle submit
   const handleSubmit = (e) => {
     e.preventDefault();
-    const submitData = formatData(vesselData, formData);
 
+    // Test if user has updated any fields
     if (!formData) {
+      // If they have not, return them to vessels page
       history.push(VESSELS_PAGE_URL);
-    } else if (!areFieldsValid(vesselData)) {
-      axios.patch(`${VESSELS_URL}/${vesselId}`, submitData, {
+      // If they have, test if there are any errors
+    } else if (!areFieldsValid(formData)) {
+      // If there are not, format the data & submit to the API
+      axios.patch(`${VESSELS_URL}/${vesselId}`, formatData(vesselData, formData), {
         headers: { Authorization: `Bearer ${Auth.retrieveToken()}` },
       })
         .then(() => {
@@ -122,22 +131,12 @@ const EditVessel = (props) => {
     }
   };
 
-  // Get vesselData from API for use on this form
+
   useEffect(() => {
     getVesselData();
   }, []);
 
-  // Update localStorage if personData or errors changes
-  useEffect(() => {
-    localStorage.setItem('data', JSON.stringify(vesselData));
-  }, [vesselData]);
-  useEffect(() => {
-    localStorage.setItem('errors', JSON.stringify(errors));
-    window.scrollTo(0, 0);
-  }, [errors]);
-
   if (!vesselData) { return null; }
-
   return (
     <div className="govuk-width-container ">
       <div className="govuk-breadcrumbs">
@@ -172,7 +171,7 @@ const EditVessel = (props) => {
                 handleChange={handleChange}
                 handleSubmit={handleSubmit}
                 data={vesselData}
-                errors={errors}
+                errors={errors || ''}
               />
               <p>
                 <a href="/vessels" className="govuk-link govuk-link--no-visited-state" onClick={(e) => clearLocalStorage(e)}>Exit without saving</a>

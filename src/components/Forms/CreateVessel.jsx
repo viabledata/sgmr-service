@@ -4,7 +4,6 @@ const CreateVessel = ({
   handleSubmit, handleChange, data, errors,
 }) => {
   const checkIfVoyageForm = location.pathname.toLowerCase().indexOf('voyage') === -1;
-
   return (
     <section>
       <div id="vesselName" className={`govuk-form-group ${errors.vesselName ? 'govuk-form-group--error' : ''}`}>
