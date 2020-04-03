@@ -4,7 +4,7 @@ import axios from 'axios';
 
 // App imports
 import Auth from 'Auth';
-import CreateVessel from 'CreateVessel';
+import FormVessel from 'FormVessel';
 import scrollToTopOnError from 'scrollToTopOnError';
 import { VESSELS_URL } from 'Constants/ApiConstants';
 import { VESSELS_PAGE_URL } from 'Constants/ClientConstants';
@@ -68,9 +68,9 @@ const EditVessel = (props) => {
 
       // Test for empty required fields
       vesselValidationRules.find((object) => {
-        (!fieldValue && object.inputField === fieldName)
-          ? fieldsErroring[fieldName] = object.message
-          : null;
+        if (!fieldValue && object.inputField === fieldName) {
+          fieldsErroring[fieldName] = object.message;
+        }
       });
     });
 
@@ -167,7 +167,7 @@ const EditVessel = (props) => {
                     )}
               </div>
               )}
-              <CreateVessel
+              <FormVessel
                 handleChange={handleChange}
                 handleSubmit={handleSubmit}
                 data={vesselData}

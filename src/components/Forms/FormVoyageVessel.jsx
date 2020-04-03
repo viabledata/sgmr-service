@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { updateVoyageReportRoutine } from 'State/voyage';
 import { fetchVesselsRoutine } from 'State/vessels';
 import contentArray from 'contentArray';
-import CreateVessel from 'CreateVessel';
+import FormVessel from 'FormVessel';
 
 
 const FormVoyageVessel = ({
@@ -98,7 +98,7 @@ const FormVoyageVessel = ({
               <h2 className="govuk-heading-l">New vessel</h2>
               <p className="govuk-body-l">Add the details of a new vessel you have not already saved</p>
 
-              <CreateVessel
+              <FormVessel
                 handleChange={handleChange}
                 data={data}
                 errors={errors}
