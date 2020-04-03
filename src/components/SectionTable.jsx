@@ -16,7 +16,6 @@ const SectionTable = ({
   const isPageVessels = page === '/vessels';
   const isPagePeople = page === '/people';
   const [data, setData] = useState();
-  const [errors, setErrors] = useState();
   const [titles, setTitles] = useState([]);
 
   const getData = () => {
@@ -30,11 +29,10 @@ const SectionTable = ({
         .catch((err) => {
           if (err.response) {
             switch (err.response.status) {
-              case 400: setErrors({ ...errors, CreatePerson: 'This person already exists' }); break;
               case 401: history.push(`/sign-in?source=${location}`); break;
               case 422: history.push(`/sign-in?source=${location}`); break;
               case 405: history.push(`/sign-in?source=${location}`); break;
-              default: setErrors({ ...errors, CreatePerson: 'Something went wrong' });
+              default: history.push(`/sign-in?source=${location}`);
             }
           }
         });
@@ -76,14 +74,20 @@ const SectionTable = ({
                 </tr>
               </thead>
               <tbody className="govuk-table__body">
-                {isPageVessels && data.map((elem) => {
+                {isPageVessels && data.map((vessel) => {
                   return (
-                    <tr className="govuk-table__row" key={elem.id}>
+                    <tr className="govuk-table__row" key={vessel.id}>
                       <td className="govuk-table__cell">
-                        <p>{elem.vesselName}</p>
+                        <Link to={{
+                          pathname: '/vessels/edit-vessel',
+                          state: { vesselId: vessel.id },
+                        }}
+                        >
+                          {vessel.vesselName}
+                        </Link>
                       </td>
-                      <td className="govuk-table__cell">{elem.vesselType}</td>
-                      <td className="govuk-table__cell">{elem.moorings}</td>
+                      <td className="govuk-table__cell">{vessel.vesselType}</td>
+                      <td className="govuk-table__cell">{vessel.moorings}</td>
                     </tr>
                   );
                 })}

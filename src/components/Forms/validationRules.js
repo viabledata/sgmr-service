@@ -132,3 +132,26 @@ export const dateValidation = (name, value) => {
     default: return null;
   }
 };
+
+export const vesselValidationRules = [
+  {
+    inputField: 'vesselName',
+    rule: 'required',
+    message: 'You must enter a vessel name',
+  },
+  {
+    inputField: 'vesselType',
+    rule: 'required',
+    message: 'You must enter a vessel type',
+  },
+  {
+    inputField: 'moorings',
+    rule: 'required',
+    message: 'You must enter the vessel usual mooring',
+  },
+  {
+    inputField: 'registration',
+    rule: 'required',
+    message: 'You must enter the vessel registration',
+  },
+];

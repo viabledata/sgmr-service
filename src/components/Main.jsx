@@ -21,6 +21,7 @@ import FormPeople from 'FormPeople';
 import FormVoyage from 'FormVoyage';
 import FormVoyageSubmitted from 'FormVoyageSubmitted';
 import Vessels from 'Vessels';
+import EditVessel from 'EditVessel';
 
 
 const Main = () => {
@@ -45,6 +46,9 @@ const Main = () => {
         </SecureRoute>
         <SecureRoute exact path="/vessels/save-vessel">
           <Vessels />
+        </SecureRoute>
+        <SecureRoute exact path="/vessels/edit-vessel">
+          <EditVessel />
         </SecureRoute>
         <SecureRoute exact path="/people">
           <PageContainer />

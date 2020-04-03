@@ -15,7 +15,6 @@ const EditPerson = (props) => {
   const history = useHistory();
   const personId = props.location.state.peopleId;
   const [personData, setPersonData] = useState();
-  const [formattedData, setFormattedData] = useState();
   const [formData, setFormData] = useState();
   const [errors, setErrors] = useState({});
 
@@ -165,10 +164,12 @@ const EditPerson = (props) => {
               case 401: history.push('/sign-in?source=people'); break;
               case 422: history.push('/sign-in?source=people'); break;
               case 405: history.push('/sign-in?source=people'); break;
-              default: console.log(err.response.status); break;
+              default: history.push('/sign-in?source=people'); break;
             }
           }
         });
+    } else {
+      history.push(PEOPLE_PAGE_URL);
     }
   };
 

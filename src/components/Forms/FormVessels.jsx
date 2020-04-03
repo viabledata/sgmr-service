@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useHistory, useLocation } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import axios from 'axios';
 
 // app imports
@@ -94,9 +94,6 @@ const FormVessels = () => {
             }
           }
         });
-    } else {
-      // This means there are errors, so jump user to the error box
-      history.push('#CreateVessel');
     }
   };
 
