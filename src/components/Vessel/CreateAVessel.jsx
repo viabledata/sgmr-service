@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useHistory, useLocation, Link } from 'react-router-dom';
 import axios from 'axios';
 
-// app imports
+// App imports
 import Auth from 'Auth';
-import { VESSELS_URL } from 'Constants/ApiConstants';
 import FormVessel from 'FormVessel';
+import scrollToTopOnError from 'scrollToTopOnError';
+import { VESSELS_URL } from 'Constants/ApiConstants';
+import { VESSELS_PAGE_URL } from 'Constants/ClientConstants';
+import { vesselValidationRules } from 'validation';
 
 const CreateAVessel = () => {
   const history = useHistory();
@@ -16,78 +19,69 @@ const CreateAVessel = () => {
   const [formData, setFormData] = useState(JSON.parse(localStorage.getItem('formData')) || {});
   const [errors, setErrors] = useState(JSON.parse(localStorage.getItem('errors')) || { });
 
-  const validationRules = [
-    {
-      field: 'vesselName',
-      rule: 'required',
-      message: 'You must enter a name',
-    },
-    {
-      field: 'vesselType',
-      rule: 'required',
-      message: 'You must enter a vessel type',
-    },
-    {
-      field: 'moorings',
-      rule: 'required',
-      message: 'You must enter a usual mooring',
-    },
-    {
-      field: 'registration',
-      rule: 'required',
-      message: 'You must enter the registration',
-    },
-  ];
 
-  // Validation
+  // Clear form field errors
   const removeError = (fieldName) => {
-    const tempArr = { ...errors };
+    const errorList = { ...errors };
     const key = fieldName;
-    delete tempArr[key];
-    setErrors(tempArr);
-  };
-  // Handle missing required fields
-  const checkRequiredFields = () => {
-    const tempObj = {};
-    validationRules.map((elem) => {
-      if (!(elem.field in formData) || formData[elem.field] === '') {
-        tempObj[elem.field] = elem.message;
-      }
-    });
-    setErrors(tempObj);
-    return Object.keys(tempObj).length > 0;
+    delete errorList[key];
+    setErrors(errorList);
   };
 
-  // Update form info to state
+
+  // Update form data as user enters it
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
     removeError(e.target.name);
   };
 
+
+  // Check fields that are required exist
+  const areFieldsValid = (dataToValidate) => {
+    const fieldsErroring = {};
+
+    vesselValidationRules.map((rule) => {
+      if (!(rule.inputField in dataToValidate) || formData[rule.inputField] === '') {
+        fieldsErroring[rule.inputField] = rule.message;
+      }
+    });
+
+    setErrors(fieldsErroring);
+    scrollToTopOnError(fieldsErroring);
+    return Object.keys(fieldsErroring).length > 0;
+  };
+
+
   // Clear formData from localStorage
-  const clearFormData = () => {
+  const clearLocalStorage = () => {
     setFormData({});
     setErrors({ });
   };
 
+
   // Handle Submit, including clearing localStorage
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (checkRequiredFields() === false) {
+
+    // Test for any errors
+    if (!areFieldsValid(formData)) {
       axios.post(VESSELS_URL, formData, {
         headers: { Authorization: `Bearer ${Auth.retrieveToken()}` },
       })
         .then(() => {
           // If this is not the voyage form then take user to vessels page, otherwise leave the user here
           if (checkIfNotVoyageForm) {
-            clearFormData();
-            history.push('/vessels');
+            clearLocalStorage();
+            history.push(VESSELS_PAGE_URL);
           }
         })
         .catch((err) => {
           if (err.response) {
             switch (err.response.status) {
-              case 400: setErrors({ ...errors, CreateVessel: 'This vessel already exists' }); break;
+              case 400:
+                setErrors({ ...errors, CreateAVessel: 'This vessel already exists' });
+                scrollToTopOnError('CreateAVessel');
+                break;
               case 422: history.push(`/sign-in?source=${path}`); break;
               case 405: history.push(`/sign-in?source=${path}`); break;
               default: history.push(`/sign-in?source=${location}`);
@@ -97,7 +91,7 @@ const CreateAVessel = () => {
     }
   };
 
-  // Update localStorage/states
+  // Update localStorage to persist data if user refreshes the page
   useEffect(() => {
     localStorage.setItem('formData', JSON.stringify(formData));
   }, [formData]);
@@ -124,12 +118,18 @@ const CreateAVessel = () => {
             <form id="CreateAVessel">
               {Object.keys(errors).length > 0 && (
               <div className="govuk-error-summary" aria-labelledby="error-summary-title" role="alert" tabIndex="-1" data-module="govuk-error-summary">
-                <h2 className="govuk-error-summary__title" id="error-summary-title">
+                <h2 className="govuk-error-summary__title">
                   There is a problem
                 </h2>
+                {errors.CreateAVessel
+                    && (
+                    <span className="govuk-error-message">
+                      <span className="govuk-visually-hidden">Error:</span>
+                      {errors.CreateAVessel}
+                    </span>
+                    )}
               </div>
               )}
-
               <FormVessel
                 handleSubmit={handleSubmit}
                 handleChange={handleChange}
@@ -137,11 +137,11 @@ const CreateAVessel = () => {
                 errors={errors}
               />
               {urlParams[1] === 'vessels'
-        && (
-        <p>
-          <a href="/vessels" className="govuk-link govuk-link--no-visited-state" onClick={clearFormData}>Exit without saving</a>
-        </p>
-        )}
+                && (
+                <p>
+                  <Link to={VESSELS_PAGE_URL} className="govuk-link govuk-link--no-visited-state" onClick={clearLocalStorage}>Exit without saving</Link>
+                </p>
+                )}
             </form>
           </div>
         </div>

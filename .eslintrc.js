@@ -8,7 +8,7 @@ module.exports = {
     "airbnb",
     "plugin:import/errors",
     "plugin:import/warnings",
-    // "plugin:jsx-a11y/recommended",
+    "plugin:jsx-a11y/recommended",
     "plugin:jest/recommended",
     "plugin:react/recommended"
   ],
@@ -29,7 +29,7 @@ module.exports = {
     "filenames",
     "import",
     "jest",
-    // "jsx-a11y",
+    "jsx-a11y",
     "react",
     "react-hooks"
   ],
@@ -46,10 +46,5 @@ module.exports = {
     "import/no-unresolved": "off",
     "prefer-const": "off",
     "prefer-destructuring": "off",
-    // The warnings below need reviewing as to how to solve them in line with GDS
-    "jsx-a11y/label-has-associated-control" : "off",
-    // The warnings below need reviewing to understand the impact
-    "react/destructuring-assignment" : "off",
-    "react/prop-types" : "off",
   }
 };
