@@ -223,9 +223,11 @@ const FormVoyageCheckDetails = ({
               <tr className="govuk-table__row">
                 <td className="govuk-table__cell" colSpan={6}>
                   <div>
-                    <details>
-                      <summary role="button" aria-controls="details-content-2" aria-expanded="false" title={`Further information for ${person.firstName} ${person.lastName}`}>
-                        <span className="summary">Further information</span>
+                    <details data-module="govuk-details">
+                      <summary className="govuk-details__summary">
+                        <span className="govuk-details__summary-text">
+                          Further information
+                        </span>
                       </summary>
                       <div className="panel panel-border-narrow" id="details-content-2" aria-hidden="true">
                         <table className="govuk-table" width="100%">
