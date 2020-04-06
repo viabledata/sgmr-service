@@ -1,6 +1,6 @@
 import React from 'react';
 
-const CreatePerson = ({
+const FormPerson = ({
   handleSubmit, handleChange, data, errors,
 }) => {
   const urlParams = location.search.split('source=');
@@ -453,4 +453,4 @@ const CreatePerson = ({
   );
 };
 
-export default CreatePerson;
+export default FormPerson;
