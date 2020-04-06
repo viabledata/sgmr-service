@@ -20,7 +20,7 @@ import EditPerson from 'EditPerson';
 import FormPeople from 'FormPeople';
 import FormVoyage from 'FormVoyage';
 import FormVoyageSubmitted from 'FormVoyageSubmitted';
-import Vessels from 'Vessels';
+import CreateAVessel from 'CreateAVessel';
 import EditVessel from 'EditVessel';
 
 
@@ -45,7 +45,7 @@ const Main = () => {
           <PageContainer />
         </SecureRoute>
         <SecureRoute exact path="/vessels/save-vessel">
-          <Vessels />
+          <CreateAVessel />
         </SecureRoute>
         <SecureRoute exact path="/vessels/edit-vessel">
           <EditVessel />

@@ -45,6 +45,6 @@ module.exports = {
     "no-restricted-syntax": "off",
     "import/no-unresolved": "off",
     "prefer-const": "off",
-    "prefer-destructuring": "off"
+    "prefer-destructuring": "off",
   }
 };

@@ -1,6 +1,6 @@
 import React from 'react';
 
-const CreateVessel = ({
+const FormVessel = ({
   handleSubmit, handleChange, data, errors,
 }) => {
   const checkIfVoyageForm = location.pathname.toLowerCase().indexOf('voyage') === -1;
@@ -149,6 +149,7 @@ const CreateVessel = ({
         && (
         <div id="submitBlock">
           <button
+            type="submit"
             className="govuk-button"
             data-module="govuk-button"
             onClick={handleSubmit}
@@ -161,4 +162,4 @@ const CreateVessel = ({
   );
 };
 
-export default CreateVessel;
+export default FormVessel;

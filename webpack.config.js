@@ -36,18 +36,18 @@ module.exports = {
       SectionTabs: path.resolve(__dirname, 'src/components/SectionTabs.jsx'),
       SectionTable: path.resolve(__dirname, 'src/components/SectionTable.jsx'),
       StartButton: path.resolve(__dirname, 'src/components/StartButton.jsx'),
-      Vessels: path.resolve(__dirname, 'src/components/Vessels.jsx'),
       // Page content
       contentArray: path.resolve(__dirname, 'src/components/contentArray.js'),
       PageAccount: path.resolve(__dirname, 'src/components/PageAccount.jsx'),
       // Forms
+      CreateAVessel: path.resolve(__dirname, 'src/components/Vessel/CreateAVessel.jsx'),
+      EditVessel: path.resolve(__dirname, 'src/components/Vessel/EditVessel.jsx'),
+      FormVessel: path.resolve(__dirname, 'src/components/Vessel/FormVessel.jsx'),
+
       CreatePerson: path.resolve(__dirname, 'src/components/Forms/CreatePerson.jsx'),
-      CreateVessel: path.resolve(__dirname, 'src/components/Forms/CreateVessel.jsx'),
       EditAccount: path.resolve(__dirname, 'src/components/Forms/EditAccount.jsx'),
       EditPerson: path.resolve(__dirname, 'src/components/Forms/EditPerson.jsx'),
-      EditVessel: path.resolve(__dirname, 'src/components/Forms/EditVessel.jsx'),
       FormPeople: path.resolve(__dirname, 'src/components/Forms/FormPeople.jsx'),
-      FormVessels: path.resolve(__dirname, 'src/components/Forms/FormVessels.jsx'),
       FormVoyage: path.resolve(__dirname, 'src/components/Forms/FormVoyage.jsx'),
       FormVoyageArrival: path.resolve(__dirname, 'src/components/Forms/FormVoyageArrival.jsx'),
       FormVoyageCheckDetails: path.resolve(__dirname, 'src/components/Forms/FormVoyageCheckDetails.jsx'),
