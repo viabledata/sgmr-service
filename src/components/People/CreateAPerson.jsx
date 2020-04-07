@@ -43,7 +43,7 @@ const CreateAPerson = () => {
   };
 
 
-  // Check fields that are required exist
+  // Check fields that are required exist & fields with rules match
   const areFieldsValid = (dataToValidate) => {
     const fieldsErroring = {};
 
@@ -69,7 +69,6 @@ const CreateAPerson = () => {
     if ((isDateBefore(dataToValidate.documentExpiryDateYear, dataToValidate.documentExpiryDateMonth, dataToValidate.documentExpiryDateDay))) {
       fieldsErroring.documentExpiryDate = 'You must enter a valid document expiry date';
     }
-
 
     setErrors(fieldsErroring);
     scrollToTopOnError(fieldsErroring);
