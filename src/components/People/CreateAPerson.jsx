@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-expressions */
 import React, { useState, useEffect } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 import axios from 'axios';
@@ -7,7 +6,7 @@ import axios from 'axios';
 import Auth from 'Auth';
 import FormPerson from 'FormPerson';
 import scrollToTopOnError from 'scrollToTopOnError';
-import { formatDate, isDateValid } from 'Utils/date';
+import { formatDate, isDateValid, isDateBefore } from 'Utils/date';
 import { PEOPLE_URL } from 'Constants/ApiConstants';
 import { PEOPLE_PAGE_URL, SAVE_VOYAGE_PEOPLE_URL } from 'Constants/ClientConstants';
 import { personValidationRules } from 'validation';
@@ -62,6 +61,15 @@ const CreateAPerson = () => {
     if (!(isDateValid(dataToValidate.dateOfBirthYear, dataToValidate.dateOfBirthMonth, dataToValidate.dateOfBirthDay))) {
       fieldsErroring.dateOfBirth = 'You must enter a valid date';
     }
+    // Date of Birth must be before today
+    if (!(isDateBefore(dataToValidate.dateOfBirthYear, dataToValidate.dateOfBirthMonth, dataToValidate.dateOfBirthDay))) {
+      fieldsErroring.dateOfBirth = 'You must enter a valid date of birth date';
+    }
+    // Document expiry date must be after today
+    if ((isDateBefore(dataToValidate.documentExpiryDateYear, dataToValidate.documentExpiryDateMonth, dataToValidate.documentExpiryDateDay))) {
+      fieldsErroring.documentExpiryDate = 'You must enter a valid document expiry date';
+    }
+
 
     setErrors(fieldsErroring);
     scrollToTopOnError(fieldsErroring);
@@ -116,7 +124,7 @@ const CreateAPerson = () => {
           if (err.response) {
             switch (err.response.status) {
               case 400:
-                setErrors({ ...errors, FormPerson: err.response.data.message });
+                setErrors({ ...errors, CreateAPerson: err.response.data.message });
                 scrollToTopOnError(err.response);
                 break;
               case 401: history.push(`/sign-in?source=${location}`); break;
