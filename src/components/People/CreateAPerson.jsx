@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-expressions */
 import React, { useState, useEffect } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 import axios from 'axios';
@@ -43,24 +44,34 @@ const CreateAPerson = () => {
     removeError(e.target.name);
   };
 
-  
 
+  // Check fields that are required exist
+  const areFieldsValid = (dataToValidate) => {
+    const fieldsErroring = {};
 
-  // Handle missing required fields
-  const checkRequiredFields = () => {
-    const tempObj = {};
-    validationRules.map((elem) => {
-      (!(elem.field in formData) || formData[elem.field] === '')
-        ? tempObj[elem.field] = elem.message
+    // Required fields must not be null
+    personValidationRules.map((rule) => {
+      (!(rule.field in dataToValidate) || formData[rule.field] === '')
+        ? fieldsErroring[rule.field] = rule.message
         : null;
     });
-    setErrors(tempObj);
-    return Object.keys(tempObj).length > 0;
+
+    // Date fields must be valid
+    if (!(isDateValid(dataToValidate.documentExpiryDateYear, dataToValidate.documentExpiryDateMonth, dataToValidate.documentExpiryDateDay))) {
+      fieldsErroring.documentExpiryDate = 'You must enter a valid date';
+    }
+    if (!(isDateValid(dataToValidate.dateOfBirthYear, dataToValidate.dateOfBirthMonth, dataToValidate.dateOfBirthDay))) {
+      fieldsErroring.dateOfBirth = 'You must enter a valid date';
+    }
+
+    setErrors(fieldsErroring);
+    scrollToTopOnError(fieldsErroring);
+    return Object.keys(fieldsErroring).length > 0;
   };
 
 
   // Clear formData from localStorage
-  const clearFormData = () => {
+  const clearLocalStorage = () => {
     setFormData({});
     setErrors({ });
   };
@@ -103,7 +114,7 @@ const CreateAPerson = () => {
           if (source[1] === 'voyage') {
             history.push(SAVE_VOYAGE_PEOPLE_URL);
           } else {
-            clearFormData();
+            clearLocalStorage();
             history.push(PEOPLE_PAGE_URL);
           }
         })
@@ -171,7 +182,7 @@ const CreateAPerson = () => {
               />
 
               <p>
-                <a href="/people" className="govuk-link govuk-link--no-visited-state" onClick={(e) => clearFormData(e)}>Exit without saving</a>
+                <a href="/people" className="govuk-link govuk-link--no-visited-state" onClick={(e) => clearLocalStorage(e)}>Exit without saving</a>
               </p>
             </form>
           </div>

@@ -174,6 +174,13 @@ const FormPerson = ({
         <label className="govuk-label" htmlFor="nationality">
           Nationality
         </label>
+        {errors.nationality
+          && (
+          <span className="govuk-error-message">
+            <span className="govuk-visually-hidden">Error:</span>
+            {errors.nationality}
+          </span>
+          )}
         <select
           className="govuk-select"
           name="nationality"
