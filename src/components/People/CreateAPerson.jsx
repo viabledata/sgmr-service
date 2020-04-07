@@ -5,13 +5,13 @@ import moment from 'moment';
 
 // app imports
 import Auth from 'Auth';
-import CreatePerson from 'CreatePerson';
+import FormPerson from 'FormPerson';
 import { PEOPLE_URL } from 'Constants/ApiConstants';
 import { formatDate, isDateValid } from 'Utils/date';
 import { PEOPLE_PAGE_URL, SAVE_VOYAGE_PEOPLE_URL } from 'Constants/ClientConstants';
 
 
-const FormPeople = (props) => {
+const CreateAPerson = (props) => {
   const history = useHistory();
   const location = useLocation().pathname.slice(1);
   const source = useLocation().search.split('=');
@@ -152,7 +152,7 @@ const FormPeople = (props) => {
         .catch((err) => {
           if (err.response) {
             switch (err.response.status) {
-              case 400: setErrors({ ...errors, CreatePerson: err.response.data.message }); break;
+              case 400: setErrors({ ...errors, FormPerson: err.response.data.message }); break;
               case 401: history.push(`/sign-in?source=${location}`); break;
               case 422: history.push(`/sign-in?source=${location}`); break;
               case 405: history.push(`/sign-in?source=${location}`); break;
@@ -188,24 +188,24 @@ const FormPeople = (props) => {
           <div className="govuk-grid-column-two-thirds">
             <h1 className="govuk-heading-xl">Save a person</h1>
             <p className="govuk-body-l">Provide the details of the person you want to add to your list of saved people.</p>
-            <form id="CreatePerson">
+            <form id="FormPerson">
 
               {Object.keys(errors).length > 0 && (
               <div className="govuk-error-summary" aria-labelledby="error-summary-title" role="alert" tabIndex="-1" data-module="govuk-error-summary">
                 <h2 className="govuk-error-summary__title">
                   There is a problem
                 </h2>
-                {errors.CreatePerson
+                {errors.FormPerson
                     && (
                     <span className="govuk-error-message">
                       <span className="govuk-visually-hidden">Error:</span>
-                      {errors.CreatePerson}
+                      {errors.FormPerson}
                     </span>
                     )}
               </div>
               )}
 
-              <CreatePerson
+              <FormPerson
                 handleSubmit={handleSubmit}
                 handleChange={handleChange}
                 data={formData}
@@ -223,4 +223,4 @@ const FormPeople = (props) => {
   );
 };
 
-export default FormPeople;
+export default CreateAPerson;

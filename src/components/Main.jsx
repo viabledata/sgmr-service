@@ -17,7 +17,7 @@ import UserResendCode from 'UserResendCode';
 
 import EditAccount from 'EditAccount';
 import EditPerson from 'EditPerson';
-import FormPeople from 'FormPeople';
+import CreateAPerson from 'CreateAPerson';
 import FormVoyage from 'FormVoyage';
 import FormVoyageSubmitted from 'FormVoyageSubmitted';
 import CreateAVessel from 'CreateAVessel';
@@ -54,7 +54,7 @@ const Main = () => {
           <PageContainer />
         </SecureRoute>
         <SecureRoute exact path="/people/save-person">
-          <FormPeople />
+          <CreateAPerson />
         </SecureRoute>
         <SecureRoute exact path="/people/edit-person">
           <EditPerson />

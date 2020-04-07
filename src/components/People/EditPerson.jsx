@@ -5,7 +5,7 @@ import moment from 'moment';
 
 // App imports
 import Auth from 'Auth';
-import CreatePerson from 'CreatePerson';
+import FormPerson from 'FormPerson';
 import { PEOPLE_URL } from 'Constants/ApiConstants';
 import { PEOPLE_PAGE_URL } from 'Constants/ClientConstants';
 import { dateValidation, personValidationRules } from 'validation';
@@ -220,7 +220,7 @@ const EditPerson = (props) => {
               )}
 
 
-              <CreatePerson
+              <FormPerson
                 handleChange={handleChange}
                 handleSubmit={handleSubmit}
                 data={personData}

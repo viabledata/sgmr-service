@@ -44,10 +44,12 @@ module.exports = {
       EditVessel: path.resolve(__dirname, 'src/components/Vessel/EditVessel.jsx'),
       FormVessel: path.resolve(__dirname, 'src/components/Vessel/FormVessel.jsx'),
 
-      CreatePerson: path.resolve(__dirname, 'src/components/Forms/CreatePerson.jsx'),
+
+      CreateAPerson: path.resolve(__dirname, 'src/components/People/CreateAPerson.jsx'),
+      EditPerson: path.resolve(__dirname, 'src/components/People/EditPerson.jsx'),
+      FormPerson: path.resolve(__dirname, 'src/components/People/FormPerson.jsx'),
+
       EditAccount: path.resolve(__dirname, 'src/components/Forms/EditAccount.jsx'),
-      EditPerson: path.resolve(__dirname, 'src/components/Forms/EditPerson.jsx'),
-      FormPeople: path.resolve(__dirname, 'src/components/Forms/FormPeople.jsx'),
       FormVoyage: path.resolve(__dirname, 'src/components/Forms/FormVoyage.jsx'),
       FormVoyageArrival: path.resolve(__dirname, 'src/components/Forms/FormVoyageArrival.jsx'),
       FormVoyageCheckDetails: path.resolve(__dirname, 'src/components/Forms/FormVoyageCheckDetails.jsx'),
