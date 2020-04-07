@@ -1,88 +1,51 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 import axios from 'axios';
-import moment from 'moment';
 
 // app imports
 import Auth from 'Auth';
 import FormPerson from 'FormPerson';
-import { PEOPLE_URL } from 'Constants/ApiConstants';
+import scrollToTopOnError from 'scrollToTopOnError';
 import { formatDate, isDateValid } from 'Utils/date';
+import { PEOPLE_URL } from 'Constants/ApiConstants';
 import { PEOPLE_PAGE_URL, SAVE_VOYAGE_PEOPLE_URL } from 'Constants/ClientConstants';
+import { personValidationRules } from 'validation';
 
-
-const CreateAPerson = (props) => {
+const CreateAPerson = () => {
   const history = useHistory();
-  const location = useLocation().pathname.slice(1);
+  const location = useLocation();
+  const pathName = useLocation().pathname.slice(1);
   const source = useLocation().search.split('=');
   const [formData, setFormData] = useState(JSON.parse(localStorage.getItem('formData')) || {});
   const [errors, setErrors] = useState(JSON.parse(localStorage.getItem('errors')) || {});
 
-  const validationRules = [
-    {
-      field: 'firstName',
-      rule: 'required',
-      message: 'You must enter a first name',
-    },
-    {
-      field: 'lastName',
-      rule: 'required',
-      message: 'You must enter a last name',
-    },
-    {
-      field: 'peopleType',
-      rule: 'required',
-      message: 'You must enter a person type',
-    },
-    {
-      field: 'documentType',
-      rule: 'required',
-      message: 'You must select a document type',
-    },
-    {
-      field: 'documentNumber',
-      rule: 'required',
-      message: 'You must enter a document number',
-    },
-    {
-      field: 'documentIssuingState',
-      rule: 'required',
-      message: 'You must enter the document issuing state',
-    },
-    {
-      field: 'documentExpiryDateYear', // testing against year as it's the last piece of the date field
-      rule: 'required',
-      message: 'You must enter an expiry date',
-    },
-    {
-      field: 'gender',
-      rule: 'required',
-      message: 'You must select a gender',
-    },
-    {
-      field: 'dateOfBirthYear',
-      rule: 'required',
-      message: 'You must enter a date of birth',
-    },
-    {
-      field: 'placeOfBirth',
-      rule: 'required',
-      message: 'You must enter a place of birth',
-    },
-    {
-      field: 'nationality',
-      rule: 'required',
-      message: 'You must enter a nationality',
-    },
-  ];
 
-  // Validation
   const removeError = (fieldName) => {
-    const tempArr = { ...errors };
-    const key = fieldName;
-    delete tempArr[key];
-    setErrors(tempArr);
+    const errorList = { ...errors };
+    let key;
+
+    if (fieldName.includes('dateOfBirth')) {
+      key = 'dateOfBirth';
+    } else if (fieldName.includes('documentExpiryDate')) {
+      key = 'documentExpiryDate';
+    } else {
+      key = fieldName;
+    }
+
+    delete errorList[key];
+    setErrors(errorList);
   };
+
+
+  // Update form data as user enters it
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+    removeError(e.target.name);
+  };
+
+  
+
+
   // Handle missing required fields
   const checkRequiredFields = () => {
     const tempObj = {};
@@ -95,11 +58,6 @@ const CreateAPerson = (props) => {
     return Object.keys(tempObj).length > 0;
   };
 
-  // Update form info to state
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-    removeError(e.target.name);
-  };
 
   // Clear formData from localStorage
   const clearFormData = () => {
