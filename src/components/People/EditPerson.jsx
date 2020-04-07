@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { withRouter, useHistory } from 'react-router-dom';
 import axios from 'axios';
-import moment from 'moment';
 
 // App imports
 import Auth from 'Auth';
 import FormPerson from 'FormPerson';
+import scrollToTopOnError from 'scrollToTopOnError';
+import { formatDate, isDateValid, isDateBefore } from 'Utils/date';
 import { PEOPLE_URL } from 'Constants/ApiConstants';
-import { PEOPLE_PAGE_URL } from 'Constants/ClientConstants';
+import { PEOPLE_PAGE_URL, SAVE_VOYAGE_PEOPLE_URL } from 'Constants/ClientConstants';
 import { dateValidation, personValidationRules } from 'validation';
 
 
@@ -40,7 +41,6 @@ const EditPerson = (props) => {
         documentExpiryDateDay,
       };
     }
-
     setPersonData({ ...data, ...formattedFields });
   };
 
@@ -75,20 +75,19 @@ const EditPerson = (props) => {
 
   // Clear errors
   const removeError = (fieldName) => {
-    const tempArr = { ...errors };
-    // Check for grouped fields
-    let thisFieldName = '';
+    const errorList = { ...errors };
+    let key;
+
     if (fieldName.includes('dateOfBirth')) {
-      thisFieldName = 'dateOfBirth';
+      key = 'dateOfBirth';
     } else if (fieldName.includes('documentExpiryDate')) {
-      thisFieldName = 'documentExpiryDate';
+      key = 'documentExpiryDate';
     } else {
-      thisFieldName = fieldName;
+      key = fieldName;
     }
-    // Delete the error
-    const key = thisFieldName;
-    delete tempArr[key];
-    setErrors(tempArr);
+
+    delete errorList[key];
+    setErrors(errorList);
   };
 
   // Update form info to state
@@ -101,27 +100,35 @@ const EditPerson = (props) => {
     removeError(e.target.name);
   };
 
-  // Handle validation
-  const areFieldsValid = (data) => {
+  // Check validation
+  const areFieldsValid = (dataToValidate) => {
     const fieldsErroring = {};
+
     // Check required fields are not empty
     personValidationRules.map((rule) => {
-      (!(rule.inputField in data) || data[rule.inputField] === '')
+      (!(rule.inputField in dataToValidate) || dataToValidate[rule.inputField] === '')
         ? fieldsErroring[rule.errorDisplayId] = rule.message
         : null;
     });
-    // Check date fields have valid data
-    Object.entries(data).map((field) => {
-      const fieldName = field[0];
-      const fieldValue = field[1];
-      const fieldGroup = field[0].toLowerCase().indexOf('birth') !== -1 ? 'dateOfBirth' : 'documentExpiryDate';
 
-      dateValidation(fieldName, fieldValue) === 'error'
-        ? fieldsErroring[fieldGroup] = 'Enter valid date'
-        : null;
-    });
+    // Check date fields have valid format
+    if (!(isDateValid(dataToValidate.documentExpiryDateYear, dataToValidate.documentExpiryDateMonth, dataToValidate.documentExpiryDateDay))) {
+      fieldsErroring.documentExpiryDate = 'You must enter a valid date';
+    }
+    if (!(isDateValid(dataToValidate.dateOfBirthYear, dataToValidate.dateOfBirthMonth, dataToValidate.dateOfBirthDay))) {
+      fieldsErroring.dateOfBirth = 'You must enter a valid date';
+    }
+    // Date of Birth must be before today
+    if (!(isDateBefore(dataToValidate.dateOfBirthYear, dataToValidate.dateOfBirthMonth, dataToValidate.dateOfBirthDay))) {
+      fieldsErroring.dateOfBirth = 'You must enter a valid date of birth date';
+    }
+    // Document expiry date must be after today
+    if ((isDateBefore(dataToValidate.documentExpiryDateYear, dataToValidate.documentExpiryDateMonth, dataToValidate.documentExpiryDateDay))) {
+      fieldsErroring.documentExpiryDate = 'You must enter a valid document expiry date';
+    }
 
     setErrors(fieldsErroring);
+    scrollToTopOnError(fieldsErroring);
     return Object.keys(fieldsErroring).length > 0;
   };
 
