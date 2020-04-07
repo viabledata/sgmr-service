@@ -21,7 +21,7 @@ pipeline:
     commands:
       - node -v
       - npm -v
-      - npm install --silent
+      - npm ci
       - npm run test
     when:
       event: push
