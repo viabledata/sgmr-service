@@ -1,126 +1,103 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 import axios from 'axios';
-import moment from 'moment';
 
 // app imports
 import Auth from 'Auth';
 import FormPerson from 'FormPerson';
+import scrollToTopOnError from 'scrollToTopOnError';
+import { formatDate, isDateValid, isDateBefore } from 'Utils/date';
 import { PEOPLE_URL } from 'Constants/ApiConstants';
-import { formatDate, isDateValid } from 'Utils/date';
 import { PEOPLE_PAGE_URL, SAVE_VOYAGE_PEOPLE_URL } from 'Constants/ClientConstants';
+import { personValidationRules } from 'validation';
 
-
-const CreateAPerson = (props) => {
+const CreateAPerson = () => {
   const history = useHistory();
-  const location = useLocation().pathname.slice(1);
-  const source = useLocation().search.split('=');
+  const location = useLocation();
+  const source = location.search.split('=');
   const [formData, setFormData] = useState(JSON.parse(localStorage.getItem('formData')) || {});
   const [errors, setErrors] = useState(JSON.parse(localStorage.getItem('errors')) || {});
 
-  const validationRules = [
-    {
-      field: 'firstName',
-      rule: 'required',
-      message: 'You must enter a first name',
-    },
-    {
-      field: 'lastName',
-      rule: 'required',
-      message: 'You must enter a last name',
-    },
-    {
-      field: 'peopleType',
-      rule: 'required',
-      message: 'You must enter a person type',
-    },
-    {
-      field: 'documentType',
-      rule: 'required',
-      message: 'You must select a document type',
-    },
-    {
-      field: 'documentNumber',
-      rule: 'required',
-      message: 'You must enter a document number',
-    },
-    {
-      field: 'documentIssuingState',
-      rule: 'required',
-      message: 'You must enter the document issuing state',
-    },
-    {
-      field: 'documentExpiryDateYear', // testing against year as it's the last piece of the date field
-      rule: 'required',
-      message: 'You must enter an expiry date',
-    },
-    {
-      field: 'gender',
-      rule: 'required',
-      message: 'You must select a gender',
-    },
-    {
-      field: 'dateOfBirthYear',
-      rule: 'required',
-      message: 'You must enter a date of birth',
-    },
-    {
-      field: 'placeOfBirth',
-      rule: 'required',
-      message: 'You must enter a place of birth',
-    },
-    {
-      field: 'nationality',
-      rule: 'required',
-      message: 'You must enter a nationality',
-    },
-  ];
 
-  // Validation
   const removeError = (fieldName) => {
-    const tempArr = { ...errors };
-    const key = fieldName;
-    delete tempArr[key];
-    setErrors(tempArr);
-  };
-  // Handle missing required fields
-  const checkRequiredFields = () => {
-    const tempObj = {};
-    validationRules.map((elem) => {
-      (!(elem.field in formData) || formData[elem.field] === '')
-        ? tempObj[elem.field] = elem.message
-        : null;
-    });
-    setErrors(tempObj);
-    return Object.keys(tempObj).length > 0;
+    const errorList = { ...errors };
+    let key;
+
+    if (fieldName.includes('dateOfBirth')) {
+      key = 'dateOfBirth';
+    } else if (fieldName.includes('documentExpiryDate')) {
+      key = 'documentExpiryDate';
+    } else {
+      key = fieldName;
+    }
+
+    delete errorList[key];
+    setErrors(errorList);
   };
 
-  // Update form info to state
+
+  // Update form data as user enters it
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
     removeError(e.target.name);
   };
 
+
+  // Check fields that are required exist
+  const areFieldsValid = (dataToValidate) => {
+    const fieldsErroring = {};
+
+    // Required fields must not be null
+    personValidationRules.map((rule) => {
+      (!(rule.inputField in dataToValidate) || formData[rule.inputField] === '')
+        ? fieldsErroring[rule.inputField] = rule.message
+        : null;
+    });
+
+    // Date fields must be valid
+    if (!(isDateValid(dataToValidate.documentExpiryDateYear, dataToValidate.documentExpiryDateMonth, dataToValidate.documentExpiryDateDay))) {
+      fieldsErroring.documentExpiryDate = 'You must enter a valid date';
+    }
+    if (!(isDateValid(dataToValidate.dateOfBirthYear, dataToValidate.dateOfBirthMonth, dataToValidate.dateOfBirthDay))) {
+      fieldsErroring.dateOfBirth = 'You must enter a valid date';
+    }
+    // Date of Birth must be before today
+    if (!(isDateBefore(dataToValidate.dateOfBirthYear, dataToValidate.dateOfBirthMonth, dataToValidate.dateOfBirthDay))) {
+      fieldsErroring.dateOfBirth = 'You must enter a valid date of birth date';
+    }
+    // Document expiry date must be after today
+    if ((isDateBefore(dataToValidate.documentExpiryDateYear, dataToValidate.documentExpiryDateMonth, dataToValidate.documentExpiryDateDay))) {
+      fieldsErroring.documentExpiryDate = 'You must enter a valid document expiry date';
+    }
+
+
+    setErrors(fieldsErroring);
+    scrollToTopOnError(fieldsErroring);
+    return Object.keys(fieldsErroring).length > 0;
+  };
+
+
   // Clear formData from localStorage
-  const clearFormData = () => {
+  const clearLocalStorage = () => {
     setFormData({});
     setErrors({ });
   };
 
-  // Ensure we have correct formatting
-  const getFieldsToSubmit = () => {
+
+  // Format data to submit
+  const formatDataToSubmit = (data) => {
     const dataSubmit = {
-      firstName: formData.firstName,
-      lastName: formData.lastName,
-      documentType: formData.documentType,
-      documentNumber: formData.documentNumber,
-      documentExpiryDate: formatDate(formData.documentExpiryDateYear, formData.documentExpiryDateMonth, formData.documentExpiryDateDay),
-      documentIssuingState: formData.documentIssuingState,
-      peopleType: formData.peopleType,
-      gender: formData.gender,
-      dateOfBirth: formatDate(formData.dateOfBirthYear, formData.dateOfBirthMonth, formData.dateOfBirthDay),
-      placeOfBirth: formData.placeOfBirth,
-      nationality: formData.nationality,
+      firstName: data.firstName,
+      lastName: data.lastName,
+      documentType: data.documentType,
+      documentNumber: data.documentNumber,
+      documentExpiryDate: formatDate(data.documentExpiryDateYear, data.documentExpiryDateMonth, data.documentExpiryDateDay),
+      documentIssuingState: data.documentIssuingState,
+      peopleType: data.peopleType,
+      gender: data.gender,
+      dateOfBirth: formatDate(data.dateOfBirthYear, data.dateOfBirthMonth, data.dateOfBirthDay),
+      placeOfBirth: data.placeOfBirth,
+      nationality: data.nationality,
     };
     return dataSubmit;
   };
@@ -129,15 +106,9 @@ const CreateAPerson = (props) => {
   // Handle Submit, including clearing localStorage
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (isDateValid(formData.documentExpiryDateYear, formData.documentExpiryDateMonth, formData.documentExpiryDateDay)) {
-      removeError('documentExpiryDate');
-    } else {
-      setErrors({ ...errors, documentExpiryDate: 'You must enter a valid date' });
-    }
-    const fields = getFieldsToSubmit();
 
-    if (!checkRequiredFields()) {
-      axios.post(PEOPLE_URL, fields, {
+    if (!areFieldsValid(formData)) {
+      axios.post(PEOPLE_URL, formatDataToSubmit(formData), {
         headers: { Authorization: `Bearer ${Auth.retrieveToken()}` },
       })
         .then(() => {
@@ -145,14 +116,17 @@ const CreateAPerson = (props) => {
           if (source[1] === 'voyage') {
             history.push(SAVE_VOYAGE_PEOPLE_URL);
           } else {
-            clearFormData();
+            clearLocalStorage();
             history.push(PEOPLE_PAGE_URL);
           }
         })
         .catch((err) => {
           if (err.response) {
             switch (err.response.status) {
-              case 400: setErrors({ ...errors, FormPerson: err.response.data.message }); break;
+              case 400:
+                setErrors({ ...errors, CreateAPerson: err.response.data.message });
+                scrollToTopOnError(err.response);
+                break;
               case 401: history.push(`/sign-in?source=${location}`); break;
               case 422: history.push(`/sign-in?source=${location}`); break;
               case 405: history.push(`/sign-in?source=${location}`); break;
@@ -188,18 +162,18 @@ const CreateAPerson = (props) => {
           <div className="govuk-grid-column-two-thirds">
             <h1 className="govuk-heading-xl">Save a person</h1>
             <p className="govuk-body-l">Provide the details of the person you want to add to your list of saved people.</p>
-            <form id="FormPerson">
+            <form id="CreateAPerson">
 
               {Object.keys(errors).length > 0 && (
               <div className="govuk-error-summary" aria-labelledby="error-summary-title" role="alert" tabIndex="-1" data-module="govuk-error-summary">
                 <h2 className="govuk-error-summary__title">
                   There is a problem
                 </h2>
-                {errors.FormPerson
+                {errors.CreateAPerson
                     && (
                     <span className="govuk-error-message">
                       <span className="govuk-visually-hidden">Error:</span>
-                      {errors.FormPerson}
+                      {errors.CreateAPerson}
                     </span>
                     )}
               </div>
@@ -213,7 +187,7 @@ const CreateAPerson = (props) => {
               />
 
               <p>
-                <a href="/people" className="govuk-link govuk-link--no-visited-state" onClick={(e) => clearFormData(e)}>Exit without saving</a>
+                <a href="/people" className="govuk-link govuk-link--no-visited-state" onClick={(e) => clearLocalStorage(e)}>Exit without saving</a>
               </p>
             </form>
           </div>

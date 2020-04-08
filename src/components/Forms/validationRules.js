@@ -36,12 +36,6 @@ export const personValidationRules = [
     message: 'You must enter the document issuing state',
   },
   {
-    inputField: 'documentExpiryDate',
-    errorDisplayId: 'documentExpiryDate',
-    rule: 'required',
-    message: 'You must enter an expiry date',
-  },
-  {
     inputField: 'documentExpiryDateYear',
     errorDisplayId: 'documentExpiryDate',
     rule: 'required',
@@ -64,12 +58,6 @@ export const personValidationRules = [
     errorDisplayId: 'gender',
     rule: 'required',
     message: 'You must select a gender',
-  },
-  {
-    inputField: 'dateOfBirth',
-    errorDisplayId: 'dateOfBirth',
-    rule: 'required',
-    message: 'You must enter a date of birth',
   },
   {
     inputField: 'dateOfBirthYear',
