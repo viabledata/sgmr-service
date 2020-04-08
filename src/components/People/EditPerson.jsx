@@ -173,7 +173,7 @@ const EditPerson = (props) => {
     e.preventDefault();
 
     if (!formData) {
-      history.push('/people');
+      history.push(PEOPLE_PAGE_URL);
     } else if (!areFieldsValid(personData)) {
       axios.patch(`${PEOPLE_URL}/${personId}`, formatDataToSubmit(formData, personData), {
         headers: { Authorization: `Bearer ${Auth.retrieveToken()}` },
@@ -217,7 +217,7 @@ const EditPerson = (props) => {
       <div className="govuk-breadcrumbs">
         <ol className="govuk-breadcrumbs__list">
           <li className="govuk-breadcrumbs__list-item">
-            <a className="govuk-breadcrumbs__link" href="/people">People</a>
+            <a className="govuk-breadcrumbs__link" href={PEOPLE_PAGE_URL}>People</a>
           </li>
           <li className="govuk-breadcrumbs__list-item" aria-current="page">Edit person</li>
         </ol>
@@ -253,7 +253,7 @@ const EditPerson = (props) => {
               />
 
               <p>
-                <a href="/people" className="govuk-link govuk-link--no-visited-state" onClick={(e) => clearLocalStorage(e)}>Exit without saving</a>
+                <a href={PEOPLE_PAGE_URL} className="govuk-link govuk-link--no-visited-state" onClick={(e) => clearLocalStorage(e)}>Exit without saving</a>
               </p>
             </form>
           </div>
