@@ -5,14 +5,14 @@ import axios from 'axios';
 // App imports
 import Auth from '@lib/Auth';
 import { formatUIDate } from '@utils/date';
-import { VOYAGE_REPORT_URL } from '@constants/ApiConstants';
+import { PEOPLE_URL, VOYAGE_REPORT_URL } from '@constants/ApiConstants';
 
 const EditVoyage = (props) => {
   const voyageId = props.location.state.voyageId;
   const [voyageData, setVoyageData] = useState();
-  const [peopleData, setPeopleData] = useState();
-  const [peopleIds, setPeopleIds] = useState([]);
-  const formData = { ...voyageData, people: peopleIds };
+  const [voyagePeopleData, setVoyagePeopleData] = useState();
+  const [userPeopleData, setUserPeopleData] = useState();
+  const formData = voyageData;
 
   // Split the date and time fields for use in the form
   const reformatFields = (data) => {
@@ -44,20 +44,23 @@ const EditVoyage = (props) => {
         ...formattedFields, arrivalTimeHour, arrivalTimeMinute,
       };
     }
-
     setVoyageData({ ...originalData, ...formattedFields });
   };
 
-  // Get person ID's for use in the form
-  const getPeopleIds = (data) => {
-    const idArray = [...peopleIds];
+  // Get peopleIds for use in the form
+  const findPeopleIds = (dataFromVoyagePeople) => {
+    let personData = [];
 
-    data.map((person) => {
-      idArray.push(person.id);
+    dataFromVoyagePeople.map((voyagePerson) => {
+      const uniqueRef = voyagePerson.documentType + voyagePerson.documentNumber;
+      userPeopleData.find((userPerson) => {
+        if ((userPerson.documentType + userPerson.documentNumber) === uniqueRef) {
+          personData.push(userPerson.id);
+        }
+      });
     });
-    setPeopleIds(idArray);
+    setVoyageData({ ...voyageData, people: personData });
   };
-
 
   // Get data to populate the page for this voyage
   const getVoyageData = () => {
@@ -85,8 +88,8 @@ const EditVoyage = (props) => {
       headers: { Authorization: `Bearer ${Auth.retrieveToken()}` },
     })
       .then((resp) => {
-        setPeopleData(resp.data.items);
-        getPeopleIds(resp.data.items);
+        setVoyagePeopleData(resp.data.items);
+        findPeopleIds(resp.data.items);
       })
       .catch((err) => {
         if (err.response) {
@@ -100,12 +103,35 @@ const EditVoyage = (props) => {
       });
   };
 
+  // Get people associated with this user
+  const getPeopleData = () => {
+    axios.get(`${PEOPLE_URL}`, {
+      headers: { Authorization: `Bearer ${Auth.retrieveToken()}` },
+    })
+      .then((resp) => {
+        setUserPeopleData(resp.data);
+      })
+      .catch((err) => {
+        if (err.response) {
+          switch (err.response.status) {
+            case 401: history.push('/sign-in?source=reports'); break;
+            case 422: history.push('/sign-in?source=reports'); break;
+            case 405: history.push('/sign-in?source=reports'); break;
+            default: history.push('/sign-in?source=reports');
+          }
+        }
+      });
+  };
 
   // Get person data to pass to prepopulate the form
   useEffect(() => {
+    getPeopleData();
     getVoyageData();
-    getVoyagePeopleData();
   }, []);
+
+  useEffect(() => {
+    getVoyagePeopleData();
+  }, [userPeopleData]);
 
   // Update local storage with data
   useEffect(() => {
@@ -113,7 +139,7 @@ const EditVoyage = (props) => {
   }, [formData]);
 
 
-  if (!voyageData || !peopleData) { return null; }
+  if (!voyageData || !voyagePeopleData) { return null; }
   return (
     <div id="pageContainer" className="govuk-width-container ">
       <a
@@ -286,7 +312,7 @@ const EditVoyage = (props) => {
                   <th className="govuk-table__header" scope="col">Type</th>
                 </tr>
               </thead>
-              {peopleData.map((person) => {
+              {voyagePeopleData.map((person) => {
                 return (
                   <tbody className="govuk-table__body" key={person.id}>
                     <tr className="govuk-table__row">
