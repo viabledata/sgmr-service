@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 // App imports
 import { formatUIDate } from '@utils/date';
 import { fetchReportsRoutine } from '@state/reports';
+import { EDIT_VOYAGE_CHECK_DETAILS_URL } from '@constants/ClientConstants';
 
 
 const SectionTabs = ({
@@ -94,7 +96,15 @@ const SectionTabs = ({
                 if (voyage.status.name === tableName) {
                   return (
                     <tr className="govuk-table__row" key={voyage.id}>
-                      <td className="govuk-table__cell">{voyage.vesselName}</td>
+                      <td className="govuk-table__cell">
+                        <Link to={{
+                          pathname: EDIT_VOYAGE_CHECK_DETAILS_URL,
+                          state: { voyageId: voyage.id },
+                        }}
+                        >
+                          {voyage.vesselName}
+                        </Link>
+                      </td>
                       <td className="govuk-table__cell">{formatUIDate(voyage.departureDate)}</td>
                       <td className="govuk-table__cell">{voyage.departureTime}</td>
                       <td className="govuk-table__cell">{voyage.departurePort}</td>
