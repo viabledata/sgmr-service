@@ -5,14 +5,59 @@ import axios from 'axios';
 // App imports
 import Auth from '@lib/Auth';
 import { formatUIDate } from '@utils/date';
-import { PEOPLE_URL, VOYAGE_REPORT_URL } from '@constants/ApiConstants';
+import { PEOPLE_URL, VESSELS_URL, VOYAGE_REPORT_URL } from '@constants/ApiConstants';
+
+
+// FLOW
+// Get people data & setUserPeopleData(resp.data)
+// Get voyage people data & setVoyagePeopleData(resp.data.items)
+// Get vessel data & setUserVesselData(resp.data.items)
+// Get voyage data & reformatFields(resp.data)
+// findVesselId(formattedData) & add vesselId if exists
+// findPeopleIds() & add setVoyagePeopleIds(personData)
+// set formData
 
 const EditVoyage = (props) => {
   const voyageId = props.location.state.voyageId;
   const [voyageData, setVoyageData] = useState();
   const [voyagePeopleData, setVoyagePeopleData] = useState();
   const [userPeopleData, setUserPeopleData] = useState();
-  const formData = voyageData;
+  const [userVesselData, setUserVesselData] = useState();
+  const [voyagePeopleIds, setVoyagePeopleIds] = useState();
+  const formData = { ...voyageData, people: voyagePeopleIds };
+
+
+  // Get peopleIds for use in the form
+  const findPeopleIds = () => {
+    let personData = [];
+    if (!voyagePeopleData || !userPeopleData) { return null; }
+
+    voyagePeopleData.map((voyagePerson) => {
+      const uniqueRef = voyagePerson.documentType + voyagePerson.documentNumber;
+      userPeopleData.map((userPerson) => {
+        if ((userPerson.documentType + userPerson.documentNumber) === uniqueRef) {
+          personData.push(userPerson.id);
+        }
+      });
+    });
+
+    setVoyagePeopleIds(personData);
+  };
+
+
+  // Get vesselId for use in the form if exists
+  const findVesselId = (formattedData) => {
+    const formattedDataWithVessel = { ...formattedData };
+
+    userVesselData.map((userVessel) => {
+      if (userVessel.registration === formattedData.registration) {
+        formattedDataWithVessel.vessels = userVessel.id;
+      }
+    });
+
+    setVoyageData(formattedDataWithVessel);
+  };
+
 
   // Split the date and time fields for use in the form
   const reformatFields = (data) => {
@@ -44,23 +89,9 @@ const EditVoyage = (props) => {
         ...formattedFields, arrivalTimeHour, arrivalTimeMinute,
       };
     }
-    setVoyageData({ ...originalData, ...formattedFields });
+    findVesselId({ ...originalData, ...formattedFields });
   };
 
-  // Get peopleIds for use in the form
-  const findPeopleIds = (dataFromVoyagePeople) => {
-    let personData = [];
-
-    dataFromVoyagePeople.map((voyagePerson) => {
-      const uniqueRef = voyagePerson.documentType + voyagePerson.documentNumber;
-      userPeopleData.find((userPerson) => {
-        if ((userPerson.documentType + userPerson.documentNumber) === uniqueRef) {
-          personData.push(userPerson.id);
-        }
-      });
-    });
-    setVoyageData({ ...voyageData, people: personData });
-  };
 
   // Get data to populate the page for this voyage
   const getVoyageData = () => {
@@ -82,14 +113,14 @@ const EditVoyage = (props) => {
       });
   };
 
-  // Get people associated with this voyage
-  const getVoyagePeopleData = () => {
-    axios.get(`${VOYAGE_REPORT_URL}/${voyageId}/people`, {
+
+  // Get people associated with this user
+  const getVesselData = () => {
+    axios.get(`${VESSELS_URL}`, {
       headers: { Authorization: `Bearer ${Auth.retrieveToken()}` },
     })
       .then((resp) => {
-        setVoyagePeopleData(resp.data.items);
-        findPeopleIds(resp.data.items);
+        setUserVesselData(resp.data.items);
       })
       .catch((err) => {
         if (err.response) {
@@ -102,6 +133,28 @@ const EditVoyage = (props) => {
         }
       });
   };
+
+
+  // Get people associated with this voyage
+  const getVoyagePeopleData = () => {
+    axios.get(`${VOYAGE_REPORT_URL}/${voyageId}/people`, {
+      headers: { Authorization: `Bearer ${Auth.retrieveToken()}` },
+    })
+      .then((resp) => {
+        setVoyagePeopleData(resp.data.items);
+      })
+      .catch((err) => {
+        if (err.response) {
+          switch (err.response.status) {
+            case 401: history.push('/sign-in?source=reports'); break;
+            case 422: history.push('/sign-in?source=reports'); break;
+            case 405: history.push('/sign-in?source=reports'); break;
+            default: history.push('/sign-in?source=reports');
+          }
+        }
+      });
+  };
+
 
   // Get people associated with this user
   const getPeopleData = () => {
@@ -123,15 +176,22 @@ const EditVoyage = (props) => {
       });
   };
 
-  // Get person data to pass to prepopulate the form
+
+  // Get data from APIs
   useEffect(() => {
     getPeopleData();
-    getVoyageData();
+    getVesselData();
   }, []);
 
   useEffect(() => {
     getVoyagePeopleData();
-  }, [userPeopleData]);
+    getVoyageData();
+  }, [userPeopleData, userVesselData]);
+
+  useEffect(() => {
+    findPeopleIds();
+  }, [voyageData, voyagePeopleData]);
+
 
   // Update local storage with data
   useEffect(() => {
