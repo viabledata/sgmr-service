@@ -13,57 +13,12 @@ module.exports = {
   },
   resolve: {
     alias: {
-      // Page common items
       config: path.resolve(__dirname, 'src/lib/config.js'),
-      Banner: path.resolve(__dirname, 'src/components/Banner.jsx'),
-      Footer: path.resolve(__dirname, 'src/components/Footer.jsx'),
-      Header: path.resolve(__dirname, 'src/components/Header.jsx'),
-      // Navigation & secure routes
-      Auth: path.resolve(__dirname, 'src/lib/Auth.js'),
-      Main: path.resolve(__dirname, 'src/components/Main.jsx'),
-      Nav: path.resolve(__dirname, 'src/components/Nav.jsx'),
-      ScrollToTop: path.resolve(__dirname, 'src/components/ScrollToTop.jsx'),
-      SecureRoute: path.resolve(__dirname, 'src/lib/SecureRoute.jsx'),
-      // User registration & signin/out
-      SignIn: path.resolve(__dirname, 'src/components/Forms/SignIn.jsx'),
-      UserInputCode: path.resolve(__dirname, 'src/components/Forms/UserInputCode.jsx'),
-      UserRegister: path.resolve(__dirname, 'src/components/Forms/UserRegister.jsx'),
-      UserResendCode: path.resolve(__dirname, 'src/components/Forms/UserResendCode.jsx'),
-      // Page structures & common components
-      PageContainer: path.resolve(__dirname, 'src/components/PageContainer.jsx'),
-      PageIntro: path.resolve(__dirname, 'src/components/PageIntro.jsx'),
-      PageIntroToForm: path.resolve(__dirname, 'src/components/PageIntroToForm.jsx'),
-      SectionTabs: path.resolve(__dirname, 'src/components/SectionTabs.jsx'),
-      SectionTable: path.resolve(__dirname, 'src/components/SectionTable.jsx'),
-      StartButton: path.resolve(__dirname, 'src/components/StartButton.jsx'),
-      // Page content
-      contentArray: path.resolve(__dirname, 'src/components/contentArray.js'),
-      PageAccount: path.resolve(__dirname, 'src/components/PageAccount.jsx'),
-      // Forms
-      CreateAVessel: path.resolve(__dirname, 'src/components/Vessel/CreateAVessel.jsx'),
-      EditVessel: path.resolve(__dirname, 'src/components/Vessel/EditVessel.jsx'),
-      FormVessel: path.resolve(__dirname, 'src/components/Vessel/FormVessel.jsx'),
-
-
-      CreateAPerson: path.resolve(__dirname, 'src/components/People/CreateAPerson.jsx'),
-      EditPerson: path.resolve(__dirname, 'src/components/People/EditPerson.jsx'),
-      FormPerson: path.resolve(__dirname, 'src/components/People/FormPerson.jsx'),
-
-      EditAccount: path.resolve(__dirname, 'src/components/Forms/EditAccount.jsx'),
-      FormVoyage: path.resolve(__dirname, 'src/components/Forms/FormVoyage.jsx'),
-      FormVoyageArrival: path.resolve(__dirname, 'src/components/Forms/FormVoyageArrival.jsx'),
-      FormVoyageCheckDetails: path.resolve(__dirname, 'src/components/Forms/FormVoyageCheckDetails.jsx'),
-      FormVoyageDeparture: path.resolve(__dirname, 'src/components/Forms/FormVoyageDeparture.jsx'),
-      FormVoyagePeople: path.resolve(__dirname, 'src/components/Forms/FormVoyagePeople.jsx'),
-      FormVoyageResponsiblePerson: path.resolve(__dirname, 'src/components/Forms/FormVoyageResponsiblePerson.jsx'),
-      FormVoyageSubmitted: path.resolve(__dirname, 'src/components/Forms/FormVoyageSubmitted.jsx'),
-      FormVoyageVessel: path.resolve(__dirname, 'src/components/Forms/FormVoyageVessel.jsx'),
-      validation: path.resolve(__dirname, 'src/components/Forms/validationRules.js'),
-      // Utils
-      Constants: path.resolve(__dirname, 'src/constants'),
-      State: path.resolve(__dirname, 'src/state'),
-      Utils: path.resolve(__dirname, 'src/utils'),
-      scrollToTopOnError: path.resolve(__dirname, 'src/utils/scrollToTopOnError'),
+      '@components': path.resolve(__dirname, 'src/components'),
+      '@constants': path.resolve(__dirname, 'src/constants'),
+      '@lib': path.resolve(__dirname, 'src/lib'),
+      '@state': path.resolve(__dirname, 'src/state'),
+      '@utils': path.resolve(__dirname, 'src/utils'),
     },
     extensions: ['.js', '.jsx'],
   },

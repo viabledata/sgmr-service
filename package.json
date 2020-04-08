@@ -8,7 +8,8 @@
     "lint": "eslint -f table",
     "lint:extra": "eslint \"./src/**/*.{js,jsx}\" --fix",
     "start": "webpack-dev-server --watch-poll --mode=development",
-    "test": "jest"
+    "test": "jest",
+    "test:watch": "npm run test -- --watch"
   },
   "repository": {
     "type": "git",
@@ -20,6 +21,19 @@
     "url": "https://github.com/UKHomeOffice/sgmr-service/issues"
   },
   "homepage": "https://github.com/UKHomeOffice/sgmr-service#readme",
+  "jest": {
+    "moduleNameMapper": {
+      "^config$": "<rootDir>/src/lib/config.js",
+      "^@components(.*)$": "<rootDir>/src/components$1",
+      "^@constants(.*)$": "<rootDir>/src/constants$1",
+      "^@lib(.*)$": "<rootDir>/src/lib$1",
+      "^@state(.*)$": "<rootDir>/src/state$1",
+      "^@utils(.*)$": "<rootDir>/src/utils$1"
+    },
+  "setupFilesAfterEnv": [
+    "<rootDir>/src/setupTests.js"
+  ]
+  },
   "devDependencies": {
     "@babel/core": "^7.8.4",
     "@babel/node": "^7.8.4",
@@ -29,6 +43,8 @@
     "babel-eslint": "^10.1.0",
     "babel-loader": "^8.0.6",
     "copy-webpack-plugin": "^5.1.1",
+    "enzyme": "^3.11.0",
+    "enzyme-adapter-react-16": "^1.15.2",
     "eslint": "^6.8.0",
     "eslint-config-airbnb": "^18.0.1",
     "eslint-plugin-babel": "^5.3.0",
