@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { withRouter, useHistory } from 'react-router-dom';
 import axios from 'axios';
-import moment from 'moment';
 
 // App imports
 import Auth from 'Auth';
 import FormPerson from 'FormPerson';
+import scrollToTopOnError from 'scrollToTopOnError';
+import { formatDate, isDateValid, isDateBefore } from 'Utils/date';
 import { PEOPLE_URL } from 'Constants/ApiConstants';
 import { PEOPLE_PAGE_URL } from 'Constants/ClientConstants';
-import { dateValidation, personValidationRules } from 'validation';
+import { personValidationRules } from 'validation';
 
 
 const EditPerson = (props) => {
@@ -21,9 +22,12 @@ const EditPerson = (props) => {
   // Reformat dates & peopleType into individual items for form field display
   const reformatFields = (data) => {
     let formattedFields = { peopleType: data.peopleType.name };
+    let originalData = { ...data };
 
+    // Spread date from grouped field to individual fields
     if (data.dateOfBirth) {
       const [dateOfBirthYear, dateOfBirthMonth, dateOfBirthDay] = data.dateOfBirth.split('-');
+      delete originalData.dateOfBirth;
       formattedFields = {
         ...formattedFields,
         dateOfBirthYear,
@@ -33,6 +37,7 @@ const EditPerson = (props) => {
     }
     if (data.documentExpiryDate) {
       const [documentExpiryDateYear, documentExpiryDateMonth, documentExpiryDateDay] = data.documentExpiryDate.split('-');
+      delete originalData.documentExpiryDate;
       formattedFields = {
         ...formattedFields,
         documentExpiryDateYear,
@@ -41,8 +46,9 @@ const EditPerson = (props) => {
       };
     }
 
-    setPersonData({ ...data, ...formattedFields });
+    setPersonData({ ...originalData, ...formattedFields });
   };
+
 
   // Get data to prepopulate the form for this person
   const getPersonData = () => {
@@ -50,7 +56,6 @@ const EditPerson = (props) => {
       headers: { Authorization: `Bearer ${Auth.retrieveToken()}` },
     })
       .then((resp) => {
-        setPersonData(resp.data);
         reformatFields(resp.data);
         localStorage.setItem('data', JSON.stringify(resp.data));
       })
@@ -66,6 +71,7 @@ const EditPerson = (props) => {
       });
   };
 
+
   // Clear formData from localStorage
   const clearLocalStorage = () => {
     setPersonData({});
@@ -73,84 +79,103 @@ const EditPerson = (props) => {
     setErrors({ });
   };
 
+
   // Clear errors
   const removeError = (fieldName) => {
-    const tempArr = { ...errors };
-    // Check for grouped fields
-    let thisFieldName = '';
+    const errorList = { ...errors };
+    let key;
+
     if (fieldName.includes('dateOfBirth')) {
-      thisFieldName = 'dateOfBirth';
+      key = 'dateOfBirth';
     } else if (fieldName.includes('documentExpiryDate')) {
-      thisFieldName = 'documentExpiryDate';
+      key = 'documentExpiryDate';
     } else {
-      thisFieldName = fieldName;
+      key = fieldName;
     }
-    // Delete the error
-    const key = thisFieldName;
-    delete tempArr[key];
-    setErrors(tempArr);
+    delete errorList[key];
+    setErrors(errorList);
   };
+
 
   // Update form info to state
   const handleChange = (e) => {
-    // Original data
+    // Full data set
     setPersonData({ ...personData, [e.target.name]: e.target.value });
-    // Updated data
+    // Just edited data
     setFormData({ ...formData, [e.target.name]: e.target.value });
     // Clear any errors
     removeError(e.target.name);
   };
 
-  // Handle validation
-  const areFieldsValid = (data) => {
+
+  // Check validation
+  const areFieldsValid = (dataToValidate) => {
     const fieldsErroring = {};
+
     // Check required fields are not empty
     personValidationRules.map((rule) => {
-      (!(rule.inputField in data) || data[rule.inputField] === '')
+      (!(rule.inputField in dataToValidate) || dataToValidate[rule.inputField] === '')
         ? fieldsErroring[rule.errorDisplayId] = rule.message
         : null;
     });
-    // Check date fields have valid data
-    Object.entries(data).map((field) => {
-      const fieldName = field[0];
-      const fieldValue = field[1];
-      const fieldGroup = field[0].toLowerCase().indexOf('birth') !== -1 ? 'dateOfBirth' : 'documentExpiryDate';
 
-      dateValidation(fieldName, fieldValue) === 'error'
-        ? fieldsErroring[fieldGroup] = 'Enter valid date'
-        : null;
-    });
+    // Check date fields have valid format
+    if (!(isDateValid(dataToValidate.documentExpiryDateYear, dataToValidate.documentExpiryDateMonth, dataToValidate.documentExpiryDateDay))) {
+      fieldsErroring.documentExpiryDate = 'You must enter a valid date';
+    }
+    if (!(isDateValid(dataToValidate.dateOfBirthYear, dataToValidate.dateOfBirthMonth, dataToValidate.dateOfBirthDay))) {
+      fieldsErroring.dateOfBirth = 'You must enter a valid date';
+    }
+    // Date of Birth must be before today
+    if (!(isDateBefore(dataToValidate.dateOfBirthYear, dataToValidate.dateOfBirthMonth, dataToValidate.dateOfBirthDay))) {
+      fieldsErroring.dateOfBirth = 'You must enter a valid date of birth date';
+    }
+    // Document expiry date must be after today
+    if ((isDateBefore(dataToValidate.documentExpiryDateYear, dataToValidate.documentExpiryDateMonth, dataToValidate.documentExpiryDateDay))) {
+      fieldsErroring.documentExpiryDate = 'You must enter a valid document expiry date';
+    }
 
     setErrors(fieldsErroring);
+    scrollToTopOnError(fieldsErroring);
     return Object.keys(fieldsErroring).length > 0;
   };
 
-  const formatData = (dataPerson, dataForm) => {
-    if (!areFieldsValid(dataPerson)) {
-      // Clean any field level date fields from the submit data
-      const fieldLevelDates = ['documentExpiryDateYear', 'documentExpiryDateMonth', 'documentExpiryDateDay', 'dateOfBirthYear', 'dateOfBirthMonth', 'dateOfBirthDay'];
-      const cleanedData = { ...dataForm };
 
-      Object.keys(cleanedData).map((itemKey) => {
-        return fieldLevelDates.indexOf(itemKey) >= 0 ? delete cleanedData[itemKey] : null;
-      });
+  // Format data so it matches API requirements
+  const formatDataToSubmit = (dataForm, dataPerson) => {
+    let dataToSubmit = { ...dataForm };
 
-      const dataToSubmit = ({
-        ...cleanedData,
-        documentExpiryDate: moment(`${personData.documentExpiryDateYear}-${personData.documentExpiryDateMonth}-${personData.documentExpiryDateDay}`, 'YYYY-MM-DD').format('YYYY-M-D'),
-        dateOfBirth: moment(`${personData.dateOfBirthYear}-${personData.dateOfBirthMonth}-${personData.dateOfBirthDay}`, 'YYYY-MM-DD').format('YYYY-M-D'),
+    Object.entries(dataForm).map((field) => {
+      const fieldName = field[0];
+      const dateFields = ['dateOfBirth', 'documentExpiryDate'];
+
+      dateFields.map((dateField) => {
+        if (fieldName.includes(dateField)) {
+          // Format date for submission
+          dataToSubmit[dateField] = formatDate(
+            dataForm[`${dateField}Year`] ? dataForm[`${dateField}Year`] : dataPerson[`${dateField}Year`],
+            dataForm[`${dateField}Month`] ? dataForm[`${dateField}Month`] : dataPerson[`${dateField}Month`],
+            dataForm[`${dateField}Day`] ? dataForm[`${dateField}Day`] : dataPerson[`${dateField}Day`],
+          );
+          // Delete any individual date fields
+          delete dataToSubmit[`${dateField}Year`];
+          delete dataToSubmit[`${dateField}Month`];
+          delete dataToSubmit[`${dateField}Day`];
+        }
       });
-      return dataToSubmit;
-    }
+    });
+    return dataToSubmit;
   };
+
 
   // Handle Submit, including clearing localStorage
   const handleSubmit = (e) => {
     e.preventDefault();
-    const submitData = formatData(personData, formData);
 
-    if (submitData) {
-      axios.patch(`${PEOPLE_URL}/${personId}`, submitData, {
+    if (!formData) {
+      history.push(PEOPLE_PAGE_URL);
+    } else if (!areFieldsValid(personData)) {
+      axios.patch(`${PEOPLE_URL}/${personId}`, formatDataToSubmit(formData, personData), {
         headers: { Authorization: `Bearer ${Auth.retrieveToken()}` },
       })
         .then(() => {
@@ -160,7 +185,10 @@ const EditPerson = (props) => {
         .catch((err) => {
           if (err.response) {
             switch (err.response.status) {
-              case 400: setErrors({ ...errors, EditPerson: err.response.data.message }); break;
+              case 400:
+                setErrors({ ...errors, EditPerson: err.response.data.message });
+                scrollToTopOnError(err.response);
+                break;
               case 401: history.push('/sign-in?source=people'); break;
               case 422: history.push('/sign-in?source=people'); break;
               case 405: history.push('/sign-in?source=people'); break;
@@ -168,8 +196,6 @@ const EditPerson = (props) => {
             }
           }
         });
-    } else {
-      history.push(PEOPLE_PAGE_URL);
     }
   };
 
@@ -184,7 +210,6 @@ const EditPerson = (props) => {
   }, [personData]);
   useEffect(() => {
     localStorage.setItem('errors', JSON.stringify(errors));
-    window.scrollTo(0, 0);
   }, [errors]);
 
   return (
@@ -192,7 +217,7 @@ const EditPerson = (props) => {
       <div className="govuk-breadcrumbs">
         <ol className="govuk-breadcrumbs__list">
           <li className="govuk-breadcrumbs__list-item">
-            <a className="govuk-breadcrumbs__link" href="/people">People</a>
+            <a className="govuk-breadcrumbs__link" href={PEOPLE_PAGE_URL}>People</a>
           </li>
           <li className="govuk-breadcrumbs__list-item" aria-current="page">Edit person</li>
         </ol>
@@ -200,7 +225,7 @@ const EditPerson = (props) => {
       <main className="govuk-main-wrapper govuk-main-wrapper--auto-spacing" role="main">
         <div className="govuk-grid-row">
           <div className="govuk-grid-column-two-thirds">
-            <h1 className="govuk-heading-xl">Save a person</h1>
+            <h1 className="govuk-heading-xl">Edit person</h1>
             <p className="govuk-body-l">Update the details of the person you want to edit.</p>
             <form id="EditPerson">
 
@@ -228,7 +253,7 @@ const EditPerson = (props) => {
               />
 
               <p>
-                <a href="/people" className="govuk-link govuk-link--no-visited-state" onClick={(e) => clearLocalStorage(e)}>Exit without saving</a>
+                <a href={PEOPLE_PAGE_URL} className="govuk-link govuk-link--no-visited-state" onClick={(e) => clearLocalStorage(e)}>Exit without saving</a>
               </p>
             </form>
           </div>

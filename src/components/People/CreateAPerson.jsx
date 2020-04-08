@@ -43,7 +43,7 @@ const CreateAPerson = () => {
   };
 
 
-  // Check fields that are required exist
+  // Check fields that are required exist & fields with rules match
   const areFieldsValid = (dataToValidate) => {
     const fieldsErroring = {};
 
@@ -69,7 +69,6 @@ const CreateAPerson = () => {
     if ((isDateBefore(dataToValidate.documentExpiryDateYear, dataToValidate.documentExpiryDateMonth, dataToValidate.documentExpiryDateDay))) {
       fieldsErroring.documentExpiryDate = 'You must enter a valid document expiry date';
     }
-
 
     setErrors(fieldsErroring);
     scrollToTopOnError(fieldsErroring);
@@ -152,7 +151,7 @@ const CreateAPerson = () => {
       <div className="govuk-breadcrumbs">
         <ol className="govuk-breadcrumbs__list">
           <li className="govuk-breadcrumbs__list-item">
-            <a className="govuk-breadcrumbs__link" href="/people">People</a>
+            <a className="govuk-breadcrumbs__link" href={PEOPLE_PAGE_URL}>People</a>
           </li>
           <li className="govuk-breadcrumbs__list-item" aria-current="page">Save a person</li>
         </ol>
@@ -187,7 +186,7 @@ const CreateAPerson = () => {
               />
 
               <p>
-                <a href="/people" className="govuk-link govuk-link--no-visited-state" onClick={(e) => clearLocalStorage(e)}>Exit without saving</a>
+                <a href={PEOPLE_PAGE_URL} className="govuk-link govuk-link--no-visited-state" onClick={(e) => clearLocalStorage(e)}>Exit without saving</a>
               </p>
             </form>
           </div>
