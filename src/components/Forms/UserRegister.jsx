@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 
 // app imports
-import { REGISTRATION_URL } from 'Constants/ApiConstants';
+import { REGISTRATION_URL } from '@constants/ApiConstants';
 
 
 const UserRegister = () => {

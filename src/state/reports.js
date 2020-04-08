@@ -2,8 +2,8 @@ import axios from 'axios';
 import { call, put, takeLatest } from 'redux-saga/effects';
 import { createRoutine } from 'redux-saga-routines';
 
-import Auth from 'Auth';
-import { USER_VOYAGE_REPORT_URL } from 'Constants/ApiConstants';
+import Auth from '@lib/Auth';
+import { USER_VOYAGE_REPORT_URL } from '@constants/ApiConstants';
 import { redirectToSignIn } from './redirectToSignIn';
 
 // ROUTINE

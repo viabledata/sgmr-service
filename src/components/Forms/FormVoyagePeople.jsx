@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-import { fetchPeopleRoutine } from 'State/people';
-import { updateVoyageReportRoutine } from 'State/voyage';
+import { fetchPeopleRoutine } from '@state/people';
+import { updateVoyageReportRoutine } from '@state/voyage';
 
 const FormVoyagePeople = ({
   handleSubmit, handleChange, data, fetchPeopleTriggerAction, updateVoyageReportAction, people,

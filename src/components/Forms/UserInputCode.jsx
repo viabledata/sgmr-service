@@ -3,8 +3,8 @@ import { useHistory, Link } from 'react-router-dom';
 import axios from 'axios';
 
 // app imports
-import Auth from 'Auth';
-import { SUBMIT_VERIFICATION_CODE_URL } from 'Constants/ApiConstants';
+import Auth from '@lib/Auth';
+import { SUBMIT_VERIFICATION_CODE_URL } from '@constants/ApiConstants';
 
 const UserInputCode = () => {
   const history = useHistory();

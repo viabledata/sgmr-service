@@ -2,10 +2,10 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import { updateVoyageReportRoutine } from 'State/voyage';
-import { fetchVesselsRoutine } from 'State/vessels';
-import contentArray from 'contentArray';
-import FormVessel from 'FormVessel';
+import { updateVoyageReportRoutine } from '@state/voyage';
+import { fetchVesselsRoutine } from '@state/vessels';
+import contentArray from '@components/contentArray';
+import FormVessel from '@components/Vessel/FormVessel';
 
 
 const FormVoyageVessel = ({

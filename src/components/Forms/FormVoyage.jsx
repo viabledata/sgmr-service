@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation, useHistory } from 'react-router-dom';
 
-import FormVoyageArrival from 'FormVoyageArrival';
-import FormVoyageCheckDetails from 'FormVoyageCheckDetails';
-import FormVoyageDeparture from 'FormVoyageDeparture';
-import FormVoyagePeople from 'FormVoyagePeople';
-import FormVoyageResponsiblePerson from 'FormVoyageResponsiblePerson';
-import FormVoyageVessel from 'FormVoyageVessel';
+import FormVoyageArrival from '@components/Forms/FormVoyageArrival';
+import FormVoyageCheckDetails from '@components/Forms/FormVoyageCheckDetails';
+import FormVoyageDeparture from '@components/Forms/FormVoyageDeparture';
+import FormVoyagePeople from '@components/Forms/FormVoyagePeople';
+import FormVoyageResponsiblePerson from '@components/Forms/FormVoyageResponsiblePerson';
+import FormVoyageVessel from '@components/Forms/FormVoyageVessel';
 
 const FormVoyage = () => {
   const location = useLocation();

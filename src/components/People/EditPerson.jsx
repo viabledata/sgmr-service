@@ -3,13 +3,13 @@ import { withRouter, useHistory } from 'react-router-dom';
 import axios from 'axios';
 
 // App imports
-import Auth from 'Auth';
-import FormPerson from 'FormPerson';
-import scrollToTopOnError from 'scrollToTopOnError';
-import { formatDate, isDateValid, isDateBefore } from 'Utils/date';
-import { PEOPLE_URL } from 'Constants/ApiConstants';
-import { PEOPLE_PAGE_URL } from 'Constants/ClientConstants';
-import { personValidationRules } from 'validation';
+import Auth from '@lib/Auth';
+import FormPerson from '@components/People/FormPerson';
+import scrollToTopOnError from '@utils/scrollToTopOnError';
+import { formatDate, isDateValid, isDateBefore } from '@utils/date';
+import { PEOPLE_URL } from '@constants/ApiConstants';
+import { PEOPLE_PAGE_URL } from '@constants/ClientConstants';
+import { personValidationRules } from '@components/Forms/validationRules';
 
 
 const EditPerson = (props) => {

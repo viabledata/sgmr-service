@@ -4,8 +4,8 @@ import {
 } from 'redux-saga/effects';
 import { createRoutine } from 'redux-saga-routines';
 
-import Auth from 'Auth';
-import { PEOPLE_URL } from 'Constants/ApiConstants';
+import Auth from '@lib/Auth';
+import { PEOPLE_URL } from '@constants/ApiConstants';
 
 export const fetchPeopleRoutine = createRoutine('FETCH_PEOPLE');
 

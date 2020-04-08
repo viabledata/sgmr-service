@@ -46,5 +46,6 @@ module.exports = {
     "import/no-unresolved": "off",
     "prefer-const": "off",
     "prefer-destructuring": "off",
+    "import/no-extraneous-dependencies": ["error", {"devDependencies": true}]
   }
 };

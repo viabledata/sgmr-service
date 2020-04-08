@@ -2,26 +2,26 @@ import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 
 // app imports
-import ScrollToTop from 'ScrollToTop';
-import SecureRoute from 'SecureRoute';
+import ScrollToTop from '@components/ScrollToTop';
+import SecureRoute from '@lib/SecureRoute';
 
-import Banner from 'Banner';
-import Footer from 'Footer';
-import Header from 'Header';
-import PageContainer from 'PageContainer';
+import Banner from '@components/Banner';
+import Footer from '@components/Footer';
+import Header from '@components/Header';
+import PageContainer from '@components/PageContainer';
 
-import SignIn from 'SignIn';
-import UserInputCode from 'UserInputCode';
-import UserRegister from 'UserRegister';
-import UserResendCode from 'UserResendCode';
+import SignIn from '@components/Forms/SignIn';
+import UserInputCode from '@components/Forms/UserInputCode';
+import UserRegister from '@components/Forms/UserRegister';
+import UserResendCode from '@components/Forms/UserResendCode';
 
-import EditAccount from 'EditAccount';
-import EditPerson from 'EditPerson';
-import CreateAPerson from 'CreateAPerson';
-import FormVoyage from 'FormVoyage';
-import FormVoyageSubmitted from 'FormVoyageSubmitted';
-import CreateAVessel from 'CreateAVessel';
-import EditVessel from 'EditVessel';
+import EditAccount from '@components/Forms/EditAccount';
+import EditPerson from '@components/People/EditPerson';
+import CreateAPerson from '@components/People/CreateAPerson';
+import FormVoyage from '@components/Forms/FormVoyage';
+import FormVoyageSubmitted from '@components/Forms/FormVoyageSubmitted';
+import CreateAVessel from '@components/Vessel/CreateAVessel';
+import EditVessel from '@components/Vessel/EditVessel';
 
 
 const Main = () => {
