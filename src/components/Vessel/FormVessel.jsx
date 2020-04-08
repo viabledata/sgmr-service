@@ -132,15 +132,15 @@ const FormVessel = ({
         />
       </div>
 
-      <div id="vesselBase" className="govuk-form-group">
-        <label className="govuk-label" htmlFor="vesselBase">
+      <div id="portOfRegistry" className="govuk-form-group">
+        <label className="govuk-label" htmlFor="portOfRegistry">
           Port of registry
         </label>
         <input
           className="govuk-input"
-          name="vesselBase"
+          name="portOfRegistry"
           type="text"
-          value={data.vesselBase || ''}
+          value={data.portOfRegistry || ''}
           onChange={handleChange}
         />
       </div>
