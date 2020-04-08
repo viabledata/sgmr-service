@@ -2,11 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 
 // app imports
-import contentArray from 'contentArray';
-import PageIntro from 'PageIntro';
-import PageIntroToForm from 'PageIntroToForm';
-import SectionTable from 'SectionTable';
-import SectionTabs from 'SectionTabs';
+import contentArray from '@components/contentArray';
+import PageIntro from '@components/PageIntro';
+import PageIntroToForm from '@components/PageIntroToForm';
+import SectionTable from '@components/SectionTable';
+import SectionTabs from '@components/SectionTabs';
 
 const PageContainer = (props) => {
   const location = useLocation();

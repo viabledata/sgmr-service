@@ -1,9 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { createVoyageReportRoutine } from 'State/voyage';
-import PageAccount from 'PageAccount';
-import StartButton from 'StartButton';
+import { createVoyageReportRoutine } from '@state/voyage';
+import PageAccount from '@components/PageAccount';
+import StartButton from '@components/StartButton';
 
 const PageIntro = ({ pageData, createVoyageReportAction }) => {
   return (

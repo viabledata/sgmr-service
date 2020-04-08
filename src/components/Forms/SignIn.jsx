@@ -3,8 +3,8 @@ import { Link, useHistory } from 'react-router-dom';
 import axios from 'axios';
 
 // app imports
-import Auth from 'Auth';
-import { LOGIN_URL } from 'Constants/ApiConstants';
+import Auth from '@lib/Auth';
+import { LOGIN_URL } from '@constants/ApiConstants';
 
 const SignIn = () => {
   const history = useHistory();

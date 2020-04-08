@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 
 // app imports
-import { RESEND_VERIFICATION_CODE_URL } from 'Constants/ApiConstants';
+import { RESEND_VERIFICATION_CODE_URL } from '@constants/ApiConstants';
 
 const UserResendCode = () => {
   const history = useHistory();

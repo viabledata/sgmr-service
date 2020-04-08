@@ -3,8 +3,8 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 // App imports
-import { formatUIDate } from 'Utils/date';
-import { fetchReportsRoutine } from 'State/reports';
+import { formatUIDate } from '@utils/date';
+import { fetchReportsRoutine } from '@state/reports';
 
 
 const SectionTabs = ({

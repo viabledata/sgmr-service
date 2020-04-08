@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import { updateVoyageReportRoutine } from 'State/voyage';
+import { updateVoyageReportRoutine } from '@state/voyage';
 
 const FormVoyageArrival = ({
   handleSubmit, handleChange, data, updateVoyageReportAction,

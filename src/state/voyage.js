@@ -5,9 +5,9 @@ import {
 import { push } from 'connected-react-router';
 import { createRoutine } from 'redux-saga-routines';
 
-import Auth from 'Auth';
-import { USER_VOYAGE_REPORT_URL, VOYAGE_REPORT_URL } from 'Constants/ApiConstants';
-import { formatDate } from 'Utils/date';
+import Auth from '@lib/Auth';
+import { USER_VOYAGE_REPORT_URL, VOYAGE_REPORT_URL } from '@constants/ApiConstants';
+import { formatDate } from '@utils/date';
 import { redirectToSignIn } from './redirectToSignIn';
 
 export const createVoyageReportRoutine = createRoutine('CREATE_VOYAGE_REPORT');

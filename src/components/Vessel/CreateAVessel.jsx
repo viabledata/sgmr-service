@@ -3,12 +3,12 @@ import { useHistory, useLocation, Link } from 'react-router-dom';
 import axios from 'axios';
 
 // App imports
-import Auth from 'Auth';
-import FormVessel from 'FormVessel';
-import scrollToTopOnError from 'scrollToTopOnError';
-import { VESSELS_URL } from 'Constants/ApiConstants';
-import { VESSELS_PAGE_URL } from 'Constants/ClientConstants';
-import { vesselValidationRules } from 'validation';
+import Auth from '@lib/Auth';
+import FormVessel from '@components/Vessel/FormVessel';
+import scrollToTopOnError from '@utils/scrollToTopOnError';
+import { VESSELS_URL } from '@constants/ApiConstants';
+import { VESSELS_PAGE_URL } from '@constants/ClientConstants';
+import { vesselValidationRules } from '@components/Forms/validationRules';
 
 const CreateAVessel = () => {
   const history = useHistory();

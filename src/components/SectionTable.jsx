@@ -5,10 +5,10 @@ import axios from 'axios';
 import { connect } from 'react-redux';
 
 // app imports
-import { VESSELS_URL } from 'Constants/ApiConstants';
-import Auth from 'Auth';
+import { VESSELS_URL } from '@constants/ApiConstants';
+import Auth from '@lib/Auth';
 
-import { fetchPeopleRoutine } from 'State/people';
+import { fetchPeopleRoutine } from '@state/people';
 
 const SectionTable = ({
   page, pageData, fetchPeopleTriggerAction, people,

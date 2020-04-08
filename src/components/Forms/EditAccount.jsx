@@ -3,8 +3,8 @@ import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 
 // App imports
-import { USER_URL } from 'Constants/ApiConstants';
-import Auth from 'Auth';
+import { USER_URL } from '@constants/ApiConstants';
+import Auth from '@lib/Auth';
 
 const EditAccount = (data) => {
   const history = useHistory();

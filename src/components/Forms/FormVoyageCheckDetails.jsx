@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 
-import { submitVoyageReportRoutine } from 'State/voyage';
+import { submitVoyageReportRoutine } from '@state/voyage';
 
 const getVesselInfo = ({
   vesselName,

@@ -2,8 +2,8 @@ import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import { isDateValid } from 'Utils/date';
-import { updateVoyageReportRoutine } from 'State/voyage';
+import { isDateValid } from '@utils/date';
+import { updateVoyageReportRoutine } from '@state/voyage';
 
 const FormVoyageDeparture = ({
   handleSubmit, handleChange, data, updateVoyageReportAction, setErrors, removeError, errors,
