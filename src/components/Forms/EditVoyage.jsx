@@ -11,8 +11,52 @@ const EditVoyage = (props) => {
   const voyageId = props.location.state.voyageId;
   const [voyageData, setVoyageData] = useState();
   const [peopleData, setPeopleData] = useState();
-  const formData = { ...voyageData, people: peopleData };
-  // NOTE: think I will need to destructure dates and store in localStorage formData : will add when I do date creation/validation
+  const [peopleIds, setPeopleIds] = useState([]);
+  const formData = { ...voyageData, people: peopleIds };
+
+  // Split the date and time fields for use in the form
+  const reformatFields = (data) => {
+    let formattedFields;
+    let originalData = { ...data };
+
+    // Spread date from grouped field to individual fields
+    if (data.departureDate) {
+      const [departureDateYear, departureDateMonth, departureDateDay] = data.departureDate.split('-');
+      formattedFields = {
+        ...formattedFields, departureDateYear, departureDateMonth, departureDateDay,
+      };
+    }
+    if (data.arrivalDate) {
+      const [arrivalDateYear, arrivalDateMonth, arrivalDateDay] = data.arrivalDate.split('-');
+      formattedFields = {
+        ...formattedFields, arrivalDateYear, arrivalDateMonth, arrivalDateDay,
+      };
+    }
+    if (data.departureTime) {
+      const [departureTimeHour, departureTimeMinute] = data.departureTime.split(':');
+      formattedFields = {
+        ...formattedFields, departureTimeHour, departureTimeMinute,
+      };
+    }
+    if (data.arrivalTime) {
+      const [arrivalTimeHour, arrivalTimeMinute] = data.arrivalTime.split(':');
+      formattedFields = {
+        ...formattedFields, arrivalTimeHour, arrivalTimeMinute,
+      };
+    }
+
+    setVoyageData({ ...originalData, ...formattedFields });
+  };
+
+  // Get person ID's for use in the form
+  const getPeopleIds = (data) => {
+    const idArray = [...peopleIds];
+
+    data.map((person) => {
+      idArray.push(person.id);
+    });
+    setPeopleIds(idArray);
+  };
 
 
   // Get data to populate the page for this voyage
@@ -21,7 +65,7 @@ const EditVoyage = (props) => {
       headers: { Authorization: `Bearer ${Auth.retrieveToken()}` },
     })
       .then((resp) => {
-        setVoyageData(resp.data);
+        reformatFields(resp.data);
       })
       .catch((err) => {
         if (err.response) {
@@ -42,6 +86,7 @@ const EditVoyage = (props) => {
     })
       .then((resp) => {
         setPeopleData(resp.data.items);
+        getPeopleIds(resp.data.items);
       })
       .catch((err) => {
         if (err.response) {
