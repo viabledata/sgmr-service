@@ -15,7 +15,7 @@ const getVesselInfo = ({
   hullIdentificationNumber,
   callsign,
   vesselNationality,
-  vesselBase,
+  portOfRegistry,
 }) => ({
   vesselName,
   vesselType,
@@ -24,7 +24,7 @@ const getVesselInfo = ({
   hullIdentificationNumber,
   callsign,
   vesselNationality,
-  vesselBase,
+  portOfRegistry,
 });
 
 const FormVoyageCheckDetails = ({
@@ -73,18 +73,18 @@ const FormVoyageCheckDetails = ({
           <dd className="govuk-summary-list__value">
             {[data.departureTimeHour, data.departureTimeMinute].filter(Boolean).join(':')}
           </dd>
-
         </div>
-
+        <div className="govuk-summary-list__row">
+          <dt className="govuk-summary-list__key">Departure port</dt>
+          <dd className="govuk-summary-list__value">{data.departurePort}</dd>
+        </div>
         <div className="govuk-summary-list__row">
           <dt className="govuk-summary-list__key">Departure port latitude</dt>
           <dd className="govuk-summary-list__value">{data.departureLat}</dd>
-
         </div>
         <div className="govuk-summary-list__row">
           <dt className="govuk-summary-list__key">Departure port longitude</dt>
           <dd className="govuk-summary-list__value">{data.departureLong}</dd>
-
         </div>
       </dl>
       <dl className="govuk-summary-list govuk-!-margin-bottom-9">
@@ -110,24 +110,24 @@ const FormVoyageCheckDetails = ({
               .format('DD/MM/YYYY')
           }
           </dd>
-
         </div>
         <div className="govuk-summary-list__row">
           <dt className="govuk-summary-list__key">Arrival time</dt>
           <dd className="govuk-summary-list__value">
             {[data.arrivalTimeHour, data.arrivalTimeMinute].filter(Boolean).join(':')}
           </dd>
-
+        </div>
+        <div className="govuk-summary-list__row">
+          <dt className="govuk-summary-list__key">Arrival port</dt>
+          <dd className="govuk-summary-list__value">{data.arrivalPort}</dd>
         </div>
         <div className="govuk-summary-list__row">
           <dt className="govuk-summary-list__key">Arrival port latitude</dt>
           <dd className="govuk-summary-list__value">{data.arrivalLat}</dd>
-
         </div>
         <div className="govuk-summary-list__row">
           <dt className="govuk-summary-list__key">Arrival port longitude</dt>
           <dd className="govuk-summary-list__value">{data.arrivalLong}</dd>
-
         </div>
       </dl>
       <dl className="govuk-summary-list govuk-!-margin-bottom-9">
@@ -146,22 +146,18 @@ const FormVoyageCheckDetails = ({
         <div className="govuk-summary-list__row">
           <dt className="govuk-summary-list__key">Vessel name</dt>
           <dd className="govuk-summary-list__value">{vessel.vesselName}</dd>
-
         </div>
         <div className="govuk-summary-list__row">
           <dt className="govuk-summary-list__key">Usual moorings</dt>
           <dd className="govuk-summary-list__value">{vessel.moorings}</dd>
-
         </div>
         <div className="govuk-summary-list__row">
           <dt className="govuk-summary-list__key">Registration number</dt>
           <dd className="govuk-summary-list__value">{vessel.registration}</dd>
-
         </div>
         <div className="govuk-summary-list__row">
           <dt className="govuk-summary-list__key">Vessel type</dt>
           <dd className="govuk-summary-list__value">{vessel.vesselType}</dd>
-
         </div>
         <div className="govuk-summary-list__row">
           <dt className="govuk-summary-list__key">Hull identification number</dt>
@@ -172,17 +168,14 @@ const FormVoyageCheckDetails = ({
         <div className="govuk-summary-list__row">
           <dt className="govuk-summary-list__key">Callsign</dt>
           <dd className="govuk-summary-list__value">{vessel.callsign}</dd>
-
         </div>
         <div className="govuk-summary-list__row">
           <dt className="govuk-summary-list__key">Vessel nationality</dt>
           <dd className="govuk-summary-list__value">{vessel.vesselNationality}</dd>
-
         </div>
         <div className="govuk-summary-list__row">
           <dt className="govuk-summary-list__key">Port of registry</dt>
-          <dd className="govuk-summary-list__value">{vessel.vesselBase}</dd>
-
+          <dd className="govuk-summary-list__value">{vessel.portOfRegistry}</dd>
         </div>
       </dl>
 
@@ -234,7 +227,7 @@ const FormVoyageCheckDetails = ({
                           <tbody className="govuk-table__body">
                             <tr className="govuk-table__row">
                               <td className="govuk-table__cell">Gender</td>
-                              <td className="govuk-table__cell">{person.gender}</td>
+                              <td className="govuk-table__cell">{(person.gender).charAt(0).toUpperCase() + person.gender.slice(1)}</td>
                             </tr>
                             <tr className="govuk-table__row">
                               <td className="govuk-table__cell">Place of birth</td>

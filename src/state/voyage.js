@@ -112,7 +112,7 @@ const getVesselInfo = ({
   callsign,
   hullIdentificationNumber,
   vesselNationality,
-  vesselBase,
+  portOfRegistry,
 }) => ({
   status: 'Draft',
   vesselName,
@@ -122,7 +122,7 @@ const getVesselInfo = ({
   callsign,
   hullIdentificationNumber,
   vesselNationality,
-  vesselBase,
+  portOfRegistry,
 });
 
 const getPeopleInfo = ({ people }, peopleList) => {

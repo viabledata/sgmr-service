@@ -45,9 +45,9 @@ const FormVoyageVessel = ({
               <thead className="govuk-table__head">
                 <tr className="govuk-table__row">
                   <th className="govuk-table__header">&nbsp;</th>
-                  {titles.map((elem, i) => {
+                  {titles.map((title) => {
                     return (
-                      <th className="govuk-table__header" scope="col" key={i}>{elem}</th>
+                      <th className="govuk-table__header" scope="col" key={title}>{title}</th>
                     );
                   })}
                 </tr>
@@ -73,9 +73,9 @@ const FormVoyageVessel = ({
                           <label className="govuk-label govuk-checkboxes__label" htmlFor={vessel.id}>&nbsp;</label>
                         </div>
                       </td>
-                      <td className="govuk-table__cell" scope="row">{vessel.vesselName}</td>
+                      <td className="govuk-table__cell">{vessel.vesselName}</td>
                       <td className="govuk-table__cell">{vessel.vesselType}</td>
-                      <td className="govuk-table__cell">{vessel.vesselBase}</td>
+                      <td className="govuk-table__cell">{vessel.portOfRegistry}</td>
                     </tr>
                   );
                 })}
@@ -122,8 +122,6 @@ const FormVoyageVessel = ({
 FormVoyageVessel.propTypes = {
   handleChange: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
-  setErrors: PropTypes.func.isRequired,
-  removeError: PropTypes.func.isRequired,
   data: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   errors: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   vessels: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
