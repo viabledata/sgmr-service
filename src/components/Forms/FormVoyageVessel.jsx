@@ -75,7 +75,7 @@ const FormVoyageVessel = ({
                       </td>
                       <td className="govuk-table__cell" scope="row">{vessel.vesselName}</td>
                       <td className="govuk-table__cell">{vessel.vesselType}</td>
-                      <td className="govuk-table__cell">{vessel.vesselBase}</td>
+                      <td className="govuk-table__cell">{vessel.portOfRegistry}</td>
                     </tr>
                   );
                 })}
