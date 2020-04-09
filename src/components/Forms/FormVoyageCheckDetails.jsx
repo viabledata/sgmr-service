@@ -227,7 +227,7 @@ const FormVoyageCheckDetails = ({
                           <tbody className="govuk-table__body">
                             <tr className="govuk-table__row">
                               <td className="govuk-table__cell">Gender</td>
-                              <td className="govuk-table__cell">{person.gender}</td>
+                              <td className="govuk-table__cell">{(person.gender).charAt(0).toUpperCase() + person.gender.slice(1)}</td>
                             </tr>
                             <tr className="govuk-table__row">
                               <td className="govuk-table__cell">Place of birth</td>
