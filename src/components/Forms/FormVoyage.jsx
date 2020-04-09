@@ -22,7 +22,6 @@ const FormVoyage = () => {
   const peoplePage = '/save-voyage/page-4';
 
 
-
   const removeError = (fieldName) => {
     const errorArray = { ...errors };
     const key = fieldName;
