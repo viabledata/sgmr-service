@@ -49,7 +49,7 @@ const FormVoyagePeople = ({
                         <label className="govuk-label govuk-checkboxes__label" htmlFor={person.id}>&nbsp;</label>
                       </div>
                     </td>
-                    <td className="govuk-table__cell" scope="row">
+                    <td className="govuk-table__cell">
                       <p>{person.lastName}</p>
                     </td>
                     <td className="govuk-table__cell">{person.firstName}</td>

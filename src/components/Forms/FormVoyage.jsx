@@ -1,12 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation, useHistory } from 'react-router-dom';
+import axios from 'axios';
 
+// App imports
+import Auth from '@lib/Auth';
 import FormVoyageArrival from '@components/Forms/FormVoyageArrival';
 import FormVoyageCheckDetails from '@components/Forms/FormVoyageCheckDetails';
 import FormVoyageDeparture from '@components/Forms/FormVoyageDeparture';
 import FormVoyagePeople from '@components/Forms/FormVoyagePeople';
 import FormVoyageResponsiblePerson from '@components/Forms/FormVoyageResponsiblePerson';
 import FormVoyageVessel from '@components/Forms/FormVoyageVessel';
+import { VOYAGE_REPORT_URL } from '@constants/ApiConstants';
 
 const FormVoyage = () => {
   const location = useLocation();
@@ -15,12 +19,15 @@ const FormVoyage = () => {
   let [pageNum, setPageNum] = useState(1);
   const [formData, setFormData] = useState(JSON.parse(localStorage.getItem('formData')) || {});
   const [errors, setErrors] = useState(JSON.parse(localStorage.getItem('errors')) || {});
-  // Validation
+  const peoplePage = '/save-voyage/page-4';
+
+
+
   const removeError = (fieldName) => {
-    const tempArr = { ...errors };
+    const errorArray = { ...errors };
     const key = fieldName;
-    delete tempArr[key];
-    setErrors(tempArr);
+    delete errorArray[key];
+    setErrors(errorArray);
   };
 
 
@@ -60,8 +67,37 @@ const FormVoyage = () => {
 
   const handleSubmit = (e, submitAction, formStep) => {
     e.preventDefault();
-    submitAction && submitAction({ ...formData, formStep });
 
+    // Check for people page and delete any people who are now unchecked
+    if (location.pathname === peoplePage) {
+      const checkboxes = document.querySelectorAll('input[name=people]');
+      Array.from(checkboxes).map((person) => {
+        // Check if we have pairedId data (passed through if editing form)
+        formData.pairedIds
+        && formData.pairedIds.map((pair) => {
+          if (person.checked === false && pair.personId === person.id) {
+            axios.delete(`${VOYAGE_REPORT_URL}/${formData.id}/people/${pair.voyagePersonId}`, {
+              headers: { Authorization: `Bearer ${Auth.retrieveToken()}` },
+            })
+              .catch((err) => {
+                if (err.response) {
+                  switch (err.response.status) {
+                    case 401: history.push(`/sign-in?source=${peoplePage}`); break;
+                    case 422: history.push(`/sign-in?source=${peoplePage}`); break;
+                    case 405: history.push(`/sign-in?source=${peoplePage}`); break;
+                    default: console.log(err); break;
+                  }
+                }
+              });
+          }
+        });
+      });
+      // Then run submit actions
+      submitAction && submitAction({ ...formData, formStep });
+    } else {
+      // If not people page just run submit actions
+      submitAction && submitAction({ ...formData, formStep });
+    }
     setNextPage();
   };
 

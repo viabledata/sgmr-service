@@ -24,12 +24,14 @@ const EditVoyage = (props) => {
   const [userPeopleData, setUserPeopleData] = useState();
   const [userVesselData, setUserVesselData] = useState();
   const [voyagePeopleIds, setVoyagePeopleIds] = useState();
-  const formData = { ...voyageData, people: voyagePeopleIds };
+  const [pairedPeopleIds, setPairedPeopleIds] = useState();
+  const formData = { ...voyageData, people: voyagePeopleIds, pairedIds: pairedPeopleIds };
 
 
   // Get peopleIds for use in the form
   const findPeopleIds = () => {
     let personData = [];
+    let pairedPersonData = [];
     if (!voyagePeopleData || !userPeopleData) { return null; }
 
     voyagePeopleData.map((voyagePerson) => {
@@ -37,10 +39,12 @@ const EditVoyage = (props) => {
       userPeopleData.map((userPerson) => {
         if ((userPerson.documentType + userPerson.documentNumber) === uniqueRef) {
           personData.push(userPerson.id);
+          pairedPersonData.push({ personId: userPerson.id, voyagePersonId: voyagePerson.id });
         }
       });
     });
 
+    setPairedPeopleIds(pairedPersonData);
     setVoyagePeopleIds(personData);
   };
 
