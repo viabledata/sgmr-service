@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link, withRouter } from 'react-router-dom';
+import { Link, withRouter, useHistory } from 'react-router-dom';
 import axios from 'axios';
 
 // App imports
@@ -20,6 +20,7 @@ import { PEOPLE_URL, VESSELS_URL, VOYAGE_REPORT_URL } from '@constants/ApiConsta
 // set paired people data
 
 const EditVoyage = (props) => {
+  const history = useHistory();
   const [voyageId, setVoyageId] = useState();
   const [voyageData, setVoyageData] = useState();
   const [voyagePeopleData, setVoyagePeopleData] = useState();
@@ -196,6 +197,27 @@ const EditVoyage = (props) => {
       });
   };
 
+  
+  const updateVoyage = (voyageStatus) => {
+    axios.patch(`${VOYAGE_REPORT_URL}/${voyageId}`, { status: voyageStatus }, {
+      headers: { Authorization: `Bearer ${Auth.retrieveToken()}` },
+    })
+      .then((resp) => {
+        if (resp.status === 200) {
+          history.push('/reports');
+        }
+      })
+      .catch((err) => {
+        if (err.response) {
+          switch (err.response.status) {
+            case 401: history.push('/sign-in'); break;
+            default: history.push('/sign-in'); break;
+          }
+        }
+      });
+  };
+
+
   // Get data from APIs
   useEffect(() => {
     getVoyageId();
@@ -218,7 +240,7 @@ const EditVoyage = (props) => {
   }, [formData]);
 
 
-  if (!voyageData || !voyagePeopleData || !pairedPeopleIds ) { return null; }
+  if (!voyageData || !voyagePeopleData || !pairedPeopleIds) { return null; }
   return (
     <section>
       <h1 className="govuk-heading-xl">
@@ -389,34 +411,34 @@ const EditVoyage = (props) => {
                     <details data-module="govuk-details">
                       <summary className="govuk-details__summary">
                         <span className="govuk-details__summary-text">
-                                Further information
-                              </span>
+                          Further information
+                        </span>
                       </summary>
                       <div className="panel panel-border-narrow" id="details-content-2" aria-hidden="true">
                         <table className="govuk-table" width="100%">
-                                <tbody className="govuk-table__body">
-                                  <tr className="govuk-table__row">
-                                    <td className="govuk-table__cell">Gender</td>
-                                    <td className="govuk-table__cell">{(person.gender).charAt(0).toUpperCase() + person.gender.slice(1)}</td>
-                                  </tr>
-                                  <tr className="govuk-table__row">
-                                    <td className="govuk-table__cell">Place of birth</td>
-                                    <td className="govuk-table__cell">{person.placeOfBirth}</td>
-                                  </tr>
-                                  <tr className="govuk-table__row">
-                                    <td className="govuk-table__cell">Travel document type</td>
-                                    <td className="govuk-table__cell">{person.documentType}</td>
-                                  </tr>
-                                  <tr className="govuk-table__row">
-                                    <td className="govuk-table__cell">Travel document issuing state</td>
-                                    <td className="govuk-table__cell">{person.documentIssuingState}</td>
-                                  </tr>
-                                  <tr className="govuk-table__row">
-                                    <td className="govuk-table__cell">Travel document expiry date</td>
-                                    <td className="govuk-table__cell">{formatUIDate(person.documentExpiryDate)}</td>
-                                  </tr>
-                                </tbody>
-                              </table>
+                          <tbody className="govuk-table__body">
+                            <tr className="govuk-table__row">
+                              <td className="govuk-table__cell">Gender</td>
+                              <td className="govuk-table__cell">{(person.gender).charAt(0).toUpperCase() + person.gender.slice(1)}</td>
+                            </tr>
+                            <tr className="govuk-table__row">
+                              <td className="govuk-table__cell">Place of birth</td>
+                              <td className="govuk-table__cell">{person.placeOfBirth}</td>
+                            </tr>
+                            <tr className="govuk-table__row">
+                              <td className="govuk-table__cell">Travel document type</td>
+                              <td className="govuk-table__cell">{person.documentType}</td>
+                            </tr>
+                            <tr className="govuk-table__row">
+                              <td className="govuk-table__cell">Travel document issuing state</td>
+                              <td className="govuk-table__cell">{person.documentIssuingState}</td>
+                            </tr>
+                            <tr className="govuk-table__row">
+                              <td className="govuk-table__cell">Travel document expiry date</td>
+                              <td className="govuk-table__cell">{formatUIDate(person.documentExpiryDate)}</td>
+                            </tr>
+                          </tbody>
+                        </table>
                       </div>
                     </details>
                   </div>
@@ -471,6 +493,14 @@ const EditVoyage = (props) => {
         data-module="govuk-button"
       >
         Accept and submit report
+      </button>
+      <button
+        type="button"
+        className="govuk-button govuk-button--warning govuk-body govuk!-margin-top-3 block-button"
+        data-module="govuk-button"
+        onClick={() => updateVoyage('PreCancelled')}
+      >
+        Cancel voyage
       </button>
     </section>
   );
