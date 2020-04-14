@@ -30,9 +30,9 @@
       "^@state(.*)$": "<rootDir>/src/state$1",
       "^@utils(.*)$": "<rootDir>/src/utils$1"
     },
-  "setupFilesAfterEnv": [
-    "<rootDir>/src/setupTests.js"
-  ]
+    "setupFilesAfterEnv": [
+      "<rootDir>/src/setupTests.js"
+    ]
   },
   "devDependencies": {
     "@babel/core": "^7.8.4",

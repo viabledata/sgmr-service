@@ -98,7 +98,7 @@ const SectionTabs = ({
             </thead>
             <tbody>
               {reports.list.items && reports.list.items.map((voyage) => {
-                if (voyage.status.name === tableName) {
+                if (voyage.status.name === tableName || voyage.status.name === `Pre${tableName}`) {
                   return (
                     <tr className="govuk-table__row" key={voyage.id}>
                       <td className="govuk-table__cell">
