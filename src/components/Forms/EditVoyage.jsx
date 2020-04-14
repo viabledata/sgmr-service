@@ -9,6 +9,7 @@ import { PEOPLE_URL, VESSELS_URL, VOYAGE_REPORT_URL } from '@constants/ApiConsta
 
 
 // FLOW
+// Get voyageId
 // Get people data & setUserPeopleData(resp.data)
 // Get voyage people data & setVoyagePeopleData(resp.data.items)
 // Get vessel data & setUserVesselData(resp.data.items)
@@ -16,9 +17,10 @@ import { PEOPLE_URL, VESSELS_URL, VOYAGE_REPORT_URL } from '@constants/ApiConsta
 // findVesselId(formattedData) & add vesselId if exists
 // findPeopleIds() & add setVoyagePeopleIds(personData)
 // set formData
+// set paired people data
 
 const EditVoyage = (props) => {
-  const voyageId = props.location.state.voyageId;
+  const [voyageId, setVoyageId] = useState();
   const [voyageData, setVoyageData] = useState();
   const [voyagePeopleData, setVoyagePeopleData] = useState();
   const [userPeopleData, setUserPeopleData] = useState();
@@ -26,6 +28,17 @@ const EditVoyage = (props) => {
   const [voyagePeopleIds, setVoyagePeopleIds] = useState();
   const [pairedPeopleIds, setPairedPeopleIds] = useState();
   const formData = { ...voyageData, people: voyagePeopleIds, pairedIds: pairedPeopleIds };
+
+
+  // Get the voyage Id
+  const getVoyageId = () => {
+    if (props.voyageId) {
+      setVoyageId(props.voyageId.id);
+    }
+    if (props.location.state) {
+      setVoyageId(props.location.state.voyageId);
+    }
+  };
 
 
   // Get peopleIds for use in the form
@@ -43,9 +56,9 @@ const EditVoyage = (props) => {
         }
       });
     });
-
     setPairedPeopleIds(pairedPersonData);
     setVoyagePeopleIds(personData);
+    localStorage.setItem('pairedPeopleIds', JSON.stringify(pairedPersonData));
   };
 
 
@@ -58,7 +71,6 @@ const EditVoyage = (props) => {
         formattedDataWithVessel.vessels = userVessel.id;
       }
     });
-
     setVoyageData(formattedDataWithVessel);
   };
 
@@ -99,7 +111,8 @@ const EditVoyage = (props) => {
 
   // Get data to populate the page for this voyage
   const getVoyageData = () => {
-    axios.get(`${VOYAGE_REPORT_URL}/${voyageId}`, {
+    voyageId
+    && axios.get(`${VOYAGE_REPORT_URL}/${voyageId}`, {
       headers: { Authorization: `Bearer ${Auth.retrieveToken()}` },
     })
       .then((resp) => {
@@ -118,7 +131,7 @@ const EditVoyage = (props) => {
   };
 
 
-  // Get people associated with this user
+  // Get vessels associated with this user
   const getVesselData = () => {
     axios.get(`${VESSELS_URL}`, {
       headers: { Authorization: `Bearer ${Auth.retrieveToken()}` },
@@ -141,7 +154,8 @@ const EditVoyage = (props) => {
 
   // Get people associated with this voyage
   const getVoyagePeopleData = () => {
-    axios.get(`${VOYAGE_REPORT_URL}/${voyageId}/people`, {
+    voyageId
+    && axios.get(`${VOYAGE_REPORT_URL}/${voyageId}/people`, {
       headers: { Authorization: `Bearer ${Auth.retrieveToken()}` },
     })
       .then((resp) => {
@@ -180,9 +194,9 @@ const EditVoyage = (props) => {
       });
   };
 
-
   // Get data from APIs
   useEffect(() => {
+    getVoyageId();
     getPeopleData();
     getVesselData();
   }, []);
@@ -190,12 +204,11 @@ const EditVoyage = (props) => {
   useEffect(() => {
     getVoyagePeopleData();
     getVoyageData();
-  }, [userPeopleData, userVesselData]);
+  }, [voyageId, userPeopleData, userVesselData]);
 
   useEffect(() => {
     findPeopleIds();
   }, [voyageData, voyagePeopleData]);
-
 
   // Update local storage with data
   useEffect(() => {
@@ -203,7 +216,7 @@ const EditVoyage = (props) => {
   }, [formData]);
 
 
-  if (!voyageData || !voyagePeopleData) { return null; }
+  if (!voyageData || !voyagePeopleData || !pairedPeopleIds) { return null; }
   return (
     <div id="pageContainer" className="govuk-width-container ">
       <a
