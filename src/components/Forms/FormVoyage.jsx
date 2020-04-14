@@ -197,11 +197,6 @@ const FormVoyage = (props) => {
                   voyageId={props.voyage}
                 />
               )}
-              {/* {pageNum === 6 && (
-                <FormVoyageCheckDetails
-                  data={formData}
-                />
-              )} */}
               <p>
                 <a href="/reports" className="govuk-link govuk-link--no-visited-state" onClick={clearFormData}>Exit without saving</a>
               </p>
