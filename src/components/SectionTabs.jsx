@@ -44,9 +44,14 @@ const SectionTabs = ({
     setTabData(tempArr);
   };
 
+  const clearFormData = () => {
+    localStorage.removeItem('pairedPeopleIds');
+  };
+
   useEffect(() => {
     setTabData(tabs);
     fetchReportsTriggerAction();
+    clearFormData();
   }, [pageData]);
 
   if (!pageData || !tabData || tabData.length === 0 || !reports.list) { return null; }

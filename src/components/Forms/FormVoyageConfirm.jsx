@@ -48,6 +48,8 @@ const EditVoyage = (props) => {
     if (!voyagePeopleData || !userPeopleData) { return null; }
 
     voyagePeopleData.map((voyagePerson) => {
+      // Clear any pairedPeople from localStorage so it can be reset cleanly
+      localStorage.removeItem('pairedPeopleIds');
       const uniqueRef = voyagePerson.documentType + voyagePerson.documentNumber;
       userPeopleData.map((userPerson) => {
         if ((userPerson.documentType + userPerson.documentNumber) === uniqueRef) {
@@ -216,7 +218,7 @@ const EditVoyage = (props) => {
   }, [formData]);
 
 
-  if (!voyageData || !voyagePeopleData || !pairedPeopleIds) { return null; }
+  if (!voyageData || !voyagePeopleData || !pairedPeopleIds ) { return null; }
   return (
     <section>
       <h1 className="govuk-heading-xl">

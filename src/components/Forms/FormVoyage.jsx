@@ -116,6 +116,7 @@ const FormVoyage = (props) => {
   useEffect(() => {
     const thisPage = location.pathname.split('page-');
     setPageNum(parseInt(thisPage[1], 10));
+    setFormData(JSON.parse(localStorage.getItem('formData')));
   }, [location]);
 
 

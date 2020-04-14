@@ -13,6 +13,8 @@ const FormVoyagePeople = ({
     fetchPeopleTriggerAction();
   }, []);
 
+
+  if (Object.keys(data).length === 0) { return null; }
   return (
     <section>
       <h1 className="govuk-heading-xl">Manifest details</h1>
