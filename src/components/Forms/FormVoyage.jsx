@@ -5,7 +5,7 @@ import axios from 'axios';
 
 // App imports
 import Auth from '@lib/Auth';
-import EditVoyage from '@components/Forms/EditVoyage';
+import FormVoyageConfirm from '@components/Forms/FormVoyageConfirm';
 import FormVoyageArrival from '@components/Forms/FormVoyageArrival';
 import FormVoyageDeparture from '@components/Forms/FormVoyageDeparture';
 import FormVoyagePeople from '@components/Forms/FormVoyagePeople';
@@ -192,7 +192,7 @@ const FormVoyage = (props) => {
                 />
               )}
               {pageNum === 6 && (
-                <EditVoyage
+                <FormVoyageConfirm
                   data={formData}
                   voyageId={props.voyage}
                 />
