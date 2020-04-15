@@ -1,18 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation, useHistory } from 'react-router-dom';
+import { connect } from 'react-redux';
 import axios from 'axios';
 
 // App imports
 import Auth from '@lib/Auth';
+import FormVoyageConfirm from '@components/Forms/FormVoyageConfirm';
 import FormVoyageArrival from '@components/Forms/FormVoyageArrival';
-import FormVoyageCheckDetails from '@components/Forms/FormVoyageCheckDetails';
 import FormVoyageDeparture from '@components/Forms/FormVoyageDeparture';
 import FormVoyagePeople from '@components/Forms/FormVoyagePeople';
 import FormVoyageResponsiblePerson from '@components/Forms/FormVoyageResponsiblePerson';
 import FormVoyageVessel from '@components/Forms/FormVoyageVessel';
 import { VOYAGE_REPORT_URL } from '@constants/ApiConstants';
 
-const FormVoyage = () => {
+const FormVoyage = (props) => {
   const location = useLocation();
   const history = useHistory();
   const maxPages = 6;
@@ -20,6 +21,7 @@ const FormVoyage = () => {
   const [formData, setFormData] = useState(JSON.parse(localStorage.getItem('formData')) || {});
   const [errors, setErrors] = useState(JSON.parse(localStorage.getItem('errors')) || {});
   const peoplePage = '/save-voyage/page-4';
+  const voyageId = props.voyage.id;
 
 
   const removeError = (fieldName) => {
@@ -54,9 +56,11 @@ const FormVoyage = () => {
     }
   };
 
+
   const clearFormData = () => {
     setFormData({});
   };
+
 
   const setNextPage = () => {
     const nextPage = pageNum < maxPages ? pageNum + 1 : pageNum;
@@ -64,18 +68,20 @@ const FormVoyage = () => {
     history.push(`/save-voyage/page-${nextPage}`);
   };
 
+
   const handleSubmit = (e, submitAction, formStep) => {
     e.preventDefault();
-
     // Check for people page and delete any people who are now unchecked
     if (location.pathname === peoplePage) {
       const checkboxes = document.querySelectorAll('input[name=people]');
+      // Get paired people data from localStorage
+      const pairedPeopleIds = (JSON.parse(localStorage.getItem('pairedPeopleIds')));
       Array.from(checkboxes).map((person) => {
-        // Check if we have pairedId data (passed through if editing form)
-        formData.pairedIds
-        && formData.pairedIds.map((pair) => {
-          if (person.checked === false && pair.personId === person.id) {
-            axios.delete(`${VOYAGE_REPORT_URL}/${formData.id}/people/${pair.voyagePersonId}`, {
+        // Check if we have pairedId data (passed through from confirmation page of form)
+        pairedPeopleIds
+        && Object.entries(pairedPeopleIds).map((pair) => {
+          if (person.checked === false && pair[1].personId === person.id) {
+            axios.delete(`${VOYAGE_REPORT_URL}/${voyageId}/people/${pair[1].voyagePersonId}`, {
               headers: { Authorization: `Bearer ${Auth.retrieveToken()}` },
             })
               .catch((err) => {
@@ -84,7 +90,7 @@ const FormVoyage = () => {
                     case 401: history.push(`/sign-in?source=${peoplePage}`); break;
                     case 422: history.push(`/sign-in?source=${peoplePage}`); break;
                     case 405: history.push(`/sign-in?source=${peoplePage}`); break;
-                    default: console.log(err); break;
+                    default: setErrors(err.response);
                   }
                 }
               });
@@ -100,6 +106,7 @@ const FormVoyage = () => {
     setNextPage();
   };
 
+
   // Update localStorage to hold page data
   useEffect(() => {
     localStorage.setItem('formData', JSON.stringify(formData));
@@ -109,6 +116,7 @@ const FormVoyage = () => {
   useEffect(() => {
     const thisPage = location.pathname.split('page-');
     setPageNum(parseInt(thisPage[1], 10));
+    setFormData(JSON.parse(localStorage.getItem('formData')));
   }, [location]);
 
 
@@ -170,6 +178,7 @@ const FormVoyage = () => {
                   removeError={removeError}
                   errors={errors}
                   setFormData={setFormData}
+                  voyageId={props.voyage}
                 />
               )}
               {pageNum === 5 && (
@@ -184,8 +193,9 @@ const FormVoyage = () => {
                 />
               )}
               {pageNum === 6 && (
-                <FormVoyageCheckDetails
+                <FormVoyageConfirm
                   data={formData}
+                  voyageId={props.voyage}
                 />
               )}
               <p>
@@ -199,4 +209,6 @@ const FormVoyage = () => {
   );
 };
 
-export default FormVoyage;
+const mapStateToProps = ({ voyage }) => ({ voyage });
+
+export default connect(mapStateToProps)(FormVoyage);
