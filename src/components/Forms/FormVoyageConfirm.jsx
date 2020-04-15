@@ -114,7 +114,7 @@ const EditVoyage = (props) => {
 
   // Get data to populate the page for this voyage
   const getVoyageData = () => {
-    voyageId
+    (voyageId && userVesselData)
     && axios.get(`${VOYAGE_REPORT_URL}/${voyageId}`, {
       headers: { Authorization: `Bearer ${Auth.retrieveToken()}` },
     })
@@ -216,7 +216,7 @@ const EditVoyage = (props) => {
         }
       });
   };
-
+    
 
   // Get data from APIs
   useEffect(() => {
@@ -227,8 +227,13 @@ const EditVoyage = (props) => {
 
   useEffect(() => {
     getVoyagePeopleData();
-    getVoyageData();
-  }, [voyageId, userPeopleData, userVesselData]);
+  }, [voyageId]);
+
+  useEffect(() => {
+    if (userVesselData) {
+      getVoyageData();
+    }
+  }, [userVesselData]);
 
   useEffect(() => {
     findPeopleIds();
