@@ -62,3 +62,8 @@ li a.govuk-header__link {
 .govuk-table__cell .govuk-link:link, .govuk-table__cell a:link {
   display: block;
 }
+
+// Make block buttons display block
+.block-button {
+  display: block;
+}
