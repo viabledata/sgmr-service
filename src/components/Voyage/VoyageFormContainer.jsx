@@ -1,9 +1,15 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable no-unused-expressions */
 import React, { useState, useEffect } from 'react';
 import { useLocation, useHistory } from 'react-router-dom';
 
 // App imports
 import { getData, postData } from '@utils/apiHooks';
 import { VOYAGE_REPORT_URL, USER_VOYAGE_REPORT_URL } from '@constants/ApiConstants';
+
+import FormDeparture from '@components/Voyage/FormDeparture';
 
 
 const FormVoyageContainer = () => {
@@ -13,6 +19,15 @@ const FormVoyageContainer = () => {
   const [pageNum, setPageNum] = useState();
   const [voyageId, setVoyageId] = useState();
   const [voyageData, setVoyageData] = useState();
+  const [formData, setFormData] = useState(JSON.parse(localStorage.getItem('formData')) || {});
+  const [errors, setErrors] = useState(JSON.parse(localStorage.getItem('errors')) || {});
+
+
+  // Update form data as user enters it
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+    // removeError(e.target.name);
+  };
 
 
   // Get voyage data
@@ -31,7 +46,10 @@ const FormVoyageContainer = () => {
       getVoyageData(location.state.voyageId);
     } else if (pageNum === 1) {
       postData(USER_VOYAGE_REPORT_URL)
-        .then((resp) => setVoyageId(resp.id));
+        .then((resp) => {
+          setVoyageId(resp.id);
+          getVoyageData(resp.id);
+        });
     } else {
       console.log('missing id');
     }
@@ -54,6 +72,15 @@ const FormVoyageContainer = () => {
     voyageId && getVoyageData(voyageId);
   }, [pageNum]);
 
+  // Persist form data if page refreshed
+  useEffect(() => {
+    localStorage.setItem('formData', JSON.stringify(formData));
+  }, [formData]);
+
+  useEffect(() => {
+    localStorage.setItem('errors', JSON.stringify(errors));
+  }, [errors]);
+
 
   return (
     <div id="pageContainer" className="govuk-width-container ">
@@ -70,7 +97,16 @@ const FormVoyageContainer = () => {
         <div className="govuk-grid-row">
           <div className="govuk-grid-column-two-thirds">
             <span className="govuk-caption-xl">{`Page ${pageNum} of ${maxPages}`}</span>
-            
+            <form>
+              {pageNum === 1 && (
+                <FormDeparture
+                // handleSubmit={handleSubmit}
+                  handleChange={handleChange}
+                  data={formData}
+                // errors={errors}
+                />
+              )}
+            </form>
           </div>
         </div>
       </main>
