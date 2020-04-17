@@ -91,36 +91,6 @@ export const personValidationRules = [
   },
 ];
 
-export const dateValidation = (name, value) => {
-  switch (name) {
-    case 'documentExpiryDateYear':
-      return /^(19|20)\d{2}$/i.test(value)
-        ? { documentExpiryDateYear: value }
-        : 'error';
-    case 'documentExpiryDateMonth':
-      return /^(0?[1-9]|1[012])$/i.test(value)
-        ? { documentExpiryDateMonth: value }
-        : 'error';
-    case 'documentExpiryDateDay':
-      return /^(0?[1-9]|[12][0-9]|3[01])$/i.test(value)
-        ? { documentExpiryDateDay: value }
-        : 'error';
-    case 'dateOfBirthYear':
-      return /^(19|20)\d{2}$/i.test(value)
-        ? { dateOfBirthYear: value }
-        : 'error';
-    case 'dateOfBirthMonth':
-      return /^(0?[1-9]|1[012])$/i.test(value)
-        ? { dateOfBirthMonth: value }
-        : 'error';
-    case 'dateOfBirthDay':
-      return /^(0?[1-9]|[12][0-9]|3[01])$/i.test(value)
-        ? { dateOfBirthDay: value }
-        : 'error';
-    default: return null;
-  }
-};
-
 export const vesselValidationRules = [
   {
     inputField: 'vesselName',
@@ -143,3 +113,68 @@ export const vesselValidationRules = [
     message: 'You must enter the vessel registration',
   },
 ];
+
+export const voyageValidationRules = [
+  {
+    inputField: 'departureDateYear',
+    errorDisplayId: 'departureDate',
+    rule: 'required',
+    message: 'You must enter a departure date',
+  },
+  {
+    inputField: 'departureDateMonth',
+    errorDisplayId: 'departureDate',
+    rule: 'required',
+    message: 'You must enter a departure date',
+  },
+  {
+    inputField: 'departureDateDay',
+    errorDisplayId: 'departureDate',
+    rule: 'required',
+    message: 'You must enter a departure date',
+  },
+];
+
+export const dateValidation = (name, value) => {
+  switch (name) {
+    case 'documentExpiryDateYear':
+      return /^(19|20)\d{2}$/i.test(value)
+        ? { documentExpiryDateYear: value }
+        : 'error';
+    case 'documentExpiryDateMonth':
+      return /^(0?[1-9]|1[012])$/i.test(value)
+        ? { documentExpiryDateMonth: value }
+        : 'error';
+    case 'documentExpiryDateDay':
+      return /^(0?[1-9]|[12][0-9]|3[01])$/i.test(value)
+        ? { documentExpiryDateDay: value }
+        : 'error';
+
+    case 'dateOfBirthYear':
+      return /^(19|20)\d{2}$/i.test(value)
+        ? { dateOfBirthYear: value }
+        : 'error';
+    case 'dateOfBirthMonth':
+      return /^(0?[1-9]|1[012])$/i.test(value)
+        ? { dateOfBirthMonth: value }
+        : 'error';
+    case 'dateOfBirthDay':
+      return /^(0?[1-9]|[12][0-9]|3[01])$/i.test(value)
+        ? { dateOfBirthDay: value }
+        : 'error';
+
+    case 'departureDateYear':
+      return /^(19|20)\d{2}$/i.test(value)
+        ? { departureDateYear: value }
+        : 'error';
+    case 'departureDateMonth':
+      return /^(0?[1-9]|1[012])$/i.test(value)
+        ? { departureDateMonth: value }
+        : 'error';
+    case 'departureDateDay':
+      return /^(0?[1-9]|[12][0-9]|3[01])$/i.test(value)
+        ? { departureDateDay: value }
+        : 'error';
+    default: return null;
+  }
+};

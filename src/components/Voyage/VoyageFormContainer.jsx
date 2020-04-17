@@ -10,6 +10,8 @@ import { getData, postData } from '@utils/apiHooks';
 import { VOYAGE_REPORT_URL, USER_VOYAGE_REPORT_URL } from '@constants/ApiConstants';
 
 import FormDeparture from '@components/Voyage/FormDeparture';
+import VoyageFormDataFormatting from '@components/Voyage/VoyageFormDataFormatting';
+import VoyageFormValidation from '@components/Voyage/VoyageFormValidation';
 
 
 const FormVoyageContainer = () => {
@@ -23,10 +25,30 @@ const FormVoyageContainer = () => {
   const [errors, setErrors] = useState(JSON.parse(localStorage.getItem('errors')) || {});
 
 
+  // Handle errors
+  const removeError = (fieldName) => {
+    const errorList = { ...errors };
+    let key;
+
+    if (fieldName.includes('dateOfBirth')) {
+      key = 'dateOfBirth';
+    } else if (fieldName.includes('documentExpiryDate')) {
+      key = 'documentExpiryDate';
+    } else if (fieldName.includes('departureDate')) {
+      key = 'departureDate';
+    } else if (fieldName.includes('arrivalDate')) {
+      key = 'arrivalDate';
+    } else { key = fieldName; }
+
+    delete errorList[key];
+    setErrors(errorList);
+  };
+
+
   // Update form data as user enters it
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
-    // removeError(e.target.name);
+    removeError(e.target.name);
   };
 
 
@@ -53,6 +75,22 @@ const FormVoyageContainer = () => {
     } else {
       console.log('missing id');
     }
+  };
+
+
+  // Handle submit
+  const handleSubmit = (e) => {
+    e.preventDefault;
+    setErrors(VoyageFormValidation(formData));
+    if (Object.keys(errors).length === 0) {
+      console.log(VoyageFormDataFormatting(voyageId, 'Draft', formData))
+    }
+
+    // postData(USER_VOYAGE_REPORT_URL)
+    //     .then((resp) => {
+    //       setVoyageId(resp.id);
+    //       getVoyageData(resp.id);
+    //     });
   };
 
 
@@ -100,10 +138,10 @@ const FormVoyageContainer = () => {
             <form>
               {pageNum === 1 && (
                 <FormDeparture
-                // handleSubmit={handleSubmit}
+                  handleSubmit={handleSubmit}
                   handleChange={handleChange}
                   data={formData}
-                // errors={errors}
+                  errors={errors}
                 />
               )}
             </form>
