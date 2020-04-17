@@ -35,7 +35,19 @@ const getData = (url) => {
   return data;
 };
 
+
+const patchData = (url, dataToSubmit) => {
+  const data = axios.patch(url, dataToSubmit, {
+    headers: { Authorization: `Bearer ${Auth.retrieveToken()}` },
+  })
+    .then((resp) => { return resp.data; })
+    .catch((err) => { return err.response; });
+  return data;
+};
+
+
 export {
   postData,
   getData,
+  patchData,
 };

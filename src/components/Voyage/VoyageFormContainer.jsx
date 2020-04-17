@@ -1,12 +1,8 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
-/* eslint-disable jsx-a11y/click-events-have-key-events */
-/* eslint-disable jsx-a11y/no-static-element-interactions */
-/* eslint-disable no-unused-expressions */
 import React, { useState, useEffect } from 'react';
 import { useLocation, useHistory } from 'react-router-dom';
 
 // App imports
-import { getData, postData } from '@utils/apiHooks';
+import { getData, patchData, postData } from '@utils/apiHooks';
 import { VOYAGE_REPORT_URL, USER_VOYAGE_REPORT_URL } from '@constants/ApiConstants';
 
 import FormDeparture from '@components/Voyage/FormDeparture';
@@ -72,25 +68,25 @@ const FormVoyageContainer = () => {
           setVoyageId(resp.id);
           getVoyageData(resp.id);
         });
-    } else {
-      console.log('missing id');
     }
+  };
+
+
+  const setNextPage = () => {
+    const nextPage = pageNum < maxPages ? pageNum + 1 : pageNum;
+    setPageNum(nextPage);
+    history.push(`/save-voyage/page-${nextPage}`);
   };
 
 
   // Handle submit
   const handleSubmit = (e) => {
-    e.preventDefault;
+    e.preventDefault();
     setErrors(VoyageFormValidation(formData));
     if (Object.keys(errors).length === 0) {
-      console.log(VoyageFormDataFormatting(voyageId, 'Draft', formData))
+      patchData(`${VOYAGE_REPORT_URL}/${voyageId}`, VoyageFormDataFormatting(voyageId, 'Draft', formData))
+        .then(() => setNextPage());
     }
-
-    // postData(USER_VOYAGE_REPORT_URL)
-    //     .then((resp) => {
-    //       setVoyageId(resp.id);
-    //       getVoyageData(resp.id);
-    //     });
   };
 
 
@@ -99,6 +95,7 @@ const FormVoyageContainer = () => {
     const thisPage = location.pathname.split('page-');
     setPageNum(parseInt(thisPage[1], 10));
   };
+
 
   // Trigger functions
   useEffect(() => {

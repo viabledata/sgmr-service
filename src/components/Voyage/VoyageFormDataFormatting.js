@@ -1,7 +1,9 @@
 import { formatDate } from '@utils/date';
 
 const VoyageFormDataFormatting = (id, status, data) => {
-  const dataList = {};
+  const dataList = {
+    status,
+  };
 
   Object.entries(data).map((item) => {
     // If this is a date item, reformat to a single item
