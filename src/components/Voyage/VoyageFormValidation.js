@@ -8,6 +8,7 @@ const VoyageFormValidation = (dataToValidate) => {
 
   // Required fields must not be null
   voyageValidationRules.map((rule) => {
+    // eslint-disable-next-line no-unused-expressions
     (!(rule.inputField in dataToValidate) || dataToValidate[rule.inputField] === '')
       ? fieldsErroring[rule.errorDisplayId] = rule.message
       : null;

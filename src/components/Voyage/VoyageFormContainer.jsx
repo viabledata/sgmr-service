@@ -83,7 +83,7 @@ const FormVoyageContainer = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     setErrors(VoyageFormValidation(formData));
-    if (Object.keys(errors).length === 0) {
+    if (Object.keys(VoyageFormValidation(formData)).length === 0 && Object.keys(errors).length === 0) {
       patchData(`${VOYAGE_REPORT_URL}/${voyageId}`, VoyageFormDataFormatting(voyageId, 'Draft', formData))
         .then(() => setNextPage());
     }
