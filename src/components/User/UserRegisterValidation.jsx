@@ -1,6 +1,6 @@
 // App imports
 import { userValidationRules } from '@components/Forms/validationRules';
-import ScrollToTopOnError from '@utils/ScrollToTopOnError';
+import scrollToTopOnError from '@utils/scrollToTopOnError';
 
 
 const UserRegisterValidation = (dataToValidate) => {
@@ -43,7 +43,7 @@ const UserRegisterValidation = (dataToValidate) => {
     }
   }
 
-  ScrollToTopOnError(fieldsErroring);
+  scrollToTopOnError(fieldsErroring);
   return fieldsErroring;
 };
 

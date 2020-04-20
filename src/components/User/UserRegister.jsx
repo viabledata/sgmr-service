@@ -5,8 +5,8 @@ import { useHistory } from 'react-router-dom';
 // app imports
 import { REGISTRATION_URL } from '@constants/ApiConstants';
 import UserRegisterValidation from '@components/User/UserRegisterValidation';
-import { postData } from '@utils/ApiHooks';
-import ScrollToTopOnError from '@utils/ScrollToTopOnError';
+import { postData } from '@utils/apiHooks';
+import scrollToTopOnError from '@utils/scrollToTopOnError';
 
 
 const UserRegister = () => {
@@ -52,7 +52,7 @@ const UserRegister = () => {
             localStorage.setItem('email', JSON.stringify(formData.email));
           } else {
             setErrors({ userRegister: resp.message });
-            ScrollToTopOnError(resp.message);
+            scrollToTopOnError(resp.message);
           }
         });
     }
