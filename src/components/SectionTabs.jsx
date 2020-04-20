@@ -110,7 +110,15 @@ const SectionTabs = ({
                           {voyage.vesselName}
                         </Link>
                       </td>
-                      <td className="govuk-table__cell">{formatUIDate(voyage.departureDate)}</td>
+                      <td className="govuk-table__cell">
+                        <Link to={{
+                          pathname: EDIT_VOYAGE_CHECK_DETAILS_URL,
+                          state: { voyageId: voyage.id },
+                        }}
+                        >
+                          {formatUIDate(voyage.departureDate)}
+                        </Link>
+                      </td>
                       <td className="govuk-table__cell">{voyage.departureTime}</td>
                       <td className="govuk-table__cell">{voyage.departurePort}</td>
                       <td className="govuk-table__cell">{voyage.arrivalPort}</td>

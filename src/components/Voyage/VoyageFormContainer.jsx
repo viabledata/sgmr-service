@@ -5,6 +5,7 @@ import { useLocation, useHistory } from 'react-router-dom';
 import { getData, patchData, postData } from '@utils/apiHooks';
 import { VOYAGE_REPORT_URL, USER_VOYAGE_REPORT_URL } from '@constants/ApiConstants';
 
+import FormCheck from '@components/Voyage/FormCheck';
 import FormDeparture from '@components/Voyage/FormDeparture';
 import VoyageFormDataFormatting from '@components/Voyage/VoyageFormDataFormatting';
 import VoyageFormValidation from '@components/Voyage/VoyageFormValidation';
@@ -144,6 +145,9 @@ const FormVoyageContainer = () => {
                   data={formData}
                   errors={errors}
                 />
+              )}
+              {pageNum === 6 && (
+                <FormCheck />
               )}
             </form>
           </div>
