@@ -58,6 +58,7 @@ const FormVoyageContainer = () => {
     getData(`${VOYAGE_REPORT_URL}/${id}`)
       .then((resp) => {
         setVoyageData(resp);
+        localStorage.setItem('formData', JSON.stringify(resp));
       });
   };
 
@@ -96,12 +97,12 @@ const FormVoyageContainer = () => {
 
   // Trigger functions
   useEffect(() => {
-    storeVoyageId();
-  }, []);
-
-  useEffect(() => {
     location && getPageNum();
   }, [location]);
+
+  useEffect(() => {
+    storeVoyageId();
+  }, [pageNum]);
 
   useEffect(() => {
     voyageId && getVoyageData(voyageId);
