@@ -3,6 +3,7 @@ import { useLocation, useHistory } from 'react-router-dom';
 
 // App imports
 import { getData, patchData, postData } from '@utils/apiHooks';
+import { splitDate } from '@utils/date';
 import { VOYAGE_REPORT_URL, USER_VOYAGE_REPORT_URL } from '@constants/ApiConstants';
 
 import FormCheck from '@components/Voyage/FormCheck';
@@ -53,10 +54,23 @@ const FormVoyageContainer = () => {
   };
 
 
+  // Destructure dates (for when reach page via an edit path with dates)
+  const formatDateTime = (data) => {
+    let formattedData = { ...data };
+    Object.entries(data).map((item) => {
+      if (item[0].includes('Date') && item[1]) {
+        const newDates = splitDate(item[1], item[0]);
+        formattedData = { ...formattedData, ...newDates };
+      }
+    });
+    setFormData({ ...data, ...formattedData });
+  };
+
+
   const getVoyageData = (id) => {
     getData(`${VOYAGE_REPORT_URL}/${id}`)
       .then((resp) => {
-        setVoyageData(resp);
+        setVoyageData(formatDateTime(resp));
         localStorage.setItem('formData', JSON.stringify(resp));
       });
   };
@@ -137,7 +151,7 @@ const FormVoyageContainer = () => {
                 <FormDeparture
                   handleSubmit={handleSubmit}
                   handleChange={handleChange}
-                  data={formData}
+                  data={formData || voyageData}
                   errors={errors}
                 />
               )}

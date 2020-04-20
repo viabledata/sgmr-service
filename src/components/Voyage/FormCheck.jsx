@@ -31,6 +31,7 @@ const FormCheck = (voyageId) => {
   useEffect(() => {
     storeVoyageData();
     storeVoyagePeopleData();
+    localStorage.removeItem('errors');
   }, []);
 
 
