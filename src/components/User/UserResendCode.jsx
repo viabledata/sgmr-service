@@ -40,6 +40,7 @@ const UserResendCode = () => {
       axios.patch(RESEND_VERIFICATION_CODE_URL, formData)
         .then(() => {
           history.push(`/verify?source=${source}`);
+          localStorage.setItem('email', JSON.stringify(formData.email));
         })
         .catch((err) => {
           if (err.response) {

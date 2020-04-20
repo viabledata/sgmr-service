@@ -12,7 +12,7 @@ const postData = (url, dataToSubmit) => {
     .catch((err) => {
       if (err.response) {
         switch (err.response.status) {
-          default: return err.response.data.message;
+          default: return ({ errors: true, status: err.response.status, message: err.response.data.message });
         }
       }
     });

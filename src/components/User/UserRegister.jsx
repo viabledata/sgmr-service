@@ -5,6 +5,7 @@ import { useHistory } from 'react-router-dom';
 // app imports
 import { REGISTRATION_URL } from '@constants/ApiConstants';
 import UserRegisterValidation from '@components/User/UserRegisterValidation';
+import { postData } from '@utils/ApiHooks';
 import ScrollToTopOnError from '@utils/ScrollToTopOnError';
 
 
@@ -14,12 +15,11 @@ const UserRegister = () => {
   const [errors, setErrors] = useState(JSON.parse(localStorage.getItem('errors')) || {});
 
   const removeError = (fieldName) => {
-    const tempArr = { ...errors };
+    const errorArray = { ...errors };
     const key = fieldName;
-    delete tempArr[key];
-    setErrors(tempArr);
+    delete errorArray[key];
+    setErrors(errorArray);
   };
-
 
   // Update form info to state
   const handleChange = (e) => {
@@ -27,12 +27,32 @@ const UserRegister = () => {
     removeError(e.target.name);
   };
 
+  // Format data to submit
+  const formatData = (data) => {
+    return {
+      firstName: data.firstName,
+      lastName: data.lastName,
+      mobileNumber: data.mobileNumber,
+      email: data.email.toLowerCase(),
+      password: data.password,
+    };
+  };
+
   // Handle submit
   const handleSubmit = (e) => {
     e.preventDefault();
     setErrors(UserRegisterValidation(formData));
     if (Object.keys(UserRegisterValidation(formData)).length === 0 && Object.keys(errors).length === 0) {
-      console.log('submitting');
+      postData(REGISTRATION_URL, formatData(formData))
+        .then((resp) => {
+          if (!resp.errors) {
+            history.push('/verify?source=registration');
+            localStorage.setItem('email', JSON.stringify(formData.email));
+          } else {
+            setErrors({ userRegister: resp.message });
+            ScrollToTopOnError(resp.message);
+          }
+        });
     }
   };
 
@@ -43,11 +63,6 @@ const UserRegister = () => {
     localStorage.removeItem('email');
     localStorage.removeItem('redux');
   }, []);
-
-  // Scroll to top on errors
-  useEffect(() => {
-    ScrollToTopOnError(errors);
-  }, [errors]);
 
 
   return (
@@ -72,6 +87,13 @@ const UserRegister = () => {
                 <h2 className="govuk-error-summary__title">
                   There is a problem
                 </h2>
+                {errors.userRegister
+                    && (
+                    <span className="govuk-error-message">
+                      <span className="govuk-visually-hidden">Error:</span>
+                      {errors.userRegister}
+                    </span>
+                    )}
               </div>
               )}
 
