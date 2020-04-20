@@ -67,22 +67,14 @@ const FormVoyageContainer = () => {
     if (location && location.state && location.state.voyageId) {
       setVoyageId(location.state.voyageId);
       getVoyageData(location.state.voyageId);
-    } else if (pageNum === 1) {
-      postData(USER_VOYAGE_REPORT_URL)
-        .then((resp) => {
-          setVoyageId(resp.id);
-          getVoyageData(resp.id);
-        });
     }
   };
-
 
   const setNextPage = () => {
     const nextPage = pageNum < maxPages ? pageNum + 1 : pageNum;
     setPageNum(nextPage);
     history.push(`/save-voyage/page-${nextPage}`);
   };
-
 
   // Handle submit
   const handleSubmit = (e) => {
@@ -104,13 +96,16 @@ const FormVoyageContainer = () => {
 
   // Trigger functions
   useEffect(() => {
+    storeVoyageId();
+  }, []);
+
+  useEffect(() => {
     location && getPageNum();
   }, [location]);
 
   useEffect(() => {
-    pageNum && storeVoyageId();
     voyageId && getVoyageData(voyageId);
-  }, [pageNum]);
+  }, [voyageId]);
 
   // Persist form data if page refreshed
   useEffect(() => {
@@ -147,7 +142,9 @@ const FormVoyageContainer = () => {
                 />
               )}
               {pageNum === 6 && (
-                <FormCheck />
+                <FormCheck
+                  voyageId={voyageId}
+                />
               )}
             </form>
           </div>

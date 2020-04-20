@@ -1,11 +1,9 @@
 import React from 'react';
-import { connect } from 'react-redux';
+// import { connect } from 'react-redux';
 
-import { createVoyageReportRoutine } from '@state/voyage';
 import PageAccount from '@components/PageAccount';
-import StartButton from '@components/StartButton';
 
-const PageIntro = ({ pageData, createVoyageReportAction }) => {
+const PageIntro = ({ pageData }) => {
   return (
     <div className="govuk-width-container">
       <div className="govuk-grid-row">
@@ -13,15 +11,10 @@ const PageIntro = ({ pageData, createVoyageReportAction }) => {
           <h1 className="govuk-heading-xl">{pageData.pageHeading}</h1>
           <p className="govuk-body-l">{pageData.pageBlurb}</p>
           {pageData.urlStub === '/account' && <PageAccount pageData={pageData} />}
-          {pageData.buttonLocation === 'intro' && <StartButton pageData={pageData} onClick={createVoyageReportAction} />}
         </div>
       </div>
     </div>
   );
 };
 
-const mapDispatchToProps = (dispatch) => ({
-  createVoyageReportAction: () => dispatch(createVoyageReportRoutine.request()),
-});
-
-export default connect(null, mapDispatchToProps)(PageIntro);
+export default PageIntro;
