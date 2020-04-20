@@ -18,11 +18,12 @@ import UserResendCode from '@components/Forms/UserResendCode';
 import EditAccount from '@components/Forms/EditAccount';
 import EditPerson from '@components/People/EditPerson';
 import CreateAPerson from '@components/People/CreateAPerson';
-import FormVoyage from '@components/Forms/FormVoyage';
 import FormVoyageConfirm from '@components/Forms/FormVoyageConfirm';
 import FormVoyageSubmitted from '@components/Forms/FormVoyageSubmitted';
 import CreateAVessel from '@components/Vessel/CreateAVessel';
 import EditVessel from '@components/Vessel/EditVessel';
+
+import VoyageFormContainer from '@components/Voyage/VoyageFormContainer';
 
 
 const Main = () => {
@@ -35,13 +36,12 @@ const Main = () => {
         <SecureRoute exact path="/reports">
           <PageContainer />
         </SecureRoute>
-        <SecureRoute exact path="/save-voyage/page-1"><FormVoyage /></SecureRoute>
-        <SecureRoute exact path="/save-voyage/page-2"><FormVoyage /></SecureRoute>
-        <SecureRoute exact path="/save-voyage/page-3"><FormVoyage /></SecureRoute>
-        <SecureRoute exact path="/save-voyage/page-4"><FormVoyage /></SecureRoute>
-        <SecureRoute exact path="/save-voyage/page-5"><FormVoyage /></SecureRoute>
-        <SecureRoute exact path="/save-voyage/page-6"><FormVoyage /></SecureRoute>
-        <SecureRoute exact path="/save-voyage/edit-voyage"><FormVoyageConfirm /></SecureRoute>
+        <SecureRoute exact path="/save-voyage/page-1"><VoyageFormContainer /></SecureRoute>
+        <SecureRoute exact path="/save-voyage/page-2"><VoyageFormContainer /></SecureRoute>
+        <SecureRoute exact path="/save-voyage/page-3"><VoyageFormContainer /></SecureRoute>
+        <SecureRoute exact path="/save-voyage/page-4"><VoyageFormContainer /></SecureRoute>
+        <SecureRoute exact path="/save-voyage/page-5"><VoyageFormContainer /></SecureRoute>
+        <SecureRoute exact path="/save-voyage/page-6"><VoyageFormContainer /></SecureRoute>
         <SecureRoute exact path="/save-voyage/voyage-submitted"><FormVoyageSubmitted /></SecureRoute>
         <SecureRoute exact path="/vessels">
           <PageContainer />
