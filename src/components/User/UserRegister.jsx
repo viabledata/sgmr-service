@@ -10,6 +10,7 @@ import ScrollToTopOnError from '@utils/ScrollToTopOnError';
 
 
 const UserRegister = () => {
+  const pageName = 'userRegister';
   const history = useHistory();
   const [formData, setFormData] = useState({});
   const [errors, setErrors] = useState(JSON.parse(localStorage.getItem('errors')) || {});
@@ -18,6 +19,7 @@ const UserRegister = () => {
     const errorArray = { ...errors };
     const key = fieldName;
     delete errorArray[key];
+    delete errorArray[pageName];
     setErrors(errorArray);
   };
 
@@ -80,7 +82,7 @@ const UserRegister = () => {
         <div className="govuk-grid-row">
           <div className="govuk-grid-column-two-thirds">
             <h1 className="govuk-heading-xl">Create an account</h1>
-            <form id="userRegister">
+            <form id="pageName">
 
               {Object.keys(errors).length > 0 && (
               <div className="govuk-error-summary" aria-labelledby="error-summary-title" role="alert" tabIndex="-1" data-module="govuk-error-summary">
