@@ -34,6 +34,10 @@ const FormVoyageContainer = () => {
       key = 'departureDate';
     } else if (fieldName.includes('arrivalDate')) {
       key = 'arrivalDate';
+    } else if (fieldName.includes('departureTime')) {
+      key = 'departureTime';
+    } else if (fieldName.includes('arrivalTime')) {
+      key = 'arrivalTime';
     } else { key = fieldName; }
 
     delete errorList[key];
