@@ -1,11 +1,22 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 // App imports
+import { splitDate } from '@utils/date';
 
 const FormDeparture = ({
   handleSubmit, handleChange, data, errors,
 }) => {
-  if (!data) { return (null); }
+  const [formattedData, setFormattedData] = useState();
+
+
+  // Destructure dates
+  useEffect(() => {
+    const dateFormat = splitDate(data.departureDate, 'departureDate');
+    setFormattedData({ ...data, ...dateFormat });
+  }, [data]);
+
+
+  if (!formattedData) { return (null); }
   return (
     <section>
       <h1 className="govuk-heading-xl">Departure details</h1>
@@ -41,7 +52,7 @@ const FormDeparture = ({
                   maxLength={2}
                   pattern="[0-9]*"
                   inputMode="numeric"
-                  value={data.departureDateDay || ''}
+                  value={formattedData.departureDateDay || ''}
                   onChange={(handleChange)}
                 />
               </div>
@@ -59,7 +70,7 @@ const FormDeparture = ({
                   autoComplete="bday-month"
                   pattern="[0-9]*"
                   inputMode="numeric"
-                  value={data.departureDateMonth || ''}
+                  value={formattedData.departureDateMonth || ''}
                   onChange={handleChange}
                 />
               </div>
@@ -77,7 +88,7 @@ const FormDeparture = ({
                   autoComplete="bday-year"
                   pattern="[0-9]*"
                   inputMode="numeric"
-                  value={data.departureDateYear || ''}
+                  value={formattedData.departureDateYear || ''}
                   onChange={handleChange}
                 />
               </div>
@@ -153,7 +164,7 @@ const FormDeparture = ({
           className="govuk-input"
           name="departurePort"
           type="text"
-          value={data.departurePort || ''}
+          value={formattedData.departurePort || ''}
           onChange={handleChange}
         />
       </div>
@@ -181,7 +192,7 @@ const FormDeparture = ({
               type="text"
               pattern="[0-9]*"
               inputMode="numeric"
-              value={data.departureLat || ''}
+              value={formattedData.departureLat || ''}
               onChange={handleChange}
             />
           </div>
@@ -198,7 +209,7 @@ const FormDeparture = ({
               type="text"
               pattern="[0-9]*"
               inputMode="numeric"
-              value={data.departureLong || ''}
+              value={formattedData.departureLong || ''}
               onChange={handleChange}
             />
           </div>

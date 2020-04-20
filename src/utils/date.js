@@ -29,3 +29,9 @@ export const isDateBefore = (year, month, day) => {
   const testDate = new Date(`${year}-${month}-${day}`);
   return today.getTime() >= testDate.getTime();
 };
+
+
+export const splitDate = (date, fieldName) => {
+  const [year, month, day] = date.split('-');
+  return ({ [`${fieldName}Year`]: year, [`${fieldName}Month`]: month, [`${fieldName}Day`]: day });
+};

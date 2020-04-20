@@ -53,7 +53,6 @@ const FormVoyageContainer = () => {
   };
 
 
-  // Get voyage data
   const getVoyageData = (id) => {
     getData(`${VOYAGE_REPORT_URL}/${id}`)
       .then((resp) => {
@@ -63,7 +62,6 @@ const FormVoyageContainer = () => {
   };
 
 
-  // Store voyageId
   const storeVoyageId = () => {
     if (location && location.state && location.state.voyageId) {
       setVoyageId(location.state.voyageId);
@@ -71,13 +69,14 @@ const FormVoyageContainer = () => {
     }
   };
 
+
   const setNextPage = () => {
     const nextPage = pageNum < maxPages ? pageNum + 1 : pageNum;
     setPageNum(nextPage);
     history.push(`/save-voyage/page-${nextPage}`);
   };
 
-  // Handle submit
+
   const handleSubmit = (e) => {
     e.preventDefault();
     setErrors(VoyageFormValidation(formData));
