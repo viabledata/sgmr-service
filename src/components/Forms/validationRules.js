@@ -114,6 +114,39 @@ export const vesselValidationRules = [
   },
 ];
 
+export const userValidationRules = [
+  {
+    inputField: 'firstName',
+    errorDisplayId: 'firstName',
+    rule: 'required',
+    message: 'You must enter your first name',
+  },
+  {
+    inputField: 'lastName',
+    errorDisplayId: 'lastName',
+    rule: 'required',
+    message: 'You must enter your last name',
+  },
+  {
+    inputField: 'mobileNumber',
+    errorDisplayId: 'mobileNumber',
+    rule: 'required',
+    message: 'You must enter your mobile number',
+  },
+  {
+    inputField: 'email',
+    errorDisplayId: 'email',
+    rule: 'required',
+    message: 'You must enter your email address',
+  },
+  {
+    inputField: 'password',
+    errorDisplayId: 'password',
+    rule: 'required',
+    message: 'You must enter a password',
+  },
+];
+
 export const voyageValidationRules = [
   {
     inputField: 'departureDateYear',

@@ -1,9 +1,11 @@
+/* eslint-disable no-unused-expressions */
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-import axios from 'axios';
 
 // app imports
 import { REGISTRATION_URL } from '@constants/ApiConstants';
+import UserRegisterValidation from '@components/User/UserRegisterValidation';
+import ScrollToTopOnError from '@utils/ScrollToTopOnError';
 
 
 const UserRegister = () => {
@@ -18,35 +20,6 @@ const UserRegister = () => {
     setErrors(tempArr);
   };
 
-  const handleErrors = (e, errorText, groupField) => {
-    // For fields with multiple inputs in a single group
-    const name = !groupField ? e.target.name : groupField;
-    // Error onBlur if condition not met
-    if (!e.target.value) { setErrors({ ...errors, [name]: errorText }); }
-    switch (name) {
-      case 'email':
-        (/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(formData.email))
-          ? removeError('email')
-          : setErrors({ ...errors, email: errorText });
-        break;
-      case 'confirmEmail':
-        formData.email.toLowerCase() === formData.confirmEmail.toLowerCase()
-          ? removeError('confirmEmail')
-          : setErrors({ ...errors, confirmEmail: errorText });
-        break;
-      case 'password':
-        formData.password.length < 8
-          ? setErrors({ ...errors, password: 'Password is too short' })
-          : removeError('password');
-        break;
-      case 'confirmPassword':
-        formData.password === formData.confirmPassword
-          ? removeError('confirmPassword')
-          : setErrors({ ...errors, confirmPassword: errorText });
-        break;
-      default: null;
-    }
-  };
 
   // Update form info to state
   const handleChange = (e) => {
@@ -54,40 +27,12 @@ const UserRegister = () => {
     removeError(e.target.name);
   };
 
-  // Handle Submit, including clearing localStorage
+  // Handle submit
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Check if email addresses still match in our data, if they don't, set error
-    if (formData.email.toLowerCase() !== formData.confirmEmail.toLowerCase()) {
-      setErrors({ ...errors, confirmEmail: 'Your email addresses do not match' });
-    }
-    // Check if passwords still match in our data, if they don't, set error
-    if (formData.password !== formData.confirmPassword) {
-      setErrors({ ...errors, confirmPassword: 'Your passwords do not match' });
-    }
-
-    // If there are no errors, format data and submit to api
-    if (Object.keys(errors).length === 0) {
-      const dataSubmit = {
-        email: formData.email.toLowerCase(),
-        firstName: formData.firstName,
-        lastName: formData.lastName,
-        mobileNumber: formData.mobileNumber,
-        password: formData.password,
-      };
-      axios.post(REGISTRATION_URL, dataSubmit)
-        .then((resp) => {
-          history.push('/verify?source=registration');
-          localStorage.setItem('email', JSON.stringify(formData.email));
-        })
-        .catch((err) => {
-          switch (err.response.data.message) {
-            case 'User already registered':
-              setErrors({ ...errors, email: 'Email address already registered' });
-              break;
-            default: setErrors(err.response.data);
-          }
-        });
+    setErrors(UserRegisterValidation(formData));
+    if (Object.keys(UserRegisterValidation(formData)).length === 0 && Object.keys(errors).length === 0) {
+      console.log('submitting');
     }
   };
 
@@ -96,7 +41,13 @@ const UserRegister = () => {
     localStorage.removeItem('formData');
     localStorage.removeItem('errors');
     localStorage.removeItem('email');
+    localStorage.removeItem('redux');
   }, []);
+
+  // Scroll to top on errors
+  useEffect(() => {
+    ScrollToTopOnError(errors);
+  }, [errors]);
 
 
   return (
@@ -114,23 +65,13 @@ const UserRegister = () => {
         <div className="govuk-grid-row">
           <div className="govuk-grid-column-two-thirds">
             <h1 className="govuk-heading-xl">Create an account</h1>
-            <form>
+            <form id="userRegister">
 
               {Object.keys(errors).length > 0 && (
               <div className="govuk-error-summary" aria-labelledby="error-summary-title" role="alert" tabIndex="-1" data-module="govuk-error-summary">
                 <h2 className="govuk-error-summary__title">
                   There is a problem
                 </h2>
-                <div className="govuk-error-summary__body">
-                  <ul className="govuk-list govuk-error-summary__list">
-                    {Object.entries(errors).map((elem, i) => (
-                      <li key={i}>
-                        {elem[0] !== 'title'
-                              && <a href={`#${elem[0]}`}>{elem[1]}</a>}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
               </div>
               )}
 
@@ -142,7 +83,6 @@ const UserRegister = () => {
                   && (
                   <span className="govuk-error-message">
                     <span className="govuk-visually-hidden">Error:</span>
-                    {' '}
                     {errors.firstName}
                   </span>
                   )}
@@ -152,7 +92,6 @@ const UserRegister = () => {
                   type="text"
                   value={formData.firstName || ''}
                   onChange={handleChange}
-                  onBlur={(e) => handleErrors(e, 'You must enter your given name')}
                 />
               </div>
 
@@ -164,7 +103,6 @@ const UserRegister = () => {
                   && (
                   <span className="govuk-error-message">
                     <span className="govuk-visually-hidden">Error:</span>
-                    {' '}
                     {errors.lastName}
                   </span>
                   )}
@@ -174,7 +112,6 @@ const UserRegister = () => {
                   type="text"
                   value={formData.lastName || ''}
                   onChange={handleChange}
-                  onBlur={(e) => handleErrors(e, 'You must enter your lastName')}
                 />
               </div>
 
@@ -186,7 +123,6 @@ const UserRegister = () => {
                   && (
                   <span className="govuk-error-message">
                     <span className="govuk-visually-hidden">Error:</span>
-                    {' '}
                     {errors.mobileNumber}
                   </span>
                   )}
@@ -197,7 +133,6 @@ const UserRegister = () => {
                   type="text"
                   value={formData.mobileNumber || ''}
                   onChange={handleChange}
-                  onBlur={(e) => handleErrors(e, 'You must enter your mobile number')}
                 />
               </div>
               <div id="email" className={`govuk-form-group ${errors.email ? 'govuk-form-group--error' : ''}`}>
@@ -208,7 +143,6 @@ const UserRegister = () => {
                   && (
                   <span className="govuk-error-message">
                     <span className="govuk-visually-hidden">Error:</span>
-                    {' '}
                     {errors.email}
                   </span>
                   )}
@@ -219,7 +153,6 @@ const UserRegister = () => {
                   type="text"
                   value={formData.email || ''}
                   onChange={handleChange}
-                  onBlur={(e) => handleErrors(e, 'You must enter your email')}
                 />
               </div>
 
@@ -231,7 +164,6 @@ const UserRegister = () => {
                   && (
                   <span className="govuk-error-message">
                     <span className="govuk-visually-hidden">Error:</span>
-                    {' '}
                     {errors.confirmEmail}
                   </span>
                   )}
@@ -241,7 +173,6 @@ const UserRegister = () => {
                   type="text"
                   value={formData.confirmEmail || ''}
                   onChange={handleChange}
-                  onBlur={(e) => handleErrors(e, 'Your email addresses do not match')}
                 />
               </div>
 
@@ -253,7 +184,6 @@ const UserRegister = () => {
                   && (
                   <span className="govuk-error-message">
                     <span className="govuk-visually-hidden">Error:</span>
-                    {' '}
                     {errors.password}
                   </span>
                   )}
@@ -263,7 +193,6 @@ const UserRegister = () => {
                   type="password"
                   value={formData.password || ''}
                   onChange={handleChange}
-                  onBlur={(e) => handleErrors(e, 'You must enter a password')}
                 />
               </div>
 
@@ -275,7 +204,6 @@ const UserRegister = () => {
                   && (
                   <span className="govuk-error-message">
                     <span className="govuk-visually-hidden">Error:</span>
-                    {' '}
                     {errors.confirmPassword}
                   </span>
                   )}
@@ -285,7 +213,6 @@ const UserRegister = () => {
                   type="password"
                   value={formData.confirmPassword || ''}
                   onChange={handleChange}
-                  onBlur={(e) => handleErrors(e, 'Your passwords do not match')}
                 />
               </div>
 
@@ -295,11 +222,12 @@ const UserRegister = () => {
                 <li>that the information you have provided is correct to the best of your knowledge</li>
                 <li>
                   that you have read and accept our&nbsp;
-                  <a target="_blank" href="https://www.gov.uk/government/publications/personal-information-use-in-borders-immigration-and-citizenship">privacy policy</a>
+                  <a target="_blank" rel="noopener noreferrer" href="https://www.gov.uk/government/publications/personal-information-use-in-borders-immigration-and-citizenship">privacy policy</a>
                 </li>
               </ul>
 
               <button
+                type="submit"
                 className="govuk-button"
                 data-module="govuk-button"
                 onClick={handleSubmit}
