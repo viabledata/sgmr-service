@@ -15,7 +15,10 @@ const VoyageFormDataFormatting = (id, status, data) => {
     // If this is a time item, reformat to a single item
     if (item[0].search(/hour/i) > 0) {
       const fieldName = item[0].slice(0, (item[0].length - 4));
-      dataList[fieldName] = (`${data[`${fieldName}Hour`]}:${data[`${fieldName}Minute`]}`);
+      // If hour or minute are not null then add, else, skip the time field
+      if (`${data[`${fieldName}Hour`]}`.length > 0 && `${data[`${fieldName}Minute`]}`.length > 0) {
+        dataList[fieldName] = (`${data[`${fieldName}Hour`]}:${data[`${fieldName}Minute`]}`);
+      }
     }
 
     // If this is a date or time field ignore them as they're handled above
