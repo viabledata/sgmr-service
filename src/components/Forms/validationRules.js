@@ -178,3 +178,17 @@ export const dateValidation = (name, value) => {
     default: return null;
   }
 };
+
+export const timeValidation = (name, value) => {
+  switch (name) {
+    case 'departureTimeHour':
+      return /^([0-9]|0[0-9]|1[0-9]|2[0-3])$/.test(value)
+        ? { departureTimeHour: value }
+        : 'error';
+    case 'departureTimeMinute':
+      return /^[0-5][0-9]$/.test(value)
+        ? { departureTimeMinute: value }
+        : 'error';
+    default: return null;
+  }
+};

@@ -2,7 +2,9 @@ import React from 'react';
 
 // App imports
 
-const FormDeparture = ({ handleSubmit, handleChange, data, errors }) => {
+const FormDeparture = ({
+  handleSubmit, handleChange, data, errors,
+}) => {
   if (!data) { return (null); }
   return (
     <section>
@@ -76,6 +78,62 @@ const FormDeparture = ({ handleSubmit, handleChange, data, errors }) => {
                   pattern="[0-9]*"
                   inputMode="numeric"
                   value={data.departureDateYear || ''}
+                  onChange={handleChange}
+                />
+              </div>
+            </div>
+          </div>
+        </fieldset>
+      </div>
+
+      <div id="departureTime" className={`govuk-form-group ${errors.departureTime ? 'govuk-form-group--error' : ''}`}>
+        <fieldset className="govuk-fieldset" role="group" aria-describedby="departureTime-hint">
+          <legend className="govuk-fieldset__legend govuk-fieldset__legend--m">
+            <label className="govuk-label govuk-label" htmlFor="departureTime">
+              Departure time (UTC)
+            </label>
+            {errors.departureTime
+              && (
+              <span className="govuk-error-message">
+                <span className="govuk-visually-hidden">Error:</span>
+                {errors.departureTime}
+              </span>
+              )}
+          </legend>
+          <span className="govuk-hint">
+            For example, 17 30
+          </span>
+          <div className="govuk-date-input">
+            <div className="govuk-date-input__item">
+              <div className="govuk-form-group">
+                <label className="govuk-label govuk-date-input__label" htmlFor="departureTimeHour">
+                  Hour
+                </label>
+                <input
+                  className="govuk-input govuk-date-input__input govuk-input--width-2"
+                  name="departureTimeHour"
+                  type="text"
+                  pattern="[0-9]*"
+                  inputMode="numeric"
+                  maxLength={2}
+                  value={data.departureTimeHour || ''}
+                  onChange={handleChange}
+                />
+              </div>
+            </div>
+            <div className="govuk-date-input__item">
+              <div className="govuk-form-group">
+                <label className="govuk-label govuk-date-input__label" htmlFor="departureTimeMinute">
+                  Minute
+                </label>
+                <input
+                  className="govuk-input govuk-date-input__input govuk-input--width-2"
+                  name="departureTimeMinute"
+                  type="text"
+                  pattern="[0-9]*"
+                  inputMode="numeric"
+                  maxLength={2}
+                  value={data.departureTimeMinute || ''}
                   onChange={handleChange}
                 />
               </div>

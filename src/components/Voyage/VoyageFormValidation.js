@@ -1,5 +1,6 @@
 // App imports
 import { isDateValid } from '@utils/date';
+import isTimeValid from '@utils/time';
 import { voyageValidationRules } from '@components/Forms/validationRules';
 
 
@@ -28,6 +29,10 @@ const VoyageFormValidation = (dataToValidate) => {
     fieldsErroring.arrivalDate = 'You must enter a valid date';
   }
 
+  // Time fields must be valid
+  if (dataToValidate.departureTimeHour && !(isTimeValid(dataToValidate.departureTimeHour, dataToValidate.departureTimeMinute))) {
+    fieldsErroring.departureTime = 'You must enter a valid time';
+  }
   return fieldsErroring;
 };
 
