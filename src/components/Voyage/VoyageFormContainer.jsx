@@ -12,7 +12,7 @@ import FormCheck from '@components/Voyage/FormCheck';
 import FormDeparture from '@components/Voyage/FormDeparture';
 import VoyageFormDataFormatting from '@components/Voyage/VoyageFormDataFormatting';
 import VoyageFormValidation from '@components/Voyage/VoyageFormValidation';
-import FormVessels from './FormVessels';
+import FormVessels from './FormVoyageVessels';
 
 
 const FormVoyageContainer = () => {
@@ -147,7 +147,7 @@ const FormVoyageContainer = () => {
     localStorage.setItem('errors', JSON.stringify(errors));
   }, [errors]);
 
-
+  
   return (
     <div id="pageContainer" className="govuk-width-container ">
       <a
@@ -184,7 +184,7 @@ const FormVoyageContainer = () => {
                 <FormVessels
                   handleSubmit={handleSubmit}
                   handleChange={handleChange}
-                  data={formData}
+                  formData={formData}
                   errors={errors}
                 />
               )}

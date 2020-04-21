@@ -5,28 +5,7 @@ import { Link } from 'react-router-dom';
 import { getData } from '@utils/apiHooks';
 import { VESSELS_URL } from '@constants/ApiConstants';
 
-const VesselTable = ({ vesselData, checkboxes, link }) => {
-  const [checkedVesselData, setCheckedVesselData] = useState();
-
-
-  // Handle checkboxes being checked/unchecked
-  const handleCheckboxes = (e) => {
-    if ((e.target).checked) {
-      // Get this vessel data
-      getData(`${VESSELS_URL}/${e.target.id}`)
-        // Overwrite checkedVesselData with this vesselData
-        .then((resp) => setCheckedVesselData(resp));
-      // Uncheck every other option
-      const vesselCheckboxes = document.querySelectorAll('input[name=vessel]');
-      Array.from(vesselCheckboxes).map((vessel) => {
-        if (e.target.id !== vessel.id && vessel.checked) {
-          vessel.checked = false;
-        }
-      });
-    }
-  };
-
-
+const VesselTable = ({ vesselData, checkboxes, link, handleCheckboxes }) => {
   return (
     <table className="table-clickable govuk-table">
       <thead className="govuk-table__head">

@@ -10,17 +10,35 @@ const FormVessels = ({
   handleSubmit, handleChange, errors, formData,
 }) => {
   const [vesselData, setVesselData] = useState();
-
+  const [selectedVessel, setSelectedVessel] = useState();
 
   const storeVesselData = () => {
     getData(VESSELS_URL)
       .then((resp) => setVesselData(resp.items));
   };
 
+  // Handle checkboxes being checked/unchecked
+  const handleCheckboxes = (e) => {
+    if ((e.target).checked) {
+      // Get this vessel data
+      getData(`${VESSELS_URL}/${e.target.id}`)
+        // Overwrite checkedVesselData with this vesselData
+        .then((resp) => setSelectedVessel(resp));
+    }
+    // Uncheck every other option
+    const vesselCheckboxes = document.querySelectorAll('input[name=vessel]');
+    Array.from(vesselCheckboxes).map((vessel) => {
+      if (e.target.id !== vessel.id && vessel.checked) {
+        vessel.checked = false;
+      }
+    });
+  };
+
 
   // Handle 'add to report' to populate vessel form below
   const handleAdd = () => {
-    console.log('add');
+    // Overwrite formData with vesselData
+    console.log(selectedVessel)
   };
 
   // Display vessel form
@@ -29,6 +47,7 @@ const FormVessels = ({
   useEffect(() => {
     storeVesselData();
   }, []);
+
 
   return (
     <section>
@@ -41,6 +60,7 @@ const FormVessels = ({
         sourceForm="voyage"
         checkboxes="true"
         link="false"
+        handleCheckboxes={handleCheckboxes}
       />
       )}
       <button
@@ -51,7 +71,6 @@ const FormVessels = ({
       >
         Add to report
       </button>
-
       <FormVessel
         handleSubmit={handleSubmit}
         handleChange={handleChange}
