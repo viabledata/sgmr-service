@@ -8,6 +8,7 @@ import { VESSELS_URL } from '@constants/ApiConstants';
 import Auth from '@lib/Auth';
 
 import { fetchPeopleRoutine } from '@state/people';
+import VesselTable from './Vessel/VesselTable';
 
 const SectionTable = ({
   page, pageData, fetchPeopleTriggerAction, people,
@@ -63,6 +64,15 @@ const SectionTable = ({
             <h2 className="govuk-heading-l">
               {`Saved ${pageData.pageHeading}`}
             </h2>
+            {isPageVessels && (
+            <VesselTable
+              vesselData={data}
+              sourceForm="vessels"
+              checkboxes="false"
+              link="true"
+            />
+            )}
+            {isPagePeople && (
             <table className="govuk-table">
               <thead className="govuk-table__head">
                 <tr className="govuk-table__row">
@@ -74,24 +84,7 @@ const SectionTable = ({
                 </tr>
               </thead>
               <tbody className="govuk-table__body">
-                {isPageVessels && data.map((vessel) => {
-                  return (
-                    <tr className="govuk-table__row" key={vessel.id}>
-                      <td className="govuk-table__cell">
-                        <Link to={{
-                          pathname: '/vessels/edit-vessel',
-                          state: { vesselId: vessel.id },
-                        }}
-                        >
-                          {vessel.vesselName}
-                        </Link>
-                      </td>
-                      <td className="govuk-table__cell">{vessel.vesselType}</td>
-                      <td className="govuk-table__cell">{vessel.moorings}</td>
-                    </tr>
-                  );
-                })}
-                {isPagePeople && people.list.map((person) => {
+                {people.list.map((person) => {
                   return (
                     <tr className="govuk-table__row" key={person.id}>
                       <td className="govuk-table__cell">
@@ -110,6 +103,7 @@ const SectionTable = ({
                 })}
               </tbody>
             </table>
+            )}
           </div>
         </div>
       </div>

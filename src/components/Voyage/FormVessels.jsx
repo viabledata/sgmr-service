@@ -33,6 +33,7 @@ const FormVessels = () => {
         vesselData={vesselData}
         sourceForm="voyage"
         checkboxes="true"
+        link="false"
       />
       )}
     </section>

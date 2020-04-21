@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const VesselTable = (data) => {
   return (
@@ -27,7 +28,19 @@ const VesselTable = (data) => {
                 </div>
               </td>
               )}
-              <td className="govuk-table__cell">{vessel.vesselName}</td>
+              {data.link === 'true'
+                && (
+                <td className="govuk-table__cell">
+                  <Link to={{
+                    pathname: '/vessels/edit-vessel',
+                    state: { vesselId: vessel.id },
+                  }}
+                  >
+                    {vessel.vesselName}
+                  </Link>
+                </td>
+                ) }
+              {data.link !== 'true' && <td className="govuk-table__cell">{vessel.vesselName}</td> }
               <td className="govuk-table__cell">{vessel.vesselType}</td>
               <td className="govuk-table__cell">{vessel.moorings}</td>
             </tr>
