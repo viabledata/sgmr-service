@@ -3,9 +3,12 @@ import React, { useState, useEffect } from 'react';
 // App imports
 import { getData } from '@utils/apiHooks';
 import { VESSELS_URL } from '@constants/ApiConstants';
+import FormVessel from '@components/Vessel/FormVessel';
 import VesselTable from '@components/Vessel/VesselTable';
 
-const FormVessels = ({ handleSubmit, handleChange, errors, formData }) => {
+const FormVessels = ({
+  handleSubmit, handleChange, errors, formData,
+}) => {
   const [vesselData, setVesselData] = useState();
 
 
@@ -14,7 +17,11 @@ const FormVessels = ({ handleSubmit, handleChange, errors, formData }) => {
       .then((resp) => setVesselData(resp.items));
   };
 
- 
+
+  // Handle 'add to report' to populate vessel form below
+  const handleAdd = () => {
+    console.log('add');
+  };
 
   // Display vessel form
   // Save and continue saves to this voyage only (does not update vessel)
@@ -44,6 +51,14 @@ const FormVessels = ({ handleSubmit, handleChange, errors, formData }) => {
       >
         Add to report
       </button>
+
+      <FormVessel
+        handleSubmit={handleSubmit}
+        handleChange={handleChange}
+        data={formData}
+        errors={errors}
+        sourceForm="voyage"
+      />
     </section>
   );
 };

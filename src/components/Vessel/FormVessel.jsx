@@ -1,9 +1,8 @@
 import React from 'react';
 
 const FormVessel = ({
-  handleSubmit, handleChange, data, errors,
+  handleSubmit, handleChange, data, errors, sourceForm
 }) => {
-  const checkIfVoyageForm = location.pathname.toLowerCase().indexOf('voyage') === -1;
   return (
     <section>
       <div id="vesselName" className={`govuk-form-group ${errors.vesselName ? 'govuk-form-group--error' : ''}`}>
@@ -145,7 +144,7 @@ const FormVessel = ({
         />
       </div>
 
-      {checkIfVoyageForm
+      {sourceForm !== 'voyage'
         && (
         <div id="submitBlock">
           <button
