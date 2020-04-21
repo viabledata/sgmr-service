@@ -12,6 +12,7 @@ import FormCheck from '@components/Voyage/FormCheck';
 import FormDeparture from '@components/Voyage/FormDeparture';
 import VoyageFormDataFormatting from '@components/Voyage/VoyageFormDataFormatting';
 import VoyageFormValidation from '@components/Voyage/VoyageFormValidation';
+import FormVessels from './FormVessels';
 
 
 const FormVoyageContainer = () => {
@@ -173,6 +174,14 @@ const FormVoyageContainer = () => {
               )}
               {pageNum === 2 && (
                 <FormArrival
+                  handleSubmit={handleSubmit}
+                  handleChange={handleChange}
+                  data={formData}
+                  errors={errors}
+                />
+              )}
+              {pageNum === 3 && (
+                <FormVessels
                   handleSubmit={handleSubmit}
                   handleChange={handleChange}
                   data={formData}
