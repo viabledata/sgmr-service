@@ -94,21 +94,25 @@ export const personValidationRules = [
 export const vesselValidationRules = [
   {
     inputField: 'vesselName',
+    errorDisplayId: 'vesselName',
     rule: 'required',
     message: 'You must enter a vessel name',
   },
   {
     inputField: 'vesselType',
+    errorDisplayId: 'vesselType',
     rule: 'required',
     message: 'You must enter a vessel type',
   },
   {
     inputField: 'moorings',
+    errorDisplayId: 'moorings',
     rule: 'required',
     message: 'You must enter the vessel usual mooring',
   },
   {
     inputField: 'registration',
+    errorDisplayId: 'registration',
     rule: 'required',
     message: 'You must enter the vessel registration',
   },
@@ -147,7 +151,7 @@ export const userValidationRules = [
   },
 ];
 
-export const voyageValidationRules = [
+export const departureValidationRules = [
   {
     inputField: 'departureDateYear',
     errorDisplayId: 'departureDate',

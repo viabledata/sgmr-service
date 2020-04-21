@@ -51,6 +51,14 @@ const FormVessels = ({
         errors={errors}
         sourceForm="voyage"
       />
+      <button
+        type="button"
+        className="govuk-button"
+        data-module="govuk-button"
+        onClick={(e) => handleSubmit(e, 'vessel')}
+      >
+        Save and continue
+      </button>
     </section>
   );
 };

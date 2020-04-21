@@ -1,19 +1,26 @@
 // App imports
 import { isDateValid } from '@utils/date';
-import { isTimeValid } from '@utils/time';
-import { voyageValidationRules } from '@components/Forms/validationRules';
+import isTimeValid from '@utils/time';
+import { departureValidationRules, vesselValidationRules } from '@components/Forms/validationRules';
 
 
-const VoyageFormValidation = (dataToValidate) => {
+const VoyageFormValidation = (dataToValidate, source) => {
   const fieldsErroring = {};
+  let validationRules;
+  switch (source) {
+    case 'departure': validationRules = departureValidationRules; break;
+    case 'vessel': validationRules = vesselValidationRules; break;
+    default: null;
+  }
 
   // Required fields must not be null
-  voyageValidationRules.map((rule) => {
-    // eslint-disable-next-line no-unused-expressions
-    (!(rule.inputField in dataToValidate) || dataToValidate[rule.inputField] === '')
-      ? fieldsErroring[rule.errorDisplayId] = rule.message
-      : null;
-  });
+  if (validationRules) {
+    validationRules.map((rule) => {
+      if (!(rule.inputField in dataToValidate) || dataToValidate[rule.inputField] === '') {
+        fieldsErroring[rule.errorDisplayId] = rule.message;
+      }
+    });
+  }
 
   // Date fields must be valid
   if (dataToValidate.documentExpiryDateYear && !(isDateValid(dataToValidate.documentExpiryDateYear, dataToValidate.documentExpiryDateMonth, dataToValidate.documentExpiryDateDay))) {
@@ -33,6 +40,7 @@ const VoyageFormValidation = (dataToValidate) => {
   if (dataToValidate.departureTimeHour && !(isTimeValid(dataToValidate.departureTimeHour, dataToValidate.departureTimeMinute))) {
     fieldsErroring.departureTime = 'You must enter a valid time';
   }
+
   return fieldsErroring;
 };
 
