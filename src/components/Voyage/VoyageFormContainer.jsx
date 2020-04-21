@@ -110,7 +110,7 @@ const FormVoyageContainer = () => {
 
   // Handle add buttons which populate page data
   const handleAddButton = () => {
-    setFormData(checkboxData);
+    if (checkboxData) { setFormData(checkboxData); }
   };
 
 
