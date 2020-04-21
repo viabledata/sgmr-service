@@ -5,7 +5,7 @@ import { useLocation, useHistory } from 'react-router-dom';
 import { getData, patchData } from '@utils/apiHooks';
 import { splitDate } from '@utils/date';
 import { splitTime } from '@utils/time';
-import { VOYAGE_REPORT_URL } from '@constants/ApiConstants';
+import { PEOPLE_URL, VESSELS_URL, VOYAGE_REPORT_URL } from '@constants/ApiConstants';
 
 import FormArrival from '@components/Voyage/FormArrival';
 import FormCheck from '@components/Voyage/FormCheck';
@@ -22,6 +22,7 @@ const FormVoyageContainer = () => {
   const [pageNum, setPageNum] = useState();
   const [voyageId, setVoyageId] = useState();
   const [voyageData, setVoyageData] = useState();
+  const [checkboxData, setCheckboxData] = useState();
   const [formData, setFormData] = useState(JSON.parse(localStorage.getItem('formData')) || {});
   const [errors, setErrors] = useState(JSON.parse(localStorage.getItem('errors')) || {});
 
@@ -84,6 +85,35 @@ const FormVoyageContainer = () => {
   };
 
 
+  // Handle checkboxes being checked/unchecked
+  const handleCheckboxes = (e) => {
+    let url;
+    switch (e.target.name) {
+      case 'vessel': url = `${VESSELS_URL}/${e.target.id}`; break;
+      case 'people': url = `${PEOPLE_URL}/${e.target.id}`; break;
+      default: url = '';
+    }
+    // Get the data
+    if ((e.target).checked) {
+      getData(url)
+        .then((resp) => setCheckboxData({ ...checkboxData, ...resp }));
+    }
+    // Uncheck every other option for vessels (these are currently checkboxes but only one can be selected)
+    const vesselCheckboxes = document.querySelectorAll('input[name=vessel]');
+    Array.from(vesselCheckboxes).map((vessel) => {
+      if (e.target.id !== vessel.id && vessel.checked) {
+        vessel.checked = false;
+      }
+    });
+  };
+
+  // Handle add buttons which populate page data
+  const handleAddButton = () => {
+    setFormData(checkboxData);
+  };
+
+
+  // Get voyage data
   const getVoyageData = (id) => {
     getData(`${VOYAGE_REPORT_URL}/${id}`)
       .then((resp) => {
@@ -147,7 +177,7 @@ const FormVoyageContainer = () => {
     localStorage.setItem('errors', JSON.stringify(errors));
   }, [errors]);
 
-  
+
   return (
     <div id="pageContainer" className="govuk-width-container ">
       <a
@@ -184,6 +214,8 @@ const FormVoyageContainer = () => {
                 <FormVessels
                   handleSubmit={handleSubmit}
                   handleChange={handleChange}
+                  handleCheckboxes={handleCheckboxes}
+                  handleAddButton={handleAddButton}
                   formData={formData}
                   errors={errors}
                 />

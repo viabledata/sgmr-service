@@ -1,9 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 
 // App imports
-import { getData } from '@utils/apiHooks';
-import { VESSELS_URL } from '@constants/ApiConstants';
 
 const VesselTable = ({ vesselData, checkboxes, link, handleCheckboxes }) => {
   return (
