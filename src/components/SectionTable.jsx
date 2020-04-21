@@ -1,55 +1,34 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useHistory } from 'react-router-dom';
-import axios from 'axios';
-import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 
-// app imports
-import { VESSELS_URL } from '@constants/ApiConstants';
-import Auth from '@lib/Auth';
-
-import { fetchPeopleRoutine } from '@state/people';
+// App imports
+import { getData } from '@utils/apiHooks';
+import { VESSELS_URL, PEOPLE_URL } from '@constants/ApiConstants';
 import VesselTable from './Vessel/VesselTable';
 
-const SectionTable = ({
-  page, pageData, fetchPeopleTriggerAction, people,
-}) => {
-  const history = useHistory();
+const SectionTable = ({ page, pageData, }) => {
   const isPageVessels = page === '/vessels';
   const isPagePeople = page === '/people';
   const [data, setData] = useState();
   const [titles, setTitles] = useState([]);
 
-  const getData = () => {
+  const storeData = () => {
     if (isPageVessels) {
-      axios.get(`${VESSELS_URL}?pagination=false`, {
-        headers: { Authorization: `Bearer ${Auth.retrieveToken()}` },
-      })
-        .then((resp) => {
-          setData(resp.data.vessels);
-        })
-        .catch((err) => {
-          if (err.response) {
-            switch (err.response.status) {
-              case 401: history.push(`/sign-in?source=${location}`); break;
-              case 422: history.push(`/sign-in?source=${location}`); break;
-              case 405: history.push(`/sign-in?source=${location}`); break;
-              default: history.push(`/sign-in?source=${location}`);
-            }
-          }
-        });
+      getData(`${VESSELS_URL}?pagination=false`)
+        .then((resp) => setData(resp.vessels));
     }
-
     if (isPagePeople) {
-      fetchPeopleTriggerAction();
+      getData(`${PEOPLE_URL}?pagination=false`)
+        .then((resp) => setData(resp));
     }
   };
 
   useEffect(() => {
-    getData();
+    storeData();
     setTitles(pageData.reportTitles);
   }, [pageData]);
 
-  if ((isPageVessels && !data) || (isPagePeople && !people.list)) {
+  if ((isPageVessels && !data) || (isPagePeople && !data)) {
     return null;
   }
 
@@ -84,7 +63,7 @@ const SectionTable = ({
                 </tr>
               </thead>
               <tbody className="govuk-table__body">
-                {people.list.map((person) => {
+                {data.map((person) => {
                   return (
                     <tr className="govuk-table__row" key={person.id}>
                       <td className="govuk-table__cell">
@@ -111,8 +90,4 @@ const SectionTable = ({
   );
 };
 
-const mapDispatchToProps = (dispatch) => ({
-  fetchPeopleTriggerAction: () => dispatch(fetchPeopleRoutine.trigger()),
-});
-const mapStateToProps = ({ people }) => ({ people });
-export default connect(mapStateToProps, mapDispatchToProps)(SectionTable);
+export default SectionTable;
