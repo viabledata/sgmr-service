@@ -5,17 +5,17 @@ import { getData } from '@utils/apiHooks';
 import { VESSELS_URL } from '@constants/ApiConstants';
 import VesselTable from '@components/Vessel/VesselTable';
 
-const FormVessels = () => {
+const FormVessels = ({ handleSubmit, handleChange, errors, formData }) => {
   const [vesselData, setVesselData] = useState();
-  // Get vessel data
+
+
   const storeVesselData = () => {
     getData(VESSELS_URL)
       .then((resp) => setVesselData(resp.items));
   };
 
-  // Display as checkboxes
-  // Handle checkboxes
-  // Handle 'add to report' to populate vessel form below
+ 
+
   // Display vessel form
   // Save and continue saves to this voyage only (does not update vessel)
 
@@ -36,6 +36,14 @@ const FormVessels = () => {
         link="false"
       />
       )}
+      <button
+        type="button"
+        className="govuk-button"
+        data-module="govuk-button"
+        onClick={(e) => handleAdd(e)}
+      >
+        Add to report
+      </button>
     </section>
   );
 };
