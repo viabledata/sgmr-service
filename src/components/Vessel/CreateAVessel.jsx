@@ -62,7 +62,6 @@ const CreateAVessel = () => {
   // Handle Submit, including clearing localStorage
   const handleSubmit = (e) => {
     e.preventDefault();
-
     // Test for any errors
     if (!areFieldsValid(formData)) {
       axios.post(VESSELS_URL, formData, {

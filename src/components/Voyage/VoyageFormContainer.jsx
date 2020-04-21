@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useLocation, useHistory } from 'react-router-dom';
 
 // App imports
+<<<<<<< HEAD
 import { getData, patchData } from '@utils/apiHooks';
 import { splitDate } from '@utils/date';
 import { splitTime } from '@utils/time';
@@ -9,6 +10,14 @@ import { PEOPLE_URL, VESSELS_URL, VOYAGE_REPORT_URL } from '@constants/ApiConsta
 
 import FormArrival from '@components/Voyage/FormArrival';
 import FormCheck from '@components/Voyage/FormCheck';
+=======
+import { getData, patchData, postData } from '@utils/apiHooks';
+import {
+  PEOPLE_URL, USER_VOYAGE_REPORT_URL, VESSELS_URL, VOYAGE_REPORT_URL,
+} from '@constants/ApiConstants';
+
+import FormArrival from '@components/Voyage/FormArrival';
+>>>>>>> Update save and continue
 import FormDeparture from '@components/Voyage/FormDeparture';
 import VoyageFormDataFormatting from '@components/Voyage/VoyageFormDataFormatting';
 import VoyageFormValidation from '@components/Voyage/VoyageFormValidation';
@@ -157,11 +166,16 @@ const FormVoyageContainer = () => {
 
   // Trigger functions
   useEffect(() => {
-    location && getPageNum();
+    if (location) { getPageNum(); }
   }, [location]);
 
   useEffect(() => {
+<<<<<<< HEAD
     storeVoyageId();
+=======
+    if (pageNum) { storeVoyageId(); }
+    if (voyageId) { getVoyageData(voyageId); }
+>>>>>>> Update save and continue
   }, [pageNum]);
 
   useEffect(() => {
@@ -216,6 +230,7 @@ const FormVoyageContainer = () => {
                   handleChange={handleChange}
                   handleCheckboxes={handleCheckboxes}
                   handleAddButton={handleAddButton}
+                  voyageId={voyageId}
                   formData={formData}
                   errors={errors}
                 />

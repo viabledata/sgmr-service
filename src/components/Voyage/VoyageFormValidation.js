@@ -10,7 +10,7 @@ const VoyageFormValidation = (dataToValidate, source) => {
   switch (source) {
     case 'departure': validationRules = departureValidationRules; break;
     case 'vessel': validationRules = vesselValidationRules; break;
-    default: null;
+    default: validationRules = null;
   }
 
   // Required fields must not be null
@@ -21,6 +21,7 @@ const VoyageFormValidation = (dataToValidate, source) => {
       }
     });
   }
+
 
   // Date fields must be valid
   if (dataToValidate.documentExpiryDateYear && !(isDateValid(dataToValidate.documentExpiryDateYear, dataToValidate.documentExpiryDateMonth, dataToValidate.documentExpiryDateDay))) {
