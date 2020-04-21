@@ -7,7 +7,7 @@ import FormVessel from '@components/Vessel/FormVessel';
 import VesselTable from '@components/Vessel/VesselTable';
 
 const FormVessels = ({
-  handleSubmit, handleChange, handleCheckboxes, handleAddButton, errors, formData,
+  handleSubmit, handleChange, handleCheckboxes, handleAddButton, voyageId, errors, formData,
 }) => {
   const [vesselData, setVesselData] = useState();
 
@@ -44,9 +44,14 @@ const FormVessels = ({
       >
         Add to report
       </button>
+      <h2 className="govuk-heading-l">New vessel</h2>
+      <p className="govuk-body-l">
+        Add the details of a new vessel you have not already saved
+      </p>
       <FormVessel
         handleSubmit={handleSubmit}
         handleChange={handleChange}
+        voyageId={voyageId}
         data={formData}
         errors={errors}
         sourceForm="voyage"
@@ -55,7 +60,7 @@ const FormVessels = ({
         type="button"
         className="govuk-button"
         data-module="govuk-button"
-        onClick={(e) => handleSubmit(e, 'vessel')}
+        onClick={(e) => handleSubmit(e, 'vessel', voyageId)}
       >
         Save and continue
       </button>

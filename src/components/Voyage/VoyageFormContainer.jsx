@@ -2,22 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { useLocation, useHistory } from 'react-router-dom';
 
 // App imports
-<<<<<<< HEAD
 import { getData, patchData } from '@utils/apiHooks';
 import { splitDate } from '@utils/date';
 import { splitTime } from '@utils/time';
-import { PEOPLE_URL, VESSELS_URL, VOYAGE_REPORT_URL } from '@constants/ApiConstants';
+import { PEOPLE_URL, USER_VOYAGE_REPORT_URL, VESSELS_URL, VOYAGE_REPORT_URL } from '@constants/ApiConstants';
+import ScrollToTopOnError from '@utils/ScrollToTopOnError';
 
 import FormArrival from '@components/Voyage/FormArrival';
 import FormCheck from '@components/Voyage/FormCheck';
-=======
-import { getData, patchData, postData } from '@utils/apiHooks';
-import {
-  PEOPLE_URL, USER_VOYAGE_REPORT_URL, VESSELS_URL, VOYAGE_REPORT_URL,
-} from '@constants/ApiConstants';
-
-import FormArrival from '@components/Voyage/FormArrival';
->>>>>>> Update save and continue
 import FormDeparture from '@components/Voyage/FormDeparture';
 import VoyageFormDataFormatting from '@components/Voyage/VoyageFormDataFormatting';
 import VoyageFormValidation from '@components/Voyage/VoyageFormValidation';
@@ -149,10 +141,16 @@ const FormVoyageContainer = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setErrors(VoyageFormValidation(formData));
-    if (Object.keys(VoyageFormValidation(formData)).length === 0 && Object.keys(errors).length === 0) {
-      patchData(`${VOYAGE_REPORT_URL}/${voyageId}`, VoyageFormDataFormatting(voyageId, 'Draft', formData))
-        .then(() => setNextPage());
+    // Handle missing voyageId (for if user comes to a subpage directly, and we haven't got the id)
+    if (!voyageId) {
+      setErrors({ voyageForm: 'There was a problem locating your voyage, please return to "Reports" and try again' });
+      ScrollToTopOnError(errors);
+    } else {
+      setErrors(VoyageFormValidation(formData, sourceForm));
+      if (Object.keys(VoyageFormValidation(formData, sourceForm)).length === 0 && Object.keys(errors).length === 0) {
+        patchData(`${VOYAGE_REPORT_URL}/${voyageId}`, VoyageFormDataFormatting(voyageId, 'Draft', formData))
+          .then(() => setNextPage());
+      }
     }
   };
 
@@ -170,12 +168,8 @@ const FormVoyageContainer = () => {
   }, [location]);
 
   useEffect(() => {
-<<<<<<< HEAD
-    storeVoyageId();
-=======
     if (pageNum) { storeVoyageId(); }
     if (voyageId) { getVoyageData(voyageId); }
->>>>>>> Update save and continue
   }, [pageNum]);
 
   useEffect(() => {
@@ -207,7 +201,21 @@ const FormVoyageContainer = () => {
         <div className="govuk-grid-row">
           <div className="govuk-grid-column-two-thirds">
             <span className="govuk-caption-xl">{`Page ${pageNum} of ${maxPages}`}</span>
-            <form>
+            <form id="voyageForm">
+              {Object.keys(errors).length > 0 && (
+              <div className="govuk-error-summary" aria-labelledby="error-summary-title" role="alert" tabIndex="-1" data-module="govuk-error-summary">
+                <h2 className="govuk-error-summary__title">
+                  There is a problem
+                </h2>
+                {errors.voyageForm
+                    && (
+                    <span className="govuk-error-message">
+                      <span className="govuk-visually-hidden">Error:</span>
+                      {errors.voyageForm}
+                    </span>
+                    )}
+              </div>
+              )}
               {pageNum === 1 && (
                 <FormDeparture
                   handleSubmit={handleSubmit}
