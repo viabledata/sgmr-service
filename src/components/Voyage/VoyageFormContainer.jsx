@@ -7,6 +7,7 @@ import { splitDate } from '@utils/date';
 import { splitTime } from '@utils/time';
 import { VOYAGE_REPORT_URL, USER_VOYAGE_REPORT_URL } from '@constants/ApiConstants';
 
+import FormArrival from '@components/Voyage/FormArrival';
 import FormCheck from '@components/Voyage/FormCheck';
 import FormDeparture from '@components/Voyage/FormDeparture';
 import VoyageFormDataFormatting from '@components/Voyage/VoyageFormDataFormatting';
@@ -167,6 +168,14 @@ const FormVoyageContainer = () => {
                   handleSubmit={handleSubmit}
                   handleChange={handleChange}
                   data={formData || voyageData}
+                  errors={errors}
+                />
+              )}
+              {pageNum === 2 && (
+                <FormArrival
+                  handleSubmit={handleSubmit}
+                  handleChange={handleChange}
+                  data={formData}
                   errors={errors}
                 />
               )}
