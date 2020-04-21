@@ -4,6 +4,7 @@ import { useLocation, useHistory } from 'react-router-dom';
 // App imports
 import { getData, patchData, postData } from '@utils/apiHooks';
 import { splitDate } from '@utils/date';
+import { splitTime } from '@utils/time';
 import { VOYAGE_REPORT_URL, USER_VOYAGE_REPORT_URL } from '@constants/ApiConstants';
 
 import FormCheck from '@components/Voyage/FormCheck';
@@ -54,8 +55,20 @@ const FormVoyageContainer = () => {
   };
 
 
+  const formatTime = (data) => {
+    let formattedData = { ...data };
+    Object.entries(data).map((item) => {
+      if (item[0].includes('Time') && item[1]) {
+        const newTime = splitTime(item[1], item[0]);
+        formattedData = { ...formattedData, ...newTime };
+      }
+    });
+    setFormData({ ...data, ...formattedData });
+  };
+
+
   // Destructure dates (for when reach page via an edit path with dates)
-  const formatDateTime = (data) => {
+  const formatDate = (data) => {
     let formattedData = { ...data };
     Object.entries(data).map((item) => {
       if (item[0].includes('Date') && item[1]) {
@@ -63,14 +76,16 @@ const FormVoyageContainer = () => {
         formattedData = { ...formattedData, ...newDates };
       }
     });
-    setFormData({ ...data, ...formattedData });
+    const newFormData = ({ ...data, ...formattedData });
+    setFormData(newFormData);
+    formatTime(newFormData);
   };
 
 
   const getVoyageData = (id) => {
     getData(`${VOYAGE_REPORT_URL}/${id}`)
       .then((resp) => {
-        setVoyageData(formatDateTime(resp));
+        setVoyageData(formatDate(resp));
         localStorage.setItem('formData', JSON.stringify(resp));
       });
   };
