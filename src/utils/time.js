@@ -7,4 +7,13 @@ const isTimeValid = (hour, minute) => {
   return true;
 };
 
-export default isTimeValid;
+const splitTime = (time, fieldName) => {
+  const [hour, minute] = time.split(':');
+  return ({ [`${fieldName}Hour`]: hour, [`${fieldName}Minute`]: minute });
+};
+
+
+export {
+  isTimeValid,
+  splitTime,
+};

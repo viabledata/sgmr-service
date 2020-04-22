@@ -1,6 +1,6 @@
 // App imports
 import { isDateValid } from '@utils/date';
-import isTimeValid from '@utils/time';
+import { isTimeValid } from '@utils/time';
 import { voyageValidationRules } from '@components/Forms/validationRules';
 
 
