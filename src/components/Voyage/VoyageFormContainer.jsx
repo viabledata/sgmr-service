@@ -6,7 +6,7 @@ import { getData, patchData } from '@utils/apiHooks';
 import { splitDate } from '@utils/date';
 import { splitTime } from '@utils/time';
 import { PEOPLE_URL, VESSELS_URL, VOYAGE_REPORT_URL } from '@constants/ApiConstants';
-import { formatDepartureArrival, formatResponsiblePerson} from '@components/Voyage/VoyageFormDataFormatting';
+import { formatDepartureArrival, formatResponsiblePerson } from '@components/Voyage/VoyageFormDataFormatting';
 import scrollToTopOnError from '@utils/scrollToTopOnError';
 import VoyageFormValidation from '@components/Voyage/VoyageFormValidation';
 
@@ -15,7 +15,7 @@ import FormArrival from '@components/Voyage/FormArrival';
 import FormCheck from '@components/Voyage/FormCheck';
 import FormDeparture from '@components/Voyage/FormDeparture';
 import FormResponsiblePerson from '@components/Voyage/FormResponsiblePerson';
-import FormVoyageVessel from '@components/Voyage/FormVoyageVessel';
+import FormVoyageVessels from '@components/Voyage/FormVoyageVessels';
 import FormVoyagePeople from '@components/Voyage/FormVoyagePeople';
 
 
@@ -126,8 +126,8 @@ const FormVoyageContainer = () => {
         localStorage.setItem('formData', JSON.stringify(resp));
       });
   };
-
-
+  
+  
   const storeVoyageId = () => {
     if (location && location.state && location.state.voyageId) {
       setVoyageId(location.state.voyageId);
@@ -145,30 +145,28 @@ const FormVoyageContainer = () => {
 
   const handleSubmit = (e, sourceForm) => {
     e.preventDefault();
-    // Handle missing voyageId (for if user comes to a subpage directly, and we haven't got the id)
-    
     let dataToSubmit;
     switch (sourceForm) {
       case 'departure': dataToSubmit = formatDepartureArrival('Draft', formData, voyageData); break;
+      case 'arrival': dataToSubmit = formatDepartureArrival('Draft', formData, voyageData); break;
       case 'responsiblePerson': dataToSubmit = formatResponsiblePerson('Draft', formData, voyageData); break;
       default: dataToSubmit = null;
     }
 
+    // Handle missing voyageId (for if user comes to a subpage directly, and we haven't got the id)
     if (!voyageId) {
       setErrors({ voyageForm: 'There was a problem locating your voyage, please return to "Reports" and try again' });
       scrollToTopOnError('voyageForm');
     } else {
-    setErrors(VoyageFormValidation(formData, sourceForm));
-    if (Object.keys(VoyageFormValidation(formData, sourceForm)).length === 0 && Object.keys(errors).length === 0) {
-      patchData(`${VOYAGE_REPORT_URL}/${voyageId}`, dataToSubmit)
-        .then(() => {
-          setNextPage();
-        });
+      setErrors(VoyageFormValidation(formData, sourceForm));
+      if (Object.keys(VoyageFormValidation(formData, sourceForm)).length === 0 && Object.keys(errors).length === 0) {
+        patchData(`${VOYAGE_REPORT_URL}/${voyageId}`, dataToSubmit)
+          .then(() => {
+            setNextPage();
+          });
       }
     }
   };
-
-  
 
 
   // Set page number based on current URL
@@ -244,7 +242,7 @@ const FormVoyageContainer = () => {
                 />
               )}
               {pageNum === 3 && (
-                <FormVoyageVessel
+                <FormVoyageVessels
                   handleSubmit={handleSubmit}
                   handleChange={handleChange}
                   handleCheckboxes={handleCheckboxes}
@@ -273,6 +271,7 @@ const FormVoyageContainer = () => {
               {pageNum === 6 && (
                 <FormCheck
                   voyageId={voyageId}
+                  voyageData={voyageData}
                 />
               )}
             </form>
