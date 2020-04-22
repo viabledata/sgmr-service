@@ -1,6 +1,6 @@
 import { formatDate } from '@utils/date';
 
-const formatDepartureArrival = (status, data, voyageData) => {
+const formatDepartureArrival = (status, data) => {
   const dataList = {
     status,
   };
@@ -70,10 +70,17 @@ const formatResponsiblePerson = (status, data, voyageData) => {
     status,
   };
 
-  Object.entries(data).map((item) => {
-    console.log(voyageData)
-    console.log(Object.keys(voyageData))
+  Object.entries(voyageData).map((item) => {
+    if (
+      item[0].search(/responsible/i) >= 0 // if item is a 'responsible' field
+      && data[item[0]] !== item[1] // and value from voyageData !== value from form
+    ) {
+      // then add it to dataList
+      dataList[item[0]] = data[item[0]];
+    }
   });
+
+  return (dataList);
 };
 
 export {
