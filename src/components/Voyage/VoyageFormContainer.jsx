@@ -5,13 +5,15 @@ import { useLocation, useHistory } from 'react-router-dom';
 import { getData, patchData } from '@utils/apiHooks';
 import { splitDate } from '@utils/date';
 import { splitTime } from '@utils/time';
-import { VOYAGE_REPORT_URL } from '@constants/ApiConstants';
+import { PEOPLE_URL, VESSELS_URL, VOYAGE_REPORT_URL } from '@constants/ApiConstants';
+import scrollToTopOnError from '@utils/scrollToTopOnError';
 
 import FormArrival from '@components/Voyage/FormArrival';
 import FormCheck from '@components/Voyage/FormCheck';
 import FormDeparture from '@components/Voyage/FormDeparture';
 import VoyageFormDataFormatting from '@components/Voyage/VoyageFormDataFormatting';
 import VoyageFormValidation from '@components/Voyage/VoyageFormValidation';
+import FormVessels from './FormVoyageVessels';
 
 
 const FormVoyageContainer = () => {
@@ -21,6 +23,7 @@ const FormVoyageContainer = () => {
   const [pageNum, setPageNum] = useState();
   const [voyageId, setVoyageId] = useState();
   const [voyageData, setVoyageData] = useState();
+  const [checkboxData, setCheckboxData] = useState();
   const [formData, setFormData] = useState(JSON.parse(localStorage.getItem('formData')) || {});
   const [errors, setErrors] = useState(JSON.parse(localStorage.getItem('errors')) || {});
 
@@ -83,6 +86,35 @@ const FormVoyageContainer = () => {
   };
 
 
+  // Handle checkboxes being checked/unchecked
+  const handleCheckboxes = (e) => {
+    let url;
+    switch (e.target.name) {
+      case 'vessel': url = `${VESSELS_URL}/${e.target.id}`; break;
+      case 'people': url = `${PEOPLE_URL}/${e.target.id}`; break;
+      default: url = '';
+    }
+    // Get the data
+    if ((e.target).checked) {
+      getData(url)
+        .then((resp) => setCheckboxData({ ...checkboxData, ...resp }));
+    }
+    // Uncheck every other option for vessels (these are currently checkboxes but only one can be selected)
+    const vesselCheckboxes = document.querySelectorAll('input[name=vessel]');
+    Array.from(vesselCheckboxes).map((vessel) => {
+      if (e.target.id !== vessel.id && vessel.checked) {
+        vessel.checked = false;
+      }
+    });
+  };
+
+  // Handle add buttons which populate page data
+  const handleAddButton = () => {
+    if (checkboxData) { setFormData(checkboxData); }
+  };
+
+
+  // Get voyage data
   const getVoyageData = (id) => {
     getData(`${VOYAGE_REPORT_URL}/${id}`)
       .then((resp) => {
@@ -107,12 +139,18 @@ const FormVoyageContainer = () => {
   };
 
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e, sourceForm) => {
     e.preventDefault();
-    setErrors(VoyageFormValidation(formData));
-    if (Object.keys(VoyageFormValidation(formData)).length === 0 && Object.keys(errors).length === 0) {
-      patchData(`${VOYAGE_REPORT_URL}/${voyageId}`, VoyageFormDataFormatting(voyageId, 'Draft', formData))
-        .then(() => setNextPage());
+    // Handle missing voyageId (for if user comes to a subpage directly, and we haven't got the id)
+    if (!voyageId) {
+      setErrors({ voyageForm: 'There was a problem locating your voyage, please return to "Reports" and try again' });
+      scrollToTopOnError('voyageForm');
+    } else {
+      setErrors(VoyageFormValidation(formData, sourceForm));
+      if (Object.keys(VoyageFormValidation(formData, sourceForm)).length === 0 && Object.keys(errors).length === 0) {
+        patchData(`${VOYAGE_REPORT_URL}/${voyageId}`, VoyageFormDataFormatting(voyageId, 'Draft', formData))
+          .then(() => setNextPage());
+      }
     }
   };
 
@@ -126,15 +164,15 @@ const FormVoyageContainer = () => {
 
   // Trigger functions
   useEffect(() => {
-    location && getPageNum();
+    if (location) { getPageNum(); }
   }, [location]);
 
   useEffect(() => {
-    storeVoyageId();
+    if (pageNum) { storeVoyageId(); }
   }, [pageNum]);
 
   useEffect(() => {
-    voyageId && getVoyageData(voyageId);
+    if (voyageId) { getVoyageData(voyageId); }
   }, [voyageId]);
 
   // Persist form data if page refreshed
@@ -162,7 +200,21 @@ const FormVoyageContainer = () => {
         <div className="govuk-grid-row">
           <div className="govuk-grid-column-two-thirds">
             <span className="govuk-caption-xl">{`Page ${pageNum} of ${maxPages}`}</span>
-            <form>
+            <form id="voyageForm">
+              {Object.keys(errors).length > 0 && (
+              <div className="govuk-error-summary" aria-labelledby="error-summary-title" role="alert" tabIndex="-1" data-module="govuk-error-summary">
+                <h2 className="govuk-error-summary__title">
+                  There is a problem
+                </h2>
+                {errors.voyageForm
+                    && (
+                    <span className="govuk-error-message">
+                      <span className="govuk-visually-hidden">Error:</span>
+                      {errors.voyageForm}
+                    </span>
+                    )}
+              </div>
+              )}
               {pageNum === 1 && (
                 <FormDeparture
                   handleSubmit={handleSubmit}
@@ -179,7 +231,18 @@ const FormVoyageContainer = () => {
                   errors={errors}
                 />
               )}
-              {pageNum === 6 && (
+              {pageNum === 3 && (
+                <FormVessels
+                  handleSubmit={handleSubmit}
+                  handleChange={handleChange}
+                  handleCheckboxes={handleCheckboxes}
+                  handleAddButton={handleAddButton}
+                  voyageId={voyageId}
+                  formData={formData}
+                  errors={errors}
+                />
+              )}
+              {voyageId && pageNum === 6 && (
                 <FormCheck
                   voyageId={voyageId}
                 />

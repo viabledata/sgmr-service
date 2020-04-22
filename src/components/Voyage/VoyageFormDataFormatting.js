@@ -28,11 +28,13 @@ const VoyageFormDataFormatting = (id, status, data) => {
         && item[1] // it's value is not null
         && item[0] !== 'id' // it's not the id field
         && typeof item[1] !== 'object' // it's not something being passed in obj form to us from an existing voyage
+        && item[1] // Only save items with a value
     ) {
       // Then add it to dataList
       dataList[item[0]] = item[1];
     }
   });
+
 
   return dataList;
 };
