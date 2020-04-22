@@ -64,7 +64,6 @@ const SectionTable = ({ page, pageData }) => {
               </thead>
               <tbody className="govuk-table__body">
                 {data.errors === false && data.map((person) => {
-
                   return (
                     <tr className="govuk-table__row" key={person.id}>
                       <td className="govuk-table__cell">
