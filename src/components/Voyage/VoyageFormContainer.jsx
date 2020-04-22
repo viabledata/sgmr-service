@@ -142,7 +142,14 @@ const FormVoyageContainer = () => {
 
 
   const setNextPage = () => {
-    const nextPage = pageNum < maxPages ? pageNum + 1 : pageNum;
+    // Skip page 4 until people page is built
+    let nextPage;
+    if (pageNum === 3) {
+      nextPage = 5;
+    } else {
+      nextPage = pageNum < maxPages ? pageNum + 1 : pageNum;
+    }
+
     setPageNum(nextPage);
     history.push(`/save-voyage/page-${nextPage}`, { voyageId });
   };
@@ -260,7 +267,7 @@ const FormVoyageContainer = () => {
                   errors={errors}
                 />
               )}
-              {pageNum === 4 && (
+              {pageNum === 5 && (
                 <FormResponsiblePerson
                   handleSubmit={handleSubmit}
                   handleChange={handleChange}
@@ -269,7 +276,7 @@ const FormVoyageContainer = () => {
                   voyageId={voyageId}
                 />
               )}
-              {pageNum === 5 && (
+              {pageNum === 6 && (
                 <FormCheck
                   voyageId={voyageId}
                   voyageData={voyageData}
