@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { useLocation, useHistory } from 'react-router-dom';
+import {
+  Link, useLocation, useHistory, withRouter,
+} from 'react-router-dom';
 
 // App imports
 import { getData, patchData } from '@utils/apiHooks';
@@ -126,12 +128,15 @@ const FormVoyageContainer = () => {
         localStorage.setItem('formData', JSON.stringify(resp));
       });
   };
-  
-  
+
+
   const storeVoyageId = () => {
     if (location && location.state && location.state.voyageId) {
       setVoyageId(location.state.voyageId);
       getVoyageData(location.state.voyageId);
+    } else if (history && history.state && history.state.state && history.state.state.voyageId) {
+      setVoyageId(history.state.state.voyageId);
+      getVoyageData(history.state.state.voyageId);
     }
   };
 
@@ -139,7 +144,7 @@ const FormVoyageContainer = () => {
   const setNextPage = () => {
     const nextPage = pageNum < maxPages ? pageNum + 1 : pageNum;
     setPageNum(nextPage);
-    history.push(`/save-voyage/page-${nextPage}`);
+    history.push(`/save-voyage/page-${nextPage}`, { voyageId });
   };
 
 
@@ -198,15 +203,13 @@ const FormVoyageContainer = () => {
 
   return (
     <div id="pageContainer" className="govuk-width-container ">
-      <a
-        className="govuk-back-link"
-        onClick={(e) => {
-          e.preventDefault();
-          history.goBack();
-        }}
+      <Link to={{
+        pathname: `page-${pageNum - 1}`,
+        state: { voyageId },
+      }}
       >
         Back
-      </a>
+      </Link>
       <main className="govuk-main-wrapper govuk-main-wrapper--auto-spacing" role="main">
         <div className="govuk-grid-row">
           <div className="govuk-grid-column-two-thirds">
@@ -232,6 +235,7 @@ const FormVoyageContainer = () => {
                   handleChange={handleChange}
                   data={formData || voyageData}
                   errors={errors}
+                  voyageId={voyageId}
                 />
               )}
               {pageNum === 2 && (
@@ -240,6 +244,7 @@ const FormVoyageContainer = () => {
                   handleChange={handleChange}
                   data={formData || voyageData}
                   errors={errors}
+                  voyageId={voyageId}
                 />
               )}
               {pageNum === 3 && (
@@ -254,22 +259,15 @@ const FormVoyageContainer = () => {
                 />
               )}
               {pageNum === 4 && (
-                <FormVoyagePeople
-                  handleSubmit={handleSubmit}
-                  handleChange={handleChange}
-                  data={formData || voyageData}
-                  errors={errors}
-                />
-              )}
-              {pageNum === 5 && (
                 <FormResponsiblePerson
                   handleSubmit={handleSubmit}
                   handleChange={handleChange}
                   data={formData || voyageData}
                   errors={errors}
+                  voyageId={voyageId}
                 />
               )}
-              {pageNum === 6 && (
+              {pageNum === 5 && (
                 <FormCheck
                   voyageId={voyageId}
                   voyageData={voyageData}
@@ -283,4 +281,4 @@ const FormVoyageContainer = () => {
   );
 };
 
-export default FormVoyageContainer;
+export default withRouter(FormVoyageContainer);

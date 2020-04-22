@@ -3,7 +3,7 @@ import React from 'react';
 // App imports
 
 const FormDeparture = ({
-  handleSubmit, handleChange, data, errors,
+  handleSubmit, handleChange, data, errors, voyageId,
 }) => {
   if (!data) { return (null); }
   return (
@@ -209,7 +209,7 @@ const FormDeparture = ({
         type="button"
         className="govuk-button"
         data-module="govuk-button"
-        onClick={(e) => handleSubmit(e, 'departure')}
+        onClick={(e) => handleSubmit(e, 'departure', voyageId)}
       >
         Save and continue
       </button>

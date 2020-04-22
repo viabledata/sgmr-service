@@ -2,7 +2,7 @@ import React from 'react';
 
 // App imports
 
-const FormVoyagePeople = ({ handleSubmit, data }) => {
+const FormVoyagePeople = ({ handleSubmit, data, voyageId }) => {
   if (!data) { return (null); }
   return (
     <section>
@@ -12,7 +12,7 @@ const FormVoyagePeople = ({ handleSubmit, data }) => {
         type="button"
         className="govuk-button"
         data-module="govuk-button"
-        onClick={(e) => handleSubmit(e)}
+        onClick={(e) => handleSubmit(e, 'people')}
       >
         Save and continue
       </button>

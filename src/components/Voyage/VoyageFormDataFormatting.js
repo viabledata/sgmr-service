@@ -53,7 +53,7 @@ const formatResponsiblePerson = (status, data, voyageData) => {
       dataList[item[0]] = data[item[0]];
     }
   });
-  return (dataList);
+  return dataList;
 };
 
 const formatVessel = (status, data, voyageData) => {
@@ -75,7 +75,7 @@ const formatVessel = (status, data, voyageData) => {
       dataList[item[0]] = data[item[0]];
     }
   });
-  return (dataList);
+  return dataList;
 };
 
 export {
