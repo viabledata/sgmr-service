@@ -5,14 +5,9 @@ import { useLocation, useHistory } from 'react-router-dom';
 import { getData, patchData } from '@utils/apiHooks';
 import { splitDate } from '@utils/date';
 import { splitTime } from '@utils/time';
-<<<<<<< HEAD
 import { PEOPLE_URL, VESSELS_URL, VOYAGE_REPORT_URL } from '@constants/ApiConstants';
-import scrollToTopOnError from '@utils/scrollToTopOnError';
-import VoyageFormDataFormatting from '@components/Voyage/VoyageFormDataFormatting';
-=======
-import { VOYAGE_REPORT_URL } from '@constants/ApiConstants';
 import { formatDepartureArrival, formatResponsiblePerson} from '@components/Voyage/VoyageFormDataFormatting';
->>>>>>> Split data formatting into multiple functions
+import scrollToTopOnError from '@utils/scrollToTopOnError';
 import VoyageFormValidation from '@components/Voyage/VoyageFormValidation';
 
 // App imports - forms
@@ -126,7 +121,8 @@ const FormVoyageContainer = () => {
   const getVoyageData = (id) => {
     getData(`${VOYAGE_REPORT_URL}/${id}`)
       .then((resp) => {
-        setVoyageData(formatDate(resp));
+        setVoyageData(resp);
+        formatDate(resp);
         localStorage.setItem('formData', JSON.stringify(resp));
       });
   };
@@ -190,10 +186,6 @@ const FormVoyageContainer = () => {
   useEffect(() => {
     if (pageNum) { storeVoyageId(); }
   }, [pageNum]);
-
-  useEffect(() => {
-    if (voyageId) { getVoyageData(voyageId); }
-  }, [voyageId]);
 
   // Persist form data if page refreshed
   useEffect(() => {

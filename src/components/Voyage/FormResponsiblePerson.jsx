@@ -1,7 +1,7 @@
 import React from 'react';
 
 const FormResponsiblePerson = ({
-  handleSubmit, handleChange, data, updateVoyageReportAction,
+  handleSubmit, handleChange, data,
 }) => {
   return (
     <section>
@@ -112,7 +112,7 @@ const FormResponsiblePerson = ({
         type="button"
         className="govuk-button"
         data-module="govuk-button"
-        onClick={(e) => handleSubmit(e, updateVoyageReportAction, 'responsible')}
+        onClick={(e) => handleSubmit(e, 'responsiblePerson')}
       >
         Save and continue
       </button>

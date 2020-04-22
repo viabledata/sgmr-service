@@ -71,7 +71,8 @@ const formatResponsiblePerson = (status, data, voyageData) => {
   };
 
   Object.entries(data).map((item) => {
-    
+    console.log(voyageData)
+    console.log(Object.keys(voyageData))
   });
 };
 
