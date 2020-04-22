@@ -5,9 +5,14 @@ import { useLocation, useHistory } from 'react-router-dom';
 import { getData, patchData } from '@utils/apiHooks';
 import { splitDate } from '@utils/date';
 import { splitTime } from '@utils/time';
+<<<<<<< HEAD
 import { PEOPLE_URL, VESSELS_URL, VOYAGE_REPORT_URL } from '@constants/ApiConstants';
 import scrollToTopOnError from '@utils/scrollToTopOnError';
 import VoyageFormDataFormatting from '@components/Voyage/VoyageFormDataFormatting';
+=======
+import { VOYAGE_REPORT_URL } from '@constants/ApiConstants';
+import { formatDepartureArrival, formatResponsiblePerson} from '@components/Voyage/VoyageFormDataFormatting';
+>>>>>>> Split data formatting into multiple functions
 import VoyageFormValidation from '@components/Voyage/VoyageFormValidation';
 
 // App imports - forms
@@ -145,16 +150,29 @@ const FormVoyageContainer = () => {
   const handleSubmit = (e, sourceForm) => {
     e.preventDefault();
     // Handle missing voyageId (for if user comes to a subpage directly, and we haven't got the id)
+    
+    let dataToSubmit;
+    switch (sourceForm) {
+      case 'departure': dataToSubmit = formatDepartureArrival('Draft', formData, voyageData); break;
+      case 'responsiblePerson': dataToSubmit = formatResponsiblePerson('Draft', formData, voyageData); break;
+      default: dataToSubmit = null;
+    }
+
     if (!voyageId) {
       setErrors({ voyageForm: 'There was a problem locating your voyage, please return to "Reports" and try again' });
       scrollToTopOnError('voyageForm');
     } else {
-      setErrors(VoyageFormValidation(formData, sourceForm));
-      if (Object.keys(VoyageFormValidation(formData, sourceForm)).length === 0 && Object.keys(errors).length === 0) {
-        patchData(`${VOYAGE_REPORT_URL}/${voyageId}`, VoyageFormDataFormatting('Draft', formData, sourceForm))
-          .then(() => setNextPage());
+    setErrors(VoyageFormValidation(formData, sourceForm));
+    if (Object.keys(VoyageFormValidation(formData, sourceForm)).length === 0 && Object.keys(errors).length === 0) {
+      patchData(`${VOYAGE_REPORT_URL}/${voyageId}`, dataToSubmit)
+        .then(() => {
+          setNextPage();
+        });
       }
+    }
   };
+
+  
 
 
   // Set page number based on current URL
