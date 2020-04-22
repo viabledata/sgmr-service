@@ -134,7 +134,7 @@ const FormVoyageContainer = () => {
     if (location && location.state && location.state.voyageId) {
       setVoyageId(location.state.voyageId);
       getVoyageData(location.state.voyageId);
-    } else if (history && history.state && history.state.state && history.state.state.voyageId) {
+    } else if (history && history.state && history.state.state && history) {
       setVoyageId(history.state.state.voyageId);
       getVoyageData(history.state.state.voyageId);
     }
@@ -203,15 +203,15 @@ const FormVoyageContainer = () => {
 
   return (
     <div id="pageContainer" className="govuk-width-container ">
-      <Link
-        to={{
-          pathname: `page-${pageNum - 1}`,
-          state: { voyageId },
-        }}
+      <a
         className="govuk-back-link"
+        onClick={(e) => {
+          e.preventDefault();
+          history.goBack();
+        }}
       >
         Back
-      </Link>
+      </a>
       <main className="govuk-main-wrapper govuk-main-wrapper--auto-spacing" role="main">
         <div className="govuk-grid-row">
           <div className="govuk-grid-column-two-thirds">

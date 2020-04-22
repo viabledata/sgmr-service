@@ -18,7 +18,7 @@ const FormCheck = ({ voyageId, voyageData }) => {
           <dd className="govuk-summary-list__value">
             <Link to={{
               pathname: 'page-1',
-              state: { voyageId: voyageData.id },
+              state: { voyageId },
             }}
             >
               Change
@@ -60,7 +60,7 @@ const FormCheck = ({ voyageId, voyageData }) => {
           <dd className="govuk-summary-list__value">
             <Link to={{
               pathname: 'page-2',
-              state: { voyageId: voyageData.id },
+              state: { voyageId },
             }}
             >
               Change
@@ -101,7 +101,7 @@ const FormCheck = ({ voyageId, voyageData }) => {
           <dd className="govuk-summary-list__value">
             <Link to={{
               pathname: 'page-3',
-              state: { voyageId: voyageData.id },
+              state: { voyageId },
             }}
             >
               Change
@@ -154,7 +154,7 @@ const FormCheck = ({ voyageId, voyageData }) => {
           <dd className="govuk-summary-list__value">
             <Link to={{
               pathname: 'page-4',
-              state: { voyageId: voyageData.id },
+              state: { voyageId },
             }}
             >
               Change
@@ -185,7 +185,7 @@ const FormCheck = ({ voyageId, voyageData }) => {
           <dd className="govuk-summary-list__value">
             <Link to={{
               pathname: 'page-5',
-              state: { voyageId: voyageData.id },
+              state: { voyageId },
             }}
             >
               Change
