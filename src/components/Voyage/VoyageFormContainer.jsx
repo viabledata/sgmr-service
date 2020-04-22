@@ -7,13 +7,16 @@ import { splitDate } from '@utils/date';
 import { splitTime } from '@utils/time';
 import { PEOPLE_URL, VESSELS_URL, VOYAGE_REPORT_URL } from '@constants/ApiConstants';
 import scrollToTopOnError from '@utils/scrollToTopOnError';
+import VoyageFormDataFormatting from '@components/Voyage/VoyageFormDataFormatting';
+import VoyageFormValidation from '@components/Voyage/VoyageFormValidation';
 
+// App imports - forms
 import FormArrival from '@components/Voyage/FormArrival';
 import FormCheck from '@components/Voyage/FormCheck';
 import FormDeparture from '@components/Voyage/FormDeparture';
-import VoyageFormDataFormatting from '@components/Voyage/VoyageFormDataFormatting';
-import VoyageFormValidation from '@components/Voyage/VoyageFormValidation';
-import FormVessels from './FormVoyageVessels';
+import FormResponsiblePerson from '@components/Voyage/FormResponsiblePerson';
+import FormVoyageVessel from '@components/Voyage/FormVoyageVessel';
+import FormVoyagePeople from '@components/Voyage/FormVoyagePeople';
 
 
 const FormVoyageContainer = () => {
@@ -227,22 +230,38 @@ const FormVoyageContainer = () => {
                 <FormArrival
                   handleSubmit={handleSubmit}
                   handleChange={handleChange}
-                  data={formData}
+                  data={formData || voyageData}
                   errors={errors}
                 />
               )}
               {pageNum === 3 && (
-                <FormVessels
+                <FormVoyageVessel
                   handleSubmit={handleSubmit}
                   handleChange={handleChange}
                   handleCheckboxes={handleCheckboxes}
                   handleAddButton={handleAddButton}
                   voyageId={voyageId}
-                  formData={formData}
+                  formData={formData || voyageData}
                   errors={errors}
                 />
               )}
-              {voyageId && pageNum === 6 && (
+              {pageNum === 4 && (
+                <FormVoyagePeople
+                  handleSubmit={handleSubmit}
+                  handleChange={handleChange}
+                  data={formData || voyageData}
+                  errors={errors}
+                />
+              )}
+              {pageNum === 5 && (
+                <FormResponsiblePerson
+                  handleSubmit={handleSubmit}
+                  handleChange={handleChange}
+                  data={formData || voyageData}
+                  errors={errors}
+                />
+              )}
+              {pageNum === 6 && (
                 <FormCheck
                   voyageId={voyageId}
                 />
