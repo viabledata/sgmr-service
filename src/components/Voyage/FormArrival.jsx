@@ -209,7 +209,7 @@ const FormArrival = ({
         type="button"
         className="govuk-button"
         data-module="govuk-button"
-        onClick={(e) => handleSubmit(e)}
+        onClick={(e) => handleSubmit(e, 'arrival')}
       >
         Save and continue
       </button>
