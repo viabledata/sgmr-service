@@ -173,7 +173,7 @@ const FormVoyageContainer = () => {
   }, [pageNum]);
 
   useEffect(() => {
-    voyageId && getVoyageData(voyageId);
+    if (voyageId) { getVoyageData(voyageId); }
   }, [voyageId]);
 
   // Persist form data if page refreshed
