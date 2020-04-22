@@ -30,39 +30,13 @@ const formatDepartureArrival = (status, data) => {
           && item[1] // it's value is not null
           && item[0] !== 'id' // it's not the id field
           && typeof item[1] !== 'object' // it's not something being passed in obj form to us from an existing voyage
-<<<<<<< HEAD
-      ) {
-        // Then add it to dataList
-        dataList[item[0]] = item[1];
-      }
-<<<<<<< HEAD
-    } else if (
-      item[0].search(/year/i) === -1 // it's not the year part of the date (handed above)
-        && item[0].search(/month/i) === -1 // it's not the month part of the date (handed above)
-        && item[0].search(/day/i) === -1 // it's not the day part of the date (handled above)
-        && item[0].search(/hour/i) === -1 // it's not the hour part of the time
-        && item[0].search(/minute/i) === -1 // it's not the minute part of the time
-        && item[1] // it's value is not null
-        && item[0] !== 'id' // it's not the id field
-        && typeof item[1] !== 'object' // it's not something being passed in obj form to us from an existing voyage
-        && item[1] // Only save items with a value
-=======
->>>>>>> Split data formatting into multiple functions
     ) {
       // Then add it to dataList
       dataList[item[0]] = item[1];
     }
   });
-<<<<<<< HEAD
-=======
-    });
-  }
-=======
   return dataList;
 };
->>>>>>> Split data formatting into multiple functions
-
->>>>>>> Update dataformatting to handle different form needs
 
 
 const formatResponsiblePerson = (status, data, voyageData) => {
@@ -79,11 +53,33 @@ const formatResponsiblePerson = (status, data, voyageData) => {
       dataList[item[0]] = data[item[0]];
     }
   });
+  return (dataList);
+};
 
+const formatVessel = (status, data, voyageData) => {
+  const dataList = {
+    status,
+  };
+
+  Object.entries(voyageData).map((item) => {
+    if (
+      (item[0].search(/vessel/i) >= 0 // if item is a 'vessel' field
+        || item[0] === 'hullIdentificationNumber' // or one of the other vessel fields that don't contain 'vessel'
+        || item[0] === 'registration'
+        || item[0] === 'moorings'
+        || item[0] === 'callsign'
+      )
+      && data[item[0]] !== item[1] // and value from voyageData !== value from form
+    ) {
+      // then add it to dataList
+      dataList[item[0]] = data[item[0]];
+    }
+  });
   return (dataList);
 };
 
 export {
   formatDepartureArrival,
   formatResponsiblePerson,
+  formatVessel,
 };

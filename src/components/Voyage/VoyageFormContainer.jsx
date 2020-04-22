@@ -6,7 +6,7 @@ import { getData, patchData } from '@utils/apiHooks';
 import { splitDate } from '@utils/date';
 import { splitTime } from '@utils/time';
 import { PEOPLE_URL, VESSELS_URL, VOYAGE_REPORT_URL } from '@constants/ApiConstants';
-import { formatDepartureArrival, formatResponsiblePerson } from '@components/Voyage/VoyageFormDataFormatting';
+import { formatDepartureArrival, formatResponsiblePerson, formatVessel } from '@components/Voyage/VoyageFormDataFormatting';
 import scrollToTopOnError from '@utils/scrollToTopOnError';
 import VoyageFormValidation from '@components/Voyage/VoyageFormValidation';
 
@@ -147,9 +147,10 @@ const FormVoyageContainer = () => {
     e.preventDefault();
     let dataToSubmit;
     switch (sourceForm) {
-      case 'departure': dataToSubmit = formatDepartureArrival('Draft', formData, voyageData); break;
       case 'arrival': dataToSubmit = formatDepartureArrival('Draft', formData, voyageData); break;
+      case 'departure': dataToSubmit = formatDepartureArrival('Draft', formData, voyageData); break;
       case 'responsiblePerson': dataToSubmit = formatResponsiblePerson('Draft', formData, voyageData); break;
+      case 'vessel': dataToSubmit = formatVessel('Draft', formData, voyageData); break;
       default: dataToSubmit = null;
     }
 
