@@ -10,20 +10,20 @@ import Footer from '@components/Footer';
 import Header from '@components/Header';
 import PageContainer from '@components/PageContainer';
 
-import SignIn from '@components/Forms/SignIn';
-import UserInputCode from '@components/Forms/UserInputCode';
-import UserRegister from '@components/Forms/UserRegister';
-import UserResendCode from '@components/Forms/UserResendCode';
-
-import EditAccount from '@components/Forms/EditAccount';
 import EditPerson from '@components/People/EditPerson';
 import CreateAPerson from '@components/People/CreateAPerson';
-import FormVoyageConfirm from '@components/Forms/FormVoyageConfirm';
-import FormVoyageSubmitted from '@components/Forms/FormVoyageSubmitted';
+
+import SignIn from '@components/User/SignIn';
+import UserInputCode from '@components/User/UserInputCode';
+import UserRegister from '@components/User/UserRegister';
+import UserResendCode from '@components/User/UserResendCode';
+import EditAccount from '@components/User/EditAccount';
+
 import CreateAVessel from '@components/Vessel/CreateAVessel';
 import EditVessel from '@components/Vessel/EditVessel';
 
 import VoyageFormContainer from '@components/Voyage/VoyageFormContainer';
+import FormVoyageSubmitted from '@components/Forms/FormVoyageSubmitted';
 
 
 const Main = () => {
