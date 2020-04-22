@@ -203,10 +203,12 @@ const FormVoyageContainer = () => {
 
   return (
     <div id="pageContainer" className="govuk-width-container ">
-      <Link to={{
-        pathname: `page-${pageNum - 1}`,
-        state: { voyageId },
-      }}
+      <Link
+        to={{
+          pathname: `page-${pageNum - 1}`,
+          state: { voyageId },
+        }}
+        className="govuk-back-link"
       >
         Back
       </Link>
