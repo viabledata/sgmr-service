@@ -151,10 +151,9 @@ const FormVoyageContainer = () => {
     } else {
       setErrors(VoyageFormValidation(formData, sourceForm));
       if (Object.keys(VoyageFormValidation(formData, sourceForm)).length === 0 && Object.keys(errors).length === 0) {
-        patchData(`${VOYAGE_REPORT_URL}/${voyageId}`, VoyageFormDataFormatting(voyageId, 'Draft', formData))
+        patchData(`${VOYAGE_REPORT_URL}/${voyageId}`, VoyageFormDataFormatting('Draft', formData, sourceForm))
           .then(() => setNextPage());
       }
-    }
   };
 
 
