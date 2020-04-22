@@ -88,7 +88,11 @@ const FormCheck = (voyageId) => {
         <div className="govuk-summary-list__row">
           <dt className="govuk-heading-m">Arrival details</dt>
           <dd className="govuk-summary-list__value">
-            <Link to="page-2">
+            <Link to={{
+              pathname: 'page-2',
+              state: { voyageId: voyageData.id },
+            }}
+            >
               Change
               <span className="govuk-visually-hidden"> Change</span>
             </Link>
@@ -125,7 +129,11 @@ const FormCheck = (voyageId) => {
         <div className="govuk-summary-list__row">
           <dt className="govuk-heading-m">Vessel details</dt>
           <dd className="govuk-summary-list__value">
-            <Link to="page-3">
+            <Link to={{
+              pathname: 'page-3',
+              state: { voyageId: voyageData.id },
+            }}
+            >
               Change
               <span className="govuk-visually-hidden"> Change</span>
             </Link>
@@ -174,7 +182,11 @@ const FormCheck = (voyageId) => {
         <div className="govuk-summary-list__row">
           <dt className="govuk-heading-m">Details of persons on board</dt>
           <dd className="govuk-summary-list__value">
-            <Link to="page-4">
+            <Link to={{
+              pathname: 'page-4',
+              state: { voyageId: voyageData.id },
+            }}
+            >
               Change
               <span className="govuk-visually-hidden"> Change</span>
             </Link>
@@ -255,7 +267,11 @@ const FormCheck = (voyageId) => {
             Responsible person details
           </dt>
           <dd className="govuk-summary-list__value">
-            <Link to="page-5">
+            <Link to={{
+              pathname: 'page-5',
+              state: { voyageId: voyageData.id },
+            }}
+            >
               Change
               <span className="govuk-visually-hidden"> Change</span>
             </Link>
@@ -297,7 +313,7 @@ const FormCheck = (voyageId) => {
         type="button"
         className="govuk-button govuk-button--warning govuk-body govuk!-margin-top-3 block-button"
         data-module="govuk-button"
-        onClick={() => updateVoyage('PreCancelled')}
+
       >
         Cancel voyage
       </button>
