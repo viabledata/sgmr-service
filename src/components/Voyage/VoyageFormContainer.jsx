@@ -5,8 +5,8 @@ import { useLocation, useHistory } from 'react-router-dom';
 import { getData, patchData } from '@utils/apiHooks';
 import { splitDate } from '@utils/date';
 import { splitTime } from '@utils/time';
-import { PEOPLE_URL, USER_VOYAGE_REPORT_URL, VESSELS_URL, VOYAGE_REPORT_URL } from '@constants/ApiConstants';
-import ScrollToTopOnError from '@utils/ScrollToTopOnError';
+import { PEOPLE_URL, VESSELS_URL, VOYAGE_REPORT_URL } from '@constants/ApiConstants';
+import scrollToTopOnError from '@utils/scrollToTopOnError';
 
 import FormArrival from '@components/Voyage/FormArrival';
 import FormCheck from '@components/Voyage/FormCheck';
@@ -139,12 +139,12 @@ const FormVoyageContainer = () => {
   };
 
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e, sourceForm) => {
     e.preventDefault();
     // Handle missing voyageId (for if user comes to a subpage directly, and we haven't got the id)
     if (!voyageId) {
       setErrors({ voyageForm: 'There was a problem locating your voyage, please return to "Reports" and try again' });
-      ScrollToTopOnError(errors);
+      scrollToTopOnError('voyageForm');
     } else {
       setErrors(VoyageFormValidation(formData, sourceForm));
       if (Object.keys(VoyageFormValidation(formData, sourceForm)).length === 0 && Object.keys(errors).length === 0) {
@@ -169,7 +169,6 @@ const FormVoyageContainer = () => {
 
   useEffect(() => {
     if (pageNum) { storeVoyageId(); }
-    if (voyageId) { getVoyageData(voyageId); }
   }, [pageNum]);
 
   useEffect(() => {
@@ -243,7 +242,7 @@ const FormVoyageContainer = () => {
                   errors={errors}
                 />
               )}
-              {pageNum === 6 && (
+              {voyageId && pageNum === 6 && (
                 <FormCheck
                   voyageId={voyageId}
                 />
