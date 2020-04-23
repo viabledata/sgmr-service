@@ -121,7 +121,7 @@ const FormVoyageContainer = () => {
 
   // Get voyage data
   const getVoyageData = (id) => {
-    getData(`${VOYAGE_REPORT_URL}/${id}`)
+    getData(`${VOYAGE_REPORT_URL}/${id}`, location.pathname)
       .then((resp) => {
         setVoyageData(resp);
         formatDate(resp);
@@ -173,7 +173,7 @@ const FormVoyageContainer = () => {
     } else {
       setErrors(VoyageFormValidation(formData, sourceForm));
       if (Object.keys(VoyageFormValidation(formData, sourceForm)).length === 0 && Object.keys(errors).length === 0) {
-        patchData(`${VOYAGE_REPORT_URL}/${voyageId}`, dataToSubmit)
+        patchData(`${VOYAGE_REPORT_URL}/${voyageId}`, dataToSubmit, location.pathname)
           .then(() => {
             setNextPage();
           });

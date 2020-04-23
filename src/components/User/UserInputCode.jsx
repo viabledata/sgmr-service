@@ -55,7 +55,8 @@ const UserInputCode = () => {
     } else {
       axios.post(SUBMIT_VERIFICATION_CODE_URL, formData)
         .then((resp) => {
-          resp.data.token ? Auth.storeToken(resp.data.token) : null;
+          console.log(resp);
+          if (resp.data.token) { Auth.storeToken(resp.data.token); }
           history.push(`/${source}`);
         })
         .catch((err) => {
@@ -64,7 +65,7 @@ const UserInputCode = () => {
               case 400: setErrors({ ...errors, twoFactorToken: 'Something is wrong' }); break;
               case 401: setErrors({ ...errors, twoFactorToken: 'Code is invalid' }); break;
               case 409: setErrors({ ...errors, twoFactorToken: 'Already verified, login' }); break;
-              default: false;
+              default: null;
             }
           }
         });
