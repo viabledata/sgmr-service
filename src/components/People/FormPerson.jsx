@@ -1,7 +1,9 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+
 
 const FormPerson = ({
-  handleSubmit, handleChange, data, errors,
+  handleSubmit, handleChange, data, errors, clearLocalStorage,
 }) => {
   const urlParams = location.search.split('source=');
   const source = urlParams[1];
@@ -456,6 +458,19 @@ const FormPerson = ({
           {source === 'voyage' ? 'Add to manifest' : 'Add to saved people list'}
         </button>
       </div>
+
+      <p>
+        {source !== 'voyage'
+          && (
+          <Link
+            to="/people"
+            className="govuk-link govuk-link--no-visited-state"
+            onClick={(e) => clearLocalStorage(e)}
+          >
+            Exit without saving
+          </Link>
+          )}
+      </p>
     </section>
   );
 };

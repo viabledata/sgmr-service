@@ -189,8 +189,8 @@ const EditPerson = (props) => {
                 setErrors({ ...errors, EditPerson: err.response.data.message });
                 scrollToTopOnError(err.response);
                 break;
-              case 401: history.push('/sign-in?source=people'); break;
-              case 422: history.push('/sign-in?source=people'); break;
+              case 401:
+              case 422:
               case 405: history.push('/sign-in?source=people'); break;
               default: history.push('/sign-in?source=people'); break;
             }
@@ -244,17 +244,14 @@ const EditPerson = (props) => {
                 </div>
               )}
 
-
               <FormPerson
                 handleChange={handleChange}
                 handleSubmit={handleSubmit}
+                clearLocalStorage={clearLocalStorage}
                 data={personData}
                 errors={errors}
               />
 
-              <p>
-                <a href={PEOPLE_PAGE_URL} className="govuk-link govuk-link--no-visited-state" onClick={(e) => clearLocalStorage(e)}>Exit without saving</a>
-              </p>
             </form>
           </div>
         </div>
