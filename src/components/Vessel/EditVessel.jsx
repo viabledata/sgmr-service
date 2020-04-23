@@ -170,12 +170,10 @@ const EditVessel = (props) => {
               <FormVessel
                 handleChange={handleChange}
                 handleSubmit={handleSubmit}
+                clearLocalStorage={clearLocalStorage}
                 data={vesselData}
                 errors={errors || ''}
               />
-              <p>
-                <a href="/vessels" className="govuk-link govuk-link--no-visited-state" onClick={(e) => clearLocalStorage(e)}>Exit without saving</a>
-              </p>
             </form>
           </div>
         </div>

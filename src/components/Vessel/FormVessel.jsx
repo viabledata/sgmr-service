@@ -1,7 +1,7 @@
 import React from 'react';
 
 const FormVoyageVessel = ({
-  handleSubmit, handleChange, data, errors, sourceForm
+  handleSubmit, handleChange, data, errors, sourceForm, clearLocalStorage
 }) => {
   return (
     <section>
@@ -146,17 +146,24 @@ const FormVoyageVessel = ({
 
       {sourceForm !== 'voyage'
         && (
-        <div id="submitBlock">
-          <button
-            type="submit"
-            className="govuk-button"
-            data-module="govuk-button"
-            onClick={handleSubmit}
-          >
-            Save
-          </button>
-        </div>
+          <>
+            <div id="submitBlock">
+              <button
+                type="submit"
+                className="govuk-button"
+                data-module="govuk-button"
+                onClick={handleSubmit}
+              >
+                Save
+              </button>
+            </div>
+            <p>
+              <a href="/vessels" className="govuk-link govuk-link--no-visited-state" onClick={(e) => clearLocalStorage(e)}>Exit without saving</a>
+            </p>
+          </>
         )}
+
+
     </section>
   );
 };

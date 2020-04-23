@@ -132,15 +132,10 @@ const CreateAVessel = () => {
               <FormVessel
                 handleSubmit={handleSubmit}
                 handleChange={handleChange}
+                clearLocalStorage={clearLocalStorage}
                 data={formData}
                 errors={errors}
               />
-              {urlParams[1] === 'vessels'
-                && (
-                <p>
-                  <Link to={VESSELS_PAGE_URL} className="govuk-link govuk-link--no-visited-state" onClick={clearLocalStorage}>Exit without saving</Link>
-                </p>
-                )}
             </form>
           </div>
         </div>
