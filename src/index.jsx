@@ -1,16 +1,12 @@
 import './lib/polyfills';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Provider } from 'react-redux';
-import { ConnectedRouter } from 'connected-react-router';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 
-// app imports
-import Main from '@components/Main';
-import configureStore, { history } from '@state/configureStore';
-
-const store = configureStore();
+// App imports
+import Main from './components/Main';
 
 ReactDOM.render(
-  <Provider store={store}><ConnectedRouter history={history}><Main /></ConnectedRouter></Provider>,
+  <Router><Main /></Router>,
   document.getElementById('main'),
 );
