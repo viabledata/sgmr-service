@@ -83,7 +83,7 @@ const FormVoyageContainer = () => {
         formattedData = { ...formattedData, ...newDates };
       }
     });
-    const newFormData = ({ ...data, ...formattedData });
+    const newFormData = ({ ...formData, ...data, ...formattedData });
     setFormData(newFormData);
     formatTime(newFormData);
   };
