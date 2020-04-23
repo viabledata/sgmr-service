@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {
-  Link, useLocation, useHistory, withRouter,
-} from 'react-router-dom';
+import { useLocation, useHistory, withRouter } from 'react-router-dom';
 
 // App imports
 import { getData, patchData } from '@utils/apiHooks';
@@ -216,9 +214,7 @@ const FormVoyageContainer = () => {
         className="govuk-back-link"
         onClick={(e) => {
           e.preventDefault();
-          history.goBack({
-            search: location.pathname.substring(1)
-          });
+          history.goBack();
         }}
       >
         Back

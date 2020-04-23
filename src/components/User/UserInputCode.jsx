@@ -39,7 +39,7 @@ const UserInputCode = () => {
     // Ensure required fields have a value
     if (checkRequiredFields() === true && source === 'registration') {
       axios.patch(SUBMIT_VERIFICATION_CODE_URL, formData)
-        .then((resp) => {
+        .then(() => {
           history.push(`/sign-in?source=${source}`);
         })
         .catch((err) => {
@@ -64,7 +64,7 @@ const UserInputCode = () => {
               case 400: setErrors({ ...errors, twoFactorToken: 'Something is wrong' }); break;
               case 401: setErrors({ ...errors, twoFactorToken: 'Code is invalid' }); break;
               case 409: setErrors({ ...errors, twoFactorToken: 'Already verified, login' }); break;
-              default: null;
+              default: false;
             }
           }
         });
