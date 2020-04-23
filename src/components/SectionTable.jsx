@@ -6,7 +6,7 @@ import { getData } from '@utils/apiHooks';
 import { VESSELS_URL, PEOPLE_URL } from '@constants/ApiConstants';
 import VesselTable from './Vessel/VesselTable';
 
-const SectionTable = ({ page, pageData, }) => {
+const SectionTable = ({ page, pageData }) => {
   const isPageVessels = page === '/vessels';
   const isPagePeople = page === '/people';
   const [data, setData] = useState();
@@ -19,7 +19,7 @@ const SectionTable = ({ page, pageData, }) => {
     }
     if (isPagePeople) {
       getData(`${PEOPLE_URL}?pagination=false`)
-        .then((resp) => setData(resp));
+        .then((resp) => setData(resp.people));
     }
   };
 
@@ -64,6 +64,7 @@ const SectionTable = ({ page, pageData, }) => {
               </thead>
               <tbody className="govuk-table__body">
                 {data.errors === false && data.map((person) => {
+
                   return (
                     <tr className="govuk-table__row" key={person.id}>
                       <td className="govuk-table__cell">
