@@ -1,41 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 
 // App imports
-import { VOYAGE_REPORT_URL } from '@constants/ApiConstants';
-import { getData } from '@utils/apiHooks';
 import { formatUIDate } from '@utils/date';
 
-const FormCheck = (voyageId) => {
-  const [voyageData, setVoyageData] = useState();
-  const [voyagePeopleData, setVoyagePeopleData] = useState();
-
-  const storeVoyageData = () => {
-    getData(`${VOYAGE_REPORT_URL}/${voyageId.voyageId}`)
-      .then((resp) => {
-        if (!resp.errors) {
-          setVoyageData(resp);
-        }
-      });
-  };
-
-  const storeVoyagePeopleData = () => {
-    getData(`${VOYAGE_REPORT_URL}/${voyageId.voyageId}/people`)
-      .then((resp) => {
-        if (!resp.errors) {
-          setVoyagePeopleData(resp.items);
-        }
-      });
-  };
-
-  useEffect(() => {
-    storeVoyageData();
-    storeVoyagePeopleData();
-    localStorage.removeItem('errors');
-  }, []);
-
-
-  if (!voyageData || !voyagePeopleData) { return null; }
+const FormCheck = ({ voyageId, voyageData }) => {
+  if (!voyageData) { return null; }
   return (
     <section>
       <h1 className="govuk-heading-xl">
@@ -48,7 +18,7 @@ const FormCheck = (voyageId) => {
           <dd className="govuk-summary-list__value">
             <Link to={{
               pathname: 'page-1',
-              state: { voyageId: voyageData.id },
+              state: { voyageId },
             }}
             >
               Change
@@ -88,7 +58,11 @@ const FormCheck = (voyageId) => {
         <div className="govuk-summary-list__row">
           <dt className="govuk-heading-m">Arrival details</dt>
           <dd className="govuk-summary-list__value">
-            <Link to="page-2">
+            <Link to={{
+              pathname: 'page-2',
+              state: { voyageId },
+            }}
+            >
               Change
               <span className="govuk-visually-hidden"> Change</span>
             </Link>
@@ -125,7 +99,11 @@ const FormCheck = (voyageId) => {
         <div className="govuk-summary-list__row">
           <dt className="govuk-heading-m">Vessel details</dt>
           <dd className="govuk-summary-list__value">
-            <Link to="page-3">
+            <Link to={{
+              pathname: 'page-3',
+              state: { voyageId },
+            }}
+            >
               Change
               <span className="govuk-visually-hidden"> Change</span>
             </Link>
@@ -174,7 +152,11 @@ const FormCheck = (voyageId) => {
         <div className="govuk-summary-list__row">
           <dt className="govuk-heading-m">Details of persons on board</dt>
           <dd className="govuk-summary-list__value">
-            <Link to="page-4">
+            <Link to={{
+              pathname: 'page-4',
+              state: { voyageId },
+            }}
+            >
               Change
               <span className="govuk-visually-hidden"> Change</span>
             </Link>
@@ -192,60 +174,6 @@ const FormCheck = (voyageId) => {
             <th className="govuk-table__header" scope="col">Type</th>
           </tr>
         </thead>
-        {voyagePeopleData.map((person) => {
-          return (
-            <tbody className="govuk-table__body" key={person.id}>
-              <tr className="govuk-table__row">
-                <td className="govuk-table__cell">{person.lastName}</td>
-                <td className="govuk-table__cell">{person.firstName}</td>
-                <td className="govuk-table__cell">{formatUIDate(person.dateOfBirth)}</td>
-                <td className="govuk-table__cell">{person.documentNumber}</td>
-                <td className="govuk-table__cell">{person.nationality}</td>
-                <td className="govuk-table__cell">{person.peopleType.name}</td>
-              </tr>
-
-              <tr className="govuk-table__row">
-                <td className="govuk-table__cell" colSpan={6}>
-                  <div>
-                    <details data-module="govuk-details">
-                      <summary className="govuk-details__summary">
-                        <span className="govuk-details__summary-text">
-                          Further information
-                        </span>
-                      </summary>
-                      <div className="panel panel-border-narrow" id="details-content-2" aria-hidden="true">
-                        <table className="govuk-table" width="100%">
-                          <tbody className="govuk-table__body">
-                            <tr className="govuk-table__row">
-                              <td className="govuk-table__cell">Gender</td>
-                              <td className="govuk-table__cell">{(person.gender).charAt(0).toUpperCase() + person.gender.slice(1)}</td>
-                            </tr>
-                            <tr className="govuk-table__row">
-                              <td className="govuk-table__cell">Place of birth</td>
-                              <td className="govuk-table__cell">{person.placeOfBirth}</td>
-                            </tr>
-                            <tr className="govuk-table__row">
-                              <td className="govuk-table__cell">Travel document type</td>
-                              <td className="govuk-table__cell">{person.documentType}</td>
-                            </tr>
-                            <tr className="govuk-table__row">
-                              <td className="govuk-table__cell">Travel document issuing state</td>
-                              <td className="govuk-table__cell">{person.documentIssuingState}</td>
-                            </tr>
-                            <tr className="govuk-table__row">
-                              <td className="govuk-table__cell">Travel document expiry date</td>
-                              <td className="govuk-table__cell">{formatUIDate(person.documentExpiryDate)}</td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                    </details>
-                  </div>
-                </td>
-              </tr>
-            </tbody>
-          );
-        })}
       </table>
 
 
@@ -255,7 +183,11 @@ const FormCheck = (voyageId) => {
             Responsible person details
           </dt>
           <dd className="govuk-summary-list__value">
-            <Link to="page-5">
+            <Link to={{
+              pathname: 'page-5',
+              state: { voyageId },
+            }}
+            >
               Change
               <span className="govuk-visually-hidden"> Change</span>
             </Link>
@@ -297,7 +229,7 @@ const FormCheck = (voyageId) => {
         type="button"
         className="govuk-button govuk-button--warning govuk-body govuk!-margin-top-3 block-button"
         data-module="govuk-button"
-        onClick={() => updateVoyage('PreCancelled')}
+
       >
         Cancel voyage
       </button>

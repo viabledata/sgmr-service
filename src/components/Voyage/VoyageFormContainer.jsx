@@ -1,19 +1,24 @@
 import React, { useState, useEffect } from 'react';
-import { useLocation, useHistory } from 'react-router-dom';
+import {
+  Link, useLocation, useHistory, withRouter,
+} from 'react-router-dom';
 
 // App imports
 import { getData, patchData } from '@utils/apiHooks';
 import { splitDate } from '@utils/date';
 import { splitTime } from '@utils/time';
 import { PEOPLE_URL, VESSELS_URL, VOYAGE_REPORT_URL } from '@constants/ApiConstants';
+import { formatDepartureArrival, formatResponsiblePerson, formatVessel } from '@components/Voyage/VoyageFormDataFormatting';
 import scrollToTopOnError from '@utils/scrollToTopOnError';
+import VoyageFormValidation from '@components/Voyage/VoyageFormValidation';
 
+// App imports - forms
 import FormArrival from '@components/Voyage/FormArrival';
 import FormCheck from '@components/Voyage/FormCheck';
 import FormDeparture from '@components/Voyage/FormDeparture';
-import VoyageFormDataFormatting from '@components/Voyage/VoyageFormDataFormatting';
-import VoyageFormValidation from '@components/Voyage/VoyageFormValidation';
-import FormVessels from './FormVoyageVessels';
+import FormResponsiblePerson from '@components/Voyage/FormResponsiblePerson';
+import FormVoyageVessels from '@components/Voyage/FormVoyageVessels';
+import FormVoyagePeople from '@components/Voyage/FormVoyagePeople';
 
 
 const FormVoyageContainer = () => {
@@ -118,7 +123,8 @@ const FormVoyageContainer = () => {
   const getVoyageData = (id) => {
     getData(`${VOYAGE_REPORT_URL}/${id}`)
       .then((resp) => {
-        setVoyageData(formatDate(resp));
+        setVoyageData(resp);
+        formatDate(resp);
         localStorage.setItem('formData', JSON.stringify(resp));
       });
   };
@@ -128,19 +134,38 @@ const FormVoyageContainer = () => {
     if (location && location.state && location.state.voyageId) {
       setVoyageId(location.state.voyageId);
       getVoyageData(location.state.voyageId);
+    } else if (history && history.state && history.state.state && history) {
+      setVoyageId(history.state.state.voyageId);
+      getVoyageData(history.state.state.voyageId);
     }
   };
 
 
   const setNextPage = () => {
-    const nextPage = pageNum < maxPages ? pageNum + 1 : pageNum;
+    // Skip page 4 until people page is built
+    let nextPage;
+    if (pageNum === 3) {
+      nextPage = 5;
+    } else {
+      nextPage = pageNum < maxPages ? pageNum + 1 : pageNum;
+    }
+
     setPageNum(nextPage);
-    history.push(`/save-voyage/page-${nextPage}`);
+    history.push(`/save-voyage/page-${nextPage}`, { voyageId });
   };
 
 
   const handleSubmit = (e, sourceForm) => {
     e.preventDefault();
+    let dataToSubmit;
+    switch (sourceForm) {
+      case 'arrival': dataToSubmit = formatDepartureArrival('Draft', formData, voyageData); break;
+      case 'departure': dataToSubmit = formatDepartureArrival('Draft', formData, voyageData); break;
+      case 'responsiblePerson': dataToSubmit = formatResponsiblePerson('Draft', formData, voyageData); break;
+      case 'vessel': dataToSubmit = formatVessel('Draft', formData, voyageData); break;
+      default: dataToSubmit = null;
+    }
+
     // Handle missing voyageId (for if user comes to a subpage directly, and we haven't got the id)
     if (!voyageId) {
       setErrors({ voyageForm: 'There was a problem locating your voyage, please return to "Reports" and try again' });
@@ -148,8 +173,10 @@ const FormVoyageContainer = () => {
     } else {
       setErrors(VoyageFormValidation(formData, sourceForm));
       if (Object.keys(VoyageFormValidation(formData, sourceForm)).length === 0 && Object.keys(errors).length === 0) {
-        patchData(`${VOYAGE_REPORT_URL}/${voyageId}`, VoyageFormDataFormatting(voyageId, 'Draft', formData))
-          .then(() => setNextPage());
+        patchData(`${VOYAGE_REPORT_URL}/${voyageId}`, dataToSubmit)
+          .then(() => {
+            setNextPage();
+          });
       }
     }
   };
@@ -170,10 +197,6 @@ const FormVoyageContainer = () => {
   useEffect(() => {
     if (pageNum) { storeVoyageId(); }
   }, [pageNum]);
-
-  useEffect(() => {
-    if (voyageId) { getVoyageData(voyageId); }
-  }, [voyageId]);
 
   // Persist form data if page refreshed
   useEffect(() => {
@@ -221,30 +244,42 @@ const FormVoyageContainer = () => {
                   handleChange={handleChange}
                   data={formData || voyageData}
                   errors={errors}
+                  voyageId={voyageId}
                 />
               )}
               {pageNum === 2 && (
                 <FormArrival
                   handleSubmit={handleSubmit}
                   handleChange={handleChange}
-                  data={formData}
+                  data={formData || voyageData}
                   errors={errors}
+                  voyageId={voyageId}
                 />
               )}
               {pageNum === 3 && (
-                <FormVessels
+                <FormVoyageVessels
                   handleSubmit={handleSubmit}
                   handleChange={handleChange}
                   handleCheckboxes={handleCheckboxes}
                   handleAddButton={handleAddButton}
                   voyageId={voyageId}
-                  formData={formData}
+                  formData={formData || voyageData}
                   errors={errors}
                 />
               )}
-              {voyageId && pageNum === 6 && (
+              {pageNum === 5 && (
+                <FormResponsiblePerson
+                  handleSubmit={handleSubmit}
+                  handleChange={handleChange}
+                  data={formData || voyageData}
+                  errors={errors}
+                  voyageId={voyageId}
+                />
+              )}
+              {pageNum === 6 && (
                 <FormCheck
                   voyageId={voyageId}
+                  voyageData={voyageData}
                 />
               )}
             </form>
@@ -255,4 +290,4 @@ const FormVoyageContainer = () => {
   );
 };
 
-export default FormVoyageContainer;
+export default withRouter(FormVoyageContainer);
