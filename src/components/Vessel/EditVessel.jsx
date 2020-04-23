@@ -138,7 +138,7 @@ const EditVessel = (props) => {
     } else if (JSON.parse(localStorage.getItem('data')).id) {
       setVesselId(JSON.parse(localStorage.getItem('data')).id);
     }
-  });
+  }, []);
 
   useEffect(() => {
     if (vesselId) { getVesselData(); }
@@ -189,7 +189,7 @@ const EditVessel = (props) => {
                 handleSubmit={handleSubmit}
                 clearLocalStorage={clearLocalStorage}
                 data={vesselData}
-                formData={formData}
+                formData={formData || ''}
                 errors={errors || ''}
               />
             </form>

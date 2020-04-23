@@ -167,6 +167,7 @@ const CreateAPerson = () => {
                 handleChange={handleChange}
                 clearLocalStorage={clearLocalStorage}
                 data={formData}
+                formData={formData}
                 errors={errors}
               />
 

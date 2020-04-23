@@ -10,14 +10,16 @@ import { formatDate, isDateValid, isDateBefore } from '@utils/date';
 import { PEOPLE_URL } from '@constants/ApiConstants';
 import { PEOPLE_PAGE_URL } from '@constants/ClientConstants';
 import { personValidationRules } from '@components/Forms/validationRules';
+import { getData } from '../../utils/apiHooks';
 
 
 const EditPerson = (props) => {
   const history = useHistory();
-  const personId = props.location.state.peopleId;
+  const [personId, setPersonId] = useState();
   const [personData, setPersonData] = useState();
-  const [formData, setFormData] = useState();
-  const [errors, setErrors] = useState({});
+  const [formData, setFormData] = useState(JSON.parse(localStorage.getItem('formData')) || {});
+  const [errors, setErrors] = useState(JSON.parse(localStorage.getItem('errors')) || {});
+
 
   // Reformat dates & peopleType into individual items for form field display
   const reformatFields = (data) => {
@@ -45,29 +47,19 @@ const EditPerson = (props) => {
         documentExpiryDateDay,
       };
     }
-
-    setPersonData({ ...originalData, ...formattedFields });
+    // setPersonData({ ...originalData, ...formattedFields });
+    setFormData({ ...originalData, ...formattedFields });
   };
 
 
   // Get data to prepopulate the form for this person
   const getPersonData = () => {
-    axios.get(`${PEOPLE_URL}/${personId}`, {
-      headers: { Authorization: `Bearer ${Auth.retrieveToken()}` },
-    })
+    getData(`${PEOPLE_URL}/${personId}`, 'people')
       .then((resp) => {
-        reformatFields(resp.data);
-        localStorage.setItem('data', JSON.stringify(resp.data));
-      })
-      .catch((err) => {
-        if (err.response) {
-          switch (err.response.status) {
-            case 401: history.push('/sign-in?source=people'); break;
-            case 422: history.push('/sign-in?source=people'); break;
-            case 405: history.push('/sign-in?source=people'); break;
-            default: history.push('/sign-in?source=people');
-          }
-        }
+        reformatFields(resp);
+        console.log(resp)
+        setPersonData(resp);
+        localStorage.setItem('data', JSON.stringify(resp));
       });
   };
 
@@ -114,9 +106,9 @@ const EditPerson = (props) => {
 
     // Check required fields are not empty
     personValidationRules.map((rule) => {
-      (!(rule.inputField in dataToValidate) || dataToValidate[rule.inputField] === '')
-        ? fieldsErroring[rule.errorDisplayId] = rule.message
-        : null;
+      if (!(rule.inputField in dataToValidate) || dataToValidate[rule.inputField] === '') {
+        fieldsErroring[rule.errorDisplayId] = rule.message
+      }
     });
 
     // Check date fields have valid format
@@ -199,19 +191,56 @@ const EditPerson = (props) => {
     }
   };
 
-  // Get person data to pass to prepopulate the form
+  // Triggers
+  // useEffect(() => {
+  //   console.log('p', props && props.location && props.location.state && props.location.state.peopleId)
+  //   if (props && props.location && props.location.state && props.location.state.peopleId) {
+  //     setPersonId(props.location.state.peopleId);
+  //   } else if (JSON.parse(localStorage.getItem('data')).id) {
+  //     setPersonId(JSON.parse(localStorage.getItem('data')).id);
+  //   }
+  // }, []);
+
+  // useEffect(() => {
+  //   if (personId) { getPersonData(); }
+  // }, [personId]);
+
+  // useEffect(() => {
+  //   localStorage.setItem('data', JSON.stringify(personData));
+  // }, [personData]);
+
+  // useEffect(() => {
+  //   localStorage.setItem('formData', JSON.stringify(formData));
+  // }, [formData]);
+
+  // useEffect(() => {
+  //   localStorage.setItem('errors', JSON.stringify(errors));
+  // }, [errors]);
+
   useEffect(() => {
-    getPersonData();
+    if (props && props.location && props.location.state && props.location.state.peopleId) {
+      setPersonId(props.location.state.peopleId);
+    } else if (JSON.parse(localStorage.getItem('data')).id) {
+      setPersonId(JSON.parse(localStorage.getItem('data')).id);
+    }
   }, []);
 
-  // Update localStorage if personData or errors changes
   useEffect(() => {
-    localStorage.setItem('data', JSON.stringify(personData));
-  }, [personData]);
+    if (personId) { getVesselData(); }
+  }, [personId]);
+
+  // Persist form data if page refreshed
+  useEffect(() => {
+    localStorage.setItem('formData', JSON.stringify(formData));
+  }, [formData]);
+
   useEffect(() => {
     localStorage.setItem('errors', JSON.stringify(errors));
   }, [errors]);
 
+  if (!vesselData) { return null; }
+
+  if (!formData && !personData) { return null; }
   return (
     <div className="govuk-width-container ">
       <div className="govuk-breadcrumbs">
@@ -249,7 +278,8 @@ const EditPerson = (props) => {
                 handleSubmit={handleSubmit}
                 clearLocalStorage={clearLocalStorage}
                 data={personData}
-                errors={errors}
+                formData={formData}
+                errors={errors || ''}
               />
 
             </form>

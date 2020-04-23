@@ -3,12 +3,11 @@ import { Link } from 'react-router-dom';
 
 
 const FormPerson = ({
-  handleSubmit, handleChange, data, errors, clearLocalStorage,
+  handleSubmit, handleChange, data, formData, errors, clearLocalStorage,
 }) => {
   const urlParams = location.search.split('source=');
   const source = urlParams[1];
 
-  if (!data) { return (null); }
   return (
     <section>
       <div id="firstName" className={`govuk-form-group ${errors.firstName ? 'govuk-form-group--error' : ''}`}>
@@ -26,7 +25,7 @@ const FormPerson = ({
           className="govuk-input"
           name="firstName"
           type="text"
-          value={data.firstName || ''}
+          value={formData.firstName || data.firstName || ''}
           onChange={handleChange}
         />
       </div>
@@ -46,7 +45,7 @@ const FormPerson = ({
           className="govuk-input"
           name="lastName"
           type="text"
-          value={data.lastName || ''}
+          value={formData.lastName || data.lastName || ''}
           onChange={handleChange}
         />
       </div>
@@ -66,7 +65,7 @@ const FormPerson = ({
           className="govuk-select"
           name="gender"
           type="text"
-          value={data.gender || 'Please select'}
+          value={formData.gender || data.gender || 'Please select'}
           onChange={handleChange}
         >
           <option disabled>Please select</option>
@@ -107,7 +106,7 @@ const FormPerson = ({
                   autoComplete="bday-day"
                   pattern="[0-9]*"
                   inputMode="numeric"
-                  value={data.dateOfBirthDay || ''}
+                  value={formData.dateOfBirthDay || data.dateOfBirthDay || ''}
                   onChange={(handleChange)}
                 />
               </div>
@@ -125,7 +124,7 @@ const FormPerson = ({
                   autoComplete="bday-month"
                   pattern="[0-9]*"
                   inputMode="numeric"
-                  value={data.dateOfBirthMonth || ''}
+                  value={formData.dateOfBirthMonth || data.dateOfBirthMonth || ''}
                   onChange={handleChange}
                 />
               </div>
@@ -143,7 +142,7 @@ const FormPerson = ({
                   autoComplete="bday-year"
                   pattern="[0-9]*"
                   inputMode="numeric"
-                  value={data.dateOfBirthYear || ''}
+                  value={formData.dateOfBirthYear || data.dateOfBirthYear || ''}
                   onChange={handleChange}
                 />
               </div>
@@ -167,7 +166,7 @@ const FormPerson = ({
           className="govuk-input"
           name="placeOfBirth"
           type="text"
-          value={data.placeOfBirth || ''}
+          value={formData.placeOfBirth || data.placeOfBirth || ''}
           onChange={(handleChange)}
         />
       </div>
@@ -187,7 +186,7 @@ const FormPerson = ({
           className="govuk-select"
           name="nationality"
           type="text"
-          value={data.nationality || 'Please select'}
+          value={formData.nationality || data.nationality || 'Please select'}
           onChange={handleChange}
         >
           <option disabled>Please select</option>
@@ -223,7 +222,7 @@ const FormPerson = ({
                 id="peopleType-1"
                 type="radio"
                 value="Skipper"
-                checked={data.peopleType === 'Skipper' ? 'checked' : ''}
+                checked={(formData.peopleType === 'Crew' || data.peopleType === 'Skipper') ? 'checked' : ''}
                 onChange={handleChange}
               />
               <label className="govuk-label govuk-radios__label" htmlFor="peopleType-1">
@@ -237,7 +236,7 @@ const FormPerson = ({
                 id="peopleType-2"
                 type="radio"
                 value="Crew"
-                checked={data.peopleType === 'Crew' ? 'checked' : ''}
+                checked={(formData.peopleType === 'Crew' || data.peopleType === 'Crew') ? 'checked' : ''}
                 onChange={handleChange}
               />
               <label className="govuk-label govuk-radios__label" htmlFor="peopleType-2">
@@ -272,7 +271,7 @@ const FormPerson = ({
                 name="documentType"
                 type="radio"
                 value="Passport"
-                checked={data.documentType === 'Passport' ? 'checked' : ''}
+                checked={(formData.documentType === 'Passport' || data.documentType === 'Passport') ? 'checked' : ''}
                 onChange={(e) => {
                   handleChange(e);
                 }}
@@ -288,7 +287,7 @@ const FormPerson = ({
                 name="documentType"
                 type="radio"
                 value="IdentityCard"
-                checked={data.documentType === 'IdentityCard' ? 'checked' : ''}
+                checked={(formData.documentType === 'IdentityCard' || data.documentType === 'IdentityCard') ? 'checked' : ''}
                 onChange={(e) => {
                   handleChange(e);
                 }}
@@ -304,7 +303,7 @@ const FormPerson = ({
                 name="documentType"
                 type="radio"
                 value="Other"
-                checked={data.documentType === 'Other' ? 'checked' : ''}
+                checked={(formData.documentType === 'Other' || data.documentType === 'Other') ? 'checked' : ''}
                 onChange={(e) => {
                   handleChange(e);
                 }}
@@ -344,7 +343,7 @@ const FormPerson = ({
           className="govuk-input"
           name="documentNumber"
           type="text"
-          value={data.documentNumber || ''}
+          value={formData.documentNumber || data.documentNumber || ''}
           onChange={handleChange}
         />
       </div>
@@ -369,7 +368,7 @@ const FormPerson = ({
           name="documentIssuingState"
           type="text"
           maxLength={3}
-          value={data.documentIssuingState || ''}
+          value={formData.documentIssuingState || data.documentIssuingState || ''}
           onChange={handleChange}
         />
       </div>
@@ -405,7 +404,7 @@ const FormPerson = ({
                   pattern="[0-9]*"
                   inputMode="numeric"
                   maxLength={2}
-                  value={data.documentExpiryDateDay || ''}
+                  value={formData.documentExpiryDateDay || data.documentExpiryDateDay || ''}
                   onChange={handleChange}
                 />
               </div>
@@ -422,7 +421,7 @@ const FormPerson = ({
                   pattern="[0-9]*"
                   inputMode="numeric"
                   maxLength={2}
-                  value={data.documentExpiryDateMonth || ''}
+                  value={formData.documentExpiryDateMonth || data.documentExpiryDateMonth || ''}
                   onChange={handleChange}
                 />
               </div>
@@ -439,7 +438,7 @@ const FormPerson = ({
                   pattern="[0-9]*"
                   inputMode="numeric"
                   maxLength={4}
-                  value={data.documentExpiryDateYear || ''}
+                  value={formData.documentExpiryDateYear || data.documentExpiryDateYear || ''}
                   onChange={handleChange}
                 />
               </div>

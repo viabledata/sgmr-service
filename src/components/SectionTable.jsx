@@ -10,16 +10,18 @@ const SectionTable = ({ page, pageData }) => {
   const isPageVessels = page === '/vessels';
   const isPagePeople = page === '/people';
   const [data, setData] = useState();
+  const [vesselData, setVesselData] = useState();
+  const [peopleData, setPeopleData] = useState();
   const [titles, setTitles] = useState([]);
 
   const storeData = () => {
     if (isPageVessels) {
-      getData(`${VESSELS_URL}?pagination=false`)
-        .then((resp) => setData(resp.vessels));
+      getData(`${VESSELS_URL}?pagination=false`, 'vessels')
+        .then((resp) => { setVesselData(resp.vessels); });
     }
     if (isPagePeople) {
       getData(`${PEOPLE_URL}?pagination=false`)
-        .then((resp) => setData(resp));
+        .then((resp) => { setPeopleData(resp); });
     }
   };
 
@@ -28,7 +30,7 @@ const SectionTable = ({ page, pageData }) => {
     setTitles(pageData.reportTitles);
   }, [pageData]);
 
-  if ((isPageVessels && !data) || (isPagePeople && !data)) {
+  if ((isPageVessels && !vesselData) || (isPagePeople && !peopleData)) {
     return null;
   }
 
@@ -45,7 +47,7 @@ const SectionTable = ({ page, pageData }) => {
             </h2>
             {isPageVessels && (
             <VesselTable
-              vesselData={data}
+              vesselData={vesselData}
               sourceForm="vessels"
               checkboxes="false"
               link="true"
@@ -63,7 +65,7 @@ const SectionTable = ({ page, pageData }) => {
                 </tr>
               </thead>
               <tbody className="govuk-table__body">
-                {!data.errors && data.map((person) => {
+                {!peopleData.errors && peopleData.map((person) => {
                   return (
                     <tr className="govuk-table__row" key={person.id}>
                       <td className="govuk-table__cell">
