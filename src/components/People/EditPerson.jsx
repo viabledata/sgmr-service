@@ -3,14 +3,16 @@ import { withRouter, useHistory } from 'react-router-dom';
 import axios from 'axios';
 
 // App imports
-import Auth from '@lib/Auth';
-import FormPerson from '@components/People/FormPerson';
-import scrollToTopOnError from '@utils/scrollToTopOnError';
-import { formatDate, isDateValid, isDateBefore } from '@utils/date';
 import { PEOPLE_URL } from '@constants/ApiConstants';
 import { PEOPLE_PAGE_URL } from '@constants/ClientConstants';
 import { personValidationRules } from '@components/Forms/validationRules';
-import { getData } from '../../utils/apiHooks';
+import { getData, patchData } from '@utils/apiHooks';
+import { isDateValid, isDateBefore } from '@utils/date';
+import scrollToTopOnError from '@utils/scrollToTopOnError';
+
+import Auth from '@lib/Auth';
+import FormPerson from '@components/People/FormPerson';
+import PeopleFormDataFormatting from '@components/People/PeopleFormDataFormatting';
 
 
 const EditPerson = (props) => {
@@ -19,7 +21,7 @@ const EditPerson = (props) => {
   const [personData, setPersonData] = useState();
   const [formData, setFormData] = useState(JSON.parse(localStorage.getItem('formData')) || {});
   const [errors, setErrors] = useState(JSON.parse(localStorage.getItem('errors')) || {});
-
+  console.log(errors);
 
   // Reformat dates & peopleType into individual items for form field display
   const reformatFields = (data) => {
@@ -47,8 +49,7 @@ const EditPerson = (props) => {
         documentExpiryDateDay,
       };
     }
-    // setPersonData({ ...originalData, ...formattedFields });
-    setFormData({ ...originalData, ...formattedFields });
+    setPersonData({ ...originalData, ...formData, ...formattedFields });
   };
 
 
@@ -57,8 +58,6 @@ const EditPerson = (props) => {
     getData(`${PEOPLE_URL}/${personId}`, 'people')
       .then((resp) => {
         reformatFields(resp);
-        console.log(resp)
-        setPersonData(resp);
         localStorage.setItem('data', JSON.stringify(resp));
       });
   };
@@ -89,41 +88,47 @@ const EditPerson = (props) => {
   };
 
 
-  // Update form info to state
+  // Update form and vessel data if user changes any field
   const handleChange = (e) => {
-    // Full data set
     setPersonData({ ...personData, [e.target.name]: e.target.value });
-    // Just edited data
     setFormData({ ...formData, [e.target.name]: e.target.value });
-    // Clear any errors
     removeError(e.target.name);
   };
 
 
   // Check validation
-  const areFieldsValid = (dataToValidate) => {
+  const areFieldsValid = (dataFromForm, dataFromPerson) => {
     const fieldsErroring = {};
+    // Create list of fields to test
+    const dataToTest = [];
 
-    // Check required fields are not empty
-    personValidationRules.map((rule) => {
-      if (!(rule.inputField in dataToValidate) || dataToValidate[rule.inputField] === '') {
-        fieldsErroring[rule.errorDisplayId] = rule.message
+    Object.entries(dataFromPerson).map((item) => {
+      if (Object.keys(dataFromForm).indexOf(item[0]) !== -1) {
+        dataToTest.push({ [item[0]]: dataFromForm[item[0]] });
+      } else {
+        dataToTest.push({ [item[0]]: item[1] });
       }
     });
 
+    // Check required fields are not empty
+    personValidationRules.map((rule) => {
+      if (!(rule.inputField in dataToTest) || dataToTest[rule.inputField] === '') {
+        fieldsErroring[rule.errorDisplayId] = rule.message;
+      }
+    });
     // Check date fields have valid format
-    if (!(isDateValid(dataToValidate.documentExpiryDateYear, dataToValidate.documentExpiryDateMonth, dataToValidate.documentExpiryDateDay))) {
+    if (!(isDateValid(dataToTest.documentExpiryDateYear, dataToTest.documentExpiryDateMonth, dataToTest.documentExpiryDateDay))) {
       fieldsErroring.documentExpiryDate = 'You must enter a valid date';
     }
-    if (!(isDateValid(dataToValidate.dateOfBirthYear, dataToValidate.dateOfBirthMonth, dataToValidate.dateOfBirthDay))) {
+    if (!(isDateValid(dataToTest.dateOfBirthYear, dataToTest.dateOfBirthMonth, dataToTest.dateOfBirthDay))) {
       fieldsErroring.dateOfBirth = 'You must enter a valid date';
     }
     // Date of Birth must be before today
-    if (!(isDateBefore(dataToValidate.dateOfBirthYear, dataToValidate.dateOfBirthMonth, dataToValidate.dateOfBirthDay))) {
+    if (!(isDateBefore(dataToTest.dateOfBirthYear, dataToTest.dateOfBirthMonth, dataToTest.dateOfBirthDay))) {
       fieldsErroring.dateOfBirth = 'You must enter a valid date of birth date';
     }
     // Document expiry date must be after today
-    if ((isDateBefore(dataToValidate.documentExpiryDateYear, dataToValidate.documentExpiryDateMonth, dataToValidate.documentExpiryDateDay))) {
+    if ((isDateBefore(dataToTest.documentExpiryDateYear, dataToTest.documentExpiryDateMonth, dataToTest.documentExpiryDateDay))) {
       fieldsErroring.documentExpiryDate = 'You must enter a valid document expiry date';
     }
 
@@ -133,90 +138,25 @@ const EditPerson = (props) => {
   };
 
 
-  // Format data so it matches API requirements
-  const formatDataToSubmit = (dataForm, dataPerson) => {
-    let dataToSubmit = { ...dataForm };
-
-    Object.entries(dataForm).map((field) => {
-      const fieldName = field[0];
-      const dateFields = ['dateOfBirth', 'documentExpiryDate'];
-
-      dateFields.map((dateField) => {
-        if (fieldName.includes(dateField)) {
-          // Format date for submission
-          dataToSubmit[dateField] = formatDate(
-            dataForm[`${dateField}Year`] ? dataForm[`${dateField}Year`] : dataPerson[`${dateField}Year`],
-            dataForm[`${dateField}Month`] ? dataForm[`${dateField}Month`] : dataPerson[`${dateField}Month`],
-            dataForm[`${dateField}Day`] ? dataForm[`${dateField}Day`] : dataPerson[`${dateField}Day`],
-          );
-          // Delete any individual date fields
-          delete dataToSubmit[`${dateField}Year`];
-          delete dataToSubmit[`${dateField}Month`];
-          delete dataToSubmit[`${dateField}Day`];
-        }
-      });
-    });
-    return dataToSubmit;
-  };
-
-
   // Handle Submit, including clearing localStorage
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    if (!formData) {
-      history.push(PEOPLE_PAGE_URL);
-    } else if (!areFieldsValid(personData)) {
-      axios.patch(`${PEOPLE_URL}/${personId}`, formatDataToSubmit(formData, personData), {
-        headers: { Authorization: `Bearer ${Auth.retrieveToken()}` },
-      })
-        .then(() => {
-          clearLocalStorage();
-          history.push(PEOPLE_PAGE_URL);
-        })
-        .catch((err) => {
-          if (err.response) {
-            switch (err.response.status) {
-              case 400:
-                setErrors({ ...errors, EditPerson: err.response.data.message });
-                scrollToTopOnError(err.response);
-                break;
-              case 401:
-              case 422:
-              case 405: history.push('/sign-in?source=people'); break;
-              default: history.push('/sign-in?source=people'); break;
-            }
+    if (areFieldsValid(formData, personData)) {
+      patchData(`${PEOPLE_URL}/${personId}`, PeopleFormDataFormatting(formData))
+        .then((resp) => {
+          if (resp.errors) {
+            setErrors({ EditPerson: resp.message });
+            scrollToTopOnError('EditPerson');
+          } else {
+            clearLocalStorage();
+            history.push(PEOPLE_PAGE_URL);
           }
         });
     }
   };
 
+
   // Triggers
-  // useEffect(() => {
-  //   console.log('p', props && props.location && props.location.state && props.location.state.peopleId)
-  //   if (props && props.location && props.location.state && props.location.state.peopleId) {
-  //     setPersonId(props.location.state.peopleId);
-  //   } else if (JSON.parse(localStorage.getItem('data')).id) {
-  //     setPersonId(JSON.parse(localStorage.getItem('data')).id);
-  //   }
-  // }, []);
-
-  // useEffect(() => {
-  //   if (personId) { getPersonData(); }
-  // }, [personId]);
-
-  // useEffect(() => {
-  //   localStorage.setItem('data', JSON.stringify(personData));
-  // }, [personData]);
-
-  // useEffect(() => {
-  //   localStorage.setItem('formData', JSON.stringify(formData));
-  // }, [formData]);
-
-  // useEffect(() => {
-  //   localStorage.setItem('errors', JSON.stringify(errors));
-  // }, [errors]);
-
   useEffect(() => {
     if (props && props.location && props.location.state && props.location.state.peopleId) {
       setPersonId(props.location.state.peopleId);
@@ -226,7 +166,7 @@ const EditPerson = (props) => {
   }, []);
 
   useEffect(() => {
-    if (personId) { getVesselData(); }
+    if (personId) { getPersonData(); }
   }, [personId]);
 
   // Persist form data if page refreshed
@@ -238,9 +178,8 @@ const EditPerson = (props) => {
     localStorage.setItem('errors', JSON.stringify(errors));
   }, [errors]);
 
-  if (!vesselData) { return null; }
 
-  if (!formData && !personData) { return null; }
+  if (!personData) { return null; }
   return (
     <div className="govuk-width-container ">
       <div className="govuk-breadcrumbs">

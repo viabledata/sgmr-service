@@ -1,6 +1,6 @@
 import React from 'react';
 
-const FormVoyageVessel = ({
+const FormVessel = ({
   handleSubmit, handleChange, data, formData, errors, sourceForm, clearLocalStorage
 }) => {
   return (
@@ -168,4 +168,4 @@ const FormVoyageVessel = ({
   );
 };
 
-export default FormVoyageVessel;
+export default FormVessel;
