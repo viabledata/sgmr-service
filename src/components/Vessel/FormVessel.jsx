@@ -1,7 +1,7 @@
 import React from 'react';
 
 const FormVoyageVessel = ({
-  handleSubmit, handleChange, data, errors, sourceForm, clearLocalStorage
+  handleSubmit, handleChange, data, formData, errors, sourceForm, clearLocalStorage
 }) => {
   return (
     <section>
@@ -22,7 +22,7 @@ const FormVoyageVessel = ({
           className="govuk-input"
           name="vesselName"
           type="text"
-          value={data.vesselName || ''}
+          value={formData.vesselName || data.vesselName || ''}
           onChange={handleChange}
         />
       </div>
@@ -44,7 +44,7 @@ const FormVoyageVessel = ({
           className="govuk-input"
           name="vesselType"
           type="text"
-          value={data.vesselType || ''}
+          value={formData.vesselType || data.vesselType || ''}
           onChange={handleChange}
         />
       </div>
@@ -66,7 +66,7 @@ const FormVoyageVessel = ({
           className="govuk-input"
           name="moorings"
           type="text"
-          value={data.moorings || ''}
+          value={formData.moorings || data.moorings || ''}
           onChange={handleChange}
         />
       </div>
@@ -87,7 +87,7 @@ const FormVoyageVessel = ({
           className="govuk-input"
           name="registration"
           type="text"
-          value={data.registration || ''}
+          value={formData.registration || data.registration || ''}
           onChange={handleChange}
         />
       </div>
@@ -100,7 +100,7 @@ const FormVoyageVessel = ({
           className="govuk-input"
           name="hullIdentificationNumber"
           type="text"
-          value={data.hullIdentificationNumber || ''}
+          value={formData.hullIdentificationNumber || data.hullIdentificationNumber || ''}
           onChange={handleChange}
         />
       </div>
@@ -113,7 +113,7 @@ const FormVoyageVessel = ({
           className="govuk-input"
           name="callsign"
           type="text"
-          value={data.callsign || ''}
+          value={formData.callsign || data.callsign || ''}
           onChange={handleChange}
         />
       </div>
@@ -126,7 +126,7 @@ const FormVoyageVessel = ({
           className="govuk-input"
           name="vesselNationality"
           type="text"
-          value={data.vesselNationality || ''}
+          value={formData.vesselNationality || data.vesselNationality || ''}
           onChange={handleChange}
         />
       </div>
@@ -139,7 +139,7 @@ const FormVoyageVessel = ({
           className="govuk-input"
           name="portOfRegistry"
           type="text"
-          value={data.portOfRegistry || ''}
+          value={formData.portOfRegistry || data.portOfRegistry || ''}
           onChange={handleChange}
         />
       </div>

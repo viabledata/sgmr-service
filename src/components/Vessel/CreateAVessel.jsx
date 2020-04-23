@@ -133,7 +133,8 @@ const CreateAVessel = () => {
                 handleSubmit={handleSubmit}
                 handleChange={handleChange}
                 clearLocalStorage={clearLocalStorage}
-                data={formData}
+                data=""
+                formData={formData}
                 errors={errors}
               />
             </form>
