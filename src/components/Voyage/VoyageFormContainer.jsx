@@ -134,9 +134,12 @@ const FormVoyageContainer = () => {
     if (location && location.state && location.state.voyageId) {
       setVoyageId(location.state.voyageId);
       getVoyageData(location.state.voyageId);
-    } else if (history && history.state && history.state.state && history) {
+    } else if (history && history.state && history.state.state && history.state.state.voyageId) {
       setVoyageId(history.state.state.voyageId);
       getVoyageData(history.state.state.voyageId);
+    } else if (JSON.parse(localStorage.getItem('formData')).id) {
+      setVoyageId(JSON.parse(localStorage.getItem('formData')).id);
+      getVoyageData(JSON.parse(localStorage.getItem('formData')).id);
     }
   };
 
@@ -149,7 +152,6 @@ const FormVoyageContainer = () => {
     } else {
       nextPage = pageNum < maxPages ? pageNum + 1 : pageNum;
     }
-
     setPageNum(nextPage);
     history.push(`/save-voyage/page-${nextPage}`, { voyageId });
   };
@@ -173,7 +175,7 @@ const FormVoyageContainer = () => {
     } else {
       setErrors(VoyageFormValidation(formData, sourceForm));
       if (Object.keys(VoyageFormValidation(formData, sourceForm)).length === 0 && Object.keys(errors).length === 0) {
-        patchData(`${VOYAGE_REPORT_URL}/${voyageId}`, dataToSubmit, location.pathname)
+        patchData(`${VOYAGE_REPORT_URL}/${voyageId}`, dataToSubmit, location.pathname.substring(1))
           .then(() => {
             setNextPage();
           });
@@ -214,7 +216,9 @@ const FormVoyageContainer = () => {
         className="govuk-back-link"
         onClick={(e) => {
           e.preventDefault();
-          history.goBack();
+          history.goBack({
+            search: location.pathname.substring(1)
+          });
         }}
       >
         Back

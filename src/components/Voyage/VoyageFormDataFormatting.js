@@ -75,6 +75,7 @@ const formatVessel = (status, data, voyageData) => {
       dataList[item[0]] = data[item[0]];
     }
   });
+  
   return dataList;
 };
 

@@ -55,7 +55,6 @@ const UserInputCode = () => {
     } else {
       axios.post(SUBMIT_VERIFICATION_CODE_URL, formData)
         .then((resp) => {
-          console.log(resp);
           if (resp.data.token) { Auth.storeToken(resp.data.token); }
           history.push(`/${source}`);
         })
@@ -73,8 +72,13 @@ const UserInputCode = () => {
   };
 
   useEffect(() => {
-    setFormData({ email: JSON.parse(localStorage.getItem('email')) });
-    setSource(urlParams[1]);
+    if (localStorage.getItem('token')) {
+      // If user attempts to 'go back' to this page while they have a token active it will redirect to reports
+      history.push('/reports');
+    } else {
+      setFormData({ email: JSON.parse(localStorage.getItem('email')) });
+      setSource(urlParams[1]);
+    }
   }, []);
 
   return (
