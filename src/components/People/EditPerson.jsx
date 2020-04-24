@@ -27,7 +27,12 @@ const EditPerson = () => {
         formattedDateFields = { ...formattedDateFields, ...dateFields };
       }
     });
-    setFormData({ ...personData, ...formData, ...formattedDateFields, id: personId });
+    setFormData({
+      ...personData,
+      ...formData,
+      ...formattedDateFields,
+      id: personId,
+    });
   };
 
 

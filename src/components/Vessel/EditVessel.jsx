@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { withRouter, useHistory } from 'react-router-dom';
-import axios from 'axios';
 
 // App imports
 import { VESSELS_URL } from '@constants/ApiConstants';
@@ -10,7 +9,6 @@ import { getData, patchData } from '@utils/apiHooks';
 import getId from '@utils/getIdHook';
 import scrollToTopOnError from '@utils/scrollToTopOnError';
 
-import Auth from '@lib/Auth';
 import FormVessel from '@components/Vessel/FormVessel';
 import VesselDataFormatting from '@components/Vessel/VesselDataFormatting';
 

@@ -198,7 +198,7 @@ const FormVoyageContainer = () => {
       getVoyageData(getId('voyage'));
     }
   }, [pageNum]);
- 
+
   // Persist form data if page refreshed
   useEffect(() => {
     localStorage.setItem('formData', JSON.stringify(formData));

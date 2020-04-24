@@ -18,7 +18,7 @@ const PeopleTable = ({
         </tr>
       </thead>
       <tbody className="govuk-table__body">
-        {peopleData.map((person) => {
+        {!peopleData.errors && peopleData.map((person) => {
           return (
             <tr className="govuk-table__row" key={person.id}>
               {checkboxes === 'true' && (
