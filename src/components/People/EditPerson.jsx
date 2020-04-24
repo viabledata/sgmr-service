@@ -21,7 +21,6 @@ const EditPerson = (props) => {
   const [personData, setPersonData] = useState();
   const [formData, setFormData] = useState(JSON.parse(localStorage.getItem('formData')) || {});
   const [errors, setErrors] = useState(JSON.parse(localStorage.getItem('errors')) || {});
-  console.log(errors);
 
   // Reformat dates & peopleType into individual items for form field display
   const reformatFields = (data) => {
@@ -50,16 +49,6 @@ const EditPerson = (props) => {
       };
     }
     setPersonData({ ...originalData, ...formData, ...formattedFields });
-  };
-
-
-  // Get data to prepopulate the form for this person
-  const getPersonData = () => {
-    getData(`${PEOPLE_URL}/${personId}`, 'people')
-      .then((resp) => {
-        reformatFields(resp);
-        localStorage.setItem('data', JSON.stringify(resp));
-      });
   };
 
 
@@ -138,10 +127,20 @@ const EditPerson = (props) => {
   };
 
 
+  // Get data to prepopulate the form for this person
+  const getPersonData = () => {
+    getData(`${PEOPLE_URL}/${personId}`, 'people')
+      .then((resp) => {
+        reformatFields(resp);
+        localStorage.setItem('data', JSON.stringify(resp));
+      });
+  };
+
+
   // Handle Submit, including clearing localStorage
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (areFieldsValid(formData, personData)) {
+    if ((formData, personData)) {
       patchData(`${PEOPLE_URL}/${personId}`, PeopleFormDataFormatting(formData))
         .then((resp) => {
           if (resp.errors) {

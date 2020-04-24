@@ -20,8 +20,8 @@ const SectionTablePeople = ({ page, pageData }) => {
     setTitles(pageData.reportTitles);
   }, [pageData]);
 
-  if (!peopleData) { return null; }
 
+  if (!peopleData) { return null; }
   return (
     <section>
       <div className="govuk-grid-column-full">
@@ -31,8 +31,9 @@ const SectionTablePeople = ({ page, pageData }) => {
         <div className="govuk-grid-row">
           <div className="govuk-grid-column-full">
             <h2 className="govuk-heading-l">
-              {`Saved ${pageData.pageHeading}`}
+              Saved people
             </h2>
+            {!peopleData.errors && (
             <table className="govuk-table">
               <thead className="govuk-table__head">
                 <tr className="govuk-table__row">
@@ -44,25 +45,26 @@ const SectionTablePeople = ({ page, pageData }) => {
                 </tr>
               </thead>
               <tbody className="govuk-table__body">
-                {peopleData.map((person) => {
+                {Object.entries(peopleData).map((person) => {
                   return (
-                    <tr className="govuk-table__row" key={person.id}>
+                    <tr className="govuk-table__row" key={person[1].id}>
                       <td className="govuk-table__cell">
                         <Link to={{
                           pathname: '/people/edit-person',
-                          state: { peopleId: person.id },
+                          state: { peopleId: person[1].id },
                         }}
                         >
-                          {person.lastName}
+                          {person[1].lastName}
                         </Link>
                       </td>
-                      <td className="govuk-table__cell">{person.firstName}</td>
-                      <td className="govuk-table__cell">{person.peopleType.name}</td>
+                      <td className="govuk-table__cell">{person[1].firstName}</td>
+                      <td className="govuk-table__cell">{person[1].peopleType.name}</td>
                     </tr>
                   );
                 })}
               </tbody>
             </table>
+            )}
           </div>
         </div>
       </div>
