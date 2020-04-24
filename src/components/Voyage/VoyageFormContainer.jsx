@@ -63,7 +63,7 @@ const FormVoyageContainer = () => {
 
 
   // Destructure dates (for when reach page via an edit path with dates)
-  const formatDateTime = (data) => {
+  const formatDateTime = (data, id) => {
     let newDateTime = {};
 
     Object.entries(data).map((item) => {
@@ -76,8 +76,7 @@ const FormVoyageContainer = () => {
         newDateTime = { ...newDateTime, ...newTime };
       }
     });
-
-    setFormData({ ...formData, ...newDateTime });
+    setFormData({ ...formData, ...newDateTime, id });
   };
 
 
@@ -105,7 +104,19 @@ const FormVoyageContainer = () => {
 
   // Handle add buttons which populate page data
   const handleAddButton = () => {
-    if (checkboxData) { setFormData(checkboxData); }
+    if (checkboxData) {
+      const formatCheckboxData = { // removes id from the data so it doesn't clash with voyageId
+        callsign: checkboxData.callsign,
+        hullIdentificationNumber: checkboxData.hullIdentificationNumber,
+        moorings: checkboxData.moorings,
+        portOfRegistry: checkboxData.portOfRegistry,
+        registration: checkboxData.registration,
+        vesselName: checkboxData.vesselName,
+        vesselNationality: checkboxData.vesselNationality,
+        vesselType: checkboxData.vesselType,
+      };
+      setFormData(formatCheckboxData);
+    }
   };
 
 
@@ -114,7 +125,7 @@ const FormVoyageContainer = () => {
     getData(`${VOYAGE_REPORT_URL}/${id}`, location.pathname)
       .then((resp) => {
         setVoyageData(resp);
-        formatDateTime(resp);
+        formatDateTime(resp, id);
         localStorage.setItem('formData', JSON.stringify(resp));
       });
   };
