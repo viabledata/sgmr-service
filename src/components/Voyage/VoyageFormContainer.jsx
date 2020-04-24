@@ -62,30 +62,22 @@ const FormVoyageContainer = () => {
   };
 
 
-  const formatTime = (data) => {
-    let formattedData = { ...data };
-    Object.entries(data).map((item) => {
-      if (item[0].includes('Time') && item[1]) {
-        const newTime = splitTime(item[1], item[0]);
-        formattedData = { ...formattedData, ...newTime };
-      }
-    });
-    setFormData({ ...data, ...formattedData });
-  };
-
-
   // Destructure dates (for when reach page via an edit path with dates)
-  const formatDate = (data) => {
-    let formattedData = { ...data };
+  const formatDateTime = (data) => {
+    let newDateTime = {};
+
     Object.entries(data).map((item) => {
       if (item[0].includes('Date') && item[1]) {
         const newDates = splitDate(item[1], item[0]);
-        formattedData = { ...formattedData, ...newDates };
+        newDateTime = { ...newDateTime, ...newDates };
+      }
+      if (item[0].includes('Time') && item[1]) {
+        const newTime = splitTime(item[1], item[0]);
+        newDateTime = { ...newDateTime, ...newTime };
       }
     });
-    const newFormData = ({ ...formData, ...data, ...formattedData });
-    setFormData(newFormData);
-    formatTime(newFormData);
+
+    setFormData({ ...formData, ...newDateTime });
   };
 
 
@@ -122,7 +114,7 @@ const FormVoyageContainer = () => {
     getData(`${VOYAGE_REPORT_URL}/${id}`, location.pathname)
       .then((resp) => {
         setVoyageData(resp);
-        formatDate(resp);
+        formatDateTime(resp);
         localStorage.setItem('formData', JSON.stringify(resp));
       });
   };
