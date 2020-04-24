@@ -53,7 +53,7 @@ const SectionTabs = (pageData) => {
   };
 
   const handleStart = () => {
-    postData(USER_VOYAGE_REPORT_URL)
+    postData(USER_VOYAGE_REPORT_URL, null, 'reports')
       .then((resp) => {
         history.push({
           pathname: '/save-voyage/page-1',

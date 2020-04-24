@@ -39,7 +39,7 @@ const UserInputCode = () => {
     // Ensure required fields have a value
     if (checkRequiredFields() === true && source === 'registration') {
       axios.patch(SUBMIT_VERIFICATION_CODE_URL, formData)
-        .then((resp) => {
+        .then(() => {
           history.push(`/sign-in?source=${source}`);
         })
         .catch((err) => {
@@ -55,7 +55,7 @@ const UserInputCode = () => {
     } else {
       axios.post(SUBMIT_VERIFICATION_CODE_URL, formData)
         .then((resp) => {
-          resp.data.token ? Auth.storeToken(resp.data.token) : null;
+          if (resp.data.token) { Auth.storeToken(resp.data.token); }
           history.push(`/${source}`);
         })
         .catch((err) => {
@@ -72,8 +72,13 @@ const UserInputCode = () => {
   };
 
   useEffect(() => {
-    setFormData({ email: JSON.parse(localStorage.getItem('email')) });
-    setSource(urlParams[1]);
+    if (localStorage.getItem('token')) {
+      // If user attempts to 'go back' to this page while they have a token active it will redirect to reports
+      history.push('/reports');
+    } else {
+      setFormData({ email: JSON.parse(localStorage.getItem('email')) });
+      setSource(urlParams[1]);
+    }
   }, []);
 
   return (

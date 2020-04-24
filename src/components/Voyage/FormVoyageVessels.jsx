@@ -53,6 +53,7 @@ const FormVessels = ({
         handleChange={handleChange}
         voyageId={voyageId}
         data={formData}
+        formData={formData}
         errors={errors}
         sourceForm="voyage"
       />

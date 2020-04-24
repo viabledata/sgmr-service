@@ -3,35 +3,25 @@ import { Link } from 'react-router-dom';
 
 // App imports
 import { getData } from '@utils/apiHooks';
-import { VESSELS_URL, PEOPLE_URL } from '@constants/ApiConstants';
-import VesselTable from './Vessel/VesselTable';
+import { PEOPLE_URL } from '@constants/ApiConstants';
 
-const SectionTable = ({ page, pageData }) => {
-  const isPageVessels = page === '/vessels';
-  const isPagePeople = page === '/people';
-  const [data, setData] = useState();
+const SectionTablePeople = ({ page, pageData }) => {
+  const [peopleData, setPeopleData] = useState();
   const [titles, setTitles] = useState([]);
 
   const storeData = () => {
-    if (isPageVessels) {
-      getData(`${VESSELS_URL}?pagination=false`)
-        .then((resp) => setData(resp.vessels));
-    }
-    if (isPagePeople) {
-      getData(`${PEOPLE_URL}?pagination=false`)
-        .then((resp) => setData(resp.people));
-    }
+    getData(`${PEOPLE_URL}?pagination=false`)
+      .then((resp) => { setPeopleData(resp); });
   };
+
 
   useEffect(() => {
     storeData();
     setTitles(pageData.reportTitles);
   }, [pageData]);
 
-  if ((isPageVessels && !data) || (isPagePeople && !data)) {
-    return null;
-  }
 
+  if (!peopleData) { return null; }
   return (
     <section>
       <div className="govuk-grid-column-full">
@@ -41,17 +31,9 @@ const SectionTable = ({ page, pageData }) => {
         <div className="govuk-grid-row">
           <div className="govuk-grid-column-full">
             <h2 className="govuk-heading-l">
-              {`Saved ${pageData.pageHeading}`}
+              Saved people
             </h2>
-            {isPageVessels && (
-            <VesselTable
-              vesselData={data}
-              sourceForm="vessels"
-              checkboxes="false"
-              link="true"
-            />
-            )}
-            {isPagePeople && (
+            {!peopleData.errors && (
             <table className="govuk-table">
               <thead className="govuk-table__head">
                 <tr className="govuk-table__row">
@@ -63,21 +45,20 @@ const SectionTable = ({ page, pageData }) => {
                 </tr>
               </thead>
               <tbody className="govuk-table__body">
-                {data.errors === false && data.map((person) => {
-
+                {Object.entries(peopleData).map((person) => {
                   return (
-                    <tr className="govuk-table__row" key={person.id}>
+                    <tr className="govuk-table__row" key={person[1].id}>
                       <td className="govuk-table__cell">
                         <Link to={{
                           pathname: '/people/edit-person',
-                          state: { peopleId: person.id },
+                          state: { peopleId: person[1].id },
                         }}
                         >
-                          {person.lastName}
+                          {person[1].lastName}
                         </Link>
                       </td>
-                      <td className="govuk-table__cell">{person.firstName}</td>
-                      <td className="govuk-table__cell">{person.peopleType.name}</td>
+                      <td className="govuk-table__cell">{person[1].firstName}</td>
+                      <td className="govuk-table__cell">{person[1].peopleType.name}</td>
                     </tr>
                   );
                 })}
@@ -91,4 +72,4 @@ const SectionTable = ({ page, pageData }) => {
   );
 };
 
-export default SectionTable;
+export default SectionTablePeople;

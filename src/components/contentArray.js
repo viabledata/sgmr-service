@@ -21,7 +21,7 @@ const contentArray = [
     buttonLink: 'vessels/save-vessel?source=vessels',
     buttonClass: 'govuk-button--start',
     buttonLocation: 'formIntro',
-    reportType: 'tables',
+    reportType: 'vessels',
     reportTitles: ['Vessel name', 'Vessel type', 'Usual moorings'],
   },
   {
@@ -34,7 +34,7 @@ const contentArray = [
     buttonLink: 'people/save-person?source=people',
     buttonClass: 'govuk-button--start',
     buttonLocation: 'formIntro',
-    reportType: 'tables',
+    reportType: 'people',
     reportTitles: ['Surname', 'Given name', 'Type'],
   },
   {

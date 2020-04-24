@@ -1,8 +1,7 @@
 import { formatDate } from '@utils/date';
 
-const formatDepartureArrival = (status, data) => {
+const PeopleFormDataFormatting = (data) => {
   const dataList = {
-    status,
   };
 
   Object.entries(data).map((item) => {
@@ -38,49 +37,4 @@ const formatDepartureArrival = (status, data) => {
   return dataList;
 };
 
-
-const formatResponsiblePerson = (status, data, voyageData) => {
-  const dataList = {
-    status,
-  };
-
-  Object.entries(voyageData).map((item) => {
-    if (
-      item[0].search(/responsible/i) >= 0 // if item is a 'responsible' field
-      && data[item[0]] !== item[1] // and value from voyageData !== value from form
-    ) {
-      // then add it to dataList
-      dataList[item[0]] = data[item[0]];
-    }
-  });
-  return dataList;
-};
-
-const formatVessel = (status, data, voyageData) => {
-  const dataList = {
-    status,
-  };
-
-  Object.entries(voyageData).map((item) => {
-    if (
-      (item[0].search(/vessel/i) >= 0 // if item is a 'vessel' field
-        || item[0] === 'hullIdentificationNumber' // or one of the other vessel fields that don't contain 'vessel'
-        || item[0] === 'registration'
-        || item[0] === 'moorings'
-        || item[0] === 'callsign'
-      )
-      && data[item[0]] !== item[1] // and value from voyageData !== value from form
-    ) {
-      // then add it to dataList
-      dataList[item[0]] = data[item[0]];
-    }
-  });
-
-  return dataList;
-};
-
-export {
-  formatDepartureArrival,
-  formatResponsiblePerson,
-  formatVessel,
-};
+export default PeopleFormDataFormatting;

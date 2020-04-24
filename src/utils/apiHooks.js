@@ -4,7 +4,8 @@ import axios from 'axios';
 import Auth from '@lib/Auth';
 
 
-const postData = (url, dataToSubmit) => {
+const postData = (url, dataToSubmit, pageSource) => {
+  const source = pageSource || location.pathname.substring(1);
   const data = axios.post(url, dataToSubmit, {
     headers: { Authorization: `Bearer ${Auth.retrieveToken()}` },
   })
@@ -12,6 +13,9 @@ const postData = (url, dataToSubmit) => {
     .catch((err) => {
       if (err.response) {
         switch (err.response.status) {
+          case 401:
+          case 422:
+          case 405: window.location.assign(`/sign-in?source=${source}`); break;
           default: return ({ errors: true, status: err.response.status, message: err.response.data.message });
         }
       }
@@ -20,7 +24,8 @@ const postData = (url, dataToSubmit) => {
 };
 
 
-const getData = (url) => {
+const getData = (url, pageSource) => {
+  const source = pageSource || location.pathname.substring(1);
   const data = axios.get(url, {
     headers: { Authorization: `Bearer ${Auth.retrieveToken()}` },
   })
@@ -28,6 +33,9 @@ const getData = (url) => {
     .catch((err) => {
       if (err.response) {
         switch (err.response.status) {
+          case 401:
+          case 422:
+          case 405: window.location.assign(`/sign-in?source=${source}`); break;
           default: return ({ errors: true, status: err.response.status, message: err.response.data.message });
         }
       }
@@ -36,12 +44,22 @@ const getData = (url) => {
 };
 
 
-const patchData = (url, dataToSubmit) => {
+const patchData = (url, dataToSubmit, pageSource) => {
+  const source = pageSource || location.pathname.substring(1);
   const data = axios.patch(url, dataToSubmit, {
     headers: { Authorization: `Bearer ${Auth.retrieveToken()}` },
   })
     .then((resp) => { return resp.data; })
-    .catch((err) => { return err.response; });
+    .catch((err) => {
+      if (err.response) {
+        switch (err.response.status) {
+          case 401:
+          case 422:
+          case 405: window.location.assign(`/sign-in?source=${source}`); break;
+          default: return ({ errors: true, status: err.response.status, message: err.response.data.message });
+        }
+      }
+    });
   return data;
 };
 

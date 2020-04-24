@@ -5,7 +5,8 @@ import { useLocation } from 'react-router-dom';
 import contentArray from '@components/contentArray';
 import PageIntro from '@components/PageIntro';
 import PageIntroToForm from '@components/PageIntroToForm';
-import SectionTable from '@components/SectionTable';
+import SectionTablePeople from '@components/SectionTablePeople';
+import SectionTableVessels from '@components/SectionTableVessels';
 import SectionTabs from '@components/SectionTabs';
 
 const PageContainer = (props) => {
@@ -25,7 +26,8 @@ const PageContainer = (props) => {
     if (pageData) {
       switch (pageData.reportType) {
         case 'tabs': setSectionReport(<SectionTabs page={location.pathname} pageData={pageData} />); break;
-        case 'tables': setSectionReport(<SectionTable page={location.pathname} pageData={pageData} />); break;
+        case 'vessels': setSectionReport(<SectionTableVessels page={location.pathname} pageData={pageData} />); break;
+        case 'people': setSectionReport(<SectionTablePeople page={location.pathname} pageData={pageData} />); break;
         default: setSectionReport('none');
       }
     }

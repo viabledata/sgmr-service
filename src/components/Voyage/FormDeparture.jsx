@@ -1,7 +1,5 @@
 import React from 'react';
 
-// App imports
-
 const FormDeparture = ({
   handleSubmit, handleChange, data, errors, voyageId,
 }) => {

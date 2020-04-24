@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {
-  Link, useLocation, useHistory, withRouter,
-} from 'react-router-dom';
+import { useLocation, useHistory, withRouter } from 'react-router-dom';
 
 // App imports
 import { getData, patchData } from '@utils/apiHooks';
@@ -64,30 +62,27 @@ const FormVoyageContainer = () => {
   };
 
 
-  const formatTime = (data) => {
-    let formattedData = { ...data };
-    Object.entries(data).map((item) => {
-      if (item[0].includes('Time') && item[1]) {
-        const newTime = splitTime(item[1], item[0]);
-        formattedData = { ...formattedData, ...newTime };
-      }
-    });
-    setFormData({ ...data, ...formattedData });
-  };
-
-
   // Destructure dates (for when reach page via an edit path with dates)
-  const formatDate = (data) => {
-    let formattedData = { ...data };
-    Object.entries(data).map((item) => {
+  const formatDateTime = (data, id) => {
+    let thisData;
+    if (!Object.keys(formData).length <= 1) { // formData has only the id, or nothing
+      thisData = data;
+    } else {
+      thisData = formData;
+    }
+    let newDateTime = {};
+
+    Object.entries(thisData).map((item) => {
       if (item[0].includes('Date') && item[1]) {
         const newDates = splitDate(item[1], item[0]);
-        formattedData = { ...formattedData, ...newDates };
+        newDateTime = { ...newDateTime, ...newDates };
+      }
+      if (item[0].includes('Time') && item[1]) {
+        const newTime = splitTime(item[1], item[0]);
+        newDateTime = { ...newDateTime, ...newTime };
       }
     });
-    const newFormData = ({ ...data, ...formattedData });
-    setFormData(newFormData);
-    formatTime(newFormData);
+    setFormData({ ...thisData, ...formData, ...newDateTime, id });
   };
 
 
@@ -115,17 +110,29 @@ const FormVoyageContainer = () => {
 
   // Handle add buttons which populate page data
   const handleAddButton = () => {
-    if (checkboxData) { setFormData(checkboxData); }
+    if (checkboxData) {
+      const formatCheckboxData = { // removes id from the data so it doesn't clash with voyageId
+        id: voyageId,
+        callsign: checkboxData.callsign,
+        hullIdentificationNumber: checkboxData.hullIdentificationNumber,
+        moorings: checkboxData.moorings,
+        portOfRegistry: checkboxData.portOfRegistry,
+        registration: checkboxData.registration,
+        vesselName: checkboxData.vesselName,
+        vesselNationality: checkboxData.vesselNationality,
+        vesselType: checkboxData.vesselType,
+      };
+      setFormData(formatCheckboxData);
+    }
   };
 
 
   // Get voyage data
   const getVoyageData = (id) => {
-    getData(`${VOYAGE_REPORT_URL}/${id}`)
+    getData(`${VOYAGE_REPORT_URL}/${id}`, location.pathname)
       .then((resp) => {
         setVoyageData(resp);
-        formatDate(resp);
-        localStorage.setItem('formData', JSON.stringify(resp));
+        formatDateTime(resp, id);
       });
   };
 
@@ -134,9 +141,12 @@ const FormVoyageContainer = () => {
     if (location && location.state && location.state.voyageId) {
       setVoyageId(location.state.voyageId);
       getVoyageData(location.state.voyageId);
-    } else if (history && history.state && history.state.state && history) {
+    } else if (history && history.state && history.state.state && history.state.state.voyageId) {
       setVoyageId(history.state.state.voyageId);
       getVoyageData(history.state.state.voyageId);
+    } else if (JSON.parse(localStorage.getItem('formData')).id) {
+      setVoyageId(JSON.parse(localStorage.getItem('formData')).id);
+      getVoyageData(JSON.parse(localStorage.getItem('formData')).id);
     }
   };
 
@@ -149,7 +159,6 @@ const FormVoyageContainer = () => {
     } else {
       nextPage = pageNum < maxPages ? pageNum + 1 : pageNum;
     }
-
     setPageNum(nextPage);
     history.push(`/save-voyage/page-${nextPage}`, { voyageId });
   };
@@ -173,7 +182,7 @@ const FormVoyageContainer = () => {
     } else {
       setErrors(VoyageFormValidation(formData, sourceForm));
       if (Object.keys(VoyageFormValidation(formData, sourceForm)).length === 0 && Object.keys(errors).length === 0) {
-        patchData(`${VOYAGE_REPORT_URL}/${voyageId}`, dataToSubmit)
+        patchData(`${VOYAGE_REPORT_URL}/${voyageId}`, dataToSubmit, location.pathname.substring(1))
           .then(() => {
             setNextPage();
           });
@@ -208,6 +217,7 @@ const FormVoyageContainer = () => {
   }, [errors]);
 
 
+  if (!formData) { return null; }
   return (
     <div id="pageContainer" className="govuk-width-container ">
       <a

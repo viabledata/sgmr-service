@@ -1,7 +1,5 @@
 import React from 'react';
 
-// App imports
-
 const FormVoyagePeople = ({ handleSubmit, data, voyageId }) => {
   if (!data) { return (null); }
   return (

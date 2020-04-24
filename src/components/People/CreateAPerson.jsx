@@ -6,6 +6,7 @@ import axios from 'axios';
 import Auth from '@lib/Auth';
 import FormPerson from '@components/People/FormPerson';
 import scrollToTopOnError from '@utils/scrollToTopOnError';
+import { postData } from '@utils/apiHooks';
 import { formatDate, isDateValid, isDateBefore } from '@utils/date';
 import { PEOPLE_URL } from '@constants/ApiConstants';
 import { PEOPLE_PAGE_URL, SAVE_VOYAGE_PEOPLE_URL } from '@constants/ClientConstants';
@@ -107,30 +108,13 @@ const CreateAPerson = () => {
     e.preventDefault();
 
     if (!areFieldsValid(formData)) {
-      axios.post(PEOPLE_URL, formatDataToSubmit(formData), {
-        headers: { Authorization: `Bearer ${Auth.retrieveToken()}` },
-      })
-        .then(() => {
-          // Only clear data if this is the people form;
-          if (source[1] === 'voyage') {
-            history.push(SAVE_VOYAGE_PEOPLE_URL);
+      postData(PEOPLE_URL, formatDataToSubmit(formData), location.pathname.substring(1))
+        .then((resp) => {
+          if (resp.errors === true) {
+            setErrors({ CreateAPerson: resp.message });
+            scrollToTopOnError(errors);
           } else {
-            clearLocalStorage();
             history.push(PEOPLE_PAGE_URL);
-          }
-        })
-        .catch((err) => {
-          if (err.response) {
-            switch (err.response.status) {
-              case 400:
-                setErrors({ ...errors, CreateAPerson: err.response.data.message });
-                scrollToTopOnError(err.response);
-                break;
-              case 401: history.push(`/sign-in?source=${location}`); break;
-              case 422: history.push(`/sign-in?source=${location}`); break;
-              case 405: history.push(`/sign-in?source=${location}`); break;
-              default: history.push(`/sign-in?source=${location}`);
-            }
           }
         });
     }
@@ -181,13 +165,12 @@ const CreateAPerson = () => {
               <FormPerson
                 handleSubmit={handleSubmit}
                 handleChange={handleChange}
+                clearLocalStorage={clearLocalStorage}
                 data={formData}
+                formData={formData}
                 errors={errors}
               />
 
-              <p>
-                <a href={PEOPLE_PAGE_URL} className="govuk-link govuk-link--no-visited-state" onClick={(e) => clearLocalStorage(e)}>Exit without saving</a>
-              </p>
             </form>
           </div>
         </div>

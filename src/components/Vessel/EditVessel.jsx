@@ -12,10 +12,10 @@ import { vesselValidationRules } from '@components/Forms/validationRules';
 
 const EditVessel = (props) => {
   const history = useHistory();
-  const vesselId = props.location.state.vesselId;
+  const [vesselId, setVesselId] = useState();
   const [vesselData, setVesselData] = useState();
-  const [formData, setFormData] = useState();
-  const [errors, setErrors] = useState({});
+  const [formData, setFormData] = useState(JSON.parse(localStorage.getItem('formData')) || {});
+  const [errors, setErrors] = useState(JSON.parse(localStorage.getItem('errors')) || {});
 
 
   // Populate the form with this vessel's data
@@ -121,9 +121,9 @@ const EditVessel = (props) => {
           if (err.response) {
             switch (err.response.status) {
               case 400: setErrors({ ...errors, EditVessel: err.response.data.message }); break;
-              case 401: history.push('/sign-in?source=vessels'); break;
-              case 422: history.push('/sign-in?source=vessels'); break;
-              case 405: history.push('/sign-in?source=vessels'); break;
+              case 401:
+              case 422:
+              case 405: history.push('/sign-in?source=vessels/edit-vessel'); break;
               default: history.push('/sign-in?source=vessels'); break;
             }
           }
@@ -133,8 +133,25 @@ const EditVessel = (props) => {
 
 
   useEffect(() => {
-    getVesselData();
+    if (props && props.location && props.location.state && props.location.state.vesselId) {
+      setVesselId(props.location.state.vesselId);
+    } else if (JSON.parse(localStorage.getItem('data')).id) {
+      setVesselId(JSON.parse(localStorage.getItem('data')).id);
+    }
   }, []);
+
+  useEffect(() => {
+    if (vesselId) { getVesselData(); }
+  }, [vesselId]);
+
+  // Persist form data if page refreshed
+  useEffect(() => {
+    localStorage.setItem('formData', JSON.stringify(formData));
+  }, [formData]);
+
+  useEffect(() => {
+    localStorage.setItem('errors', JSON.stringify(errors));
+  }, [errors]);
 
   if (!vesselData) { return null; }
   return (
@@ -170,12 +187,11 @@ const EditVessel = (props) => {
               <FormVessel
                 handleChange={handleChange}
                 handleSubmit={handleSubmit}
+                clearLocalStorage={clearLocalStorage}
                 data={vesselData}
+                formData={formData || ''}
                 errors={errors || ''}
               />
-              <p>
-                <a href="/vessels" className="govuk-link govuk-link--no-visited-state" onClick={(e) => clearLocalStorage(e)}>Exit without saving</a>
-              </p>
             </form>
           </div>
         </div>
