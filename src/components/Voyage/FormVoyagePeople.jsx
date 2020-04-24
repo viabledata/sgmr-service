@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { getData } from '@utils/apiHooks';
 import { PEOPLE_URL } from '@constants/ApiConstants';
 import FormPerson from '@components/People/FormPerson';
+import PeopleManifest from '@components/Voyage/PeopleManifest';
 import PeopleTable from '@components/People/PeopleTable';
 
 const FormVoyagePeople = ({
@@ -37,6 +38,9 @@ const FormVoyagePeople = ({
           handleCheckboxes={handleCheckboxes}
         />
       )}
+
+      <PeopleManifest />
+
       <button
         type="button"
         className="govuk-button"
