@@ -64,9 +64,15 @@ const FormVoyageContainer = () => {
 
   // Destructure dates (for when reach page via an edit path with dates)
   const formatDateTime = (data, id) => {
+    let thisData;
+    if (!Object.keys(formData).length <= 1) { // formData has only the id, or nothing
+      thisData = data;
+    } else {
+      thisData = formData;
+    }
     let newDateTime = {};
 
-    Object.entries(data).map((item) => {
+    Object.entries(thisData).map((item) => {
       if (item[0].includes('Date') && item[1]) {
         const newDates = splitDate(item[1], item[0]);
         newDateTime = { ...newDateTime, ...newDates };
@@ -76,7 +82,7 @@ const FormVoyageContainer = () => {
         newDateTime = { ...newDateTime, ...newTime };
       }
     });
-    setFormData({ ...formData, ...newDateTime, id });
+    setFormData({ ...thisData, ...formData, ...newDateTime, id });
   };
 
 
@@ -106,6 +112,7 @@ const FormVoyageContainer = () => {
   const handleAddButton = () => {
     if (checkboxData) {
       const formatCheckboxData = { // removes id from the data so it doesn't clash with voyageId
+        id: voyageId,
         callsign: checkboxData.callsign,
         hullIdentificationNumber: checkboxData.hullIdentificationNumber,
         moorings: checkboxData.moorings,
@@ -126,7 +133,6 @@ const FormVoyageContainer = () => {
       .then((resp) => {
         setVoyageData(resp);
         formatDateTime(resp, id);
-        localStorage.setItem('formData', JSON.stringify(resp));
       });
   };
 
@@ -211,6 +217,7 @@ const FormVoyageContainer = () => {
   }, [errors]);
 
 
+  if (!formData) { return null; }
   return (
     <div id="pageContainer" className="govuk-width-container ">
       <a
