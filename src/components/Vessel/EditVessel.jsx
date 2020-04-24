@@ -3,12 +3,15 @@ import { withRouter, useHistory } from 'react-router-dom';
 import axios from 'axios';
 
 // App imports
-import Auth from '@lib/Auth';
-import FormVessel from '@components/Vessel/FormVessel';
-import scrollToTopOnError from '@utils/scrollToTopOnError';
 import { VESSELS_URL } from '@constants/ApiConstants';
 import { VESSELS_PAGE_URL } from '@constants/ClientConstants';
 import { vesselValidationRules } from '@components/Forms/validationRules';
+import { getData, patchData } from '@utils/apiHooks';
+import scrollToTopOnError from '@utils/scrollToTopOnError';
+
+import Auth from '@lib/Auth';
+import FormVessel from '@components/Vessel/FormVessel';
+
 
 const EditVessel = (props) => {
   const history = useHistory();
@@ -20,22 +23,10 @@ const EditVessel = (props) => {
 
   // Populate the form with this vessel's data
   const getVesselData = () => {
-    axios.get(`${VESSELS_URL}/${vesselId}`, {
-      headers: { Authorization: `Bearer ${Auth.retrieveToken()}` },
-    })
+    getData(`${VESSELS_URL}/${vesselId}`, 'vessel')
       .then((resp) => {
-        setVesselData(resp.data);
-        localStorage.setItem('data', JSON.stringify(resp.data));
-      })
-      .catch((err) => {
-        if (err.response) {
-          switch (err.response.status) {
-            case 401: history.push('/sign-in?source=vessels'); break;
-            case 422: history.push('/sign-in?source=vessels'); break;
-            case 405: history.push('/sign-in?source=vessels'); break;
-            default: history.push('/sign-in?source=vessels');
-          }
-        }
+        setVesselData(resp);
+        localStorage.setItem('data', JSON.stringify(resp));
       });
   };
 
