@@ -7,6 +7,7 @@ import { VESSELS_URL } from '@constants/ApiConstants';
 import { VESSELS_PAGE_URL } from '@constants/ClientConstants';
 import { vesselValidationRules } from '@components/Forms/validationRules';
 import { getData, patchData } from '@utils/apiHooks';
+import getId from '@utils/getIdHook';
 import scrollToTopOnError from '@utils/scrollToTopOnError';
 
 import Auth from '@lib/Auth';
@@ -124,11 +125,7 @@ const EditVessel = (props) => {
 
 
   useEffect(() => {
-    if (props && props.location && props.location.state && props.location.state.vesselId) {
-      setVesselId(props.location.state.vesselId);
-    } else if (JSON.parse(localStorage.getItem('data')).id) {
-      setVesselId(JSON.parse(localStorage.getItem('data')).id);
-    }
+    setVesselId(getId('vessel'));
   }, []);
 
   useEffect(() => {
