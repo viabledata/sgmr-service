@@ -39,24 +39,19 @@ const formatDepartureArrival = (status, data) => {
 };
 
 
-const formatPerson = (status, data) => {
+const formatPerson = (data) => {
   const dataList = {
-    status,
-    people: [
-      {
-        firstName: data.firstName,
-        lastName: data.lastName,
-        documentType: data.documentType,
-        documentNumber: data.documentNumber,
-        documentExpiryDate: formatDate(data.documentExpiryDateYear, data.documentExpiryDateMonth, data.documentExpiryDateDay),
-        documentIssuingState: data.documentIssuingState,
-        peopleType: data.peopleType,
-        gender: data.gender,
-        dateOfBirth: formatDate(data.dateOfBirthYear, data.dateOfBirthMonth, data.dateOfBirthDay),
-        placeOfBirth: data.placeOfBirth,
-        nationality: data.nationality,
-      },
-    ],
+    firstName: data.firstName,
+    lastName: data.lastName,
+    documentType: data.documentType,
+    documentNumber: data.documentNumber,
+    documentExpiryDate: data.documentExpiryDate,
+    documentIssuingState: data.documentIssuingState,
+    peopleType: data.peopleType.name,
+    gender: data.gender,
+    dateOfBirth: data.dateOfBirth,
+    placeOfBirth: data.placeOfBirth,
+    nationality: data.nationality,
   };
   return dataList;
 };

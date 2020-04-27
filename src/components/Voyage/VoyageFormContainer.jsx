@@ -33,6 +33,7 @@ const FormVoyageContainer = () => {
   const [voyageId, setVoyageId] = useState();
   const [voyageData, setVoyageData] = useState();
   const [checkboxData, setCheckboxData] = useState();
+  const [peopleData, setPeopleData] = useState([]);
   const [formData, setFormData] = useState(JSON.parse(localStorage.getItem('formData')) || {});
   const [errors, setErrors] = useState(JSON.parse(localStorage.getItem('errors')) || {});
 
@@ -116,8 +117,30 @@ const FormVoyageContainer = () => {
     });
   };
 
+
+  // Create checkbox people array
+  const handlePeopleCheckbox = (e) => {
+    let checkedPeople = [...peopleData];
+    if (e.target.checked) {
+      getData(`${PEOPLE_URL}/${e.target.id}`)
+        .then((resp) => checkedPeople.push(formatPerson(resp)));
+    }
+    // Handle uncheck
+    if (!e.target.checked) {
+      checkedPeople = checkedPeople.filter((person) => person.id !== e.target.id);
+    }
+    setPeopleData(checkedPeople);
+  };
+
+
+  const handleAddPeopleButton = () => {
+    patchData(`${VOYAGE_REPORT_URL}/${voyageId}`, { status: 'Draft', people: peopleData })
+      .then(setFormData({ ...formData, people: peopleData }));
+  };
+
+
   // Handle add buttons which populate page data
-  const handleAddButton = () => {
+  const handleAddVesselButton = () => {
     if (checkboxData) {
       const formatCheckboxData = { // removes id from the data so it doesn't clash with voyageId
         id: voyageId,
@@ -269,7 +292,7 @@ const FormVoyageContainer = () => {
                   handleSubmit={handleSubmit}
                   handleChange={handleChange}
                   handleCheckboxes={handleCheckboxes}
-                  handleAddButton={handleAddButton}
+                  handleAddVesselButton={handleAddVesselButton}
                   voyageId={voyageId}
                   formData={formData || voyageData}
                   errors={errors}
@@ -279,8 +302,8 @@ const FormVoyageContainer = () => {
                 <FormVoyagePeople
                   handleSubmit={handleSubmit}
                   handleChange={handleChange}
-                  handleCheckboxes={handleCheckboxes}
-                  handleAddButton={handleAddButton}
+                  handleCheckboxes={handlePeopleCheckbox}
+                  handleAddPeopleButton={handleAddPeopleButton}
                   handleLinkToForm={handleLinkToForm}
                   voyageId={voyageId}
                   formData={formData || voyageData}

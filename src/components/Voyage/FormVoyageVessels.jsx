@@ -7,7 +7,7 @@ import FormVessel from '@components/Vessel/FormVessel';
 import VesselTable from '@components/Vessel/VesselTable';
 
 const FormVessels = ({
-  handleSubmit, handleChange, handleCheckboxes, handleAddButton, voyageId, errors, formData,
+  handleSubmit, handleChange, handleCheckboxes, handleAddVesselButton, voyageId, errors, formData,
 }) => {
   const [vesselData, setVesselData] = useState();
 
@@ -40,7 +40,7 @@ const FormVessels = ({
         type="button"
         className="govuk-button"
         data-module="govuk-button"
-        onClick={(e) => handleAddButton(e)}
+        onClick={(e) => handleAddVesselButton(e)}
       >
         Add to report
       </button>
