@@ -10,7 +10,7 @@ import { splitTime } from '@utils/time';
 import { PEOPLE_URL, VESSELS_URL, VOYAGE_REPORT_URL } from '@constants/ApiConstants';
 import { SAVE_VOYAGE_PEOPLE_URL } from '@constants/ClientConstants';
 import {
-  formatDepartureArrival, formatPerson, formatResponsiblePerson, formatVessel,
+  formatDepartureArrival, formatNewPerson, formatPerson, formatResponsiblePerson, formatVessel,
 } from '@components/Voyage/VoyageFormDataFormatting';
 import getId from '@utils/getIdHook';
 import scrollToTopOnError from '@utils/scrollToTopOnError';
@@ -35,7 +35,6 @@ const FormVoyageContainer = () => {
   const [voyageData, setVoyageData] = useState();
   const [checkboxData, setCheckboxData] = useState();
   const [peopleData, setPeopleData] = useState([]);
-  const [manifestData, setManifestData] = useState();
   const [formData, setFormData] = useState(JSON.parse(localStorage.getItem('formData')) || {});
   const [errors, setErrors] = useState(JSON.parse(localStorage.getItem('errors')) || {});
 
@@ -134,15 +133,10 @@ const FormVoyageContainer = () => {
     setPeopleData(checkedPeople);
   };
 
-  const getManifestData = () => {
-    getData(`${VOYAGE_REPORT_URL}/${voyageId}/people`, location.pathname)
-      .then((resp) => { setManifestData(resp.items); });
-  };
-
 
   const handleAddPeopleButton = () => {
     patchData(`${VOYAGE_REPORT_URL}/${voyageId}`, { status: 'Draft', people: peopleData })
-      .then(getManifestData());
+      .then(history.push(`${SAVE_VOYAGE_PEOPLE_URL}?added=true`));
   };
 
 
@@ -204,7 +198,7 @@ const FormVoyageContainer = () => {
       switch (sourceForm) {
         case 'arrival': dataToSubmit = formatDepartureArrival('Draft', formData, voyageData); break;
         case 'departure': dataToSubmit = formatDepartureArrival('Draft', formData, voyageData); break;
-        case 'people': dataToSubmit = formatPerson('Draft', formData, voyageData); break;
+        case 'newPerson': dataToSubmit = formatNewPerson('Draft', formData, voyageData); break;
         case 'responsiblePerson': dataToSubmit = formatResponsiblePerson('Draft', formData, voyageData); break;
         case 'vessel': dataToSubmit = formatVessel('Draft', formData, voyageData); break;
         default: dataToSubmit = null;
@@ -243,7 +237,6 @@ const FormVoyageContainer = () => {
     if (pageNum) {
       setVoyageId(getId('voyage'));
       getVoyageData(getId('voyage'));
-      getManifestData(getId('voyage'));
     }
   }, [pageNum]);
 
@@ -320,7 +313,6 @@ const FormVoyageContainer = () => {
                   handleLinkToForm={handleLinkToForm}
                   voyageId={voyageId}
                   formData={formData || voyageData}
-                  manifestData={manifestData}
                   errors={errors}
                 />
               )}
@@ -337,6 +329,7 @@ const FormVoyageContainer = () => {
                     data={formData || ''}
                     formData={formData || ''}
                     errors={errors || ''}
+                    pageNum={4}
                   />
                 </>
               )}

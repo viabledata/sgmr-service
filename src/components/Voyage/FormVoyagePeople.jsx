@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 
 // App imports
 import { getData } from '@utils/apiHooks';
-import { PEOPLE_URL, VOYAGE_REPORT_URL } from '@constants/ApiConstants';
+import { PEOPLE_URL } from '@constants/ApiConstants';
 import PeopleManifest from '@components/Voyage/PeopleManifest';
 import PeopleTable from '@components/People/PeopleTable';
 
 const FormVoyagePeople = ({
-  handleSubmit, handleCheckboxes, handleAddPeopleButton, handleLinkToForm, voyageId, manifestData,
+  handleSubmit, handleCheckboxes, handleAddPeopleButton, handleLinkToForm, voyageId,
 }) => {
   const [peopleData, setPeopleData] = useState();
 
@@ -23,7 +22,7 @@ const FormVoyagePeople = ({
     storePeopleData();
   }, []);
 
-  if (!peopleData || !manifestData) { return null; }
+  if (!peopleData) { return null; }
   return (
     <section>
       <h1 className="govuk-heading-xl">People on board</h1>
@@ -59,18 +58,9 @@ const FormVoyagePeople = ({
         People currently on the manifest of this report
       </p>
       <PeopleManifest
-        manifestData={manifestData}
+        voyageId={voyageId}
+        source="voyage"
       />
-      <div className="govuk-form-group">
-        <label className="govuk-label" htmlFor="totalPersonsOnBoard">Total persons on board</label>
-        <input
-          className="govuk-input govuk-input--width-3"
-          id="totalPersonsOnBoard"
-          name="name"
-          value={manifestData.length}
-          readOnly
-        />
-      </div>
 
       <button
         type="button"

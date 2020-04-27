@@ -449,7 +449,7 @@ const FormPerson = ({
           type="submit"
           className="govuk-button"
           data-module="govuk-button"
-          onClick={(e) => handleSubmit(e, 'people', voyageId)}
+          onClick={(e) => handleSubmit(e, 'newPerson', voyageId)}
         >
           {source === 'voyage' ? 'Add to manifest' : 'Add to saved people list'}
         </button>
