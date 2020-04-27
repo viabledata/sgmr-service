@@ -1,12 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { useLocation, useHistory, withRouter } from 'react-router-dom';
+import {
+  Link, useLocation, useHistory, withRouter,
+} from 'react-router-dom';
 
 // App imports
 import { getData, patchData } from '@utils/apiHooks';
 import { splitDate } from '@utils/date';
 import { splitTime } from '@utils/time';
 import { PEOPLE_URL, VESSELS_URL, VOYAGE_REPORT_URL } from '@constants/ApiConstants';
-import { formatDepartureArrival, formatResponsiblePerson, formatVessel } from '@components/Voyage/VoyageFormDataFormatting';
+import {
+  formatDepartureArrival, formatPerson, formatResponsiblePerson, formatVessel,
+} from '@components/Voyage/VoyageFormDataFormatting';
 import getId from '@utils/getIdHook';
 import scrollToTopOnError from '@utils/scrollToTopOnError';
 import VoyageFormValidation from '@components/Voyage/VoyageFormValidation';
@@ -15,6 +19,7 @@ import VoyageFormValidation from '@components/Voyage/VoyageFormValidation';
 import FormArrival from '@components/Voyage/FormArrival';
 import FormCheck from '@components/Voyage/FormCheck';
 import FormDeparture from '@components/Voyage/FormDeparture';
+import FormPerson from '@components/People/FormPerson';
 import FormResponsiblePerson from '@components/Voyage/FormResponsiblePerson';
 import FormVoyageVessels from '@components/Voyage/FormVoyageVessels';
 import FormVoyagePeople from '@components/Voyage/FormVoyagePeople';
@@ -130,6 +135,12 @@ const FormVoyageContainer = () => {
   };
 
 
+  // Handle link to create person for voyage form
+  const handleLinkToForm = () => {
+    setPageNum('4b');
+  };
+
+
   // Get voyage data
   const getVoyageData = (id) => {
     getData(`${VOYAGE_REPORT_URL}/${id}`, location.pathname)
@@ -141,7 +152,12 @@ const FormVoyageContainer = () => {
 
 
   const setNextPage = () => {
-    const nextPage = pageNum < maxPages ? pageNum + 1 : pageNum;
+    let nextPage;
+    if (pageNum === '4b') {
+      nextPage = 4;
+    } else {
+      nextPage = pageNum < maxPages ? pageNum + 1 : pageNum;
+    }
     setPageNum(nextPage);
     history.push(`/save-voyage/page-${nextPage}`, { voyageId });
   };
@@ -153,6 +169,7 @@ const FormVoyageContainer = () => {
     switch (sourceForm) {
       case 'arrival': dataToSubmit = formatDepartureArrival('Draft', formData, voyageData); break;
       case 'departure': dataToSubmit = formatDepartureArrival('Draft', formData, voyageData); break;
+      case 'person': dataToSubmit = formatPerson('Draft', formData, voyageData); break;
       case 'responsiblePerson': dataToSubmit = formatResponsiblePerson('Draft', formData, voyageData); break;
       case 'vessel': dataToSubmit = formatVessel('Draft', formData, voyageData); break;
       default: dataToSubmit = null;
@@ -206,6 +223,7 @@ const FormVoyageContainer = () => {
   if (!formData) { return null; }
   return (
     <div id="pageContainer" className="govuk-width-container ">
+      {pageNum !== '4b' && (
       <a
         className="govuk-back-link"
         onClick={(e) => {
@@ -215,6 +233,8 @@ const FormVoyageContainer = () => {
       >
         Back
       </a>
+      )}
+      {pageNum === '4b' && <Link to="/save-voyage/page-4" className="govuk-back-link">Back</Link>}
       <main className="govuk-main-wrapper govuk-main-wrapper--auto-spacing" role="main">
         <div className="govuk-grid-row">
           <div className="govuk-grid-column-two-thirds">
@@ -269,9 +289,20 @@ const FormVoyageContainer = () => {
                   handleChange={handleChange}
                   handleCheckboxes={handleCheckboxes}
                   handleAddButton={handleAddButton}
+                  handleLinkToForm={handleLinkToForm}
                   voyageId={voyageId}
                   formData={formData || voyageData}
                   errors={errors}
+                />
+              )}
+              {pageNum === '4b' && (
+                <FormPerson
+                  handleSubmit={handleSubmit}
+                  handleChange={handleChange}
+                  source="voyage"
+                  data={formData || ''}
+                  formData={formData || ''}
+                  errors={errors || ''}
                 />
               )}
               {pageNum === 5 && (
