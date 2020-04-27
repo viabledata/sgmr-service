@@ -12,7 +12,6 @@ import PageContainer from '@components/PageContainer';
 
 import CreateAPerson from '@components/People/CreateAPerson';
 import EditPerson from '@components/People/EditPerson';
-import CreatePersonForVoyage from '@components/People/CreatePersonForVoyage';
 
 import SignIn from '@components/User/SignIn';
 import UserInputCode from '@components/User/UserInputCode';
@@ -43,7 +42,6 @@ const Main = () => {
         <SecureRoute exact path="/save-voyage/page-4"><VoyageFormContainer /></SecureRoute>
         <SecureRoute exact path="/save-voyage/page-5"><VoyageFormContainer /></SecureRoute>
         <SecureRoute exact path="/save-voyage/page-6"><VoyageFormContainer /></SecureRoute>
-        {/* <SecureRoute exact path="/save-voyage/create-person"><CreatePersonForVoyage /></SecureRoute> */}
         <SecureRoute exact path="/vessels">
           <PageContainer />
         </SecureRoute>
