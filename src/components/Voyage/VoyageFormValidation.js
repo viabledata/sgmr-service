@@ -2,7 +2,7 @@
 import { isDateValid } from '@utils/date';
 import { isTimeAndDateBeforeNow, isTimeValid } from '@utils/time';
 import {
-  arrivalValidationRules, departureValidationRules, vesselValidationRules, voyageValidationRules,
+  arrivalValidationRules, departureValidationRules, personValidationRules, vesselValidationRules, voyageValidationRules,
 } from '@components/Forms/validationRules';
 import scrollToTopOnError from '@utils/scrollToTopOnError';
 
@@ -14,6 +14,7 @@ const VoyageFormValidation = (dataToValidate, source) => {
     case 'check': validationRules = voyageValidationRules; break;
     case 'arrival': validationRules = arrivalValidationRules; break;
     case 'departure': validationRules = departureValidationRules; break;
+    case 'person': validationRules = personValidationRules; break;
     case 'vessel': validationRules = vesselValidationRules; break;
     default: validationRules = null;
   }
