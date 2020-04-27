@@ -3,9 +3,9 @@ import React, { useState, useEffect } from 'react';
 // App imports
 import { getData } from '@utils/apiHooks';
 import { VESSELS_URL } from '@constants/ApiConstants';
-import VesselTable from './Vessel/VesselTable';
+import VesselTable from '@components/Vessel/VesselTable';
 
-const SectionTableVessels = ({ page, pageData }) => {
+const SectionTableVessels = () => {
   const [vesselData, setVesselData] = useState();
 
   const storeData = () => {
@@ -13,12 +13,13 @@ const SectionTableVessels = ({ page, pageData }) => {
       .then((resp) => { setVesselData(resp.vessels); });
   };
 
+
   useEffect(() => {
     storeData();
-  }, [pageData]);
+  }, []);
+
 
   if (!vesselData) { return null; }
-
   return (
     <section>
       <div className="govuk-grid-column-full">
@@ -28,7 +29,7 @@ const SectionTableVessels = ({ page, pageData }) => {
         <div className="govuk-grid-row">
           <div className="govuk-grid-column-full">
             <h2 className="govuk-heading-l">
-              {`Saved ${pageData.pageHeading}`}
+              Saved vessels
             </h2>
             <VesselTable
               vesselData={vesselData}

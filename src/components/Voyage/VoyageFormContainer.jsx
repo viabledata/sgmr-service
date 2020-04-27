@@ -7,6 +7,7 @@ import { splitDate } from '@utils/date';
 import { splitTime } from '@utils/time';
 import { PEOPLE_URL, VESSELS_URL, VOYAGE_REPORT_URL } from '@constants/ApiConstants';
 import { formatDepartureArrival, formatResponsiblePerson, formatVessel } from '@components/Voyage/VoyageFormDataFormatting';
+import getId from '@utils/getIdHook';
 import scrollToTopOnError from '@utils/scrollToTopOnError';
 import VoyageFormValidation from '@components/Voyage/VoyageFormValidation';
 
@@ -82,7 +83,9 @@ const FormVoyageContainer = () => {
         newDateTime = { ...newDateTime, ...newTime };
       }
     });
-    setFormData({ ...thisData, ...formData, ...newDateTime, id });
+    setFormData({
+      ...thisData, ...formData, ...newDateTime, id,
+    });
   };
 
 
@@ -137,28 +140,8 @@ const FormVoyageContainer = () => {
   };
 
 
-  const storeVoyageId = () => {
-    if (location && location.state && location.state.voyageId) {
-      setVoyageId(location.state.voyageId);
-      getVoyageData(location.state.voyageId);
-    } else if (history && history.state && history.state.state && history.state.state.voyageId) {
-      setVoyageId(history.state.state.voyageId);
-      getVoyageData(history.state.state.voyageId);
-    } else if (JSON.parse(localStorage.getItem('formData')).id) {
-      setVoyageId(JSON.parse(localStorage.getItem('formData')).id);
-      getVoyageData(JSON.parse(localStorage.getItem('formData')).id);
-    }
-  };
-
-
   const setNextPage = () => {
-    // Skip page 4 until people page is built
-    let nextPage;
-    if (pageNum === 3) {
-      nextPage = 5;
-    } else {
-      nextPage = pageNum < maxPages ? pageNum + 1 : pageNum;
-    }
+    const nextPage = pageNum < maxPages ? pageNum + 1 : pageNum;
     setPageNum(nextPage);
     history.push(`/save-voyage/page-${nextPage}`, { voyageId });
   };
@@ -204,7 +187,10 @@ const FormVoyageContainer = () => {
   }, [location]);
 
   useEffect(() => {
-    if (pageNum) { storeVoyageId(); }
+    if (pageNum) {
+      setVoyageId(getId('voyage'));
+      getVoyageData(getId('voyage'));
+    }
   }, [pageNum]);
 
   // Persist form data if page refreshed
@@ -268,6 +254,17 @@ const FormVoyageContainer = () => {
               )}
               {pageNum === 3 && (
                 <FormVoyageVessels
+                  handleSubmit={handleSubmit}
+                  handleChange={handleChange}
+                  handleCheckboxes={handleCheckboxes}
+                  handleAddButton={handleAddButton}
+                  voyageId={voyageId}
+                  formData={formData || voyageData}
+                  errors={errors}
+                />
+              )}
+              {pageNum === 4 && (
+                <FormVoyagePeople
                   handleSubmit={handleSubmit}
                   handleChange={handleChange}
                   handleCheckboxes={handleCheckboxes}

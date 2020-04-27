@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-
 const PeopleTable = ({
   peopleData, checkboxes, link, handleCheckboxes,
 }) => {
@@ -19,7 +18,7 @@ const PeopleTable = ({
         </tr>
       </thead>
       <tbody className="govuk-table__body">
-        {peopleData.map((person) => {
+        {!peopleData.errors && peopleData.map((person) => {
           return (
             <tr className="govuk-table__row" key={person.id}>
               {checkboxes === 'true' && (

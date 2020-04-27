@@ -18,7 +18,6 @@ const SectionTablePeople = () => {
     storeData();
   }, []);
 
-
   if (!peopleData) { return null; }
   return (
     <section>

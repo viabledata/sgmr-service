@@ -1,16 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { withRouter, useHistory } from 'react-router-dom';
-import axios from 'axios';
 
 // App imports
-import Auth from '@lib/Auth';
-import FormVessel from '@components/Vessel/FormVessel';
-import scrollToTopOnError from '@utils/scrollToTopOnError';
 import { VESSELS_URL } from '@constants/ApiConstants';
 import { VESSELS_PAGE_URL } from '@constants/ClientConstants';
 import { vesselValidationRules } from '@components/Forms/validationRules';
+import { getData, patchData } from '@utils/apiHooks';
+import getId from '@utils/getIdHook';
+import scrollToTopOnError from '@utils/scrollToTopOnError';
 
-const EditVessel = (props) => {
+import FormVessel from '@components/Vessel/FormVessel';
+import VesselDataFormatting from '@components/Vessel/VesselDataFormatting';
+
+
+const EditVessel = () => {
   const history = useHistory();
   const [vesselId, setVesselId] = useState();
   const [vesselData, setVesselData] = useState();
@@ -20,22 +23,11 @@ const EditVessel = (props) => {
 
   // Populate the form with this vessel's data
   const getVesselData = () => {
-    axios.get(`${VESSELS_URL}/${vesselId}`, {
-      headers: { Authorization: `Bearer ${Auth.retrieveToken()}` },
-    })
+    getData(`${VESSELS_URL}/${vesselId}`, 'vessel')
       .then((resp) => {
-        setVesselData(resp.data);
-        localStorage.setItem('data', JSON.stringify(resp.data));
-      })
-      .catch((err) => {
-        if (err.response) {
-          switch (err.response.status) {
-            case 401: history.push('/sign-in?source=vessels'); break;
-            case 422: history.push('/sign-in?source=vessels'); break;
-            case 405: history.push('/sign-in?source=vessels'); break;
-            default: history.push('/sign-in?source=vessels');
-          }
-        }
+        setVesselData(resp);
+        setFormData({ ...resp, ...formData, id: vesselId });
+        // localStorage.setItem('formData', JSON.stringify(resp));
       });
   };
 
@@ -80,19 +72,6 @@ const EditVessel = (props) => {
   };
 
 
-  // Format the data so it matches API requirements
-  const formatData = (dataVessel, dataForm) => {
-    const dataToSubmit = {
-      ...dataForm,
-      vesselName: dataForm.vesselName ? dataForm.vesselName : dataVessel.vesselName,
-      vesselType: dataForm.vesselType ? dataForm.vesselType : dataVessel.vesselType,
-      registration: dataForm.registration ? dataForm.registration : dataVessel.registration,
-      moorings: dataForm.moorings ? dataForm.moorings : dataVessel.moorings,
-    };
-    return dataToSubmit;
-  };
-
-
   // Clear vesselData from localStorage
   const clearLocalStorage = () => {
     setVesselData({});
@@ -110,22 +89,14 @@ const EditVessel = (props) => {
       // If they have, test if there are any errors
     } else if (!areFieldsValid(formData)) {
       // If there are not, format the data & submit to the API
-      axios.patch(`${VESSELS_URL}/${vesselId}`, formatData(vesselData, formData), {
-        headers: { Authorization: `Bearer ${Auth.retrieveToken()}` },
-      })
-        .then(() => {
-          clearLocalStorage();
-          history.push(VESSELS_PAGE_URL);
-        })
-        .catch((err) => {
-          if (err.response) {
-            switch (err.response.status) {
-              case 400: setErrors({ ...errors, EditVessel: err.response.data.message }); break;
-              case 401:
-              case 422:
-              case 405: history.push('/sign-in?source=vessels/edit-vessel'); break;
-              default: history.push('/sign-in?source=vessels'); break;
-            }
+      patchData(`${VESSELS_URL}/${vesselId}`, VesselDataFormatting('na', formData, vesselData))
+        .then((resp) => {
+          if (resp.errors) {
+            setErrors({ EditVessel: resp.message });
+            scrollToTopOnError('EditVessel');
+          } else {
+            clearLocalStorage();
+            history.push(VESSELS_PAGE_URL);
           }
         });
     }
@@ -133,11 +104,7 @@ const EditVessel = (props) => {
 
 
   useEffect(() => {
-    if (props && props.location && props.location.state && props.location.state.vesselId) {
-      setVesselId(props.location.state.vesselId);
-    } else if (JSON.parse(localStorage.getItem('data')).id) {
-      setVesselId(JSON.parse(localStorage.getItem('data')).id);
-    }
+    setVesselId(getId('vessel'));
   }, []);
 
   useEffect(() => {
