@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 // App imports
 import { getData } from '@utils/apiHooks';
@@ -38,6 +39,29 @@ const FormVoyagePeople = ({
           handleCheckboxes={handleCheckboxes}
         />
       )}
+
+      <hr className="govuk-section-break govuk-section-break--m govuk-section-break--visible" />
+      <h2 className="govuk-heading-l">New people</h2>
+      <p>
+        <Link to="/people/save-person?source=voyage">
+          Add a new person to the Reports
+        </Link>
+      </p>
+
+      <hr className="govuk-section-break govuk-section-break--m govuk-section-break--visible" />
+
+      {/* <hr className="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+<h2 className="govuk-heading-l">New people</h2>
+<p>
+              <a href="create-report-add-new-person.html">Add a new person to the Reports</a>
+            </p>
+            <hr className="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+
+            </hr>
+            <h2 className="govuk-heading-l">People currently on board</h2>
+            <p className="govuk-body-l">
+              People currently on the manifest of this report
+            </p> */}
 
       <PeopleManifest />
 
