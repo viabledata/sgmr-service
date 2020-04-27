@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 
 // App imports
 import { formatUIDate } from '@utils/date';
+import PeopleManifest from '@components/Voyage/PeopleManifest';
 
 const FormCheck = ({ voyageId, voyageData }) => {
   if (!voyageData) { return null; }
@@ -163,18 +164,7 @@ const FormCheck = ({ voyageId, voyageData }) => {
           </dd>
         </div>
       </dl>
-      <table className="govuk-table">
-        <thead className="govuk-table__head">
-          <tr className="govuk-table__row">
-            <th className="govuk-table__header" scope="col">Surname</th>
-            <th className="govuk-table__header" scope="col">Given name</th>
-            <th className="govuk-table__header" scope="col">Date of birth</th>
-            <th className="govuk-table__header" scope="col">Travel document number</th>
-            <th className="govuk-table__header" scope="col">Nationality</th>
-            <th className="govuk-table__header" scope="col">Type</th>
-          </tr>
-        </thead>
-      </table>
+      <PeopleManifest />
 
 
       <dl className="govuk-summary-list govuk-!-margin-bottom-9">
