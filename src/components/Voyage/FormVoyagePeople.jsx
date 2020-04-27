@@ -43,13 +43,7 @@ const FormVoyagePeople = ({
 
       <hr className="govuk-section-break govuk-section-break--m govuk-section-break--visible" />
       <h2 className="govuk-heading-l">New people</h2>
-      <button
-        type="button"
-        className="mimic-text-link"
-        onClick={(e) => handleLinkToForm(e, voyageId)}
-      >
-        Add a new person to the Reports
-      </button>
+      <p><a href='' className="govuk-link govuk-link--no-visited-state" onClick={(e) => handleLinkToForm(e, voyageId)}>Add a new person to the Reports</a></p>
 
       <hr className="govuk-section-break govuk-section-break--m govuk-section-break--visible" />
       <h2 className="govuk-heading-l">People currently on board</h2>
