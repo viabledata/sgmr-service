@@ -152,15 +152,19 @@ const FormVoyageContainer = () => {
   };
 
 
-  const setNextPage = () => {
+  const setNextPage = (sourceForm) => {
     let nextPage;
-    if (pageNum === '4b') {
-      nextPage = 4;
-    } else {
-      nextPage = pageNum < maxPages ? pageNum + 1 : pageNum;
+    switch (sourceForm) {
+      case 'cancel': history.push('/reports'); break;
+      case 'submit': history.push('/save-voyage/submitted'); break;
+      default: if (pageNum === '4b') {
+        nextPage = 4;
+      } else {
+        nextPage = pageNum < maxPages ? pageNum + 1 : pageNum;
+      }
+        setPageNum(nextPage);
+        history.push(`/save-voyage/page-${nextPage}`, { voyageId });
     }
-    setPageNum(nextPage);
-    history.push(`/save-voyage/page-${nextPage}`, { voyageId });
   };
 
 
@@ -173,6 +177,8 @@ const FormVoyageContainer = () => {
       case 'people': dataToSubmit = formatPerson('Draft', formData, voyageData); break;
       case 'responsiblePerson': dataToSubmit = formatResponsiblePerson('Draft', formData, voyageData); break;
       case 'vessel': dataToSubmit = formatVessel('Draft', formData, voyageData); break;
+      case 'voyage': dataToSubmit = { status: 'PreSubmitted' }; break;
+      case 'cancel': dataToSubmit = { status: 'PreCancelled' }; break;
       default: dataToSubmit = null;
     }
 
@@ -185,7 +191,7 @@ const FormVoyageContainer = () => {
       if (Object.keys(VoyageFormValidation(formData, sourceForm)).length === 0 && Object.keys(errors).length === 0) {
         patchData(`${VOYAGE_REPORT_URL}/${voyageId}`, dataToSubmit, location.pathname.substring(1))
           .then(() => {
-            setNextPage();
+            setNextPage(sourceForm);
           });
       }
     }
@@ -316,6 +322,7 @@ const FormVoyageContainer = () => {
                 <FormCheck
                   voyageId={voyageId}
                   voyageData={voyageData}
+                  handleSubmit={handleSubmit}
                 />
               )}
             </form>

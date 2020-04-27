@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import { formatUIDate } from '@utils/date';
 import PeopleManifest from '@components/Voyage/PeopleManifest';
 
-const FormCheck = ({ voyageId, voyageData }) => {
+const FormCheck = ({ voyageId, voyageData, handleSubmit }) => {
   if (!voyageData) { return null; }
   return (
     <section>
@@ -221,7 +221,7 @@ const FormCheck = ({ voyageId, voyageData }) => {
         type="button"
         className="govuk-button govuk-button--warning govuk-body govuk!-margin-top-3 block-button"
         data-module="govuk-button"
-
+        onClick={((e) => handleSubmit(e, 'cancel'))}
       >
         Cancel voyage
       </button>
