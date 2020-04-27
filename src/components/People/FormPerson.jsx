@@ -3,11 +3,8 @@ import { Link } from 'react-router-dom';
 
 
 const FormPerson = ({
-  handleSubmit, handleChange, data, formData, errors, clearLocalStorage,
+  handleSubmit, handleChange, data, formData, errors, clearLocalStorage, source, voyageId
 }) => {
-  const urlParams = location.search.split('source=');
-  const source = urlParams[1];
-
   return (
     <section>
       <div id="firstName" className={`govuk-form-group ${errors.firstName ? 'govuk-form-group--error' : ''}`}>
@@ -452,7 +449,7 @@ const FormPerson = ({
           type="submit"
           className="govuk-button"
           data-module="govuk-button"
-          onClick={handleSubmit}
+          onClick={(e) => handleSubmit(e, 'people', voyageId)}
         >
           {source === 'voyage' ? 'Add to manifest' : 'Add to saved people list'}
         </button>

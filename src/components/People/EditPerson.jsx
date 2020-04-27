@@ -138,7 +138,7 @@ const EditPerson = () => {
 
   // Triggers
   useEffect(() => {
-    setPersonId(getId('person'));
+    setPersonId(getId('people'));
   }, []);
 
   useEffect(() => {

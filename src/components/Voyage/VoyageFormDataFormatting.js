@@ -39,6 +39,29 @@ const formatDepartureArrival = (status, data) => {
 };
 
 
+const formatPerson = (status, data) => {
+  const dataList = {
+    status,
+    people: [
+      {
+        firstName: data.firstName,
+        lastName: data.lastName,
+        documentType: data.documentType,
+        documentNumber: data.documentNumber,
+        documentExpiryDate: formatDate(data.documentExpiryDateYear, data.documentExpiryDateMonth, data.documentExpiryDateDay),
+        documentIssuingState: data.documentIssuingState,
+        peopleType: data.peopleType,
+        gender: data.gender,
+        dateOfBirth: formatDate(data.dateOfBirthYear, data.dateOfBirthMonth, data.dateOfBirthDay),
+        placeOfBirth: data.placeOfBirth,
+        nationality: data.nationality,
+      },
+    ],
+  };
+  return dataList;
+};
+
+
 const formatResponsiblePerson = (status, data, voyageData) => {
   const dataList = {
     status,
@@ -55,6 +78,7 @@ const formatResponsiblePerson = (status, data, voyageData) => {
   });
   return dataList;
 };
+
 
 const formatVessel = (status, data, voyageData) => {
   const dataList = {
@@ -79,8 +103,10 @@ const formatVessel = (status, data, voyageData) => {
   return dataList;
 };
 
+
 export {
   formatDepartureArrival,
+  formatPerson,
   formatResponsiblePerson,
   formatVessel,
 };

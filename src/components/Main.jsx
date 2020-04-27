@@ -10,8 +10,8 @@ import Footer from '@components/Footer';
 import Header from '@components/Header';
 import PageContainer from '@components/PageContainer';
 
-import EditPerson from '@components/People/EditPerson';
 import CreateAPerson from '@components/People/CreateAPerson';
+import EditPerson from '@components/People/EditPerson';
 
 import SignIn from '@components/User/SignIn';
 import UserInputCode from '@components/User/UserInputCode';

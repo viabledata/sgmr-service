@@ -1,45 +1,21 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 // App imports
+import { getData } from '@utils/apiHooks';
 import { formatUIDate } from '@utils/date';
+import { VOYAGE_REPORT_URL } from '@constants/ApiConstants';
 
 
-const Manifest = () => {
-  // Temp data for testing
-  const voyagePeopleData = [{
-    id: '1',
-    lastName: 'Catman',
-    firstName: 'Loki',
-    dateOfBirth: '2000-2-1',
-    documentNumber: '123',
-    nationality: 'gbr',
-    peopleType: {
-      name: 'Crew',
-    },
-    gender: 'male',
-    placeOfBirth: 'London',
-    documentType: 'Passport',
-    documentIssuingState: 'gbr',
-    documentExpiryDate: '2022-1-1',
-  },
-  {
-    id: '2',
-    lastName: 'Catman',
-    firstName: 'Thor',
-    dateOfBirth: '2000-2-1',
-    documentNumber: '123',
-    nationality: 'gbr',
-    peopleType: {
-      name: 'Skipper',
-    },
-    gender: 'male',
-    placeOfBirth: 'London',
-    documentType: 'Passport',
-    documentIssuingState: 'gbr',
-    documentExpiryDate: '2022-1-1',
-  }];
+const Manifest = ({ voyageId }) => {
+  const [manifestData, setManifestData] = useState();
+
+  useEffect(() => {
+    getData(`${VOYAGE_REPORT_URL}/${voyageId}/people`, location.pathname)
+      .then((resp) => { setManifestData(resp.items); });
+  }, []);
 
 
+  if (!manifestData) { return null; }
   return (
     <table className="govuk-table">
       <thead className="govuk-table__head">
@@ -52,7 +28,7 @@ const Manifest = () => {
           <th className="govuk-table__header" scope="col">Type</th>
         </tr>
       </thead>
-      {voyagePeopleData.map((person) => {
+      {manifestData.map((person) => {
         return (
           <tbody className="govuk-table__body" key={person.id}>
             <tr className="govuk-table__row">
