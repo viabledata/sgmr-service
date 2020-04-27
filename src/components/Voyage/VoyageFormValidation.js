@@ -1,7 +1,9 @@
 // App imports
-import { isDateValid } from '@utils/date';
-import { isTimeValid } from '@utils/time';
-import { arrivalValidationRules, departureValidationRules, vesselValidationRules, voyageValidationRules } from '@components/Forms/validationRules';
+import { isDateBefore, isDateValid } from '@utils/date';
+import { isTimeAndDateBeforeNow, isTimeValid } from '@utils/time';
+import {
+  arrivalValidationRules, departureValidationRules, vesselValidationRules, voyageValidationRules,
+} from '@components/Forms/validationRules';
 import scrollToTopOnError from '@utils/scrollToTopOnError';
 
 
@@ -20,7 +22,6 @@ const VoyageFormValidation = (dataToValidate, source) => {
   // Required fields must not be null
   if (validationRules) {
     validationRules.map((rule) => {
-      console.log(rule)
       if (!(rule.inputField in dataToValidate) || dataToValidate[rule.inputField] === '' || !dataToValidate[rule.inputField]) {
         fieldsErroring[rule.errorDisplayId] = rule.message;
       }
@@ -48,6 +49,21 @@ const VoyageFormValidation = (dataToValidate, source) => {
   }
   if (dataToValidate.arrivalTimeHour && !(isTimeValid(dataToValidate.arrivalTimeHour, dataToValidate.arrivalTimeMinute))) {
     fieldsErroring.arrivalTime = 'You must enter a valid time';
+  }
+  // Departure date must be in the future
+  if (isTimeAndDateBeforeNow(dataToValidate.departureDateYear, dataToValidate.departureDateMonth, dataToValidate.departureDateDay, dataToValidate.departureTimeHour, dataToValidate.departureTimeMinute)) {
+    fieldsErroring.departureDate = 'You must enter a departure time in the future';
+  }
+  // Arrival date must be in the future
+  if (isTimeAndDateBeforeNow(dataToValidate.arrivalDateYear, dataToValidate.arrivalDateMonth, dataToValidate.arrivalDateDay, dataToValidate.arrivalTimeHour, dataToValidate.arrivalTimeMinute)) {
+    fieldsErroring.arrivalDate = 'You must enter an arrival time in the future';
+  }
+  // Arrival date must be after the departure date
+  if (
+    (new Date(dataToValidate.arrivalDateYear, (dataToValidate.arrivalDateMonth - 1), dataToValidate.arrivalDateDay, dataToValidate.arrivalTimeHour, dataToValidate.arrivalTimeMinute))
+    < (new Date(dataToValidate.departureDateYear, (dataToValidate.departureDateMonth - 1), dataToValidate.departureDateDay, dataToValidate.departureTimeHour, dataToValidate.departureTimeMinute))
+  ) {
+    fieldsErroring.arrivalDate = 'You must enter an arrival time after your departure';
   }
 
   if (fieldsErroring) { scrollToTopOnError('voyageForm'); }

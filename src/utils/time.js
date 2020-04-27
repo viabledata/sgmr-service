@@ -7,6 +7,12 @@ const isTimeValid = (hour, minute) => {
   return true;
 };
 
+const isTimeAndDateBeforeNow = (year, month, day, hour, minute) => {
+  const today = new Date();
+  const testDate = new Date(year, (month - 1), day, hour, minute);
+  return today.getTime() >= testDate.getTime();
+};
+
 const splitTime = (time, fieldName) => {
   const [hour, minute] = time.split(':');
   return ({ [`${fieldName}Hour`]: hour, [`${fieldName}Minute`]: minute });
@@ -15,5 +21,6 @@ const splitTime = (time, fieldName) => {
 
 export {
   isTimeValid,
+  isTimeAndDateBeforeNow,
   splitTime,
 };
