@@ -1,20 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 
 // App imports
-import { getData } from '@utils/apiHooks';
 import { formatUIDate } from '@utils/date';
-import { VOYAGE_REPORT_URL } from '@constants/ApiConstants';
 
 
-const Manifest = ({ voyageId }) => {
-  const [manifestData, setManifestData] = useState();
-
-  useEffect(() => {
-    getData(`${VOYAGE_REPORT_URL}/${voyageId}/people`, location.pathname)
-      .then((resp) => { setManifestData(resp.items); });
-  }, []);
-
-
+const Manifest = ({ manifestData }) => {
   if (!manifestData) { return null; }
   return (
     <table className="govuk-table">

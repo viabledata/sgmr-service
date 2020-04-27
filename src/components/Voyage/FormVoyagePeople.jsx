@@ -3,12 +3,12 @@ import { Link } from 'react-router-dom';
 
 // App imports
 import { getData } from '@utils/apiHooks';
-import { PEOPLE_URL } from '@constants/ApiConstants';
+import { PEOPLE_URL, VOYAGE_REPORT_URL } from '@constants/ApiConstants';
 import PeopleManifest from '@components/Voyage/PeopleManifest';
 import PeopleTable from '@components/People/PeopleTable';
 
 const FormVoyagePeople = ({
-  handleSubmit, handleChange, handleCheckboxes, handleAddPeopleButton, handleLinkToForm, voyageId, errors, data,
+  handleSubmit, handleCheckboxes, handleAddPeopleButton, handleLinkToForm, voyageId, manifestData,
 }) => {
   const [peopleData, setPeopleData] = useState();
 
@@ -23,7 +23,7 @@ const FormVoyagePeople = ({
     storePeopleData();
   }, []);
 
-  if (!peopleData) { return null; }
+  if (!peopleData || !manifestData) { return null; }
   return (
     <section>
       <h1 className="govuk-heading-xl">People on board</h1>
@@ -38,16 +38,16 @@ const FormVoyagePeople = ({
             link="false"
             handleCheckboxes={handleCheckboxes}
           />
+          <button
+            type="button"
+            className="govuk-button"
+            data-module="govuk-button"
+            onClick={(e) => handleAddPeopleButton(e)}
+          >
+            Add to Reports
+          </button>
         </>
       )}
-      <button
-        type="button"
-        className="govuk-button"
-        data-module="govuk-button"
-        onClick={(e) => handleAddPeopleButton(e)}
-      >
-        Add to Reports
-      </button>
 
       <hr className="govuk-section-break govuk-section-break--m govuk-section-break--visible" />
       <h2 className="govuk-heading-l">New people</h2>
@@ -59,8 +59,18 @@ const FormVoyagePeople = ({
         People currently on the manifest of this report
       </p>
       <PeopleManifest
-        voyageId={voyageId}
+        manifestData={manifestData}
       />
+      <div className="govuk-form-group">
+        <label className="govuk-label" htmlFor="totalPersonsOnBoard">Total persons on board</label>
+        <input
+          className="govuk-input govuk-input--width-3"
+          id="totalPersonsOnBoard"
+          name="name"
+          value={manifestData.length}
+          readOnly
+        />
+      </div>
 
       <button
         type="button"

@@ -8,6 +8,7 @@ import { getData, patchData } from '@utils/apiHooks';
 import { splitDate } from '@utils/date';
 import { splitTime } from '@utils/time';
 import { PEOPLE_URL, VESSELS_URL, VOYAGE_REPORT_URL } from '@constants/ApiConstants';
+import { SAVE_VOYAGE_PEOPLE_URL } from '@constants/ClientConstants';
 import {
   formatDepartureArrival, formatPerson, formatResponsiblePerson, formatVessel,
 } from '@components/Voyage/VoyageFormDataFormatting';
@@ -34,6 +35,7 @@ const FormVoyageContainer = () => {
   const [voyageData, setVoyageData] = useState();
   const [checkboxData, setCheckboxData] = useState();
   const [peopleData, setPeopleData] = useState([]);
+  const [manifestData, setManifestData] = useState();
   const [formData, setFormData] = useState(JSON.parse(localStorage.getItem('formData')) || {});
   const [errors, setErrors] = useState(JSON.parse(localStorage.getItem('errors')) || {});
 
@@ -132,10 +134,15 @@ const FormVoyageContainer = () => {
     setPeopleData(checkedPeople);
   };
 
+  const getManifestData = () => {
+    getData(`${VOYAGE_REPORT_URL}/${voyageId}/people`, location.pathname)
+      .then((resp) => { setManifestData(resp.items); });
+  };
+
 
   const handleAddPeopleButton = () => {
     patchData(`${VOYAGE_REPORT_URL}/${voyageId}`, { status: 'Draft', people: peopleData })
-      .then(setFormData({ ...formData, people: peopleData }));
+      .then(getManifestData());
   };
 
 
@@ -236,6 +243,7 @@ const FormVoyageContainer = () => {
     if (pageNum) {
       setVoyageId(getId('voyage'));
       getVoyageData(getId('voyage'));
+      getManifestData(getId('voyage'));
     }
   }, [pageNum]);
 
@@ -312,6 +320,7 @@ const FormVoyageContainer = () => {
                   handleLinkToForm={handleLinkToForm}
                   voyageId={voyageId}
                   formData={formData || voyageData}
+                  manifestData={manifestData}
                   errors={errors}
                 />
               )}
