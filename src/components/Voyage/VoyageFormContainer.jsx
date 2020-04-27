@@ -189,27 +189,32 @@ const FormVoyageContainer = () => {
 
   const handleSubmit = (e, sourceForm) => {
     e.preventDefault();
-    let dataToSubmit;
-    switch (sourceForm) {
-      case 'arrival': dataToSubmit = formatDepartureArrival('Draft', formData, voyageData); break;
-      case 'departure': dataToSubmit = formatDepartureArrival('Draft', formData, voyageData); break;
-      case 'people': dataToSubmit = formatPerson('Draft', formData, voyageData); break;
-      case 'responsiblePerson': dataToSubmit = formatResponsiblePerson('Draft', formData, voyageData); break;
-      case 'vessel': dataToSubmit = formatVessel('Draft', formData, voyageData); break;
-      default: dataToSubmit = null;
-    }
-
-    // Handle missing voyageId (for if user comes to a subpage directly, and we haven't got the id)
-    if (!voyageId) {
-      setErrors({ voyageForm: 'There was a problem locating your voyage, please return to "Reports" and try again' });
-      scrollToTopOnError('voyageForm');
+    // If people form, go to next page as patching is done on 'add' button or 'new person' form
+    if (sourceForm === 'people') {
+      setNextPage();
     } else {
-      setErrors(VoyageFormValidation(formData, sourceForm));
-      if (Object.keys(VoyageFormValidation(formData, sourceForm)).length === 0 && Object.keys(errors).length === 0) {
-        patchData(`${VOYAGE_REPORT_URL}/${voyageId}`, dataToSubmit, location.pathname.substring(1))
-          .then(() => {
-            setNextPage();
-          });
+      let dataToSubmit;
+      switch (sourceForm) {
+        case 'arrival': dataToSubmit = formatDepartureArrival('Draft', formData, voyageData); break;
+        case 'departure': dataToSubmit = formatDepartureArrival('Draft', formData, voyageData); break;
+        case 'people': dataToSubmit = formatPerson('Draft', formData, voyageData); break;
+        case 'responsiblePerson': dataToSubmit = formatResponsiblePerson('Draft', formData, voyageData); break;
+        case 'vessel': dataToSubmit = formatVessel('Draft', formData, voyageData); break;
+        default: dataToSubmit = null;
+      }
+
+      // Handle missing voyageId (for if user comes to a subpage directly, and we haven't got the id)
+      if (!voyageId) {
+        setErrors({ voyageForm: 'There was a problem locating your voyage, please return to "Reports" and try again' });
+        scrollToTopOnError('voyageForm');
+      } else {
+        setErrors(VoyageFormValidation(formData, sourceForm));
+        if (Object.keys(VoyageFormValidation(formData, sourceForm)).length === 0 && Object.keys(errors).length === 0) {
+          patchData(`${VOYAGE_REPORT_URL}/${voyageId}`, dataToSubmit, location.pathname.substring(1))
+            .then(() => {
+              setNextPage();
+            });
+        }
       }
     }
   };
