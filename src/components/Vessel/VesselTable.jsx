@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-// App imports
 
 const VesselTable = ({ vesselData, checkboxes, link, handleCheckboxes }) => {
   return (

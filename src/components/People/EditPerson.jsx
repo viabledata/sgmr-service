@@ -1,54 +1,48 @@
 import React, { useState, useEffect } from 'react';
 import { withRouter, useHistory } from 'react-router-dom';
-import axios from 'axios';
 
 // App imports
 import { PEOPLE_URL } from '@constants/ApiConstants';
 import { PEOPLE_PAGE_URL } from '@constants/ClientConstants';
-import { personValidationRules } from '@components/Forms/validationRules';
+import { formatDate, splitDate } from '@utils/date';
 import { getData, patchData } from '@utils/apiHooks';
-import { isDateValid, isDateBefore } from '@utils/date';
+import getId from '@utils/getIdHook';
 import scrollToTopOnError from '@utils/scrollToTopOnError';
-
-import Auth from '@lib/Auth';
 import FormPerson from '@components/People/FormPerson';
-import PeopleFormDataFormatting from '@components/People/PeopleFormDataFormatting';
 
 
-const EditPerson = (props) => {
+const EditPerson = () => {
   const history = useHistory();
   const [personId, setPersonId] = useState();
   const [personData, setPersonData] = useState();
   const [formData, setFormData] = useState(JSON.parse(localStorage.getItem('formData')) || {});
   const [errors, setErrors] = useState(JSON.parse(localStorage.getItem('errors')) || {});
 
-  // Reformat dates & peopleType into individual items for form field display
-  const reformatFields = (data) => {
-    let formattedFields = { peopleType: data.peopleType.name };
-    let originalData = { ...data };
 
-    // Spread date from grouped field to individual fields
-    if (data.dateOfBirth) {
-      const [dateOfBirthYear, dateOfBirthMonth, dateOfBirthDay] = data.dateOfBirth.split('-');
-      delete originalData.dateOfBirth;
-      formattedFields = {
-        ...formattedFields,
-        dateOfBirthYear,
-        dateOfBirthMonth,
-        dateOfBirthDay,
-      };
-    }
-    if (data.documentExpiryDate) {
-      const [documentExpiryDateYear, documentExpiryDateMonth, documentExpiryDateDay] = data.documentExpiryDate.split('-');
-      delete originalData.documentExpiryDate;
-      formattedFields = {
-        ...formattedFields,
-        documentExpiryDateYear,
-        documentExpiryDateMonth,
-        documentExpiryDateDay,
-      };
-    }
-    setPersonData({ ...originalData, ...formData, ...formattedFields });
+  const formatFieldsForForm = (data) => {
+    let formattedDateFields;
+    Object.entries(data).map((item) => {
+      if (item[0].search(/date/i) !== -1) {
+        const dateFields = splitDate(item[1], item[0]);
+        formattedDateFields = { ...formattedDateFields, ...dateFields };
+      }
+    });
+    setFormData({
+      ...personData,
+      ...formData,
+      ...formattedDateFields,
+      id: personId,
+    });
+  };
+
+
+  const getPersonData = () => {
+    getData(`${PEOPLE_URL}/${personId}`, 'people')
+      .then((resp) => {
+        setPersonData(resp);
+        formatFieldsForForm(resp);
+        localStorage.setItem('data', JSON.stringify(resp));
+      });
   };
 
 
@@ -85,55 +79,42 @@ const EditPerson = (props) => {
   };
 
 
-  // Check validation
-  const areFieldsValid = (dataFromForm, dataFromPerson) => {
-    const fieldsErroring = {};
-    // Create list of fields to test
-    const dataToTest = [];
+  // Format submit data
+  const PeopleFormDataFormatting = (data) => {
+    const dataList = {
+    };
 
-    Object.entries(dataFromPerson).map((item) => {
-      if (Object.keys(dataFromForm).indexOf(item[0]) !== -1) {
-        dataToTest.push({ [item[0]]: dataFromForm[item[0]] });
-      } else {
-        dataToTest.push({ [item[0]]: item[1] });
+    Object.entries(data).map((item) => {
+      // If this is a date item, reformat to a single item
+      if (item[0].search(/year/i) > 0) {
+        const fieldName = item[0].slice(0, (item[0].length - 4));
+        dataList[fieldName] = formatDate(data[`${fieldName}Year`], data[`${fieldName}Month`], data[`${fieldName}Day`]);
+      }
+
+      // If this is a time item, reformat to a single item
+      if (item[0].search(/hour/i) > 0) {
+        const fieldName = item[0].slice(0, (item[0].length - 4));
+        // If hour or minute are not null then add, else, skip the time field
+        if (`${data[`${fieldName}Hour`]}`.length > 0 && `${data[`${fieldName}Minute`]}`.length > 0) {
+          dataList[fieldName] = (`${data[`${fieldName}Hour`]}:${data[`${fieldName}Minute`]}`);
+        }
+      }
+
+      if (
+        item[0].search(/year/i) === -1 // it's not the year part of the date (handed above)
+            && item[0].search(/month/i) === -1 // it's not the month part of the date (handed above)
+            && item[0].search(/day/i) === -1 // it's not the day part of the date (handled above)
+            && item[0].search(/hour/i) === -1 // it's not the hour part of the time
+            && item[0].search(/minute/i) === -1 // it's not the minute part of the time
+            && item[1] // it's value is not null
+            && item[0].search(/id/i) === -1 // it's not the id field
+            && typeof item[1] !== 'object' // it's not something being passed in obj form to us from an existing voyage
+      ) {
+        // Then add it to dataList
+        dataList[item[0]] = item[1];
       }
     });
-
-    // Check required fields are not empty
-    personValidationRules.map((rule) => {
-      if (!(rule.inputField in dataToTest) || dataToTest[rule.inputField] === '') {
-        fieldsErroring[rule.errorDisplayId] = rule.message;
-      }
-    });
-    // Check date fields have valid format
-    if (!(isDateValid(dataToTest.documentExpiryDateYear, dataToTest.documentExpiryDateMonth, dataToTest.documentExpiryDateDay))) {
-      fieldsErroring.documentExpiryDate = 'You must enter a valid date';
-    }
-    if (!(isDateValid(dataToTest.dateOfBirthYear, dataToTest.dateOfBirthMonth, dataToTest.dateOfBirthDay))) {
-      fieldsErroring.dateOfBirth = 'You must enter a valid date';
-    }
-    // Date of Birth must be before today
-    if (!(isDateBefore(dataToTest.dateOfBirthYear, dataToTest.dateOfBirthMonth, dataToTest.dateOfBirthDay))) {
-      fieldsErroring.dateOfBirth = 'You must enter a valid date of birth date';
-    }
-    // Document expiry date must be after today
-    if ((isDateBefore(dataToTest.documentExpiryDateYear, dataToTest.documentExpiryDateMonth, dataToTest.documentExpiryDateDay))) {
-      fieldsErroring.documentExpiryDate = 'You must enter a valid document expiry date';
-    }
-
-    setErrors(fieldsErroring);
-    scrollToTopOnError(fieldsErroring);
-    return Object.keys(fieldsErroring).length > 0;
-  };
-
-
-  // Get data to prepopulate the form for this person
-  const getPersonData = () => {
-    getData(`${PEOPLE_URL}/${personId}`, 'people')
-      .then((resp) => {
-        reformatFields(resp);
-        localStorage.setItem('data', JSON.stringify(resp));
-      });
+    return dataList;
   };
 
 
@@ -141,7 +122,7 @@ const EditPerson = (props) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if ((formData, personData)) {
-      patchData(`${PEOPLE_URL}/${personId}`, PeopleFormDataFormatting(formData))
+      patchData(`${PEOPLE_URL}/${personId}`, (PeopleFormDataFormatting(formData)))
         .then((resp) => {
           if (resp.errors) {
             setErrors({ EditPerson: resp.message });
@@ -157,11 +138,7 @@ const EditPerson = (props) => {
 
   // Triggers
   useEffect(() => {
-    if (props && props.location && props.location.state && props.location.state.peopleId) {
-      setPersonId(props.location.state.peopleId);
-    } else if (JSON.parse(localStorage.getItem('data')).id) {
-      setPersonId(JSON.parse(localStorage.getItem('data')).id);
-    }
+    setPersonId(getId('person'));
   }, []);
 
   useEffect(() => {

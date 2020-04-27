@@ -222,7 +222,7 @@ const FormPerson = ({
                 id="peopleType-1"
                 type="radio"
                 value="Skipper"
-                checked={(formData.peopleType === 'Crew' || data.peopleType === 'Skipper') ? 'checked' : ''}
+                checked={(formData.peopleType === 'Skipper' || data.peopleType === 'Skipper') ? 'checked' : ''}
                 onChange={handleChange}
               />
               <label className="govuk-label govuk-radios__label" htmlFor="peopleType-1">
