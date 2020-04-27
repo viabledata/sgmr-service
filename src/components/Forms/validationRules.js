@@ -172,6 +172,22 @@ export const departureValidationRules = [
   },
 ];
 
+export const voyageValidationRules = [
+  {
+    fieldName: 'vesselName',
+    errorDisplayId: 'vesselName',
+    message: 'You must enter a vessel name',
+  },
+
+// registration
+// departureDate
+// departureTime
+// departurePort
+// arrivalDate
+// arrivalTime
+// arrivalPort
+];
+
 export const dateValidation = (name, value) => {
   switch (name) {
     case 'documentExpiryDateYear':

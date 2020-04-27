@@ -1,13 +1,14 @@
 // App imports
 import { isDateValid } from '@utils/date';
 import { isTimeValid } from '@utils/time';
-import { departureValidationRules, vesselValidationRules } from '@components/Forms/validationRules';
+import { departureValidationRules, vesselValidationRules, voyageValidationRules } from '@components/Forms/validationRules';
 
 
 const VoyageFormValidation = (dataToValidate, source) => {
   const fieldsErroring = {};
   let validationRules;
   switch (source) {
+    case 'check': validationRules = voyageValidationRules; break;
     case 'departure': validationRules = departureValidationRules; break;
     case 'vessel': validationRules = vesselValidationRules; break;
     default: validationRules = null;

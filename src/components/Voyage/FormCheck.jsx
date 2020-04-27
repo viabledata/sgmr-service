@@ -4,14 +4,27 @@ import { Link } from 'react-router-dom';
 // App imports
 import { formatUIDate } from '@utils/date';
 import PeopleManifest from '@components/Voyage/PeopleManifest';
+import { error } from 'winston';
 
-const FormCheck = ({ voyageId, voyageData }) => {
+const FormCheck = ({
+  voyageId, voyageData, handleSubmit, errors,
+}) => {
   if (!voyageData) { return null; }
   return (
     <section>
       <h1 className="govuk-heading-xl">
         Check all the information provided before submitting your Advanced Voyage Report
       </h1>
+
+      {/* {Object.entries(errors).length > 0 && Object.entries(errors).map((error) => {
+        return (
+          <div key={error}>
+            <p className="govuk-error-message">
+              {`${error[0].charAt(0).toUpperCase() + error[0].slice(1)} : ${error[1]}`}
+            </p>
+          </div>
+        );
+      })} */}
 
       <dl className="govuk-summary-list govuk-!-margin-bottom-9">
         <div className="govuk-summary-list__row">
@@ -112,6 +125,9 @@ const FormCheck = ({ voyageId, voyageData }) => {
         </div>
       </dl>
 
+      <div className={`govuk-form-group ${errors.vessel ? 'govuk-form-group--error' : ''}`}>
+        <p className="govuk-error-message">{errors.vessel}</p>
+      </div>
       <dl className="govuk-summary-list govuk-!-margin-bottom-9">
         <div className="govuk-summary-list__row">
           <dt className="govuk-summary-list__key">Vessel name</dt>
@@ -214,6 +230,7 @@ const FormCheck = ({ voyageId, voyageData }) => {
         type="button"
         className="govuk-button"
         data-module="govuk-button"
+        onClick={(e) => handleSubmit(e, 'check', voyageId)}
       >
         Accept and submit report
       </button>

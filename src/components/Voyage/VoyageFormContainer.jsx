@@ -316,6 +316,8 @@ const FormVoyageContainer = () => {
                 <FormCheck
                   voyageId={voyageId}
                   voyageData={voyageData}
+                  handleSubmit={handleSubmit}
+                  errors={errors || ''}
                 />
               )}
             </form>
