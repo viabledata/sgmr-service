@@ -151,6 +151,45 @@ export const userValidationRules = [
   },
 ];
 
+export const arrivalValidationRules = [
+  {
+    inputField: 'arrivalDateYear',
+    errorDisplayId: 'arrivalDate',
+    rule: 'required',
+    message: 'You must enter an arrival date',
+  },
+  {
+    inputField: 'arrivalDateMonth',
+    errorDisplayId: 'arrivalDate',
+    rule: 'required',
+    message: 'You must enter an arrival date',
+  },
+  {
+    inputField: 'arrivalDateDay',
+    errorDisplayId: 'arrivalDate',
+    rule: 'required',
+    message: 'You must enter an arrival date',
+  },
+  {
+    inputField: 'arrivalTimeHour',
+    errorDisplayId: 'arrivalTime',
+    rule: 'required',
+    message: 'You must enter an arrival time',
+  },
+  {
+    inputField: 'arrivalTimeMinute',
+    errorDisplayId: 'arrivalTime',
+    rule: 'required',
+    message: 'You must enter an arrival time',
+  },
+  {
+    inputField: 'arrivalPort',
+    errorDisplayId: 'arrivalPort',
+    rule: 'required',
+    message: 'You must enter an arrival port',
+  },
+];
+
 export const departureValidationRules = [
   {
     inputField: 'departureDateYear',

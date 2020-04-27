@@ -1,7 +1,7 @@
 // App imports
 import { isDateValid } from '@utils/date';
 import { isTimeValid } from '@utils/time';
-import { departureValidationRules, vesselValidationRules, voyageValidationRules } from '@components/Forms/validationRules';
+import { arrivalValidationRules, departureValidationRules, vesselValidationRules, voyageValidationRules } from '@components/Forms/validationRules';
 import scrollToTopOnError from '@utils/scrollToTopOnError';
 
 
@@ -10,6 +10,7 @@ const VoyageFormValidation = (dataToValidate, source) => {
   let validationRules;
   switch (source) {
     case 'check': validationRules = voyageValidationRules; break;
+    case 'arrival': validationRules = arrivalValidationRules; break;
     case 'departure': validationRules = departureValidationRules; break;
     case 'vessel': validationRules = vesselValidationRules; break;
     default: validationRules = null;
@@ -42,6 +43,9 @@ const VoyageFormValidation = (dataToValidate, source) => {
   // Time fields must be valid
   if (dataToValidate.departureTimeHour && !(isTimeValid(dataToValidate.departureTimeHour, dataToValidate.departureTimeMinute))) {
     fieldsErroring.departureTime = 'You must enter a valid time';
+  }
+  if (dataToValidate.arrivalTimeHour && !(isTimeValid(dataToValidate.arrivalTimeHour, dataToValidate.arrivalTimeMinute))) {
+    fieldsErroring.arrivalTime = 'You must enter a valid time';
   }
 
   if (fieldsErroring) { scrollToTopOnError('voyageForm'); }

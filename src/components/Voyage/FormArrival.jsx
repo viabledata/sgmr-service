@@ -140,23 +140,31 @@ const FormArrival = ({
         </fieldset>
       </div>
 
-      <div id="arrivalPort" className={`govuk-form-group ${errors.firstName ? 'govuk-form-group--error' : ''}`}>
+      <div id="arrivalPort" className={`govuk-form-group ${errors.arrivalPort ? 'govuk-form-group--error' : ''}`}>
         <label className="govuk-label govuk-label--m" htmlFor="arrivalPort">
           Arrival port
         </label>
+        {errors.arrivalPort
+        && (
+        <span className="govuk-error-message">
+          <span className="govuk-visually-hidden">Error:</span>
+          {errors.arrivalPort}
+        </span>
+        )}
         <span className="govuk-hint">
           The name or UNLOCODE of the port, for example Monaco or MC MON. Enter ‘ZZZZ’ if not known
         </span>
         <input
           className="govuk-input"
           name="arrivalPort"
+          id="arrivalPort"
           type="text"
           value={data.arrivalPort || ''}
           onChange={handleChange}
         />
       </div>
 
-      <div id="arrivalCoordinates" className={`govuk-form-group ${errors.firstName ? 'govuk-form-group--error' : ''}`}>
+      <div id="arrivalCoordinates" className="govuk-form-group">
         <fieldset className="govuk-fieldset" role="group" aria-describedby="arrivalCoordinates-hint">
           <legend className="govuk-fieldset__legend govuk-fieldset__legend--m">
             <label className="govuk-label govuk-label--m" htmlFor="arrivalCoordinates">
@@ -166,7 +174,7 @@ const FormArrival = ({
               If port is ‘ZZZZ’, provide decimal coordinates to 6 places
             </span>
           </legend>
-          <div className={`govuk-form-group ${errors.firstName ? 'govuk-form-group--error' : ''}`}>
+          <div className="govuk-form-group">
             <label className="govuk-label govuk-date-input__label" htmlFor="arrivalLat">
               Latitude
             </label>
@@ -183,7 +191,7 @@ const FormArrival = ({
               onChange={handleChange}
             />
           </div>
-          <div className={`govuk-form-group ${errors.firstName ? 'govuk-form-group--error' : ''}`}>
+          <div className="govuk-form-group">
             <label className="govuk-label govuk-date-input__label" htmlFor="arrivalLong">
               Longitude
             </label>
