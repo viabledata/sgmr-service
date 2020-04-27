@@ -170,6 +170,24 @@ export const departureValidationRules = [
     rule: 'required',
     message: 'You must enter a departure date',
   },
+  {
+    inputField: 'departureTimeHour',
+    errorDisplayId: 'departureTime',
+    rule: 'required',
+    message: 'You must enter a departure time',
+  },
+  {
+    inputField: 'departureTimeMinute',
+    errorDisplayId: 'departureTime',
+    rule: 'required',
+    message: 'You must enter a departure time',
+  },
+  {
+    inputField: 'departurePort',
+    errorDisplayId: 'departurePort',
+    rule: 'required',
+    message: 'You must enter a departure port',
+  },
 ];
 
 export const voyageValidationRules = [

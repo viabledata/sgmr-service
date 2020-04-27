@@ -18,7 +18,7 @@ const VoyageFormValidation = (dataToValidate, source) => {
   // Required fields must not be null
   if (validationRules) {
     validationRules.map((rule) => {
-      if (!(rule.inputField in dataToValidate) || dataToValidate[rule.inputField] === '') {
+      if (!(rule.inputField in dataToValidate) || dataToValidate[rule.inputField] === '' || !dataToValidate[rule.inputField]) {
         fieldsErroring[rule.errorDisplayId] = rule.message;
       }
     });
