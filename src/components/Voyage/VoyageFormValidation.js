@@ -16,9 +16,11 @@ const VoyageFormValidation = (dataToValidate, source) => {
     default: validationRules = null;
   }
 
+
   // Required fields must not be null
   if (validationRules) {
     validationRules.map((rule) => {
+      console.log(rule)
       if (!(rule.inputField in dataToValidate) || dataToValidate[rule.inputField] === '' || !dataToValidate[rule.inputField]) {
         fieldsErroring[rule.errorDisplayId] = rule.message;
       }

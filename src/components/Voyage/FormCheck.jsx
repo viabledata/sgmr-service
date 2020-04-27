@@ -126,7 +126,7 @@ const FormCheck = ({
       </dl>
 
       <div className="govuk-form-group govuk-form-group--error">
-        <p className="govuk-error-message">{errors.vessel}</p>
+        <p className="govuk-error-message">{errors.vesselName}</p>
         <p className="govuk-error-message">{errors.registration}</p>
       </div>
       <dl className="govuk-summary-list govuk-!-margin-bottom-9">

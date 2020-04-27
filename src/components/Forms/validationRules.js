@@ -231,43 +231,51 @@ export const departureValidationRules = [
 
 export const voyageValidationRules = [
   {
-    fieldName: 'vesselName',
+    inputField: 'vesselName',
     errorDisplayId: 'vesselName',
+    rule: 'required',
     message: 'You must enter a vessel name',
   },
   {
-    fieldName: 'registration',
+    inputField: 'registration',
     errorDisplayId: 'registration',
+    rule: 'required',
     message: 'You must enter a vessel registration',
   },
   {
-    fieldName: 'departureDate',
+    inputField: 'departureDate',
     errorDisplayId: 'departureDate',
+    rule: 'required',
     message: 'You must enter a departure date',
   },
   {
-    fieldName: 'departureTime',
+    inputField: 'departureTime',
     errorDisplayId: 'departureTime',
+    rule: 'required',
     message: 'You must enter a departure time',
   },
   {
-    fieldName: 'departurePort',
+    inputField: 'departurePort',
     errorDisplayId: 'departurePort',
+    rule: 'required',
     message: 'You must enter a departure port',
   },
   {
-    fieldName: 'arrivalTime',
+    inputField: 'arrivalTime',
     errorDisplayId: 'arrivalTime',
+    rule: 'required',
     message: 'You must enter an arrival time',
   },
   {
-    fieldName: 'arrivalPort',
+    inputField: 'arrivalPort',
     errorDisplayId: 'arrivalPort',
+    rule: 'required',
     message: 'You must enter an arrival port',
   },
   {
-    fieldName: 'arrivalDate',
+    inputField: 'arrivalDate',
     errorDisplayId: 'arrivalDate',
+    rule: 'required',
     message: 'You must enter an arrival date',
   },
 ];
