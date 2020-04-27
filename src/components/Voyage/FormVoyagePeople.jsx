@@ -8,7 +8,7 @@ import PeopleManifest from '@components/Voyage/PeopleManifest';
 import PeopleTable from '@components/People/PeopleTable';
 
 const FormVoyagePeople = ({
-  handleSubmit, handleChange, handleCheckboxes, handleAddButton, handleLinkToForm, voyageId, errors, formData,
+  handleSubmit, handleChange, handleCheckboxes, handleAddButton, handleLinkToForm, voyageId, errors, data,
 }) => {
   const [peopleData, setPeopleData] = useState();
 
@@ -56,7 +56,9 @@ const FormVoyagePeople = ({
       <p className="govuk-body-l">
         People currently on the manifest of this report
       </p>
-      <PeopleManifest />
+      <PeopleManifest
+        voyageId={voyageId}
+      />
 
       <button
         type="button"

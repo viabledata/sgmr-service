@@ -164,7 +164,9 @@ const FormCheck = ({ voyageId, voyageData }) => {
           </dd>
         </div>
       </dl>
-      <PeopleManifest />
+      <PeopleManifest
+        voyageId={voyageId}
+      />
 
 
       <dl className="govuk-summary-list govuk-!-margin-bottom-9">
