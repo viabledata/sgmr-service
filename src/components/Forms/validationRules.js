@@ -178,14 +178,41 @@ export const voyageValidationRules = [
     errorDisplayId: 'vesselName',
     message: 'You must enter a vessel name',
   },
-
-// registration
-// departureDate
-// departureTime
-// departurePort
-// arrivalDate
-// arrivalTime
-// arrivalPort
+  {
+    fieldName: 'registration',
+    errorDisplayId: 'registration',
+    message: 'You must enter a vessel registration',
+  },
+  {
+    fieldName: 'departureDate',
+    errorDisplayId: 'departureDate',
+    message: 'You must enter a departure date',
+  },
+  {
+    fieldName: 'departureTime',
+    errorDisplayId: 'departureTime',
+    message: 'You must enter a departure time',
+  },
+  {
+    fieldName: 'departurePort',
+    errorDisplayId: 'departurePort',
+    message: 'You must enter a departure port',
+  },
+  {
+    fieldName: 'arrivalTime',
+    errorDisplayId: 'arrivalTime',
+    message: 'You must enter an arrival time',
+  },
+  {
+    fieldName: 'arrivalPort',
+    errorDisplayId: 'arrivalPort',
+    message: 'You must enter an arrival port',
+  },
+  {
+    fieldName: 'arrivalDate',
+    errorDisplayId: 'arrivalDate',
+    message: 'You must enter an arrival date',
+  },
 ];
 
 export const dateValidation = (name, value) => {

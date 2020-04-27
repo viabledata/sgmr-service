@@ -2,6 +2,7 @@
 import { isDateValid } from '@utils/date';
 import { isTimeValid } from '@utils/time';
 import { departureValidationRules, vesselValidationRules, voyageValidationRules } from '@components/Forms/validationRules';
+import scrollToTopOnError from '@utils/scrollToTopOnError';
 
 
 const VoyageFormValidation = (dataToValidate, source) => {
@@ -43,6 +44,7 @@ const VoyageFormValidation = (dataToValidate, source) => {
     fieldsErroring.departureTime = 'You must enter a valid time';
   }
 
+  if (fieldsErroring) { scrollToTopOnError('voyageForm'); }
   return fieldsErroring;
 };
 

@@ -16,16 +16,6 @@ const FormCheck = ({
         Check all the information provided before submitting your Advanced Voyage Report
       </h1>
 
-      {/* {Object.entries(errors).length > 0 && Object.entries(errors).map((error) => {
-        return (
-          <div key={error}>
-            <p className="govuk-error-message">
-              {`${error[0].charAt(0).toUpperCase() + error[0].slice(1)} : ${error[1]}`}
-            </p>
-          </div>
-        );
-      })} */}
-
       <dl className="govuk-summary-list govuk-!-margin-bottom-9">
         <div className="govuk-summary-list__row">
           <dt className="govuk-heading-m">Departure details</dt>
@@ -41,6 +31,11 @@ const FormCheck = ({
           </dd>
         </div>
       </dl>
+      <div className="govuk-form-group govuk-form-group--error">
+        <p className="govuk-error-message">{errors.departureDate}</p>
+        <p className="govuk-error-message">{errors.departureTime}</p>
+        <p className="govuk-error-message">{errors.departurePort}</p>
+      </div>
       <dl className="govuk-summary-list govuk-!-margin-bottom-9">
         <div className="govuk-summary-list__row">
           <dt className="govuk-summary-list__key">Departure date</dt>
@@ -83,6 +78,11 @@ const FormCheck = ({
           </dd>
         </div>
       </dl>
+      <div className="govuk-form-group govuk-form-group--error">
+        <p className="govuk-error-message">{errors.arrivalDate}</p>
+        <p className="govuk-error-message">{errors.arrivalTime}</p>
+        <p className="govuk-error-message">{errors.arrivalPort}</p>
+      </div>
       <dl className="govuk-summary-list govuk-!-margin-bottom-9">
         <div className="govuk-summary-list__row">
           <dt className="govuk-summary-list__key">Arrival date</dt>
@@ -125,8 +125,9 @@ const FormCheck = ({
         </div>
       </dl>
 
-      <div className={`govuk-form-group ${errors.vessel ? 'govuk-form-group--error' : ''}`}>
+      <div className="govuk-form-group govuk-form-group--error">
         <p className="govuk-error-message">{errors.vessel}</p>
+        <p className="govuk-error-message">{errors.registration}</p>
       </div>
       <dl className="govuk-summary-list govuk-!-margin-bottom-9">
         <div className="govuk-summary-list__row">
