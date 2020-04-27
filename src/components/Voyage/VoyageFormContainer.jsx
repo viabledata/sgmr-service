@@ -329,7 +329,6 @@ const FormVoyageContainer = () => {
                     data={formData || ''}
                     formData={formData || ''}
                     errors={errors || ''}
-                    pageNum={4}
                   />
                 </>
               )}
