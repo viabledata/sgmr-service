@@ -195,29 +195,33 @@ const FormVoyageContainer = () => {
   const handleSubmit = (e, sourceForm) => {
     e.preventDefault();
     let dataToSubmit;
-    switch (sourceForm) {
-      case 'arrival': dataToSubmit = formatDepartureArrival('Draft', formData, voyageData); break;
-      case 'departure': dataToSubmit = formatDepartureArrival('Draft', formData, voyageData); break;
-      case 'people': dataToSubmit = formatPerson('Draft', formData, voyageData); break;  
-      case 'newPerson': dataToSubmit = formatNewPerson('Draft', formData, voyageData); break;
-      case 'responsiblePerson': dataToSubmit = formatResponsiblePerson('Draft', formData, voyageData); break;
-      case 'vessel': dataToSubmit = formatVessel('Draft', formData, voyageData); break;
-      case 'voyage': dataToSubmit = { status: 'PreSubmitted' }; break;
-      case 'cancel': dataToSubmit = { status: 'PreCancelled' }; break;
-      default: dataToSubmit = null;
-    }
 
-    // Handle missing voyageId (for if user comes to a subpage directly, and we haven't got the id)
-    if (!voyageId) {
-      setErrors({ voyageForm: 'There was a problem locating your voyage, please return to "Reports" and try again' });
-      scrollToTopOnError('voyageForm');
+    if (sourceForm === 'people') {
+      setNextPage(sourceForm);
     } else {
-      setErrors(VoyageFormValidation(formData, sourceForm));
-      if (Object.keys(VoyageFormValidation(formData, sourceForm)).length === 0 && Object.keys(errors).length === 0) {
-        patchData(`${VOYAGE_REPORT_URL}/${voyageId}`, dataToSubmit, location.pathname.substring(1))
-          .then(() => {
-            setNextPage(sourceForm);
-          });
+      switch (sourceForm) {
+        case 'arrival': dataToSubmit = formatDepartureArrival('Draft', formData, voyageData); break;
+        case 'departure': dataToSubmit = formatDepartureArrival('Draft', formData, voyageData); break;
+        case 'newPerson': dataToSubmit = formatNewPerson('Draft', formData, voyageData); break;
+        case 'responsiblePerson': dataToSubmit = formatResponsiblePerson('Draft', formData, voyageData); break;
+        case 'vessel': dataToSubmit = formatVessel('Draft', formData, voyageData); break;
+        case 'voyage': dataToSubmit = { status: 'PreSubmitted' }; break;
+        case 'cancel': dataToSubmit = { status: 'PreCancelled' }; break;
+        default: dataToSubmit = null;
+      }
+
+      // Handle missing voyageId (for if user comes to a subpage directly, and we haven't got the id)
+      if (!voyageId) {
+        setErrors({ voyageForm: 'There was a problem locating your voyage, please return to "Reports" and try again' });
+        scrollToTopOnError('voyageForm');
+      } else {
+        setErrors(VoyageFormValidation(formData, sourceForm));
+        if (Object.keys(VoyageFormValidation(formData, sourceForm)).length === 0 && Object.keys(errors).length === 0) {
+          patchData(`${VOYAGE_REPORT_URL}/${voyageId}`, dataToSubmit, location.pathname.substring(1))
+            .then(() => {
+              setNextPage(sourceForm);
+            });
+        }
       }
     }
   };
