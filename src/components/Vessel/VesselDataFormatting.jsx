@@ -9,6 +9,7 @@ const VesselDataFormatting = (status, formData, storedData) => {
         || item[0] === 'registration'
         || item[0] === 'moorings'
         || item[0] === 'callsign'
+        || item[0] === 'portOfRegistry'
       )
       && formData[item[0]] !== item[1] // and value from storedData !== value from form
     ) {
