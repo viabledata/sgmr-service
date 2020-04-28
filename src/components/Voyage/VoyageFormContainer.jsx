@@ -198,7 +198,7 @@ const FormVoyageContainer = () => {
     switch (sourceForm) {
       case 'arrival': dataToSubmit = formatDepartureArrival('Draft', formData, voyageData); break;
       case 'departure': dataToSubmit = formatDepartureArrival('Draft', formData, voyageData); break;
-      case 'people': dataToSubmit = formatPerson('Draft', formData, voyageData); break;  
+      case 'people': dataToSubmit = formatPerson('Draft', formData, voyageData); break;
       case 'newPerson': dataToSubmit = formatNewPerson('Draft', formData, voyageData); break;
       case 'responsiblePerson': dataToSubmit = formatResponsiblePerson('Draft', formData, voyageData); break;
       case 'vessel': dataToSubmit = formatVessel('Draft', formData, voyageData); break;

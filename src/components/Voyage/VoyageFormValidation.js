@@ -14,6 +14,7 @@ const VoyageFormValidation = (dataToValidate, source) => {
     case 'check': validationRules = voyageValidationRules; break;
     case 'arrival': validationRules = arrivalValidationRules; break;
     case 'departure': validationRules = departureValidationRules; break;
+    case 'newPerson': validationRules = personValidationRules; break;
     case 'person': validationRules = personValidationRules; break;
     case 'vessel': validationRules = vesselValidationRules; break;
     default: validationRules = null;
