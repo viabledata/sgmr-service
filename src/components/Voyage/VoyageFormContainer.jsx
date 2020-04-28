@@ -22,6 +22,7 @@ import FormCheck from '@components/Voyage/FormCheck';
 import FormDeparture from '@components/Voyage/FormDeparture';
 import FormPerson from '@components/People/FormPerson';
 import FormResponsiblePerson from '@components/Voyage/FormResponsiblePerson';
+import FormSubmitted from '@components/Voyage/FormSubmitted';
 import FormVoyageVessels from '@components/Voyage/FormVoyageVessels';
 import FormVoyagePeople from '@components/Voyage/FormVoyagePeople';
 
@@ -180,7 +181,7 @@ const FormVoyageContainer = () => {
     let nextPage;
     switch (sourceForm) {
       case 'cancel': history.push('/reports'); break;
-      case 'submit': history.push('/save-voyage/submitted'); break;
+      case 'check': history.push('/save-voyage/submitted'); break;
       default: if (pageNum === '4b') {
         nextPage = 4;
       } else {
@@ -201,6 +202,7 @@ const FormVoyageContainer = () => {
     } else {
       switch (sourceForm) {
         case 'arrival': dataToSubmit = formatDepartureArrival('Draft', formData, voyageData); break;
+        case 'check': dataToSubmit = { status: 'PreSubmitted' }; break;
         case 'departure': dataToSubmit = formatDepartureArrival('Draft', formData, voyageData); break;
         case 'newPerson': dataToSubmit = formatNewPerson('Draft', formData, voyageData); break;
         case 'responsiblePerson': dataToSubmit = formatResponsiblePerson('Draft', formData, voyageData); break;
@@ -351,7 +353,10 @@ const FormVoyageContainer = () => {
                   voyageId={voyageId}
                   voyageData={voyageData}
                   handleSubmit={handleSubmit}
+<<<<<<< HEAD
                   errors={errors || ''}
+=======
+>>>>>>> Add submit button and submitted page
                 />
               )}
             </form>

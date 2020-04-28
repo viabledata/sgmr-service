@@ -42,6 +42,7 @@ const Main = () => {
         <SecureRoute exact path="/save-voyage/page-4"><VoyageFormContainer /></SecureRoute>
         <SecureRoute exact path="/save-voyage/page-5"><VoyageFormContainer /></SecureRoute>
         <SecureRoute exact path="/save-voyage/page-6"><VoyageFormContainer /></SecureRoute>
+        <SecureRoute exact path="/save-voyage/page-submitted"><FormVoyageSubmitted /></SecureRoute>
         <SecureRoute exact path="/vessels">
           <PageContainer />
         </SecureRoute>

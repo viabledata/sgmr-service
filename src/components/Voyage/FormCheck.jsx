@@ -6,10 +6,14 @@ import { formatUIDate } from '@utils/date';
 import PeopleManifest from '@components/Voyage/PeopleManifest';
 import { error } from 'winston';
 
+<<<<<<< HEAD
 
 const FormCheck = ({
   voyageId, voyageData, handleSubmit, errors,
 }) => {
+=======
+const FormCheck = ({ voyageId, voyageData, handleSubmit }) => {
+>>>>>>> Add submit button and submitted page
   if (!voyageData) { return null; }
   return (
     <section>
