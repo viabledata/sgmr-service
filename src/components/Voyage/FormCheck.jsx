@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 // App imports
 import { formatUIDate } from '@utils/date';
 import PeopleManifest from '@components/Voyage/PeopleManifest';
-import { error } from 'winston';
 
 
 const FormCheck = ({
