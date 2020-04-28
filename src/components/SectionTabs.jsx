@@ -51,7 +51,7 @@ const SectionTabs = (pageData) => {
       .then((resp) => {
         if (!resp.errors) {
           resp.items.map((report) => {
-            if (!report.departureDate) {
+            if (!report.departureDate && !report.departureTime && !report.departurePort) {
               deleteItem(`${VOYAGE_REPORT_URL}/${report.id}`);
             } else {
               validReports.push(report);
