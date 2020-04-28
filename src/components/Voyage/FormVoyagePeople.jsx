@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 
 // App imports
 import { getData } from '@utils/apiHooks';
@@ -8,7 +7,7 @@ import PeopleManifest from '@components/Voyage/PeopleManifest';
 import PeopleTable from '@components/People/PeopleTable';
 
 const FormVoyagePeople = ({
-  handleSubmit, handleChange, handleCheckboxes, handleAddButton, handleLinkToForm, voyageId, errors, data,
+  handleSubmit, handleCheckboxes, handleAddPeopleButton, handleLinkToForm, voyageId,
 }) => {
   const [peopleData, setPeopleData] = useState();
 
@@ -38,12 +37,20 @@ const FormVoyagePeople = ({
             link="false"
             handleCheckboxes={handleCheckboxes}
           />
+          <button
+            type="button"
+            className="govuk-button"
+            data-module="govuk-button"
+            onClick={(e) => handleAddPeopleButton(e)}
+          >
+            Add to Reports
+          </button>
         </>
       )}
 
       <hr className="govuk-section-break govuk-section-break--m govuk-section-break--visible" />
       <h2 className="govuk-heading-l">New people</h2>
-      <p><a href='' className="govuk-link govuk-link--no-visited-state" onClick={(e) => handleLinkToForm(e, voyageId)}>Add a new person to the Reports</a></p>
+      <p><a href="" className="govuk-link govuk-link--no-visited-state" onClick={(e) => handleLinkToForm(e, voyageId)}>Add a new person to the Reports</a></p>
 
       <hr className="govuk-section-break govuk-section-break--m govuk-section-break--visible" />
       <h2 className="govuk-heading-l">People currently on board</h2>
@@ -52,6 +59,7 @@ const FormVoyagePeople = ({
       </p>
       <PeopleManifest
         voyageId={voyageId}
+        source="voyage"
       />
 
       <button
