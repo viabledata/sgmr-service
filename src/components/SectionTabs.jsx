@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 
 // App imports
-import { getData, patchData, postData } from '@utils/apiHooks';
+import { deleteItem, getData, postData } from '@utils/apiHooks';
 import { formatUIDate } from '@utils/date';
-import { USER_VOYAGE_REPORT_URL } from '@constants/ApiConstants';
+import { USER_VOYAGE_REPORT_URL, VOYAGE_REPORT_URL } from '@constants/ApiConstants';
 import { EDIT_VOYAGE_CHECK_DETAILS_URL } from '@constants/ClientConstants';
 
 
@@ -45,22 +45,19 @@ const SectionTabs = (pageData) => {
   };
 
 
-  const removeAnyInvalidReports = (reports) => {
-    let validReports = [];
-    reports.map((report) => {
-      if (report.departureDate) {
-        validReports.push(report);
-      }
-    });
-    setReportList(validReports);
-  };
-
-
   const getReportList = () => {
+    let validReports = [];
     getData(USER_VOYAGE_REPORT_URL)
       .then((resp) => {
         if (!resp.errors) {
-          removeAnyInvalidReports(resp.items);
+          resp.items.map((report) => {
+            if (!report.departureDate && !report.departureTime && !report.departurePort) {
+              deleteItem(`${VOYAGE_REPORT_URL}/${report.id}`);
+            } else {
+              validReports.push(report);
+            }
+          });
+          setReportList(validReports);
         }
       });
   };
@@ -81,6 +78,7 @@ const SectionTabs = (pageData) => {
     setTabData(tabs);
     getReportList();
   }, [pageData]);
+
 
   if (!pageData || !tabData || tabData.length === 0) { return null; }
 

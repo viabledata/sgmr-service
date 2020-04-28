@@ -64,8 +64,29 @@ const patchData = (url, dataToSubmit, pageSource) => {
 };
 
 
+const deleteItem = (url, pageSource) => {
+  const source = pageSource || location.pathname.substring(1);
+  const data = axios.delete(url, {
+    headers: { Authorization: `Bearer ${Auth.retrieveToken()}` },
+  })
+    .then((resp) => { return resp.data; })
+    .catch((err) => {
+      if (err.response) {
+        switch (err.response.status) {
+          case 401:
+          case 422:
+          case 405: window.location.assign(`/sign-in?source=${source}`); break;
+          default: return ({ errors: true, status: err.response.status, message: err.response.data.message });
+        }
+      }
+    });
+  return data;
+};
+
+
 export {
   postData,
   getData,
   patchData,
+  deleteItem,
 };
