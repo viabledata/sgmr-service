@@ -44,7 +44,6 @@ const EditVessel = () => {
 
   // Update form and vessel data if user changes any field
   const handleChange = (e) => {
-    setVesselData({ ...vesselData, [e.target.name]: e.target.value });
     setFormData({ ...formData, [e.target.name]: e.target.value });
     removeError(e.target.name);
   };
