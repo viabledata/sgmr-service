@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 
 const FormPerson = ({
-  handleSubmit, handleChange, data, formData, errors, clearLocalStorage, source, voyageId
+  handleSubmit, handleChange, data, formData, errors, clearLocalStorage, source, voyageId,
 }) => {
   return (
     <section>
@@ -219,7 +219,7 @@ const FormPerson = ({
                 id="peopleType-1"
                 type="radio"
                 value="Skipper"
-                checked={(formData.peopleType === 'Skipper' || data.peopleType === 'Skipper') ? 'checked' : ''}
+                checked={(formData.peopleType === 'Skipper' || (data.peopleType && data.peopleType.name === 'Skipper')) ? 'checked' : ''}
                 onChange={handleChange}
               />
               <label className="govuk-label govuk-radios__label" htmlFor="peopleType-1">
@@ -233,7 +233,7 @@ const FormPerson = ({
                 id="peopleType-2"
                 type="radio"
                 value="Crew"
-                checked={(formData.peopleType === 'Crew' || data.peopleType === 'Crew') ? 'checked' : ''}
+                checked={(formData.peopleType === 'Crew' || (data.peopleType && data.peopleType.name === 'Crew')) ? 'checked' : ''}
                 onChange={handleChange}
               />
               <label className="govuk-label govuk-radios__label" htmlFor="peopleType-2">
