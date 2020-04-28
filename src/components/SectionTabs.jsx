@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 
 // App imports
-import { getData, postData } from '@utils/apiHooks';
+import { getData, patchData, postData } from '@utils/apiHooks';
 import { formatUIDate } from '@utils/date';
 import { USER_VOYAGE_REPORT_URL } from '@constants/ApiConstants';
 import { EDIT_VOYAGE_CHECK_DETAILS_URL } from '@constants/ClientConstants';
@@ -30,6 +30,7 @@ const SectionTabs = (pageData) => {
     },
   ];
 
+
   const setActiveTab = (e) => {
     const tabArray = [...tabData];
     tabArray.map((elem) => {
@@ -43,14 +44,27 @@ const SectionTabs = (pageData) => {
     setTabData(tabArray);
   };
 
+
+  const removeAnyInvalidReports = (reports) => {
+    let validReports = [];
+    reports.map((report) => {
+      if (report.departureDate) {
+        validReports.push(report);
+      }
+    });
+    setReportList(validReports);
+  };
+
+
   const getReportList = () => {
     getData(USER_VOYAGE_REPORT_URL)
       .then((resp) => {
         if (!resp.errors) {
-          setReportList(resp.items);
+          removeAnyInvalidReports(resp.items);
         }
       });
   };
+
 
   const handleStart = () => {
     postData(USER_VOYAGE_REPORT_URL, null, 'reports')
@@ -61,6 +75,7 @@ const SectionTabs = (pageData) => {
         });
       });
   };
+
 
   useEffect(() => {
     setTabData(tabs);

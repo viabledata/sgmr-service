@@ -1,7 +1,7 @@
 import React from 'react';
 
 const FormArrival = ({
-  handleSubmit, handleChange, data, errors, voyageId
+  handleSubmit, handleChange, data, errors, voyageId,
 }) => {
   if (!data) { return (null); }
   return (

@@ -176,46 +176,48 @@ const FormVoyageContainer = () => {
   };
 
 
-  const setNextPage = () => {
+  const setNextPage = (sourceForm) => {
     let nextPage;
-    if (pageNum === '4b') {
-      nextPage = 4;
-    } else {
-      nextPage = pageNum < maxPages ? pageNum + 1 : pageNum;
+    switch (sourceForm) {
+      case 'cancel': history.push('/reports'); break;
+      case 'submit': history.push('/save-voyage/submitted'); break;
+      default: if (pageNum === '4b') {
+        nextPage = 4;
+      } else {
+        nextPage = pageNum < maxPages ? pageNum + 1 : pageNum;
+      }
+        setPageNum(nextPage);
+        history.push(`/save-voyage/page-${nextPage}`, { voyageId });
     }
-    setPageNum(nextPage);
-    history.push(`/save-voyage/page-${nextPage}`, { voyageId });
   };
 
 
   const handleSubmit = (e, sourceForm) => {
     e.preventDefault();
-    // If people form, go to next page as patching is done on 'add' button or 'new person' form
-    if (sourceForm === 'people') {
-      setNextPage();
-    } else {
-      let dataToSubmit;
-      switch (sourceForm) {
-        case 'arrival': dataToSubmit = formatDepartureArrival('Draft', formData, voyageData); break;
-        case 'departure': dataToSubmit = formatDepartureArrival('Draft', formData, voyageData); break;
-        case 'newPerson': dataToSubmit = formatNewPerson('Draft', formData, voyageData); break;
-        case 'responsiblePerson': dataToSubmit = formatResponsiblePerson('Draft', formData, voyageData); break;
-        case 'vessel': dataToSubmit = formatVessel('Draft', formData, voyageData); break;
-        default: dataToSubmit = null;
-      }
+    let dataToSubmit;
+    switch (sourceForm) {
+      case 'arrival': dataToSubmit = formatDepartureArrival('Draft', formData, voyageData); break;
+      case 'departure': dataToSubmit = formatDepartureArrival('Draft', formData, voyageData); break;
+      case 'people': dataToSubmit = formatPerson('Draft', formData, voyageData); break;  
+      case 'newPerson': dataToSubmit = formatNewPerson('Draft', formData, voyageData); break;
+      case 'responsiblePerson': dataToSubmit = formatResponsiblePerson('Draft', formData, voyageData); break;
+      case 'vessel': dataToSubmit = formatVessel('Draft', formData, voyageData); break;
+      case 'voyage': dataToSubmit = { status: 'PreSubmitted' }; break;
+      case 'cancel': dataToSubmit = { status: 'PreCancelled' }; break;
+      default: dataToSubmit = null;
+    }
 
-      // Handle missing voyageId (for if user comes to a subpage directly, and we haven't got the id)
-      if (!voyageId) {
-        setErrors({ voyageForm: 'There was a problem locating your voyage, please return to "Reports" and try again' });
-        scrollToTopOnError('voyageForm');
-      } else {
-        setErrors(VoyageFormValidation(formData, sourceForm));
-        if (Object.keys(VoyageFormValidation(formData, sourceForm)).length === 0 && Object.keys(errors).length === 0) {
-          patchData(`${VOYAGE_REPORT_URL}/${voyageId}`, dataToSubmit, location.pathname.substring(1))
-            .then(() => {
-              setNextPage();
-            });
-        }
+    // Handle missing voyageId (for if user comes to a subpage directly, and we haven't got the id)
+    if (!voyageId) {
+      setErrors({ voyageForm: 'There was a problem locating your voyage, please return to "Reports" and try again' });
+      scrollToTopOnError('voyageForm');
+    } else {
+      setErrors(VoyageFormValidation(formData, sourceForm));
+      if (Object.keys(VoyageFormValidation(formData, sourceForm)).length === 0 && Object.keys(errors).length === 0) {
+        patchData(`${VOYAGE_REPORT_URL}/${voyageId}`, dataToSubmit, location.pathname.substring(1))
+          .then(() => {
+            setNextPage(sourceForm);
+          });
       }
     }
   };
@@ -349,6 +351,7 @@ const FormVoyageContainer = () => {
                 />
               )}
             </form>
+            <p><Link to="/reports" className="govuk-link govuk-link--no-visited-state">Exit without saving</Link></p>
           </div>
         </div>
       </main>

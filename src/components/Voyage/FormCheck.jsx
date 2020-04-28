@@ -6,6 +6,7 @@ import { formatUIDate } from '@utils/date';
 import PeopleManifest from '@components/Voyage/PeopleManifest';
 import { error } from 'winston';
 
+
 const FormCheck = ({
   voyageId, voyageData, handleSubmit, errors,
 }) => {
@@ -239,7 +240,7 @@ const FormCheck = ({
         type="button"
         className="govuk-button govuk-button--warning govuk-body govuk!-margin-top-3 block-button"
         data-module="govuk-button"
-
+        onClick={((e) => handleSubmit(e, 'cancel'))}
       >
         Cancel voyage
       </button>
