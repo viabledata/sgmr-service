@@ -171,7 +171,7 @@ const SectionTabs = (pageData) => {
                       <td className="govuk-table__cell">{voyage.departureTime}</td>
                       <td className="govuk-table__cell">{voyage.departurePort}</td>
                       <td className="govuk-table__cell">{voyage.arrivalPort}</td>
-                      <td className="govuk-table__cell">{voyage.submissionRef}</td>
+                      <td className="govuk-table__cell">{voyage.cbpId && voyage.cbpId}</td>
                     </tr>
                   );
                 }

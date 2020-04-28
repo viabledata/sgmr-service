@@ -181,7 +181,7 @@ const FormVoyageContainer = () => {
     let nextPage;
     switch (sourceForm) {
       case 'cancel': history.push('/reports'); break;
-      case 'check': history.push('/save-voyage/submitted'); break;
+      case 'check': history.push('/save-voyage/page-submitted'); break;
       default: if (pageNum === '4b') {
         nextPage = 4;
       } else {
@@ -353,10 +353,7 @@ const FormVoyageContainer = () => {
                   voyageId={voyageId}
                   voyageData={voyageData}
                   handleSubmit={handleSubmit}
-<<<<<<< HEAD
                   errors={errors || ''}
-=======
->>>>>>> Add submit button and submitted page
                 />
               )}
             </form>
