@@ -8,8 +8,9 @@ import { getData, patchData } from '@utils/apiHooks';
 import { splitDate } from '@utils/date';
 import { splitTime } from '@utils/time';
 import { PEOPLE_URL, VESSELS_URL, VOYAGE_REPORT_URL } from '@constants/ApiConstants';
+import { SAVE_VOYAGE_PEOPLE_URL } from '@constants/ClientConstants';
 import {
-  formatDepartureArrival, formatPerson, formatResponsiblePerson, formatVessel,
+  formatDepartureArrival, formatNewPerson, formatPerson, formatResponsiblePerson, formatVessel,
 } from '@components/Voyage/VoyageFormDataFormatting';
 import getId from '@utils/getIdHook';
 import scrollToTopOnError from '@utils/scrollToTopOnError';
@@ -33,8 +34,9 @@ const FormVoyageContainer = () => {
   const [voyageId, setVoyageId] = useState();
   const [voyageData, setVoyageData] = useState();
   const [checkboxData, setCheckboxData] = useState();
+  const [peopleData, setPeopleData] = useState([]);
   const [formData, setFormData] = useState(JSON.parse(localStorage.getItem('formData')) || {});
-  const [errors, setErrors] = useState(JSON.parse(localStorage.getItem('errors')) || {});
+  const [errors, setErrors] = useState({});
 
 
   // Handle errors
@@ -116,8 +118,30 @@ const FormVoyageContainer = () => {
     });
   };
 
+
+  // Create checkbox people array
+  const handlePeopleCheckbox = (e) => {
+    let checkedPeople = [...peopleData];
+    if (e.target.checked) {
+      getData(`${PEOPLE_URL}/${e.target.id}`)
+        .then((resp) => checkedPeople.push(formatPerson(resp)));
+    }
+    // Handle uncheck
+    if (!e.target.checked) {
+      checkedPeople = checkedPeople.filter((person) => person.id !== e.target.id);
+    }
+    setPeopleData(checkedPeople);
+  };
+
+
+  const handleAddPeopleButton = () => {
+    patchData(`${VOYAGE_REPORT_URL}/${voyageId}`, { status: 'Draft', people: peopleData })
+      .then(history.push(`${SAVE_VOYAGE_PEOPLE_URL}?added=true`));
+  };
+
+
   // Handle add buttons which populate page data
-  const handleAddButton = () => {
+  const handleAddVesselButton = () => {
     if (checkboxData) {
       const formatCheckboxData = { // removes id from the data so it doesn't clash with voyageId
         id: voyageId,
@@ -174,7 +198,8 @@ const FormVoyageContainer = () => {
     switch (sourceForm) {
       case 'arrival': dataToSubmit = formatDepartureArrival('Draft', formData, voyageData); break;
       case 'departure': dataToSubmit = formatDepartureArrival('Draft', formData, voyageData); break;
-      case 'people': dataToSubmit = formatPerson('Draft', formData, voyageData); break;
+      case 'people': dataToSubmit = formatPerson('Draft', formData, voyageData); break;  
+      case 'newPerson': dataToSubmit = formatNewPerson('Draft', formData, voyageData); break;
       case 'responsiblePerson': dataToSubmit = formatResponsiblePerson('Draft', formData, voyageData); break;
       case 'vessel': dataToSubmit = formatVessel('Draft', formData, voyageData); break;
       case 'voyage': dataToSubmit = { status: 'PreSubmitted' }; break;
@@ -207,7 +232,10 @@ const FormVoyageContainer = () => {
 
   // Trigger functions
   useEffect(() => {
-    if (location) { getPageNum(); }
+    if (location) {
+      getPageNum();
+      setErrors({});
+    }
   }, [location]);
 
   useEffect(() => {
@@ -221,10 +249,6 @@ const FormVoyageContainer = () => {
   useEffect(() => {
     localStorage.setItem('formData', JSON.stringify(formData));
   }, [formData]);
-
-  useEffect(() => {
-    localStorage.setItem('errors', JSON.stringify(errors));
-  }, [errors]);
 
 
   if (!formData) { return null; }
@@ -275,7 +299,7 @@ const FormVoyageContainer = () => {
                   handleSubmit={handleSubmit}
                   handleChange={handleChange}
                   handleCheckboxes={handleCheckboxes}
-                  handleAddButton={handleAddButton}
+                  handleAddVesselButton={handleAddVesselButton}
                   voyageId={voyageId}
                   formData={formData || voyageData}
                   errors={errors}
@@ -285,8 +309,8 @@ const FormVoyageContainer = () => {
                 <FormVoyagePeople
                   handleSubmit={handleSubmit}
                   handleChange={handleChange}
-                  handleCheckboxes={handleCheckboxes}
-                  handleAddButton={handleAddButton}
+                  handleCheckboxes={handlePeopleCheckbox}
+                  handleAddPeopleButton={handleAddPeopleButton}
                   handleLinkToForm={handleLinkToForm}
                   voyageId={voyageId}
                   formData={formData || voyageData}
@@ -323,6 +347,7 @@ const FormVoyageContainer = () => {
                   voyageId={voyageId}
                   voyageData={voyageData}
                   handleSubmit={handleSubmit}
+                  errors={errors || ''}
                 />
               )}
             </form>

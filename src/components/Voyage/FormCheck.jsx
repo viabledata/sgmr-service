@@ -4,8 +4,12 @@ import { Link } from 'react-router-dom';
 // App imports
 import { formatUIDate } from '@utils/date';
 import PeopleManifest from '@components/Voyage/PeopleManifest';
+import { error } from 'winston';
 
-const FormCheck = ({ voyageId, voyageData, handleSubmit }) => {
+
+const FormCheck = ({
+  voyageId, voyageData, handleSubmit, errors,
+}) => {
   if (!voyageData) { return null; }
   return (
     <section>
@@ -28,6 +32,11 @@ const FormCheck = ({ voyageId, voyageData, handleSubmit }) => {
           </dd>
         </div>
       </dl>
+      <div className="govuk-form-group govuk-form-group--error">
+        <p className="govuk-error-message">{errors.departureDate}</p>
+        <p className="govuk-error-message">{errors.departureTime}</p>
+        <p className="govuk-error-message">{errors.departurePort}</p>
+      </div>
       <dl className="govuk-summary-list govuk-!-margin-bottom-9">
         <div className="govuk-summary-list__row">
           <dt className="govuk-summary-list__key">Departure date</dt>
@@ -70,6 +79,11 @@ const FormCheck = ({ voyageId, voyageData, handleSubmit }) => {
           </dd>
         </div>
       </dl>
+      <div className="govuk-form-group govuk-form-group--error">
+        <p className="govuk-error-message">{errors.arrivalDate}</p>
+        <p className="govuk-error-message">{errors.arrivalTime}</p>
+        <p className="govuk-error-message">{errors.arrivalPort}</p>
+      </div>
       <dl className="govuk-summary-list govuk-!-margin-bottom-9">
         <div className="govuk-summary-list__row">
           <dt className="govuk-summary-list__key">Arrival date</dt>
@@ -112,6 +126,10 @@ const FormCheck = ({ voyageId, voyageData, handleSubmit }) => {
         </div>
       </dl>
 
+      <div className="govuk-form-group govuk-form-group--error">
+        <p className="govuk-error-message">{errors.vesselName}</p>
+        <p className="govuk-error-message">{errors.registration}</p>
+      </div>
       <dl className="govuk-summary-list govuk-!-margin-bottom-9">
         <div className="govuk-summary-list__row">
           <dt className="govuk-summary-list__key">Vessel name</dt>
@@ -214,6 +232,7 @@ const FormCheck = ({ voyageId, voyageData, handleSubmit }) => {
         type="button"
         className="govuk-button"
         data-module="govuk-button"
+        onClick={(e) => handleSubmit(e, 'check', voyageId)}
       >
         Accept and submit report
       </button>

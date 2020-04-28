@@ -151,6 +151,45 @@ export const userValidationRules = [
   },
 ];
 
+export const arrivalValidationRules = [
+  {
+    inputField: 'arrivalDateYear',
+    errorDisplayId: 'arrivalDate',
+    rule: 'required',
+    message: 'You must enter an arrival date',
+  },
+  {
+    inputField: 'arrivalDateMonth',
+    errorDisplayId: 'arrivalDate',
+    rule: 'required',
+    message: 'You must enter an arrival date',
+  },
+  {
+    inputField: 'arrivalDateDay',
+    errorDisplayId: 'arrivalDate',
+    rule: 'required',
+    message: 'You must enter an arrival date',
+  },
+  {
+    inputField: 'arrivalTimeHour',
+    errorDisplayId: 'arrivalTime',
+    rule: 'required',
+    message: 'You must enter an arrival time',
+  },
+  {
+    inputField: 'arrivalTimeMinute',
+    errorDisplayId: 'arrivalTime',
+    rule: 'required',
+    message: 'You must enter an arrival time',
+  },
+  {
+    inputField: 'arrivalPort',
+    errorDisplayId: 'arrivalPort',
+    rule: 'required',
+    message: 'You must enter an arrival port',
+  },
+];
+
 export const departureValidationRules = [
   {
     inputField: 'departureDateYear',
@@ -169,6 +208,75 @@ export const departureValidationRules = [
     errorDisplayId: 'departureDate',
     rule: 'required',
     message: 'You must enter a departure date',
+  },
+  {
+    inputField: 'departureTimeHour',
+    errorDisplayId: 'departureTime',
+    rule: 'required',
+    message: 'You must enter a departure time',
+  },
+  {
+    inputField: 'departureTimeMinute',
+    errorDisplayId: 'departureTime',
+    rule: 'required',
+    message: 'You must enter a departure time',
+  },
+  {
+    inputField: 'departurePort',
+    errorDisplayId: 'departurePort',
+    rule: 'required',
+    message: 'You must enter a departure port',
+  },
+];
+
+export const voyageValidationRules = [
+  {
+    inputField: 'vesselName',
+    errorDisplayId: 'vesselName',
+    rule: 'required',
+    message: 'You must enter a vessel name',
+  },
+  {
+    inputField: 'registration',
+    errorDisplayId: 'registration',
+    rule: 'required',
+    message: 'You must enter a vessel registration',
+  },
+  {
+    inputField: 'departureDate',
+    errorDisplayId: 'departureDate',
+    rule: 'required',
+    message: 'You must enter a departure date',
+  },
+  {
+    inputField: 'departureTime',
+    errorDisplayId: 'departureTime',
+    rule: 'required',
+    message: 'You must enter a departure time',
+  },
+  {
+    inputField: 'departurePort',
+    errorDisplayId: 'departurePort',
+    rule: 'required',
+    message: 'You must enter a departure port',
+  },
+  {
+    inputField: 'arrivalTime',
+    errorDisplayId: 'arrivalTime',
+    rule: 'required',
+    message: 'You must enter an arrival time',
+  },
+  {
+    inputField: 'arrivalPort',
+    errorDisplayId: 'arrivalPort',
+    rule: 'required',
+    message: 'You must enter an arrival port',
+  },
+  {
+    inputField: 'arrivalDate',
+    errorDisplayId: 'arrivalDate',
+    rule: 'required',
+    message: 'You must enter an arrival date',
   },
 ];
 
