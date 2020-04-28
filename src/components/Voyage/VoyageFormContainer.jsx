@@ -36,7 +36,7 @@ const FormVoyageContainer = () => {
   const [checkboxData, setCheckboxData] = useState();
   const [peopleData, setPeopleData] = useState([]);
   const [formData, setFormData] = useState(JSON.parse(localStorage.getItem('formData')) || {});
-  const [errors, setErrors] = useState(JSON.parse(localStorage.getItem('errors')) || {});
+  const [errors, setErrors] = useState({});
 
 
   // Handle errors
@@ -230,7 +230,10 @@ const FormVoyageContainer = () => {
 
   // Trigger functions
   useEffect(() => {
-    if (location) { getPageNum(); }
+    if (location) {
+      getPageNum();
+      setErrors({});
+    }
   }, [location]);
 
   useEffect(() => {
@@ -244,10 +247,6 @@ const FormVoyageContainer = () => {
   useEffect(() => {
     localStorage.setItem('formData', JSON.stringify(formData));
   }, [formData]);
-
-  useEffect(() => {
-    localStorage.setItem('errors', JSON.stringify(errors));
-  }, [errors]);
 
 
   if (!formData) { return null; }
@@ -345,6 +344,8 @@ const FormVoyageContainer = () => {
                 <FormCheck
                   voyageId={voyageId}
                   voyageData={voyageData}
+                  handleSubmit={handleSubmit}
+                  errors={errors || ''}
                 />
               )}
             </form>
