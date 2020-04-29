@@ -137,7 +137,7 @@ const FormVoyageContainer = () => {
 
   const handleAddPeopleButton = () => {
     patchData(`${VOYAGE_REPORT_URL}/${voyageId}`, { status: 'Draft', people: peopleData })
-      .then(history.push(`${SAVE_VOYAGE_PEOPLE_URL}?added=true`));
+      .then(window.location.reload(true)); // Forcing the reload so manifest updates
   };
 
 
