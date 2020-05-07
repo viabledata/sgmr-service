@@ -77,4 +77,4 @@ spec:
       volumes:
       - name: certs
         secret:
-          secretName: "{{.SGMR_SERVICE_NAME}}-pod-tls"
+          secretName: "{{.SGMR_SERVICE_NAME}}-pod-cmio"
