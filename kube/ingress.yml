@@ -25,4 +25,4 @@ spec:
   tls:
   - hosts:
     - {{.SGMR_SERVICE_URL}}
-    secretName: {{.SGMR_SERVICE_URL}}-tls
+    secretName: {{.SGMR_SERVICE_URL}}-cmio
