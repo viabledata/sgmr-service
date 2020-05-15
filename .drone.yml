@@ -32,6 +32,22 @@ pipeline:
       environment: secrets
       event: deployment
 
+  synch_production_secrets:
+    image: quay.io/ukhomeofficedigital/cop-secrets
+    environment:
+      - DRONE_SERVER=https://drone.acp.homeoffice.gov.uk
+      - DEPLOY_ENV=production
+    secrets:
+      - source: PRODUCTION_DRONE_AWS_ACCESS_KEY_ID
+        target: AWS_ACCESS_KEY_ID
+      - source: PRODUCTION_DRONE_AWS_SECRET_ACCESS_KEY
+        target: AWS_SECRET_ACCESS_KEY
+      - source: DRONE_PUBLIC_TOKEN
+        target: DRONE_TOKEN
+    when:
+      environment: secrets
+      event: deployment
+
   unit_test:
     image: quay.io/ukhomeofficedigital/cop-node:12-alpine
     commands:
@@ -156,6 +172,44 @@ pipeline:
       - kd --insecure-skip-tls-verify -f kube/ingress.yml
     when:
       environment: staging
+      event: deployment
+
+  deploy_to_production:
+    image: quay.io/ukhomeofficedigital/kd
+    secrets:
+    - source: PRODUCTION_KUBE_NAMESPACE_COP_SGMR
+      target: KUBE_NAMESPACE
+    - source: PRODUCTION_KUBE_SERVER
+      target: KUBE_SERVER
+    - source: PRODUCTION_SGMR_DATA_API_BASE_URL
+      target: SGMR_DATA_API_BASE_URL
+    - source: PRODUCTION_SGMR_SERVICE_URL
+      target: SGMR_SERVICE_URL
+    - source: PRODUCTION_SGMR_KUBE_TOKEN
+      target: KUBE_TOKEN
+    - source: NGINX_IMAGE
+      target: NGINX_IMAGE
+    - source: NGINX_TAG
+      target: NGINX_TAG
+    - source: SGMR_SERVICE_IMAGE
+      target: SGMR_SERVICE_IMAGE
+    - source: SGMR_SERVICE_NAME
+      target: SGMR_SERVICE_NAME
+    - source: SGMR_SERVICE_PORT
+      target: SGMR_SERVICE_PORT
+    - source: SGMR_SERVICE_URL
+      target: SGMR_SERVICE_URL
+    - source: PRODUCTION_WHITELIST
+      target: WHITELIST
+    commands:
+      - export SGMR_SERVICE_TAG=$${DRONE_COMMIT_SHA}
+      - kd --insecure-skip-tls-verify -f kube/cert.yml
+      - kd --insecure-skip-tls-verify -f kube/network-policy.yml
+      - kd --insecure-skip-tls-verify -f kube/service.yml
+      - kd --insecure-skip-tls-verify -f kube/deployment.yml
+      - kd --insecure-skip-tls-verify -f kube/ingress.yml
+    when:
+      environment: production
       event: deployment
 
   notify:
