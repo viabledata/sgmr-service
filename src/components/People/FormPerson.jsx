@@ -244,6 +244,20 @@ const FormPerson = ({
                 Crew
               </label>
             </div>
+            <div className="govuk-radios__item">
+              <input
+                className="govuk-radios__input"
+                name="peopleType"
+                id="peopleType-3"
+                type="radio"
+                value="Passenger"
+                checked={(formData.peopleType === 'Passenger' || (data.peopleType && data.peopleType.name === 'Passenger')) ? 'checked' : ''}
+                onChange={handleChange}
+              />
+              <label className="govuk-label govuk-radios__label" htmlFor="peopleType-3">
+                Passenger
+              </label>
+            </div>
           </div>
         </fieldset>
       </div>
