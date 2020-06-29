@@ -1,10 +1,14 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
+// App imports
+import nationalities from '@utils/staticFormData';
+
 
 const FormPerson = ({
   handleSubmit, handleChange, data, formData, errors, clearLocalStorage, source, voyageId,
 }) => {
+
   return (
     <section>
       <div id="firstName" className={`govuk-form-group ${errors.firstName ? 'govuk-form-group--error' : ''}`}>
@@ -187,9 +191,9 @@ const FormPerson = ({
           onChange={handleChange}
         >
           <option disabled>Please select</option>
-          <option value="GBP">United Kingdom</option>
-          <option value="AUS">Australia</option>
-          <option value="USA">United States</option>
+          {nationalities.map((nationality, index) => (
+              <option key={index} value={nationality.value}>{nationality.label}</option>
+          ))}
         </select>
       </div>
 
