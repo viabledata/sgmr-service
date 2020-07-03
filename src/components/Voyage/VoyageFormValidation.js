@@ -7,6 +7,7 @@ import {
 import scrollToTopOnError from '@utils/scrollToTopOnError';
 
 const VoyageFormValidation = (dataToValidate, source) => {
+  debugger;
   const fieldsErroring = {};
   let validationRules;
   switch (source) {
