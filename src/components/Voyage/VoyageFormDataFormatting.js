@@ -38,7 +38,6 @@ const formatDepartureArrival = (status, data) => {
   return dataList;
 };
 
-
 const formatNewPerson = (status, data) => {
   const dataList = {
     status,
@@ -61,7 +60,6 @@ const formatNewPerson = (status, data) => {
   return dataList;
 };
 
-
 const formatPerson = (data) => {
   const dataList = {
     firstName: data.firstName,
@@ -79,7 +77,6 @@ const formatPerson = (data) => {
   return dataList;
 };
 
-
 const formatResponsiblePerson = (status, data, voyageData) => {
   const dataList = {
     status,
@@ -96,7 +93,6 @@ const formatResponsiblePerson = (status, data, voyageData) => {
   });
   return dataList;
 };
-
 
 const formatVessel = (status, data, voyageData) => {
   const dataList = {
@@ -120,7 +116,6 @@ const formatVessel = (status, data, voyageData) => {
 
   return dataList;
 };
-
 
 export {
   formatDepartureArrival,

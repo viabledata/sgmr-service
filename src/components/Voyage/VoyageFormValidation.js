@@ -18,7 +18,7 @@ const VoyageFormValidation = (dataToValidate, source) => {
     case 'vessel': validationRules = vesselValidationRules; break;
     default: validationRules = null;
   }
-  
+
   // Required fields must not be null
   if (validationRules) {
     validationRules.map((rule) => {
@@ -30,7 +30,6 @@ const VoyageFormValidation = (dataToValidate, source) => {
 
   // Departure & Arrival must include a Port OR a Lat & Long
 
-  
   if (
     source === 'departure'
     && !dataToValidate.departurePort

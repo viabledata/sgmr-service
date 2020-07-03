@@ -226,5 +226,4 @@ const nationalities = [
   { label: 'Zimbabwean', value: 'ZWE' },
 ];
 
-
 export default nationalities;
