@@ -18,7 +18,6 @@ const splitTime = (time, fieldName) => {
   return ({ [`${fieldName}Hour`]: hour, [`${fieldName}Minute`]: minute });
 };
 
-
 export {
   isTimeValid,
   isTimeAndDateBeforeNow,

@@ -3,7 +3,6 @@ import axios from 'axios';
 // App imports
 import Auth from '@lib/Auth';
 
-
 const postData = (url, dataToSubmit, pageSource) => {
   const source = pageSource || location.pathname.substring(1);
   const data = axios.post(url, dataToSubmit, {
@@ -22,7 +21,6 @@ const postData = (url, dataToSubmit, pageSource) => {
     });
   return data;
 };
-
 
 const getData = (url, pageSource) => {
   const source = pageSource || location.pathname.substring(1);
@@ -43,7 +41,6 @@ const getData = (url, pageSource) => {
   return data;
 };
 
-
 const patchData = (url, dataToSubmit, pageSource) => {
   const source = pageSource || location.pathname.substring(1);
   const data = axios.patch(url, dataToSubmit, {
@@ -63,7 +60,6 @@ const patchData = (url, dataToSubmit, pageSource) => {
   return data;
 };
 
-
 const deleteItem = (url, pageSource) => {
   const source = pageSource || location.pathname.substring(1);
   const data = axios.delete(url, {
@@ -82,7 +78,6 @@ const deleteItem = (url, pageSource) => {
     });
   return data;
 };
-
 
 export {
   postData,

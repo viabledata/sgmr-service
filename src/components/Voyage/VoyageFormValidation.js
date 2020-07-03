@@ -6,7 +6,6 @@ import {
 } from '@components/Forms/validationRules';
 import scrollToTopOnError from '@utils/scrollToTopOnError';
 
-
 const VoyageFormValidation = (dataToValidate, source) => {
   const fieldsErroring = {};
   let validationRules;
@@ -20,7 +19,6 @@ const VoyageFormValidation = (dataToValidate, source) => {
     default: validationRules = null;
   }
 
-
   // Required fields must not be null
   if (validationRules) {
     validationRules.map((rule) => {
@@ -30,6 +28,22 @@ const VoyageFormValidation = (dataToValidate, source) => {
     });
   }
 
+  // Departure & Arrival must include a Port OR a Lat & Long
+
+  if (
+    source === 'departure'
+    && !dataToValidate.departurePort
+    && (!dataToValidate.departureLat || !dataToValidate.departureLong)
+  ) {
+    fieldsErroring.departureLocation = 'You must enter either a departure port or the lat/long coordinates';
+  }
+  if (
+    source === 'arrival'
+    && !dataToValidate.arrivalPort
+    && (!dataToValidate.arrivalLat || !dataToValidate.arrivalLong)
+  ) {
+    fieldsErroring.arrivalLocation = 'You must enter either an arrival port or the lat/long coordinates';
+  }
 
   // Date fields must be valid
   if (dataToValidate.documentExpiryDateYear && !(isDateValid(dataToValidate.documentExpiryDateYear, dataToValidate.documentExpiryDateMonth, dataToValidate.documentExpiryDateDay))) {

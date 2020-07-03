@@ -21,6 +21,12 @@ const formatDepartureArrival = (status, data) => {
       }
     }
 
+    // If this is a null value departure or arrival port, set the value to 'ZZZZ'
+    if (item[0].search(/port/i) > 0 && !item[1]) {
+      const fieldName = item[0];
+      dataList[fieldName] = 'ZZZZ';
+    }
+
     if (
       item[0].search(/year/i) === -1 // it's not the year part of the date (handed above)
           && item[0].search(/month/i) === -1 // it's not the month part of the date (handed above)
@@ -37,7 +43,6 @@ const formatDepartureArrival = (status, data) => {
   });
   return dataList;
 };
-
 
 const formatNewPerson = (status, data) => {
   const dataList = {
@@ -61,7 +66,6 @@ const formatNewPerson = (status, data) => {
   return dataList;
 };
 
-
 const formatPerson = (data) => {
   const dataList = {
     firstName: data.firstName,
@@ -79,7 +83,6 @@ const formatPerson = (data) => {
   return dataList;
 };
 
-
 const formatResponsiblePerson = (status, data, voyageData) => {
   const dataList = {
     status,
@@ -96,7 +99,6 @@ const formatResponsiblePerson = (status, data, voyageData) => {
   });
   return dataList;
 };
-
 
 const formatVessel = (status, data, voyageData) => {
   const dataList = {
@@ -120,7 +122,6 @@ const formatVessel = (status, data, voyageData) => {
 
   return dataList;
 };
-
 
 export {
   formatDepartureArrival,

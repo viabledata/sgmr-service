@@ -140,75 +140,78 @@ const FormDeparture = ({
         </fieldset>
       </div>
 
-      <div id="departurePort" className={`govuk-form-group ${errors.departurePort ? 'govuk-form-group--error' : ''}`}>
-        <label className="govuk-label govuk-label--m" htmlFor="departurePort">
-          Departure port
-        </label>
-        {errors.departurePort
+      <div id="departureLocation" className={`govuk-form-group ${errors.departureLocation ? 'govuk-form-group--error' : ''}`}>
+        {errors.departureLocation
         && (
         <span className="govuk-error-message">
           <span className="govuk-visually-hidden">Error:</span>
-          {errors.departurePort}
+          {errors.departureLocation}
         </span>
         )}
-        <span className="govuk-hint">
-          The name or UNLOCODE of the port, for example Monaco or MC MON. Enter ‘ZZZZ’ if not known
-        </span>
-        <input
-          className="govuk-input"
-          name="departurePort"
-          id="departurePort"
-          type="text"
-          value={data.departurePort || ''}
-          onChange={handleChange}
-        />
-      </div>
 
-      <div id="departureCoordinates" className='govuk-form-group'>
-        <fieldset className="govuk-fieldset" role="group" aria-describedby="departureCoordinates-hint">
-          <legend className="govuk-fieldset__legend govuk-fieldset__legend--m">
-            <label className="govuk-label govuk-label--m" htmlFor="departureCoordinates">
-              Departure coordinates
-            </label>
-            <span className="govuk-hint">
-              If port is ‘ZZZZ’, provide decimal coordinates to 6 places
-            </span>
-          </legend>
-          <div className='govuk-form-group'>
-            <label className="govuk-label govuk-date-input__label" htmlFor="departureLat">
-              Latitude
-            </label>
-            <span className="govuk-hint">
-              For example 51.507493
-            </span>
-            <input
-              className="govuk-input govuk-date-input__input"
-              name="departureLat"
-              type="text"
-              pattern="[0-9]*"
-              inputMode="numeric"
-              value={data.departureLat || ''}
-              onChange={handleChange}
-            />
-          </div>
-          <div className='govuk-form-group'>
-            <label className="govuk-label govuk-date-input__label" htmlFor="departureLong">
-              Longitude
-            </label>
-            <span className="govuk-hint">
-              For example 51.507493
-            </span>
-            <input
-              className="govuk-input govuk-date-input__input"
-              name="departureLong"
-              type="text"
-              pattern="[0-9]*"
-              inputMode="numeric"
-              value={data.departureLong || ''}
-              onChange={handleChange}
-            />
-          </div>
-        </fieldset>
+        <div id="departurePort" className="govuk-form-group">
+          <label className="govuk-label govuk-label--m" htmlFor="departurePort">
+            Departure port
+          </label>
+          <span className="govuk-hint">
+            The name or UNLOCODE of the port, for example Monaco or MC MON. Enter ‘ZZZZ’ if not known
+          </span>
+          <input
+            className="govuk-input"
+            name="departurePort"
+            id="departurePort"
+            type="text"
+            value={data.departurePort || ''}
+            onChange={handleChange}
+          />
+        </div>
+
+        <div id="departureCoordinates" className="govuk-form-group">
+          <fieldset className="govuk-fieldset" role="group" aria-describedby="departureCoordinates-hint">
+            <legend className="govuk-fieldset__legend govuk-fieldset__legend--m">
+              <label className="govuk-label govuk-label--m" htmlFor="departureCoordinates">
+                Departure coordinates
+              </label>
+              <span className="govuk-hint">
+                If port is ‘ZZZZ’, provide decimal coordinates to 6 places
+              </span>
+            </legend>
+            <div className="govuk-form-group">
+              <label className="govuk-label govuk-date-input__label" htmlFor="departureLat">
+                Latitude
+              </label>
+              <span className="govuk-hint">
+                For example 51.507493
+              </span>
+              <input
+                className="govuk-input govuk-date-input__input"
+                name="departureLat"
+                type="text"
+                pattern="[0-9]*"
+                inputMode="numeric"
+                value={data.departureLat || ''}
+                onChange={handleChange}
+              />
+            </div>
+            <div className="govuk-form-group">
+              <label className="govuk-label govuk-date-input__label" htmlFor="departureLong">
+                Longitude
+              </label>
+              <span className="govuk-hint">
+                For example 51.507493
+              </span>
+              <input
+                className="govuk-input govuk-date-input__input"
+                name="departureLong"
+                type="text"
+                pattern="[0-9]*"
+                inputMode="numeric"
+                value={data.departureLong || ''}
+                onChange={handleChange}
+              />
+            </div>
+          </fieldset>
+        </div>
       </div>
 
       <button

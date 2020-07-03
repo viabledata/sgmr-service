@@ -1,4 +1,3 @@
-
 const getId = (form) => {
   const idType = `${form}Id`;
   let id;

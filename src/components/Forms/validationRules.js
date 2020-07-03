@@ -182,12 +182,6 @@ export const arrivalValidationRules = [
     rule: 'required',
     message: 'You must enter an arrival time',
   },
-  {
-    inputField: 'arrivalPort',
-    errorDisplayId: 'arrivalPort',
-    rule: 'required',
-    message: 'You must enter an arrival port',
-  },
 ];
 
 export const departureValidationRules = [
@@ -220,12 +214,6 @@ export const departureValidationRules = [
     errorDisplayId: 'departureTime',
     rule: 'required',
     message: 'You must enter a departure time',
-  },
-  {
-    inputField: 'departurePort',
-    errorDisplayId: 'departurePort',
-    rule: 'required',
-    message: 'You must enter a departure port',
   },
 ];
 
@@ -273,12 +261,6 @@ export const voyageValidationRules = [
     message: 'You must enter a departure time',
   },
   {
-    inputField: 'departurePort',
-    errorDisplayId: 'departurePort',
-    rule: 'required',
-    message: 'You must enter a departure port',
-  },
-  {
     inputField: 'arrivalTimeHour',
     errorDisplayId: 'arrivalTime',
     rule: 'required',
@@ -289,12 +271,6 @@ export const voyageValidationRules = [
     errorDisplayId: 'arrivalTime',
     rule: 'required',
     message: 'You must enter an arrival time',
-  },
-  {
-    inputField: 'arrivalPort',
-    errorDisplayId: 'arrivalPort',
-    rule: 'required',
-    message: 'You must enter an arrival port',
   },
   {
     inputField: 'arrivalDateYear',

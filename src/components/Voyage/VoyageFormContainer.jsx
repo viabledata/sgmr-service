@@ -57,6 +57,10 @@ const FormVoyageContainer = () => {
       key = 'departureTime';
     } else if (fieldName.includes('arrivalTime')) {
       key = 'arrivalTime';
+    } else if (fieldName.includes('departurePort') || fieldName.includes('departureLat') || fieldName.includes('departureLong')) {
+      key = 'departureLocation';
+    } else if (fieldName.includes('arrivalPort') || fieldName.includes('arrivalLat') || fieldName.includes('arrivalLong')) {
+      key = 'arrivalLocation';
     } else { key = fieldName; }
 
     delete errorList[key];
@@ -196,7 +200,6 @@ const FormVoyageContainer = () => {
   const handleSubmit = (e, sourceForm) => {
     e.preventDefault();
     let dataToSubmit;
-
     if (sourceForm === 'people') {
       setNextPage(sourceForm);
     } else {
