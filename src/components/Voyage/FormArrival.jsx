@@ -140,12 +140,12 @@ const FormArrival = ({
         </fieldset>
       </div>
 
-      <div id="arrivalLocation" className={`govuk-form-group ${errors.arrivalPort ? 'govuk-form-group--error' : ''}`}>
-        {errors.arrivalPort
+      <div id="arrivalLocation" className={`govuk-form-group ${errors.arrivalLocation ? 'govuk-form-group--error' : ''}`}>
+        {errors.arrivalLocation
         && (
         <span className="govuk-error-message">
           <span className="govuk-visually-hidden">Error:</span>
-          {errors.arrivalPort}
+          {errors.arrivalLocation}
         </span>
         )}
         <div id="arrivalPort" className={`govuk-form-group ${errors.arrivalPort ? 'govuk-form-group--error' : ''}`}>
