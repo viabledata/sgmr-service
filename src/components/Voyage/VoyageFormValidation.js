@@ -7,7 +7,6 @@ import {
 import scrollToTopOnError from '@utils/scrollToTopOnError';
 
 const VoyageFormValidation = (dataToValidate, source) => {
-  debugger;
   const fieldsErroring = {};
   let validationRules;
   switch (source) {
@@ -30,12 +29,14 @@ const VoyageFormValidation = (dataToValidate, source) => {
   }
 
   // Departure & Arrival must include a Port OR a Lat & Long
+
+  
   if (
     source === 'departure'
     && !dataToValidate.departurePort
     && (!dataToValidate.departureLat || !dataToValidate.departureLong)
   ) {
-    fieldsErroring.departurePort = 'You must enter either a departure port or the lat/long coordinates';
+    fieldsErroring.departureLocation = 'You must enter either a departure port or the lat/long coordinates';
   }
   if (
     source === 'arrival'

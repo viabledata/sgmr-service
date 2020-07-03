@@ -196,7 +196,6 @@ const FormVoyageContainer = () => {
   const handleSubmit = (e, sourceForm) => {
     e.preventDefault();
     let dataToSubmit;
-
     if (sourceForm === 'people') {
       setNextPage(sourceForm);
     } else {
