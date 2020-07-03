@@ -21,6 +21,12 @@ const formatDepartureArrival = (status, data) => {
       }
     }
 
+    // If this is a null value departure or arrival port, set the value to 'ZZZZ'
+    if (item[0].search(/port/i) > 0 && !item[1]) {
+      const fieldName = item[0];
+      dataList[fieldName] = 'ZZZZ';
+    }
+
     if (
       item[0].search(/year/i) === -1 // it's not the year part of the date (handed above)
           && item[0].search(/month/i) === -1 // it's not the month part of the date (handed above)
