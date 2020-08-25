@@ -5,26 +5,31 @@ const formatDepartureArrival = (status, data) => {
     status,
   };
 
+  if (data.departureDateYear) { // format departure date.toString()
+    dataList.departureDate = formatDate(data.departureDateYear, data.departureDateMonth, data.departureDateDay);
+  }
+
+  if (data.departureTimeHour) { // format departure time
+    if (String(data.departureTimeHour).length > 0 && String(data.departureTimeMinute).length > 0) {
+      dataList.departureTime = `${data.departureTimeHour}:${data.departureTimeMinute}`;
+    }
+  }
+
+  if (data.arrivalDateYear) { // format arrival date
+    dataList.arrivalDate = formatDate(data.arrivalDateYear, data.arrivalDateMonth, data.arrivalDateDay);
+  }
+
+  if (data.arrivalTimeHour) { // format arrival time
+    if (String(data.arrivalTimeHour).length > 0 && String(data.arrivalTimeMinute).length > 0) {
+      dataList.arrivalTime = `${data.arrivalTimeHour}:${data.arrivalTimeMinute}`;
+    }
+  }
+
   Object.entries(data).map((item) => {
-    // If this is a date item, reformat to a single item
-    if (item[0].search(/year/i) > 0) {
-      const fieldName = item[0].slice(0, (item[0].length - 4));
-      dataList[fieldName] = formatDate(data[`${fieldName}Year`], data[`${fieldName}Month`], data[`${fieldName}Day`]);
-    }
-
-    // If this is a time item, reformat to a single item
-    if (item[0].search(/hour/i) > 0) {
-      const fieldName = item[0].slice(0, (item[0].length - 4));
-      // If hour or minute are not null then add, else, skip the time field
-      if (`${data[`${fieldName}Hour`]}`.length > 0 && `${data[`${fieldName}Minute`]}`.length > 0) {
-        dataList[fieldName] = (`${data[`${fieldName}Hour`]}:${data[`${fieldName}Minute`]}`);
-      }
-    }
-
-    // If this is a null value departure or arrival port, set the value to 'ZZZZ'
-    if (item[0].search(/port/i) > 0 && !item[1]) {
-      const fieldName = item[0];
-      dataList[fieldName] = 'ZZZZ';
+    if (item[0] === 'departurePort' && !item[1]) { // null value departure port
+      dataList.departurePort = 'ZZZD';
+    } else if (item[0] === 'arrivalPort' && !item[1]) { // null value arrival port
+      dataList.arrivalPort = 'ZZZA';
     }
 
     if (
