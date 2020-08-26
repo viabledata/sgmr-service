@@ -4,11 +4,7 @@ describe('Test formatDepartureArrival', () => {
   test('Return default departure and arrival ports if field is null', () => {
     const data = {
       arrivalPort: null,
-      arrivalDate: null,
-      arrivalTime: null,
       departurePort: null,
-      departureDate: null,
-      departureTime: null,
     };
     const expectedDataList = {
       arrivalPort: 'ZZZA',
@@ -20,7 +16,22 @@ describe('Test formatDepartureArrival', () => {
     expect(result).toEqual(expectedDataList);
   });
 
-  test('Return formatted departure and arrival dates', () => {
+  test('Return user departure and arrival ports if field is not null', () => {
+    const data = {
+      arrivalPort: 'Portsmouth',
+      departurePort: 'Southampton',
+    };
+    const expectedDataList = {
+      arrivalPort: 'Portsmouth',
+      departurePort: 'Southampton',
+      status: 'Draft',
+    };
+
+    const result = formatDepartureArrival('Draft', data);
+    expect(result).toEqual(expectedDataList);
+  });
+
+  test('Format departure and arrival dates', () => {
     const data = {
       arrivalDateDay: '5',
       arrivalDateMonth: '2',
@@ -31,7 +42,9 @@ describe('Test formatDepartureArrival', () => {
     };
     const expectedDataList = {
       arrivalDate: '2020-2-5',
+      arrivalPort: 'ZZZA',
       departureDate: '2020-2-4',
+      departurePort: 'ZZZD',
       status: 'Draft',
     };
 
@@ -39,16 +52,39 @@ describe('Test formatDepartureArrival', () => {
     expect(result).toEqual(expectedDataList);
   });
 
-  test('Return formatted departure and arrival times', () => {
+  test('Format departure and arrival times', () => {
     const data = {
-      arrivalTimeHour: '15',
-      arrivalTimeMinute: '2',
-      departureTimeHour: '12',
-      departureTimeMinute: '4',
+      departureTimeHour: '11',
+      departureTimeMinute: '33',
+      arrivalTimeHour: '18',
+      arrivalTimeMinute: '45',
     };
     const expectedDataList = {
-      arrivalTime: '15:2',
-      departureTime: '12:4',
+      departurePort: 'ZZZD',
+      departureTime: '11:33',
+      arrivalPort: 'ZZZA',
+      arrivalTime: '18:45',
+      status: 'Draft',
+    };
+
+    const result = formatDepartureArrival('Draft', data);
+    expect(result).toEqual(expectedDataList);
+  });
+
+  test('Return user departure and arrival lat/long coordinates if field is not null', () => {
+    const data = {
+      departureLat: '15989.0',
+      departureLong: '288.3',
+      arrivalLat: '12323.6',
+      arrivalLong: '4.900',
+    };
+    const expectedDataList = {
+      departurePort: 'ZZZD',
+      departureLat: '15989.0',
+      departureLong: '288.3',
+      arrivalLat: '12323.6',
+      arrivalLong: '4.900',
+      arrivalPort: 'ZZZA',
       status: 'Draft',
     };
 
