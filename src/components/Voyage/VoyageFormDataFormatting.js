@@ -25,27 +25,34 @@ const formatDepartureArrival = (status, data) => {
     }
   }
 
-  Object.entries(data).map((item) => {
-    if (item[0] === 'departurePort' && !item[1]) { // null value departure port
-      dataList.departurePort = 'ZZZD';
-    } else if (item[0] === 'arrivalPort' && !item[1]) { // null value arrival port
-      dataList.arrivalPort = 'ZZZA';
-    }
+  if (!data.departurePort) { // null value departure port
+    dataList.departurePort = 'ZZZD';
+  } else {
+    dataList.departurePort = data.departurePort;
+  }
 
-    if (
-      item[0].search(/year/i) === -1 // it's not the year part of the date (handed above)
-          && item[0].search(/month/i) === -1 // it's not the month part of the date (handed above)
-          && item[0].search(/day/i) === -1 // it's not the day part of the date (handled above)
-          && item[0].search(/hour/i) === -1 // it's not the hour part of the time
-          && item[0].search(/minute/i) === -1 // it's not the minute part of the time
-          && item[1] // it's value is not null
-          && item[0] !== 'id' // it's not the id field
-          && typeof item[1] !== 'object' // it's not something being passed in obj form to us from an existing voyage
-    ) {
-      // Then add it to dataList
-      dataList[item[0]] = item[1];
-    }
-  });
+  if (!data.arrivalPort) { // null value arrival port
+    dataList.arrivalPort = 'ZZZA';
+  } else {
+    dataList.arrivalPort = data.arrivalPort;
+  }
+
+  if (data.departureLat) {
+    dataList.departureLat = data.departureLat;
+  }
+
+  if (data.departureLong) {
+    dataList.departureLong = data.departureLong;
+  }
+
+  if (data.arrivalLat) {
+    dataList.arrivalLat = data.arrivalLat;
+  }
+
+  if (data.arrivalLong) {
+    dataList.arrivalLong = data.arrivalLong;
+  }
+
   return dataList;
 };
 
