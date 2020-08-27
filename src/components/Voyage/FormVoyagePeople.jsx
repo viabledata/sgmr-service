@@ -11,22 +11,20 @@ const FormVoyagePeople = ({
 }) => {
   const [peopleData, setPeopleData] = useState();
 
-
   const storePeopleData = () => {
     getData(PEOPLE_URL)
       .then((resp) => setPeopleData(resp));
   };
 
-
   useEffect(() => {
     storePeopleData();
   }, []);
 
-  if (!peopleData) { return null; }
+  if (peopleData === undefined) { return null; }
   return (
     <section>
       <h1 className="govuk-heading-xl">People on board</h1>
-      {!peopleData.errors && (
+      {peopleData && (
         <>
           <h2 className="govuk-heading-l">Saved people</h2>
           <p className="govuk-body-l">Add the details of people you have saved previously</p>
