@@ -9,7 +9,7 @@
     "lint:extra": "eslint \"./src/**/*.{js,jsx}\" --fix",
     "start": "webpack-dev-server --watch-poll --mode=development",
     "test": "jest",
-    "test-coverage": "jest --coverage --colors",
+    "test:coverage": "jest --coverage --colors",
     "test:watch": "npm run test -- --watch"
   },
   "repository": {
