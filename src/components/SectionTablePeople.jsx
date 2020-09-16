@@ -14,7 +14,6 @@ const SectionTablePeople = ({ page, pageData }) => {
       .then((resp) => { setPeopleData(resp); });
   };
 
-
   useEffect(() => {
     storeData();
     setTitles(pageData.reportTitles);
