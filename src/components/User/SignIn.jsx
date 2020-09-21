@@ -57,6 +57,7 @@ const SignIn = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    localStorage.clear();
     // Ensure required fields have a value
     if (checkRequiredFields() === true) {
       axios.post(LOGIN_URL, formData)
