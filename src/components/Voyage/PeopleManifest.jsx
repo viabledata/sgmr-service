@@ -15,14 +15,16 @@ const Manifest = ({ voyageId, source }) => {
       .then((resp) => { setManifestData(resp.items); });
   }, []);
 
+  console.log(manifestData);
+
   if (!manifestData) { return null; }
   return (
     <>
       <table className="govuk-table">
         <thead className="govuk-table__head">
           <tr className="govuk-table__row">
-            <th className="govuk-table__header" scope="col">Surname</th>
-            <th className="govuk-table__header" scope="col">Given name</th>
+            <th className="govuk-table__header" scope="col">Last name</th>
+            <th className="govuk-table__header" scope="col">First name</th>
             <th className="govuk-table__header" scope="col">Date of birth</th>
             <th className="govuk-table__header" scope="col">Travel document number</th>
             <th className="govuk-table__header" scope="col">Nationality</th>
@@ -38,7 +40,7 @@ const Manifest = ({ voyageId, source }) => {
                 <td className="govuk-table__cell">{formatUIDate(person.dateOfBirth)}</td>
                 <td className="govuk-table__cell">{person.documentNumber}</td>
                 <td className="govuk-table__cell">{person.nationality}</td>
-                <td className="govuk-table__cell">{person.peopleType.name}</td>
+                <td className="govuk-table__cell">{person.peopleType.name === 'Skipper' ? 'Skipper' : person.peopleType.name === 'Passenger' ? 'Unpaid Crew' : 'Paid Crew'}</td>
               </tr>
 
               <tr className="govuk-table__row">

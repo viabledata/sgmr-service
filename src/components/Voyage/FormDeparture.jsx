@@ -88,7 +88,7 @@ const FormDeparture = ({
         <fieldset className="govuk-fieldset" role="group" aria-describedby="departureTime-hint">
           <legend className="govuk-fieldset__legend govuk-fieldset__legend--m">
             <label className="govuk-label govuk-label--m" htmlFor="departureTime">
-              Estimate departure time (UTC)
+              Estimated departure time (UTC)
             </label>
             {errors.departureTime
               && (

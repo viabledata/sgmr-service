@@ -240,9 +240,6 @@ const FormPerson = ({
               Person type
             </label>
           </legend>
-          <span className="govuk-hint">
-            For example Skipper, Crew
-          </span>
           <div className="govuk-radios govuk-radios">
             {errors.peopleType
             && (
