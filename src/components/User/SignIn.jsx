@@ -104,7 +104,7 @@ const SignIn = () => {
 
               <div id="email" className="govuk-form-group">
                 <label className="govuk-label govuk-label--m" htmlFor="email">
-                  Registered email address
+                  Email address
                 </label>
                 <span className="govuk-hint">Enter the email address you used when you created your account</span>
                 <input
@@ -136,9 +136,10 @@ const SignIn = () => {
               >
                 Sign in
               </button>
+              <p className="govuk-body"><Link to="/">Problems signing in?</Link></p>
             </form>
-            <h3 className="govuk-heading-m">Need to create an account?</h3>
-            <p className="govuk-body"><Link to="/register">Create an account</Link></p>
+            <h3 className="govuk-heading-m">Create an account</h3>
+            <p className="govuk-body"><Link to="/register">Create an account to submit and update notifications</Link></p>
           </div>
         </div>
       </main>

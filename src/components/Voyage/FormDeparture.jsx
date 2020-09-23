@@ -7,12 +7,12 @@ const FormDeparture = ({
   return (
     <section>
       <h1 className="govuk-heading-xl">Departure details</h1>
-      <p className="govuk-body-l">Provide the departure details of the voyage</p>
+      <p className="govuk-body-l">You can update these details if your plans change, for example, due to bad weather</p>
 
       <div id="departureDate" className={`govuk-form-group ${errors.departureDate ? 'govuk-form-group--error' : ''}`}>
         <fieldset className="govuk-fieldset" role="group" aria-describedby="dob-hint">
           <legend className="govuk-fieldset__legend">
-            <label className="govuk-label" htmlFor="departureDate">
+            <label className="govuk-label govuk-label--m" htmlFor="departureDate">
               Departure date
             </label>
             {errors.departureDate
@@ -87,8 +87,8 @@ const FormDeparture = ({
       <div id="departureTime" className={`govuk-form-group ${errors.departureTime ? 'govuk-form-group--error' : ''}`}>
         <fieldset className="govuk-fieldset" role="group" aria-describedby="departureTime-hint">
           <legend className="govuk-fieldset__legend govuk-fieldset__legend--m">
-            <label className="govuk-label govuk-label" htmlFor="departureTime">
-              Departure time (UTC)
+            <label className="govuk-label govuk-label--m" htmlFor="departureTime">
+              Estimate departure time (UTC)
             </label>
             {errors.departureTime
               && (
@@ -151,10 +151,10 @@ const FormDeparture = ({
 
         <div id="departurePort" className="govuk-form-group">
           <label className="govuk-label govuk-label--m" htmlFor="departurePort">
-            Departure port
+            Departure point
           </label>
           <span className="govuk-hint">
-            The name or UNLOCODE of the port, for example Monaco or MC MON. Enter ‘ZZZZ’ if not known
+            You can enter a port, marina or anchorage name
           </span>
           <input
             className="govuk-input"
@@ -164,53 +164,6 @@ const FormDeparture = ({
             value={data.departurePort || ''}
             onChange={handleChange}
           />
-        </div>
-
-        <div id="departureCoordinates" className="govuk-form-group">
-          <fieldset className="govuk-fieldset" role="group" aria-describedby="departureCoordinates-hint">
-            <legend className="govuk-fieldset__legend govuk-fieldset__legend--m">
-              <label className="govuk-label govuk-label--m" htmlFor="departureCoordinates">
-                Departure coordinates
-              </label>
-              <span className="govuk-hint">
-                If port is ‘ZZZZ’, provide decimal coordinates to 6 places
-              </span>
-            </legend>
-            <div className="govuk-form-group">
-              <label className="govuk-label govuk-date-input__label" htmlFor="departureLat">
-                Latitude
-              </label>
-              <span className="govuk-hint">
-                For example 51.507493
-              </span>
-              <input
-                className="govuk-input govuk-date-input__input"
-                name="departureLat"
-                type="text"
-                pattern="[0-9]*"
-                inputMode="numeric"
-                value={data.departureLat || ''}
-                onChange={handleChange}
-              />
-            </div>
-            <div className="govuk-form-group">
-              <label className="govuk-label govuk-date-input__label" htmlFor="departureLong">
-                Longitude
-              </label>
-              <span className="govuk-hint">
-                For example 51.507493
-              </span>
-              <input
-                className="govuk-input govuk-date-input__input"
-                name="departureLong"
-                type="text"
-                pattern="[0-9]*"
-                inputMode="numeric"
-                value={data.departureLong || ''}
-                onChange={handleChange}
-              />
-            </div>
-          </fieldset>
         </div>
       </div>
 

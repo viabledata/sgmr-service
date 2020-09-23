@@ -328,9 +328,9 @@ const FormVoyageContainer = () => {
               )}
               {pageNum === '4b' && (
                 <>
-                  <h1 className="govuk-heading-xl">Add new person details</h1>
+                  <h1 className="govuk-heading-xl">Add details of a new person</h1>
                   <p className="govuk-body-l">
-                    Provide the details of the person you want to add to the manifest. Details should be as displayed on travel document.
+                    Enter the details as displayed on their travel document
                   </p>
                   <FormPerson
                     handleSubmit={handleSubmit}

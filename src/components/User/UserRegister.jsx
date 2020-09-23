@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-expressions */
 import React, { useState, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 
 // app imports
 import { REGISTRATION_URL } from '@constants/ApiConstants';
@@ -101,7 +101,7 @@ const UserRegister = () => {
 
               <div id="firstName" className={`govuk-form-group ${errors.firstName ? 'govuk-form-group--error' : ''}`}>
                 <label className="govuk-label govuk-label--m" htmlFor="firstName">
-                  Given name
+                  First name
                 </label>
                 {errors.firstName
                   && (
@@ -121,7 +121,7 @@ const UserRegister = () => {
 
               <div id="lastName" className={`govuk-form-group ${errors.lastName ? 'govuk-form-group--error' : ''}`}>
                 <label className="govuk-label govuk-label--m" htmlFor="lastName">
-                  Surname
+                  Last name
                 </label>
                 {errors.lastName
                   && (
@@ -150,7 +150,7 @@ const UserRegister = () => {
                     {errors.mobileNumber}
                   </span>
                   )}
-                <span className="govuk-hint">You will be sent a verification token to this number.</span>
+                <span className="govuk-hint">We will send an access code to this number</span>
                 <input
                   className="govuk-input"
                   name="mobileNumber"
@@ -170,7 +170,7 @@ const UserRegister = () => {
                     {errors.email}
                   </span>
                   )}
-                <span className="govuk-hint">You will use this email to sign in to the Submit an Advanced Voyage Report service</span>
+                <span className="govuk-hint">You will use this to sign into your account</span>
                 <input
                   className="govuk-input"
                   name="email"
@@ -202,7 +202,7 @@ const UserRegister = () => {
 
               <div id="password" className={`govuk-form-group ${errors.password ? 'govuk-form-group--error' : ''}`}>
                 <label className="govuk-label govuk-label--m" htmlFor="password">
-                  Password
+                  Create password
                 </label>
                 {errors.password
                   && (
@@ -219,7 +219,7 @@ const UserRegister = () => {
                   onChange={handleChange}
                 />
               </div>
-
+              <p className="govuk-body"><Link to="/">Help choosing a valid password</Link></p>
               <div id="confirmPassword" className={`govuk-form-group ${errors.confirmPassword ? 'govuk-form-group--error' : ''}`}>
                 <label className="govuk-label govuk-label--m" htmlFor="confirmPassword">
                   Confirm password

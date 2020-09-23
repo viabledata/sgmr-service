@@ -13,7 +13,7 @@ const FormPerson = ({
     <section>
       <div id="firstName" className={`govuk-form-group ${errors.firstName ? 'govuk-form-group--error' : ''}`}>
         <label className="govuk-label" htmlFor="firstName">
-          Given name
+          First name
         </label>
         {errors.firstName
           && (
@@ -33,7 +33,7 @@ const FormPerson = ({
 
       <div id="lastName" className={`govuk-form-group ${errors.lastName ? 'govuk-form-group--error' : ''}`}>
         <label className="govuk-label" htmlFor="lastName">
-          Surname
+          Last Name
         </label>
         {errors.lastName
           && (
@@ -52,35 +52,71 @@ const FormPerson = ({
       </div>
 
       <div id="gender" className={`govuk-form-group ${errors.gender ? 'govuk-form-group--error' : ''}`}>
-        <label className="govuk-label" htmlFor="gender">
-          Gender
-        </label>
-        {errors.gender
+      <fieldset className="govuk-fieldset" aria-describedby="gender-hint">
+        <legend className="govuk-fieldset__legend">
+          <label className="govuk-fieldset__heading">
+            Gender
+          </label>
+        </legend>
+        <div className="govuk-radios govuk-radios">
+          {errors.gender
           && (
           <span className="govuk-error-message">
             <span className="govuk-visually-hidden">Error:</span>
             {errors.gender}
           </span>
           )}
-        <select
-          className="govuk-select"
-          name="gender"
-          type="text"
-          value={formData.gender || data.gender || 'Please select'}
-          onChange={handleChange}
-        >
-          <option disabled>Please select</option>
-          <option value="female">Female</option>
-          <option value="male">Male</option>
-          <option value="unspecified">Unspecified</option>
-        </select>
+          <div className="govuk-radios__item">
+            <input
+              className="govuk-radios__input"
+              name="gender"
+              id="female"
+              type="radio"
+              value="Female"
+              checked={(formData.gender === 'Female' || data.gender === 'Female') ? 'checked' : ''}
+              onChange={handleChange}
+            />
+            <label className="govuk-label govuk-radios__label" htmlFor="female">
+              Female
+            </label>
+          </div>
+          <div className="govuk-radios__item">
+            <input
+              className="govuk-radios__input"
+              name="gender"
+              id="male"
+              type="radio"
+              value="Male"
+              checked={(formData.gender === 'Male' || data.gender === 'Male') ? 'checked' : ''}
+              onChange={handleChange}
+            />
+            <label className="govuk-label govuk-radios__label" htmlFor="male">
+              Male
+            </label>
+          </div>
+          <div className="govuk-radios__item">
+            <input
+              className="govuk-radios__input"
+              name="gender"
+              id="non-binary"
+              type="radio"
+              value="Non-binary"
+              checked={(formData.gender === 'Non-binary' || data.gender === 'Non-binary') ? 'checked' : ''}
+              onChange={handleChange}
+            />
+            <label className="govuk-label govuk-radios__label" htmlFor="non-binary">
+              Non-binary
+            </label>
+          </div>
+        </div>
+      </fieldset>
       </div>
 
       <div id="dateOfBirth" className={`govuk-form-group ${errors.dateOfBirth ? 'govuk-form-group--error' : ''}`}>
         <fieldset className="govuk-fieldset" role="group" aria-describedby="dob-hint">
           <legend className="govuk-fieldset__legend">
             <label className="govuk-label" htmlFor="dateOfBirth">
-              What is your date of birth?
+              Date of Birth
             </label>
             {errors.dateOfBirth
               && (
@@ -241,7 +277,7 @@ const FormPerson = ({
                 onChange={handleChange}
               />
               <label className="govuk-label govuk-radios__label" htmlFor="peopleType-2">
-                Crew
+                Paid Crew
               </label>
             </div>
             <div className="govuk-radios__item">
@@ -255,7 +291,7 @@ const FormPerson = ({
                 onChange={handleChange}
               />
               <label className="govuk-label govuk-radios__label" htmlFor="peopleType-3">
-                Passenger
+                Unpaid Crew
               </label>
             </div>
           </div>
