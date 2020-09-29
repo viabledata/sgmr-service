@@ -219,7 +219,7 @@ const UserRegister = () => {
                   onChange={handleChange}
                 />
               </div>
-              <p className="govuk-body"><Link to="/">Help choosing a valid password</Link></p>
+              <p className="govuk-body"><Link to="#">Help choosing a valid password</Link></p>
               <div id="confirmPassword" className={`govuk-form-group ${errors.confirmPassword ? 'govuk-form-group--error' : ''}`}>
                 <label className="govuk-label govuk-label--m" htmlFor="confirmPassword">
                   Confirm password

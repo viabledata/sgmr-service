@@ -15,8 +15,6 @@ const Manifest = ({ voyageId, source }) => {
       .then((resp) => { setManifestData(resp.items); });
   }, []);
 
-  console.log(manifestData);
-
   if (!manifestData) { return null; }
   return (
     <>

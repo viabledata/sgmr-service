@@ -9,7 +9,7 @@ const FormVoyageSubmitted = () => {
         <div className="govuk-grid-row">
           <div className="govuk-grid-column-two-thirds">
             <div className="govuk-panel govuk-panel--confirmation">
-              <h1 className="govuk-panel__title">Advanced Voyage Notification Submitted</h1>
+              <h1 className="govuk-panel__title">Advance Voyage Notification Submitted</h1>
             </div>
             <p>We have sent you a confirmation email.</p>
             <h2 className="govuk-heading-m">What happens next</h2>

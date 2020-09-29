@@ -136,11 +136,11 @@ const SignIn = () => {
               >
                 Sign in
               </button>
-              <p className="govuk-body"><Link to="/">Problems signing in?</Link></p>
+              <p className="govuk-body"><Link to="#">Problems signing in?</Link></p>
             </form>
           </div>
           <div className="govuk-grid-column-one-third">
-          <h3 className="govuk-heading-m">Create an account</h3>
+            <h3 className="govuk-heading-m">Create an account</h3>
             <p className="govuk-body"><Link to="/register">Create an account to submit and update notifications</Link></p>
           </div>
         </div>
