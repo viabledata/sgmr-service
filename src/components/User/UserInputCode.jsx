@@ -86,14 +86,14 @@ const UserInputCode = () => {
       <main className="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" role="main">
         <div className="govuk-grid-row">
           <div className="govuk-grid-column-two-thirds">
-            <h1 className="govuk-heading-xl">Confirm your multi-factor authentication code</h1>
+            <h1 className="govuk-heading-xl">Enter your access code</h1>
             <p className="govuk-body-l">
-              Due to the nature of the data used and transmitted by the Submit an Advanced Voyage Report Service, we require users to register for multi-factor authentication to ensure the security of the system.
+              To ensure security we have sent a 5-digit code to your mobile number. It may take a few minutes to arrive.
             </p>
             <form>
               <div id="twoFactorToken" className={`govuk-form-group ${errors.twoFactorToken ? 'govuk-form-group--error' : ''}`}>
                 <label className="govuk-label govuk-label--m" htmlFor="twoFactorToken">
-                  Authentication code
+                  Access code
                 </label>
                 <span className="govuk-hint">Please enter the code you received</span>
                 {errors.twoFactorToken
@@ -105,13 +105,13 @@ const UserInputCode = () => {
                   </span>
                   )}
                 <input
-                  className="govuk-input"
+                  className="govuk-input govuk-input--width-5"
                   name="twoFactorToken"
                   type="text"
                   onChange={handleChange}
                 />
                 <p className="govuk-body">
-                  <Link to={`/resend-code?source=${source}`}>Didn't receive a code?</Link>
+                  <Link to={`/resend-code?source=${source}`}>Problems receiving this code?</Link>
                 </p>
               </div>
               <button

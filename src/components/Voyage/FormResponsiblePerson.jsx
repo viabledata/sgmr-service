@@ -5,12 +5,12 @@ const FormResponsiblePerson = ({
 }) => {
   return (
     <section>
-      <h1 className="govuk-heading-xl">Responsible person</h1>
+      <h1 className="govuk-heading-xl">Add the skipper's address</h1>
       <p className="govuk-body-l">Provide the details of the person responsible for this voyage. By default this is the Skipper, but could be the vessel owner if this is a charter.</p>
 
       <div id="responsibleGivenName" className="govuk-form-group">
         <label className="govuk-label govuk-label--m" htmlFor="responsibleGivenName">
-          Given name
+          First name
         </label>
         <input
           className="govuk-input"
@@ -23,7 +23,7 @@ const FormResponsiblePerson = ({
 
       <div id="responsibleSurname" className="govuk-form-group">
         <label className="govuk-label govuk-label--m" htmlFor="responsibleSurname">
-          Surname
+          Last name
         </label>
         <input
           className="govuk-input"
@@ -38,7 +38,7 @@ const FormResponsiblePerson = ({
           Contact telephone number
         </label>
         <span className="govuk-hint">
-          Include international dialling code, for example +44
+          For international numbers include the country code
         </span>
         <input
           className="govuk-input"

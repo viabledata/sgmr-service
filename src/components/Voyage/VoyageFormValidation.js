@@ -35,14 +35,14 @@ const VoyageFormValidation = (dataToValidate, source) => {
     && !dataToValidate.departurePort
     && (!dataToValidate.departureLat || !dataToValidate.departureLong)
   ) {
-    fieldsErroring.departureLocation = 'You must enter either a departure port or the lat/long coordinates';
+    fieldsErroring.departureLocation = 'You must enter a departure point';
   }
   if (
     source === 'arrival'
     && !dataToValidate.arrivalPort
     && (!dataToValidate.arrivalLat || !dataToValidate.arrivalLong)
   ) {
-    fieldsErroring.arrivalLocation = 'You must enter either an arrival port or the lat/long coordinates';
+    fieldsErroring.arrivalLocation = 'You must enter an arrival point';
   }
 
   // Date fields must be valid

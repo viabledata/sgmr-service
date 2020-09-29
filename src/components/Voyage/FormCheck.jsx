@@ -13,7 +13,7 @@ const FormCheck = ({
   return (
     <section>
       <h1 className="govuk-heading-xl">
-        Check all the information provided before submitting your Advanced Voyage Report
+        Check the information provided before submitting your voyage notification
       </h1>
 
       <dl className="govuk-summary-list govuk-!-margin-bottom-9">
@@ -45,22 +45,14 @@ const FormCheck = ({
           </dd>
         </div>
         <div className="govuk-summary-list__row">
-          <dt className="govuk-summary-list__key">Departure time</dt>
+          <dt className="govuk-summary-list__key">Estimated departure time</dt>
           <dd className="govuk-summary-list__value">
             {voyageData.departureTime}
           </dd>
         </div>
         <div className="govuk-summary-list__row">
-          <dt className="govuk-summary-list__key">Departure port</dt>
+          <dt className="govuk-summary-list__key">Departure point</dt>
           <dd className="govuk-summary-list__value">{voyageData.departurePort}</dd>
-        </div>
-        <div className="govuk-summary-list__row">
-          <dt className="govuk-summary-list__key">Departure port latitude</dt>
-          <dd className="govuk-summary-list__value">{voyageData.departureLat}</dd>
-        </div>
-        <div className="govuk-summary-list__row">
-          <dt className="govuk-summary-list__key">Departure port longitude</dt>
-          <dd className="govuk-summary-list__value">{voyageData.departureLong}</dd>
         </div>
       </dl>
       <dl className="govuk-summary-list govuk-!-margin-bottom-9">
@@ -91,22 +83,14 @@ const FormCheck = ({
           </dd>
         </div>
         <div className="govuk-summary-list__row">
-          <dt className="govuk-summary-list__key">Arrival time</dt>
+          <dt className="govuk-summary-list__key">Estimated arrival time</dt>
           <dd className="govuk-summary-list__value">
             {voyageData.arrivalTime}
           </dd>
         </div>
         <div className="govuk-summary-list__row">
-          <dt className="govuk-summary-list__key">Arrival port</dt>
+          <dt className="govuk-summary-list__key">Arrival point</dt>
           <dd className="govuk-summary-list__value">{voyageData.arrivalPort}</dd>
-        </div>
-        <div className="govuk-summary-list__row">
-          <dt className="govuk-summary-list__key">Arrival port latitude</dt>
-          <dd className="govuk-summary-list__value">{voyageData.arrivalLat}</dd>
-        </div>
-        <div className="govuk-summary-list__row">
-          <dt className="govuk-summary-list__key">Arrival port longitude</dt>
-          <dd className="govuk-summary-list__value">{voyageData.arrivalLong}</dd>
         </div>
       </dl>
       <dl className="govuk-summary-list govuk-!-margin-bottom-9">
@@ -225,7 +209,7 @@ const FormCheck = ({
           </dd>
         </div>
       </dl>
-      <h2 className="govuk-heading-m">Submit your Advanced Voyage Report</h2>
+      <h2 className="govuk-heading-m">Submit your Advanced Voyage Notification</h2>
       <p>By submitting this Advanced Voyage Report you are confirming that, to the best of your knowledge, the information you are providing is correct and you have the explicit permission of the persons named in this report to submit information on their behalf.</p>
       <button
         type="button"
