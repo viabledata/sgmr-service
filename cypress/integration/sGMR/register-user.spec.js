@@ -14,7 +14,7 @@ describe('User Registration', () => {
     apiServer = Cypress.env('api_server');
   });
 
-  it('Successful Registration', () => {
+  it('Should register user Successfully', () => {
     cy.server();
     cy.route('POST', `${apiServer}/registration`).as('registration');
 
@@ -34,7 +34,7 @@ describe('User Registration', () => {
     });
   });
 
-  it('Failure Registration - Submit without any information', () => {
+  it('Should not register user without submitting required data', () => {
     let errors = ['You must enter your first name', 'You must enter your last name',
       'You must enter a valid phone number', 'You must enter a valid email address', 'You must enter a password'];
 
@@ -47,7 +47,7 @@ describe('User Registration', () => {
     cy.url().should('not.include', '/sign-in?source=registration');
   });
 
-  it('Duplicate Registration - Entering the exiting User information for registration', () => {
+  it('Should not regiister user with exiting user information', () => {
     cy.server();
     cy.route('POST', `${apiServer}/registration`).as('registration');
 
@@ -59,7 +59,7 @@ describe('User Registration', () => {
     cy.get('.govuk-error-message').should('contain.text', 'User already registered');
   });
 
-  it('Failure Registration - Entering Invalid Authentication code', () => {
+  it('Should not register when Entering Invalid Authentication code', () => {
     let mail = randomEmail();
     cy.server();
     cy.route('POST', `${apiServer}/registration`).as('registration');
