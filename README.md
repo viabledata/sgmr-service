@@ -34,7 +34,7 @@ There are two ways to run cypress tests, using the cypress test runner or runnin
 
 #### Running Cypress Test Runner
 ```sh
-npx cypress open
+npm run cypress:runner
 ```
 
 Once TestRunner launched, click on the interested spec inside folder cypress/integration/sGMR
@@ -43,7 +43,7 @@ Once TestRunner launched, click on the interested spec inside folder cypress/int
 
 ## Running all tests, (It executes tests headless mode on Electron Browser)
 ```sh
-npm run cypress:test -- --spec cypress/integration/sGMR/**/*
+npm run cypress:test
 ```
 
 ## Running a specific test
