@@ -24,7 +24,7 @@ function generateNewUser() {
     email: `Auto-${faker.internet.exampleEmail()}`,
     lastName: `Auto-${faker.name.lastName()}`,
     password: 'SuperSecret',
-    mobileNumber: '09999955555',
+    mobileNumber: '07000055555',
   };
   return user;
 }
