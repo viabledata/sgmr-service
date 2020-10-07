@@ -1,0 +1,10 @@
+{
+    "name": "Auto-Test-Vessel",
+    "type": "Yacht",
+    "moorings": "GBR",
+    "regNumber": "1234",
+    "hullIdNumber": "1234",
+    "callSign": "test",
+    "nationality": "British",
+    "port": "Southampton"
+}

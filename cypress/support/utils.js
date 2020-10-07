@@ -4,3 +4,9 @@ exports.randomEmail = () => {
   const testname = `Auto-test${id}@mail.com`;
   return testname;
 };
+
+exports.randomNumber = () => {
+  const uuid = () => Cypress._.random(0, 10000000);
+  const id = uuid();
+  return id;
+};
