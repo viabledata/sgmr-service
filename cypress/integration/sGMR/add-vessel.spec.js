@@ -11,11 +11,6 @@ describe('Add new vessel', () => {
     });
   });
 
-  afterEach(() => {
-    cy.navigation('Signout');
-    cy.url().should('include', '/sign-in');
-  });
-
   beforeEach(() => {
     cy.fixture('users.json').then((users) => {
       cy.login(users.user1.email, users.user1.password);
@@ -25,7 +20,7 @@ describe('Add new vessel', () => {
     cy.get('.govuk-button--start').should('have.text', 'Save a vessel').click();
   });
 
-  it('Should create a new Vessel', () => {
+  it('Should add a new Vessel', () => {
     const expectedVessel = [
       {
         'Vessel name': VESSEL.name,
@@ -35,6 +30,8 @@ describe('Add new vessel', () => {
     ];
     cy.enterVesselInfo(VESSEL);
     cy.get('.govuk-button').click();
+    cy.get('.govuk-error-message').should('not.be.visible');
+    cy.url().should('include', '/vessels');
     cy.get('table').getTable().then((vesselData) => {
       expect(vesselData).to.not.be.empty;
       cy.log(vesselData);
@@ -42,8 +39,10 @@ describe('Add new vessel', () => {
     });
   });
 
-  it('Should not create vessel without submitting required data', () => {
-    let errors = ['You must enter a vessel name', 'You must enter a vessel type', 'You must enter the vessel usual mooring',
+  it('Should not add a vessel without submitting required data', () => {
+    let errors = ['You must enter a vessel name',
+      'You must enter a vessel type',
+      'You must enter the vessel usual mooring',
       'You must enter the vessel registration'];
 
     cy.get('.govuk-button').click();
@@ -53,13 +52,13 @@ describe('Add new vessel', () => {
     });
   });
 
-  it('Should not allow creating a duplicate vessel', () => {
+  it('Should not allow adding a duplicate vessel', () => {
     cy.enterVesselInfo(VESSEL);
     cy.get('.govuk-button').click();
     cy.get('.govuk-error-message').should('contain.text', 'This vessel already exists').and('be.visible');
   });
 
-  it('Should not create a vessel when Clicking on "Exit without saving" button', () => {
+  it('Should not add a vessel when Clicking on "Exit without saving" button', () => {
     cy.enterVesselInfo(VESSEL);
     cy.get('[name="vesselName"]').clear().type('Titanic');
     cy.get('[name="registration"]').clear().type('9999999');
@@ -68,5 +67,10 @@ describe('Add new vessel', () => {
       cy.log(vesselData);
       expect(vesselData).to.not.include('Titanic');
     });
+  });
+
+  afterEach(() => {
+    cy.navigation('Signout');
+    cy.url().should('include', '/sign-in');
   });
 });

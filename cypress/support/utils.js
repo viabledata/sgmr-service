@@ -10,3 +10,7 @@ exports.randomNumber = () => {
   const id = uuid();
   return id;
 };
+
+exports.getFutureDate = () => {
+  return Cypress.moment().add(2, 'year').calendar();
+};
