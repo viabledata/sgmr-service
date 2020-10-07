@@ -12,5 +12,5 @@ exports.randomNumber = () => {
 };
 
 exports.getFutureDate = () => {
-  return Cypress.moment().add(2, 'year').calendar();
+  return Cypress.moment().add(2, 'year').format('DD/MM/YYYY');
 };

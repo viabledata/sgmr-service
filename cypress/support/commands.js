@@ -34,8 +34,8 @@ Cypress.Commands.add('enterPeopleInfo', (people) => {
   cy.get('[type="radio"]').check(people.TravelDocType).should('be.checked');
   cy.get('input[name="documentNumber"]').clear().type(people.DocumentNumber);
   cy.get('input[name="documentIssuingState"]').clear().type(people.IssuingState);
-  cy.get('input[name="documentExpiryDateDay"]').clear().type(date[1]);
-  cy.get('input[name="documentExpiryDateMonth"]').clear().type(date[0]);
+  cy.get('input[name="documentExpiryDateDay"]').clear().type(date[0]);
+  cy.get('input[name="documentExpiryDateMonth"]').clear().type(date[1]);
   cy.get('input[name="documentExpiryDateYear"]').clear().type(date[2]);
 });
 
