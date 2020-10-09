@@ -1,13 +1,13 @@
-import { randomNumber } from '../../support/utils';
+const faker = require('faker');
 
-describe('Add new vessel', () => {
-  let VESSEL;
+describe('Add new vessel in account', () => {
+  let vessel;
 
   before(() => {
-    cy.fixture('vessel.json').then((vessel) => {
-      vessel.regNumber = randomNumber();
-      vessel.name = `${vessel.name}${randomNumber()}`;
-      VESSEL = vessel;
+    cy.fixture('vessel.json').then((vesselData) => {
+      vesselData.regNumber = faker.random.number();
+      vesselData.name = `${vesselData.name}${faker.random.number()}`;
+      vessel = vesselData;
     });
   });
 
@@ -23,12 +23,12 @@ describe('Add new vessel', () => {
   it('Should add a new Vessel', () => {
     const expectedVessel = [
       {
-        'Vessel name': VESSEL.name,
-        'Vessel type': VESSEL.type,
-        'Usual moorings': VESSEL.moorings,
+        'Vessel name': vessel.name,
+        'Vessel type': vessel.type,
+        'Usual moorings': vessel.moorings,
       },
     ];
-    cy.enterVesselInfo(VESSEL);
+    cy.enterVesselInfo(vessel);
     cy.get('.govuk-button').click();
     cy.get('.govuk-error-message').should('not.be.visible');
     cy.url().should('include', '/vessels');
@@ -40,26 +40,28 @@ describe('Add new vessel', () => {
   });
 
   it('Should not add a vessel without submitting required data', () => {
-    let errors = ['You must enter a vessel name',
+    const ERRORS = [
+      'You must enter a vessel name',
       'You must enter a vessel type',
       'You must enter the vessel usual mooring',
-      'You must enter the vessel registration'];
+      'You must enter the vessel registration',
+    ];
 
     cy.get('.govuk-button').click();
 
     cy.get('.govuk-error-message').each((error, index) => {
-      cy.wrap(error).should('contain.text', errors[index]).and('be.visible');
+      cy.wrap(error).should('contain.text', ERRORS[index]).and('be.visible');
     });
   });
 
   it('Should not allow adding a duplicate vessel', () => {
-    cy.enterVesselInfo(VESSEL);
+    cy.enterVesselInfo(vessel);
     cy.get('.govuk-button').click();
     cy.get('.govuk-error-message').should('contain.text', 'This vessel already exists').and('be.visible');
   });
 
   it('Should not add a vessel when Clicking on "Exit without saving" button', () => {
-    cy.enterVesselInfo(VESSEL);
+    cy.enterVesselInfo(vessel);
     cy.get('[name="vesselName"]').clear().type('Titanic');
     cy.get('[name="registration"]').clear().type('9999999');
     cy.get('.govuk-link--no-visited-state').click();

@@ -1,13 +1,13 @@
 {
-  "FirstName": "test",
-  "LastName": "test",
-  "Gender": "Male",
-  "DateOfBirth": "01/01/1980",
-  "PlaceOfBirth": "London",
-  "Nationality": "British",
-  "PersonType": "Skipper",
-  "TravelDocType": "Passport",
-  "DocumentNumber": "1234",
-  "IssuingState": "GBR",
-  "ExpiryDate": ""
+  "firstName": "",
+  "lastName": "",
+  "gender": "Male",
+  "dateOfBirth": "",
+  "placeOfBirth": "London",
+  "nationality": "British",
+  "personType": "Skipper",
+  "travelDocType": "Passport",
+  "documentNumber": "",
+  "issuingState": "GBR",
+  "expiryDate": ""
 }

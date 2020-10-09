@@ -1,4 +1,4 @@
-import { randomEmail } from '../../support/utils';
+const faker = require('faker');
 
 describe('User Registration', () => {
   let authCode;
@@ -60,7 +60,7 @@ describe('User Registration', () => {
   });
 
   it('Should not register when Entering Invalid Authentication code', () => {
-    let mail = randomEmail();
+    let mail = faker.internet.exampleEmail();
     cy.server();
     cy.route('POST', `${apiServer}/registration`).as('registration');
 

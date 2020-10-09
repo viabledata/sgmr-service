@@ -1,20 +1,23 @@
-import { randomNumber, getFutureDate } from '../../support/utils';
+const faker = require('faker');
+const { getFutureDate, getPastDate } = require('../../support/utils');
 
 describe('Add People in account', () => {
-  let PEOPLE;
+  let people;
 
   before(() => {
-    cy.fixture('people.json').then((people) => {
-      people.DocumentNumber = randomNumber();
-      people.FirstName = `${people.FirstName}${randomNumber()}`;
-      people.ExpiryDate = getFutureDate();
-      PEOPLE = people;
+    cy.fixture('people.json').then((person) => {
+      person.documentNumber = faker.random.number();
+      person.firstName = faker.name.firstName();
+      person.lastName = faker.name.lastName();
+      person.dateOfBirth = getPastDate(30);
+      person.expiryDate = getFutureDate(3);
+      people = person;
     });
   });
 
   beforeEach(() => {
     cy.fixture('users.json').then((users) => {
-      cy.login(users.user1.email, users.user1.password);
+      cy.login(users[0].email, users[0].password);
     });
     cy.navigation('People');
     cy.url().should('include', '/people');
@@ -25,12 +28,12 @@ describe('Add People in account', () => {
   it('Should add people successfully', () => {
     const expectedPeople = [
       {
-        Surname: PEOPLE.LastName,
-        'Given name': PEOPLE.FirstName,
-        Type: PEOPLE.PersonType,
+        Surname: people.lastName,
+        'Given name': people.firstName,
+        Type: people.personType,
       },
     ];
-    cy.enterPeopleInfo(PEOPLE);
+    cy.enterPeopleInfo(people);
     cy.get('.govuk-button').click();
     cy.get('.govuk-error-message').should('not.be.visible');
     cy.url().should('include', '/people');
@@ -42,7 +45,8 @@ describe('Add People in account', () => {
   });
 
   it('Should not add people without submitting required data', () => {
-    let errors = ['You must enter a first name',
+    const ERRORS = [
+      'You must enter a first name',
       'You must enter a last name',
       'You must select a gender',
       'You must enter a valid date of birth date',
@@ -58,18 +62,18 @@ describe('Add People in account', () => {
     cy.get('.govuk-button').click();
 
     cy.get('.govuk-error-message').each((error, index) => {
-      cy.wrap(error).should('contain.text', errors[index]).and('be.visible');
+      cy.wrap(error).should('contain.text', ERRORS[index]).and('be.visible');
     });
   });
 
   it('Should not allow adding a duplicate person', () => {
-    cy.enterPeopleInfo(PEOPLE);
+    cy.enterPeopleInfo(people);
     cy.get('.govuk-button').click();
     cy.get('.govuk-error-message').should('contain.text', 'This person already exists').and('be.visible');
   });
 
   it('Should not add people when Clicking on "Exit without saving" button', () => {
-    cy.enterPeopleInfo(PEOPLE);
+    cy.enterPeopleInfo(people);
     cy.get('#firstName [type="text"]').clear().type('Auto-test-no-save');
     cy.get('input[name="documentNumber"]').clear().type('5555555');
     cy.get('.govuk-link--no-visited-state').click();
