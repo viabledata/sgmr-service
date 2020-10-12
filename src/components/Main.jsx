@@ -8,6 +8,7 @@ import SecureRoute from '@lib/SecureRoute';
 import Banner from '@components/Banner';
 import Footer from '@components/Footer';
 import Header from '@components/Header';
+import PrivacyCookiePolicy from '@components/PrivacyCookiePolicy';
 import PageContainer from '@components/PageContainer';
 
 import CreateAPerson from '@components/People/CreateAPerson';
@@ -81,6 +82,9 @@ const Main = () => {
         </Route>
         <Route exact path="/resend-code">
           <UserResendCode />
+        </Route>
+        <Route exact path="/privacy-and-cookie-policy">
+          <PrivacyCookiePolicy />
         </Route>
       </Switch>
       </UserContext.Provider>
