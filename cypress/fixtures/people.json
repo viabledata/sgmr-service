@@ -1,0 +1,13 @@
+{
+  "firstName": "",
+  "lastName": "",
+  "gender": "Male",
+  "dateOfBirth": "",
+  "placeOfBirth": "London",
+  "nationality": "British",
+  "personType": "Skipper",
+  "travelDocType": "Passport",
+  "documentNumber": "",
+  "issuingState": "GBR",
+  "expiryDate": ""
+}
