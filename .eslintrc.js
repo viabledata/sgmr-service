@@ -55,7 +55,8 @@ module.exports = {
       rules: {
         "jest/valid-expect": 0,
         "jest/valid-expect-in-promise": 0,
-        "no-unused-expressions": "off"
+        "no-unused-expressions": "off",
+        "quote-props":"off"
       },
     },
   ],

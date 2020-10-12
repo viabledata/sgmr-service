@@ -1,3 +1,5 @@
+const faker = require('faker');
+
 Cypress.Commands.add('enterUserInfo', (user) => {
   cy.get('#firstName [type="text"]').clear().type(user.firstName);
   cy.get('#lastName [type="text"]').clear().type(user.lastName);
@@ -62,4 +64,37 @@ Cypress.Commands.add('login', (email, password) => {
 
 Cypress.Commands.add('navigation', (option) => {
   cy.contains('a', option).click();
+});
+
+Cypress.Commands.add('registerUser', () => {
+  let apiServer = Cypress.env('api_server');
+  cy.writeFile('cypress/fixtures/user-registration.json',
+    {
+      email: faker.internet.exampleEmail(),
+      firstName: faker.name.firstName(),
+      lastName: faker.name.lastName(),
+      mobileNumber: '07800055555',
+      password: 'test1234',
+    });
+  cy.fixture('user-registration.json').then((payload) => {
+    cy.request(
+      'POST',
+      `${apiServer}registration`,
+      payload,
+    ).then((response) => {
+      expect(response.status).to.eq(200);
+      let code = response.body.twoFactorToken;
+      cy.request(
+        'PATCH',
+        `${apiServer}submit-verification-code`,
+        {
+          email: payload.email,
+          twoFactorToken: code.trim(),
+        },
+      ).then((res) => {
+        expect(res.status).to.eq(200);
+        cy.writeFile('cypress/fixtures/users.json', { email: payload.email, password: payload.password });
+      });
+    });
+  });
 });

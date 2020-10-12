@@ -9,11 +9,16 @@ describe('Add new vessel in account', () => {
       vesselData.name = `${vesselData.name}${faker.random.number()}`;
       vessel = vesselData;
     });
+    cy.task('readFileMaybe', 'cypress/fixtures/users.json').then((dataOrNull) => {
+      if (dataOrNull === null) {
+        cy.registerUser();
+      }
+    });
   });
 
   beforeEach(() => {
-    cy.fixture('users.json').then((users) => {
-      cy.login(users.user1.email, users.user1.password);
+    cy.fixture('users.json').then((user) => {
+      cy.login(user.email, user.password);
     });
     cy.navigation('Vessels');
     cy.url().should('include', '/vessels');
@@ -40,7 +45,7 @@ describe('Add new vessel in account', () => {
   });
 
   it('Should not add a vessel without submitting required data', () => {
-    const ERRORS = [
+    const errors = [
       'You must enter a vessel name',
       'You must enter a vessel type',
       'You must enter the vessel usual mooring',
@@ -50,7 +55,7 @@ describe('Add new vessel in account', () => {
     cy.get('.govuk-button').click();
 
     cy.get('.govuk-error-message').each((error, index) => {
-      cy.wrap(error).should('contain.text', ERRORS[index]).and('be.visible');
+      cy.wrap(error).should('contain.text', errors[index]).and('be.visible');
     });
   });
 

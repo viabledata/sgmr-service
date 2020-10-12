@@ -13,11 +13,16 @@ describe('Add People in account', () => {
       person.expiryDate = getFutureDate(3);
       people = person;
     });
+    cy.task('readFileMaybe', 'cypress/fixtures/users.json').then((dataOrNull) => {
+      if (dataOrNull === null) {
+        cy.registerUser();
+      }
+    });
   });
 
   beforeEach(() => {
-    cy.fixture('users.json').then((users) => {
-      cy.login(users[0].email, users[0].password);
+    cy.fixture('users.json').then((user) => {
+      cy.login(user.email, user.password);
     });
     cy.navigation('People');
     cy.url().should('include', '/people');
@@ -28,9 +33,9 @@ describe('Add People in account', () => {
   it('Should add people successfully', () => {
     const expectedPeople = [
       {
-        Surname: people.lastName,
+        'Surname': people.lastName,
         'Given name': people.firstName,
-        Type: people.personType,
+        'Type': people.personType,
       },
     ];
     cy.enterPeopleInfo(people);
@@ -45,7 +50,7 @@ describe('Add People in account', () => {
   });
 
   it('Should not add people without submitting required data', () => {
-    const ERRORS = [
+    const errors = [
       'You must enter a first name',
       'You must enter a last name',
       'You must select a gender',
@@ -62,7 +67,7 @@ describe('Add People in account', () => {
     cy.get('.govuk-button').click();
 
     cy.get('.govuk-error-message').each((error, index) => {
-      cy.wrap(error).should('contain.text', ERRORS[index]).and('be.visible');
+      cy.wrap(error).should('contain.text', errors[index]).and('be.visible');
     });
   });
 

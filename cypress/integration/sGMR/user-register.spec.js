@@ -1,7 +1,6 @@
 const faker = require('faker');
 
 describe('User Registration', () => {
-  let authCode;
   let user;
   let host;
   let apiServer;
@@ -27,7 +26,7 @@ describe('User Registration', () => {
 
     cy.wait('@registration').should((xhr) => {
       expect(xhr.status).to.eq(200);
-      authCode = xhr.responseBody.twoFactorToken;
+      let authCode = xhr.responseBody.twoFactorToken;
       cy.get('input[name="twoFactorToken"]').type(authCode);
       cy.get('.govuk-button').click();
       cy.url().should('include', '/sign-in?source=registration');
@@ -49,7 +48,7 @@ describe('User Registration', () => {
 
   it('Should not regiister user with exiting user information', () => {
     cy.server();
-    cy.route('POST', `${apiServer}/registration`).as('registration');
+    cy.route('POST', `${apiServer}/registration`);
 
     cy.visit(`${host}/register`);
 
@@ -62,7 +61,7 @@ describe('User Registration', () => {
   it('Should not register when Entering Invalid Authentication code', () => {
     let mail = faker.internet.exampleEmail();
     cy.server();
-    cy.route('POST', `${apiServer}/registration`).as('registration');
+    cy.route('POST', `${apiServer}/registration`);
 
     cy.visit(`${host}/register`);
 
