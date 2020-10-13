@@ -13,6 +13,7 @@ describe('My Account details verification', () => {
     });
     cy.navigation('Account');
     cy.url().should('include', '/account');
+    cy.readFile('cypress/fixtures/user-registration.json');
     cy.fixture('user-registration.json').then((accountInfo) => {
       cy.get('.govuk-summary-list__row').within(() => {
         cy.get('.govuk-summary-list__key').eq(0).should('have.text', 'Given name');
