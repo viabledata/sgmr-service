@@ -1,57 +1,33 @@
-import React, { useState, useEffect } from 'react';
+import React, { useContext } from 'react';
 import { useHistory } from 'react-router-dom';
-import axios from 'axios';
 
 // App imports
-import { USER_URL } from '@constants/ApiConstants';
-import Auth from '@lib/Auth';
+import UserContext from './UserContext';
 
 const PageAccount = () => {
   const history = useHistory();
-  const [data, setData] = useState({});
 
-  const getData = () => {
-    axios.get(USER_URL, {
-      headers: { Authorization: `Bearer ${Auth.retrieveToken()}` },
-    })
-      .then((resp) => {
-        setData(resp.data);
-        // Set data into local storage for use on Edit page until we connect this to Redux
-        localStorage.setItem('accountData', JSON.stringify(resp.data));
-      })
-      .catch((err) => {
-        if (err.response) {
-          switch (err.response.status) {
-            case 401: history.push(`/sign-in?source=${location}`); break;
-            case 422: history.push(`/sign-in?source=${location}`); break;
-            case 405: history.push(`/sign-in?source=${location}`); break;
-            default: history.push(`/sign-in?source=${location}`);
-          }
-        }
-      });
-  };
+  // Calling the user info
+  const { user, setUser } = useContext(UserContext);
 
-  useEffect(() => {
-    getData();
-  }, []);
-
+  if (!user) { return null; }
   return (
     <div>
       <dl className="govuk-summary-list govuk-!-margin-bottom-9 govuk-summary-list--no-border">
         <div className="govuk-summary-list__row">
           <dt className="govuk-summary-list__key">
-            Given name
+            First name
           </dt>
           <dd className="govuk-summary-list__value">
-            {data.firstName}
+            {user.firstName}
           </dd>
         </div>
         <div className="govuk-summary-list__row">
           <dt className="govuk-summary-list__key">
-            Surname
+            Last name
           </dt>
           <dd className="govuk-summary-list__value">
-            {data.lastName}
+            {user.lastName}
           </dd>
         </div>
         <div className="govuk-summary-list__row">
@@ -59,7 +35,7 @@ const PageAccount = () => {
             Email
           </dt>
           <dd className="govuk-summary-list__value">
-            {data.email}
+            {user.email}
           </dd>
         </div>
         <div className="govuk-summary-list__row">
@@ -67,10 +43,17 @@ const PageAccount = () => {
             Mobile number
           </dt>
           <dd className="govuk-summary-list__value">
-            {data.mobileNumber}
+            {user.mobileNumber}
           </dd>
         </div>
       </dl>
+      <button
+        type="submit"
+        className="govuk-button"
+        onClick={() => history.push('/account/edit')}
+      >
+        Edit Account
+      </button>
     </div>
   );
 };

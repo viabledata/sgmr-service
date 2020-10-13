@@ -1,14 +1,25 @@
-import React, { useState } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 
 // App imports
 import { USER_URL } from '@constants/ApiConstants';
 import Auth from '@lib/Auth';
+import UserContext from '../UserContext';
 
-const EditAccount = (data) => {
+const EditAccount = () => {
   const history = useHistory();
-  const [formData, setFormData] = useState(JSON.parse(localStorage.getItem('data')) || {});
+  // Calling the user from context
+  const { user, setUser } = useContext(UserContext)
+
+  // Prepopulating the form with user info
+  const [formData, setFormData] = useState(
+    {
+      firstName: user.firstName,
+      lastName: user.lastName,
+      mobileNumber: user.mobileNumber,
+    } || {},
+  );
   const [errors, setErrors] = useState({});
 
   const validationRules = [
@@ -21,11 +32,6 @@ const EditAccount = (data) => {
       field: 'lastName',
       rule: 'required',
       message: 'You must enter your last name',
-    },
-    {
-      field: 'email',
-      rule: 'required',
-      message: 'You must enter your email',
     },
     {
       field: 'mobileNumber',
@@ -65,13 +71,14 @@ const EditAccount = (data) => {
     setErrors({});
   };
 
-  // Handle Submit, including clearing localStorage
+  // Handle Submit
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!checkRequiredFields()) {
       axios.patch(USER_URL, formData, {
         headers: { Authorization: `Bearer ${Auth.retrieveToken()}` },
       })
+        .then((resp) => setUser(resp.data))
         .then(() => {
           history.push('/account');
         })
@@ -84,11 +91,10 @@ const EditAccount = (data) => {
           }
         });
     } else {
-      // This means there are errors, so jump user to the error box
+    // This means there are errors, so jump user to the error box
       history.push('#EditUser');
     }
   };
-
 
   return (
     <div className="govuk-width-container ">
@@ -127,7 +133,7 @@ const EditAccount = (data) => {
 
               <div id="firstName" className="govuk-form-group">
                 <label className="govuk-label govuk-label--m" htmlFor="firstName">
-                  Given name
+                  First name
                 </label>
                 <input
                   className="govuk-input"
@@ -140,26 +146,13 @@ const EditAccount = (data) => {
 
               <div id="lastName" className="govuk-form-group">
                 <label className="govuk-label govuk-label--m" htmlFor="lastName">
-                  Surname
+                  Last name
                 </label>
                 <input
                   className="govuk-input"
                   name="lastName"
                   type="text"
                   value={formData.lastName || ''}
-                  onChange={handleChange}
-                />
-              </div>
-
-              <div id="email" className="govuk-form-group">
-                <label className="govuk-label govuk-label--m" htmlFor="email">
-                  Email
-                </label>
-                <input
-                  className="govuk-input"
-                  name="email"
-                  type="text"
-                  value={formData.email || ''}
                   onChange={handleChange}
                 />
               </div>
@@ -180,6 +173,7 @@ const EditAccount = (data) => {
               <div id="submitBlock">
                 <button
                   className="govuk-button"
+                  type="submit"
                   data-module="govuk-button"
                   onClick={handleSubmit}
                 >
