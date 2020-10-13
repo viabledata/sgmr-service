@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useMemo } from 'react';
 import { Route, Switch } from 'react-router-dom';
 
 // app imports
@@ -24,12 +24,15 @@ import EditVessel from '@components/Vessel/EditVessel';
 
 import VoyageFormContainer from '@components/Voyage/VoyageFormContainer';
 import FormVoyageSubmitted from '@components/Forms/FormVoyageSubmitted';
-
+import UserContext from './UserContext';
 
 const Main = () => {
+  const [user, setUser] = useState(null);
+
   return (
     <>
       <ScrollToTop />
+      <UserContext.Provider value={{ user, setUser }}>
       <Header />
       <Banner />
       <Switch>
@@ -80,6 +83,7 @@ const Main = () => {
           <UserResendCode />
         </Route>
       </Switch>
+      </UserContext.Provider>
       <Footer />
     </>
   );
