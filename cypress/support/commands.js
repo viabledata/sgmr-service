@@ -76,25 +76,29 @@ Cypress.Commands.add('registerUser', () => {
       mobileNumber: '07800055555',
       password: 'test1234',
     });
-  cy.fixture('user-registration.json').then((payload) => {
+
+  cy.readFile('cypress/fixtures/user-registration.json').then((registrationData) => {
     cy.request(
       'POST',
       `${apiServer}registration`,
-      payload,
-    ).then((response) => {
-      expect(response.status).to.eq(200);
-      let code = response.body.twoFactorToken;
-      cy.request(
-        'PATCH',
-        `${apiServer}submit-verification-code`,
-        {
-          email: payload.email,
-          twoFactorToken: code.trim(),
-        },
-      ).then((res) => {
-        expect(res.status).to.eq(200);
-        cy.writeFile('cypress/fixtures/users.json', { email: payload.email, password: payload.password });
-      });
+      registrationData,
+    ).as('registration');
+  });
+
+  cy.get('@registration').then((response) => {
+    expect(response.status).to.eq(200);
+    let code = response.body.twoFactorToken;
+    let emailAddress = response.body.email;
+    cy.request(
+      'PATCH',
+      `${apiServer}submit-verification-code`,
+      {
+        email: emailAddress,
+        twoFactorToken: code.trim(),
+      },
+    ).then((res) => {
+      expect(res.status).to.eq(200);
+      cy.writeFile('cypress/fixtures/users.json', { email: emailAddress, password: 'test1234' });
     });
   });
 });
