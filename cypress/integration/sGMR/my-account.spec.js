@@ -18,7 +18,7 @@ describe('My Account details verification', () => {
       cy.get('.govuk-summary-list__row').within(() => {
         cy.get('.govuk-summary-list__key').eq(0).should('have.text', 'First name');
         cy.get('.govuk-summary-list__value').eq(0).should('have.text', accountInfo.firstName);
-        cy.get('.govuk-summary-list__key').eq(1).should('have.text', 'Surname');
+        cy.get('.govuk-summary-list__key').eq(1).should('have.text', 'Last name');
         cy.get('.govuk-summary-list__value').eq(1).should('have.text', accountInfo.lastName);
         cy.get('.govuk-summary-list__key').eq(2).should('have.text', 'Email');
         cy.get('.govuk-summary-list__value').eq(2).should('have.text', accountInfo.email);
