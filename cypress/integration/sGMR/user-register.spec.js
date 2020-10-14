@@ -34,8 +34,13 @@ describe('User Registration', () => {
   });
 
   it('Should not register user without submitting required data', () => {
-    let errors = ['You must enter your first name', 'You must enter your last name',
-      'You must enter a valid phone number', 'You must enter a valid email address', 'You must enter a password'];
+    const errors = [
+      'You must enter your first name',
+      'You must enter your last name',
+      'You must enter a valid phone number',
+      'You must enter a valid email address',
+      'You must enter a password',
+    ];
 
     cy.visit(`${host}/register`);
     cy.get('.govuk-button').click();
