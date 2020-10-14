@@ -1,7 +1,8 @@
 import React from 'react';
+import FormError from '@components/Voyage/FormError';
 
 const FormResponsiblePerson = ({
-  handleSubmit, handleChange, data, voyageId,
+  handleSubmit, handleChange, data, errors, voyageId,
 }) => {
   return (
     <section>
@@ -12,6 +13,7 @@ const FormResponsiblePerson = ({
         <label className="govuk-label govuk-label--m" htmlFor="responsibleGivenName">
           First name
         </label>
+        <FormError error={errors.responsibleGivenName} />
         <input
           className="govuk-input"
           name="responsibleGivenName"
@@ -25,6 +27,7 @@ const FormResponsiblePerson = ({
         <label className="govuk-label govuk-label--m" htmlFor="responsibleSurname">
           Last name
         </label>
+        <FormError error={errors.responsibleSurname} />
         <input
           className="govuk-input"
           name="responsibleSurname"
@@ -37,6 +40,7 @@ const FormResponsiblePerson = ({
         <label className="govuk-label govuk-label--m" htmlFor="responsibleContactNo">
           Contact telephone number
         </label>
+        <FormError error={errors.responsibleContactNo} />
         <span className="govuk-hint">
           For international numbers include the country code
         </span>
@@ -56,6 +60,7 @@ const FormResponsiblePerson = ({
             House number / building and street
             <span className="govuk-visually-hidden">line 1 of 2</span>
           </label>
+          <FormError error={errors.responsibleAddressLine1} />
           <input
             className="govuk-input"
             name="responsibleAddressLine1"
@@ -68,6 +73,7 @@ const FormResponsiblePerson = ({
           <label className="govuk-label" htmlFor="responsibleAddressLine2">
             <span className="govuk-visually-hidden">Building and street line 2 of 2</span>
           </label>
+          <FormError error={errors.responsibleAddressLine2} />
           <input
             className="govuk-input"
             name="responsibleAddressLine2"
@@ -78,6 +84,7 @@ const FormResponsiblePerson = ({
         </div>
         <div id="responsibleTown" className="govuk-form-group">
           <label className="govuk-label" htmlFor="responsibleTown">Town or city</label>
+          <FormError error={errors.responsibleTown} />
           <input
             className="govuk-input govuk-!-width-two-thirds"
             name="responsibleTown"
@@ -88,6 +95,7 @@ const FormResponsiblePerson = ({
         </div>
         <div id="responsibleCounty" className="govuk-form-group">
           <label className="govuk-label" htmlFor="responsibleCounty">County</label>
+          <FormError error={errors.responsibleCounty} />
           <input
             className="govuk-input govuk-!-width-two-thirds"
             name="responsibleCounty"
@@ -98,6 +106,7 @@ const FormResponsiblePerson = ({
         </div>
         <div id="responsiblePostcode" className="govuk-form-group">
           <label className="govuk-label" htmlFor="responsiblePostcode">Postcode or ZIP</label>
+          <FormError error={errors.responsiblePostcode} />
           <input
             className="govuk-input govuk-input--width-10"
             name="responsiblePostcode"
