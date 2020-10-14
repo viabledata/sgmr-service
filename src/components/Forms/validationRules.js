@@ -91,6 +91,57 @@ export const personValidationRules = [
   },
 ];
 
+export const responsiblePersonValidationRules = [
+  {
+    inputField: 'responsibleGivenName',
+    errorDisplayId: 'responsibleGivenName',
+    rule: 'required',
+    message: 'You must enter a given name',
+  },
+  {
+    inputField: 'responsibleSurname',
+    errorDisplayId: 'responsibleSurname',
+    rule: 'required',
+    message: 'You must enter a given name',
+  },
+  {
+    inputField: 'responsibleContactNo',
+    errorDisplayId: 'responsibleContactNo',
+    rule: 'required',
+    message: 'You must enter a contact number',
+  },
+  {
+    inputField: 'responsibleAddressLine1',
+    errorDisplayId: 'responsibleAddressLine1',
+    rule: 'required',
+    message: 'You must enter the first line of your address',
+  },
+  {
+    inputField: 'responsibleAddressLine2',
+    errorDisplayId: 'responsibleAddressLine2',
+    rule: 'required',
+    message: 'You must enter the second line of your address',
+  },
+  {
+    inputField: 'responsibleTown',
+    errorDisplayId: 'responsibleTown',
+    rule: 'required',
+    message: 'You must enter a town or a city name',
+  },
+  {
+    inputField: 'responsibleCounty',
+    errorDisplayId: 'responsibleCounty',
+    rule: 'required',
+    message: 'You must enter a country name',
+  },
+  {
+    inputField: 'responsiblePostcode',
+    errorDisplayId: 'responsiblePostcode',
+    rule: 'required',
+    message: 'You must enter a postcode',
+  },
+];
+
 export const vesselValidationRules = [
   {
     inputField: 'vesselName',
