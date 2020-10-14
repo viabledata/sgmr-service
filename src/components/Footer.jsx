@@ -12,7 +12,7 @@ const Footer = () => {
               <li className="govuk-footer__inline-list-item"><a className="govuk-footer__link" href="/privacy-and-cookie-policy">Privacy and Cookie Policy</a></li>
               <li className="govuk-footer__inline-list-item"><a className="govuk-footer__link" href="/accessibility-statement">Accessibility Statement</a></li>
               <li className="govuk-footer__inline-list-item">
-                <a className="govuk-footer__link" href="#" target="_blank" rel="noopener noreferrer">
+                <a className="govuk-footer__link" href="/help" target="_blank" rel="noopener noreferrer">
                   Help
                 </a>
               </li>
