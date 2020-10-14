@@ -16,7 +16,7 @@ describe('My Account details verification', () => {
     cy.readFile('cypress/fixtures/user-registration.json');
     cy.fixture('user-registration.json').then((accountInfo) => {
       cy.get('.govuk-summary-list__row').within(() => {
-        cy.get('.govuk-summary-list__key').eq(0).should('have.text', 'Given name');
+        cy.get('.govuk-summary-list__key').eq(0).should('have.text', 'First name');
         cy.get('.govuk-summary-list__value').eq(0).should('have.text', accountInfo.firstName);
         cy.get('.govuk-summary-list__key').eq(1).should('have.text', 'Surname');
         cy.get('.govuk-summary-list__value').eq(1).should('have.text', accountInfo.lastName);
@@ -26,5 +26,10 @@ describe('My Account details verification', () => {
         cy.get('.govuk-summary-list__value').eq(3).should('have.text', accountInfo.mobileNumber);
       });
     });
+  });
+
+  afterEach(() => {
+    cy.navigation('Signout');
+    cy.url().should('include', '/sign-in');
   });
 });
