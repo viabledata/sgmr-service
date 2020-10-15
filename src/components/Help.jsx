@@ -1,11 +1,12 @@
 import React from 'react';
+import { govUrl } from 'config';
 
 const Help = () => {
   return (
     <div className="govuk-width-container ">
       <main className="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" role="main">
         <p className="govuk-body-l">
-          <span style={{ color: 'white', backgroundColor: '#1d70b8' }}>This service is to support consultation as a BETA  demonstrator. No data will be submitted during the consultation period. </span>
+          <span className="page-notice">This service is to support consultation as a BETA  demonstrator. No data will be submitted during the consultation period. </span>
         </p>
         <div className="govuk-grid-row">
           <div className="govuk-grid-column-two-thirds">
@@ -30,10 +31,10 @@ const Help = () => {
             <h1 className="govuk-heading-m">Related Links</h1>
             <ul className="govuk-list govuk-list--bullet">
               <li><a className="govuk-link" target="blank" href="https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/268868/mgn489-amendment-pleasure-vessels.pdf">Pleasure Craft – UK Regulations</a></li>
-              <li><a className="govuk-link" target="blank" href="https://www.gov.uk/browse/abroad/travel-abroad">Travel Abroad</a></li>
-              <li><a className="govuk-link" target="blank" href="https://www.gov.uk/government/collections/send-advance-passenger-information">Advance Application to notify of General Maritime (Pleasure Craft)</a></li>
-              <li><a className="govuk-link" target="blank" href="https://www.gov.uk/government/organisations/border-force">UK Border Force</a></li>
-              <li><a className="govuk-link" target="blank" href="https://www.gov.uk/government/organisations/hm-revenue-customs">HMRC</a></li>
+              <li><a className="govuk-link" target="blank" href={`${govUrl}/browse/abroad/travel-abroad`}>Travel Abroad</a></li>
+              <li><a className="govuk-link" target="blank" href={`${govUrl}government/collections/send-advance-passenger-information`}>Advance Application to notify of General Maritime (Pleasure Craft)</a></li>
+              <li><a className="govuk-link" target="blank" href={`${govUrl}government/organisations/border-force`}>UK Border Force</a></li>
+              <li><a className="govuk-link" target="blank" href={`${govUrl}government/organisations/hm-revenue-customs`}>HMRC</a></li>
             </ul>
           </div>
         </div>
