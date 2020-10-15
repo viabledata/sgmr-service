@@ -10,6 +10,7 @@ import Footer from '@components/Footer';
 import Header from '@components/Header';
 import PrivacyCookiePolicy from '@components/PrivacyCookiePolicy';
 import Help from '@components/Help';
+import AccessibilityStatement from '@components/AccessibilityStatement';
 import PageContainer from '@components/PageContainer';
 
 import CreateAPerson from '@components/People/CreateAPerson';
@@ -89,6 +90,9 @@ const Main = () => {
         </Route>
         <Route exact path="/help">
           <Help />
+        </Route>
+        <Route exact path="/accessibility-statement">
+          <AccessibilityStatement />
         </Route>
       </Switch>
       </UserContext.Provider>
