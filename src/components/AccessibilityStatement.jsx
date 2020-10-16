@@ -1,5 +1,4 @@
 import React from 'react';
-import { govUrl } from 'config';
 
 const AccessibilityStatement = () => {
   return (
@@ -14,7 +13,7 @@ const AccessibilityStatement = () => {
             <p className="govuk-body">
               This accessibility statement contains information about the sGMR, available at
               {' '}
-              <a className="govuk-link" target="blank" href="https://www.dev.sgmr.cop.homeoffice.gov.uk/reports">https://www.dev.sgmr.cop.homeoffice.gov.uk/reports (opens in new tab).</a>
+              <a className="govuk-link" target="blank" href="/reports">Submit a General Maritime Report (opens in new tab).</a>
             </p>
             <p className="govuk-body">
               This website is run by Border Force. We want as many people as possible to be able to use this website. For example, that means you should be able to:
@@ -33,7 +32,7 @@ const AccessibilityStatement = () => {
               {' '}
               has advice on making your device easier to use if you have a disability.
             </p>
-            <h1 className="govuk-heading-l">How accessible this website is</h1>
+            <h2 className="govuk-heading-l">How accessible this website is</h2>
             <p className="govuk-body">We aim to meet international accessibility guidelines. However, this may not always be possible, or we may have missed a problem.</p>
             <p className="govuk-body">Some people may find parts of this service difficult to use because:</p>
             <ul className="govuk-list govuk-list--bullet">
@@ -47,7 +46,7 @@ const AccessibilityStatement = () => {
               <li>The “Further information” expanded accordion cannot be read by a screen reader</li>
             </ul>
             <p className="govuk-body">We know some parts of this website are not fully accessible. You can see a full list of any issues we currently know about in the Non-accessible content section of this statement.</p>
-            <h1 className="govuk-heading-l">Enforcement procedure</h1>
+            <h2 className="govuk-heading-l">Enforcement procedure</h2>
             <p className="govuk-body">
               The Equality and Human Rights Commission (EHRC) is responsible for enforcing the Public Sector Bodies (Websites and Mobile Applications) (No. 2) Accessibility Regulations 2018 (the ‘accessibility regulations’). If you’re not happy with how we respond to your complaint, contact the
               {' '}
@@ -60,9 +59,9 @@ const AccessibilityStatement = () => {
               {' '}
               who are responsible for enforcing the Public Sector Bodies (Websites and Mobile Applications) (No. 2) Accessibility Regulations 2018 (the ‘accessibility regulations’) in Northern Ireland.
             </p>
-            <h1 className="govuk-heading-l">Technical information about this website’s accessibility</h1>
+            <h2 className="govuk-heading-l">Technical information about this website’s accessibility</h2>
             <p className="govuk-body"> The Home Office is committed to making its website accessible, in accordance with the Public Sector Bodies (Websites and Mobile Applications) (No. 2) Accessibility Regulations 2018.</p>
-            <h1 className="govuk-heading-l">Compliance status</h1>
+            <h2 className="govuk-heading-l">Compliance status</h2>
             <p className="govuk-body">
               This website is not compliant with the
               {' '}
@@ -70,9 +69,9 @@ const AccessibilityStatement = () => {
               {' '}
               The non-compliances are listed below.
             </p>
-            <h1 className="govuk-heading-l">Non-accessible content</h1>
+            <h2 className="govuk-heading-l">Non-accessible content</h2>
             <p className="govuk-body">The content listed below is non-accessible for the following reasons.</p>
-            <h1 className="govuk-heading-m">Non-compliance with the accessibility regulations</h1>
+            <h2 className="govuk-heading-m">Non-compliance with the accessibility regulations</h2>
             <ul className="govuk-list govuk-list--bullet">
               <li>Resize Text (1.4.4) – The menu bar is not readable / functional when the page is zoomed in 200% on a desktop.</li>
               <li>Reflow (1.4.10) – Loss of content / functionality when zoomed into 110% or more on the menu bar, users will not be able to see other options on the menu</li>
@@ -93,7 +92,7 @@ const AccessibilityStatement = () => {
               <li>Multiple “Change” links on page 6 should include an extra label text for screen readers to differentiate the links.</li>
               <li>“Further information” expanded accordion cannot be read by a screen reader.</li>
             </ul>
-            <h1 className="govuk-heading-m">What we&apos;re doing to improve accessibility</h1>
+            <h2 className="govuk-heading-m">What we&apos;re doing to improve accessibility</h2>
             <p className="govuk-body">Our plan below describes how and when we plan to improve the accessibility of this service:</p>
             <ul className="govuk-list govuk-list--bullet">
               <li>We will train our staff to create accessible services.</li>
@@ -125,7 +124,7 @@ const AccessibilityStatement = () => {
               <li>Name, Role, Value (4.1.2) – Keycloak page aria-hidden attribute on an element removes the element and all its child nodes from the accessibility API.</li>
               <li>“Further information” expanded accordion will be read by a screen reader.</li>
             </ul>
-            <h1 className="govuk-heading-l">Preparation of this accessibility statement</h1>
+            <h2 className="govuk-heading-l">Preparation of this accessibility statement</h2>
             <p className="govuk-body">This statement was prepared on 8th October 2020. It was last reviewed on 12th October 2020.</p>
             <p className="govuk-body">This website was last tested on 8th October 2020. The test was carried out by the Home Office’s Quality Assurance and Testing team.</p>
             <p className="govuk-body">We tested the service based on a user's ability to complete key journeys. All parts of the chosen journeys were tested.</p>
