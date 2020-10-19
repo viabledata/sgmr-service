@@ -123,6 +123,7 @@ describe('Add new voyage report', () => {
     cy.checkNoErrors();
     cy.contains('Cancel voyage').click();
     cy.url().should('include', '/reports');
+    // eslint-disable-next-line cypress/no-unnecessary-waiting
     cy.wait(1000);
     cy.get('.govuk-tabs__list li')
       .within(() => {
