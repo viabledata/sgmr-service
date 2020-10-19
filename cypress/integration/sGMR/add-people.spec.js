@@ -9,8 +9,8 @@ describe('Add People in account', () => {
       person.documentNumber = faker.random.number();
       person.firstName = faker.name.firstName();
       person.lastName = faker.name.lastName();
-      person.dateOfBirth = getPastDate(30);
-      person.expiryDate = getFutureDate(3);
+      person.dateOfBirth = getPastDate(30, 'DD/MM/YYYY');
+      person.expiryDate = getFutureDate(3, 'DD/MM/YYYY');
       people = person;
     });
     cy.task('readFileMaybe', 'cypress/fixtures/users.json').then((dataOrNull) => {

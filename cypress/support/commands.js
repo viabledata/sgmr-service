@@ -102,3 +102,48 @@ Cypress.Commands.add('registerUser', () => {
     });
   });
 });
+
+Cypress.Commands.add('enterDepartureDetails', (date, port) => {
+  let temp = date.split(' ');
+  const departureDate = temp[0].split('/');
+  const departureTime = temp[1].split(':');
+  cy.get('input[name="departureDateDay"]').clear().type(departureDate[0]);
+  cy.get('input[name="departureDateMonth"]').clear().type(departureDate[1]);
+  cy.get('input[name="departureDateYear"]').clear().type(departureDate[2]);
+  cy.get('input[name="departureTimeHour"]').clear().type(departureTime[0]);
+  cy.get('input[name="departureTimeMinute"]').clear().type(departureTime[1]);
+  cy.log(port);
+  cy.get('input[name="departurePort"]').clear().type(port);
+});
+
+Cypress.Commands.add('enterArrivalDetails', (date, port) => {
+  let temp = date.split(' ');
+  const arrivalDate = temp[0].split('/');
+  const arrivalTime = temp[1].split(':');
+  cy.get('input[name="arrivalDateDay"]').clear().type(arrivalDate[0]);
+  cy.get('input[name="arrivalDateMonth"]').clear().type(arrivalDate[1]);
+  cy.get('input[name="arrivalDateYear"]').clear().type(arrivalDate[2]);
+  cy.get('input[name="arrivalTimeHour"]').clear().type(arrivalTime[0]);
+  cy.get('input[name="arrivalTimeMinute"]').clear().type(arrivalTime[1]);
+  cy.get('input[name="arrivalPort"]').clear().type(port);
+});
+
+Cypress.Commands.add('enterSkipperDetails', () => {
+  faker.locale = 'en_GB';
+  cy.get('input[name="responsibleGivenName"]').clear().type(faker.name.firstName());
+  cy.get('input[name="responsibleSurname"]').clear().type(faker.name.lastName());
+  cy.get('input[name="responsibleContactNo"]').clear().type(faker.phone.phoneNumber());
+  cy.get('input[name="responsibleAddressLine1"]').clear().type(faker.address.streetAddress());
+  cy.get('input[name="responsibleAddressLine2"]').clear().type(faker.address.streetName());
+  cy.get('input[name="responsibleTown"]').clear().type(faker.address.city());
+  cy.get('input[name="responsibleCounty"]').clear().type(faker.address.county());
+  cy.get('input[name="responsiblePostcode"]').clear().type(faker.address.zipCode());
+});
+
+Cypress.Commands.add('checkNoErrors', () => {
+  cy.get('.govuk-error-message').should('not.be.visible');
+});
+
+Cypress.Commands.add('saveAndContinue', () => {
+  cy.contains('Save and continue').click();
+});
