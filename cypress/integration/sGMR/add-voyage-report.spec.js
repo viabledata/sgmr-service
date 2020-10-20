@@ -15,6 +15,11 @@ describe('Add new voyage report', () => {
     cy.task('readFileMaybe', 'cypress/fixtures/users.json').then((dataOrNull) => {
       if (dataOrNull === null) {
         cy.registerUser();
+      } else {
+        let data = JSON.parse(dataOrNull);
+        if (cy.checkUserExists(data.email) === false) {
+          cy.registerUser();
+        }
       }
     });
   });
@@ -123,8 +128,6 @@ describe('Add new voyage report', () => {
     cy.checkNoErrors();
     cy.contains('Cancel voyage').click();
     cy.url().should('include', '/reports');
-    // eslint-disable-next-line cypress/no-unnecessary-waiting
-    cy.wait(1000);
     cy.get('.govuk-tabs__list li')
       .within(() => {
         cy.get('#cancelled').should('have.text', 'Cancelled')

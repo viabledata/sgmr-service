@@ -104,9 +104,9 @@ Cypress.Commands.add('registerUser', () => {
 });
 
 Cypress.Commands.add('enterDepartureDetails', (date, port) => {
-  let temp = date.split(' ');
-  const departureDate = temp[0].split('/');
-  const departureTime = temp[1].split(':');
+  let dateTime = date.split(' ');
+  const departureDate = dateTime[0].split('/');
+  const departureTime = dateTime[1].split(':');
   cy.get('input[name="departureDateDay"]').clear().type(departureDate[0]);
   cy.get('input[name="departureDateMonth"]').clear().type(departureDate[1]);
   cy.get('input[name="departureDateYear"]').clear().type(departureDate[2]);
@@ -117,9 +117,9 @@ Cypress.Commands.add('enterDepartureDetails', (date, port) => {
 });
 
 Cypress.Commands.add('enterArrivalDetails', (date, port) => {
-  let temp = date.split(' ');
-  const arrivalDate = temp[0].split('/');
-  const arrivalTime = temp[1].split(':');
+  let dateTime = date.split(' ');
+  const arrivalDate = dateTime[0].split('/');
+  const arrivalTime = dateTime[1].split(':');
   cy.get('input[name="arrivalDateDay"]').clear().type(arrivalDate[0]);
   cy.get('input[name="arrivalDateMonth"]').clear().type(arrivalDate[1]);
   cy.get('input[name="arrivalDateYear"]').clear().type(arrivalDate[2]);
@@ -146,4 +146,16 @@ Cypress.Commands.add('checkNoErrors', () => {
 
 Cypress.Commands.add('saveAndContinue', () => {
   cy.contains('Save and continue').click();
+});
+
+Cypress.Commands.add('checkUserExists', (user) => {
+  const query = `sh cypress/scripts/check-user-exist.sh ${user}`;
+  cy.exec(query).then((result) => {
+    return result.stdout;
+  }).then((result) => {
+    if (result.includes('0 row')) {
+      return false;
+    }
+    return true;
+  });
 });

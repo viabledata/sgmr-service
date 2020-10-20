@@ -3,6 +3,11 @@ describe('Sign-in flow', () => {
     cy.task('readFileMaybe', 'cypress/fixtures/users.json').then((dataOrNull) => {
       if (dataOrNull === null) {
         cy.registerUser();
+      } else {
+        let data = JSON.parse(dataOrNull);
+        if (cy.checkUserExists(data.email) === false) {
+          cy.registerUser();
+        }
       }
     });
   });
