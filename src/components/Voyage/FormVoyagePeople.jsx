@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 // App imports
 import { getData } from '@utils/apiHooks';
 import { PEOPLE_URL } from '@constants/ApiConstants';
+import { FORM_STEPS } from '@constants/ClientConstants';
 import PeopleManifest from '@components/Voyage/PeopleManifest';
 import PeopleTable from '@components/People/PeopleTable';
 
@@ -64,7 +65,7 @@ const FormVoyagePeople = ({
         type="button"
         className="govuk-button"
         data-module="govuk-button"
-        onClick={(e) => handleSubmit(e, 'people', voyageId)}
+        onClick={(e) => handleSubmit(e, FORM_STEPS.PEOPLE, voyageId)}
       >
         Save and continue
       </button>

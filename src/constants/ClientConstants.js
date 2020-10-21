@@ -18,3 +18,15 @@ export const PEOPLE_PAGE_URL = '/people';
 export const ADD_PERSON_URL = '/people/save-person';
 export const ACCOUNT_PAGE_URL = '/account';
 export const EDIT_ACCOUNT_URL = '/account/edit';
+export const FORM_STEPS = {
+  CHECK: 'check',
+  ARRIVAL: 'arrival',
+  DEPARTURE: 'departure',
+  PEOPLE: 'people',
+  NEW_PERSON: 'newPerson',
+  RESPONSIBLE_PERSON: 'responsiblePerson',
+  PERSON: 'person',
+  VESSEL: 'vessel',
+  VOYAGE: 'voyage',
+  CANCEL: 'cancel',
+};

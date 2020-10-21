@@ -1,4 +1,5 @@
 import React from 'react';
+import { FORM_STEPS } from '@constants/ClientConstants';
 import FormError from '@components/Voyage/FormError';
 
 const FormResponsiblePerson = ({
@@ -121,7 +122,7 @@ const FormResponsiblePerson = ({
         type="button"
         className="govuk-button"
         data-module="govuk-button"
-        onClick={(e) => handleSubmit(e, 'responsiblePerson', voyageId)}
+        onClick={(e) => handleSubmit(e, FORM_STEPS.RESPONSIBLE_PERSON, voyageId)}
       >
         Save and continue
       </button>

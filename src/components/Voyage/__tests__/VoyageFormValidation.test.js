@@ -1,4 +1,5 @@
 import VoyageFormValidation from '@components/Voyage/VoyageFormValidation';
+import { FORM_STEPS } from '@constants/ClientConstants';
 
 test('Validates responsible person', () => {
   const expectedErrors = {
@@ -11,6 +12,6 @@ test('Validates responsible person', () => {
     responsibleSurname: 'You must enter a given name',
     responsibleTown: 'You must enter a town or a city name',
   };
-  const result = VoyageFormValidation({}, 'responsiblePerson');
+  const result = VoyageFormValidation({}, FORM_STEPS.RESPONSIBLE_PERSON);
   expect(result).toEqual(expectedErrors);
 });

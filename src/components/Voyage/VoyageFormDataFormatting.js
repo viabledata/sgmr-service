@@ -79,7 +79,7 @@ const formatNewPerson = (status, data) => {
 };
 
 const formatPerson = (data) => {
-  const dataList = {
+  return {
     firstName: data.firstName,
     lastName: data.lastName,
     documentType: data.documentType,
@@ -92,7 +92,6 @@ const formatPerson = (data) => {
     placeOfBirth: data.placeOfBirth,
     nationality: data.nationality,
   };
-  return dataList;
 };
 
 const formatResponsiblePerson = (status, data, voyageData) => {

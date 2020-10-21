@@ -1,9 +1,10 @@
 import React from 'react';
+import { FORM_STEPS } from '@constants/ClientConstants';
 
 const FormArrival = ({
   handleSubmit, handleChange, data, errors, voyageId,
 }) => {
-  if (!data) { return (null); }
+  if (!data) { return null; }
   return (
     <section>
       <h1 className="govuk-heading-xl">Arrival details</h1>
@@ -171,7 +172,7 @@ const FormArrival = ({
         type="button"
         className="govuk-button"
         data-module="govuk-button"
-        onClick={(e) => handleSubmit(e, 'arrival', voyageId)}
+        onClick={(e) => handleSubmit(e, FORM_STEPS.ARRIVAL, voyageId)}
       >
         Save and continue
       </button>
