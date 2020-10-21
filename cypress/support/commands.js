@@ -151,9 +151,7 @@ Cypress.Commands.add('saveAndContinue', () => {
 Cypress.Commands.add('checkUserExists', (user) => {
   const query = `sh cypress/scripts/check-user-exist.sh ${user}`;
   cy.exec(query).then((result) => {
-    return result.stdout;
-  }).then((result) => {
-    if (result.includes('0 row')) {
+    if (result.stdout.includes('0 rows')) {
       return false;
     }
     return true;

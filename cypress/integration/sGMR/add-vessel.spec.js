@@ -4,20 +4,18 @@ describe('Add new vessel in account', () => {
   let vessel;
 
   before(() => {
-    cy.fixture('vessel.json').then((vesselData) => {
-      vesselData.regNumber = faker.random.number();
-      vesselData.name = `${vesselData.name}${faker.random.number()}`;
-      vessel = vesselData;
+    cy.fixture('vessel.json').then((vesselObj) => {
+      vesselObj.regNumber = faker.random.number();
+      vesselObj.name = `${vesselObj.name}${faker.random.number()}`;
+      vessel = vesselObj;
     });
-    cy.task('readFileMaybe', 'cypress/fixtures/users.json').then((dataOrNull) => {
-      if (dataOrNull === null) {
-        cy.registerUser();
-      } else {
-        let data = JSON.parse(dataOrNull);
-        if (cy.checkUserExists(data.email) === false) {
+    cy.task('readFileMaybe', 'cypress/fixtures/users.json').then((data) => {
+      const user = JSON.parse(data);
+      cy.checkUserExists(user.email).then((userExist) => {
+        if (userExist === false) {
           cy.registerUser();
         }
-      }
+      });
     });
   });
 

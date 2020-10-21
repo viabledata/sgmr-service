@@ -5,23 +5,21 @@ describe('Add People in account', () => {
   let people;
 
   before(() => {
-    cy.fixture('people.json').then((person) => {
-      person.documentNumber = faker.random.number();
-      person.firstName = faker.name.firstName();
-      person.lastName = faker.name.lastName();
-      person.dateOfBirth = getPastDate(30, 'DD/MM/YYYY');
-      person.expiryDate = getFutureDate(3, 'DD/MM/YYYY');
-      people = person;
+    cy.fixture('people.json').then((personObj) => {
+      personObj.documentNumber = faker.random.number();
+      personObj.firstName = `Auto-${faker.name.firstName()}`;
+      personObj.lastName = faker.name.lastName();
+      personObj.dateOfBirth = getPastDate(30, 'DD/MM/YYYY');
+      personObj.expiryDate = getFutureDate(3, 'DD/MM/YYYY');
+      people = personObj;
     });
-    cy.task('readFileMaybe', 'cypress/fixtures/users.json').then((dataOrNull) => {
-      if (dataOrNull === null) {
-        cy.registerUser();
-      } else {
-        let data = JSON.parse(dataOrNull);
-        if (cy.checkUserExists(data.email) === false) {
+    cy.task('readFileMaybe', 'cypress/fixtures/users.json').then((data) => {
+      const user = JSON.parse(data);
+      cy.checkUserExists(user.email).then((userExist) => {
+        if (userExist === false) {
           cy.registerUser();
         }
-      }
+      });
     });
   });
 

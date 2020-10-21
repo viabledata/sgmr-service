@@ -12,31 +12,29 @@ describe('Add new voyage report', () => {
   let departTime;
 
   before(() => {
-    cy.task('readFileMaybe', 'cypress/fixtures/users.json').then((dataOrNull) => {
-      if (dataOrNull === null) {
-        cy.registerUser();
-      } else {
-        let data = JSON.parse(dataOrNull);
-        if (cy.checkUserExists(data.email) === false) {
+    cy.task('readFileMaybe', 'cypress/fixtures/users.json').then((data) => {
+      const user = JSON.parse(data);
+      cy.checkUserExists(user.email).then((userExist) => {
+        if (userExist === false) {
           cy.registerUser();
         }
-      }
+      });
     });
   });
 
   beforeEach(() => {
-    cy.fixture('vessel.json').then((vesselData) => {
-      vesselData.regNumber = faker.random.number();
-      vesselData.name = `${vesselData.name}${faker.random.number()}`;
-      vessel = vesselData;
+    cy.fixture('vessel.json').then((vesselObj) => {
+      vesselObj.regNumber = faker.random.number();
+      vesselObj.name = `${vesselObj.name}${faker.random.number()}`;
+      vessel = vesselObj;
     });
-    cy.fixture('people.json').then((person) => {
-      person.documentNumber = faker.random.number();
-      person.firstName = `Auto-${faker.name.firstName()}`;
-      person.lastName = faker.name.lastName();
-      person.dateOfBirth = getPastDate(30, 'DD/MM/YYYY');
-      person.expiryDate = getFutureDate(3, 'DD/MM/YYYY');
-      people = person;
+    cy.fixture('people.json').then((personObj) => {
+      personObj.documentNumber = faker.random.number();
+      personObj.firstName = `Auto-${faker.name.firstName()}`;
+      personObj.lastName = faker.name.lastName();
+      personObj.dateOfBirth = getPastDate(30, 'DD/MM/YYYY');
+      personObj.expiryDate = getFutureDate(3, 'DD/MM/YYYY');
+      people = personObj;
     });
 
     departurePort = 'Port of Hong Kong';
