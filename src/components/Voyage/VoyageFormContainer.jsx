@@ -7,8 +7,13 @@ import {
 import { getData, patchData } from '@utils/apiHooks';
 import { splitDate } from '@utils/date';
 import { splitTime } from '@utils/time';
-import { PEOPLE_URL, VESSELS_URL, VOYAGE_REPORT_URL } from '@constants/ApiConstants';
-import { SAVE_VOYAGE_PEOPLE_URL } from '@constants/ClientConstants';
+import {
+  PEOPLE_URL,
+  VESSELS_URL,
+  VOYAGE_REPORT_URL,
+  VOYAGE_STATUSES,
+} from '@constants/ApiConstants';
+import { FORM_STEPS } from '@constants/ClientConstants';
 import {
   formatDepartureArrival, formatNewPerson, formatPerson, formatResponsiblePerson, formatVessel,
 } from '@components/Voyage/VoyageFormDataFormatting';
@@ -22,10 +27,8 @@ import FormCheck from '@components/Voyage/FormCheck';
 import FormDeparture from '@components/Voyage/FormDeparture';
 import FormPerson from '@components/People/FormPerson';
 import FormResponsiblePerson from '@components/Voyage/FormResponsiblePerson';
-import FormSubmitted from '@components/Voyage/FormSubmitted';
 import FormVoyageVessels from '@components/Voyage/FormVoyageVessels';
 import FormVoyagePeople from '@components/Voyage/FormVoyagePeople';
-
 
 const FormVoyageContainer = () => {
   const location = useLocation();
@@ -38,7 +41,6 @@ const FormVoyageContainer = () => {
   const [peopleData, setPeopleData] = useState([]);
   const [formData, setFormData] = useState(JSON.parse(localStorage.getItem('formData')) || {});
   const [errors, setErrors] = useState({});
-
 
   // Handle errors
   const removeError = (fieldName) => {
@@ -67,13 +69,11 @@ const FormVoyageContainer = () => {
     setErrors(errorList);
   };
 
-
   // Update form data as user enters it
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
     removeError(e.target.name);
   };
-
 
   // Destructure dates (for when reach page via an edit path with dates)
   const formatDateTime = (data, id) => {
@@ -100,7 +100,6 @@ const FormVoyageContainer = () => {
     });
   };
 
-
   // Handle checkboxes being checked/unchecked
   const handleCheckboxes = (e) => {
     let url;
@@ -123,7 +122,6 @@ const FormVoyageContainer = () => {
     });
   };
 
-
   // Create checkbox people array
   const handlePeopleCheckbox = (e) => {
     let checkedPeople = [...peopleData];
@@ -138,12 +136,16 @@ const FormVoyageContainer = () => {
     setPeopleData(checkedPeople);
   };
 
-
   const handleAddPeopleButton = () => {
-    patchData(`${VOYAGE_REPORT_URL}/${voyageId}`, { status: 'Draft', people: peopleData })
+    patchData(
+      `${VOYAGE_REPORT_URL}/${voyageId}`,
+      {
+        status: VOYAGE_STATUSES.DRAFT,
+        people: peopleData,
+      },
+    )
       .then(window.location.reload(true)); // Forcing the reload so manifest updates
   };
-
 
   // Handle add buttons which populate page data
   const handleAddVesselButton = () => {
@@ -163,13 +165,11 @@ const FormVoyageContainer = () => {
     }
   };
 
-
   // Handle link to create person for voyage form
   const handleLinkToForm = (e) => {
     e.preventDefault();
     setPageNum('4b');
   };
-
 
   // Get voyage data
   const getVoyageData = (id) => {
@@ -180,12 +180,11 @@ const FormVoyageContainer = () => {
       });
   };
 
-
   const setNextPage = (sourceForm) => {
     let nextPage;
     switch (sourceForm) {
-      case 'cancel': history.push('/reports'); break;
-      case 'check': history.push('/save-voyage/page-submitted'); break;
+      case FORM_STEPS.CANCEL: history.push('/reports'); break;
+      case FORM_STEPS.CHECK: history.push('/save-voyage/page-submitted'); break;
       default: if (pageNum === '4b') {
         nextPage = 4;
       } else {
@@ -196,23 +195,39 @@ const FormVoyageContainer = () => {
     }
   };
 
-
   const handleSubmit = (e, sourceForm) => {
     e.preventDefault();
     let dataToSubmit;
-    if (sourceForm === 'people') {
+    if (sourceForm === FORM_STEPS.PEOPLE) {
       setNextPage(sourceForm);
     } else {
       switch (sourceForm) {
-        case 'arrival': dataToSubmit = formatDepartureArrival('Draft', formData, voyageData); break;
-        case 'check': dataToSubmit = { status: 'PreSubmitted' }; break;
-        case 'departure': dataToSubmit = formatDepartureArrival('Draft', formData, voyageData); break;
-        case 'newPerson': dataToSubmit = formatNewPerson('Draft', formData, voyageData); break;
-        case 'responsiblePerson': dataToSubmit = formatResponsiblePerson('Draft', formData, voyageData); break;
-        case 'vessel': dataToSubmit = formatVessel('Draft', formData, voyageData); break;
-        case 'voyage': dataToSubmit = { status: 'PreSubmitted' }; break;
-        case 'cancel': dataToSubmit = { status: 'PreCancelled' }; break;
-        default: dataToSubmit = null;
+        case FORM_STEPS.ARRIVAL:
+          dataToSubmit = formatDepartureArrival(VOYAGE_STATUSES.DRAFT, formData, voyageData);
+          break;
+        case FORM_STEPS.CHECK:
+          dataToSubmit = { status: VOYAGE_STATUSES.PRE_SUBMITTED };
+          break;
+        case FORM_STEPS.DEPARTURE:
+          dataToSubmit = formatDepartureArrival(VOYAGE_STATUSES.DRAFT, formData, voyageData);
+          break;
+        case FORM_STEPS.NEW_PERSON:
+          dataToSubmit = formatNewPerson(VOYAGE_STATUSES.DRAFT, formData, voyageData);
+          break;
+        case FORM_STEPS.RESPONSIBLE_PERSON:
+          dataToSubmit = formatResponsiblePerson(VOYAGE_STATUSES.DRAFT, formData, voyageData);
+          break;
+        case FORM_STEPS.VESSEL:
+          dataToSubmit = formatVessel(VOYAGE_STATUSES.DRAFT, formData, voyageData);
+          break;
+        case FORM_STEPS.VOYAGE:
+          dataToSubmit = { status: VOYAGE_STATUSES.PRE_SUBMITTED };
+          break;
+        case FORM_STEPS.CANCEL:
+          dataToSubmit = { status: VOYAGE_STATUSES.PRE_CANCELLED };
+          break;
+        default:
+          dataToSubmit = null;
       }
 
       // Handle missing voyageId (for if user comes to a subpage directly, and we haven't got the id)
@@ -231,13 +246,11 @@ const FormVoyageContainer = () => {
     }
   };
 
-
   // Set page number based on current URL
   const getPageNum = () => {
     const thisPage = location.pathname.split('page-');
     setPageNum(parseInt(thisPage[1], 10));
   };
-
 
   // Trigger functions
   useEffect(() => {
@@ -258,7 +271,6 @@ const FormVoyageContainer = () => {
   useEffect(() => {
     localStorage.setItem('formData', JSON.stringify(formData));
   }, [formData]);
-
 
   if (!formData) { return null; }
   return (

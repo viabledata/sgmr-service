@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { getData } from '@utils/apiHooks';
 import { formatUIDate } from '@utils/date';
 import { VOYAGE_REPORT_URL } from '@constants/ApiConstants';
+import { FORM_STEPS } from '@constants/ClientConstants';
 
 
 const Manifest = ({ voyageId, source }) => {
@@ -84,7 +85,7 @@ const Manifest = ({ voyageId, source }) => {
           );
         })}
       </table>
-      {source === 'voyage' && (
+      {source === FORM_STEPS.VOYAGE && (
       <div className="govuk-form-group">
         <label className="govuk-label" htmlFor="totalPersonsOnBoard">Total persons on board</label>
         <input

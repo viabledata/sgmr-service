@@ -1,4 +1,5 @@
 import React from 'react';
+import { FORM_STEPS } from '@constants/ClientConstants';
 
 const FormDeparture = ({
   handleSubmit, handleChange, data, errors, voyageId,
@@ -171,7 +172,7 @@ const FormDeparture = ({
         type="button"
         className="govuk-button"
         data-module="govuk-button"
-        onClick={(e) => handleSubmit(e, 'departure', voyageId)}
+        onClick={(e) => handleSubmit(e, FORM_STEPS.DEPARTURE, voyageId)}
       >
         Save and continue
       </button>

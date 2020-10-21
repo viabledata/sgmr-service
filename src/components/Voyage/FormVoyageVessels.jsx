@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 // App imports
 import { getData } from '@utils/apiHooks';
 import { VESSELS_URL } from '@constants/ApiConstants';
+import { FORM_STEPS } from '@constants/ClientConstants';
 import FormVessel from '@components/Vessel/FormVessel';
 import VesselTable from '@components/Vessel/VesselTable';
 
@@ -61,7 +62,7 @@ const FormVessels = ({
         type="button"
         className="govuk-button"
         data-module="govuk-button"
-        onClick={(e) => handleSubmit(e, 'vessel', voyageId)}
+        onClick={(e) => handleSubmit(e, FORM_STEPS.VESSEL, voyageId)}
       >
         Save and continue
       </button>

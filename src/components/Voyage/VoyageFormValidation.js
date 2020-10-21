@@ -10,18 +10,19 @@ import {
   voyageValidationRules,
 } from '@components/Forms/validationRules';
 import scrollToTopOnError from '@utils/scrollToTopOnError';
+import { FORM_STEPS } from '@constants/ClientConstants';
 
 const VoyageFormValidation = (dataToValidate, source) => {
   const fieldsErroring = {};
   let validationRules;
   switch (source) {
-    case 'check': validationRules = voyageValidationRules; break;
-    case 'arrival': validationRules = arrivalValidationRules; break;
-    case 'departure': validationRules = departureValidationRules; break;
-    case 'newPerson': validationRules = personValidationRules; break;
-    case 'person': validationRules = personValidationRules; break;
-    case 'responsiblePerson': validationRules = responsiblePersonValidationRules; break;
-    case 'vessel': validationRules = vesselValidationRules; break;
+    case FORM_STEPS.CHECK: validationRules = voyageValidationRules; break;
+    case FORM_STEPS.ARRIVAL: validationRules = arrivalValidationRules; break;
+    case FORM_STEPS.DEPARTURE: validationRules = departureValidationRules; break;
+    case FORM_STEPS.NEW_PERSON: validationRules = personValidationRules; break;
+    case FORM_STEPS.PERSON: validationRules = personValidationRules; break;
+    case FORM_STEPS.RESPONSIBLE_PERSON: validationRules = responsiblePersonValidationRules; break;
+    case FORM_STEPS.VESSEL: validationRules = vesselValidationRules; break;
     default: validationRules = null;
   }
 
@@ -37,14 +38,14 @@ const VoyageFormValidation = (dataToValidate, source) => {
   // Departure & Arrival must include a Port OR a Lat & Long
 
   if (
-    source === 'departure'
+    source === FORM_STEPS.DEPARTURE
     && !dataToValidate.departurePort
     && (!dataToValidate.departureLat || !dataToValidate.departureLong)
   ) {
     fieldsErroring.departureLocation = 'You must enter a departure point';
   }
   if (
-    source === 'arrival'
+    source === FORM_STEPS.ARRIVAL
     && !dataToValidate.arrivalPort
     && (!dataToValidate.arrivalLat || !dataToValidate.arrivalLong)
   ) {
