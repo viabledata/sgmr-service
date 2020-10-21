@@ -29,6 +29,7 @@ import FormPerson from '@components/People/FormPerson';
 import FormResponsiblePerson from '@components/Voyage/FormResponsiblePerson';
 import FormVoyageVessels from '@components/Voyage/FormVoyageVessels';
 import FormVoyagePeople from '@components/Voyage/FormVoyagePeople';
+import FormError from '@components/Voyage/FormError';
 
 const FormVoyageContainer = () => {
   const location = useLocation();
@@ -288,13 +289,7 @@ const FormVoyageContainer = () => {
                 <h2 className="govuk-error-summary__title">
                   There is a problem
                 </h2>
-                {errors.voyageForm
-                    && (
-                    <span className="govuk-error-message">
-                      <span className="govuk-visually-hidden">Error:</span>
-                      {errors.voyageForm}
-                    </span>
-                    )}
+                <FormError error={errors.voyageForm} />
               </div>
               )}
               {pageNum === 1 && (

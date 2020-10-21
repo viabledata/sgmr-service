@@ -9,6 +9,7 @@ import { getData, patchData } from '@utils/apiHooks';
 import getId from '@utils/getIdHook';
 import scrollToTopOnError from '@utils/scrollToTopOnError';
 import FormPerson from '@components/People/FormPerson';
+import FormError from '@components/Voyage/FormError';
 
 
 const EditPerson = () => {
@@ -178,13 +179,7 @@ const EditPerson = () => {
                   <h2 className="govuk-error-summary__title">
                     There is a problem
                   </h2>
-                  {errors.EditPerson
-                    && (
-                    <span className="govuk-error-message">
-                      <span className="govuk-visually-hidden">Error:</span>
-                      {errors.EditPerson}
-                    </span>
-                    )}
+                  <FormError error={errors.EditPerson} />
                 </div>
               )}
 

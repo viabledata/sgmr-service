@@ -7,6 +7,7 @@ import { REGISTRATION_URL } from '@constants/ApiConstants';
 import UserRegisterValidation from '@components/User/UserRegisterValidation';
 import { postData } from '@utils/apiHooks';
 import scrollToTopOnError from '@utils/scrollToTopOnError';
+import FormError from '@components/Voyage/FormError';
 
 
 const UserRegister = () => {
@@ -89,13 +90,7 @@ const UserRegister = () => {
                 <h2 className="govuk-error-summary__title">
                   There is a problem
                 </h2>
-                {errors.userRegister
-                    && (
-                    <span className="govuk-error-message">
-                      <span className="govuk-visually-hidden">Error:</span>
-                      {errors.userRegister}
-                    </span>
-                    )}
+                <FormError error={errors.userRegister} />
               </div>
               )}
 
@@ -103,13 +98,7 @@ const UserRegister = () => {
                 <label className="govuk-label govuk-label--m" htmlFor="firstName">
                   First name
                 </label>
-                {errors.firstName
-                  && (
-                  <span className="govuk-error-message">
-                    <span className="govuk-visually-hidden">Error:</span>
-                    {errors.firstName}
-                  </span>
-                  )}
+                <FormError error={errors.firstName} />
                 <input
                   className="govuk-input"
                   name="firstName"
@@ -123,13 +112,7 @@ const UserRegister = () => {
                 <label className="govuk-label govuk-label--m" htmlFor="lastName">
                   Last name
                 </label>
-                {errors.lastName
-                  && (
-                  <span className="govuk-error-message">
-                    <span className="govuk-visually-hidden">Error:</span>
-                    {errors.lastName}
-                  </span>
-                  )}
+                <FormError error={errors.lastName} />
                 <input
                   className="govuk-input"
                   name="lastName"
@@ -143,13 +126,7 @@ const UserRegister = () => {
                 <label className="govuk-label govuk-label--m" htmlFor="mobileNumber">
                   Mobile number
                 </label>
-                {errors.mobileNumber
-                  && (
-                  <span className="govuk-error-message">
-                    <span className="govuk-visually-hidden">Error:</span>
-                    {errors.mobileNumber}
-                  </span>
-                  )}
+                <FormError error={errors.mobileNumber} />
                 <span className="govuk-hint">We will send an access code to this number</span>
                 <input
                   className="govuk-input"
@@ -163,13 +140,7 @@ const UserRegister = () => {
                 <label className="govuk-label govuk-label--m" htmlFor="email">
                   Email address
                 </label>
-                {errors.email
-                  && (
-                  <span className="govuk-error-message">
-                    <span className="govuk-visually-hidden">Error:</span>
-                    {errors.email}
-                  </span>
-                  )}
+                <FormError error={errors.email} />
                 <span className="govuk-hint">You will use this to sign into your account</span>
                 <input
                   className="govuk-input"
@@ -184,13 +155,7 @@ const UserRegister = () => {
                 <label className="govuk-label govuk-label--m" htmlFor="confirmEmail">
                   Confirm email address
                 </label>
-                {errors.confirmEmail
-                  && (
-                  <span className="govuk-error-message">
-                    <span className="govuk-visually-hidden">Error:</span>
-                    {errors.confirmEmail}
-                  </span>
-                  )}
+                <FormError error={errors.confirmEmail} />
                 <input
                   className="govuk-input"
                   name="confirmEmail"
@@ -204,13 +169,7 @@ const UserRegister = () => {
                 <label className="govuk-label govuk-label--m" htmlFor="password">
                   Create password
                 </label>
-                {errors.password
-                  && (
-                  <span className="govuk-error-message">
-                    <span className="govuk-visually-hidden">Error:</span>
-                    {errors.password}
-                  </span>
-                  )}
+                <FormError error={errors.password} />
                 <input
                   className="govuk-input"
                   name="password"
@@ -224,13 +183,7 @@ const UserRegister = () => {
                 <label className="govuk-label govuk-label--m" htmlFor="confirmPassword">
                   Confirm password
                 </label>
-                {errors.confirmPassword
-                  && (
-                  <span className="govuk-error-message">
-                    <span className="govuk-visually-hidden">Error:</span>
-                    {errors.confirmPassword}
-                  </span>
-                  )}
+                <FormError error={errors.confirmPassword} />
                 <input
                   className="govuk-input"
                   name="confirmPassword"
