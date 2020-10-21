@@ -21,7 +21,7 @@ module.exports = (on) => {
   on('task', {
     readFileMaybe(filename) {
       if (fs.existsSync(filename)) {
-        return fs.readFileSync(filename);
+        return fs.readFileSync(filename, 'utf8');
       }
       return null;
     },

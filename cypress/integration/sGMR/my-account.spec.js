@@ -1,9 +1,12 @@
 describe('My Account details verification', () => {
   before(() => {
-    cy.task('readFileMaybe', 'cypress/fixtures/users.json').then((dataOrNull) => {
-      if (dataOrNull === null) {
-        cy.registerUser();
-      }
+    cy.task('readFileMaybe', 'cypress/fixtures/users.json').then((data) => {
+      const user = JSON.parse(data);
+      cy.checkUserExists(user.email).then((userExist) => {
+        if (userExist === false) {
+          cy.registerUser();
+        }
+      });
     });
   });
 
