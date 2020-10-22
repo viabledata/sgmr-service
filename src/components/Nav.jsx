@@ -63,7 +63,6 @@ const Nav = () => {
       })
       .catch(() => {
         Auth.logout();
-        localStorage.clear();
         history.push('/sign-in');
       });
   };
