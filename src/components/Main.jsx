@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState } from 'react';
 import { Route, Switch } from 'react-router-dom';
 
 // app imports
@@ -27,7 +27,9 @@ import EditVessel from '@components/Vessel/EditVessel';
 
 import VoyageFormContainer from '@components/Voyage/VoyageFormContainer';
 import FormVoyageSubmitted from '@components/Forms/FormVoyageSubmitted';
-import UserContext from './UserContext';
+import UserContext from '@components/UserContext';
+import DeleteAccount from '@components/User/DeleteAccount';
+import DeleteConfirmation from '@components/User/DeleteConfirmation';
 
 const Main = () => {
   const [user, setUser] = useState(null);
@@ -73,6 +75,12 @@ const Main = () => {
         <SecureRoute exact path="/account/edit">
           <EditAccount />
         </SecureRoute>
+        <SecureRoute exact path="/account/delete">
+          <DeleteAccount />
+        </SecureRoute>
+        <Route exact path="/account/delete-confirmation">
+          <DeleteConfirmation />
+        </Route>
         <Route exact path="/sign-in">
           <SignIn />
         </Route>
