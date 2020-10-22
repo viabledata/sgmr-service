@@ -10,19 +10,12 @@ describe('Validate report form', () => {
   let people;
 
   before(() => {
-    cy.task('readFileMaybe', 'cypress/fixtures/users.json').then((data) => {
-      const user = JSON.parse(data);
-      cy.checkUserExists(user.email).then((userExist) => {
-        if (userExist === false) {
-          cy.registerUser();
-        }
-      });
-    });
     cy.fixture('vessel.json').then((vesselObj) => {
       vesselObj.regNumber = faker.random.number();
       vesselObj.name = `${vesselObj.name}${faker.random.number()}`;
       vessel = vesselObj;
     });
+
     cy.fixture('people.json').then((personObj) => {
       personObj.documentNumber = faker.random.number();
       personObj.firstName = `Auto-${faker.name.firstName()}`;
@@ -31,6 +24,8 @@ describe('Validate report form', () => {
       personObj.expiryDate = getFutureDate(3, 'DD/MM/YYYY');
       people = personObj;
     });
+
+    cy.registerUser();
 
     departurePort = 'Auto-Port of Hong Kong';
     arrivalPort = 'Port of Felixstowe';
@@ -72,7 +67,7 @@ describe('Validate report form', () => {
     cy.enterDepartureDetails(departureDateTime, departurePort);
     cy.saveAndContinue();
     cy.url().should('include', '/page-2');
-    cy.get('.govuk-button[type="button"]').click();
+    cy.saveAndContinue();
     cy.get('.govuk-error-message').each((error, index) => {
       cy.wrap(error).should('contain.text', errors[index]).and('be.visible');
     });
