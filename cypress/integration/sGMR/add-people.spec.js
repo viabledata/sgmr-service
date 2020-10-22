@@ -13,20 +13,11 @@ describe('Add People in account', () => {
       personObj.expiryDate = getFutureDate(3, 'DD/MM/YYYY');
       people = personObj;
     });
-    cy.task('readFileMaybe', 'cypress/fixtures/users.json').then((data) => {
-      const user = JSON.parse(data);
-      cy.checkUserExists(user.email).then((userExist) => {
-        if (userExist === false) {
-          cy.registerUser();
-        }
-      });
-    });
+    cy.registerUser();
   });
 
   beforeEach(() => {
-    cy.fixture('users.json').then((user) => {
-      cy.login(user.email, user.password);
-    });
+    cy.login();
     cy.navigation('People');
     cy.url().should('include', '/people');
     cy.get('.govuk-button--start').should('have.text', 'Save a person').click();

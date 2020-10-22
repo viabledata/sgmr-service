@@ -9,20 +9,11 @@ describe('Add new vessel in account', () => {
       vesselObj.name = `${vesselObj.name}${faker.random.number()}`;
       vessel = vesselObj;
     });
-    cy.task('readFileMaybe', 'cypress/fixtures/users.json').then((data) => {
-      const user = JSON.parse(data);
-      cy.checkUserExists(user.email).then((userExist) => {
-        if (userExist === false) {
-          cy.registerUser();
-        }
-      });
-    });
+    cy.registerUser();
   });
 
   beforeEach(() => {
-    cy.fixture('users.json').then((user) => {
-      cy.login(user.email, user.password);
-    });
+    cy.login();
     cy.navigation('Vessels');
     cy.url().should('include', '/vessels');
     cy.get('.govuk-button--start').should('have.text', 'Save a vessel').click();
