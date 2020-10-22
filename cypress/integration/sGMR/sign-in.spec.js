@@ -1,19 +1,10 @@
 describe('Sign-in flow', () => {
   before(() => {
-    cy.task('readFileMaybe', 'cypress/fixtures/users.json').then((data) => {
-      const user = JSON.parse(data);
-      cy.checkUserExists(user.email).then((userExist) => {
-        if (userExist === false) {
-          cy.registerUser();
-        }
-      });
-    });
+    cy.registerUser();
   });
 
   it('Should Sign-in Successfully', () => {
-    cy.fixture('users.json').then((user) => {
-      cy.login(user.email, user.password);
-    });
+    cy.login();
     cy.get('.govuk-heading-xl').should('have.text', 'Submit an Advanced Voyage Report');
     cy.navigation('Signout');
     cy.url().should('include', '/sign-in');

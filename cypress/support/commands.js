@@ -41,64 +41,59 @@ Cypress.Commands.add('enterPeopleInfo', (people) => {
   cy.get('input[name="documentExpiryDateYear"]').clear().type(date[2]);
 });
 
-Cypress.Commands.add('login', (email, password) => {
-  cy.visit('/sign-in');
-  cy.get('#email input').type(email);
-  cy.get('#password input ').type(password);
-
-  cy.server();
-  cy.route('POST', `${Cypress.env('api_server')}/login`).as('login');
-
-  cy.get('.govuk-button').click();
-  cy.url().should('include', '/verify?source=reports');
-
-  cy.wait('@login').should((xhr) => {
-    expect(xhr.status).to.eq(200);
-    let authCode = xhr.responseBody.twoFactorToken;
-    cy.get('input[name="twoFactorToken"]').type(authCode);
-    cy.get('.govuk-button').click();
-  });
-  cy.url().should('include', '/reports');
-  cy.get('.govuk-button--start').should('have.text', 'Start now');
-});
-
 Cypress.Commands.add('navigation', (option) => {
   cy.contains('a', option).click();
 });
 
+Cypress.Commands.add('login', () => {
+  cy.fixture('users.json').then((user) => {
+    const { email, password } = user;
+    cy.visit('/sign-in');
+    cy.get('#email input').type(email);
+    cy.get('#password input ').type(password);
+
+    cy.server();
+    cy.route('POST', `${Cypress.env('api_server')}/login`).as('login');
+
+    cy.get('.govuk-button').click();
+    cy.url().should('include', '/verify?source=reports');
+
+    cy.wait('@login').should((xhr) => {
+      expect(xhr.status).to.eq(200);
+      let authCode = xhr.responseBody.twoFactorToken;
+      cy.get('input[name="twoFactorToken"]').type(authCode);
+      cy.get('.govuk-button').click();
+    });
+    cy.url().should('include', '/reports');
+    cy.get('.govuk-button--start').should('have.text', 'Start now');
+  });
+});
+
 Cypress.Commands.add('registerUser', () => {
   let apiServer = Cypress.env('api_server');
-  cy.writeFile('cypress/fixtures/user-registration.json',
-    {
-      email: faker.internet.exampleEmail(),
-      firstName: faker.name.firstName(),
-      lastName: faker.name.lastName(),
-      mobileNumber: '07800055555',
-      password: 'test1234',
-    });
-
   cy.readFile('cypress/fixtures/user-registration.json').then((registrationData) => {
-    cy.request(
-      'POST',
-      `${apiServer}registration`,
-      registrationData,
-    ).as('registration');
-  });
-
-  cy.get('@registration').then((response) => {
-    expect(response.status).to.eq(200);
-    let code = response.body.twoFactorToken;
-    let emailAddress = response.body.email;
-    cy.request(
-      'PATCH',
-      `${apiServer}submit-verification-code`,
-      {
-        email: emailAddress,
-        twoFactorToken: code.trim(),
-      },
-    ).then((res) => {
-      expect(res.status).to.eq(200);
-      cy.writeFile('cypress/fixtures/users.json', { email: emailAddress, password: 'test1234' });
+    cy.request({
+      method: 'POST',
+      url: `${apiServer}registration`,
+      body: registrationData,
+      failOnStatusCode: false,
+    }).then((response) => {
+      if (response.status === 200) {
+        cy.request(
+          'PATCH',
+          `${apiServer}submit-verification-code`,
+          {
+            email: response.body.email,
+            twoFactorToken: response.body.twoFactorToken,
+          },
+        ).then((response2) => {
+          expect(response2.status).to.eq(200);
+        });
+      } else if (response.body.message === 'User already registered') {
+        expect(response.status).to.eq(400);
+      } else {
+        throw Error('Could not register the user');
+      }
     });
   });
 });
@@ -146,14 +141,4 @@ Cypress.Commands.add('checkNoErrors', () => {
 
 Cypress.Commands.add('saveAndContinue', () => {
   cy.contains('Save and continue').click();
-});
-
-Cypress.Commands.add('checkUserExists', (user) => {
-  const query = `sh cypress/scripts/check-user-exist.sh ${user}`;
-  cy.exec(query).then((result) => {
-    if (result.stdout.includes('0 rows')) {
-      return false;
-    }
-    return true;
-  });
 });

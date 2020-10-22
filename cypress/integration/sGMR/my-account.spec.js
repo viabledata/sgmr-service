@@ -1,19 +1,10 @@
 describe('My Account details verification', () => {
   before(() => {
-    cy.task('readFileMaybe', 'cypress/fixtures/users.json').then((data) => {
-      const user = JSON.parse(data);
-      cy.checkUserExists(user.email).then((userExist) => {
-        if (userExist === false) {
-          cy.registerUser();
-        }
-      });
-    });
+    cy.registerUser();
   });
 
   it('Should show correct account details', () => {
-    cy.fixture('users.json').then((user) => {
-      cy.login(user.email, user.password);
-    });
+    cy.login();
     cy.navigation('Account');
     cy.url().should('include', '/account');
     cy.readFile('cypress/fixtures/user-registration.json');

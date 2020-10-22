@@ -12,14 +12,7 @@ describe('Add new voyage report', () => {
   let departTime;
 
   before(() => {
-    cy.task('readFileMaybe', 'cypress/fixtures/users.json').then((data) => {
-      const user = JSON.parse(data);
-      cy.checkUserExists(user.email).then((userExist) => {
-        if (userExist === false) {
-          cy.registerUser();
-        }
-      });
-    });
+    cy.registerUser();
   });
 
   beforeEach(() => {
@@ -43,9 +36,7 @@ describe('Add new voyage report', () => {
     departDate = departureDateTime.split(' ')[0];
     departTime = departureDateTime.split(' ')[1];
     arrivalDateTime = getFutureDate(2, 'DD/MM/YYYY HH:MM');
-    cy.fixture('users.json').then((user) => {
-      cy.login(user.email, user.password);
-    });
+    cy.login();
     cy.navigation('Reports');
     cy.url().should('include', '/reports');
     cy.get('.govuk-tabs__list li')
