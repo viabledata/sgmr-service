@@ -1,4 +1,5 @@
 import React from 'react';
+import FormError from '@components/Voyage/FormError';
 import { FORM_STEPS } from '@constants/ClientConstants';
 
 const FormArrival = ({
@@ -16,13 +17,7 @@ const FormArrival = ({
             <label className="govuk-label govuk-label--m" htmlFor="arrivalDate">
               Arrival date
             </label>
-            {errors.arrivalDate
-              && (
-              <span className="govuk-error-message">
-                <span className="govuk-visually-hidden">Error:</span>
-                {errors.arrivalDate}
-              </span>
-              )}
+            <FormError error={errors.arrivalDate} />
           </legend>
           <span className="govuk-hint">
             For example, 20 2 2020
@@ -91,13 +86,7 @@ const FormArrival = ({
             <label className="govuk-label govuk-label--m" htmlFor="arrivalTime">
               Estimated arrival time (UTC)
             </label>
-            {errors.arrivalTime
-              && (
-              <span className="govuk-error-message">
-                <span className="govuk-visually-hidden">Error:</span>
-                {errors.arrivalTime}
-              </span>
-              )}
+            <FormError error={errors.arrivalTime} />
           </legend>
           <span className="govuk-hint">
             For example, 17 30
@@ -142,13 +131,7 @@ const FormArrival = ({
       </div>
 
       <div id="arrivalLocation" className={`govuk-form-group ${errors.arrivalLocation ? 'govuk-form-group--error' : ''}`}>
-        {errors.arrivalLocation
-        && (
-        <span className="govuk-error-message">
-          <span className="govuk-visually-hidden">Error:</span>
-          {errors.arrivalLocation}
-        </span>
-        )}
+        <FormError error={errors.arrivalLocation} />
         <div id="arrivalPort" className={`govuk-form-group ${errors.arrivalPort ? 'govuk-form-group--error' : ''}`}>
           <label className="govuk-label govuk-label--m" htmlFor="arrivalPort">
             Arrival point

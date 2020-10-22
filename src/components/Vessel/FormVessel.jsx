@@ -1,4 +1,5 @@
 import React from 'react';
+import FormError from '@components/Voyage/FormError';
 
 const FormVessel = ({
   handleSubmit, handleChange, data, formData, errors, sourceForm, clearLocalStorage
@@ -9,14 +10,7 @@ const FormVessel = ({
         <label className="govuk-label" htmlFor="vesselName">
           Vessel name
         </label>
-        {errors.vesselName
-          && (
-          <span className="govuk-error-message">
-            <span className="govuk-visually-hidden">Error:</span>
-            {' '}
-            {errors.vesselName}
-          </span>
-          )}
+        <FormError error={errors.vesselName} />
         <span className="govuk-hint">For example Baroness</span>
         <input
           className="govuk-input"
@@ -31,14 +25,7 @@ const FormVessel = ({
         <label className="govuk-label" htmlFor="vesselType">
           Vessel type
         </label>
-        {errors.vesselType
-          && (
-          <span className="govuk-error-message">
-            <span className="govuk-visually-hidden">Error:</span>
-            {' '}
-            {errors.vesselType}
-          </span>
-          )}
+        <FormError error={errors.vesselType} />
         <span className="govuk-hint">For example Yacht or Sailboat</span>
         <input
           className="govuk-input"
@@ -54,14 +41,7 @@ const FormVessel = ({
           Usual moorings
         </label>
         <span className="govuk-hint">A description, UNLOCODE or set of Coordinates for where the vessel is usually moored</span>
-        {errors.moorings
-          && (
-          <span className="govuk-error-message">
-            <span className="govuk-visually-hidden">Error:</span>
-            {' '}
-            {errors.moorings}
-          </span>
-          )}
+        <FormError error={errors.moorings} />
         <input
           className="govuk-input"
           name="moorings"
@@ -75,14 +55,7 @@ const FormVessel = ({
         <label className="govuk-label" htmlFor="registration">
           Registration number
         </label>
-        {errors.registration
-          && (
-          <span className="govuk-error-message">
-            <span className="govuk-visually-hidden">Error:</span>
-            {' '}
-            {errors.registration}
-          </span>
-          )}
+        <FormError error={errors.registration} />
         <input
           className="govuk-input"
           name="registration"

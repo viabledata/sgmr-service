@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 // App imports
 import nationalities from '@utils/staticFormData';
-
+import FormError from '@components/Voyage/FormError';
 
 const FormPerson = ({
   handleSubmit, handleChange, data, formData, errors, clearLocalStorage, source, voyageId,
@@ -15,13 +15,7 @@ const FormPerson = ({
         <label className="govuk-label" htmlFor="firstName">
           First name
         </label>
-        {errors.firstName
-          && (
-          <span className="govuk-error-message">
-            <span className="govuk-visually-hidden">Error:</span>
-            {errors.firstName}
-          </span>
-          )}
+        <FormError error={errors.firstName} />
         <input
           className="govuk-input"
           name="firstName"
@@ -35,13 +29,7 @@ const FormPerson = ({
         <label className="govuk-label" htmlFor="lastName">
           Last Name
         </label>
-        {errors.lastName
-          && (
-          <span className="govuk-error-message">
-            <span className="govuk-visually-hidden">Error:</span>
-            {errors.lastName}
-          </span>
-          )}
+        <FormError error={errors.lastName} />
         <input
           className="govuk-input"
           name="lastName"
@@ -59,13 +47,7 @@ const FormPerson = ({
           </label>
         </legend>
         <div className="govuk-radios govuk-radios">
-          {errors.gender
-          && (
-          <span className="govuk-error-message">
-            <span className="govuk-visually-hidden">Error:</span>
-            {errors.gender}
-          </span>
-          )}
+          <FormError error={errors.gender} />
           <div className="govuk-radios__item">
             <input
               className="govuk-radios__input"
@@ -118,13 +100,7 @@ const FormPerson = ({
             <label className="govuk-label" htmlFor="dateOfBirth">
               Date of Birth
             </label>
-            {errors.dateOfBirth
-              && (
-              <span className="govuk-error-message">
-                <span className="govuk-visually-hidden">Error:</span>
-                {errors.dateOfBirth}
-              </span>
-              )}
+            <FormError error={errors.dateOfBirth} />
           </legend>
           <span className="govuk-hint">
             For example, 31 3 1980
@@ -192,13 +168,7 @@ const FormPerson = ({
         <label className="govuk-label" htmlFor="placeOfBirth">
           Place of birth
         </label>
-        {errors.placeOfBirth
-          && (
-          <span className="govuk-error-message">
-            <span className="govuk-visually-hidden">Error:</span>
-            {errors.placeOfBirth}
-          </span>
-          )}
+        <FormError error={errors.placeOfBirth} />
         <input
           className="govuk-input"
           name="placeOfBirth"
@@ -212,13 +182,7 @@ const FormPerson = ({
         <label className="govuk-label" htmlFor="nationality">
           Nationality
         </label>
-        {errors.nationality
-          && (
-          <span className="govuk-error-message">
-            <span className="govuk-visually-hidden">Error:</span>
-            {errors.nationality}
-          </span>
-          )}
+        <FormError error={errors.nationality} />
         <select
           className="govuk-select"
           name="nationality"
@@ -241,13 +205,7 @@ const FormPerson = ({
             </label>
           </legend>
           <div className="govuk-radios govuk-radios">
-            {errors.peopleType
-            && (
-            <span className="govuk-error-message">
-              <span className="govuk-visually-hidden">Error:</span>
-              {' '}
-              {errors.peopleType}
-            </span>
+            <FormError error={errors.peopleType} />
             )}
             <div className="govuk-radios__item">
               <input
@@ -304,13 +262,7 @@ const FormPerson = ({
             </label>
           </legend>
           <div className="govuk-radios govuk-radios govuk-form-group">
-            {errors.documentType
-              && (
-              <span className="govuk-error-message">
-                <span className="govuk-visually-hidden">Error:</span>
-                {' '}
-                {errors.documentType}
-              </span>
+            <FormError error={errors.documentType} />
               )}
             <div className="govuk-radios__item">
               <input
@@ -379,13 +331,7 @@ const FormPerson = ({
         <label className="govuk-label" htmlFor="documentNumber">
           Document number
         </label>
-        {errors.documentNumber
-          && (
-          <span className="govuk-error-message">
-            <span className="govuk-visually-hidden">Error:</span>
-            {' '}
-            {errors.documentNumber}
-          </span>
+        <FormError error={errors.documentNumber} />
           )}
         <input
           className="govuk-input"
@@ -403,14 +349,7 @@ const FormPerson = ({
         <span className="govuk-hint">
           Please enter 3 letter ISO country code, for example GBR
         </span>
-        {errors.documentIssuingState
-            && (
-            <span className="govuk-error-message">
-              <span className="govuk-visually-hidden">Error:</span>
-              {' '}
-              {errors.documentIssuingState}
-            </span>
-            )}
+        <FormError error={errors.documentIssuingState} />
         <input
           className="govuk-input govuk-input--width-3"
           name="documentIssuingState"
@@ -432,14 +371,7 @@ const FormPerson = ({
             For example, 31 3 2022
           </span>
           <div className="govuk-date-input">
-            {errors.documentExpiryDate
-              && (
-              <span className="govuk-error-message">
-                <span className="govuk-visually-hidden">Error:</span>
-                {' '}
-                {errors.documentExpiryDate}
-              </span>
-              )}
+            <FormError error={errors.documentExpiryDate} />
             <div className="govuk-date-input__item">
               <div className="govuk-form-group">
                 <label className="govuk-label govuk-date-input__label" htmlFor="documentExpiryDateDay">
