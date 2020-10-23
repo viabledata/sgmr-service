@@ -206,7 +206,6 @@ const FormPerson = ({
           </legend>
           <div className="govuk-radios govuk-radios">
             <FormError error={errors.peopleType} />
-            )}
             <div className="govuk-radios__item">
               <input
                 className="govuk-radios__input"
@@ -263,7 +262,6 @@ const FormPerson = ({
           </legend>
           <div className="govuk-radios govuk-radios govuk-form-group">
             <FormError error={errors.documentType} />
-              )}
             <div className="govuk-radios__item">
               <input
                 className="govuk-radios__input"
@@ -332,7 +330,6 @@ const FormPerson = ({
           Document number
         </label>
         <FormError error={errors.documentNumber} />
-          )}
         <input
           className="govuk-input"
           name="documentNumber"
