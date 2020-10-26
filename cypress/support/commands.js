@@ -167,19 +167,19 @@ Cypress.Commands.add('getVesselObj', () => {
 Cypress.Commands.add('addPeople', (person) => {
   cy.navigation('People');
   cy.get('.govuk-button--start').should('have.text', 'Save a person').click();
+  cy.url().should('include', '/save-person?source=people');
   cy.enterPeopleInfo(person);
   cy.get('.govuk-button').click();
   cy.get('.govuk-error-message').should('not.be.visible');
-  cy.url().should('include', '/people');
 });
 
 Cypress.Commands.add('addVessel', (vessel) => {
   cy.navigation('Vessels');
   cy.get('.govuk-button--start').should('have.text', 'Save a vessel').click();
+  cy.url().should('include', '/save-vessel?source=vessels');
   cy.enterVesselInfo(vessel);
   cy.get('.govuk-button').click();
   cy.get('.govuk-error-message').should('not.be.visible');
-  cy.url().should('include', '/vessels');
 });
 
 Cypress.Commands.add('selectCheckbox', (option) => {

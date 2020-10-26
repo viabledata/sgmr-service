@@ -19,12 +19,10 @@ describe('Add new voyage report', () => {
 
     cy.getPersonObj().then((personObj) => {
       people = personObj;
-      cy.addPeople(people);
     });
 
     cy.getVesselObj().then((vesselObj) => {
       vessel = vesselObj;
-      cy.addVessel(vessel);
     });
 
     departurePort = 'Port of Hong Kong';
@@ -77,9 +75,9 @@ describe('Add new voyage report', () => {
       .within(() => {
         cy.get('#submitted').should('have.text', 'Submitted')
           .click();
+        cy.wait(2000);
       });
     cy.contains('h2', 'Submitted').next().getTable().should((reportData) => {
-      cy.wait(2000);
       expectedReport.forEach((item) => expect(reportData).to.deep.include(item));
     });
   });
@@ -117,9 +115,9 @@ describe('Add new voyage report', () => {
       .within(() => {
         cy.get('#cancelled').should('have.text', 'Cancelled')
           .click();
+        cy.wait(2000);
       });
     cy.contains('h2', 'Cancelled').next().getTable().should((reportData) => {
-      cy.wait(2000);
       expectedReport.forEach((item) => expect(reportData).to.deep.include(item));
     });
   });
@@ -157,9 +155,9 @@ describe('Add new voyage report', () => {
       .within(() => {
         cy.get('#draft').should('have.text', 'Draft')
           .click();
+        cy.wait(2000);
       });
     cy.contains('h2', 'Draft').next().getTable().should((reportData) => {
-      cy.wait(2000);
       expectedReport.forEach((item) => expect(reportData).to.deep.include(item));
     });
   });
