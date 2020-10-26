@@ -42,7 +42,7 @@ describe('Add report with saved data', () => {
     cy.url().should('include', '/save-voyage/page-1');
   });
 
-  it('Should be able to submit report successfully with Saved People and Vessel and then Cancel', () => {
+  it('Should be able to Cancel a submitted report using Saved People & Vessel', () => {
     const expectedReport = [
       {
         'Vessel': vessel.name,
