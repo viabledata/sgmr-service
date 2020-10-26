@@ -1,5 +1,7 @@
 const faker = require('faker');
 
+const { getFutureDate, getPastDate } = require('./utils');
+
 Cypress.Commands.add('enterUserInfo', (user) => {
   cy.get('#firstName [type="text"]').clear().type(user.firstName);
   cy.get('#lastName [type="text"]').clear().type(user.lastName);
@@ -141,4 +143,49 @@ Cypress.Commands.add('checkNoErrors', () => {
 
 Cypress.Commands.add('saveAndContinue', () => {
   cy.contains('Save and continue').click();
+});
+
+Cypress.Commands.add('getPersonObj', () => {
+  cy.fixture('people.json').then((personObj) => {
+    personObj.documentNumber = faker.random.number();
+    personObj.firstName = `Auto-${faker.name.firstName()}`;
+    personObj.lastName = faker.name.lastName();
+    personObj.dateOfBirth = getPastDate(30, 'DD/MM/YYYY');
+    personObj.expiryDate = getFutureDate(3, 'DD/MM/YYYY');
+    return cy.wrap(personObj);
+  });
+});
+
+Cypress.Commands.add('getVesselObj', () => {
+  cy.fixture('vessel.json').then((vesselObj) => {
+    vesselObj.regNumber = faker.random.number();
+    vesselObj.name = `${vesselObj.name}${faker.random.number()}`;
+    return cy.wrap(vesselObj);
+  });
+});
+
+Cypress.Commands.add('addPeople', (person) => {
+  cy.navigation('People');
+  cy.get('.govuk-button--start').should('have.text', 'Save a person').click();
+  cy.url().should('include', '/save-person?source=people');
+  cy.enterPeopleInfo(person);
+  cy.get('.govuk-button').click();
+  cy.get('.govuk-error-message').should('not.be.visible');
+});
+
+Cypress.Commands.add('addVessel', (vessel) => {
+  cy.navigation('Vessels');
+  cy.get('.govuk-button--start').should('have.text', 'Save a vessel').click();
+  cy.url().should('include', '/save-vessel?source=vessels');
+  cy.enterVesselInfo(vessel);
+  cy.get('.govuk-button').click();
+  cy.get('.govuk-error-message').should('not.be.visible');
+});
+
+Cypress.Commands.add('selectCheckbox', (option) => {
+  cy.get('.table-clickable td').contains(option)
+    .prev('.multiple-choice--hod')
+    .find('input[type="checkbox"]')
+    .check()
+    .should('be.checked');
 });

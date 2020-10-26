@@ -1,5 +1,4 @@
-const faker = require('faker');
-const { getFutureDate, getPastDate } = require('../../support/utils');
+const { getFutureDate } = require('../../support/utils');
 
 describe('Validate report form', () => {
   let departureDateTime;
@@ -10,22 +9,19 @@ describe('Validate report form', () => {
   let people;
 
   before(() => {
-    cy.fixture('vessel.json').then((vesselObj) => {
-      vesselObj.regNumber = faker.random.number();
-      vesselObj.name = `${vesselObj.name}${faker.random.number()}`;
-      vessel = vesselObj;
-    });
-
-    cy.fixture('people.json').then((personObj) => {
-      personObj.documentNumber = faker.random.number();
-      personObj.firstName = `Auto-${faker.name.firstName()}`;
-      personObj.lastName = faker.name.lastName();
-      personObj.dateOfBirth = getPastDate(30, 'DD/MM/YYYY');
-      personObj.expiryDate = getFutureDate(3, 'DD/MM/YYYY');
-      people = personObj;
-    });
-
     cy.registerUser();
+
+    cy.login();
+
+    cy.getPersonObj().then((personObj) => {
+      people = personObj;
+      cy.addPeople(people);
+    });
+
+    cy.getVesselObj().then((vesselObj) => {
+      vessel = vesselObj;
+      cy.addVessel(vessel);
+    });
 
     departurePort = 'Auto-Port of Hong Kong';
     arrivalPort = 'Port of Felixstowe';
@@ -34,9 +30,7 @@ describe('Validate report form', () => {
   });
 
   beforeEach(() => {
-    cy.fixture('users.json').then((user) => {
-      cy.login(user.email, user.password);
-    });
+    cy.login();
     cy.navigation('Reports');
     cy.url().should('include', '/reports');
     cy.get('.govuk-tabs__list li')

@@ -1,5 +1,4 @@
-const faker = require('faker');
-const { getFutureDate, getPastDate } = require('../../support/utils');
+const { getFutureDate } = require('../../support/utils');
 
 describe('Add new voyage report', () => {
   let departureDateTime;
@@ -16,18 +15,14 @@ describe('Add new voyage report', () => {
   });
 
   beforeEach(() => {
-    cy.fixture('vessel.json').then((vesselObj) => {
-      vesselObj.regNumber = faker.random.number();
-      vesselObj.name = `${vesselObj.name}${faker.random.number()}`;
-      vessel = vesselObj;
-    });
-    cy.fixture('people.json').then((personObj) => {
-      personObj.documentNumber = faker.random.number();
-      personObj.firstName = `Auto-${faker.name.firstName()}`;
-      personObj.lastName = faker.name.lastName();
-      personObj.dateOfBirth = getPastDate(30, 'DD/MM/YYYY');
-      personObj.expiryDate = getFutureDate(3, 'DD/MM/YYYY');
+    cy.login();
+
+    cy.getPersonObj().then((personObj) => {
       people = personObj;
+    });
+
+    cy.getVesselObj().then((vesselObj) => {
+      vessel = vesselObj;
     });
 
     departurePort = 'Port of Hong Kong';
@@ -36,7 +31,7 @@ describe('Add new voyage report', () => {
     departDate = departureDateTime.split(' ')[0];
     departTime = departureDateTime.split(' ')[1];
     arrivalDateTime = getFutureDate(2, 'DD/MM/YYYY HH:MM');
-    cy.login();
+
     cy.navigation('Reports');
     cy.url().should('include', '/reports');
     cy.get('.govuk-tabs__list li')
@@ -80,10 +75,9 @@ describe('Add new voyage report', () => {
       .within(() => {
         cy.get('#submitted').should('have.text', 'Submitted')
           .click();
+        cy.wait(2000);
       });
-    cy.get('table').getTable().then((reportData) => {
-      cy.log(reportData);
-      expect(reportData).to.not.be.empty;
+    cy.contains('h2', 'Submitted').next().getTable().should((reportData) => {
       expectedReport.forEach((item) => expect(reportData).to.deep.include(item));
     });
   });
@@ -121,9 +115,9 @@ describe('Add new voyage report', () => {
       .within(() => {
         cy.get('#cancelled').should('have.text', 'Cancelled')
           .click();
+        cy.wait(2000);
       });
-    cy.get('table').getTable().then((reportData) => {
-      expect(reportData).to.not.be.empty;
+    cy.contains('h2', 'Cancelled').next().getTable().should((reportData) => {
       expectedReport.forEach((item) => expect(reportData).to.deep.include(item));
     });
   });
@@ -161,9 +155,9 @@ describe('Add new voyage report', () => {
       .within(() => {
         cy.get('#draft').should('have.text', 'Draft')
           .click();
+        cy.wait(2000);
       });
-    cy.get('table').getTable().then((reportData) => {
-      expect(reportData).to.not.be.empty;
+    cy.contains('h2', 'Draft').next().getTable().should((reportData) => {
       expectedReport.forEach((item) => expect(reportData).to.deep.include(item));
     });
   });
