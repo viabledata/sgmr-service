@@ -1,15 +1,12 @@
-const faker = require('faker');
-
 describe('Add new vessel in account', () => {
   let vessel;
 
   before(() => {
-    cy.fixture('vessel.json').then((vesselObj) => {
-      vesselObj.regNumber = faker.random.number();
-      vesselObj.name = `${vesselObj.name}${faker.random.number()}`;
+    cy.registerUser();
+
+    cy.getVesselObj().then((vesselObj) => {
       vessel = vesselObj;
     });
-    cy.registerUser();
   });
 
   beforeEach(() => {
@@ -27,10 +24,7 @@ describe('Add new vessel in account', () => {
         'Usual moorings': vessel.moorings,
       },
     ];
-    cy.enterVesselInfo(vessel);
-    cy.get('.govuk-button').click();
-    cy.get('.govuk-error-message').should('not.be.visible');
-    cy.url().should('include', '/vessels');
+    cy.addVessel(vessel);
     cy.get('table').getTable().then((vesselData) => {
       expect(vesselData).to.not.be.empty;
       cy.log(vesselData);
@@ -70,7 +64,7 @@ describe('Add new vessel in account', () => {
     });
   });
 
-  afterEach(() => {
+  after(() => {
     cy.navigation('Signout');
     cy.url().should('include', '/sign-in');
   });

@@ -1,19 +1,11 @@
-const faker = require('faker');
-const { getFutureDate, getPastDate } = require('../../support/utils');
-
 describe('Add People in account', () => {
   let people;
 
   before(() => {
-    cy.fixture('people.json').then((personObj) => {
-      personObj.documentNumber = faker.random.number();
-      personObj.firstName = `Auto-${faker.name.firstName()}`;
-      personObj.lastName = faker.name.lastName();
-      personObj.dateOfBirth = getPastDate(30, 'DD/MM/YYYY');
-      personObj.expiryDate = getFutureDate(3, 'DD/MM/YYYY');
+    cy.registerUser();
+    cy.getPersonObj().then((personObj) => {
       people = personObj;
     });
-    cy.registerUser();
   });
 
   beforeEach(() => {
@@ -32,10 +24,7 @@ describe('Add People in account', () => {
         'Type': people.personType,
       },
     ];
-    cy.enterPeopleInfo(people);
-    cy.get('.govuk-button').click();
-    cy.get('.govuk-error-message').should('not.be.visible');
-    cy.url().should('include', '/people');
+    cy.addPeople(people);
     cy.get('table').getTable().then((peopleData) => {
       expect(peopleData).to.not.be.empty;
       cy.log(peopleData);
@@ -82,7 +71,7 @@ describe('Add People in account', () => {
     });
   });
 
-  afterEach(() => {
+  after(() => {
     cy.navigation('Signout');
     cy.url().should('include', '/sign-in');
   });

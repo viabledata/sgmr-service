@@ -22,7 +22,7 @@ describe('My Account details verification', () => {
     });
   });
 
-  afterEach(() => {
+  after(() => {
     cy.navigation('Signout');
     cy.url().should('include', '/sign-in');
   });
