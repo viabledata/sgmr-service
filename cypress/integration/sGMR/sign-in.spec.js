@@ -12,8 +12,8 @@ describe('Sign-in flow', () => {
 
   it('Should not be Signed-in with invalid credentials', () => {
     cy.fixture('users.json').then((user) => {
-      cy.get('#email input').clear().type(user.email);
-      cy.get('#password input').clear().type('wrongpassword');
+      cy.get('input[name="email"]').clear().type(user.email);
+      cy.get('input[name="password"]').clear().type('wrongpassword');
       cy.get('.govuk-button').click();
     });
     cy.get('.govuk-error-summary__list')
@@ -21,8 +21,8 @@ describe('Sign-in flow', () => {
       .contains('Email and password combination is invalid');
 
     cy.fixture('users.json').then((user) => {
-      cy.get('#email input').clear().type('randomemail@mail.com');
-      cy.get('#password input').clear().type(user.password);
+      cy.get('input[name="email"]').clear().type('randomemail@mail.com');
+      cy.get('input[name="password"]').clear().type(user.password);
       cy.get('.govuk-button').click();
     });
     cy.get('.govuk-error-summary__list')
@@ -36,8 +36,8 @@ describe('Sign-in flow', () => {
       'You must enter your password',
       'You must enter an email address and password',
     ];
-    cy.get('#email input').clear();
-    cy.get('#password input').clear();
+    cy.get('input[name="email"]').clear();
+    cy.get('input[name="password"]').clear();
     cy.get('.govuk-button').click();
 
     cy.get('.govuk-error-summary__list').each((error, index) => {
@@ -47,11 +47,11 @@ describe('Sign-in flow', () => {
 
   it('Should not be Signed-in with invalid authentication code', () => {
     cy.fixture('users.json').then((user) => {
-      cy.get('#email input').clear().type(user.email);
-      cy.get('#password input').clear().type(user.password);
+      cy.get('input[name="email"]').clear().type(user.email);
+      cy.get('input[name="password"]').clear().type(user.password);
     });
     cy.get('.govuk-button').click();
-    cy.get('input[name="twoFactorToken"]').type('34567');
+    cy.get('input[name="twoFactorToken"]').clear().type('34567');
     cy.get('.govuk-button').click();
     cy.get('.govuk-error-message').should('contain.text', 'Code is invalid');
     cy.url().should('not.include', '/reports');
