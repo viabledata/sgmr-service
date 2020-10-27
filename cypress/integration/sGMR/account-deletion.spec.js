@@ -37,8 +37,8 @@ describe('Account deletion', () => {
   it('Should not be Logged in with deleted account', () => {
     cy.visit('/sign-in');
     cy.fixture('users.json').then((user) => {
-      cy.get('#email input').clear().type(user.email);
-      cy.get('#password input').clear().type(user.password);
+      cy.get('input[name="email"]').clear().type(user.email);
+      cy.get('input[name="password"]').clear().type(user.password);
       cy.get('.govuk-button').click();
     });
     cy.get('.govuk-error-summary__list')

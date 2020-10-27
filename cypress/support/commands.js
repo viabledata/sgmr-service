@@ -1,4 +1,5 @@
 const faker = require('faker');
+require('@reportportal/agent-js-cypress/lib/commands/reportPortalCommands');
 
 const { getFutureDate, getPastDate } = require('./utils');
 
@@ -51,8 +52,8 @@ Cypress.Commands.add('login', () => {
   cy.fixture('users.json').then((user) => {
     const { email, password } = user;
     cy.visit('/sign-in');
-    cy.get('#email input').type(email);
-    cy.get('#password input ').type(password);
+    cy.get('input[name="email"]').clear().type(email);
+    cy.get('input[name="password"]').clear().type(password);
 
     cy.server();
     cy.route('POST', `${Cypress.env('api_server')}/login`).as('login');
@@ -63,7 +64,7 @@ Cypress.Commands.add('login', () => {
     cy.wait('@login').should((xhr) => {
       expect(xhr.status).to.eq(200);
       let authCode = xhr.responseBody.twoFactorToken;
-      cy.get('input[name="twoFactorToken"]').type(authCode);
+      cy.get('input[name="twoFactorToken"]').clear().type(authCode);
       cy.get('.govuk-button').click();
     });
     cy.url().should('include', '/reports');
