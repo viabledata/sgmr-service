@@ -1,10 +1,10 @@
 describe('Account deletion', () => {
-  beforeEach(() => {
+  before(() => {
     cy.registerUser();
-    cy.login();
   });
 
   it('Should NOT delete an account when user does NOT confirm the deletion', () => {
+    cy.login();
     cy.contains('a', 'Account').click();
     cy.contains('button', 'Edit Account').click();
     cy.contains('a', 'Delete this account').click();
@@ -15,6 +15,7 @@ describe('Account deletion', () => {
   });
 
   it('Should delete an account when user confirms the deletion', () => {
+    cy.login();
     cy.contains('a', 'Account').click();
     cy.contains('button', 'Edit Account').click();
     cy.contains('a', 'Delete this account').click();
@@ -31,5 +32,17 @@ describe('Account deletion', () => {
         'href',
         '/register',
       );
+  });
+
+  it('Should not be Logged in with deleted account', () => {
+    cy.visit('/sign-in');
+    cy.fixture('users.json').then((user) => {
+      cy.get('#email input').clear().type(user.email);
+      cy.get('#password input').clear().type(user.password);
+      cy.get('.govuk-button').click();
+    });
+    cy.get('.govuk-error-summary__list')
+      .should('be.visible')
+      .contains('Email and password combination is invalid');
   });
 });
