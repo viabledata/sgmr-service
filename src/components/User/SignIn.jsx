@@ -1,9 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import axios from 'axios';
 
-// app imports
-import Auth from '@lib/Auth';
 import { LOGIN_URL } from '@constants/ApiConstants';
 
 const SignIn = () => {
@@ -94,7 +92,7 @@ const SignIn = () => {
                       {Object.entries(errors).map((elem, i) => (
                         <li key={i}>
                           {elem[0] !== 'title'
-                              && <a href={`#${elem[0]}`}>{elem[1]}</a>}
+                          && <a href={`#${elem[0]}`}>{elem[1]}</a>}
                         </li>
                       ))}
                     </ul>
@@ -102,13 +100,14 @@ const SignIn = () => {
                 </div>
               )}
 
-              <div id="email" className="govuk-form-group">
-                <label className="govuk-label govuk-label--m" htmlFor="email">
+              <div className="govuk-form-group">
+                <label className="govuk-label" htmlFor="email">
                   Email address
                 </label>
                 <span className="govuk-hint">Enter the email address you used when you created your account</span>
                 <input
                   className="govuk-input"
+                  id="email"
                   name="email"
                   type="text"
                   onChange={handleChange}
@@ -116,12 +115,13 @@ const SignIn = () => {
                 />
               </div>
 
-              <div id="password" className="govuk-form-group">
-                <label className="govuk-label govuk-label--m" htmlFor="password">
+              <div className="govuk-form-group">
+                <label className="govuk-label" htmlFor="password">
                   Password
                 </label>
                 <input
                   className="govuk-input"
+                  id="password"
                   name="password"
                   type="password"
                   onChange={handleChange}
@@ -136,7 +136,7 @@ const SignIn = () => {
               >
                 Sign in
               </button>
-              <p className="govuk-body"><Link to="#">Problems signing in?</Link></p>
+              <p className="govuk-body"><Link to="/forgotten-password">Problems signing in?</Link></p>
             </form>
           </div>
           <div className="govuk-grid-column-one-third">
