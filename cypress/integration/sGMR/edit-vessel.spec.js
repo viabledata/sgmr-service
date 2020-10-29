@@ -37,7 +37,6 @@ describe('Edit existing vessel information', () => {
 
     cy.get('table').getTable().then((vesselData) => {
       expect(vesselData).to.not.be.empty;
-      cy.log(vesselData);
       expectedVessel.forEach((item) => expect(vesselData).to.deep.include(item));
     });
   });
@@ -59,7 +58,6 @@ describe('Edit existing vessel information', () => {
 
     cy.get('table').getTable().then((vesselData) => {
       expect(vesselData).to.not.be.empty;
-      cy.log(vesselData);
       expectedVessel.forEach((item) => expect(vesselData).to.deep.include(item));
     });
   });
