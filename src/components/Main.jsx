@@ -32,6 +32,7 @@ import DeleteAccount from '@components/User/DeleteAccount';
 import DeleteConfirmation from '@components/User/DeleteConfirmation';
 import NewPassword from '@components/User/NewPassword';
 import ForgottenPassword from '@components/User/ForgottenPassword';
+import LandingPage from './LandingPage';
 
 const Main = () => {
   const [user, setUser] = useState(null);
@@ -43,6 +44,9 @@ const Main = () => {
       <Header />
       <Banner />
       <Switch>
+        <Route exact path="/">
+          <LandingPage />
+        </Route>
         <SecureRoute exact path="/reports">
           <PageContainer />
         </SecureRoute>
