@@ -30,6 +30,8 @@ import FormVoyageSubmitted from '@components/Forms/FormVoyageSubmitted';
 import UserContext from '@components/UserContext';
 import DeleteAccount from '@components/User/DeleteAccount';
 import DeleteConfirmation from '@components/User/DeleteConfirmation';
+import NewPassword from '@components/User/NewPassword';
+import ForgottenPassword from '@components/User/ForgottenPassword';
 
 const Main = () => {
   const [user, setUser] = useState(null);
@@ -44,13 +46,12 @@ const Main = () => {
         <SecureRoute exact path="/reports">
           <PageContainer />
         </SecureRoute>
-        <SecureRoute exact path="/save-voyage/page-1"><VoyageFormContainer /></SecureRoute>
-        <SecureRoute exact path="/save-voyage/page-2"><VoyageFormContainer /></SecureRoute>
-        <SecureRoute exact path="/save-voyage/page-3"><VoyageFormContainer /></SecureRoute>
-        <SecureRoute exact path="/save-voyage/page-4"><VoyageFormContainer /></SecureRoute>
-        <SecureRoute exact path="/save-voyage/page-5"><VoyageFormContainer /></SecureRoute>
-        <SecureRoute exact path="/save-voyage/page-6"><VoyageFormContainer /></SecureRoute>
-        <SecureRoute exact path="/save-voyage/page-submitted"><FormVoyageSubmitted /></SecureRoute>
+        <SecureRoute exact path="/save-voyage/page-([1-6]{1})">
+          <VoyageFormContainer />
+        </SecureRoute>
+        <SecureRoute exact path="/save-voyage/page-submitted">
+          <FormVoyageSubmitted />
+        </SecureRoute>
         <SecureRoute exact path="/vessels">
           <PageContainer />
         </SecureRoute>
@@ -83,6 +84,12 @@ const Main = () => {
         </Route>
         <Route exact path="/sign-in">
           <SignIn />
+        </Route>
+        <Route exact path="/forgotten-password">
+          <ForgottenPassword />
+        </Route>
+        <Route exact path="/new-password">
+          <NewPassword />
         </Route>
         <Route exact path="/register">
           <UserRegister />

@@ -1,7 +1,7 @@
 // App imports
 import { userValidationRules } from '@components/Forms/validationRules';
 import scrollToTopOnError from '@utils/scrollToTopOnError';
-
+import { VALID_EMAIL_REGEX } from '@constants/ClientConstants';
 
 const UserRegisterValidation = (dataToValidate) => {
   const fieldsErroring = {};
@@ -15,7 +15,7 @@ const UserRegisterValidation = (dataToValidate) => {
   });
 
   // Email field must be valid
-  if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(dataToValidate.email)) {
+  if (!VALID_EMAIL_REGEX.test(dataToValidate.email)) {
     fieldsErroring.email = 'You must enter a valid email address';
   }
 

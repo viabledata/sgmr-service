@@ -8,8 +8,6 @@ class Auth {
   }
 
   static logout() {
-    localStorage.removeItem('token');
-    localStorage.removeItem('redux');
     localStorage.clear();
   }
 
