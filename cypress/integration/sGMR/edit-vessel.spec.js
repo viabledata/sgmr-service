@@ -42,7 +42,7 @@ describe('Edit existing vessel information', () => {
   });
 
   it('Should be able to edit existing vessel information and NOT save', () => {
-    cy.get('.govuk-table td a').contains(vessel.name).click();
+    cy.get('a').contains(vessel.name).click();
     const expectedVessel = [
       {
         'Vessel name': vessel.name,
