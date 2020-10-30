@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import axios from 'axios';
 
 // App imports
@@ -101,7 +101,7 @@ const EditAccount = () => {
       <div className="govuk-breadcrumbs">
         <ol className="govuk-breadcrumbs__list">
           <li className="govuk-breadcrumbs__list-item">
-            <a className="govuk-breadcrumbs__link" href="/account">Account</a>
+            <Link className="govuk-breadcrumbs__link" to="/account">Account</Link>
           </li>
           <li className="govuk-breadcrumbs__list-item" aria-current="page">Edit account</li>
         </ol>
@@ -182,7 +182,7 @@ const EditAccount = () => {
               </div>
 
               <p>
-                <a href="/account" className="govuk-link govuk-link--no-visited-state" onClick={clearFormData}>Exit without saving</a>
+                <Link to="/account" className="govuk-link govuk-link--no-visited-state" onClick={clearFormData}>Exit without saving</Link>
               </p>
             </form>
           </div>
@@ -196,7 +196,9 @@ const EditAccount = () => {
         <h2 className="govuk-heading-m">Delete account</h2>
         <p className="govuk-body-l">Delete this account and stop using the service.</p>
         <p>
-          <a href="/" className="govuk-link govuk-link--no-visited-state" onClick={(e) => deleteUser(e)}>Delete this account</a>
+          <Link className="govuk-button govuk-button--warning" to="/account/delete">
+            Delete this account
+          </Link>
         </p>
       </main>
     </div>

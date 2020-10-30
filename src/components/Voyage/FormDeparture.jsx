@@ -1,9 +1,11 @@
 import React from 'react';
+import FormError from '@components/Voyage/FormError';
+import { FORM_STEPS } from '@constants/ClientConstants';
 
 const FormDeparture = ({
   handleSubmit, handleChange, data, errors, voyageId,
 }) => {
-  if (!data) { return (null); }
+  if (!data) { return null; }
   return (
     <section>
       <h1 className="govuk-heading-xl">Departure details</h1>
@@ -15,13 +17,7 @@ const FormDeparture = ({
             <label className="govuk-label govuk-label--m" htmlFor="departureDate">
               Departure date
             </label>
-            {errors.departureDate
-              && (
-              <span className="govuk-error-message">
-                <span className="govuk-visually-hidden">Error:</span>
-                {errors.departureDate}
-              </span>
-              )}
+            <FormError error={errors.departureDate} />
           </legend>
           <span className="govuk-hint">
             For example, 20 2 2020
@@ -90,13 +86,7 @@ const FormDeparture = ({
             <label className="govuk-label govuk-label--m" htmlFor="departureTime">
               Estimated departure time (UTC)
             </label>
-            {errors.departureTime
-              && (
-              <span className="govuk-error-message">
-                <span className="govuk-visually-hidden">Error:</span>
-                {errors.departureTime}
-              </span>
-              )}
+            <FormError error={errors.departureTime} />
           </legend>
           <span className="govuk-hint">
             For example, 17 30
@@ -141,13 +131,7 @@ const FormDeparture = ({
       </div>
 
       <div id="departureLocation" className={`govuk-form-group ${errors.departureLocation ? 'govuk-form-group--error' : ''}`}>
-        {errors.departureLocation
-        && (
-        <span className="govuk-error-message">
-          <span className="govuk-visually-hidden">Error:</span>
-          {errors.departureLocation}
-        </span>
-        )}
+        <FormError error={errors.departureLocation} />
 
         <div id="departurePort" className="govuk-form-group">
           <label className="govuk-label govuk-label--m" htmlFor="departurePort">
@@ -171,7 +155,7 @@ const FormDeparture = ({
         type="button"
         className="govuk-button"
         data-module="govuk-button"
-        onClick={(e) => handleSubmit(e, 'departure', voyageId)}
+        onClick={(e) => handleSubmit(e, FORM_STEPS.DEPARTURE, voyageId)}
       >
         Save and continue
       </button>

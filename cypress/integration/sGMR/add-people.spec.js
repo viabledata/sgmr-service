@@ -1,29 +1,15 @@
-const faker = require('faker');
-const { getFutureDate, getPastDate } = require('../../support/utils');
-
 describe('Add People in account', () => {
   let people;
 
   before(() => {
-    cy.fixture('people.json').then((person) => {
-      person.documentNumber = faker.random.number();
-      person.firstName = faker.name.firstName();
-      person.lastName = faker.name.lastName();
-      person.dateOfBirth = getPastDate(30);
-      person.expiryDate = getFutureDate(3);
-      people = person;
-    });
-    cy.task('readFileMaybe', 'cypress/fixtures/users.json').then((dataOrNull) => {
-      if (dataOrNull === null) {
-        cy.registerUser();
-      }
+    cy.registerUser();
+    cy.getPersonObj().then((personObj) => {
+      people = personObj;
     });
   });
 
   beforeEach(() => {
-    cy.fixture('users.json').then((user) => {
-      cy.login(user.email, user.password);
-    });
+    cy.login();
     cy.navigation('People');
     cy.url().should('include', '/people');
     cy.get('.govuk-button--start').should('have.text', 'Save a person').click();
@@ -38,10 +24,7 @@ describe('Add People in account', () => {
         'Type': people.personType,
       },
     ];
-    cy.enterPeopleInfo(people);
-    cy.get('.govuk-button').click();
-    cy.get('.govuk-error-message').should('not.be.visible');
-    cy.url().should('include', '/people');
+    cy.addPeople(people);
     cy.get('table').getTable().then((peopleData) => {
       expect(peopleData).to.not.be.empty;
       cy.log(peopleData);
@@ -88,7 +71,7 @@ describe('Add People in account', () => {
     });
   });
 
-  afterEach(() => {
+  after(() => {
     cy.navigation('Signout');
     cy.url().should('include', '/sign-in');
   });

@@ -4,7 +4,6 @@
  */
 
 const faker = require('faker');
-const fs = require('fs');
 
 function generateNewUser() {
   let user = {
@@ -19,12 +18,6 @@ function generateNewUser() {
 
 module.exports = (on) => {
   on('task', {
-    readFileMaybe(filename) {
-      if (fs.existsSync(filename)) {
-        return fs.readFileSync(filename);
-      }
-      return null;
-    },
     newUser() {
       return generateNewUser();
     },

@@ -11,6 +11,7 @@ import scrollToTopOnError from '@utils/scrollToTopOnError';
 
 import FormVessel from '@components/Vessel/FormVessel';
 import VesselDataFormatting from '@components/Vessel/VesselDataFormatting';
+import FormError from '@components/Voyage/FormError';
 
 
 const EditVessel = () => {
@@ -141,13 +142,7 @@ const EditVessel = () => {
                 <h2 className="govuk-error-summary__title">
                   There is a problem
                 </h2>
-                {errors.EditVessel
-                    && (
-                    <span className="govuk-error-message">
-                      <span className="govuk-visually-hidden">Error:</span>
-                      {errors.EditVessel}
-                    </span>
-                    )}
+                <FormError error={errors.EditVessel} />
               </div>
               )}
               <FormVessel

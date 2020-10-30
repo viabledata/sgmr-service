@@ -5,6 +5,7 @@ import axios from 'axios';
 // app imports
 import Auth from '@lib/Auth';
 import { SUBMIT_VERIFICATION_CODE_URL } from '@constants/ApiConstants';
+import FormError from '@components/Voyage/FormError';
 
 const UserInputCode = () => {
   const history = useHistory();
@@ -96,14 +97,7 @@ const UserInputCode = () => {
                   Access code
                 </label>
                 <span className="govuk-hint">Please enter the code you received</span>
-                {errors.twoFactorToken
-                  && (
-                  <span className="govuk-error-message">
-                    <span className="govuk-visually-hidden">Error:</span>
-                    {' '}
-                    {errors.twoFactorToken}
-                  </span>
-                  )}
+                <FormError error={errors.twoFactorToken} />
                 <input
                   className="govuk-input govuk-input--width-5"
                   name="twoFactorToken"

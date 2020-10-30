@@ -1,17 +1,13 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
-import { BrowserRouter } from 'react-router-dom';
-import EditAccount from '../EditAccount';
-import UserContext from '../../UserContext';
+import WelcomeBanner from '@components/WelcomeBanner';
+import UserContext from '../UserContext';
 
 const customRender = (ui, { providerProps, ...renderOptions }) => {
   return render(
     <UserContext.Provider value={providerProps}>{ui}</UserContext.Provider>,
-    {
-      wrapper: BrowserRouter,
-      ...renderOptions,
-    },
+    renderOptions,
   );
 };
 
@@ -31,14 +27,8 @@ const providerProps = {
   },
 };
 
-test('Edit Account prepopulates the form with the users details', () => {
-  customRender(<EditAccount />, { providerProps });
+test('Welcome banner displays the users details', () => {
+  customRender(<WelcomeBanner />, { providerProps });
 
-  expect(screen.getByText('First name')).toBeInTheDocument();
-  expect(screen.getByDisplayValue('John')).toBeInTheDocument();
-  expect(screen.getByDisplayValue('07444112888')).toBeInTheDocument();
-
-  describe('Save changes button displayed', () => {
-    expect(screen.getByRole('button')).toHaveTextContent('Save changes');
-  });
+  expect(screen.getByText('Welcome back, John')).toBeInTheDocument();
 });

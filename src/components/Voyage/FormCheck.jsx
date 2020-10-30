@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 // App imports
 import { formatUIDate } from '@utils/date';
 import PeopleManifest from '@components/Voyage/PeopleManifest';
-
+import { FORM_STEPS } from '@constants/ClientConstants';
 
 const FormCheck = ({
   voyageId, voyageData, handleSubmit, errors,
@@ -223,7 +223,7 @@ const FormCheck = ({
         type="button"
         className="govuk-button govuk-button--warning govuk-body govuk!-margin-top-3 block-button"
         data-module="govuk-button"
-        onClick={((e) => handleSubmit(e, 'cancel'))}
+        onClick={((e) => handleSubmit(e, FORM_STEPS.CANCEL))}
       >
         Cancel voyage
       </button>

@@ -11,6 +11,7 @@ import { formatDate, isDateValid, isDateBefore } from '@utils/date';
 import { PEOPLE_URL } from '@constants/ApiConstants';
 import { PEOPLE_PAGE_URL, SAVE_VOYAGE_PEOPLE_URL } from '@constants/ClientConstants';
 import { personValidationRules } from '@components/Forms/validationRules';
+import FormError from '@components/Voyage/FormError';
 
 const CreateAPerson = () => {
   const history = useHistory();
@@ -152,13 +153,7 @@ const CreateAPerson = () => {
                 <h2 className="govuk-error-summary__title">
                   There is a problem
                 </h2>
-                {errors.CreateAPerson
-                    && (
-                    <span className="govuk-error-message">
-                      <span className="govuk-visually-hidden">Error:</span>
-                      {errors.CreateAPerson}
-                    </span>
-                    )}
+                <FormError error={errors.CreateAPerson} />
               </div>
               )}
 
