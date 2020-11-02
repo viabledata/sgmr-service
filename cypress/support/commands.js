@@ -1,5 +1,4 @@
 const faker = require('faker');
-require('@reportportal/agent-js-cypress/lib/commands/reportPortalCommands');
 
 const { getFutureDate, getPastDate } = require('./utils');
 
