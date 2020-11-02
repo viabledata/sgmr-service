@@ -32,7 +32,7 @@ import DeleteAccount from '@components/User/DeleteAccount';
 import DeleteConfirmation from '@components/User/DeleteConfirmation';
 import NewPassword from '@components/User/NewPassword';
 import ForgottenPassword from '@components/User/ForgottenPassword';
-import LandingPage from './LandingPage';
+import LandingPage from '@components/LandingPage';
 
 const Main = () => {
   const [user, setUser] = useState(null);
