@@ -1,8 +1,8 @@
 const contentArray = [
   {
     urlStub: '/reports',
-    pageHeading: 'Submit an Advanced Voyage Report',
-    pageBlurb: 'You can use the online form to create and submit an Advanced Voyage Report to UK Border Force.',
+    pageHeading: 'Notification Dashboard',
+    pageBlurb: null,
     formIntroHeading: null,
     formIntroBlurb: null,
     buttonText: 'Start now',

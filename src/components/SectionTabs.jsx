@@ -85,7 +85,9 @@ const SectionTabs = (pageData) => {
   return (
     <div className="govuk-width-container">
       <div className="govuk-grid-row">
-        <div className="govuk-grid-column-full">
+        <div className="govuk-grid-column-one-half">
+          <h2 className="govuk-heading-m">Create a new notification</h2>
+          <p className="govuk-body">You can use the online form to create and submit an Advance Voyage Notification to UK Border Force.</p>
           <button
             type="button"
             className="govuk-button govuk-button--start"
@@ -106,78 +108,30 @@ const SectionTabs = (pageData) => {
             </svg>
           </button>
         </div>
-      </div>
-      <hr className="govuk-section-break govuk-section-break--visible govuk-section-break--xl govuk-!-margin-top-0" />
-      <h2 className="govuk-heading-l">Manage Advanced Voyage Reports</h2>
-      <p>You can view, edit, cancel or delete reports dependant on the status of the report.</p>
-      <div className="govuk-tabs" data-module="govuk-tabs">
-        {/* The h3 is only visible on small screens (GDS controlled) */}
-        <h3 className="govuk-tabs__title">
-          Contents
-        </h3>
-
-        <ul className="govuk-tabs__list">
-          {tabData && tabData.map((tab) => {
-            return (
-              <li
-                key={tab.name}
-                className={tab.active === true ? 'govuk-tabs__list-item govuk-tabs__list-item--selected' : 'govuk-tabs__list-item'}
-                onClick={(e) => setActiveTab(e)}
-              >
-                <p id={tab.name} className="govuk-tabs__tab">
-                  {tab.text}
-                </p>
-              </li>
-            );
-          })}
-        </ul>
-
-        <div className="govuk-tabs__panel">
-          <h2 className="govuk-heading-l">{tableName}</h2>
-          <table className="govuk-table">
-            <thead className="govuk-table__head">
-              <tr className="govuk-table__row">
-                <th scope="col" className="govuk-table__header">Vessel</th>
-                <th scope="col" className="govuk-table__header">Departure date</th>
-                <th scope="col" className="govuk-table__header">Departure time</th>
-                <th scope="col" className="govuk-table__header">Departure port</th>
-                <th scope="col" className="govuk-table__header">Arrival port</th>
-                <th scope="col" className="govuk-table__header">Submission reference</th>
-              </tr>
-            </thead>
-            <tbody>
-              {reportList && reportList.map((voyage) => {
-                if (voyage.status.name === tableName || voyage.status.name === `Pre${tableName}`) {
-                  return (
-                    <tr className="govuk-table__row" key={voyage.id}>
-                      <td className="govuk-table__cell">
-                        <Link to={{
-                          pathname: EDIT_VOYAGE_CHECK_DETAILS_URL,
-                          state: { voyageId: voyage.id },
-                        }}
-                        >
-                          {voyage.vesselName}
-                        </Link>
-                      </td>
-                      <td className="govuk-table__cell">
-                        <Link to={{
-                          pathname: EDIT_VOYAGE_CHECK_DETAILS_URL,
-                          state: { voyageId: voyage.id },
-                        }}
-                        >
-                          {formatUIDate(voyage.departureDate)}
-                        </Link>
-                      </td>
-                      <td className="govuk-table__cell">{voyage.departureTime}</td>
-                      <td className="govuk-table__cell">{voyage.departurePort}</td>
-                      <td className="govuk-table__cell">{voyage.arrivalPort}</td>
-                      <td className="govuk-table__cell">{voyage.cbpId && voyage.cbpId}</td>
-                    </tr>
-                  );
-                }
-              })}
-            </tbody>
-          </table>
+        <div className="govuk-grid-column-one-half">
+          <h2 className="govuk-heading-m">Manage existing notifications</h2>
+          <p className="govuk-body">View your notifications to edit, cancel or delete them, depending on its status.</p>
+          <div className="govuk-grid-row">
+            <div className="govuk-grid-column-one-third panel-number">
+              <p className="govuk-body-s">
+                <strong className="panel-number-large">4</strong>
+                Draft
+              </p>
+            </div>
+            <div className="govuk-grid-column-one-third panel-number">
+              <p className="govuk-body-s">
+                <strong className="panel-number-large">11</strong>
+                Submitted
+              </p>
+            </div>
+            <div className="govuk-grid-column-one-third panel-number">
+              <p className="govuk-body-s">
+                <strong className="panel-number-large">1</strong>
+                Cancelled
+              </p>
+            </div>
+          </div>
+          <Link className="govuk-link govuk-body" to="/manage-notifications">View existing notifications</Link>
         </div>
       </div>
     </div>
