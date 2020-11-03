@@ -7,43 +7,9 @@ import { formatUIDate } from '@utils/date';
 import { USER_VOYAGE_REPORT_URL, VOYAGE_REPORT_URL } from '@constants/ApiConstants';
 import { EDIT_VOYAGE_CHECK_DETAILS_URL } from '@constants/ClientConstants';
 
-
-const SectionTabs = (pageData) => {
+const Dashboard = (pageData) => {
   const history = useHistory();
-  const [tabData, setTabData] = useState([]);
-  const [tableName, setTableName] = useState('Draft');
   const [reportList, setReportList] = useState();
-  const tabs = [
-    {
-      name: 'draft',
-      text: 'Draft',
-      active: true,
-    },
-    {
-      name: 'submitted',
-      text: 'Submitted',
-      active: false,
-    }, {
-      name: 'cancelled',
-      text: 'Cancelled',
-      active: false,
-    },
-  ];
-
-
-  const setActiveTab = (e) => {
-    const tabArray = [...tabData];
-    tabArray.map((elem) => {
-      if (e.target.id === elem.name) {
-        elem.active = true;
-        setTableName(e.target.id.charAt(0).toUpperCase() + e.target.id.slice(1));
-      } else {
-        elem.active = false;
-      }
-    });
-    setTabData(tabArray);
-  };
-
 
   const getReportList = () => {
     let validReports = [];
@@ -62,7 +28,6 @@ const SectionTabs = (pageData) => {
       });
   };
 
-
   const handleStart = () => {
     postData(USER_VOYAGE_REPORT_URL, null, 'reports')
       .then((resp) => {
@@ -73,14 +38,27 @@ const SectionTabs = (pageData) => {
       });
   };
 
+  // const countVoyages = () => {
+  //   const statusArray = reportList.reduce((tally, status) => {
+  //     tally[status] = (tally[status] || 0) + 1;
+  //     return tally;
+  //   }, {});
+  //   console.log(statusArray);
+  //   setStatusList(statusArray);
+  // };
+
+  const countVoyages = (currentStatus) => {
+    const newArray = reportList.filter((voyage) => {
+      return voyage.status.name === currentStatus;
+    });
+    return newArray.length;
+  };
 
   useEffect(() => {
-    setTabData(tabs);
     getReportList();
   }, [pageData]);
 
-
-  if (!pageData || !tabData || tabData.length === 0) { return null; }
+  if (!pageData || !reportList) { return null; }
 
   return (
     <div className="govuk-width-container">
@@ -114,19 +92,19 @@ const SectionTabs = (pageData) => {
           <div className="govuk-grid-row">
             <div className="govuk-grid-column-one-third panel-number">
               <p className="govuk-body-s">
-                <strong className="panel-number-large">4</strong>
+                <strong className="panel-number-large">{countVoyages('Draft')}</strong>
                 Draft
               </p>
             </div>
             <div className="govuk-grid-column-one-third panel-number">
               <p className="govuk-body-s">
-                <strong className="panel-number-large">11</strong>
+                <strong className="panel-number-large">{countVoyages('PreSubmitted')}</strong>
                 Submitted
               </p>
             </div>
             <div className="govuk-grid-column-one-third panel-number">
               <p className="govuk-body-s">
-                <strong className="panel-number-large">1</strong>
+                <strong className="panel-number-large">{countVoyages('Cancelled')}</strong>
                 Cancelled
               </p>
             </div>
@@ -138,5 +116,4 @@ const SectionTabs = (pageData) => {
   );
 };
 
-
-export default SectionTabs;
+export default Dashboard;

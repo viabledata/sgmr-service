@@ -66,70 +66,76 @@ const ManageNotifications = (pageData) => {
 
   if (!pageData || !tabData || tabData.length === 0) { return null; }
   return (
-    <div className="govuk-tabs" data-module="govuk-tabs">
-      <ul className="govuk-tabs__list">
-        {tabData && tabData.map((tab) => {
-          return (
-            <li
-              key={tab.name}
-              className={tab.active === true ? 'govuk-tabs__list-item govuk-tabs__list-item--selected' : 'govuk-tabs__list-item'}
-              onClick={(e) => setActiveTab(e)}
-            >
-              <p id={tab.name} className="govuk-tabs__tab">
-                {tab.text}
-              </p>
-            </li>
-          );
-        })}
-      </ul>
-
-    <div className="govuk-tabs__panel">
-      <h2 className="govuk-heading-l">{tableName}</h2>
-      <table className="govuk-table">
-        <thead className="govuk-table__head">
-          <tr className="govuk-table__row">
-            <th scope="col" className="govuk-table__header">Vessel</th>
-            <th scope="col" className="govuk-table__header">Departure date</th>
-            <th scope="col" className="govuk-table__header">Departure time</th>
-            <th scope="col" className="govuk-table__header">Departure port</th>
-            <th scope="col" className="govuk-table__header">Arrival port</th>
-            <th scope="col" className="govuk-table__header">Submission reference</th>
-          </tr>
-        </thead>
-        <tbody>
-          {reportList && reportList.map((voyage) => {
-            if (voyage.status.name === tableName || voyage.status.name === `Pre${tableName}`) {
+    <div className="govuk-width-container">
+      <main className="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" role="main">
+        <h1 className="govuk-heading-l">Manage your notifications</h1>
+        <p className="govuk-body-l">Click on one of your notifications below to view, edit, cancel or delete it, depending on its status. For example, you can edit a draft or submitted notification, but you can&apos;t edit a cancelled notification.</p>
+        <div className="govuk-tabs" data-module="govuk-tabs">
+          <ul className="govuk-tabs__list">
+            {tabData && tabData.map((tab) => {
               return (
-                <tr className="govuk-table__row" key={voyage.id}>
-                  <td className="govuk-table__cell">
-                    <Link to={{
-                      pathname: EDIT_VOYAGE_CHECK_DETAILS_URL,
-                      state: { voyageId: voyage.id },
-                    }}
-                    >
-                      {voyage.vesselName}
-                    </Link>
-                  </td>
-                  <td className="govuk-table__cell">
-                    <Link to={{
-                      pathname: EDIT_VOYAGE_CHECK_DETAILS_URL,
-                      state: { voyageId: voyage.id },
-                    }}
-                    >
-                      {formatUIDate(voyage.departureDate)}
-                    </Link>
-                  </td>
-                  <td className="govuk-table__cell">{voyage.departureTime}</td>
-                  <td className="govuk-table__cell">{voyage.departurePort}</td>
-                  <td className="govuk-table__cell">{voyage.arrivalPort}</td>
-                  <td className="govuk-table__cell">{voyage.cbpId && voyage.cbpId}</td>
-                </tr>
+                <li
+                  key={tab.name}
+                  className={tab.active === true ? 'govuk-tabs__list-item govuk-tabs__list-item--selected' : 'govuk-tabs__list-item'}
+                  onClick={(e) => setActiveTab(e)}
+                >
+                  <p id={tab.name} className="govuk-tabs__tab">
+                    {tab.text}
+                  </p>
+                </li>
               );
-            }
-          })}
-        </tbody>
-      </table>
-    </div>
+            })}
+          </ul>
+
+          <div className="govuk-tabs__panel">
+            <h2 className="govuk-heading-l">{tableName}</h2>
+            <table className="govuk-table">
+              <thead className="govuk-table__head">
+                <tr className="govuk-table__row">
+                  <th scope="col" className="govuk-table__header">Vessel</th>
+                  <th scope="col" className="govuk-table__header">Departure date</th>
+                  <th scope="col" className="govuk-table__header">Departure time</th>
+                  <th scope="col" className="govuk-table__header">Departure port</th>
+                  <th scope="col" className="govuk-table__header">Arrival port</th>
+                  <th scope="col" className="govuk-table__header">Submission reference</th>
+                </tr>
+              </thead>
+              <tbody>
+                {reportList && reportList.map((voyage) => {
+                  if (voyage.status.name === tableName || voyage.status.name === `Pre${tableName}`) {
+                    return (
+                      <tr className="govuk-table__row" key={voyage.id}>
+                        <td className="govuk-table__cell">
+                          <Link to={{
+                            pathname: EDIT_VOYAGE_CHECK_DETAILS_URL,
+                            state: { voyageId: voyage.id },
+                          }}
+                          >
+                            {voyage.vesselName}
+                          </Link>
+                        </td>
+                        <td className="govuk-table__cell">
+                          <Link to={{
+                            pathname: EDIT_VOYAGE_CHECK_DETAILS_URL,
+                            state: { voyageId: voyage.id },
+                          }}
+                          >
+                            {formatUIDate(voyage.departureDate)}
+                          </Link>
+                        </td>
+                        <td className="govuk-table__cell">{voyage.departureTime}</td>
+                        <td className="govuk-table__cell">{voyage.departurePort}</td>
+                        <td className="govuk-table__cell">{voyage.arrivalPort}</td>
+                        <td className="govuk-table__cell">{voyage.cbpId && voyage.cbpId}</td>
+                      </tr>
+                    );
+                  }
+                })}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </main>
     </div>
   );
 };

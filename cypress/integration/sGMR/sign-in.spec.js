@@ -5,10 +5,10 @@ describe('Sign-in flow', () => {
 
   it('Should Sign-in Successfully', () => {
     cy.login();
-
     cy.fixture('user-registration.json').then((userDetails) => {
-      cy.get('.govuk-heading-m').should('have.text', `Welcome back, ${userDetails.firstName}`);
+      cy.get('h3.govuk-heading-m').should('have.text', `Welcome back, ${userDetails.firstName}`);
     });
+
     cy.navigation('Signout');
     cy.url().should('include', '/sign-in');
   });
