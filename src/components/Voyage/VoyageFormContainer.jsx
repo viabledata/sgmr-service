@@ -278,7 +278,7 @@ const FormVoyageContainer = () => {
     <div id="pageContainer" className="govuk-width-container ">
       {pageNum !== '4b' && <a className="govuk-back-link" onClick={(e) => { e.preventDefault(); history.goBack(); }}>Back</a>}
       {pageNum === '4b' && <Link to="/save-voyage/page-4" className="govuk-back-link">Back</Link>}
-      <main className="govuk-main-wrapper govuk-main-wrapper--auto-spacing" role="main">
+      <main className="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" role="main">
         <div className="govuk-grid-row">
           <div className="govuk-grid-column-two-thirds">
             {pageNum !== '4b' && <span className="govuk-caption-xl">{`Page ${pageNum} of ${maxPages}`}</span>}

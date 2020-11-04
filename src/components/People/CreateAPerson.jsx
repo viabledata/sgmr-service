@@ -141,7 +141,7 @@ const CreateAPerson = () => {
           <li className="govuk-breadcrumbs__list-item" aria-current="page">Save a person</li>
         </ol>
       </div>
-      <main className="govuk-main-wrapper govuk-main-wrapper--auto-spacing" role="main">
+      <main className="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" role="main">
         <div className="govuk-grid-row">
           <div className="govuk-grid-column-two-thirds">
             <h1 className="govuk-heading-xl">Save a person</h1>
