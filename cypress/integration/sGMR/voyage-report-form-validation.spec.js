@@ -116,8 +116,8 @@ describe('Validate report form', () => {
   });
   it('Should verify Skipper details mandatory data', () => {
     const errors = [
-      'You must enter a given name',
-      'You must enter a given name',
+      'You must enter a first name',
+      'You must enter a last name',
       'You must enter a contact number',
       'You must enter the first line of your address',
       'You must enter the second line of your address',
