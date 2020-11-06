@@ -1,0 +1,8 @@
+{
+    "baseUrl": "https://www.dev.sgmr.cop.homeoffice.gov.uk",
+    "env": {
+      "envname": "development",
+      "api_server": "https://sgmr-data-api.dev.sgmr.cop.homeoffice.gov.uk/v1",
+      "host": "https://www.dev.sgmr.cop.homeoffice.gov.uk"
+    }  
+}

@@ -11,7 +11,8 @@
         "test": "jest",
         "test:coverage": "jest --coverage --colors",
         "test:watch": "npm run test -- --watch",
-        "cypress:test": "cypress run",
+        "cypress:test:local": "cypress run",
+        "cypress:test:dev": "cypress run -- --env configFile=dev",
         "cypress:runner": "cypress open"
     },
     "repository": {
@@ -71,6 +72,7 @@
         "eslint-plugin-react-hooks": "^1.7.0",
         "faker": "^5.1.0",
         "file-loader": "^5.1.0",
+        "fs-extra": "^9.0.1",
         "jest": "^24.9.0",
         "msw": "^0.21.2",
         "node-sass": "^4.14.1",
