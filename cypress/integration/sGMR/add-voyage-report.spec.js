@@ -168,7 +168,10 @@ describe('Add new voyage report', () => {
     });
   });
 
-  afterEach(() => {
-    cy.exec('sh cypress/scripts/delete-reports.sh');
+  after(() => {
+    if (Cypress.env('envname') === 'local') {
+      const query = `sh cypress/scripts/delete-reports.sh ${Cypress.env('dbName')}`;
+      cy.exec(query);
+    }
   });
 });
