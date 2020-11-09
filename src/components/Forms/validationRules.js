@@ -96,13 +96,13 @@ export const responsiblePersonValidationRules = [
     inputField: 'responsibleGivenName',
     errorDisplayId: 'responsibleGivenName',
     rule: 'required',
-    message: 'You must enter a given name',
+    message: 'You must enter a first name',
   },
   {
     inputField: 'responsibleSurname',
     errorDisplayId: 'responsibleSurname',
     rule: 'required',
-    message: 'You must enter a given name',
+    message: 'You must enter a last name',
   },
   {
     inputField: 'responsibleContactNo',
@@ -340,6 +340,12 @@ export const voyageValidationRules = [
     errorDisplayId: 'arrivalDate',
     rule: 'required',
     message: 'You must enter an arrival date',
+  },
+  {
+    inputField: 'responsibleGivenName',
+    errorDisplayId: 'responsibleGivenName',
+    rule: 'required',
+    message: 'You must enter the responsible person\'s details',
   },
 ];
 
