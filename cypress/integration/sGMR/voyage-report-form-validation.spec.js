@@ -31,12 +31,10 @@ describe('Validate report form', () => {
 
   beforeEach(() => {
     cy.login();
-    cy.navigation('Reports');
+    cy.navigation('Notifications');
     cy.url().should('include', '/reports');
-    cy.get('.govuk-tabs__list li')
-      .filter('.govuk-tabs__list-item--selected').find('p').should('contain', 'Draft');
+    cy.checkNotifications('Draft', 0);
     cy.get('.govuk-button--start').should('have.text', 'Start now').click();
-    cy.url().should('include', '/save-voyage/page-1');
   });
 
   it('Should verify Departure details mandatory data', () => {

@@ -189,3 +189,11 @@ Cypress.Commands.add('selectCheckbox', (option) => {
     .check()
     .should('be.checked');
 });
+
+Cypress.Commands.add('checkNotifications', (type, numberOfNotification) => {
+  cy.get('.govuk-grid-row')
+    .find('p.govuk-body-s')
+    .filter(`:contains(${type})`)
+    .find('strong')
+    .should('have.text', numberOfNotification);
+});

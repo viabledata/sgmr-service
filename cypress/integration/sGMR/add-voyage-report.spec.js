@@ -32,12 +32,10 @@ describe('Add new voyage report', () => {
     departTime = departureDateTime.split(' ')[1];
     arrivalDateTime = getFutureDate(2, 'DD/MM/YYYY HH:MM');
 
-    cy.navigation('Reports');
+    cy.navigation('Notifications');
     cy.url().should('include', '/reports');
-    cy.get('.govuk-tabs__list li')
-      .filter('.govuk-tabs__list-item--selected').find('p').should('contain', 'Draft');
+    cy.checkNotifications('Draft', 0);
     cy.get('.govuk-button--start').should('have.text', 'Start now').click();
-    cy.url().should('include', '/save-voyage/page-1');
   });
 
   it('Should submit report successfully', () => {
@@ -70,7 +68,9 @@ describe('Add new voyage report', () => {
     cy.contains('Accept and submit report').click();
     cy.url().should('include', '/save-voyage/page-submitted');
     cy.get('.govuk-panel__title').should('have.text', 'Advance Voyage Notification Submitted');
-    cy.navigation('Reports');
+    cy.navigation('Notifications');
+    cy.checkNotifications('Submitted', 1);
+    cy.contains('View existing notifications').click();
     cy.get('.govuk-tabs__list li')
       .within(() => {
         cy.get('#submitted').should('have.text', 'Submitted')
@@ -111,6 +111,9 @@ describe('Add new voyage report', () => {
     cy.checkNoErrors();
     cy.contains('Cancel voyage').click();
     cy.url().should('include', '/reports');
+    cy.navigation('Notifications');
+    cy.checkNotifications('Cancelled', 1);
+    cy.contains('View existing notifications').click();
     cy.get('.govuk-tabs__list li')
       .within(() => {
         cy.get('#cancelled').should('have.text', 'Cancelled')
@@ -151,6 +154,9 @@ describe('Add new voyage report', () => {
     cy.checkNoErrors();
     cy.contains('Exit without saving').click();
     cy.url().should('include', '/reports');
+    cy.navigation('Notifications');
+    cy.checkNotifications('Draft', 1);
+    cy.contains('View existing notifications').click();
     cy.get('.govuk-tabs__list li')
       .within(() => {
         cy.get('#draft').should('have.text', 'Draft')
@@ -162,7 +168,7 @@ describe('Add new voyage report', () => {
     });
   });
 
-  after(() => {
+  afterEach(() => {
     cy.exec('sh cypress/scripts/delete-reports.sh');
   });
 });

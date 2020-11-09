@@ -37,12 +37,9 @@ describe('Add report with saved data', () => {
     arrivalDateTime = getFutureDate(2, 'DD/MM/YYYY HH:MM');
 
     cy.login();
-    cy.navigation('Reports');
     cy.url().should('include', '/reports');
-    cy.get('.govuk-tabs__list li')
-      .filter('.govuk-tabs__list-item--selected').find('p').should('contain', 'Draft');
+    cy.checkNotifications('Draft', 0);
     cy.get('.govuk-button--start').should('have.text', 'Start now').click();
-    cy.url().should('include', '/save-voyage/page-1');
   });
 
   it('Should be able to Cancel a submitted report using Saved People & Vessel', () => {
@@ -77,7 +74,9 @@ describe('Add report with saved data', () => {
     cy.contains('Accept and submit report').click();
     cy.url().should('include', '/save-voyage/page-submitted');
     cy.get('.govuk-panel__title').should('have.text', 'Advance Voyage Notification Submitted');
-    cy.navigation('Reports');
+    cy.navigation('Notifications');
+    cy.checkNotifications('Submitted', 1);
+    cy.contains('View existing notifications').click();
     cy.get('.govuk-tabs__list li')
       .within(() => {
         cy.get('#submitted').should('have.text', 'Submitted')
@@ -89,6 +88,7 @@ describe('Add report with saved data', () => {
       expectedReport.forEach((item) => expect(reportData).to.deep.include(item));
       cy.get('.govuk-table td a').contains(vessel.name).click();
       cy.contains('Cancel voyage').click();
+      cy.contains('View existing notifications').click();
       cy.get('.govuk-tabs__list li')
         .within(() => {
           cy.get('#cancelled').should('have.text', 'Cancelled')
@@ -132,7 +132,9 @@ describe('Add report with saved data', () => {
     cy.contains('Accept and submit report').click();
     cy.url().should('include', '/save-voyage/page-submitted');
     cy.get('.govuk-panel__title').should('have.text', 'Advance Voyage Notification Submitted');
-    cy.navigation('Reports');
+    cy.navigation('Notifications');
+    cy.checkNotifications('Submitted', 1);
+    cy.contains('View existing notifications').click();
     cy.get('.govuk-tabs__list li')
       .within(() => {
         cy.get('#submitted').should('have.text', 'Submitted')
