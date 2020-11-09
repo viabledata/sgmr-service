@@ -42,82 +42,82 @@ const Main = () => {
     <>
       <ScrollToTop />
       <UserContext.Provider value={{ user, setUser }}>
-      <Header />
-      <Banner />
-      <Switch>
-        <Route exact path="/">
-          <LandingPage />
-        </Route>
-        <SecureRoute exact path="/reports">
-          <PageContainer />
-        </SecureRoute>
-        <SecureRoute exact path="/save-voyage/page-([1-6]{1})">
-          <VoyageFormContainer />
-        </SecureRoute>
-        <SecureRoute exact path="/save-voyage/page-submitted">
-          <FormVoyageSubmitted />
-        </SecureRoute>
-        <SecureRoute exact path="/vessels">
-          <PageContainer />
-        </SecureRoute>
-        <SecureRoute exact path="/vessels/save-vessel">
-          <CreateAVessel />
-        </SecureRoute>
-        <SecureRoute exact path="/vessels/edit-vessel">
-          <EditVessel />
-        </SecureRoute>
-        <SecureRoute exact path="/people">
-          <PageContainer />
-        </SecureRoute>
-        <SecureRoute exact path="/people/save-person">
-          <CreateAPerson />
-        </SecureRoute>
-        <SecureRoute exact path="/people/edit-person">
-          <EditPerson />
-        </SecureRoute>
-        <SecureRoute exact path="/account">
-          <PageContainer />
-        </SecureRoute>
-        <SecureRoute exact path="/account/edit">
-          <EditAccount />
-        </SecureRoute>
-        <SecureRoute exact path="/account/delete">
-          <DeleteAccount />
-        </SecureRoute>
-        <Route exact path="/account/delete-confirmation">
-          <DeleteConfirmation />
-        </Route>
-        <Route exact path="/sign-in">
-          <SignIn />
-        </Route>
-        <Route exact path="/forgotten-password">
-          <ForgottenPassword />
-        </Route>
-        <Route exact path="/new-password">
-          <NewPassword />
-        </Route>
-        <Route exact path="/register">
-          <UserRegister />
-        </Route>
-        <Route exact path="/verify">
-          <UserInputCode />
-        </Route>
-        <Route exact path="/resend-code">
-          <UserResendCode />
-        </Route>
-        <Route exact path="/privacy-and-cookie-policy">
-          <PrivacyCookiePolicy />
-        </Route>
-        <Route exact path="/help">
-          <Help />
-        </Route>
-        <Route exact path="/accessibility-statement">
-          <AccessibilityStatement />
-        </Route>
-        <SecureRoute exact path="/manage-notifications">
-          <ManageNotifications />
-        </SecureRoute>
-      </Switch>
+        <Header />
+        <Banner />
+        <Switch>
+          <Route exact path="/">
+            <LandingPage />
+          </Route>
+          <SecureRoute exact path="/reports">
+            <PageContainer />
+          </SecureRoute>
+          <SecureRoute exact path="/save-voyage/page-([1-6]{1})">
+            <VoyageFormContainer />
+          </SecureRoute>
+          <SecureRoute exact path="/save-voyage/page-submitted">
+            <FormVoyageSubmitted />
+          </SecureRoute>
+          <SecureRoute exact path="/vessels">
+            <PageContainer />
+          </SecureRoute>
+          <SecureRoute exact path="/vessels/save-vessel">
+            <CreateAVessel />
+          </SecureRoute>
+          <SecureRoute exact path="/vessels/edit-vessel">
+            <EditVessel />
+          </SecureRoute>
+          <SecureRoute exact path="/people">
+            <PageContainer />
+          </SecureRoute>
+          <SecureRoute exact path="/people/save-person">
+            <CreateAPerson />
+          </SecureRoute>
+          <SecureRoute exact path="/people/edit-person">
+            <EditPerson />
+          </SecureRoute>
+          <SecureRoute exact path="/account">
+            <PageContainer />
+          </SecureRoute>
+          <SecureRoute exact path="/account/edit">
+            <EditAccount />
+          </SecureRoute>
+          <SecureRoute exact path="/account/delete">
+            <DeleteAccount />
+          </SecureRoute>
+          <Route exact path="/account/delete-confirmation">
+            <DeleteConfirmation />
+          </Route>
+          <Route exact path="/sign-in">
+            <SignIn />
+          </Route>
+          <Route exact path="/forgotten-password">
+            <ForgottenPassword />
+          </Route>
+          <Route exact path="/new-password">
+            <NewPassword />
+          </Route>
+          <Route exact path="/register">
+            <UserRegister />
+          </Route>
+          <Route exact path="/verify">
+            <UserInputCode />
+          </Route>
+          <Route exact path="/resend-code">
+            <UserResendCode />
+          </Route>
+          <Route exact path="/privacy-and-cookie-policy">
+            <PrivacyCookiePolicy />
+          </Route>
+          <Route exact path="/help">
+            <Help />
+          </Route>
+          <Route exact path="/accessibility-statement">
+            <AccessibilityStatement />
+          </Route>
+          <SecureRoute exact path="/manage-notifications">
+            <ManageNotifications />
+          </SecureRoute>
+        </Switch>
       </UserContext.Provider>
       <Footer />
     </>
