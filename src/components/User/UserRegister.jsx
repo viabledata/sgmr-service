@@ -1,20 +1,18 @@
-/* eslint-disable no-unused-expressions */
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 
-// app imports
 import { REGISTRATION_URL } from '@constants/ApiConstants';
 import UserRegisterValidation from '@components/User/UserRegisterValidation';
 import { postData } from '@utils/apiHooks';
 import scrollToTopOnError from '@utils/scrollToTopOnError';
 import FormError from '@components/Voyage/FormError';
-
+import PasswordField from '@components/User/PasswordField';
 
 const UserRegister = () => {
   const pageName = 'userRegister';
   const history = useHistory();
   const [formData, setFormData] = useState({});
-  const [errors, setErrors] = useState(JSON.parse(localStorage.getItem('errors')) || {});
+  const [errors, setErrors] = useState({});
 
   const removeError = (fieldName) => {
     const errorArray = { ...errors };
@@ -59,15 +57,6 @@ const UserRegister = () => {
     }
   };
 
-  // Clear local storage of formData & errors on pageload just incase
-  useEffect(() => {
-    localStorage.removeItem('formData');
-    localStorage.removeItem('errors');
-    localStorage.removeItem('email');
-    localStorage.removeItem('redux');
-  }, []);
-
-
   return (
     <div id="pageContainer" className="govuk-width-container ">
       <a
@@ -83,23 +72,23 @@ const UserRegister = () => {
         <div className="govuk-grid-row">
           <div className="govuk-grid-column-two-thirds">
             <h1 className="govuk-heading-xl">Create an account</h1>
-            <form id="pageName">
-
+            <form onSubmit={handleSubmit}>
               {Object.keys(errors).length > 0 && (
-              <div className="govuk-error-summary" aria-labelledby="error-summary-title" role="alert" tabIndex="-1" data-module="govuk-error-summary">
-                <h2 className="govuk-error-summary__title">
-                  There is a problem
-                </h2>
-                <FormError error={errors.userRegister} />
-              </div>
+                <div className="govuk-error-summary" aria-labelledby="error-summary-title" role="alert" tabIndex="-1" data-module="govuk-error-summary">
+                  <h2 className="govuk-error-summary__title">
+                    There is a problem
+                  </h2>
+                  <FormError error={errors.userRegister} />
+                </div>
               )}
 
               <div id="firstName" className={`govuk-form-group ${errors.firstName ? 'govuk-form-group--error' : ''}`}>
-                <label className="govuk-label govuk-label--m" htmlFor="firstName">
+                <label className="govuk-label" htmlFor="firstName-field">
                   First name
                 </label>
                 <FormError error={errors.firstName} />
                 <input
+                  id="firstName-field"
                   className="govuk-input"
                   name="firstName"
                   type="text"
@@ -109,11 +98,12 @@ const UserRegister = () => {
               </div>
 
               <div id="lastName" className={`govuk-form-group ${errors.lastName ? 'govuk-form-group--error' : ''}`}>
-                <label className="govuk-label govuk-label--m" htmlFor="lastName">
+                <label className="govuk-label" htmlFor="lastName-field">
                   Last name
                 </label>
                 <FormError error={errors.lastName} />
                 <input
+                  id="lastName-field"
                   className="govuk-input"
                   name="lastName"
                   type="text"
@@ -123,12 +113,13 @@ const UserRegister = () => {
               </div>
 
               <div id="mobileNumber" className={`govuk-form-group ${errors.mobileNumber ? 'govuk-form-group--error' : ''}`}>
-                <label className="govuk-label govuk-label--m" htmlFor="mobileNumber">
+                <label className="govuk-label" htmlFor="mobileNumber-field">
                   Mobile number
                 </label>
                 <FormError error={errors.mobileNumber} />
                 <span className="govuk-hint">We will send an access code to this number</span>
                 <input
+                  id="mobileNumber-field"
                   className="govuk-input"
                   name="mobileNumber"
                   type="text"
@@ -137,12 +128,13 @@ const UserRegister = () => {
                 />
               </div>
               <div id="email" className={`govuk-form-group ${errors.email ? 'govuk-form-group--error' : ''}`}>
-                <label className="govuk-label govuk-label--m" htmlFor="email">
+                <label className="govuk-label" htmlFor="email-field">
                   Email address
                 </label>
                 <FormError error={errors.email} />
                 <span className="govuk-hint">You will use this to sign into your account</span>
                 <input
+                  id="email-field"
                   className="govuk-input"
                   name="email"
                   type="text"
@@ -152,11 +144,12 @@ const UserRegister = () => {
               </div>
 
               <div id="confirmEmail" className={`govuk-form-group ${errors.confirmEmail ? 'govuk-form-group--error' : ''}`}>
-                <label className="govuk-label govuk-label--m" htmlFor="confirmEmail">
+                <label className="govuk-label" htmlFor="confirmEmail-field">
                   Confirm email address
                 </label>
                 <FormError error={errors.confirmEmail} />
                 <input
+                  id="confirmEmail-field"
                   className="govuk-input"
                   name="confirmEmail"
                   type="text"
@@ -165,35 +158,7 @@ const UserRegister = () => {
                 />
               </div>
 
-              <div id="password" className={`govuk-form-group govuk-!-margin-bottom-2 ${errors.password ? 'govuk-form-group--error' : ''}`}>
-                <label className="govuk-label govuk-label--m" htmlFor="password">
-                  Create password
-                </label>
-                <FormError error={errors.password} />
-                <input
-                  className="govuk-input"
-                  name="password"
-                  type="password"
-                  value={formData.password || ''}
-                  onChange={handleChange}
-                />
-              </div>
-
-              <p className="govuk-body"><Link to="#">Help choosing a valid password</Link></p>
-
-              <div id="confirmPassword" className={`govuk-form-group ${errors.confirmPassword ? 'govuk-form-group--error' : ''}`}>
-                <label className="govuk-label govuk-label--m" htmlFor="confirmPassword">
-                  Confirm password
-                </label>
-                <FormError error={errors.confirmPassword} />
-                <input
-                  className="govuk-input"
-                  name="confirmPassword"
-                  type="password"
-                  value={formData.confirmPassword || ''}
-                  onChange={handleChange}
-                />
-              </div>
+              <PasswordField handleChange={handleChange} formData={formData} errors={errors} />
 
               <h3 className="govuk-heading-s">Declaration</h3>
               <p className="govuk-body">By creating this account, you agree:</p>
@@ -201,7 +166,13 @@ const UserRegister = () => {
                 <li>that the information you have provided is correct to the best of your knowledge</li>
                 <li>
                   that you have read and accept our&nbsp;
-                  <a target="_blank" rel="noopener noreferrer" href="https://www.gov.uk/government/publications/personal-information-use-in-borders-immigration-and-citizenship">privacy policy</a>
+                  <a
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    href="https://www.gov.uk/government/publications/personal-information-use-in-borders-immigration-and-citizenship"
+                  >
+                    privacy policy
+                  </a>
                 </li>
               </ul>
 
@@ -209,7 +180,6 @@ const UserRegister = () => {
                 type="submit"
                 className="govuk-button"
                 data-module="govuk-button"
-                onClick={handleSubmit}
               >
                 Agree and submit
               </button>
