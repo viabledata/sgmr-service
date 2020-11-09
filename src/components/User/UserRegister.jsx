@@ -79,7 +79,7 @@ const UserRegister = () => {
       >
         Back
       </a>
-      <main className="govuk-main-wrapper govuk-main-wrapper--auto-spacing" role="main">
+      <main className="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" role="main">
         <div className="govuk-grid-row">
           <div className="govuk-grid-column-two-thirds">
             <h1 className="govuk-heading-xl">Create an account</h1>

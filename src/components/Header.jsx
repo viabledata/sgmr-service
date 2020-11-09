@@ -1,11 +1,14 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
+// app imports
 import Nav from '@components/Nav';
 
 const Header = () => {
   return (
-    <header className="govuk-header" role="banner" data-module="govuk-header">
+    <header className="govuk-header" role="banner" data-module="header">
+      <a href="#main-content" className="govuk-skip-link">Skip to main content</a>
+
       <div className="govuk-header__container govuk-width-container">
         <div className="govuk-header__logo">
           <Link className="govuk-header__link govuk-header__link--service-name" to="/">
