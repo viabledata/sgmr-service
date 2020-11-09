@@ -10,7 +10,7 @@ const PageWrapper = ({ children }) => (
   <div className="govuk-width-container ">
     <Link to="/sign-in" className="govuk-back-link">Back</Link>
 
-    <main className="govuk-main-wrapper govuk-main-wrapper--auto-spacing" role="main">
+    <main className="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" role="main">
       <div className="govuk-grid-row">
         <div className="govuk-grid-column-two-thirds">
           {children}
