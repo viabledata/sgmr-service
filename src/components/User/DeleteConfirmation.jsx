@@ -12,7 +12,7 @@ const DeleteConfirmation = () => {
   }
   return (
     <div className="govuk-width-container ">
-      <main className="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" role="main">
+      <main className="govuk-main-wrapper govuk-main-wrapper--auto-spacing" role="main">
         <div className="govuk-grid-row">
           <div className="govuk-grid-column-two-thirds">
             <h1 className="govuk-heading-l">Your account is now deleted</h1>

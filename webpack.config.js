@@ -5,7 +5,6 @@ const webpack = require('webpack');
 module.exports = {
   // in the `entry` property there is no need to
   // specify `filename.js` at the end, its smart enough to figure out
-  devtool: 'source-map',
   entry: ['./src/', './src/sass/main.scss'],
   output: {
     path: path.resolve(__dirname, 'dist'),
