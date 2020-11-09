@@ -7,9 +7,9 @@ test('Validates responsible person', () => {
     responsibleAddressLine2: 'You must enter the second line of your address',
     responsibleContactNo: 'You must enter a contact number',
     responsibleCounty: 'You must enter a country name',
-    responsibleGivenName: 'You must enter a given name',
+    responsibleGivenName: 'You must enter a first name',
     responsiblePostcode: 'You must enter a postcode',
-    responsibleSurname: 'You must enter a given name',
+    responsibleSurname: 'You must enter a last name',
     responsibleTown: 'You must enter a town or a city name',
   };
   const result = VoyageFormValidation({}, FORM_STEPS.RESPONSIBLE_PERSON);

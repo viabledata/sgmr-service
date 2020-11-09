@@ -89,7 +89,7 @@ const UserInputCode = () => {
           <div className="govuk-grid-column-two-thirds">
             <h1 className="govuk-heading-xl">Enter your access code</h1>
             <p className="govuk-body-l">
-              To ensure security we have sent a 5-digit code to your mobile number. It may take a few minutes to arrive.
+              To ensure security we have sent a 6-digit code to your mobile number. It may take a few minutes to arrive.
             </p>
             <form>
               <div id="twoFactorToken" className={`govuk-form-group govuk-!-margin-bottom-2 ${errors.twoFactorToken ? 'govuk-form-group--error' : ''}`}>
