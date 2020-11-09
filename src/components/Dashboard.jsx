@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 
-// App imports
 import { deleteItem, getData, postData } from '@utils/apiHooks';
-import { formatUIDate } from '@utils/date';
 import { USER_VOYAGE_REPORT_URL, VOYAGE_REPORT_URL } from '@constants/ApiConstants';
-import { EDIT_VOYAGE_CHECK_DETAILS_URL } from '@constants/ClientConstants';
+import { SAVE_VOYAGE_DEPARTURE_URL } from '@constants/ClientConstants';
 
 const Dashboard = (pageData) => {
   const history = useHistory();
@@ -28,24 +26,13 @@ const Dashboard = (pageData) => {
       });
   };
 
-  const handleStart = () => {
-    postData(USER_VOYAGE_REPORT_URL, null, 'reports')
-      .then((resp) => {
-        history.push({
-          pathname: '/save-voyage/page-1',
-          state: { voyageId: resp.id },
-        });
-      });
+  const handleStart = async () => {
+    const resp = await postData(USER_VOYAGE_REPORT_URL, null, 'reports');
+    history.push({
+      pathname: SAVE_VOYAGE_DEPARTURE_URL,
+      state: { voyageId: resp.id },
+    });
   };
-
-  // const countVoyages = () => {
-  //   const statusArray = reportList.reduce((tally, status) => {
-  //     tally[status] = (tally[status] || 0) + 1;
-  //     return tally;
-  //   }, {});
-  //   console.log(statusArray);
-  //   setStatusList(statusArray);
-  // };
 
   const countVoyages = (currentStatus) => {
     const newArray = reportList.filter((voyage) => {

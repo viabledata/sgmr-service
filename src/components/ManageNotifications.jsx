@@ -27,7 +27,6 @@ const ManageNotifications = (pageData) => {
     },
   ];
 
-
   const setActiveTab = (e) => {
     const tabArray = [...tabData];
     tabArray.map((elem) => {
