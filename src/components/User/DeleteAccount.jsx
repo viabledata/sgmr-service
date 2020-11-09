@@ -39,7 +39,7 @@ const DeleteAccount = () => {
     <div className="govuk-width-container ">
       <Link to="/account/edit" className="govuk-back-link">Back</Link>
 
-      <main className="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" role="main">
+      <main className="govuk-main-wrapper govuk-main-wrapper--auto-spacing" role="main">
         <div className="govuk-grid-row">
           <div className="govuk-grid-column-two-thirds">
             {error && (

@@ -187,17 +187,13 @@ const FormCheck = ({
           </dd>
         </div>
       </dl>
-
-      <div className="govuk-form-group govuk-form-group--error">
-        <p className="govuk-error-message">{errors.responsibleGivenName}</p>
-      </div>
       <dl className="govuk-summary-list govuk-!-margin-bottom-9">
         <div className="govuk-summary-list__row">
-          <dt className="govuk-summary-list__key">First name</dt>
+          <dt className="govuk-summary-list__key">Given name</dt>
           <dd className="govuk-summary-list__value">{voyageData.responsibleGivenName}</dd>
         </div>
         <div className="govuk-summary-list__row">
-          <dt className="govuk-summary-list__key">Last name</dt>
+          <dt className="govuk-summary-list__key">Surname</dt>
           <dd className="govuk-summary-list__value">{voyageData.responsibleSurname}</dd>
         </div>
         <div className="govuk-summary-list__row">
