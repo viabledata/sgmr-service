@@ -121,8 +121,6 @@ pipeline:
       target: SGMR_SERVICE_NAME
     - source: SGMR_SERVICE_PORT
       target: SGMR_SERVICE_PORT
-    - source: SGMR_SERVICE_URL
-      target: SGMR_SERVICE_URL
     - source: DEV_WHITELIST
       target: WHITELIST
     commands:
@@ -159,8 +157,6 @@ pipeline:
       target: SGMR_SERVICE_NAME
     - source: SGMR_SERVICE_PORT
       target: SGMR_SERVICE_PORT
-    - source: SGMR_SERVICE_URL
-      target: SGMR_SERVICE_URL
     - source: STAGING_WHITELIST
       target: WHITELIST
     commands:
@@ -197,8 +193,6 @@ pipeline:
       target: SGMR_SERVICE_NAME
     - source: SGMR_SERVICE_PORT
       target: SGMR_SERVICE_PORT
-    - source: SGMR_SERVICE_URL
-      target: SGMR_SERVICE_URL
     - source: PRODUCTION_WHITELIST
       target: WHITELIST
     commands:
