@@ -69,7 +69,7 @@ const VoyageFormValidation = (dataToValidate, source) => {
   if (source === FORM_STEPS.NEW_PERSON
     && dataToValidate.dateOfBirthYear
     && !(isDateBefore(dataToValidate.dateOfBirthYear, dataToValidate.dateOfBirthMonth, dataToValidate.dateOfBirthDay))) {
-    fieldsErroring.dateOfBirth = 'You must enter a valid date of birthå';
+    fieldsErroring.dateOfBirth = 'You must enter a valid date of birth date';
   }
 
   // Time fields must be valid
