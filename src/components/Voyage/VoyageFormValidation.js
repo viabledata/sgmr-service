@@ -1,5 +1,5 @@
 // App imports
-import { isDateValid } from '@utils/date';
+import { isDateValid, isDateBefore } from '@utils/date';
 import { isTimeAndDateBeforeNow, isTimeValid } from '@utils/time';
 import {
   arrivalValidationRules,
@@ -52,18 +52,24 @@ const VoyageFormValidation = (dataToValidate, source) => {
     fieldsErroring.arrivalLocation = 'You must enter an arrival point';
   }
 
-  // Date fields must be valid
-  if (dataToValidate.documentExpiryDateYear && !(isDateValid(dataToValidate.documentExpiryDateYear, dataToValidate.documentExpiryDateMonth, dataToValidate.documentExpiryDateDay))) {
-    fieldsErroring.documentExpiryDate = 'You must enter a valid date';
-  }
-  if (dataToValidate.dateOfBirthYear && !(isDateValid(dataToValidate.dateOfBirthYear, dataToValidate.dateOfBirthMonth, dataToValidate.dateOfBirthDay))) {
-    fieldsErroring.dateOfBirth = 'You must enter a valid date';
-  }
   if (dataToValidate.departureDateYear && !(isDateValid(dataToValidate.departureDateYear, dataToValidate.departureDateMonth, dataToValidate.departureDateDay))) {
     fieldsErroring.departureDate = 'You must enter a valid date';
   }
   if (dataToValidate.arrivalDateYear && !(isDateValid(dataToValidate.arrivalDateYear, dataToValidate.arrivalDateMonth, dataToValidate.arrivalDateDay))) {
     fieldsErroring.arrivalDate = 'You must enter a valid date';
+  }
+
+  // For a New Person - document expiry date must be after today and DOB before today
+  if (source === FORM_STEPS.NEW_PERSON
+    && dataToValidate.documentExpiryDateYear
+    && (isDateBefore(dataToValidate.documentExpiryDateYear, dataToValidate.documentExpiryDateMonth, dataToValidate.documentExpiryDateDay))) {
+    fieldsErroring.documentExpiryDate = 'You must enter a valid document expiry date';
+  }
+
+  if (source === FORM_STEPS.NEW_PERSON
+    && dataToValidate.dateOfBirthYear
+    && !(isDateBefore(dataToValidate.dateOfBirthYear, dataToValidate.dateOfBirthMonth, dataToValidate.dateOfBirthDay))) {
+    fieldsErroring.dateOfBirth = 'You must enter a valid date of birthå';
   }
 
   // Time fields must be valid
