@@ -162,7 +162,7 @@ steps:
     SGMR_SERVICE_PORT:
       from_secret: SGMR_SERVICE_PORT
     SGMR_SERVICE_URL:
-      from_secret: SGMR_SERVICE_URL
+      from_secret: DEV_SGMR_SERVICE_URL
     WHITELIST:
       from_secret: DEV_WHITELIST
   when:
@@ -201,7 +201,7 @@ steps:
     SGMR_SERVICE_PORT:
       from_secret: SGMR_SERVICE_PORT
     SGMR_SERVICE_URL:
-      from_secret: SGMR_SERVICE_URL
+      from_secret: STAGING_SGMR_SERVICE_URL
     WHITELIST:
       from_secret: STAGING_WHITELIST
   when:
@@ -240,7 +240,7 @@ steps:
     SGMR_SERVICE_PORT:
       from_secret: SGMR_SERVICE_PORT
     SGMR_SERVICE_URL:
-      from_secret: SGMR_SERVICE_URL
+      from_secret: PRODUCTION_SGMR_SERVICE_URL
     WHITELIST:
       from_secret: PRODUCTION_WHITELIST
   when:
