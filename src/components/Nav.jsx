@@ -6,17 +6,16 @@ import axios from 'axios';
 import Auth from '@lib/Auth';
 import { LOGOUT_URL } from '@constants/ApiConstants';
 
-
 const Nav = () => {
   const location = useLocation();
   const history = useHistory();
-  const serviceName = 'Submit an Advanced Voyage Report';
+  const serviceName = 'Submit an Advanced Voyage Notification';
   const [navArray, setNavArray] = useState([]);
 
   const navData = [
     {
       urlStem: '/reports',
-      text: 'Reports',
+      text: 'Notifications',
       active: false,
     },
     {
@@ -72,30 +71,36 @@ const Nav = () => {
   }, []);
 
   return (
-    <nav>
-      <div className="govuk-header__content">
-        <p className="govuk-header__link govuk-header__link--service-name">{serviceName}</p>
-        <button type="button" className="govuk-header__menu-button js-header-toggle" aria-controls="navigation" aria-label="Show or hide Top Level Navigation">
-          Menu
-        </button>
+    <div className="govuk-header__content">
+      <p className="govuk-header__link govuk-header__link--service-name">{serviceName}</p>
 
-        {Auth.isAuthorized() && (
-        <ul id="navigation" className="govuk-header__navigation " aria-label="Top Level Navigation">
-          {navArray.map((elem) => {
-            const activeState = elem.active === true ? 'govuk-header__navigation-item govuk-header__navigation-item--active' : 'govuk-header__navigation-item';
-            return (
-              <li className={activeState} key={elem.urlStem}>
-                <Link to={elem.urlStem} className="govuk-header__link" onClick={() => setActivePage(elem.urlStem)}>{elem.text}</Link>
-              </li>
-            );
-          })}
-          <li className="govuk-header__navigation-item">
-            <a className="govuk-header__link" onClick={() => handleSignout()}>Signout</a>
-          </li>
-        </ul>
-        )}
-      </div>
-    </nav>
+      <button
+        type="button"
+        className="govuk-header__menu-button govuk-js-header-toggle"
+        aria-controls="navigation"
+        aria-label="Show or hide navigation menu"
+      >
+        Menu
+      </button>
+
+      {Auth.isAuthorized() && (
+        <nav>
+          <ul id="navigation" className="govuk-header__navigation " aria-label="Top Level Navigation">
+            {navArray.map((elem) => {
+              const activeState = elem.active === true ? 'govuk-header__navigation-item govuk-header__navigation-item--active' : 'govuk-header__navigation-item';
+              return (
+                <li className={activeState} key={elem.urlStem}>
+                  <Link to={elem.urlStem} className="govuk-header__link" onClick={() => setActivePage(elem.urlStem)}>{elem.text}</Link>
+                </li>
+              );
+            })}
+            <li className="govuk-header__navigation-item">
+              <a href="#sign-out" className="govuk-header__link" onClick={() => handleSignout()}>Signout</a>
+            </li>
+          </ul>
+        </nav>
+      )}
+    </div>
   );
 };
 

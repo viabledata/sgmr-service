@@ -89,10 +89,10 @@ const UserInputCode = () => {
           <div className="govuk-grid-column-two-thirds">
             <h1 className="govuk-heading-xl">Enter your access code</h1>
             <p className="govuk-body-l">
-              To ensure security we have sent a 5-digit code to your mobile number. It may take a few minutes to arrive.
+              To ensure security we have sent a 6-digit code to your mobile number. It may take a few minutes to arrive.
             </p>
             <form>
-              <div id="twoFactorToken" className={`govuk-form-group ${errors.twoFactorToken ? 'govuk-form-group--error' : ''}`}>
+              <div id="twoFactorToken" className={`govuk-form-group govuk-!-margin-bottom-2 ${errors.twoFactorToken ? 'govuk-form-group--error' : ''}`}>
                 <label className="govuk-label govuk-label--m" htmlFor="twoFactorToken">
                   Access code
                 </label>
@@ -104,10 +104,12 @@ const UserInputCode = () => {
                   type="text"
                   onChange={handleChange}
                 />
-                <p className="govuk-body">
-                  <Link to={`/resend-code?source=${source}`}>Problems receiving this code?</Link>
-                </p>
               </div>
+
+              <p className="govuk-body">
+                <Link to={`/resend-code?source=${source}`}>Problems receiving this code?</Link>
+              </p>
+
               <button
                 type="submit"
                 className="govuk-button"

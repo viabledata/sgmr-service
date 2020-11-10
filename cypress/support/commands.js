@@ -1,5 +1,4 @@
 const faker = require('faker');
-require('@reportportal/agent-js-cypress/lib/commands/reportPortalCommands');
 
 const { getFutureDate, getPastDate } = require('./utils');
 
@@ -189,4 +188,12 @@ Cypress.Commands.add('selectCheckbox', (option) => {
     .find('input[type="checkbox"]')
     .check()
     .should('be.checked');
+});
+
+Cypress.Commands.add('checkNotifications', (type, numberOfNotification) => {
+  cy.get('.govuk-grid-row')
+    .find('p.govuk-body-s')
+    .filter(`:contains(${type})`)
+    .find('strong')
+    .should('have.text', numberOfNotification);
 });

@@ -1,4 +1,3 @@
-// eslint-disable-next-line import/prefer-default-export
 export const SIGN_IN_URL = '/sign-in';
 export const REGISTER_URL = '/register';
 export const VERIFY_URL = '/verify';
@@ -18,6 +17,7 @@ export const PEOPLE_PAGE_URL = '/people';
 export const ADD_PERSON_URL = '/people/save-person';
 export const ACCOUNT_PAGE_URL = '/account';
 export const EDIT_ACCOUNT_URL = '/account/edit';
+
 export const FORM_STEPS = {
   CHECK: 'check',
   ARRIVAL: 'arrival',
@@ -30,3 +30,5 @@ export const FORM_STEPS = {
   VOYAGE: 'voyage',
   CANCEL: 'cancel',
 };
+
+export const VALID_EMAIL_REGEX = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;

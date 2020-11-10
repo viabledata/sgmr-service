@@ -8,7 +8,7 @@ import PageIntro from '@components/PageIntro';
 import PageIntroToForm from '@components/PageIntroToForm';
 import SectionTablePeople from '@components/SectionTablePeople';
 import SectionTableVessels from '@components/SectionTableVessels';
-import SectionTabs from '@components/SectionTabs';
+import Dashboard from '@components/Dashboard';
 import { USER_URL } from '@constants/ApiConstants';
 import Auth from '@lib/Auth';
 import UserContext from './UserContext';
@@ -32,7 +32,7 @@ const PageContainer = (props) => {
   const checkPageReportsSection = () => {
     if (pageData) {
       switch (pageData.reportType) {
-        case 'tabs': setSectionReport(<SectionTabs page={location.pathname} pageData={pageData} />); break;
+        case 'tabs': setSectionReport(<Dashboard page={location.pathname} pageData={pageData} />); break;
         case 'vessels': setSectionReport(<SectionTableVessels page={location.pathname} pageData={pageData} />); break;
         case 'people': setSectionReport(<SectionTablePeople page={location.pathname} pageData={pageData} />); break;
         default: setSectionReport('none');
