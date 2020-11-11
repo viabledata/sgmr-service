@@ -32,9 +32,9 @@ describe('Add new voyage report', () => {
     departTime = departureDateTime.split(' ')[1];
     arrivalDateTime = getFutureDate(2, 'DD/MM/YYYY HH:MM');
 
-    cy.navigation('Notifications');
+    cy.navigation('Reports');
     cy.url().should('include', '/reports');
-    cy.checkNotifications('Draft', 0);
+    cy.checkReports('Draft', 0);
     cy.get('.govuk-button--start').should('have.text', 'Start now').click();
   });
 
@@ -67,10 +67,10 @@ describe('Add new voyage report', () => {
     cy.checkNoErrors();
     cy.contains('Accept and submit report').click();
     cy.url().should('include', '/save-voyage/page-submitted');
-    cy.get('.govuk-panel__title').should('have.text', 'Advance Voyage Notification Submitted');
-    cy.navigation('Notifications');
-    cy.checkNotifications('Submitted', 1);
-    cy.contains('View existing notifications').click();
+    cy.get('.govuk-panel__title').should('have.text', 'Pleasure Craft Report Submitted');
+    cy.navigation('Reports');
+    cy.checkReports('Submitted', 1);
+    cy.contains('View existing reports').click();
     cy.get('.govuk-tabs__list li')
       .within(() => {
         cy.get('#submitted').should('have.text', 'Submitted')
@@ -111,9 +111,9 @@ describe('Add new voyage report', () => {
     cy.checkNoErrors();
     cy.contains('Cancel voyage').click();
     cy.url().should('include', '/reports');
-    cy.navigation('Notifications');
-    cy.checkNotifications('Cancelled', 1);
-    cy.contains('View existing notifications').click();
+    cy.navigation('Reports');
+    cy.checkReports('Cancelled', 1);
+    cy.contains('View existing reports').click();
     cy.get('.govuk-tabs__list li')
       .within(() => {
         cy.get('#cancelled').should('have.text', 'Cancelled')
@@ -154,9 +154,9 @@ describe('Add new voyage report', () => {
     cy.checkNoErrors();
     cy.contains('Exit without saving').click();
     cy.url().should('include', '/reports');
-    cy.navigation('Notifications');
-    cy.checkNotifications('Draft', 1);
-    cy.contains('View existing notifications').click();
+    cy.navigation('Reports');
+    cy.checkReports('Draft', 1);
+    cy.contains('View existing reports').click();
     cy.get('.govuk-tabs__list li')
       .within(() => {
         cy.get('#draft').should('have.text', 'Draft')
