@@ -82,7 +82,7 @@ const UserResendCode = () => {
           <div className="govuk-grid-column-two-thirds">
             <h1 className="govuk-heading-xl">Request a new multi-factor authentication code</h1>
             <p className="govuk-body-l">
-              Due to the nature of the data used and transmitted by the Submit an Advanced Voyage Report Service, we require users to register for multi-factor authentication to ensure the security of the system.
+              Due to the nature of the data used and transmitted by the Submit a Pleasure Craft Report Service, we require users to register for multi-factor authentication to ensure the security of the system.
             </p>
 
             {Object.keys(errors).length > 0 && (

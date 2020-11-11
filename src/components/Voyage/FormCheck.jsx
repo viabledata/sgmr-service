@@ -13,7 +13,7 @@ const FormCheck = ({
   return (
     <section>
       <h1 className="govuk-heading-xl">
-        Check the information provided before submitting your voyage notification
+        Check the information provided before submitting your voyage report
       </h1>
 
       <dl className="govuk-summary-list govuk-!-margin-bottom-9">
@@ -213,8 +213,8 @@ const FormCheck = ({
           </dd>
         </div>
       </dl>
-      <h2 className="govuk-heading-m">Submit your Advanced Voyage Notification</h2>
-      <p>By submitting this Advanced Voyage Report you are confirming that, to the best of your knowledge, the information you are providing is correct and you have the explicit permission of the persons named in this report to submit information on their behalf.</p>
+      <h2 className="govuk-heading-m">Submit your Pleasure Craft Report</h2>
+      <p>By submitting this voyage report you are confirming that, to the best of your knowledge, the information you are providing is correct and you have the explicit permission of the persons named in this report to submit information on their behalf.</p>
       <button
         type="button"
         className="govuk-button"

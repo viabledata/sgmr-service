@@ -6,14 +6,14 @@ const AccessibilityStatement = () => {
       <main className="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" role="main">
         <div className="govuk-grid-row">
           <div className="govuk-width-container">
-            <h1 className="govuk-heading-xl">Accessibility statement for Submit a General Maritime Report (sGMR)</h1>
+            <h1 className="govuk-heading-xl">Accessibility statement for Submit a Pleasure Craft Report</h1>
             <p className="govuk-body">
               We want everyone to be able to get and do what they need with this service, regardless of access needs, due to a disability or condition.
             </p>
             <p className="govuk-body">
               This accessibility statement contains information about the sGMR, available at
               {' '}
-              <a className="govuk-link" target="blank" href="/reports">Submit a General Maritime Report (opens in new tab).</a>
+              <a className="govuk-link" target="blank" href="/reports">Submit a Pleasure Craft Report (opens in new tab).</a>
             </p>
             <p className="govuk-body">
               This website is run by Border Force. We want as many people as possible to be able to use this website. For example, that means you should be able to:

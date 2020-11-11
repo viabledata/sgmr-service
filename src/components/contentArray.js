@@ -1,7 +1,7 @@
 const contentArray = [
   {
     urlStub: '/reports',
-    pageHeading: 'Notification Dashboard',
+    pageHeading: 'Reports Dashboard',
     pageBlurb: null,
     formIntroHeading: null,
     formIntroBlurb: null,
@@ -14,9 +14,9 @@ const contentArray = [
   {
     urlStub: '/vessels',
     pageHeading: 'Vessels',
-    pageBlurb: 'You can view, edit or delete vessels that you regularly add to Advanced Voyage Reports.',
+    pageBlurb: 'You can view, edit or delete vessels that you regularly add to Pleasure Craft Reports.',
     formIntroHeading: 'Save a new vessel',
-    formIntroBlurb: 'Save the details of vessels that you regularly submit Advanced Voyage Reports for.',
+    formIntroBlurb: 'Save the details of vessels that you regularly submit Pleasure Craft Reports for.',
     buttonText: 'Save a vessel',
     buttonLink: 'vessels/save-vessel?source=vessels',
     buttonClass: 'govuk-button--start',
@@ -27,7 +27,7 @@ const contentArray = [
   {
     urlStub: '/people',
     pageHeading: 'People',
-    pageBlurb: 'You can view, edit or delete people that you regularly sail with so that you can easily add them to Advanced Voyage Reports.',
+    pageBlurb: 'You can view, edit or delete people that you regularly sail with so that you can easily add them to Pleasure Craft Reports.',
     formIntroHeading: 'Save a new person',
     formIntroBlurb: 'Save the details of people that you regularly sail with.',
     buttonText: 'Save a person',

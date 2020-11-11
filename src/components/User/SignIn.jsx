@@ -141,7 +141,7 @@ const SignIn = () => {
           </div>
           <div className="govuk-grid-column-one-third">
             <h3 className="govuk-heading-m">Create an account</h3>
-            <p className="govuk-body"><Link to="/register">Create an account to submit and update notifications</Link></p>
+            <p className="govuk-body"><Link to="/register">Create an account to submit and update reports</Link></p>
           </div>
         </div>
       </main>

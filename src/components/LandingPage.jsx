@@ -7,7 +7,7 @@ const LandingPage = () => {
       <main className="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" role="main">
         <div className="govuk-grid-row">
           <div className="govuk-grid-column-two-thirds">
-            <h1 className="govuk-heading-l">Submit an Advanced Voyage Notification</h1>
+            <h1 className="govuk-heading-l">Submit a Pleasure Craft Report</h1>
             <p className="govuk-body">Use this service to:</p>
             <ul className="govuk-list govuk-list--bullet govuk-!-margin-bottom-7">
               <li>Tell Border Force you are sailing to or from the UK in a General Maritime Pleasure Craft</li>

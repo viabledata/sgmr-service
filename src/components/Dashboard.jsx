@@ -51,8 +51,8 @@ const Dashboard = (pageData) => {
     <div className="govuk-width-container">
       <div className="govuk-grid-row">
         <div className="govuk-grid-column-one-half">
-          <h2 className="govuk-heading-m">Create a new notification</h2>
-          <p className="govuk-body">You can use the online form to create and submit an Advance Voyage Notification to UK Border Force.</p>
+          <h2 className="govuk-heading-m">Create a new report</h2>
+          <p className="govuk-body">You can use this online form to create and submit a pleasure craft report to UK Border Force, notifying them of your travel plans.</p>
           <button
             type="button"
             className="govuk-button govuk-button--start"
@@ -74,8 +74,8 @@ const Dashboard = (pageData) => {
           </button>
         </div>
         <div className="govuk-grid-column-one-half">
-          <h2 className="govuk-heading-m">Manage existing notifications</h2>
-          <p className="govuk-body">View your notifications to edit, cancel or delete them, depending on its status.</p>
+          <h2 className="govuk-heading-m">Manage existing reports</h2>
+          <p className="govuk-body">View your reports to edit, cancel or delete them, depending on its status.</p>
           <div className="govuk-grid-row">
             <div className="govuk-grid-column-one-third panel-number">
               <p className="govuk-body-s">
@@ -96,7 +96,7 @@ const Dashboard = (pageData) => {
               </p>
             </div>
           </div>
-          <Link className="govuk-link govuk-body" to="/manage-notifications">View existing notifications</Link>
+          <Link className="govuk-link govuk-body" to="/manage-reports">View existing reports</Link>
         </div>
       </div>
     </div>
