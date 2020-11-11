@@ -5,7 +5,7 @@ import axios from 'axios';
 import { PASSWORD_RESET_LINK } from '@constants/ApiConstants';
 import Auth from '@lib/Auth';
 import ErrorSummary from '@components/ErrorSummary';
-import { VALID_EMAIL_REGEX } from '@constants/ClientConstants';
+import { VALID_EMAIL_REGEX } from '@components/Forms/validationRules';
 
 const PageWrapper = ({ children }) => (
   <div className="govuk-width-container ">

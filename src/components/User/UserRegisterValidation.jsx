@@ -1,7 +1,9 @@
-// App imports
-import { userValidationRules } from '@components/Forms/validationRules';
+import {
+  passwordValidation,
+  userValidationRules,
+  VALID_EMAIL_REGEX,
+} from '@components/Forms/validationRules';
 import scrollToTopOnError from '@utils/scrollToTopOnError';
-import { VALID_EMAIL_REGEX } from '@constants/ClientConstants';
 
 const UserRegisterValidation = (dataToValidate) => {
   const fieldsErroring = {};
@@ -24,9 +26,10 @@ const UserRegisterValidation = (dataToValidate) => {
     fieldsErroring.mobileNumber = 'You must enter a valid phone number';
   }
 
-  // Password field must be at least 8 characters
-  if (dataToValidate.password && dataToValidate.password.length < 8) {
-    fieldsErroring.password = 'Passwords must be at least 8 characters long';
+  // Password must be complex
+  const passwordValidationError = passwordValidation(dataToValidate.password);
+  if (passwordValidationError) {
+    fieldsErroring.password = passwordValidationError;
   }
 
   // Confirm email must match email
@@ -36,7 +39,7 @@ const UserRegisterValidation = (dataToValidate) => {
     }
   }
 
-  // Confirm password must match email
+  // Confirm password must match password
   if (dataToValidate.password) {
     if (dataToValidate.password !== dataToValidate.confirmPassword) {
       fieldsErroring.confirmPassword = 'Passwords must match';
