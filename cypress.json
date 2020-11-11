@@ -3,7 +3,6 @@
   "requestTimeout": 20000,
   "responseTimeout": 20000,
   "chromeWebSecurity": false,
-  "baseUrl": "http://localhost:8080",
   "testFiles": "**/sGMR/*.js",
   "video": false,
   "watchForFileChanges":false

@@ -148,6 +148,9 @@ describe('Add report with saved data', () => {
   });
 
   after(() => {
-    cy.exec('sh cypress/scripts/delete-reports.sh');
+    if (Cypress.env('envname') === 'local') {
+      const query = `sh cypress/scripts/delete-reports.sh ${Cypress.env('dbName')}`;
+      cy.exec(query);
+    }
   });
 });

@@ -76,14 +76,14 @@ Cypress.Commands.add('registerUser', () => {
   cy.readFile('cypress/fixtures/user-registration.json').then((registrationData) => {
     cy.request({
       method: 'POST',
-      url: `${apiServer}registration`,
+      url: `${apiServer}/registration`,
       body: registrationData,
       failOnStatusCode: false,
     }).then((response) => {
       if (response.status === 200) {
         cy.request(
           'PATCH',
-          `${apiServer}submit-verification-code`,
+          `${apiServer}/submit-verification-code`,
           {
             email: response.body.email,
             twoFactorToken: response.body.twoFactorToken,
