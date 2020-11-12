@@ -1,5 +1,6 @@
 export const VALID_EMAIL_REGEX = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
 export const COMPLEX_PASSWORD_REGEX = /(\d+)|([a-z]+)|([A-Z]+)|([!@$%^&\\(){}[\]:;<>,*.?/~_+-=|]+)+/g;
+export const VALID_MOBILE_REGEX = /^\d([ 0-9]{3,20})$/i;
 
 export const personValidationRules = [
   {
