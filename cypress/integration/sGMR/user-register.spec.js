@@ -18,7 +18,7 @@ describe('User Registration', () => {
 
   beforeEach(() => {
     cy.visit('/');
-    cy.get('.govuk-heading-l').should('have.text', 'Submit an Advanced Voyage Notification');
+    cy.get('.govuk-heading-l').should('have.text', 'Submit a Pleasure Craft Report');
     cy.get('.govuk-list .govuk-link').each((link, index) => {
       cy.wrap(link).should('contain.text', externalURL[index]);
     });
