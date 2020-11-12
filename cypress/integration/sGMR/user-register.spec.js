@@ -3,7 +3,7 @@ const faker = require('faker');
 describe('User Registration', () => {
   let user;
   let apiServer;
-  const externalURL = [
+  const externalURLs = [
     'Travel abroad',
     'Send Advance Passenger Information',
     'Notice 8: sailing your pleasure craft to and from the UK',
@@ -20,7 +20,7 @@ describe('User Registration', () => {
     cy.visit('/');
     cy.get('.govuk-heading-l').should('have.text', 'Submit a Pleasure Craft Report');
     cy.get('.govuk-list .govuk-link').each((link, index) => {
-      cy.wrap(link).should('contain.text', externalURL[index]);
+      cy.wrap(link).should('contain.text', externalURLs[index]);
     });
     cy.get('.govuk-button--start').click();
     cy.get('a[href="/register"]').click();
