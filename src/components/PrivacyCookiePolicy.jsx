@@ -6,9 +6,9 @@ const PrivacyCookiePolicy = () => {
       <main className="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" role="main">
         <div className="govuk-grid-row">
           <div className="govuk-width-container">
-            <h1 className="govuk-heading-l">Privacy notice for the Submit a Pleasure Craft Report</h1>
+            <h1 className="govuk-heading-l">Privacy notice for Submit a Pleasure Craft Report</h1>
             <p className="govuk-body">
-              Provision of the Pleasure Craft Report service is from the borders, immigration and citizenship system, which is part of the Home Office. Please visit the guidance at
+              Provision of the Submit a Pleasure Craft Report service is from the borders, immigration and citizenship system, which is part of the Home Office. Please visit the guidance at
               {' '}
               <a href="https://www.gov.uk/government/publications/personal-information-use-in-borders-immigration-and-citizenship">Borders, immigration and citizenship: privacy information notice</a>
               {' '}

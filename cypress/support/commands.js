@@ -190,10 +190,10 @@ Cypress.Commands.add('selectCheckbox', (option) => {
     .should('be.checked');
 });
 
-Cypress.Commands.add('checkReports', (type, numberOfReport) => {
+Cypress.Commands.add('checkReports', (type, numberOfReports) => {
   cy.get('.govuk-grid-row')
     .find('p.govuk-body-s')
     .filter(`:contains(${type})`)
     .find('strong')
-    .should('have.text', numberOfReport);
+    .should('have.text', numberOfReports);
 });

@@ -16,7 +16,7 @@ const contentArray = [
     pageHeading: 'Vessels',
     pageBlurb: 'You can view, edit or delete vessels that you regularly add to Pleasure Craft Reports.',
     formIntroHeading: 'Save a new vessel',
-    formIntroBlurb: 'Save the details of vessels that you regularly submit Pleasure Craft Reports for.',
+    formIntroBlurb: 'Save the details of vessels that you regularly Submit Pleasure Craft Reports for.',
     buttonText: 'Save a vessel',
     buttonLink: 'vessels/save-vessel?source=vessels',
     buttonClass: 'govuk-button--start',
