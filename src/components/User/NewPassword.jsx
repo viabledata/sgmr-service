@@ -5,6 +5,7 @@ import axios from 'axios';
 import { PASSWORD_RESET_CONFIRMATION } from '@constants/ApiConstants';
 import Auth from '@lib/Auth';
 import ErrorSummary from '@components/ErrorSummary';
+import { passwordValidation } from '@components/Forms/validationRules';
 
 const PageWrapper = ({ children }) => (
   <div className="govuk-width-container ">
@@ -34,16 +35,14 @@ const NewPassword = () => {
   const formSubmitHandler = (e) => {
     e.preventDefault();
 
-    if (!formData.password || !formData.confirmPassword) {
-      setError('Enter your new password');
+    const passwordValidationError = passwordValidation(formData.password);
+    if (passwordValidationError) {
+      setError(passwordValidationError);
       return;
     }
+
     if (formData.password !== formData.confirmPassword) {
       setError('Passwords must match');
-      return;
-    }
-    if (formData.password && formData.password.length < 8) {
-      setError('Passwords must be at least 8 characters long');
       return;
     }
 

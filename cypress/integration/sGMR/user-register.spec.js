@@ -39,7 +39,7 @@ describe('User Registration', () => {
       'You must enter your last name',
       'You must enter a valid phone number',
       'You must enter a valid email address',
-      'You must enter a password',
+      'Enter your new password',
     ];
 
     cy.visit(`${host}/register`);

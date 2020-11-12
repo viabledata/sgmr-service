@@ -30,5 +30,3 @@ export const FORM_STEPS = {
   VOYAGE: 'voyage',
   CANCEL: 'cancel',
 };
-
-export const VALID_EMAIL_REGEX = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;

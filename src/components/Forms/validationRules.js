@@ -1,3 +1,6 @@
+export const VALID_EMAIL_REGEX = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
+export const COMPLEX_PASSWORD_REGEX = /(\d+)|([a-z]+)|([A-Z]+)|([!@$%^&\\(){}[\]:;<>,*.?/~_+-=|]+)+/g;
+
 export const personValidationRules = [
   {
     inputField: 'firstName',
@@ -194,12 +197,6 @@ export const userValidationRules = [
     rule: 'required',
     message: 'You must enter your email address',
   },
-  {
-    inputField: 'password',
-    errorDisplayId: 'password',
-    rule: 'required',
-    message: 'You must enter a password',
-  },
 ];
 
 export const arrivalValidationRules = [
@@ -390,5 +387,19 @@ export const dateValidation = (name, value) => {
         ? { departureDateDay: value }
         : 'error';
     default: return null;
+  }
+};
+
+// Validates if password is 8 characters long and contain 3 of the following:
+// an uppercase letter, a lowercase letter, a symbol, a number
+export const passwordValidation = (password) => {
+  if (!password) {
+    return 'Enter your new password';
+  }
+  if (password && password.length < 8) {
+    return 'Passwords must be at least 8 characters long';
+  }
+  if (password.match(COMPLEX_PASSWORD_REGEX).length < 3) {
+    return 'The password must contain 3 of the following: an uppercase letter, a lowercase letter, a symbol, a number';
   }
 };
