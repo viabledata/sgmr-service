@@ -38,7 +38,7 @@ describe('Add report with saved data', () => {
 
     cy.login();
     cy.url().should('include', '/reports');
-    cy.checkNotifications('Draft', 0);
+    cy.checkReports('Draft', 0);
     cy.get('.govuk-button--start').should('have.text', 'Start now').click();
   });
 
@@ -73,10 +73,10 @@ describe('Add report with saved data', () => {
     cy.checkNoErrors();
     cy.contains('Accept and submit report').click();
     cy.url().should('include', '/save-voyage/page-submitted');
-    cy.get('.govuk-panel__title').should('have.text', 'Advance Voyage Notification Submitted');
-    cy.navigation('Notifications');
-    cy.checkNotifications('Submitted', 1);
-    cy.contains('View existing notifications').click();
+    cy.get('.govuk-panel__title').should('have.text', 'Pleasure Craft Report Submitted');
+    cy.navigation('Reports');
+    cy.checkReports('Submitted', 1);
+    cy.contains('View existing reports').click();
     cy.get('.govuk-tabs__list li')
       .within(() => {
         cy.get('#submitted').should('have.text', 'Submitted')
@@ -88,7 +88,7 @@ describe('Add report with saved data', () => {
       expectedReport.forEach((item) => expect(reportData).to.deep.include(item));
       cy.get('.govuk-table td a').contains(vessel.name).click();
       cy.contains('Cancel voyage').click();
-      cy.contains('View existing notifications').click();
+      cy.contains('View existing reports').click();
       cy.get('.govuk-tabs__list li')
         .within(() => {
           cy.get('#cancelled').should('have.text', 'Cancelled')
@@ -131,10 +131,10 @@ describe('Add report with saved data', () => {
     cy.checkNoErrors();
     cy.contains('Accept and submit report').click();
     cy.url().should('include', '/save-voyage/page-submitted');
-    cy.get('.govuk-panel__title').should('have.text', 'Advance Voyage Notification Submitted');
-    cy.navigation('Notifications');
-    cy.checkNotifications('Submitted', 1);
-    cy.contains('View existing notifications').click();
+    cy.get('.govuk-panel__title').should('have.text', 'Pleasure Craft Report Submitted');
+    cy.navigation('reports');
+    cy.checkReports('Submitted', 1);
+    cy.contains('View existing reports').click();
     cy.get('.govuk-tabs__list li')
       .within(() => {
         cy.get('#submitted').should('have.text', 'Submitted')

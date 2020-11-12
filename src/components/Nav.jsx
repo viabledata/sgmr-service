@@ -9,13 +9,13 @@ import { LOGOUT_URL } from '@constants/ApiConstants';
 const Nav = () => {
   const location = useLocation();
   const history = useHistory();
-  const serviceName = 'Submit an Advanced Voyage Notification';
+  const serviceName = 'Submit a Pleasure Craft Report';
   const [navArray, setNavArray] = useState([]);
 
   const navData = [
     {
       urlStem: '/reports',
-      text: 'Notifications',
+      text: 'Reports',
       active: false,
     },
     {

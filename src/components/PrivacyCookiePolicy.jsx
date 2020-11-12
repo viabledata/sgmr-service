@@ -6,16 +6,16 @@ const PrivacyCookiePolicy = () => {
       <main className="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" role="main">
         <div className="govuk-grid-row">
           <div className="govuk-width-container">
-            <h1 className="govuk-heading-l">Privacy notice for General Maritime (Pleasure Craft) Advanced Voyage Notification</h1>
+            <h1 className="govuk-heading-l">Privacy notice for Submit a Pleasure Craft Report</h1>
             <p className="govuk-body">
-              Provision of the Advance Voyage Notification service is from the borders, immigration and citizenship system, which is part of the Home Office. Please visit the guidance at
+              Provision of the Submit a Pleasure Craft Report service is from the borders, immigration and citizenship system, which is part of the Home Office. Please visit the guidance at
               {' '}
               <a href="https://www.gov.uk/government/publications/personal-information-use-in-borders-immigration-and-citizenship">Borders, immigration and citizenship: privacy information notice</a>
               {' '}
               for full information on how your personal information may be used within the Home Office Borders, Immigration and Citizenship System.
             </p>
             <h2 className="govuk-heading-m">What data we need</h2>
-            <p className="govuk-body">The personal data we collect from you on the Submit an Advance Voyage Notification service may include:</p>
+            <p className="govuk-body">The personal data we collect from you on the Submit a Pleasure Craft Report service may include:</p>
             <ul className="govuk-list govuk-list--bullet">
               <li>your full name</li>
               <li>other travel document information such as document number and expiry date</li>
@@ -24,7 +24,7 @@ const PrivacyCookiePolicy = () => {
               <li>
                 information on how you use the site, using cookies and page tagging techniques:
                 <ul className="govuk-list govuk-list--bullet">
-                  <li>the pages you visit on Submit an Advance Voyage Report</li>
+                  <li>the pages you visit on Submit a Pleasure Craft Report</li>
                   <li>how long you spend on each page</li>
                   <li>what you click on while you’re visiting the site</li>
                 </ul>
@@ -32,16 +32,16 @@ const PrivacyCookiePolicy = () => {
             </ul>
             <p className="govuk-body">
               Under the Data Protection Act 2018, we are processing your personal information on a performance-of-a-public-task basis to allow Border Force to discharge our duties around your entry into the United Kingdom.
-              We may process your information in systems other that the Submit an Advance Voyage Notification Service. The legislative basis for collecting this information is the Immigration Act of 1971 Paragraph 27B.
+              We may process your information in systems other that the Submit a Pleasure Craft Report Service. The legislative basis for collecting this information is the Immigration Act of 1971 Paragraph 27B.
             </p>
             <h2 className="govuk-heading-l">Cookies</h2>
             <p className="govuk-body">This service puts small files (known as &apos;cookies&apos;) onto your computer to collect information about how you browse the site.</p>
-            <p className="govuk-body">Cookies are used to help identify you when you return to the site and improves the way you can access the site by storing your logon information for a limited period when you complete the General Maritime Advance Voyage Notification.</p>
+            <p className="govuk-body">Cookies are used to help identify you when you return to the site and improves the way you can access the site by storing your logon information for a limited period when you complete the Pleasure Craft Report.</p>
             <h2 className="govuk-heading-m">How cookies are used</h2>
             <h3 className="govuk-heading-s">Measuring website usage</h3>
-            <p className="govuk-body">We use cookies to collect information as you interact with the Submit General Maritime Advance Voyage Notification. We do this to help make sure the site is meeting the needs of its users and to help us make improvements. Cookies will be used to monitor specific user information to improve your access to the form by remembering your non-personal details for the next time you submit a form. </p>
+            <p className="govuk-body">We use cookies to collect information as you interact with the Submit a Pleasure Craft Report. We do this to help make sure the site is meeting the needs of its users and to help us make improvements. Cookies will be used to monitor specific user information to improve your access to the form by remembering your non-personal details for the next time you submit a form. </p>
             <h3 className="govuk-heading-s">Cookie Details</h3>
-            <p className="govuk-body">Submit an Advance Voyage Notification uses cookies. The two types of persistent cookies are:</p>
+            <p className="govuk-body">Submit a Pleasure Craft Report uses cookies. The two types of persistent cookies are:</p>
             <ul className="govuk-list govuk-list--bullet">
               <li>_pk_id: used to store a few details about you such as the unique visitor ID, stored for 13 months; and</li>
               <li>_pk_ref: used to store information to initially identify you when you visit the website, stored for 6 months.</li>
@@ -52,9 +52,9 @@ const PrivacyCookiePolicy = () => {
               <li>_pk_ses: used to temporarily store data for the visit and are stored for 30 minutes.</li>
             </ul>
             <h2 className="govuk-heading-m">Cookie Introductory Message</h2>
-            <p className="govuk-body">You may see a Cookie Notice pop-up message when you first Submit an Advance Voyage Notification. This message is to advise you that the process will capture cookies as described above. By accessing the Advance Voyage Notification form, you are consenting to the use of cookies described above. </p>
+            <p className="govuk-body">You may see a Cookie Notice pop-up message when you first submit a Pleasure Craft Report. This message is to advise you that the process will capture cookies as described above. By accessing the Pleasure Craft Report form, you are consenting to the use of cookies described above. </p>
             <h2 className="govuk-heading-m">Why we need this data</h2>
-            <p className="govuk-body">We use cookie information to enable you to log into the service that we provide and to link information you add into Submit an Advance Voyage Notification to your account.</p>
+            <p className="govuk-body">We use cookie information to enable you to log into the service that we provide and to link information you add into Submit a Pleasure Craft Report to your account.</p>
             <p className="govuk-body">We use the information you provide to help ensure that we can enforce access control and keep data secure.</p>
             <p className="govuk-body">We use information about your email and your name that we hold within the system when we send you a notification. We use the GOV.UK Notify service, to send you notifications from the service to your email address; the GOV.UK Notify service is operated and assured by the Cabinet Office. </p>
             <p className="govuk-body">The legal basis for processing your personal data is for the performance of a public task . Privacy and Electronic Communications Regulations (PECR) require either the subscriber’s or the user’s consent. </p>

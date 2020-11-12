@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
-import { deleteItem, getData, postData } from '@utils/apiHooks';
+import { deleteItem, getData } from '@utils/apiHooks';
 import { formatUIDate } from '@utils/date';
 import { USER_VOYAGE_REPORT_URL, VOYAGE_REPORT_URL } from '@constants/ApiConstants';
 import { EDIT_VOYAGE_CHECK_DETAILS_URL } from '@constants/ClientConstants';
 
-const ManageNotifications = (pageData) => {
+const ManageReports = (pageData) => {
   const [tabData, setTabData] = useState([]);
   const [tableName, setTableName] = useState('Draft');
   const [reportList, setReportList] = useState();
@@ -67,8 +67,8 @@ const ManageNotifications = (pageData) => {
   return (
     <div className="govuk-width-container">
       <main className="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" role="main">
-        <h1 className="govuk-heading-l">Manage your notifications</h1>
-        <p className="govuk-body-l">Click on one of your notifications below to view, edit, cancel or delete it, depending on its status. For example, you can edit a draft or submitted notification, but you can&apos;t edit a cancelled notification.</p>
+        <h1 className="govuk-heading-l">Manage your reports</h1>
+        <p className="govuk-body-l">Click on one of your reports below to view, edit, cancel or delete it, depending on its status. For example, you can edit a draft or submitted report, but you can&apos;t edit a cancelled report.</p>
         <div className="govuk-tabs" data-module="govuk-tabs">
           <ul className="govuk-tabs__list">
             {tabData && tabData.map((tab) => {
@@ -139,4 +139,4 @@ const ManageNotifications = (pageData) => {
   );
 };
 
-export default ManageNotifications;
+export default ManageReports;
