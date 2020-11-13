@@ -24,7 +24,7 @@ const UserRegisterValidation = (dataToValidate) => {
 
   // Mobile Number field must be valid
   if (!(VALID_MOBILE_REGEX.test(dataToValidate.mobileNumber))) {
-    fieldsErroring.mobileNumber = 'You must enter a valid phone number e.g. 07700 900000, 0033 63998 010101 ';
+    fieldsErroring.mobileNumber = 'You must enter a valid phone number e.g. 07700 900982, +33 63998 010101';
   }
 
   // Password must be complex
