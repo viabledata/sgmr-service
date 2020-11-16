@@ -2,22 +2,33 @@ const faker = require('faker');
 
 describe('User Registration', () => {
   let user;
-  let host;
   let apiServer;
+  const externalURLs = [
+    'Travel abroad',
+    'Send Advance Passenger Information',
+    'Notice 8: sailing your pleasure craft to and from the UK',
+  ];
 
   before(() => {
     cy.task('newUser').then((object) => {
       user = object;
     });
-    host = Cypress.env('host');
     apiServer = Cypress.env('api_server');
+  });
+
+  beforeEach(() => {
+    cy.visit('/');
+    cy.get('.govuk-heading-l').should('have.text', 'Submit a Pleasure Craft Report');
+    cy.get('.govuk-list .govuk-link').each((link, index) => {
+      cy.wrap(link).should('contain.text', externalURLs[index]);
+    });
+    cy.get('.govuk-button--start').click();
+    cy.get('a[href="/register"]').click();
   });
 
   it('Should register user Successfully', () => {
     cy.server();
     cy.route('POST', `${apiServer}/registration`).as('registration');
-
-    cy.visit(`${host}/register`);
 
     cy.enterUserInfo(user);
 
@@ -42,7 +53,6 @@ describe('User Registration', () => {
       'Enter your new password',
     ];
 
-    cy.visit(`${host}/register`);
     cy.get('.govuk-button').click();
 
     cy.get('.govuk-error-message').each((error, index) => {
@@ -55,8 +65,6 @@ describe('User Registration', () => {
     cy.server();
     cy.route('POST', `${apiServer}/registration`);
 
-    cy.visit(`${host}/register`);
-
     cy.enterUserInfo(user);
 
     cy.get('.govuk-button').click();
@@ -67,8 +75,6 @@ describe('User Registration', () => {
     const mail = faker.internet.exampleEmail();
     cy.server();
     cy.route('POST', `${apiServer}/registration`);
-
-    cy.visit(`${host}/register`);
 
     cy.enterUserInfo(user);
     cy.get('input[name="email"]').clear().type(mail);
@@ -87,7 +93,6 @@ describe('User Registration', () => {
 
     cy.server();
     cy.route('POST', `${apiServer}/registration`).as('registration');
-    cy.visit(`${host}/register`);
 
     cy.enterUserInfo(user);
     cy.get('input[name="email"]').clear().type(mail);

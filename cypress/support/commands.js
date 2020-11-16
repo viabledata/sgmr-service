@@ -3,13 +3,13 @@ const faker = require('faker');
 const { getFutureDate, getPastDate } = require('./utils');
 
 Cypress.Commands.add('enterUserInfo', (user) => {
-  cy.get('#firstName [type="text"]').clear().type(user.firstName);
-  cy.get('#lastName [type="text"]').clear().type(user.lastName);
-  cy.get('input[name="mobileNumber"][type="text"]').clear().type(user.mobileNumber);
-  cy.get('#email input[type="text"]').clear().type(user.email);
-  cy.get('#confirmEmail input[type="text"]').clear().type(user.email);
-  cy.get('#password input[type="password"]').clear().type(user.password);
-  cy.get('#confirmPassword input[type="password"]').clear().type(user.password);
+  cy.get('input[name="firstName"]').clear().type(user.firstName);
+  cy.get('input[name="lastName"]').clear().type(user.lastName);
+  cy.get('input[name="mobileNumber"]').clear().type(user.mobileNumber);
+  cy.get('input[name="email"]').clear().type(user.email);
+  cy.get('input[name="confirmEmail"]').clear().type(user.email);
+  cy.get('input[name="password"]').clear().type(user.password);
+  cy.get('input[name="confirmPassword"]').clear().type(user.password);
 });
 
 Cypress.Commands.add('enterVesselInfo', (newVessel) => {
@@ -26,8 +26,8 @@ Cypress.Commands.add('enterVesselInfo', (newVessel) => {
 Cypress.Commands.add('enterPeopleInfo', (people) => {
   let date = people.expiryDate.split('/');
   let dob = people.dateOfBirth.split('/');
-  cy.get('#firstName [type="text"]').clear().type(people.firstName);
-  cy.get('#lastName [type="text"]').clear().type(people.lastName);
+  cy.get('input[name="firstName"]').clear().type(people.firstName);
+  cy.get('input[name="lastName"]').clear().type(people.lastName);
   cy.get('[type="radio"]').check(people.gender).should('be.checked');
   cy.get('input[name="dateOfBirthDay"]').clear().type(dob[0]);
   cy.get('input[name="dateOfBirthMonth"]').clear().type(dob[1]);
@@ -50,7 +50,8 @@ Cypress.Commands.add('navigation', (option) => {
 Cypress.Commands.add('login', () => {
   cy.fixture('users.json').then((user) => {
     const { email, password } = user;
-    cy.visit('/sign-in');
+    cy.visit('/');
+    cy.get('.govuk-button--start').click();
     cy.get('input[name="email"]').clear().type(email);
     cy.get('input[name="password"]').clear().type(password);
 
