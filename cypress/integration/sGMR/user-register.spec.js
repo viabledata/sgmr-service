@@ -113,7 +113,7 @@ describe('User Registration', () => {
     });
   });
 
-  it('Should not register If Password does not meet validation rules', () => {
+  it('Should not register if password does not meet validation rules', () => {
     cy.visit(`${host}/register`);
     cy.enterUserInfo(user);
     cy.get('input[name="password"]').clear().type('test');
