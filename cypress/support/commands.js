@@ -146,7 +146,7 @@ Cypress.Commands.add('checkNoErrors', () => {
 });
 
 Cypress.Commands.add('saveAndContinue', () => {
-  cy.contains('Save and continue').click();
+  cy.contains('Save and continue').click({ force: true });
 });
 
 Cypress.Commands.add('saveAndContinueOnPeopleManifest', (makeChanges) => {
