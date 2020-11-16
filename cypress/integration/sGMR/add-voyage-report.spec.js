@@ -6,7 +6,7 @@ describe('Add new voyage report', () => {
   let arrivalDateTime;
   let arrivalPort;
   let vessel;
-  let people;
+  let person;
   let departDate;
   let departTime;
 
@@ -18,7 +18,7 @@ describe('Add new voyage report', () => {
     cy.login();
 
     cy.getPersonObj().then((personObj) => {
-      people = personObj;
+      person = personObj;
     });
 
     cy.getVesselObj().then((vesselObj) => {
@@ -57,10 +57,26 @@ describe('Add new voyage report', () => {
     cy.enterVesselInfo(vessel);
     cy.saveAndContinue();
     cy.checkNoErrors();
-    cy.contains('Add a new person to the Reports').click();
-    cy.enterPeopleInfo(people);
-    cy.get('.govuk-button').contains('Add to manifest').click();
-    cy.saveAndContinue();
+    cy.contains('add a new person').click();
+    cy.enterPeopleInfo(person);
+    cy.contains('Add to manifest').click();
+    cy.assertPeopleTable((reportData) => {
+      expect(reportData).to.have.length(1);
+      expect(reportData[0]).to.deep.include({
+        'Last name': person.lastName,
+        'First name': person.firstName,
+      });
+    });
+    cy.get('input[name=people]').eq(0).check();
+    cy.contains('Remove person').click();
+    cy.contains('There are no people on the manifest.');
+    cy.saveAndContinueOnPeopleManifest(true);
+    cy.contains('add a new person').click();
+    cy.contains('Add to manifest').click();
+    cy.assertPeopleTable((reportData) => {
+      expect(reportData).to.have.length(1);
+    });
+    cy.saveAndContinueOnPeopleManifest(false);
     cy.checkNoErrors();
     cy.enterSkipperDetails();
     cy.saveAndContinue();
@@ -101,10 +117,10 @@ describe('Add new voyage report', () => {
     cy.enterVesselInfo(vessel);
     cy.saveAndContinue();
     cy.checkNoErrors();
-    cy.contains('Add a new person to the Reports').click();
-    cy.enterPeopleInfo(people);
-    cy.get('.govuk-button').contains('Add to manifest').click();
-    cy.saveAndContinue();
+    cy.contains('add a new person').click();
+    cy.enterPeopleInfo(person);
+    cy.contains('Add to manifest').click();
+    cy.saveAndContinueOnPeopleManifest(false);
     cy.checkNoErrors();
     cy.enterSkipperDetails();
     cy.saveAndContinue();
@@ -144,10 +160,10 @@ describe('Add new voyage report', () => {
     cy.enterVesselInfo(vessel);
     cy.saveAndContinue();
     cy.checkNoErrors();
-    cy.contains('Add a new person to the Reports').click();
-    cy.enterPeopleInfo(people);
-    cy.get('.govuk-button').contains('Add to manifest').click();
-    cy.saveAndContinue();
+    cy.contains('add a new person').click();
+    cy.enterPeopleInfo(person);
+    cy.contains('Add to manifest').click();
+    cy.saveAndContinueOnPeopleManifest(false);
     cy.checkNoErrors();
     cy.enterSkipperDetails();
     cy.saveAndContinue();

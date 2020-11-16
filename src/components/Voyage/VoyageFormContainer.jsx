@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
-  Link, useLocation, useHistory, withRouter,
+  Link, useHistory, useLocation, withRouter,
 } from 'react-router-dom';
 
 // App imports
@@ -8,14 +8,19 @@ import { getData, patchData } from '@utils/apiHooks';
 import { splitDate } from '@utils/date';
 import { splitTime } from '@utils/time';
 import {
-  PEOPLE_URL,
   VESSELS_URL,
   VOYAGE_REPORT_URL,
   VOYAGE_STATUSES,
 } from '@constants/ApiConstants';
-import { FORM_STEPS } from '@constants/ClientConstants';
 import {
-  formatDepartureArrival, formatNewPerson, formatPerson, formatResponsiblePerson, formatVessel,
+  FORM_STEPS,
+  SAVE_VOYAGE_PEOPLE_URL,
+} from '@constants/ClientConstants';
+import {
+  formatDepartureArrival,
+  formatNewPerson,
+  formatResponsiblePerson,
+  formatVessel,
 } from '@components/Voyage/VoyageFormDataFormatting';
 import getId from '@utils/getIdHook';
 import scrollToTopOnError from '@utils/scrollToTopOnError';
@@ -30,16 +35,17 @@ import FormResponsiblePerson from '@components/Voyage/FormResponsiblePerson';
 import FormVoyageVessels from '@components/Voyage/FormVoyageVessels';
 import FormVoyagePeople from '@components/Voyage/FormVoyagePeople';
 import FormError from '@components/Voyage/FormError';
+import FormVoyagePeopleManifest
+  from '@components/Voyage/FormVoyagePeopleManifest';
 
 const FormVoyageContainer = () => {
   const location = useLocation();
   const history = useHistory();
-  const maxPages = 6;
+  const maxPages = 7;
   const [pageNum, setPageNum] = useState();
   const [voyageId, setVoyageId] = useState();
   const [voyageData, setVoyageData] = useState();
   const [checkboxData, setCheckboxData] = useState();
-  const [peopleData, setPeopleData] = useState([]);
   const [formData, setFormData] = useState(JSON.parse(localStorage.getItem('formData')) || {});
   const [errors, setErrors] = useState({});
 
@@ -102,16 +108,10 @@ const FormVoyageContainer = () => {
   };
 
   // Handle checkboxes being checked/unchecked
-  const handleCheckboxes = (e) => {
-    let url;
-    switch (e.target.name) {
-      case 'vessel': url = `${VESSELS_URL}/${e.target.id}`; break;
-      case 'people': url = `${PEOPLE_URL}/${e.target.id}`; break;
-      default: url = '';
-    }
+  const handleVesselCheckboxes = (e) => {
     // Get the data
     if ((e.target).checked) {
-      getData(url)
+      getData(`${VESSELS_URL}/${e.target.id}`)
         .then((resp) => setCheckboxData({ ...checkboxData, ...resp }));
     }
     // Uncheck every other option for vessels (these are currently checkboxes but only one can be selected)
@@ -121,31 +121,6 @@ const FormVoyageContainer = () => {
         vessel.checked = false;
       }
     });
-  };
-
-  // Create checkbox people array
-  const handlePeopleCheckbox = (e) => {
-    let checkedPeople = [...peopleData];
-    if (e.target.checked) {
-      getData(`${PEOPLE_URL}/${e.target.id}`)
-        .then((resp) => checkedPeople.push(formatPerson(resp)));
-    }
-    // Handle uncheck
-    if (!e.target.checked) {
-      checkedPeople = checkedPeople.filter((person) => person.id !== e.target.id);
-    }
-    setPeopleData(checkedPeople);
-  };
-
-  const handleAddPeopleButton = () => {
-    patchData(
-      `${VOYAGE_REPORT_URL}/${voyageId}`,
-      {
-        status: VOYAGE_STATUSES.DRAFT,
-        people: peopleData,
-      },
-    )
-      .then(window.location.reload(true)); // Forcing the reload so manifest updates
   };
 
   // Handle add buttons which populate page data
@@ -166,12 +141,6 @@ const FormVoyageContainer = () => {
     }
   };
 
-  // Handle link to create person for voyage form
-  const handleLinkToForm = (e) => {
-    e.preventDefault();
-    setPageNum('4b');
-  };
-
   // Get voyage data
   const getVoyageData = (id) => {
     getData(`${VOYAGE_REPORT_URL}/${id}`, location.pathname)
@@ -183,66 +152,66 @@ const FormVoyageContainer = () => {
 
   const setNextPage = (sourceForm) => {
     let nextPage;
+    const currentPage = parseInt(pageNum, 10);
     switch (sourceForm) {
       case FORM_STEPS.CANCEL: history.push('/reports'); break;
       case FORM_STEPS.CHECK: history.push('/save-voyage/page-submitted'); break;
-      default: if (pageNum === '4b') {
-        nextPage = 4;
-      } else {
-        nextPage = pageNum < maxPages ? pageNum + 1 : pageNum;
-      }
+      default:
+        nextPage = currentPage < maxPages ? currentPage + 1 : currentPage;
         setPageNum(nextPage);
         history.push(`/save-voyage/page-${nextPage}`, { voyageId });
     }
   };
 
-  const handleSubmit = (e, sourceForm) => {
+  const handleSubmit = async (e, sourceForm, voyageIdLocal, extraParams = {}) => {
     e.preventDefault();
     let dataToSubmit;
-    if (sourceForm === FORM_STEPS.PEOPLE) {
-      setNextPage(sourceForm);
-    } else {
-      switch (sourceForm) {
-        case FORM_STEPS.ARRIVAL:
-          dataToSubmit = formatDepartureArrival(VOYAGE_STATUSES.DRAFT, formData, voyageData);
-          break;
-        case FORM_STEPS.CHECK:
-          dataToSubmit = { status: VOYAGE_STATUSES.PRE_SUBMITTED };
-          break;
-        case FORM_STEPS.DEPARTURE:
-          dataToSubmit = formatDepartureArrival(VOYAGE_STATUSES.DRAFT, formData, voyageData);
-          break;
-        case FORM_STEPS.NEW_PERSON:
-          dataToSubmit = formatNewPerson(VOYAGE_STATUSES.DRAFT, formData, voyageData);
-          break;
-        case FORM_STEPS.RESPONSIBLE_PERSON:
-          dataToSubmit = formatResponsiblePerson(VOYAGE_STATUSES.DRAFT, formData, voyageData);
-          break;
-        case FORM_STEPS.VESSEL:
-          dataToSubmit = formatVessel(VOYAGE_STATUSES.DRAFT, formData, voyageData);
-          break;
-        case FORM_STEPS.VOYAGE:
-          dataToSubmit = { status: VOYAGE_STATUSES.PRE_SUBMITTED };
-          break;
-        case FORM_STEPS.CANCEL:
-          dataToSubmit = { status: VOYAGE_STATUSES.PRE_CANCELLED };
-          break;
-        default:
-          dataToSubmit = null;
-      }
 
-      // Handle missing voyageId (for if user comes to a subpage directly, and we haven't got the id)
-      if (!voyageId) {
-        setErrors({ voyageForm: 'There was a problem locating your voyage, please return to "Reports" and try again' });
-        scrollToTopOnError('voyageForm');
-      } else {
-        setErrors(VoyageFormValidation(formData, sourceForm));
-        if (Object.keys(VoyageFormValidation(formData, sourceForm)).length === 0 && Object.keys(errors).length === 0) {
-          patchData(`${VOYAGE_REPORT_URL}/${voyageId}`, dataToSubmit, location.pathname.substring(1))
-            .then(() => {
-              setNextPage(sourceForm);
-            });
+    switch (sourceForm) {
+      case FORM_STEPS.ARRIVAL:
+        dataToSubmit = formatDepartureArrival(VOYAGE_STATUSES.DRAFT, formData, voyageData);
+        break;
+      case FORM_STEPS.CHECK:
+        dataToSubmit = { status: VOYAGE_STATUSES.PRE_SUBMITTED };
+        break;
+      case FORM_STEPS.DEPARTURE:
+        dataToSubmit = formatDepartureArrival(VOYAGE_STATUSES.DRAFT, formData, voyageData);
+        break;
+      case FORM_STEPS.NEW_PERSON:
+        dataToSubmit = formatNewPerson(VOYAGE_STATUSES.DRAFT, formData, voyageData);
+        break;
+      case FORM_STEPS.PEOPLE_MANIFEST:
+        if (extraParams.makeChanges) {
+          history.push(SAVE_VOYAGE_PEOPLE_URL, { voyageId });
+        } else {
+          setNextPage(sourceForm);
         }
+        return;
+      case FORM_STEPS.RESPONSIBLE_PERSON:
+        dataToSubmit = formatResponsiblePerson(VOYAGE_STATUSES.DRAFT, formData, voyageData);
+        break;
+      case FORM_STEPS.VESSEL:
+        dataToSubmit = formatVessel(VOYAGE_STATUSES.DRAFT, formData, voyageData);
+        break;
+      case FORM_STEPS.VOYAGE:
+        dataToSubmit = { status: VOYAGE_STATUSES.PRE_SUBMITTED };
+        break;
+      case FORM_STEPS.CANCEL:
+        dataToSubmit = { status: VOYAGE_STATUSES.PRE_CANCELLED };
+        break;
+      default:
+        dataToSubmit = null;
+    }
+
+    // Handle missing voyageId (for if user comes to a subpage directly, and we haven't got the id)
+    if (!voyageId) {
+      setErrors({ voyageForm: 'There was a problem locating your voyage, please return to "Reports" and try again' });
+      scrollToTopOnError('voyageForm');
+    } else {
+      setErrors(VoyageFormValidation(formData, sourceForm));
+      if (Object.keys(VoyageFormValidation(formData, sourceForm)).length === 0 && Object.keys(errors).length === 0) {
+        await patchData(`${VOYAGE_REPORT_URL}/${voyageId}`, dataToSubmit, location.pathname.substring(1));
+        setNextPage(sourceForm);
       }
     }
   };
@@ -277,7 +246,7 @@ const FormVoyageContainer = () => {
   return (
     <div id="pageContainer" className="govuk-width-container ">
       {pageNum !== '4b' && <a href="#back" className="govuk-back-link" onClick={(e) => { e.preventDefault(); history.goBack(); }}>Back</a>}
-      {pageNum === '4b' && <Link to="/save-voyage/page-4" className="govuk-back-link">Back</Link>}
+      {pageNum === '4b' && <Link to={SAVE_VOYAGE_PEOPLE_URL} className="govuk-back-link">Back</Link>}
       <main className="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" role="main">
         <div className="govuk-grid-row">
           <div className="govuk-grid-column-two-thirds">
@@ -314,7 +283,7 @@ const FormVoyageContainer = () => {
                 <FormVoyageVessels
                   handleSubmit={handleSubmit}
                   handleChange={handleChange}
-                  handleCheckboxes={handleCheckboxes}
+                  handleCheckboxes={handleVesselCheckboxes}
                   handleAddVesselButton={handleAddVesselButton}
                   voyageId={voyageId}
                   formData={formData || voyageData}
@@ -323,14 +292,10 @@ const FormVoyageContainer = () => {
               )}
               {pageNum === 4 && (
                 <FormVoyagePeople
-                  handleSubmit={handleSubmit}
-                  handleChange={handleChange}
-                  handleCheckboxes={handlePeopleCheckbox}
-                  handleAddPeopleButton={handleAddPeopleButton}
-                  handleLinkToForm={handleLinkToForm}
                   voyageId={voyageId}
-                  formData={formData || voyageData}
-                  errors={errors}
+                  setNextPage={setNextPage}
+                  setErrors={setErrors}
+                  setPageNum={setPageNum}
                 />
               )}
               {pageNum === '4b' && (
@@ -350,6 +315,14 @@ const FormVoyageContainer = () => {
                 </>
               )}
               {pageNum === 5 && (
+                <FormVoyagePeopleManifest
+                  handleSubmit={handleSubmit}
+                  voyageId={voyageId}
+                  setErrors={setErrors}
+                  setPageNum={setPageNum}
+                />
+              )}
+              {pageNum === 6 && (
                 <FormResponsiblePerson
                   handleSubmit={handleSubmit}
                   handleChange={handleChange}
@@ -358,7 +331,7 @@ const FormVoyageContainer = () => {
                   voyageId={voyageId}
                 />
               )}
-              {pageNum === 6 && (
+              {pageNum === 7 && (
                 <FormCheck
                   voyageId={voyageId}
                   voyageData={voyageData}
@@ -367,7 +340,11 @@ const FormVoyageContainer = () => {
                 />
               )}
             </form>
-            <p><Link to="/reports" className="govuk-link govuk-link--no-visited-state">Exit without saving</Link></p>
+            <p>
+              <Link to="/reports" className="govuk-link govuk-link--no-visited-state">
+                Exit without saving
+              </Link>
+            </p>
           </div>
         </div>
       </main>

@@ -64,9 +64,11 @@ describe('Add report with saved data', () => {
     cy.checkNoErrors();
     cy.wait(1000);
     cy.selectCheckbox(persons[0].lastName);
-    cy.contains('Add to Reports').click();
-    cy.get('#totalPersonsOnBoard').should('have.value', 1);
-    cy.saveAndContinue();
+    cy.contains('Add to report and continue').click();
+    cy.assertPeopleTable((reportData) => {
+      expect(reportData).to.have.length(1);
+    });
+    cy.saveAndContinueOnPeopleManifest(false);
     cy.checkNoErrors();
     cy.enterSkipperDetails();
     cy.saveAndContinue();
@@ -98,7 +100,7 @@ describe('Add report with saved data', () => {
     });
   });
 
-  it('Should be able to submitt a report with more than one passenger', () => {
+  it('Should be able to submit a report with more than one passenger', () => {
     const expectedReport = [
       {
         'Vessel': vessel.name,
@@ -122,9 +124,11 @@ describe('Add report with saved data', () => {
     for (let i = 0; i < numberOfPersons; i += 1) {
       cy.selectCheckbox(persons[i].lastName);
     }
-    cy.contains('Add to Reports').click();
-    cy.get('#totalPersonsOnBoard').should('have.value', numberOfPersons);
-    cy.saveAndContinue();
+    cy.contains('Add to report and continue').click();
+    cy.assertPeopleTable((reportData) => {
+      expect(reportData).to.have.length(3);
+    });
+    cy.saveAndContinueOnPeopleManifest(false);
     cy.checkNoErrors();
     cy.enterSkipperDetails();
     cy.saveAndContinue();

@@ -1,10 +1,15 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-// App imports
 import { formatUIDate } from '@utils/date';
-import PeopleManifest from '@components/Voyage/PeopleManifest';
-import { FORM_STEPS } from '@constants/ClientConstants';
+import PeopleSummary from '@components/Voyage/PeopleSummary';
+import {
+  FORM_STEPS,
+  SAVE_VOYAGE_ARRIVALS_URL, SAVE_VOYAGE_DEPARTURE_URL,
+  SAVE_VOYAGE_PEOPLE_MANIFEST_URL,
+  SAVE_VOYAGE_RESPONSIBLE_PERSON_URL,
+  SAVE_VOYAGE_VESSEL_URL,
+} from '@constants/ClientConstants';
 
 const FormCheck = ({
   voyageId, voyageData, handleSubmit, errors,
@@ -21,7 +26,7 @@ const FormCheck = ({
           <dt className="govuk-heading-m">Departure details</dt>
           <dd className="govuk-summary-list__value">
             <Link to={{
-              pathname: 'page-1',
+              pathname: SAVE_VOYAGE_DEPARTURE_URL,
               state: { voyageId },
             }}
             >
@@ -60,7 +65,7 @@ const FormCheck = ({
           <dt className="govuk-heading-m">Arrival details</dt>
           <dd className="govuk-summary-list__value">
             <Link to={{
-              pathname: 'page-2',
+              pathname: SAVE_VOYAGE_ARRIVALS_URL,
               state: { voyageId },
             }}
             >
@@ -98,7 +103,7 @@ const FormCheck = ({
           <dt className="govuk-heading-m">Vessel details</dt>
           <dd className="govuk-summary-list__value">
             <Link to={{
-              pathname: 'page-3',
+              pathname: SAVE_VOYAGE_VESSEL_URL,
               state: { voyageId },
             }}
             >
@@ -155,7 +160,7 @@ const FormCheck = ({
           <dt className="govuk-heading-m">Details of persons on board</dt>
           <dd className="govuk-summary-list__value">
             <Link to={{
-              pathname: 'page-4',
+              pathname: SAVE_VOYAGE_PEOPLE_MANIFEST_URL,
               state: { voyageId },
             }}
             >
@@ -165,7 +170,7 @@ const FormCheck = ({
           </dd>
         </div>
       </dl>
-      <PeopleManifest
+      <PeopleSummary
         voyageId={voyageId}
       />
 
@@ -177,7 +182,7 @@ const FormCheck = ({
           </dt>
           <dd className="govuk-summary-list__value">
             <Link to={{
-              pathname: 'page-5',
+              pathname: SAVE_VOYAGE_RESPONSIBLE_PERSON_URL,
               state: { voyageId },
             }}
             >

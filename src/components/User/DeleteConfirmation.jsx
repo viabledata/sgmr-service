@@ -2,8 +2,6 @@ import React from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import Auth from '@lib/Auth';
 
-// App imports
-
 const DeleteConfirmation = () => {
   const history = useHistory();
   if (Auth.isAuthorized()) {

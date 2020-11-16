@@ -7,7 +7,7 @@ import { VOYAGE_REPORT_URL } from '@constants/ApiConstants';
 import { FORM_STEPS } from '@constants/ClientConstants';
 
 
-const Manifest = ({ voyageId, source }) => {
+const PeopleSummary = ({ voyageId, source }) => {
   const [manifestData, setManifestData] = useState();
 
 
@@ -101,4 +101,4 @@ const Manifest = ({ voyageId, source }) => {
   );
 };
 
-export default Manifest;
+export default PeopleSummary;
