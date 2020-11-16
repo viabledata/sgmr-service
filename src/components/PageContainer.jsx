@@ -70,7 +70,7 @@ const PageContainer = (props) => {
     setUserContext();
   }, []);
 
-  if (!sectionReport) { return (null); }
+  if (!sectionReport) { return null; }
   return (
     <div className="govuk-width-container">
       <main className="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" role="main">

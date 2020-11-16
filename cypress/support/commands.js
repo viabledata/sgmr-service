@@ -145,6 +145,13 @@ Cypress.Commands.add('saveAndContinue', () => {
   cy.contains('Save and continue').click();
 });
 
+Cypress.Commands.add('saveAndContinueOnPeopleManifest', (makeChanges) => {
+  cy.contains('Would you like to make further changes?').parent().parent()
+    .contains(makeChanges ? 'Yes' : 'No')
+    .click();
+  cy.saveAndContinue();
+});
+
 Cypress.Commands.add('getPersonObj', () => {
   cy.fixture('people.json').then((personObj) => {
     personObj.documentNumber = faker.random.number();
@@ -196,4 +203,9 @@ Cypress.Commands.add('checkReports', (type, numberOfReports) => {
     .filter(`:contains(${type})`)
     .find('strong')
     .should('have.text', numberOfReports);
+});
+
+Cypress.Commands.add('assertPeopleTable', (callback) => {
+  cy.contains('The people you have selected for this voyage are:').next()
+    .getTable().then(callback);
 });

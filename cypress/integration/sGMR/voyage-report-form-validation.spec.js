@@ -106,7 +106,7 @@ describe('Validate report form', () => {
     cy.enterVesselInfo(vessel);
     cy.saveAndContinue();
     cy.url().should('include', '/page-4');
-    cy.contains('Add a new person to the Reports').click();
+    cy.contains('add a new person').click();
     cy.get('.govuk-button').contains('Add to manifest').click();
     cy.get('.govuk-error-message').each((error, index) => {
       cy.wrap(error).should('contain.text', errors[index]).and('be.visible');
@@ -130,11 +130,20 @@ describe('Validate report form', () => {
     cy.saveAndContinue();
     cy.enterVesselInfo(vessel);
     cy.saveAndContinue();
-    cy.contains('Add a new person to the Reports').click();
+    cy.get('input[name=people]').eq(0).check();
+    cy.get('input[name=people]').eq(1).check();
+    cy.contains('Add to report and continue').click();
+    cy.assertPeopleTable((reportData) => {
+      expect(reportData).to.have.length(2);
+    });
+    cy.saveAndContinueOnPeopleManifest(true);
+    cy.contains('add a new person').click();
     cy.enterPeopleInfo(people);
     cy.get('.govuk-button').contains('Add to manifest').click();
+    cy.saveAndContinueOnPeopleManifest(false);
+    cy.checkNoErrors();
     cy.saveAndContinue();
-    cy.url().should('include', '/page-5');
+    cy.url().should('include', '/page-6');
     cy.saveAndContinue();
     cy.get('.govuk-error-message').each((error, index) => {
       cy.wrap(error).should('contain.text', errors[index]).and('be.visible');

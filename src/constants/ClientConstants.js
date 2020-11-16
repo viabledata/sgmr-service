@@ -7,9 +7,10 @@ export const SAVE_VOYAGE_DEPARTURE_URL = '/save-voyage/page-1';
 export const SAVE_VOYAGE_ARRIVALS_URL = '/save-voyage/page-2';
 export const SAVE_VOYAGE_VESSEL_URL = '/save-voyage/page-3';
 export const SAVE_VOYAGE_PEOPLE_URL = '/save-voyage/page-4';
-export const SAVE_VOYAGE_RESPONSIBLE_PERSON_URL = '/save-voyage/page-5';
-export const SAVE_VOYAGE_CHECK_DETAILS_URL = '/save-voyage/page-6';
-export const EDIT_VOYAGE_CHECK_DETAILS_URL = '/save-voyage/page-6';
+export const SAVE_VOYAGE_PEOPLE_MANIFEST_URL = '/save-voyage/page-5';
+export const SAVE_VOYAGE_RESPONSIBLE_PERSON_URL = '/save-voyage/page-6';
+export const SAVE_VOYAGE_CHECK_DETAILS_URL = '/save-voyage/page-7';
+export const EDIT_VOYAGE_CHECK_DETAILS_URL = '/save-voyage/page-7';
 export const SAVE_VOYAGE_SUBMITTED_URL = '/save-voyage/voyage-submitted';
 export const VESSELS_PAGE_URL = '/vessels';
 export const ADD_VESSELS_URL = '/vessels/save-vessel';
@@ -23,6 +24,7 @@ export const FORM_STEPS = {
   ARRIVAL: 'arrival',
   DEPARTURE: 'departure',
   PEOPLE: 'people',
+  PEOPLE_MANIFEST: 'peopleManifest',
   NEW_PERSON: 'newPerson',
   RESPONSIBLE_PERSON: 'responsiblePerson',
   PERSON: 'person',
