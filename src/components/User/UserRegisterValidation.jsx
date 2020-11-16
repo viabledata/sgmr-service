@@ -2,6 +2,7 @@ import {
   passwordValidation,
   userValidationRules,
   VALID_EMAIL_REGEX,
+  VALID_MOBILE_REGEX,
 } from '@components/Forms/validationRules';
 import scrollToTopOnError from '@utils/scrollToTopOnError';
 
@@ -22,8 +23,8 @@ const UserRegisterValidation = (dataToValidate) => {
   }
 
   // Mobile Number field must be valid
-  if (!parseInt(dataToValidate.mobileNumber, 10)) {
-    fieldsErroring.mobileNumber = 'You must enter a valid phone number';
+  if (!(VALID_MOBILE_REGEX.test(dataToValidate.mobileNumber))) {
+    fieldsErroring.mobileNumber = 'You must enter a valid phone number e.g. 07700 900982, +33 63998 010101';
   }
 
   // Password must be complex

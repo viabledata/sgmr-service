@@ -67,7 +67,7 @@ const FormVessel = ({
 
       <div id="hullIdentificationNumber" className="govuk-form-group">
         <label className="govuk-label" htmlFor="hullIdentificationNumber">
-          Hull identification number
+          Hull identification number (optional)
         </label>
         <input
           className="govuk-input"
@@ -80,7 +80,7 @@ const FormVessel = ({
 
       <div id="callsign" className="govuk-form-group">
         <label className="govuk-label" htmlFor="callsign">
-          Callsign
+          Callsign (optional)
         </label>
         <input
           className="govuk-input"
@@ -93,7 +93,7 @@ const FormVessel = ({
 
       <div id="vesselNationality" className="govuk-form-group">
         <label className="govuk-label" htmlFor="vesselNationality">
-          Vessel nationality
+          Vessel nationality (optional)
         </label>
         <input
           className="govuk-input"
@@ -106,7 +106,7 @@ const FormVessel = ({
 
       <div id="portOfRegistry" className="govuk-form-group">
         <label className="govuk-label" htmlFor="portOfRegistry">
-          Port of registry
+          Port of registry (optional)
         </label>
         <input
           className="govuk-input"
