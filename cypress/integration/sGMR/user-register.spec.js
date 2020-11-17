@@ -112,4 +112,19 @@ describe('User Registration', () => {
       cy.url().should('include', '/sign-in?source=registration');
     });
   });
+
+  it('Should not register if password does not meet validation rules', () => {
+    cy.enterUserInfo(user);
+    cy.get('input[name="password"]').clear().type('test');
+    cy.get('input[name="confirmPassword"]').clear().type('test');
+    cy.get('.govuk-button').click();
+
+    cy.get('.govuk-error-message').should('contain.text', 'Passwords must be at least 8 characters long');
+
+    cy.get('input[name="password"]').clear().type('test1234');
+    cy.get('input[name="confirmPassword"]').clear().type('test1234');
+    cy.get('.govuk-button').click();
+
+    cy.get('.govuk-error-message').should('contain.text', 'The password must contain 3 of the following: an uppercase letter, a lowercase letter, a symbol, a number');
+  });
 });
