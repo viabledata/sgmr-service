@@ -5,7 +5,9 @@ describe('My Account details verification', () => {
 
   it('Should show correct account details', () => {
     cy.login();
+    cy.injectAxe();
     cy.navigation('Account');
+    cy.checkAxe();
     cy.url().should('include', '/account');
     cy.readFile('cypress/fixtures/user-registration.json');
     cy.fixture('user-registration.json').then((accountInfo) => {

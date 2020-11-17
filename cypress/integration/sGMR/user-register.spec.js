@@ -18,6 +18,7 @@ describe('User Registration', () => {
 
   beforeEach(() => {
     cy.visit('/');
+    cy.injectAxe();
     cy.get('.govuk-heading-l').should('have.text', 'Submit a Pleasure Craft Report');
     cy.get('.govuk-list .govuk-link').each((link, index) => {
       cy.wrap(link).should('contain.text', externalURLs[index]);
@@ -31,9 +32,11 @@ describe('User Registration', () => {
     cy.route('POST', `${apiServer}/registration`).as('registration');
 
     cy.enterUserInfo(user);
+    cy.checkAxe();
 
     cy.get('.govuk-button').click();
     cy.url().should('include', '/verify?source=registration');
+    cy.checkAxe();
 
     cy.wait('@registration').should((xhr) => {
       expect(xhr.status).to.eq(200);
@@ -41,6 +44,7 @@ describe('User Registration', () => {
       cy.get('input[name="twoFactorToken"]').type(authCode);
       cy.get('.govuk-button').click();
       cy.url().should('include', '/sign-in?source=registration');
+      cy.checkAxe();
     });
   });
 

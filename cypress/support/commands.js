@@ -1,6 +1,6 @@
 const faker = require('faker');
 
-const { getFutureDate, getPastDate } = require('./utils');
+const { getFutureDate, getPastDate, terminalLog } = require('./utils');
 
 Cypress.Commands.add('enterUserInfo', (user) => {
   cy.get('input[name="firstName"]').clear().type(user.firstName);
@@ -59,6 +59,7 @@ Cypress.Commands.add('login', () => {
     cy.route('POST', `${Cypress.env('api_server')}/login`).as('login');
 
     cy.get('.govuk-button').click();
+
     cy.url().should('include', '/verify?source=reports');
 
     cy.wait('@login').should((xhr) => {
@@ -211,4 +212,13 @@ Cypress.Commands.add('checkReports', (type, numberOfReports) => {
 Cypress.Commands.add('assertPeopleTable', (callback) => {
   cy.contains('The people you have selected for this voyage are:').next()
     .getTable().then(callback);
+});
+
+Cypress.Commands.add('checkAxe', () => {
+  cy.checkA11y(null, {
+    runOnly: {
+      type: 'tag',
+      values: ['wcag2a', 'wcag2aa'],
+    },
+  }, terminalLog, true);
 });

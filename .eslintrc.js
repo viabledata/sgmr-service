@@ -53,13 +53,14 @@ module.exports = {
   },
   overrides: [
     {
-      files: ["*.spec.js", "commands.js"],
+      files: ["*.spec.js", "commands.js", "index.js"],
       rules: {
         "jest/valid-expect": 0,
         "jest/valid-expect-in-promise": 0,
         "no-unused-expressions": "off",
         "quote-props":"off",
-        "cypress/no-unnecessary-waiting":"off"
+        "cypress/no-unnecessary-waiting":"off",
+        "no-console": 0
       },
     },
   ],

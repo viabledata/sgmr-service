@@ -10,6 +10,7 @@ describe('Add People in account', () => {
 
   beforeEach(() => {
     cy.login();
+    cy.injectAxe();
     cy.navigation('People');
     cy.url().should('include', '/people');
     cy.get('.govuk-button--start').should('have.text', 'Save a person').click();
@@ -24,12 +25,14 @@ describe('Add People in account', () => {
         'Type': people.personType,
       },
     ];
+    cy.checkAxe();
     cy.addPeople(people);
     cy.get('table').getTable().then((peopleData) => {
       expect(peopleData).to.not.be.empty;
       cy.log(peopleData);
       expectedPeople.forEach((item) => expect(peopleData).to.deep.include(item));
     });
+    cy.checkAxe();
   });
 
   it('Should not add people without submitting required data', () => {

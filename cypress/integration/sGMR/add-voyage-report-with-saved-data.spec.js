@@ -37,8 +37,10 @@ describe('Add report with saved data', () => {
     arrivalDateTime = getFutureDate(2, 'DD/MM/YYYY HH:MM');
 
     cy.login();
+    cy.injectAxe();
     cy.url().should('include', '/reports');
     cy.checkReports('Draft', 0);
+    cy.checkAxe();
     cy.get('.govuk-button--start').should('have.text', 'Start now').click();
   });
 
