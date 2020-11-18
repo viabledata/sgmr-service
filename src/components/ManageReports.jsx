@@ -75,12 +75,19 @@ const ManageReports = (pageData) => {
               return (
                 <li
                   key={tab.name}
-                  className={tab.active === true ? 'govuk-tabs__list-item govuk-tabs__list-item--selected' : 'govuk-tabs__list-item'}
-                  onClick={(e) => setActiveTab(e)}
+                  className={tab.active ? 'govuk-tabs__list-item govuk-tabs__list-item--selected' : 'govuk-tabs__list-item'}
                 >
-                  <p id={tab.name} className="govuk-tabs__tab">
+                  <a
+                    href={`#${tab.name}`}
+                    id={tab.name}
+                    className="govuk-tabs__tab"
+                    onClick={(e) => {
+                      setActiveTab(e);
+                      e.preventDefault();
+                    }}
+                  >
                     {tab.text}
-                  </p>
+                  </a>
                 </li>
               );
             })}
