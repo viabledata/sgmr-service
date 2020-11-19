@@ -127,4 +127,15 @@ describe('User Registration', () => {
 
     cy.get('.govuk-error-message').should('contain.text', 'The password must contain 3 of the following: an uppercase letter, a lowercase letter, a symbol, a number');
   });
+
+  it('Should not register if mobile number is not valid', () => {
+    cy.enterUserInfo(user);
+    cy.get('input[name="mobileNumber"]').clear().type('+44 7O128 OO3331');
+    cy.get('.govuk-button').click();
+
+    cy.get('.govuk-error-message').should('contain.text', 'You must enter a valid phone number e.g. 07700 900982, +33 63998 010101');
+
+    cy.get('input[name="mobileNumber"]').clear().type('+44 7O128 OO$?31');
+    cy.get('.govuk-button').click();
+  });
 });
