@@ -6,7 +6,7 @@ describe('Sign-in flow', () => {
   it('Should Sign-in Successfully', () => {
     cy.login();
     cy.injectAxe();
-    cy.checkAxe();
+    cy.checkAccessibility();
     cy.fixture('user-registration.json').then((userDetails) => {
       cy.get('h3.govuk-heading-m').should('have.text', `Welcome back, ${userDetails.firstName}`);
     });
@@ -67,7 +67,7 @@ describe('Sign-in flow', () => {
     cy.route('POST', `${Cypress.env('api_server')}/login`).as('login');
     cy.visit('/sign-in');
     cy.injectAxe();
-    cy.checkAxe();
+    cy.checkAccessibility();
     cy.fixture('users.json').then((user) => {
       cy.get('input[name="email"]').clear().type(user.email);
       cy.get('input[name="password"]').clear().type(user.password);

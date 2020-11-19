@@ -26,7 +26,7 @@ exports.terminalLog = (violations) => {
       impact,
       description,
       nodes: nodes.length,
-      name: Cypress.spec.name,
+      spec: Cypress.spec.name,
     }),
   );
   cy.task('csv', violationData);

@@ -1,5 +1,4 @@
 const faker = require('faker');
-const { terminalLog } = require('../../support/utils');
 
 describe('Edit exiting People information in the account', () => {
   let people;
@@ -17,13 +16,13 @@ describe('Edit exiting People information in the account', () => {
     cy.login();
     cy.injectAxe();
     cy.navigation('People');
-    cy.checkA11y({ exclude: ['.govuk-phase-banner__text'] }, null, terminalLog);
+    cy.checkAccessibility();
     cy.url().should('include', '/people');
   });
 
   it('Should be able to edit existing people information and save', () => {
     cy.contains('a', people.lastName).click();
-    cy.checkAxe();
+    cy.checkAccessibility();
     people.firstName = `Auto-${faker.name.firstName()}`;
     people.lastName = faker.name.lastName();
     people.personType = 'Crew';
@@ -57,11 +56,12 @@ describe('Edit exiting People information in the account', () => {
     cy.get('input[name="documentType"][checked]').should('have.value', people.travelDocType);
     cy.get('input[name="documentNumber"]').should('have.value', people.documentNumber);
     cy.get('input[name="documentIssuingState"]').should('have.value', people.issuingState);
-    cy.checkAxe();
+    cy.checkAccessibility();
   });
 
   it('Should be able to edit existing people information and NOT save', () => {
     cy.contains('a', people.lastName).click();
+    cy.checkAccessibility();
     people.travelDocType = 'Other';
     people.documentNumber = faker.random.number();
     people.issuingState = 'CUB';

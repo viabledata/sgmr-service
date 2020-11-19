@@ -14,7 +14,6 @@ describe('Add new vessel in account', () => {
     cy.injectAxe();
     cy.navigation('Vessels');
     cy.url().should('include', '/vessels');
-    cy.checkAxe();
     cy.get('.govuk-button--start').should('have.text', 'Save a vessel').click();
   });
 
@@ -26,14 +25,14 @@ describe('Add new vessel in account', () => {
         'Usual moorings': vessel.moorings,
       },
     ];
-    cy.checkAxe();
+    cy.checkAccessibility();
     cy.addVessel(vessel);
     cy.get('table').getTable().then((vesselData) => {
       expect(vesselData).to.not.be.empty;
       cy.log(vesselData);
       expectedVessel.forEach((item) => expect(vesselData).to.deep.include(item));
     });
-    cy.checkAxe();
+    cy.checkAccessibility();
   });
 
   it('Should not add a vessel without submitting required data', () => {

@@ -25,14 +25,14 @@ describe('Add People in account', () => {
         'Type': people.personType,
       },
     ];
-    cy.checkAxe();
+    cy.checkAccessibility();
     cy.addPeople(people);
     cy.get('table').getTable().then((peopleData) => {
       expect(peopleData).to.not.be.empty;
       cy.log(peopleData);
       expectedPeople.forEach((item) => expect(peopleData).to.deep.include(item));
     });
-    cy.checkAxe();
+    cy.checkAccessibility();
   });
 
   it('Should not add people without submitting required data', () => {

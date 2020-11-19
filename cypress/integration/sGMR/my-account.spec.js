@@ -7,7 +7,7 @@ describe('My Account details verification', () => {
     cy.login();
     cy.injectAxe();
     cy.navigation('Account');
-    cy.checkAxe();
+    cy.checkAccessibility();
     cy.url().should('include', '/account');
     cy.readFile('cypress/fixtures/user-registration.json');
     cy.fixture('user-registration.json').then((accountInfo) => {

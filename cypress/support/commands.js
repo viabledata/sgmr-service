@@ -214,7 +214,7 @@ Cypress.Commands.add('assertPeopleTable', (callback) => {
     .getTable().then(callback);
 });
 
-Cypress.Commands.add('checkAxe', () => {
+Cypress.Commands.add('checkAccessibility', () => {
   cy.checkA11y(null, {
     runOnly: {
       type: 'tag',
