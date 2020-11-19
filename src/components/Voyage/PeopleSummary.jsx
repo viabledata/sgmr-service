@@ -40,7 +40,7 @@ const PeopleSummary = ({ voyageId, source }) => {
                 <td className="govuk-table__cell">{formatUIDate(person.dateOfBirth)}</td>
                 <td className="govuk-table__cell">{person.documentNumber}</td>
                 <td className="govuk-table__cell">{person.nationality}</td>
-                <td className="govuk-table__cell">{person.peopleType.name === 'Skipper' ? 'Skipper' : person.peopleType.name === 'Passenger' ? 'Unpaid Crew' : 'Paid Crew'}</td>
+                <td className="govuk-table__cell">{person.peopleType.name === 'Skipper' ? 'Skipper' : person.peopleType.name === 'Passenger' ? 'Unpaid Crew' : 'Employed Crew'}</td>
               </tr>
 
               <tr className="govuk-table__row">
