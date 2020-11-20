@@ -52,38 +52,34 @@ const CreateAPerson = () => {
     // Required fields must not be null
     personValidationRules.map((rule) => {
       (!(rule.inputField in dataToValidate) || formData[rule.inputField] === '')
-        ? fieldsErroring[rule.inputField] = rule.message
+        ? fieldsErroring[rule.errorDisplayId] = rule.message
         : null;
     });
 
-    // Date fields must be valid
-    if (!(isDateValid(dataToValidate.documentExpiryDateYear, dataToValidate.documentExpiryDateMonth, dataToValidate.documentExpiryDateDay))) {
-      fieldsErroring.documentExpiryDate = 'You must enter a valid date';
+    // DoB must be valid and not in the future
+    if (dataToValidate.dateOfBirthYear || dataToValidate.dateOfBirthMonth || dataToValidate.dateOfBirthDay) {
+      if (!(isDateValid(dataToValidate.dateOfBirthYear, dataToValidate.dateOfBirthMonth, dataToValidate.dateOfBirthDay))
+      || !(isDateBefore(dataToValidate.dateOfBirthYear, dataToValidate.dateOfBirthMonth, dataToValidate.dateOfBirthDay))) {
+        fieldsErroring.dateOfBirth = 'You must enter a valid date of birth';
+      }
     }
-    if (!(isDateValid(dataToValidate.dateOfBirthYear, dataToValidate.dateOfBirthMonth, dataToValidate.dateOfBirthDay))) {
-      fieldsErroring.dateOfBirth = 'You must enter a valid date';
+    // Expiry Date must be valid and in the future
+    if (dataToValidate.documentExpiryDateYear || dataToValidate.documentExpiryDateMonth || dataToValidate.documentExpiryDateDay) {
+      if (!(isDateValid(dataToValidate.documentExpiryDateYear, dataToValidate.documentExpiryDateMonth, dataToValidate.documentExpiryDateDay))
+      || isDateBefore(dataToValidate.documentExpiryDateYear, dataToValidate.documentExpiryDateMonth, dataToValidate.documentExpiryDateDay)) {
+        fieldsErroring.documentExpiryDate = 'You must enter a valid document expiry date';
+      }
     }
-    // Date of Birth must be before today
-    if (!(isDateBefore(dataToValidate.dateOfBirthYear, dataToValidate.dateOfBirthMonth, dataToValidate.dateOfBirthDay))) {
-      fieldsErroring.dateOfBirth = 'You must enter a valid date of birth date';
-    }
-    // Document expiry date must be after today
-    if ((isDateBefore(dataToValidate.documentExpiryDateYear, dataToValidate.documentExpiryDateMonth, dataToValidate.documentExpiryDateDay))) {
-      fieldsErroring.documentExpiryDate = 'You must enter a valid document expiry date';
-    }
-
     setErrors(fieldsErroring);
     scrollToTopOnError(fieldsErroring);
     return Object.keys(fieldsErroring).length > 0;
   };
-
 
   // Clear formData from localStorage
   const clearLocalStorage = () => {
     setFormData({});
     setErrors({ });
   };
-
 
   // Format data to submit
   const formatDataToSubmit = (data) => {
