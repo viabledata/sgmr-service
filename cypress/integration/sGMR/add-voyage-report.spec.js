@@ -67,6 +67,9 @@ describe('Add new voyage report', () => {
         'First name': person.firstName,
       });
     });
+    cy.saveAndContinueOnPeopleManifest(true);
+    cy.contains(`People already added to the manifest:${person.firstName} ${person.lastName}`);
+    cy.saveAndContinue();
     cy.get('input[name=people]').eq(0).check();
     cy.contains('Remove person').click();
     cy.contains('There are no people on the manifest.');
