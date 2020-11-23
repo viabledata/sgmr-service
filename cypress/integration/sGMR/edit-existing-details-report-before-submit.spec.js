@@ -6,7 +6,7 @@ describe('Edit Details & Submit new voyage report', () => {
   let arrivalDateTime;
   let arrivalPort;
   let vessel;
-  let people;
+  let person;
   let departDate;
   let departTime;
 
@@ -43,13 +43,23 @@ describe('Edit Details & Submit new voyage report', () => {
     });
     cy.saveAndContinue();
     cy.checkNoErrors();
-    cy.contains('Add a new person to the Reports').click();
-    cy.getPersonObj().then((personObj) => {
-      people = personObj;
-      cy.enterPeopleInfo(people);
+    cy.contains('add a new person').click();
+    cy.getPersonObj().then((peopleObj) => {
+      person = peopleObj;
+      cy.enterPeopleInfo(person);
+      cy.contains('Add to manifest').click();
+      cy.assertPeopleTable((reportData) => {
+        expect(reportData).to.have.length(1);
+        expect(reportData[0]).to.deep.include({
+          'Last name': person.lastName,
+          'First name': person.firstName,
+        });
+      });
+      cy.saveAndContinueOnPeopleManifest(true);
+      cy.contains(`People already added to the manifest:${person.firstName} ${person.lastName}`);
     });
-    cy.get('.govuk-button').contains('Add to manifest').click();
     cy.saveAndContinue();
+    cy.saveAndContinueOnPeopleManifest(false);
     cy.checkNoErrors();
     cy.enterSkipperDetails();
     cy.saveAndContinue();
@@ -73,7 +83,7 @@ describe('Edit Details & Submit new voyage report', () => {
         'Submission reference': '',
       },
     ];
-    cy.get('a[href="page-1"]').click();
+    cy.get('a[href="/save-voyage/page-1"]').click();
     cy.enterDepartureDetails(departureDateTime, departurePort);
     cy.saveAndContinue();
     cy.checkNoErrors();
@@ -87,6 +97,9 @@ describe('Edit Details & Submit new voyage report', () => {
     cy.saveAndContinue();
     cy.checkNoErrors();
     cy.url().should('include', 'page-5');
+    cy.saveAndContinueOnPeopleManifest(false);
+    cy.checkNoErrors();
+    cy.url().should('include', 'page-6');
     cy.saveAndContinue();
     cy.checkNoErrors();
     cy.contains('Accept and submit report').click();
@@ -120,7 +133,7 @@ describe('Edit Details & Submit new voyage report', () => {
         'Submission reference': '',
       },
     ];
-    cy.get('a[href="page-3"]').click();
+    cy.get('a[href="/save-voyage/page-3"]').click();
     cy.enterVesselInfo(vessel);
     cy.saveAndContinue();
     cy.checkNoErrors();
@@ -128,6 +141,9 @@ describe('Edit Details & Submit new voyage report', () => {
     cy.saveAndContinue();
     cy.checkNoErrors();
     cy.url().should('include', 'page-5');
+    cy.saveAndContinueOnPeopleManifest();
+    cy.checkNoErrors();
+    cy.url().should('include', 'page-6');
     cy.saveAndContinue();
     cy.checkNoErrors();
     cy.contains('Accept and submit report').click();
@@ -148,7 +164,7 @@ describe('Edit Details & Submit new voyage report', () => {
 
     cy.contains('a', vessel.name).click();
 
-    cy.get('a[href="page-3"]').click();
+    cy.get('a[href="/save-voyage/page-3"]').click();
 
     cy.get('[name="vesselType"]').should('have.value', vessel.type);
     cy.get('[name="moorings"]').should('have.value', vessel.moorings);
