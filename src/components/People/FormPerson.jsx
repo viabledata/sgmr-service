@@ -231,7 +231,7 @@ const FormPerson = ({
                 onChange={handleChange}
               />
               <label className="govuk-label govuk-radios__label" htmlFor="peopleType-2">
-                Paid Crew
+                Employed Crew
               </label>
             </div>
             <div className="govuk-radios__item">
