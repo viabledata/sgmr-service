@@ -29,5 +29,5 @@ exports.terminalLog = (violations) => {
       spec: Cypress.spec.name,
     }),
   );
-  cy.task('csv', violationData);
+  cy.task('table', violationData);
 };

@@ -1,12 +1,6 @@
-/// <reference types="cypress" />
-/**
- * @type {Cypress.PluginConfig}
- */
-
 const faker = require('faker');
 const path = require('path');
 const fs = require('fs-extra');
-const ObjectsToCsv = require('objects-to-csv');
 
 function generateNewUser() {
   let user = {
@@ -36,10 +30,6 @@ module.exports = (on, config) => {
     },
     table(message) {
       console.table(message);
-      return null;
-    },
-    csv(data) {
-      new ObjectsToCsv(data).toDisk('axe.csv', { append: true });
       return null;
     },
   });
