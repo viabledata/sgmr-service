@@ -1,8 +1,3 @@
-/// <reference types="cypress" />
-/**
- * @type {Cypress.PluginConfig}
- */
-
 const faker = require('faker');
 const path = require('path');
 const fs = require('fs-extra');
@@ -28,6 +23,14 @@ module.exports = (on, config) => {
   on('task', {
     newUser() {
       return generateNewUser();
+    },
+    log(message) {
+      console.log(message);
+      return null;
+    },
+    table(message) {
+      console.table(message);
+      return null;
     },
   });
   return getConfigurationByFile(file);

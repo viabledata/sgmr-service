@@ -1,4 +1,5 @@
 import './commands';
+import 'cypress-axe';
 
 require('cypress-get-table');
 
