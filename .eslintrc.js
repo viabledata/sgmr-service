@@ -48,6 +48,8 @@ module.exports = {
     "prefer-const": "off",
     "prefer-destructuring": "off",
     "import/no-extraneous-dependencies": ["error", { devDependencies: true }],
+    "react/prop-types": "off",
+    "react/jsx-props-no-spreading": "off",
   },
   overrides: [
     {
