@@ -9,7 +9,7 @@ import scrollToTopOnError from '@utils/scrollToTopOnError';
 import { postData } from '@utils/apiHooks';
 import { formatDate, isDateValid, isInThePast } from '@utils/date';
 import { PEOPLE_URL } from '@constants/ApiConstants';
-import { PEOPLE_PAGE_URL, SAVE_VOYAGE_PEOPLE_URL } from '@constants/ClientConstants';
+import { PEOPLE_PAGE_URL } from '@constants/ClientConstants';
 import { personValidationRules } from '@components/Forms/validationRules';
 import FormError from '@components/Voyage/FormError';
 
@@ -19,7 +19,6 @@ const CreateAPerson = () => {
   const source = location.search.split('=');
   const [formData, setFormData] = useState(JSON.parse(localStorage.getItem('formData')) || {});
   const [errors, setErrors] = useState(JSON.parse(localStorage.getItem('errors')) || {});
-
 
   const removeError = (fieldName) => {
     const errorList = { ...errors };
@@ -37,13 +36,11 @@ const CreateAPerson = () => {
     setErrors(errorList);
   };
 
-
   // Update form data as user enters it
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
     removeError(e.target.name);
   };
-
 
   // Check fields that are required exist & fields with rules match
   const areFieldsValid = (dataToValidate) => {
@@ -58,18 +55,24 @@ const CreateAPerson = () => {
 
     // DoB must be valid and not in the future
     if (dataToValidate.dateOfBirthYear || dataToValidate.dateOfBirthMonth || dataToValidate.dateOfBirthDay) {
-      if (!(isDateValid(dataToValidate.dateOfBirthYear, dataToValidate.dateOfBirthMonth, dataToValidate.dateOfBirthDay))
-      || !(isInThePast(dataToValidate.dateOfBirthYear, dataToValidate.dateOfBirthMonth, dataToValidate.dateOfBirthDay))) {
+      const isValidFormat = isDateValid(dataToValidate.dateOfBirthYear, dataToValidate.dateOfBirthMonth, dataToValidate.dateOfBirthDay);
+      const isDobInPast = isInThePast(dataToValidate.dateOfBirthYear, dataToValidate.dateOfBirthMonth, dataToValidate.dateOfBirthDay);
+
+      if (!isValidFormat || !isDobInPast) {
         fieldsErroring.dateOfBirth = 'You must enter a valid date of birth';
       }
     }
+
     // Expiry Date must be valid and in the future
     if (dataToValidate.documentExpiryDateYear || dataToValidate.documentExpiryDateMonth || dataToValidate.documentExpiryDateDay) {
-      if (!(isDateValid(dataToValidate.documentExpiryDateYear, dataToValidate.documentExpiryDateMonth, dataToValidate.documentExpiryDateDay))
-      || isInThePast(dataToValidate.documentExpiryDateYear, dataToValidate.documentExpiryDateMonth, dataToValidate.documentExpiryDateDay)) {
+      const isValidFormat = isDateValid(dataToValidate.documentExpiryDateYear, dataToValidate.documentExpiryDateMonth, dataToValidate.documentExpiryDateDay);
+      const isExpiryDateInPast = isInThePast(dataToValidate.documentExpiryDateYear, dataToValidate.documentExpiryDateMonth, dataToValidate.documentExpiryDateDay);
+
+      if (!isValidFormat || isExpiryDateInPast) {
         fieldsErroring.documentExpiryDate = 'You must enter a valid document expiry date';
       }
     }
+
     setErrors(fieldsErroring);
     scrollToTopOnError(fieldsErroring);
     return Object.keys(fieldsErroring).length > 0;

@@ -61,16 +61,20 @@ const VoyageFormValidation = (dataToValidate, source) => {
 
   // DoB must be valid and not in the future
   if (source === FORM_STEPS.NEW_PERSON && (dataToValidate.dateOfBirthYear || dataToValidate.dateOfBirthMonth || dataToValidate.dateOfBirthDay)) {
-    if (!(isDateValid(dataToValidate.dateOfBirthYear, dataToValidate.dateOfBirthMonth, dataToValidate.dateOfBirthDay))
-    || !(isInThePast(dataToValidate.dateOfBirthYear, dataToValidate.dateOfBirthMonth, dataToValidate.dateOfBirthDay))) {
+    const isValidFormat = isDateValid(dataToValidate.dateOfBirthYear, dataToValidate.dateOfBirthMonth, dataToValidate.dateOfBirthDay);
+    const isDobInPast = isInThePast(dataToValidate.dateOfBirthYear, dataToValidate.dateOfBirthMonth, dataToValidate.dateOfBirthDay);
+
+    if (!isValidFormat || !isDobInPast) {
       fieldsErroring.dateOfBirth = 'You must enter a valid date of birth';
     }
   }
 
   // Expiry Date must be valid and in the future
   if (source === FORM_STEPS.NEW_PERSON && (dataToValidate.documentExpiryDateYear || dataToValidate.documentExpiryDateMonth || dataToValidate.documentExpiryDateDay)) {
-    if (!(isDateValid(dataToValidate.documentExpiryDateYear, dataToValidate.documentExpiryDateMonth, dataToValidate.documentExpiryDateDay))
-    || isInThePast(dataToValidate.documentExpiryDateYear, dataToValidate.documentExpiryDateMonth, dataToValidate.documentExpiryDateDay)) {
+    const isValidFormat = isDateValid(dataToValidate.documentExpiryDateYear, dataToValidate.documentExpiryDateMonth, dataToValidate.documentExpiryDateDay);
+    const isExpiryDateInPast = isInThePast(dataToValidate.documentExpiryDateYear, dataToValidate.documentExpiryDateMonth, dataToValidate.documentExpiryDateDay);
+
+    if (!isValidFormat || isExpiryDateInPast) {
       fieldsErroring.documentExpiryDate = 'You must enter a valid document expiry date';
     }
   }
