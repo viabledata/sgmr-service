@@ -5,6 +5,7 @@ import { getData } from '@utils/apiHooks';
 import { formatUIDate } from '@utils/date';
 import { VOYAGE_REPORT_URL } from '@constants/ApiConstants';
 import { FORM_STEPS } from '@constants/ClientConstants';
+import Details from '@components/Details';
 
 
 const PeopleSummary = ({ voyageId, source }) => {
@@ -39,45 +40,38 @@ const PeopleSummary = ({ voyageId, source }) => {
                 <td className="govuk-table__cell">{formatUIDate(person.dateOfBirth)}</td>
                 <td className="govuk-table__cell">{person.documentNumber}</td>
                 <td className="govuk-table__cell">{person.nationality}</td>
-                <td className="govuk-table__cell">{person.peopleType.name === 'Skipper' ? 'Skipper' : person.peopleType.name === 'Passenger' ? 'Unpaid Crew' : 'Paid Crew'}</td>
+                <td className="govuk-table__cell">{person.peopleType.name === 'Skipper' ? 'Skipper' : person.peopleType.name === 'Passenger' ? 'Unpaid Crew' : 'Employed Crew'}</td>
               </tr>
 
               <tr className="govuk-table__row">
                 <td className="govuk-table__cell" colSpan={6}>
                   <div>
-                    <details data-module="govuk-details">
-                      <summary className="govuk-details__summary">
-                        <span className="govuk-details__summary-text">
-                          Further information
-                        </span>
-                      </summary>
-                      <div className="panel panel-border-narrow" id="details-content-2" aria-hidden="true">
-                        <table className="govuk-table" width="100%">
-                          <tbody className="govuk-table__body">
-                            <tr className="govuk-table__row">
-                              <td className="govuk-table__cell">Gender</td>
-                              <td className="govuk-table__cell">{(person.gender).charAt(0).toUpperCase() + person.gender.slice(1)}</td>
-                            </tr>
-                            <tr className="govuk-table__row">
-                              <td className="govuk-table__cell">Place of birth</td>
-                              <td className="govuk-table__cell">{person.placeOfBirth}</td>
-                            </tr>
-                            <tr className="govuk-table__row">
-                              <td className="govuk-table__cell">Travel document type</td>
-                              <td className="govuk-table__cell">{person.documentType}</td>
-                            </tr>
-                            <tr className="govuk-table__row">
-                              <td className="govuk-table__cell">Travel document issuing state</td>
-                              <td className="govuk-table__cell">{person.documentIssuingState}</td>
-                            </tr>
-                            <tr className="govuk-table__row">
-                              <td className="govuk-table__cell">Travel document expiry date</td>
-                              <td className="govuk-table__cell">{formatUIDate(person.documentExpiryDate)}</td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                    </details>
+                    <Details summary="Further information">
+                      <table className="govuk-table" width="100%">
+                        <tbody className="govuk-table__body">
+                          <tr className="govuk-table__row">
+                            <td className="govuk-table__cell">Gender</td>
+                            <td className="govuk-table__cell">{(person.gender).charAt(0).toUpperCase() + person.gender.slice(1)}</td>
+                          </tr>
+                          <tr className="govuk-table__row">
+                            <td className="govuk-table__cell">Place of birth</td>
+                            <td className="govuk-table__cell">{person.placeOfBirth}</td>
+                          </tr>
+                          <tr className="govuk-table__row">
+                            <td className="govuk-table__cell">Travel document type</td>
+                            <td className="govuk-table__cell">{person.documentType}</td>
+                          </tr>
+                          <tr className="govuk-table__row">
+                            <td className="govuk-table__cell">Travel document issuing state</td>
+                            <td className="govuk-table__cell">{person.documentIssuingState}</td>
+                          </tr>
+                          <tr className="govuk-table__row">
+                            <td className="govuk-table__cell">Travel document expiry date</td>
+                            <td className="govuk-table__cell">{formatUIDate(person.documentExpiryDate)}</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </Details>
                   </div>
                 </td>
               </tr>

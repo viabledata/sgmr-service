@@ -1,9 +1,11 @@
 import React from 'react';
+
 import FormError from '@components/Voyage/FormError';
 import { FORM_STEPS } from '@constants/ClientConstants';
+import PortField from '@components/PortField';
 
 const FormDeparture = ({
-  handleSubmit, handleChange, data, errors, voyageId,
+  handleSubmit, handleChange, updateFieldValue, data, errors, voyageId,
 }) => {
   if (!data) { return null; }
   return (
@@ -140,13 +142,11 @@ const FormDeparture = ({
           <span className="govuk-hint">
             You can enter a port, marina or anchorage name
           </span>
-          <input
-            className="govuk-input"
-            name="departurePort"
+          <PortField
             id="departurePort"
-            type="text"
-            value={data.departurePort || ''}
-            onChange={handleChange}
+            onConfirm={(result) => {
+              updateFieldValue('departurePort', result.unlocode || result.name);
+            }}
           />
         </div>
       </div>
@@ -162,4 +162,5 @@ const FormDeparture = ({
     </section>
   );
 };
+
 export default FormDeparture;

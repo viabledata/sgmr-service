@@ -29,16 +29,18 @@ describe('Add report with saved data', () => {
   });
 
   beforeEach(() => {
-    departurePort = 'Port of Hong Kong';
-    arrivalPort = 'Port of Felixstowe';
+    departurePort = 'Dover';
+    arrivalPort = 'Felixstowe';
     departureDateTime = getFutureDate(1, 'DD/MM/YYYY HH:MM');
     departDate = departureDateTime.split(' ')[0];
     departTime = departureDateTime.split(' ')[1];
     arrivalDateTime = getFutureDate(2, 'DD/MM/YYYY HH:MM');
 
     cy.login();
+    cy.injectAxe();
     cy.url().should('include', '/reports');
     cy.checkReports('Draft', 0);
+    cy.checkAccessibility();
     cy.get('.govuk-button--start').should('have.text', 'Start now').click();
   });
 
@@ -48,8 +50,8 @@ describe('Add report with saved data', () => {
         'Vessel': vessel.name,
         'Departure date': departDate,
         'Departure time': `${departTime}:00`,
-        'Departure port': departurePort,
-        'Arrival port': arrivalPort,
+        'Departure port': 'DVR',
+        'Arrival port': 'FXT',
         'Submission reference': '',
       },
     ];
@@ -106,8 +108,8 @@ describe('Add report with saved data', () => {
         'Vessel': vessel.name,
         'Departure date': departDate,
         'Departure time': `${departTime}:00`,
-        'Departure port': departurePort,
-        'Arrival port': arrivalPort,
+        'Departure port': 'DVR',
+        'Arrival port': 'FXT',
         'Submission reference': '',
       },
     ];

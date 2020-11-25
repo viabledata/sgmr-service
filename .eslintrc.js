@@ -48,16 +48,19 @@ module.exports = {
     "prefer-const": "off",
     "prefer-destructuring": "off",
     "import/no-extraneous-dependencies": ["error", { devDependencies: true }],
+    "react/prop-types": "off",
+    "react/jsx-props-no-spreading": "off",
   },
   overrides: [
     {
-      files: ["*.spec.js", "commands.js"],
+      files: ["*.spec.js", "commands.js", "index.js"],
       rules: {
         "jest/valid-expect": 0,
         "jest/valid-expect-in-promise": 0,
         "no-unused-expressions": "off",
         "quote-props":"off",
-        "cypress/no-unnecessary-waiting":"off"
+        "cypress/no-unnecessary-waiting":"off",
+        "no-console": 0
       },
     },
   ],

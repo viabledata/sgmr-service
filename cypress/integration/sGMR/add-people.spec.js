@@ -10,6 +10,7 @@ describe('Add People in account', () => {
 
   beforeEach(() => {
     cy.login();
+    cy.injectAxe();
     cy.navigation('People');
     cy.url().should('include', '/people');
     cy.get('.govuk-button--start').should('have.text', 'Save a person').click();
@@ -24,12 +25,14 @@ describe('Add People in account', () => {
         'Type': people.personType,
       },
     ];
+    cy.checkAccessibility();
     cy.addPeople(people);
     cy.get('table').getTable().then((peopleData) => {
       expect(peopleData).to.not.be.empty;
       cy.log(peopleData);
       expectedPeople.forEach((item) => expect(peopleData).to.deep.include(item));
     });
+    cy.checkAccessibility();
   });
 
   it('Should not add people without submitting required data', () => {
@@ -37,14 +40,14 @@ describe('Add People in account', () => {
       'You must enter a first name',
       'You must enter a last name',
       'You must select a gender',
-      'You must enter a valid date of birth date',
+      'You must enter a date of birth',
       'You must enter a place of birth',
       'You must enter a nationality',
       'You must enter a person type',
       'You must select a document type',
       'You must enter a document number',
       'You must enter the document issuing state',
-      'You must enter a valid date',
+      'You must enter an expiry date',
     ];
 
     cy.get('.govuk-button').click();

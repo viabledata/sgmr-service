@@ -77,9 +77,12 @@ const FormVoyageContainer = () => {
   };
 
   // Update form data as user enters it
+  const updateFieldValue = (name, value) => {
+    setFormData({ ...formData, [name]: value });
+    removeError(name);
+  };
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-    removeError(e.target.name);
+    updateFieldValue(e.target.name, e.target.value);
   };
 
   // Destructure dates (for when reach page via an edit path with dates)
@@ -265,6 +268,7 @@ const FormVoyageContainer = () => {
                 <FormDeparture
                   handleSubmit={handleSubmit}
                   handleChange={handleChange}
+                  updateFieldValue={updateFieldValue}
                   data={formData || voyageData}
                   errors={errors}
                   voyageId={voyageId}
@@ -274,6 +278,7 @@ const FormVoyageContainer = () => {
                 <FormArrival
                   handleSubmit={handleSubmit}
                   handleChange={handleChange}
+                  updateFieldValue={updateFieldValue}
                   data={formData || voyageData}
                   errors={errors}
                   voyageId={voyageId}

@@ -8,6 +8,7 @@ $govuk-global-styles: true;
 // Override the govuk-frontend font stack
 $govuk-font-family: 'Inter', sans-serif;
 
+@import '~accessible-autocomplete/dist/accessible-autocomplete.min';
 @import '~govuk-frontend/govuk/all';
 
 // header
@@ -77,10 +78,18 @@ li a.govuk-header__link {
   padding-top: 10px;
   border-top: 2px solid #1d70b8;
 }
-  
+
 .panel-number-large {
   font-size: 53px;
   line-height: 1.0377358491;
   font-weight: bold;
   display: block;
+}
+
+// Autocomplete widget
+.autocomplete__wrapper {
+  font-family: $govuk-font-family;
+}
+.autocomplete__input--focused {
+  outline: $govuk-focus-width solid $govuk-focus-colour;
 }

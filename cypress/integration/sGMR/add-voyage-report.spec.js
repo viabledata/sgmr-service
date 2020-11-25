@@ -16,7 +16,7 @@ describe('Add new voyage report', () => {
 
   beforeEach(() => {
     cy.login();
-
+    cy.injectAxe();
     cy.getPersonObj().then((personObj) => {
       person = personObj;
     });
@@ -25,8 +25,8 @@ describe('Add new voyage report', () => {
       vessel = vesselObj;
     });
 
-    departurePort = 'Port of Hong Kong';
-    arrivalPort = 'Port of Felixstowe';
+    departurePort = 'Dover';
+    arrivalPort = 'Felixstowe';
     departureDateTime = getFutureDate(1, 'DD/MM/YYYY HH:MM');
     departDate = departureDateTime.split(' ')[0];
     departTime = departureDateTime.split(' ')[1];
@@ -44,19 +44,23 @@ describe('Add new voyage report', () => {
         'Vessel': vessel.name,
         'Departure date': departDate,
         'Departure time': `${departTime}:00`,
-        'Departure port': departurePort,
-        'Arrival port': arrivalPort,
+        'Departure port': 'DVR',
+        'Arrival port': 'FXT',
         'Submission reference': '',
       },
     ];
+    cy.checkAccessibility();
     cy.enterDepartureDetails(departureDateTime, departurePort);
     cy.saveAndContinue();
+    cy.checkAccessibility();
     cy.enterArrivalDetails(arrivalDateTime, arrivalPort);
     cy.saveAndContinue();
     cy.checkNoErrors();
+    cy.checkAccessibility();
     cy.enterVesselInfo(vessel);
     cy.saveAndContinue();
     cy.checkNoErrors();
+    cy.checkAccessibility();
     cy.contains('add a new person').click();
     cy.enterPeopleInfo(person);
     cy.contains('Add to manifest').click();
@@ -81,9 +85,11 @@ describe('Add new voyage report', () => {
     });
     cy.saveAndContinueOnPeopleManifest(false);
     cy.checkNoErrors();
+    cy.checkAccessibility();
     cy.enterSkipperDetails();
     cy.saveAndContinue();
     cy.checkNoErrors();
+    cy.checkAccessibility();
     cy.contains('Accept and submit report').click();
     cy.url().should('include', '/save-voyage/page-submitted');
     cy.get('.govuk-panel__title').should('have.text', 'Pleasure Craft Report Submitted');
@@ -99,6 +105,7 @@ describe('Add new voyage report', () => {
     cy.contains('h2', 'Submitted').next().getTable().should((reportData) => {
       expectedReport.forEach((item) => expect(reportData).to.deep.include(item));
     });
+    cy.checkAccessibility();
   });
 
   it('Should be able to cancel report', () => {
@@ -107,8 +114,8 @@ describe('Add new voyage report', () => {
         'Vessel': vessel.name,
         'Departure date': departDate,
         'Departure time': `${departTime}:00`,
-        'Departure port': departurePort,
-        'Arrival port': arrivalPort,
+        'Departure port': 'DVR',
+        'Arrival port': 'FXT',
         'Submission reference': '',
       },
     ];
@@ -150,8 +157,8 @@ describe('Add new voyage report', () => {
         'Vessel': vessel.name,
         'Departure date': departDate,
         'Departure time': `${departTime}:00`,
-        'Departure port': departurePort,
-        'Arrival port': arrivalPort,
+        'Departure port': 'DVR',
+        'Arrival port': 'FXT',
         'Submission reference': '',
       },
     ];

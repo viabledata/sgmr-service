@@ -1,6 +1,6 @@
 const faker = require('faker');
 
-const { getFutureDate, getPastDate } = require('./utils');
+const { getFutureDate, getPastDate, terminalLog } = require('./utils');
 
 Cypress.Commands.add('enterUserInfo', (user) => {
   cy.get('input[name="firstName"]').clear().type(user.firstName);
@@ -59,6 +59,7 @@ Cypress.Commands.add('login', () => {
     cy.route('POST', `${Cypress.env('api_server')}/login`).as('login');
 
     cy.get('.govuk-button').click();
+
     cy.url().should('include', '/verify?source=reports');
 
     cy.wait('@login').should((xhr) => {
@@ -111,7 +112,8 @@ Cypress.Commands.add('enterDepartureDetails', (date, port) => {
   cy.get('input[name="departureTimeHour"]').clear().type(departureTime[0]);
   cy.get('input[name="departureTimeMinute"]').clear().type(departureTime[1]);
   cy.log(port);
-  cy.get('input[name="departurePort"]').clear().type(port);
+  cy.get('input[id="departurePort"]').clear().type(port);
+  cy.get('ul[id="departurePort__listbox"] .autocomplete__option').contains(port).click();
 });
 
 Cypress.Commands.add('enterArrivalDetails', (date, port) => {
@@ -123,7 +125,8 @@ Cypress.Commands.add('enterArrivalDetails', (date, port) => {
   cy.get('input[name="arrivalDateYear"]').clear().type(arrivalDate[2]);
   cy.get('input[name="arrivalTimeHour"]').clear().type(arrivalTime[0]);
   cy.get('input[name="arrivalTimeMinute"]').clear().type(arrivalTime[1]);
-  cy.get('input[name="arrivalPort"]').clear().type(port);
+  cy.get('input[id="arrivalPort"]').clear().type(port);
+  cy.get('ul[id="arrivalPort__listbox"] .autocomplete__option').contains(port).click();
 });
 
 Cypress.Commands.add('enterSkipperDetails', () => {
@@ -209,4 +212,13 @@ Cypress.Commands.add('checkReports', (type, numberOfReports) => {
 Cypress.Commands.add('assertPeopleTable', (callback) => {
   cy.contains('The people you have selected for this voyage are:').next()
     .getTable().then(callback);
+});
+
+Cypress.Commands.add('checkAccessibility', () => {
+  cy.checkA11y(null, {
+    runOnly: {
+      type: 'tag',
+      values: ['wcag2a', 'wcag2aa'],
+    },
+  }, terminalLog, true);
 });

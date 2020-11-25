@@ -23,8 +23,8 @@ describe('Validate report form', () => {
       cy.addVessel(vessel);
     });
 
-    departurePort = 'Auto-Port of Hong Kong';
-    arrivalPort = 'Port of Felixstowe';
+    departurePort = 'Dover';
+    arrivalPort = 'Felixstowe';
     departureDateTime = getFutureDate(1, 'DD/MM/YYYY HH:MM');
     arrivalDateTime = getFutureDate(2, 'DD/MM/YYYY HH:MM');
   });
@@ -131,10 +131,9 @@ describe('Validate report form', () => {
     cy.enterVesselInfo(vessel);
     cy.saveAndContinue();
     cy.get('input[name=people]').eq(0).check();
-    cy.get('input[name=people]').eq(1).check();
     cy.contains('Add to report and continue').click();
     cy.assertPeopleTable((reportData) => {
-      expect(reportData).to.have.length(2);
+      expect(reportData).to.have.length(1);
     });
     cy.saveAndContinueOnPeopleManifest(true);
     cy.contains('add a new person').click();
