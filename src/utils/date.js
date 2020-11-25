@@ -21,7 +21,7 @@ export const isDateValid = (year, month, day) => {
   return true;
 };
 
-export const isDateBefore = (year, month, day) => {
+export const isInThePast = (year, month, day) => {
   const today = new Date();
   const testDate = new Date(year, (month - 1), day);
   return today.getTime() >= testDate.getTime();

@@ -7,7 +7,7 @@ import Auth from '@lib/Auth';
 import FormPerson from '@components/People/FormPerson';
 import scrollToTopOnError from '@utils/scrollToTopOnError';
 import { postData } from '@utils/apiHooks';
-import { formatDate, isDateValid, isDateBefore } from '@utils/date';
+import { formatDate, isDateValid, isInThePast } from '@utils/date';
 import { PEOPLE_URL } from '@constants/ApiConstants';
 import { PEOPLE_PAGE_URL, SAVE_VOYAGE_PEOPLE_URL } from '@constants/ClientConstants';
 import { personValidationRules } from '@components/Forms/validationRules';
@@ -59,14 +59,14 @@ const CreateAPerson = () => {
     // DoB must be valid and not in the future
     if (dataToValidate.dateOfBirthYear || dataToValidate.dateOfBirthMonth || dataToValidate.dateOfBirthDay) {
       if (!(isDateValid(dataToValidate.dateOfBirthYear, dataToValidate.dateOfBirthMonth, dataToValidate.dateOfBirthDay))
-      || !(isDateBefore(dataToValidate.dateOfBirthYear, dataToValidate.dateOfBirthMonth, dataToValidate.dateOfBirthDay))) {
+      || !(isInThePast(dataToValidate.dateOfBirthYear, dataToValidate.dateOfBirthMonth, dataToValidate.dateOfBirthDay))) {
         fieldsErroring.dateOfBirth = 'You must enter a valid date of birth';
       }
     }
     // Expiry Date must be valid and in the future
     if (dataToValidate.documentExpiryDateYear || dataToValidate.documentExpiryDateMonth || dataToValidate.documentExpiryDateDay) {
       if (!(isDateValid(dataToValidate.documentExpiryDateYear, dataToValidate.documentExpiryDateMonth, dataToValidate.documentExpiryDateDay))
-      || isDateBefore(dataToValidate.documentExpiryDateYear, dataToValidate.documentExpiryDateMonth, dataToValidate.documentExpiryDateDay)) {
+      || isInThePast(dataToValidate.documentExpiryDateYear, dataToValidate.documentExpiryDateMonth, dataToValidate.documentExpiryDateDay)) {
         fieldsErroring.documentExpiryDate = 'You must enter a valid document expiry date';
       }
     }
