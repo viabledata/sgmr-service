@@ -21,8 +21,8 @@ describe('Edit Details & Submit new voyage report', () => {
   beforeEach(() => {
     cy.login();
 
-    departurePort = 'Port of Hong Kong';
-    arrivalPort = 'Port of Felixstowe';
+    departurePort = 'Dover';
+    arrivalPort = 'Felixstowe';
     departureDateTime = getFutureDate(1, 'DD/MM/YYYY HH:MM');
     departDate = departureDateTime.split(' ')[0];
     departTime = departureDateTime.split(' ')[1];
@@ -78,8 +78,8 @@ describe('Edit Details & Submit new voyage report', () => {
         'Vessel': vessel.name,
         'Departure date': departDate,
         'Departure time': `${departTime}:00`,
-        'Departure port': departurePort,
-        'Arrival port': arrivalPort,
+        'Departure port': 'LGP',
+        'Arrival port': 'Swansea Marina',
         'Submission reference': '',
       },
     ];
@@ -128,8 +128,8 @@ describe('Edit Details & Submit new voyage report', () => {
         'Vessel': vessel.name,
         'Departure date': departDate,
         'Departure time': `${departTime}:00`,
-        'Departure port': departurePort,
-        'Arrival port': arrivalPort,
+        'Departure port': 'DVR',
+        'Arrival port': 'FXT',
         'Submission reference': '',
       },
     ];
