@@ -297,6 +297,7 @@ const FormVoyageContainer = () => {
               )}
               {pageNum === 4 && (
                 <FormVoyagePeople
+                  handleSubmit={handleSubmit}
                   voyageId={voyageId}
                   setNextPage={setNextPage}
                   setErrors={setErrors}

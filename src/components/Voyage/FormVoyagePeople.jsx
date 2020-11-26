@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 
-// App imports
 import { getData, patchData } from '@utils/apiHooks';
 import {
   PEOPLE_URL,
@@ -13,9 +12,10 @@ import scrollToTopOnError from '@utils/scrollToTopOnError';
 import { formatPerson } from '@components/Voyage/VoyageFormDataFormatting';
 
 const FormVoyagePeople = ({
-  voyageId, setErrors, setNextPage, setPageNum,
+  handleSubmit, voyageId, setErrors, setNextPage, setPageNum,
 }) => {
   const [savedPeople, setSavedPeople] = useState([]);
+  const [voyagePeople, setVoyagePeople] = useState([]);
   const [peopleToAdd, setPeopleToAdd] = useState([]);
 
   const handleLinkToNewPersonForm = (e) => {
@@ -24,8 +24,7 @@ const FormVoyagePeople = ({
   };
 
   const handleAddPeopleButton = async () => {
-    const voyagePeople = await getData(`${VOYAGE_REPORT_URL}/${voyageId}/people`);
-    if (!peopleToAdd.length && !voyagePeople.items.length) {
+    if (!peopleToAdd.length && !voyagePeople.length) {
       setErrors({ voyageForm: 'You need to add at least one person to your voyage' });
       scrollToTopOnError('voyageForm');
     } else {
@@ -43,6 +42,11 @@ const FormVoyagePeople = ({
     }
   };
 
+  const fetchVoyagePeople = async () => {
+    const response = await getData(`${VOYAGE_REPORT_URL}/${voyageId}/people`);
+    setVoyagePeople(response.items);
+  };
+
   const fetchSavedPeople = async () => {
     const userSavedPeopleLocal = await getData(PEOPLE_URL);
     setSavedPeople(userSavedPeopleLocal);
@@ -55,6 +59,7 @@ const FormVoyagePeople = ({
   useEffect(() => {
     if (voyageId) {
       fetchSavedPeople();
+      fetchVoyagePeople();
     }
   }, [voyageId]);
 
@@ -75,7 +80,7 @@ const FormVoyagePeople = ({
         </a>
       </p>
 
-      {savedPeople && (
+      {!!savedPeople.length && (
         <>
           <PeopleTable
             voyageId={voyageId}
@@ -90,6 +95,26 @@ const FormVoyagePeople = ({
             onClick={(e) => handleAddPeopleButton(e)}
           >
             Add to report and continue
+          </button>
+        </>
+      )}
+
+      {!!voyagePeople.length && (
+        <>
+          <p className="govuk-body-l">
+            People already added to the manifest:
+            <br />
+            {voyagePeople.map(({ firstName, lastName }) => `${firstName} ${lastName}`).join(', ')}
+          </p>
+          <button
+            type="button"
+            className="govuk-button"
+            data-module="govuk-button"
+            onClick={(e) => {
+              handleSubmit(e, FORM_STEPS.PEOPLE, voyageId);
+            }}
+          >
+            Save and continue
           </button>
         </>
       )}
