@@ -30,7 +30,7 @@ npm run lint -- <directory>
 
 ### Running End to End tests (cypress tests)
 There are two ways to run cypress tests, using the cypress test runner or running cypress tests using the command line.
-(You will need both sGMR FE and API services running before triggering Cypress)
+(You will need both sGMR FE & API and ref-data-api services running before triggering Cypress)
 By default tests run against local environment.
 
 #### Running Cypress Test Runner
@@ -64,5 +64,15 @@ npm run cypress:test:local -- --spec cypress/integration/sGMR/register-user.spec
 
 ## Running specific test with chrome browser
 ```sh
-npm run cypress:test:local -- --browser chrome --spec cypress/integration/sGMR/register-user.spec.js
+npm run cypress:test:local -- --browser chrome --spec cypress/integration/sGMR/user-register.spec.js
+```
+
+## Running All E2E tests and generating mochawesome html report with screenshots
+```sh
+npm run cypress:test:report -- -b chrome
+```
+
+## Running specific test and generating mochawesome html report with screenshots
+```sh
+npm run cypress:test:report -- -b chrome -s cypress/integration/sGMR/user-register.spec.js
 ```
