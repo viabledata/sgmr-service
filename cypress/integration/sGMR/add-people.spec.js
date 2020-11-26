@@ -55,6 +55,10 @@ describe('Add People in account', () => {
     cy.get('.govuk-error-message').each((error, index) => {
       cy.wrap(error).should('contain.text', errors[index]).and('be.visible');
     });
+
+    cy.get('input[name="documentIssuingState"]').clear().type('ZZZ');
+    cy.get('.govuk-button').click();
+    cy.get('.govuk-error-message').should('contain.text', 'You must enter a valid ISO country code').and('be.visible');
   });
 
   it('Should not allow adding a duplicate person', () => {

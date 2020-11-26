@@ -211,8 +211,9 @@ const FormVoyageContainer = () => {
       setErrors({ voyageForm: 'There was a problem locating your voyage, please return to "Reports" and try again' });
       scrollToTopOnError('voyageForm');
     } else {
-      setErrors(VoyageFormValidation(formData, sourceForm));
-      if (Object.keys(VoyageFormValidation(formData, sourceForm)).length === 0 && Object.keys(errors).length === 0) {
+      const validationErrors = await VoyageFormValidation(formData, sourceForm);
+      setErrors(validationErrors);
+      if (Object.keys(validationErrors).length === 0 && Object.keys(errors).length === 0) {
         await patchData(`${VOYAGE_REPORT_URL}/${voyageId}`, dataToSubmit, location.pathname.substring(1));
         setNextPage(sourceForm);
       }

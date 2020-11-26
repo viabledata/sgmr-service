@@ -1,7 +1,7 @@
 import VoyageFormValidation from '@components/Voyage/VoyageFormValidation';
 import { FORM_STEPS } from '@constants/ClientConstants';
 
-test('Validates responsible person', () => {
+test('Validates responsible person', async () => {
   const expectedErrors = {
     responsibleAddressLine1: 'You must enter the first line of your address',
     responsibleAddressLine2: 'You must enter the second line of your address',
@@ -12,6 +12,6 @@ test('Validates responsible person', () => {
     responsibleSurname: 'You must enter a last name',
     responsibleTown: 'You must enter a town or a city name',
   };
-  const result = VoyageFormValidation({}, FORM_STEPS.RESPONSIBLE_PERSON);
+  const result = await VoyageFormValidation({}, FORM_STEPS.RESPONSIBLE_PERSON);
   expect(result).toEqual(expectedErrors);
 });

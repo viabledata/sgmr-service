@@ -1,24 +1,23 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
-import axios from 'axios';
 
-// app imports
-import Auth from '@lib/Auth';
 import FormPerson from '@components/People/FormPerson';
 import scrollToTopOnError from '@utils/scrollToTopOnError';
 import { postData } from '@utils/apiHooks';
 import { formatDate, isDateValid, isInThePast } from '@utils/date';
 import { PEOPLE_URL } from '@constants/ApiConstants';
 import { PEOPLE_PAGE_URL } from '@constants/ClientConstants';
-import { personValidationRules } from '@components/Forms/validationRules';
+import {
+  personValidationRules,
+  validate,
+} from '@components/Forms/validationRules';
 import FormError from '@components/Voyage/FormError';
 
 const CreateAPerson = () => {
   const history = useHistory();
   const location = useLocation();
-  const source = location.search.split('=');
-  const [formData, setFormData] = useState(JSON.parse(localStorage.getItem('formData')) || {});
-  const [errors, setErrors] = useState(JSON.parse(localStorage.getItem('errors')) || {});
+  const [formData, setFormData] = useState({});
+  const [errors, setErrors] = useState({});
 
   const removeError = (fieldName) => {
     const errorList = { ...errors };
@@ -43,15 +42,8 @@ const CreateAPerson = () => {
   };
 
   // Check fields that are required exist & fields with rules match
-  const areFieldsValid = (dataToValidate) => {
-    const fieldsErroring = {};
-
-    // Required fields must not be null
-    personValidationRules.map((rule) => {
-      (!(rule.inputField in dataToValidate) || formData[rule.inputField] === '')
-        ? fieldsErroring[rule.errorDisplayId] = rule.message
-        : null;
-    });
+  const validateForm = async (dataToValidate) => {
+    const newErrors = await validate(personValidationRules, dataToValidate);
 
     // DoB must be valid and not in the future
     if (dataToValidate.dateOfBirthYear || dataToValidate.dateOfBirthMonth || dataToValidate.dateOfBirthDay) {
@@ -59,7 +51,7 @@ const CreateAPerson = () => {
       const isDobInPast = isInThePast(dataToValidate.dateOfBirthYear, dataToValidate.dateOfBirthMonth, dataToValidate.dateOfBirthDay);
 
       if (!isValidFormat || !isDobInPast) {
-        fieldsErroring.dateOfBirth = 'You must enter a valid date of birth';
+        newErrors.dateOfBirth = 'You must enter a valid date of birth';
       }
     }
 
@@ -69,24 +61,18 @@ const CreateAPerson = () => {
       const isExpiryDateInPast = isInThePast(dataToValidate.documentExpiryDateYear, dataToValidate.documentExpiryDateMonth, dataToValidate.documentExpiryDateDay);
 
       if (!isValidFormat || isExpiryDateInPast) {
-        fieldsErroring.documentExpiryDate = 'You must enter a valid document expiry date';
+        newErrors.documentExpiryDate = 'You must enter a valid document expiry date';
       }
     }
 
-    setErrors(fieldsErroring);
-    scrollToTopOnError(fieldsErroring);
-    return Object.keys(fieldsErroring).length > 0;
-  };
-
-  // Clear formData from localStorage
-  const clearLocalStorage = () => {
-    setFormData({});
-    setErrors({ });
+    setErrors(newErrors);
+    scrollToTopOnError(newErrors);
+    return Object.keys(newErrors).length > 0;
   };
 
   // Format data to submit
   const formatDataToSubmit = (data) => {
-    const dataSubmit = {
+    return {
       firstName: data.firstName,
       lastName: data.lastName,
       documentType: data.documentType,
@@ -99,36 +85,21 @@ const CreateAPerson = () => {
       placeOfBirth: data.placeOfBirth,
       nationality: data.nationality,
     };
-    return dataSubmit;
   };
 
-
-  // Handle Submit, including clearing localStorage
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!areFieldsValid(formData)) {
-      postData(PEOPLE_URL, formatDataToSubmit(formData), location.pathname.substring(1))
-        .then((resp) => {
-          if (resp.errors === true) {
-            setErrors({ CreateAPerson: resp.message });
-            scrollToTopOnError(errors);
-          } else {
-            history.push(PEOPLE_PAGE_URL);
-          }
-        });
+    if (!await validateForm(formData)) {
+      const resp = await postData(PEOPLE_URL, formatDataToSubmit(formData), location.pathname.substring(1));
+      if (resp.errors === true) {
+        setErrors({ CreateAPerson: resp.message });
+        scrollToTopOnError(errors);
+      } else {
+        history.push(PEOPLE_PAGE_URL);
+      }
     }
   };
-
-  // Update localStorage to hold page data
-  useEffect(() => {
-    localStorage.setItem('formData', JSON.stringify(formData));
-  }, [formData]);
-
-  useEffect(() => {
-    localStorage.setItem('errors', JSON.stringify(errors));
-  }, [errors]);
-
 
   return (
     <div className="govuk-width-container ">
@@ -159,7 +130,6 @@ const CreateAPerson = () => {
               <FormPerson
                 handleSubmit={handleSubmit}
                 handleChange={handleChange}
-                clearLocalStorage={clearLocalStorage}
                 data={formData}
                 formData={formData}
                 errors={errors}

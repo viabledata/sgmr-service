@@ -1,3 +1,7 @@
+import * as axios from 'axios';
+import { COUNTRIES_URL } from '@constants/ApiConstants';
+import Auth from '@lib/Auth';
+
 export const VALID_EMAIL_REGEX = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
 export const COMPLEX_PASSWORD_REGEX = /(\d+)|([a-z]+)|([A-Z]+)|([!@$%^&\\(){}[\]:;<>,*.?/~_+-=|]+)+/g;
 export const VALID_MOBILE_REGEX = /^[0|+]([ 0-9]{3,20})$/i;
@@ -6,91 +10,103 @@ export const personValidationRules = [
   {
     inputField: 'firstName',
     errorDisplayId: 'firstName',
-    rule: 'required',
+    type: 'required',
     message: 'You must enter a first name',
   },
   {
     inputField: 'lastName',
     errorDisplayId: 'lastName',
-    rule: 'required',
+    type: 'required',
     message: 'You must enter a last name',
   },
   {
     inputField: 'peopleType',
     errorDisplayId: 'peopleType',
-    rule: 'required',
+    type: 'required',
     message: 'You must enter a person type',
   },
   {
     inputField: 'documentType',
     errorDisplayId: 'documentType',
-    rule: 'required',
+    type: 'required',
     message: 'You must select a document type',
   },
   {
     inputField: 'documentNumber',
     errorDisplayId: 'documentNumber',
-    rule: 'required',
+    type: 'required',
     message: 'You must enter a document number',
   },
   {
     inputField: 'documentIssuingState',
     errorDisplayId: 'documentIssuingState',
-    rule: 'required',
+    type: 'required',
     message: 'You must enter the document issuing state',
+  },
+  {
+    inputField: 'documentIssuingState',
+    errorDisplayId: 'documentIssuingState',
+    type: 'async',
+    callback: async (value) => {
+      const resp = await axios.get(`${COUNTRIES_URL}?iso3=${encodeURIComponent(value)}`, {
+        headers: { Authorization: `Bearer ${Auth.retrieveToken()}` },
+      });
+      return resp.data.data.length > 0;
+    },
+    message: 'You must enter a valid ISO country code',
   },
   {
     inputField: 'documentExpiryDateYear',
     errorDisplayId: 'documentExpiryDate',
-    rule: 'required',
+    type: 'required',
     message: 'You must enter an expiry date',
   },
   {
     inputField: 'documentExpiryDateMonth',
     errorDisplayId: 'documentExpiryDate',
-    rule: 'required',
+    type: 'required',
     message: 'You must enter an expiry date',
   },
   {
     inputField: 'documentExpiryDateDay',
     errorDisplayId: 'documentExpiryDate',
-    rule: 'required',
+    type: 'required',
     message: 'You must enter an expiry date',
   },
   {
     inputField: 'gender',
     errorDisplayId: 'gender',
-    rule: 'required',
+    type: 'required',
     message: 'You must select a gender',
   },
   {
     inputField: 'dateOfBirthYear',
     errorDisplayId: 'dateOfBirth',
-    rule: 'required',
+    type: 'required',
     message: 'You must enter a date of birth',
   },
   {
     inputField: 'dateOfBirthMonth',
     errorDisplayId: 'dateOfBirth',
-    rule: 'required',
+    type: 'required',
     message: 'You must enter a date of birth',
   },
   {
     inputField: 'dateOfBirthDay',
     errorDisplayId: 'dateOfBirth',
-    rule: 'required',
+    type: 'required',
     message: 'You must enter a date of birth',
   },
   {
     inputField: 'placeOfBirth',
     errorDisplayId: 'placeOfBirth',
-    rule: 'required',
+    type: 'required',
     message: 'You must enter a place of birth',
   },
   {
     inputField: 'nationality',
     errorDisplayId: 'nationality',
-    rule: 'required',
+    type: 'required',
     message: 'You must enter a nationality',
   },
 ];
@@ -99,49 +115,49 @@ export const responsiblePersonValidationRules = [
   {
     inputField: 'responsibleGivenName',
     errorDisplayId: 'responsibleGivenName',
-    rule: 'required',
+    type: 'required',
     message: 'You must enter a first name',
   },
   {
     inputField: 'responsibleSurname',
     errorDisplayId: 'responsibleSurname',
-    rule: 'required',
+    type: 'required',
     message: 'You must enter a last name',
   },
   {
     inputField: 'responsibleContactNo',
     errorDisplayId: 'responsibleContactNo',
-    rule: 'required',
+    type: 'required',
     message: 'You must enter a contact number',
   },
   {
     inputField: 'responsibleAddressLine1',
     errorDisplayId: 'responsibleAddressLine1',
-    rule: 'required',
+    type: 'required',
     message: 'You must enter the first line of your address',
   },
   {
     inputField: 'responsibleAddressLine2',
     errorDisplayId: 'responsibleAddressLine2',
-    rule: 'required',
+    type: 'required',
     message: 'You must enter the second line of your address',
   },
   {
     inputField: 'responsibleTown',
     errorDisplayId: 'responsibleTown',
-    rule: 'required',
+    type: 'required',
     message: 'You must enter a town or a city name',
   },
   {
     inputField: 'responsibleCounty',
     errorDisplayId: 'responsibleCounty',
-    rule: 'required',
+    type: 'required',
     message: 'You must enter a country name',
   },
   {
     inputField: 'responsiblePostcode',
     errorDisplayId: 'responsiblePostcode',
-    rule: 'required',
+    type: 'required',
     message: 'You must enter a postcode',
   },
 ];
@@ -150,25 +166,25 @@ export const vesselValidationRules = [
   {
     inputField: 'vesselName',
     errorDisplayId: 'vesselName',
-    rule: 'required',
+    type: 'required',
     message: 'You must enter a vessel name',
   },
   {
     inputField: 'vesselType',
     errorDisplayId: 'vesselType',
-    rule: 'required',
+    type: 'required',
     message: 'You must enter a vessel type',
   },
   {
     inputField: 'moorings',
     errorDisplayId: 'moorings',
-    rule: 'required',
+    type: 'required',
     message: 'You must enter the vessel usual mooring',
   },
   {
     inputField: 'registration',
     errorDisplayId: 'registration',
-    rule: 'required',
+    type: 'required',
     message: 'You must enter the vessel registration',
   },
 ];
@@ -177,25 +193,25 @@ export const userValidationRules = [
   {
     inputField: 'firstName',
     errorDisplayId: 'firstName',
-    rule: 'required',
+    type: 'required',
     message: 'You must enter your first name',
   },
   {
     inputField: 'lastName',
     errorDisplayId: 'lastName',
-    rule: 'required',
+    type: 'required',
     message: 'You must enter your last name',
   },
   {
     inputField: 'mobileNumber',
     errorDisplayId: 'mobileNumber',
-    rule: 'required',
+    type: 'required',
     message: 'You must enter your mobile number',
   },
   {
     inputField: 'email',
     errorDisplayId: 'email',
-    rule: 'required',
+    type: 'required',
     message: 'You must enter your email address',
   },
 ];
@@ -204,31 +220,31 @@ export const arrivalValidationRules = [
   {
     inputField: 'arrivalDateYear',
     errorDisplayId: 'arrivalDate',
-    rule: 'required',
+    type: 'required',
     message: 'You must enter an arrival date',
   },
   {
     inputField: 'arrivalDateMonth',
     errorDisplayId: 'arrivalDate',
-    rule: 'required',
+    type: 'required',
     message: 'You must enter an arrival date',
   },
   {
     inputField: 'arrivalDateDay',
     errorDisplayId: 'arrivalDate',
-    rule: 'required',
+    type: 'required',
     message: 'You must enter an arrival date',
   },
   {
     inputField: 'arrivalTimeHour',
     errorDisplayId: 'arrivalTime',
-    rule: 'required',
+    type: 'required',
     message: 'You must enter an arrival time',
   },
   {
     inputField: 'arrivalTimeMinute',
     errorDisplayId: 'arrivalTime',
-    rule: 'required',
+    type: 'required',
     message: 'You must enter an arrival time',
   },
 ];
@@ -237,31 +253,31 @@ export const departureValidationRules = [
   {
     inputField: 'departureDateYear',
     errorDisplayId: 'departureDate',
-    rule: 'required',
+    type: 'required',
     message: 'You must enter a departure date',
   },
   {
     inputField: 'departureDateMonth',
     errorDisplayId: 'departureDate',
-    rule: 'required',
+    type: 'required',
     message: 'You must enter a departure date',
   },
   {
     inputField: 'departureDateDay',
     errorDisplayId: 'departureDate',
-    rule: 'required',
+    type: 'required',
     message: 'You must enter a departure date',
   },
   {
     inputField: 'departureTimeHour',
     errorDisplayId: 'departureTime',
-    rule: 'required',
+    type: 'required',
     message: 'You must enter a departure time',
   },
   {
     inputField: 'departureTimeMinute',
     errorDisplayId: 'departureTime',
-    rule: 'required',
+    type: 'required',
     message: 'You must enter a departure time',
   },
 ];
@@ -270,79 +286,79 @@ export const voyageValidationRules = [
   {
     inputField: 'vesselName',
     errorDisplayId: 'vesselName',
-    rule: 'required',
+    type: 'required',
     message: 'You must enter a vessel name',
   },
   {
     inputField: 'registration',
     errorDisplayId: 'registration',
-    rule: 'required',
+    type: 'required',
     message: 'You must enter a vessel registration',
   },
   {
     inputField: 'departureDateYear',
     errorDisplayId: 'departureDate',
-    rule: 'required',
+    type: 'required',
     message: 'You must enter a departure date',
   },
   {
     inputField: 'departureDateMonth',
     errorDisplayId: 'departureDate',
-    rule: 'required',
+    type: 'required',
     message: 'You must enter a departure date',
   },
   {
     inputField: 'departureDateDay',
     errorDisplayId: 'departureDate',
-    rule: 'required',
+    type: 'required',
     message: 'You must enter a departure date',
   },
   {
     inputField: 'departureTimeHour',
     errorDisplayId: 'departureTime',
-    rule: 'required',
+    type: 'required',
     message: 'You must enter a departure time',
   },
   {
     inputField: 'departureTimeMinute',
     errorDisplayId: 'departureTime',
-    rule: 'required',
+    type: 'required',
     message: 'You must enter a departure time',
   },
   {
     inputField: 'arrivalTimeHour',
     errorDisplayId: 'arrivalTime',
-    rule: 'required',
+    type: 'required',
     message: 'You must enter an arrival time',
   },
   {
     inputField: 'arrivalTimeMinute',
     errorDisplayId: 'arrivalTime',
-    rule: 'required',
+    type: 'required',
     message: 'You must enter an arrival time',
   },
   {
     inputField: 'arrivalDateYear',
     errorDisplayId: 'arrivalDate',
-    rule: 'required',
+    type: 'required',
     message: 'You must enter an arrival date',
   },
   {
     inputField: 'arrivalDateMonth',
     errorDisplayId: 'arrivalDate',
-    rule: 'required',
+    type: 'required',
     message: 'You must enter an arrival date',
   },
   {
     inputField: 'arrivalDateDay',
     errorDisplayId: 'arrivalDate',
-    rule: 'required',
+    type: 'required',
     message: 'You must enter an arrival date',
   },
   {
     inputField: 'responsibleGivenName',
     errorDisplayId: 'responsibleGivenName',
-    rule: 'required',
+    type: 'required',
     message: 'You must enter the responsible person\'s details',
   },
 ];
@@ -403,4 +419,54 @@ export const passwordValidation = (password) => {
   if (password.match(COMPLEX_PASSWORD_REGEX).length < 3) {
     return 'The password must contain 3 of the following: an uppercase letter, a lowercase letter, a symbol, a number';
   }
+};
+
+export const validate = async (rules, data) => {
+  const errors = {};
+  if (rules) {
+    const promises = rules.map((rule) => {
+      return new Promise((resolve) => {
+        const value = data[rule.inputField];
+        switch (rule.type) {
+          case 'pattern':
+            if (value && !rule.pattern.test(value)) {
+              return { [rule.errorDisplayId]: rule.message };
+            }
+            break;
+          case 'async':
+            if (value) {
+              rule.callback(value).then((valid) => {
+                if (!valid) {
+                  resolve({ [rule.errorDisplayId]: rule.message });
+                } else {
+                  resolve(undefined);
+                }
+              });
+            } else {
+              resolve(undefined);
+            }
+            break;
+          default:
+          case 'required':
+            if (value === '' || !value) {
+              resolve({ [rule.errorDisplayId]: rule.message });
+            } else {
+              resolve(undefined);
+            }
+            break;
+        }
+      });
+    });
+
+    const results = await Promise.all(promises);
+    return results.filter(Boolean).reduce((acc, error) => {
+      if (error) {
+        return {
+          ...error,
+          ...acc,
+        };
+      }
+    }, {});
+  }
+  return errors;
 };
