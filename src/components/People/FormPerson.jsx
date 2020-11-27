@@ -1,12 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-// App imports
 import nationalities from '@utils/staticFormData';
 import FormError from '@components/Voyage/FormError';
 
 const FormPerson = ({
-  handleSubmit, handleChange, data, formData, errors, clearLocalStorage, source, voyageId,
+  handleSubmit, handleChange, data, formData, errors, source, voyageId,
 }) => {
 
   return (
@@ -441,7 +440,6 @@ const FormPerson = ({
           <Link
             to="/people"
             className="govuk-link govuk-link--no-visited-state"
-            onClick={(e) => clearLocalStorage(e)}
           >
             Exit without saving
           </Link>

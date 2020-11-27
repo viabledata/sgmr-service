@@ -13,6 +13,7 @@ export const SUBMIT_VERIFICATION_CODE_URL = `${apiUrl}/submit-verification-code`
 export const RESEND_VERIFICATION_CODE_URL = `${apiUrl}/resend-verification-code`;
 export const REGISTRATION_URL = `${apiUrl}/registration`;
 export const PORTS_URL = `${apiUrl}/ports`;
+export const COUNTRIES_URL = `${apiUrl}/countries`;
 
 export const VOYAGE_STATUSES = {
   CANCELLED: 'Cancelled',
