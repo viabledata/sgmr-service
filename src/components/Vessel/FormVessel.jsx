@@ -1,6 +1,7 @@
 import React from 'react';
 import FormError from '@components/Voyage/FormError';
 import { Link } from 'react-router-dom';
+import nationalities from '@utils/staticFormData';
 
 const FormVessel = ({
   handleSubmit, handleChange, data, formData, errors, sourceForm,
@@ -102,14 +103,17 @@ const FormVessel = ({
         <label className="govuk-label" htmlFor="vesselNationality">
           Vessel nationality (optional)
         </label>
-        <input
-          className="govuk-input"
+        <select
+          className="govuk-select"
           name="vesselNationality"
-          id="vesselNationality"
-          type="text"
           value={formData.vesselNationality || ''}
           onChange={handleChange}
-        />
+        >
+          <option>- Please select -</option>
+          {nationalities.map((vesselNationality) => (
+            <option key={vesselNationality.value} value={vesselNationality.value}>{vesselNationality.label}</option>
+          ))}
+        </select>
       </div>
 
       <div className="govuk-form-group">
