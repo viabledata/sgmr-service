@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-
 const VesselTable = ({ vesselData, checkboxes, link, handleCheckboxes }) => {
   return (
     <table className="table-clickable govuk-table">
@@ -38,11 +37,7 @@ const VesselTable = ({ vesselData, checkboxes, link, handleCheckboxes }) => {
               {link === 'true'
                 && (
                 <td className="govuk-table__cell">
-                  <Link to={{
-                    pathname: '/vessels/edit-vessel',
-                    state: { vesselId: vessel.id },
-                  }}
-                  >
+                  <Link to={`/vessels/${vessel.id}`}>
                     {vessel.vesselName}
                   </Link>
                 </td>

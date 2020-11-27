@@ -1,12 +1,13 @@
 import React from 'react';
 import FormError from '@components/Voyage/FormError';
+import { Link } from 'react-router-dom';
 
 const FormVessel = ({
-  handleSubmit, handleChange, data, formData, errors, sourceForm, clearLocalStorage
+  handleSubmit, handleChange, data, formData, errors, sourceForm,
 }) => {
   return (
     <section>
-      <div id="vesselName" className={`govuk-form-group ${errors.vesselName ? 'govuk-form-group--error' : ''}`}>
+      <div className={`govuk-form-group ${errors.vesselName ? 'govuk-form-group--error' : ''}`}>
         <label className="govuk-label" htmlFor="vesselName">
           Vessel name
         </label>
@@ -15,13 +16,14 @@ const FormVessel = ({
         <input
           className="govuk-input"
           name="vesselName"
+          id="vesselName"
           type="text"
-          value={formData.vesselName || data.vesselName || ''}
+          value={formData.vesselName || ''}
           onChange={handleChange}
         />
       </div>
 
-      <div id="vesselType" className={`govuk-form-group ${errors.vesselType ? 'govuk-form-group--error' : ''}`}>
+      <div className={`govuk-form-group ${errors.vesselType ? 'govuk-form-group--error' : ''}`}>
         <label className="govuk-label" htmlFor="vesselType">
           Vessel type
         </label>
@@ -30,13 +32,14 @@ const FormVessel = ({
         <input
           className="govuk-input"
           name="vesselType"
+          id="vesselType"
           type="text"
-          value={formData.vesselType || data.vesselType || ''}
+          value={formData.vesselType || ''}
           onChange={handleChange}
         />
       </div>
 
-      <div id="moorings" className={`govuk-form-group ${errors.moorings ? 'govuk-form-group--error' : ''}`}>
+      <div className={`govuk-form-group ${errors.moorings ? 'govuk-form-group--error' : ''}`}>
         <label className="govuk-label" htmlFor="moorings">
           Usual moorings
         </label>
@@ -45,13 +48,14 @@ const FormVessel = ({
         <input
           className="govuk-input"
           name="moorings"
+          id="moorings"
           type="text"
-          value={formData.moorings || data.moorings || ''}
+          value={formData.moorings || ''}
           onChange={handleChange}
         />
       </div>
 
-      <div id="registration" className={`govuk-form-group ${errors.registration ? 'govuk-form-group--error' : ''}`}>
+      <div className={`govuk-form-group ${errors.registration ? 'govuk-form-group--error' : ''}`}>
         <label className="govuk-label" htmlFor="registration">
           Registration number
         </label>
@@ -59,60 +63,65 @@ const FormVessel = ({
         <input
           className="govuk-input"
           name="registration"
+          id="registration"
           type="text"
-          value={formData.registration || data.registration || ''}
+          value={formData.registration || ''}
           onChange={handleChange}
         />
       </div>
 
-      <div id="hullIdentificationNumber" className="govuk-form-group">
+      <div className="govuk-form-group">
         <label className="govuk-label" htmlFor="hullIdentificationNumber">
           Hull identification number (optional)
         </label>
         <input
           className="govuk-input"
           name="hullIdentificationNumber"
+          id="hullIdentificationNumber"
           type="text"
-          value={formData.hullIdentificationNumber || data.hullIdentificationNumber || ''}
+          value={formData.hullIdentificationNumber || ''}
           onChange={handleChange}
         />
       </div>
 
-      <div id="callsign" className="govuk-form-group">
+      <div className="govuk-form-group">
         <label className="govuk-label" htmlFor="callsign">
           Callsign (optional)
         </label>
         <input
           className="govuk-input"
           name="callsign"
+          id="callsign"
           type="text"
-          value={formData.callsign || data.callsign || ''}
+          value={formData.callsign || ''}
           onChange={handleChange}
         />
       </div>
 
-      <div id="vesselNationality" className="govuk-form-group">
+      <div className="govuk-form-group">
         <label className="govuk-label" htmlFor="vesselNationality">
           Vessel nationality (optional)
         </label>
         <input
           className="govuk-input"
           name="vesselNationality"
+          id="vesselNationality"
           type="text"
-          value={formData.vesselNationality || data.vesselNationality || ''}
+          value={formData.vesselNationality || ''}
           onChange={handleChange}
         />
       </div>
 
-      <div id="portOfRegistry" className="govuk-form-group">
+      <div className="govuk-form-group">
         <label className="govuk-label" htmlFor="portOfRegistry">
           Port of registry (optional)
         </label>
         <input
           className="govuk-input"
           name="portOfRegistry"
+          id="portOfRegistry"
           type="text"
-          value={formData.portOfRegistry || data.portOfRegistry || ''}
+          value={formData.portOfRegistry || ''}
           onChange={handleChange}
         />
       </div>
@@ -131,12 +140,10 @@ const FormVessel = ({
               </button>
             </div>
             <p>
-              <a href="/vessels" className="govuk-link govuk-link--no-visited-state" onClick={(e) => clearLocalStorage(e)}>Exit without saving</a>
+              <Link to="/vessels" className="govuk-link govuk-link--no-visited-state">Exit without saving</Link>
             </p>
           </>
         )}
-
-
     </section>
   );
 };
