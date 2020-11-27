@@ -1,54 +1,47 @@
-import React, { useState, useEffect } from 'react';
-import { withRouter, useHistory } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { Link, useHistory, useParams, withRouter } from 'react-router-dom';
 
-// App imports
 import { VESSELS_URL } from '@constants/ApiConstants';
 import { VESSELS_PAGE_URL } from '@constants/ClientConstants';
 import { vesselValidationRules } from '@components/Forms/validationRules';
 import { getData, patchData } from '@utils/apiHooks';
-import getId from '@utils/getIdHook';
 import scrollToTopOnError from '@utils/scrollToTopOnError';
 
 import FormVessel from '@components/Vessel/FormVessel';
 import VesselDataFormatting from '@components/Vessel/VesselDataFormatting';
 import FormError from '@components/Voyage/FormError';
 
-
 const EditVessel = () => {
   const history = useHistory();
-  const [vesselId, setVesselId] = useState();
+  const { vesselId } = useParams();
   const [vesselData, setVesselData] = useState();
-  const [formData, setFormData] = useState(JSON.parse(localStorage.getItem('formData')) || {});
-  const [errors, setErrors] = useState(JSON.parse(localStorage.getItem('errors')) || {});
-
+  const [formData, setFormData] = useState({});
+  const [errors, setErrors] = useState({});
 
   // Populate the form with this vessel's data
   const getVesselData = () => {
-    getData(`${VESSELS_URL}/${vesselId}`, 'vessel')
-      .then((resp) => {
-        setVesselData(resp);
-        setFormData({ ...resp, ...formData, id: vesselId });
-        // localStorage.setItem('formData', JSON.stringify(resp));
-      });
+    if (vesselId) {
+      getData(`${VESSELS_URL}/${vesselId}`, 'vessel')
+        .then((resp) => {
+          setVesselData(resp);
+          setFormData({ ...resp, ...formData, id: vesselId });
+        });
+    }
   };
-
 
   // Clear form field errors
   const removeError = (fieldName) => {
     const errorList = { ...errors };
     // Delete the error
-    const key = fieldName;
-    delete errorList[key];
+    delete errorList[fieldName];
     setErrors(errorList);
   };
-
 
   // Update form and vessel data if user changes any field
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
     removeError(e.target.name);
   };
-
 
   // Check fields that have been changed are valid
   const areFieldsValid = (dataToValidate) => {
@@ -71,13 +64,6 @@ const EditVessel = () => {
     return Object.keys(fieldsErroring).length > 0;
   };
 
-
-  // Clear vesselData from localStorage
-  const clearLocalStorage = () => {
-    setVesselData({});
-  };
-
-
   // Handle submit
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -95,30 +81,15 @@ const EditVessel = () => {
             setErrors({ EditVessel: resp.message });
             scrollToTopOnError('EditVessel');
           } else {
-            clearLocalStorage();
             history.push(VESSELS_PAGE_URL);
           }
         });
     }
   };
 
-
   useEffect(() => {
-    setVesselId(getId('vessel'));
-  }, []);
-
-  useEffect(() => {
-    if (vesselId) { getVesselData(); }
+    getVesselData();
   }, [vesselId]);
-
-  // Persist form data if page refreshed
-  useEffect(() => {
-    localStorage.setItem('formData', JSON.stringify(formData));
-  }, [formData]);
-
-  useEffect(() => {
-    localStorage.setItem('errors', JSON.stringify(errors));
-  }, [errors]);
 
   if (!vesselData) { return null; }
   return (
@@ -126,7 +97,7 @@ const EditVessel = () => {
       <div className="govuk-breadcrumbs">
         <ol className="govuk-breadcrumbs__list">
           <li className="govuk-breadcrumbs__list-item">
-            <a className="govuk-breadcrumbs__link" href="/vessels">Vessels</a>
+            <Link className="govuk-breadcrumbs__link" to="/vessels">Vessels</Link>
           </li>
           <li className="govuk-breadcrumbs__list-item" aria-current="page">Edit vessel</li>
         </ol>
@@ -148,7 +119,6 @@ const EditVessel = () => {
               <FormVessel
                 handleChange={handleChange}
                 handleSubmit={handleSubmit}
-                clearLocalStorage={clearLocalStorage}
                 data={vesselData}
                 formData={formData || ''}
                 errors={errors || ''}
