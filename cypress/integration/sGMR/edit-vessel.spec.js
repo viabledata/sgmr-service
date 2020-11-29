@@ -4,6 +4,7 @@ describe('Edit existing vessel information', () => {
   before(() => {
     cy.registerUser();
     cy.login();
+    cy.navigation('Vessels');
 
     cy.getVesselObj().then((vesselObj) => {
       vessel = vesselObj;

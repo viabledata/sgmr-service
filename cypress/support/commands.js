@@ -176,21 +176,31 @@ Cypress.Commands.add('getVesselObj', () => {
 });
 
 Cypress.Commands.add('addPeople', (person) => {
-  cy.navigation('People');
-  cy.get('.govuk-button--start').should('have.text', 'Save a person').click();
-  cy.url().should('include', '/save-person?source=people');
+  cy.contains('a', 'Save a person').should('have.text', 'Save a person').click();
   cy.enterPeopleInfo(person);
   cy.get('.govuk-button').click();
   cy.get('.govuk-error-message').should('not.be.visible');
+  cy.get('table').getTable().then((peopleData) => {
+    expect(peopleData).to.deep.include({
+      'Surname': person.lastName,
+      'Given name': person.firstName,
+      'Type': person.personType,
+    });
+  });
 });
 
 Cypress.Commands.add('addVessel', (vessel) => {
-  cy.navigation('Vessels');
-  cy.get('.govuk-button--start').should('have.text', 'Save a vessel').click();
-  cy.url().should('include', '/save-vessel?source=vessels');
+  cy.contains('a', 'Save a vessel').should('have.text', 'Save a vessel').click();
   cy.enterVesselInfo(vessel);
   cy.get('.govuk-button').click();
   cy.get('.govuk-error-message').should('not.be.visible');
+  cy.get('table').getTable().then((vesselData) => {
+    expect(vesselData).to.deep.include({
+      'Vessel name': vessel.name,
+      'Vessel type': vessel.type,
+      'Usual moorings': vessel.moorings,
+    });
+  });
 });
 
 Cypress.Commands.add('selectCheckbox', (option) => {
@@ -221,4 +231,11 @@ Cypress.Commands.add('checkAccessibility', () => {
       values: ['wcag2a', 'wcag2aa'],
     },
   }, terminalLog, true);
+});
+
+Cypress.Commands.add('deleteReports', () => {
+  if (Cypress.env('envname') === 'local') {
+    const query = `sh cypress/scripts/delete-reports.sh ${Cypress.env('dbName')}`;
+    cy.exec(query);
+  }
 });

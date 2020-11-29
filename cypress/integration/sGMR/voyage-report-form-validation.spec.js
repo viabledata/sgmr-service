@@ -12,11 +12,14 @@ describe('Validate report form', () => {
     cy.registerUser();
 
     cy.login();
+    cy.navigation('People');
 
     cy.getPersonObj().then((personObj) => {
       people = personObj;
       cy.addPeople(people);
     });
+
+    cy.navigation('Vessels');
 
     cy.getVesselObj().then((vesselObj) => {
       vessel = vesselObj;
@@ -150,9 +153,6 @@ describe('Validate report form', () => {
   });
 
   afterEach(() => {
-    if (Cypress.env('envname') === 'local') {
-      const query = `sh cypress/scripts/delete-reports.sh ${Cypress.env('dbName')}`;
-      cy.exec(query);
-    }
+    cy.deleteReports();
   });
 });

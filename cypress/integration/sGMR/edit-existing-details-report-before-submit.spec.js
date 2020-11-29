@@ -172,9 +172,6 @@ describe('Edit Details & Submit new voyage report', () => {
   });
 
   afterEach(() => {
-    if (Cypress.env('envname') === 'local') {
-      const query = `sh cypress/scripts/delete-reports.sh ${Cypress.env('dbName')}`;
-      cy.exec(query);
-    }
+    cy.deleteReports();
   });
 });
