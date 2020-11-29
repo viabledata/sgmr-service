@@ -35,6 +35,7 @@ describe('Add People in account', () => {
       'You must enter the document issuing state',
       'You must enter an expiry date',
     ];
+
     cy.contains('a', 'Save a person').should('have.text', 'Save a person').click();
 
     cy.get('.govuk-button').click();
@@ -49,7 +50,7 @@ describe('Add People in account', () => {
   });
 
   it('Should not allow adding a duplicate person', () => {
-    cy.contains('a', 'Save a person').should('have.text', 'Save a person').click();  
+    cy.contains('a', 'Save a person').should('have.text', 'Save a person').click();
     cy.enterPeopleInfo(people);
     cy.get('.govuk-button').click();
     cy.get('.govuk-error-message').should('contain.text', 'This person already exists').and('be.visible');
