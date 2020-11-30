@@ -47,8 +47,7 @@ const UserRegister = () => {
       postData(REGISTRATION_URL, formatData(formData))
         .then((resp) => {
           if (!resp.errors) {
-            history.push('/verify?source=registration');
-            localStorage.setItem('email', JSON.stringify(formData.email));
+            history.push(`/registration-confirmation?email=${formData.email}`);
           } else {
             setErrors({ userRegister: resp.message });
             scrollToTopOnError(resp.message);

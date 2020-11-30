@@ -21,6 +21,9 @@ import UserInputCode from '@components/User/UserInputCode';
 import UserRegister from '@components/User/UserRegister';
 import UserResendCode from '@components/User/UserResendCode';
 import EditAccount from '@components/User/EditAccount';
+import UserRegisterConfirmation from '@components/User/UserRegisterConfirmation';
+import AccountActivation from '@components/User/AccountActivation';
+
 
 import CreateAVessel from '@components/Vessel/CreateAVessel';
 import EditVessel from '@components/Vessel/EditVessel';
@@ -99,11 +102,11 @@ const Main = () => {
           <Route exact path="/register">
             <UserRegister />
           </Route>
-          <Route exact path="/verify">
-            <UserInputCode />
+          <Route exact path="/registration-confirmation">
+            <UserRegisterConfirmation />
           </Route>
-          <Route exact path="/resend-code">
-            <UserResendCode />
+          <Route exact path="/activate-account">
+            <AccountActivation />
           </Route>
           <Route exact path="/privacy-and-cookie-policy">
             <PrivacyCookiePolicy />
