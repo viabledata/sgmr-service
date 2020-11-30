@@ -32,6 +32,7 @@ const FormDeparture = ({
                 </label>
                 <input
                   className="govuk-input govuk-date-input__input govuk-input--width-2"
+                  id="departureDateDay"
                   name="departureDateDay"
                   id="departureDateDay"
                   type="text"
@@ -50,6 +51,7 @@ const FormDeparture = ({
                 </label>
                 <input
                   className="govuk-input govuk-date-input__input govuk-input--width-2"
+                  id="departureDateMonth"
                   name="departureDateMonth"
                   id="departureDateMonth"
                   type="text"
@@ -69,6 +71,7 @@ const FormDeparture = ({
                 </label>
                 <input
                   className="govuk-input govuk-date-input__input govuk-input--width-4"
+                  id="departureDateYear"
                   name="departureDateYear"
                   id="departureDateYear"
                   type="text"
@@ -104,6 +107,7 @@ const FormDeparture = ({
                 </label>
                 <input
                   className="govuk-input govuk-date-input__input govuk-input--width-2"
+                  id="departureTimeHour"
                   name="departureTimeHour"
                   id="departureTimeHour"
                   type="text"
@@ -122,6 +126,7 @@ const FormDeparture = ({
                 </label>
                 <input
                   className="govuk-input govuk-date-input__input govuk-input--width-2"
+                  id="departureTimeMinute"
                   name="departureTimeMinute"
                   id="departureTimeMinute"
                   type="text"
@@ -137,7 +142,7 @@ const FormDeparture = ({
         </fieldset>
       </div>
 
-      <div id="departureLocation" className={`govuk-form-group ${errors.departureLocation ? 'govuk-form-group--error' : ''}`}>
+      <div className={`govuk-form-group ${errors.departureLocation ? 'govuk-form-group--error' : ''}`}>
         <FormError error={errors.departureLocation} />
 
         <div className="govuk-form-group">
