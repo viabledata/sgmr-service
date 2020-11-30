@@ -17,9 +17,7 @@ import CreateAPerson from '@components/People/CreateAPerson';
 import EditPerson from '@components/People/EditPerson';
 
 import SignIn from '@components/User/SignIn';
-import UserInputCode from '@components/User/UserInputCode';
 import UserRegister from '@components/User/UserRegister';
-import UserResendCode from '@components/User/UserResendCode';
 import EditAccount from '@components/User/EditAccount';
 import UserRegisterConfirmation from '@components/User/UserRegisterConfirmation';
 import AccountActivation from '@components/User/AccountActivation';

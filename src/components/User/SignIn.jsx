@@ -3,11 +3,10 @@ import { Link, useHistory } from 'react-router-dom';
 import axios from 'axios';
 
 import { LOGIN_URL } from '@constants/ApiConstants';
+import Auth from '@lib/Auth';
 
 const SignIn = () => {
   const history = useHistory();
-  const urlParams = location.search.split('source=');
-  const [source, setSource] = useState(urlParams[1] || 'reports');
   const [formData, setFormData] = useState({});
   const [errors, setErrors] = useState({});
 
@@ -53,24 +52,17 @@ const SignIn = () => {
     return true;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    localStorage.clear();
     // Ensure required fields have a value
     if (checkRequiredFields() === true) {
-      axios.post(LOGIN_URL, formData)
-        .then((resp) => {
-          localStorage.setItem('email', JSON.stringify(formData.email));
-          source === 'registration' ? history.push('/verify?source=reports') : history.push(`/verify?source=${source}`);
-        })
-        .catch((err) => {
-          if (err.response) {
-            switch (err.response.status) {
-              case 401: setErrors({ ...errors, main: 'Email and password combination is invalid' }); break;
-              default: false;
-            }
-          }
-        });
+      try {
+        const response = await axios.post(LOGIN_URL, formData);
+        if (response.data.token) { Auth.storeToken(response.data.token); }
+        history.push('/reports');
+      } catch (err) {
+        setErrors({ ...errors, main: 'Email and password combination is invalid' });
+      }
     }
   };
 
