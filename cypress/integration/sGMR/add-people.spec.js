@@ -13,25 +13,11 @@ describe('Add People in account', () => {
     cy.injectAxe();
     cy.navigation('People');
     cy.url().should('include', '/people');
-    cy.get('.govuk-button--start').should('have.text', 'Save a person').click();
-    cy.url().should('include', '/save-person?source=people');
   });
 
   it('Should add people successfully', () => {
-    const expectedPeople = [
-      {
-        'Surname': people.lastName,
-        'Given name': people.firstName,
-        'Type': people.personType,
-      },
-    ];
     cy.checkAccessibility();
     cy.addPeople(people);
-    cy.get('table').getTable().then((peopleData) => {
-      expect(peopleData).to.not.be.empty;
-      cy.log(peopleData);
-      expectedPeople.forEach((item) => expect(peopleData).to.deep.include(item));
-    });
     cy.checkAccessibility();
   });
 
@@ -50,6 +36,8 @@ describe('Add People in account', () => {
       'You must enter an expiry date',
     ];
 
+    cy.contains('a', 'Save a person').should('have.text', 'Save a person').click();
+
     cy.get('.govuk-button').click();
 
     cy.get('.govuk-error-message').each((error, index) => {
@@ -62,12 +50,14 @@ describe('Add People in account', () => {
   });
 
   it('Should not allow adding a duplicate person', () => {
+    cy.contains('a', 'Save a person').should('have.text', 'Save a person').click();
     cy.enterPeopleInfo(people);
     cy.get('.govuk-button').click();
     cy.get('.govuk-error-message').should('contain.text', 'This person already exists').and('be.visible');
   });
 
   it('Should not add people when Clicking on "Exit without saving" button', () => {
+    cy.contains('a', 'Save a person').should('have.text', 'Save a person').click();
     cy.enterPeopleInfo(people);
     cy.get('#firstName [type="text"]').clear().type('Auto-test-no-save');
     cy.get('input[name="documentNumber"]').clear().type('5555555');

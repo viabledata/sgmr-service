@@ -6,6 +6,7 @@ describe('Edit exiting People information in the account', () => {
   before(() => {
     cy.registerUser();
     cy.login();
+    cy.navigation('People');
     cy.getPersonObj().then((personObj) => {
       people = personObj;
       cy.addPeople(people);

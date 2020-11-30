@@ -14,6 +14,7 @@ describe('Add report with saved data', () => {
   before(() => {
     cy.registerUser();
     cy.login();
+    cy.navigation('People');
 
     for (let i = 0; i < numberOfPersons; i += 1) {
       cy.getPersonObj().then((personObj) => {
@@ -21,6 +22,8 @@ describe('Add report with saved data', () => {
         cy.addPeople(persons[i]);
       });
     }
+
+    cy.navigation('Vessels');
 
     cy.getVesselObj().then((vesselObj) => {
       vessel = vesselObj;
@@ -153,10 +156,7 @@ describe('Add report with saved data', () => {
     });
   });
 
-  after(() => {
-    if (Cypress.env('envname') === 'local') {
-      const query = `sh cypress/scripts/delete-reports.sh ${Cypress.env('dbName')}`;
-      cy.exec(query);
-    }
+  afterEach(() => {
+    cy.deleteReports();
   });
 });
