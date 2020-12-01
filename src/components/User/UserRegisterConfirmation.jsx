@@ -5,13 +5,14 @@ import Auth from '@lib/Auth';
 
 const UserRegisterConfirmation = () => {
   const history = useHistory();
-  if (Auth.isAuthorized()) {
-    history.push('/reports');
-    return null;
-  }
 
   const location = useLocation();
   const { email } = qs.parse(location.search, { ignoreQueryPrefix: true });
+
+  if (Auth.isAuthorized() || !email) {
+    history.push('/reports');
+    return null;
+  }
 
   return (
     <div className="govuk-width-container ">
@@ -30,11 +31,6 @@ const UserRegisterConfirmation = () => {
             <p>
               Click the verification link inside the email. This link will remain valid
               for 3 hours. If you can’t see the email, please check any spam folders.
-            </p>
-            <p>
-              <a href="https://www.homeofficesurveys.homeoffice.gov.uk/s/NWSI7P/">What did you think of this service?</a>
-              {' '}
-              (takes 30 seconds)
             </p>
           </div>
         </div>
