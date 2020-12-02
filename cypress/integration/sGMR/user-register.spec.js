@@ -44,6 +44,25 @@ describe('User Registration', () => {
     });
   });
 
+  it('Should not be logged in without user account activation', () => {
+    cy.visit('/sign-in');
+    const { email, password } = user;
+    cy.get('input[name="email"]').clear().type(email);
+    cy.get('input[name="password"]').clear().type(password);
+
+    cy.server();
+    cy.route('POST', `${Cypress.env('api_server')}/login`).as('login');
+
+    cy.get('.govuk-button').click();
+
+    cy.wait('@login').should((xhr) => {
+      expect(xhr.status).to.eq(401);
+    });
+    cy.get('.govuk-error-summary__list')
+      .should('be.visible')
+      .contains('Email and password combination is invalid');
+  });
+
   it('Should not register user without submitting required data', () => {
     const errors = [
       'You must enter your first name',
