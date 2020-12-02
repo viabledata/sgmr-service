@@ -1,5 +1,3 @@
-const faker = require('faker');
-
 describe('User Registration', () => {
   let user;
   let apiServer;
@@ -36,15 +34,12 @@ describe('User Registration', () => {
     cy.checkAccessibility();
 
     cy.get('.govuk-button').click();
-    cy.url().should('include', '/verify?source=registration');
     cy.checkAccessibility();
 
     cy.wait('@registration').should((xhr) => {
       expect(xhr.status).to.eq(200);
-      let authCode = xhr.responseBody.twoFactorToken;
-      cy.get('input[name="twoFactorToken"]').type(authCode);
-      cy.get('.govuk-button').click();
-      cy.url().should('include', '/sign-in?source=registration');
+      cy.url().should('include', `email=${user.email}`);
+      cy.get('.govuk-panel--confirmation .govuk-panel__title').should('have.text', 'Account successfully created');
       cy.checkAccessibility();
     });
   });
@@ -74,48 +69,6 @@ describe('User Registration', () => {
 
     cy.get('.govuk-button').click();
     cy.get('.govuk-error-message').should('contain.text', 'User already registered');
-  });
-
-  it('Should not register when Entering Invalid Authentication code', () => {
-    const mail = faker.internet.exampleEmail();
-    cy.server();
-    cy.route('POST', `${apiServer}/registration`);
-
-    cy.enterUserInfo(user);
-    cy.get('input[name="email"]').clear().type(mail);
-    cy.get('input[name="confirmEmail"]').clear().type(mail);
-
-    cy.get('.govuk-button').click();
-    cy.get('input[name="twoFactorToken"]').type('1234');
-    cy.get('.govuk-button').click();
-    cy.get('.govuk-error-message').should('contain.text', 'Code is invalid');
-    cy.url().should('not.include', '/sign-in?source=registration');
-  });
-
-  it('Should register User By requesting new Authentication code', () => {
-    const mail = faker.internet.exampleEmail();
-    user.email = mail;
-
-    cy.server();
-    cy.route('POST', `${apiServer}/registration`).as('registration');
-
-    cy.enterUserInfo(user);
-    cy.get('input[name="email"]').clear().type(mail);
-    cy.get('input[name="confirmEmail"]').clear().type(mail);
-    cy.get('.govuk-button').click();
-
-    cy.contains('Problems receiving this code?').click();
-    cy.get('input[name="email"]').clear().type(mail);
-    cy.get('input[name="mobileNumber"]').clear().type(user.mobileNumber);
-    cy.get('.govuk-button').click();
-
-    cy.wait('@registration').should((xhr) => {
-      expect(xhr.status).to.eq(200);
-      const authCode = xhr.responseBody.twoFactorToken;
-      cy.get('input[name="twoFactorToken"]').type(authCode);
-      cy.get('.govuk-button').click();
-      cy.url().should('include', '/sign-in?source=registration');
-    });
   });
 
   it('Should not register if password does not meet validation rules', () => {

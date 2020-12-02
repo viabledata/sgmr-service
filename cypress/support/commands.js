@@ -1,6 +1,10 @@
 const faker = require('faker');
+const { MailSlurp } = require('mailslurp-client');
 
 const { getFutureDate, getPastDate, terminalLog } = require('./utils');
+
+const apiKey = 'e6a3b1f5d1877486bba59baa6800bcccc252997dc7561e56065a0a0d953f75bd';
+const mailslurp = new MailSlurp({ apiKey });
 
 Cypress.Commands.add('enterUserInfo', (user) => {
   cy.get('input[name="firstName"]').clear().type(user.firstName);
@@ -48,29 +52,24 @@ Cypress.Commands.add('navigation', (option) => {
 });
 
 Cypress.Commands.add('login', () => {
+  let apiServer = Cypress.env('api_server');
   cy.fixture('users.json').then((user) => {
-    const { email, password } = user;
-    cy.visit('/');
-    cy.get('.govuk-button--start').click();
-    cy.get('input[name="email"]').clear().type(email);
-    cy.get('input[name="password"]').clear().type(password);
-
-    cy.server();
-    cy.route('POST', `${Cypress.env('api_server')}/login`).as('login');
-
-    cy.get('.govuk-button').click();
-
-    cy.url().should('include', '/verify?source=reports');
-
-    cy.wait('@login').should((xhr) => {
-      expect(xhr.status).to.eq(200);
-      let authCode = xhr.responseBody.twoFactorToken;
-      cy.get('input[name="twoFactorToken"]').clear().type(authCode);
-      cy.get('.govuk-button').click();
+    cy.request({
+      method: 'POST',
+      url: `${apiServer}/login`,
+      body: user,
+      followRedirect: true,
+    }).then((response) => {
+      if (response.status === 200) {
+        cy.visit('/');
+        localStorage.setItem('token', response.body.token);
+      } else {
+        throw Error(`Login Failed for user: ${user.email}`);
+      }
     });
-    cy.url().should('include', '/reports');
-    cy.get('.govuk-button--start').should('have.text', 'Start now');
   });
+  cy.navigation('Reports');
+  cy.get('.govuk-button--start').should('have.text', 'Start now');
 });
 
 Cypress.Commands.add('registerUser', () => {
@@ -83,15 +82,11 @@ Cypress.Commands.add('registerUser', () => {
       failOnStatusCode: false,
     }).then((response) => {
       if (response.status === 200) {
-        cy.request(
-          'PATCH',
-          `${apiServer}/submit-verification-code`,
-          {
-            email: response.body.email,
-            twoFactorToken: response.body.twoFactorToken,
-          },
-        ).then((response2) => {
-          expect(response2.status).to.eq(200);
+        cy.waitForLatestEmail('cb52ca14-0d64-4821-9970-4e81b47e13c1').then((mail) => {
+          assert.isDefined(mail);
+          const token = /token=([A-Za-z0-9-_=]+\.[A-Za-z0-9-_=]+\.?[A-Za-z0-9-_.+/=]*)/.exec(mail.body)[1];
+          const email = /email=([A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,})/i.exec(mail.body)[1];
+          cy.visit(`/activate-account?email=${email}&token=${token}`);
         });
       } else if (response.body.message === 'User already registered') {
         expect(response.status).to.eq(400);
@@ -238,4 +233,12 @@ Cypress.Commands.add('deleteReports', () => {
     const query = `sh cypress/scripts/delete-reports.sh ${Cypress.env('dbName')}`;
     cy.exec(query);
   }
+});
+
+Cypress.Commands.add('createInbox', () => {
+  return mailslurp.createInbox();
+});
+
+Cypress.Commands.add('waitForLatestEmail', (inboxId) => {
+  return mailslurp.waitForLatestEmail(inboxId);
 });

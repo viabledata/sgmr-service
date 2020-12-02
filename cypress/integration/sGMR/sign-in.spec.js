@@ -4,7 +4,25 @@ describe('Sign-in flow', () => {
   });
 
   it('Should Sign-in Successfully', () => {
-    cy.login();
+    cy.visit('/');
+    cy.get('.govuk-button--start').should('have.text', 'Start now');
+    cy.get('.govuk-button--start').click();
+    cy.fixture('users.json').then((user) => {
+      const { email, password } = user;
+      cy.get('input[name="email"]').clear().type(email);
+      cy.get('input[name="password"]').clear().type(password);
+
+      cy.server();
+      cy.route('POST', `${Cypress.env('api_server')}/login`).as('login');
+
+      cy.get('.govuk-button').click();
+
+      cy.wait('@login').should((xhr) => {
+        expect(xhr.status).to.eq(200);
+      });
+    });
+    cy.url().should('include', '/reports');
+    cy.get('.govuk-button--start').should('have.text', 'Start now');
     cy.injectAxe();
     cy.checkAccessibility();
     cy.fixture('user-registration.json').then((userDetails) => {
@@ -48,48 +66,5 @@ describe('Sign-in flow', () => {
     cy.get('.govuk-error-summary__list').each((error, index) => {
       cy.wrap(error).should('contain.text', errors[index]).and('be.visible');
     });
-  });
-
-  it('Should not be Signed-in with invalid authentication code', () => {
-    cy.fixture('users.json').then((user) => {
-      cy.get('input[name="email"]').clear().type(user.email);
-      cy.get('input[name="password"]').clear().type(user.password);
-    });
-    cy.get('.govuk-button').click();
-    cy.get('input[name="twoFactorToken"]').clear().type('34567');
-    cy.get('.govuk-button').click();
-    cy.get('.govuk-error-message').should('contain.text', 'Code is invalid');
-    cy.url().should('not.include', '/reports');
-  });
-
-  it('Should be Signed-in By requesting new authentication code', () => {
-    cy.server();
-    cy.route('POST', `${Cypress.env('api_server')}/login`).as('login');
-    cy.visit('/sign-in');
-    cy.injectAxe();
-    cy.checkAccessibility();
-    cy.fixture('users.json').then((user) => {
-      cy.get('input[name="email"]').clear().type(user.email);
-      cy.get('input[name="password"]').clear().type(user.password);
-    });
-    cy.get('.govuk-button').click();
-
-    cy.contains('Problems receiving this code?').click();
-
-    cy.fixture('user-registration.json').then((userDetails) => {
-      cy.get('input[name="email"]').clear().type(userDetails.email);
-      cy.get('input[name="mobileNumber"]').clear().type(userDetails.mobileNumber);
-    });
-    cy.get('.govuk-button').click();
-
-    cy.wait('@login').should((xhr) => {
-      expect(xhr.status).to.eq(200);
-      const authCode = xhr.responseBody.twoFactorToken;
-      cy.get('input[name="twoFactorToken"]').clear().type(authCode);
-      cy.get('.govuk-button').click();
-    });
-
-    cy.url().should('include', '/reports');
-    cy.get('.govuk-button--start').should('have.text', 'Start now');
   });
 });
