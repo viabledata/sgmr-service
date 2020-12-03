@@ -240,5 +240,5 @@ Cypress.Commands.add('createInbox', () => {
 });
 
 Cypress.Commands.add('waitForLatestEmail', (inboxId) => {
-  return mailslurp.waitForLatestEmail(inboxId);
+  return mailslurp.waitForLatestEmail(inboxId, 30000);
 });
