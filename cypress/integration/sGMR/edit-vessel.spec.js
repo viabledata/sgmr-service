@@ -56,4 +56,8 @@ describe('Edit existing vessel information', () => {
       });
     });
   });
+
+  afterEach(() => {
+    localStorage.removeItem('token');
+  });
 });

@@ -58,7 +58,6 @@ Cypress.Commands.add('login', () => {
       method: 'POST',
       url: `${apiServer}/login`,
       body: user,
-      followRedirect: true,
     }).then((response) => {
       if (response.status === 200) {
         cy.visit('/');
@@ -74,6 +73,7 @@ Cypress.Commands.add('login', () => {
 
 Cypress.Commands.add('registerUser', () => {
   let apiServer = Cypress.env('api_server');
+  let token;
   cy.readFile('cypress/fixtures/user-registration.json').then((registrationData) => {
     cy.request({
       method: 'POST',
@@ -84,9 +84,19 @@ Cypress.Commands.add('registerUser', () => {
       if (response.status === 200) {
         cy.waitForLatestEmail('cb52ca14-0d64-4821-9970-4e81b47e13c1').then((mail) => {
           assert.isDefined(mail);
-          const token = /token=([A-Za-z0-9-_=]+\.[A-Za-z0-9-_=]+\.?[A-Za-z0-9-_.+/=]*)/.exec(mail.body)[1];
+          token = /token=([A-Za-z0-9-_=]+\.[A-Za-z0-9-_=]+\.?[A-Za-z0-9-_.+/=]*)/.exec(mail.body)[1];
           const email = /email=([A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,})/i.exec(mail.body)[1];
-          cy.visit(`/activate-account?email=${email}&token=${token}`);
+          cy.log('token:', token, 'email', email);
+          cy.request({
+            url: `${apiServer}/activate-account`,
+            method: 'POST',
+            body: {
+              token: `${token}`,
+            },
+          }).then((activateResponse) => {
+            expect(activateResponse.status).to.eq(200);
+            expect(activateResponse.body.email).to.eq(email);
+          });
         });
       } else if (response.body.message === 'User already registered') {
         expect(response.status).to.eq(400);
@@ -240,5 +250,5 @@ Cypress.Commands.add('createInbox', () => {
 });
 
 Cypress.Commands.add('waitForLatestEmail', (inboxId) => {
-  return mailslurp.waitForLatestEmail(inboxId, 30000);
+  return mailslurp.waitForLatestEmail(inboxId);
 });

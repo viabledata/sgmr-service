@@ -94,4 +94,8 @@ describe('Edit exiting People information in the account', () => {
     cy.get('input[name="documentNumber"]').should('not.have.value', people.documentNumber);
     cy.get('input[name="documentIssuingState"]').should('not.have.value', people.issuingState);
   });
+
+  afterEach(() => {
+    localStorage.removeItem('token');
+  });
 });

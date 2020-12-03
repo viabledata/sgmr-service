@@ -149,5 +149,6 @@ describe('Validate report form', () => {
 
   afterEach(() => {
     cy.deleteReports();
+    localStorage.removeItem('token');
   });
 });

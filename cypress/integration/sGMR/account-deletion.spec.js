@@ -49,4 +49,8 @@ describe('Account deletion', () => {
       .should('be.visible')
       .contains('Email and password combination is invalid');
   });
+
+  afterEach(() => {
+    localStorage.removeItem('token');
+  });
 });

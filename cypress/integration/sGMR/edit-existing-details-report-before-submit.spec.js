@@ -173,5 +173,6 @@ describe('Edit Details & Submit new voyage report', () => {
 
   afterEach(() => {
     cy.deleteReports();
+    localStorage.removeItem('token');
   });
 });

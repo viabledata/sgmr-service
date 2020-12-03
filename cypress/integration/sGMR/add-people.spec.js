@@ -72,4 +72,8 @@ describe('Add People in account', () => {
     cy.navigation('Signout');
     cy.url().should('include', '/sign-in');
   });
+
+  afterEach(() => {
+    localStorage.removeItem('token');
+  });
 });

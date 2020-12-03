@@ -27,5 +27,6 @@ describe('My Account details verification', () => {
   after(() => {
     cy.navigation('Signout');
     cy.url().should('include', '/sign-in');
+    localStorage.removeItem('token');
   });
 });

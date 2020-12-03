@@ -67,4 +67,8 @@ describe('Sign-in flow', () => {
       cy.wrap(error).should('contain.text', errors[index]).and('be.visible');
     });
   });
+
+  afterEach(() => {
+    localStorage.removeItem('token');
+  });
 });
