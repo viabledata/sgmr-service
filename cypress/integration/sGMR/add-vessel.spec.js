@@ -13,25 +13,11 @@ describe('Add new vessel in account', () => {
     cy.login();
     cy.injectAxe();
     cy.navigation('Vessels');
-    cy.url().should('include', '/vessels');
-    cy.get('.govuk-button--start').should('have.text', 'Save a vessel').click();
   });
 
   it('Should add a new Vessel', () => {
-    const expectedVessel = [
-      {
-        'Vessel name': vessel.name,
-        'Vessel type': vessel.type,
-        'Usual moorings': vessel.moorings,
-      },
-    ];
     cy.checkAccessibility();
     cy.addVessel(vessel);
-    cy.get('table').getTable().then((vesselData) => {
-      expect(vesselData).to.not.be.empty;
-      cy.log(vesselData);
-      expectedVessel.forEach((item) => expect(vesselData).to.deep.include(item));
-    });
     cy.checkAccessibility();
   });
 
@@ -43,6 +29,8 @@ describe('Add new vessel in account', () => {
       'You must enter the vessel registration',
     ];
 
+    cy.contains('a', 'Save a vessel').should('have.text', 'Save a vessel').click();
+
     cy.get('.govuk-button').click();
 
     cy.get('.govuk-error-message').each((error, index) => {
@@ -51,12 +39,14 @@ describe('Add new vessel in account', () => {
   });
 
   it('Should not allow adding a duplicate vessel', () => {
+    cy.contains('a', 'Save a vessel').should('have.text', 'Save a vessel').click();
     cy.enterVesselInfo(vessel);
     cy.get('.govuk-button').click();
     cy.get('.govuk-error-message').should('contain.text', 'This vessel already exists').and('be.visible');
   });
 
   it('Should not add a vessel when Clicking on "Exit without saving" button', () => {
+    cy.contains('a', 'Save a vessel').should('have.text', 'Save a vessel').click();
     cy.enterVesselInfo(vessel);
     cy.get('[name="vesselName"]').clear().type('Titanic');
     cy.get('[name="registration"]').clear().type('9999999');
