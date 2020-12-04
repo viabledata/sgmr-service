@@ -60,6 +60,7 @@ describe('Add new vessel in account', () => {
   after(() => {
     cy.navigation('Signout');
     cy.url().should('include', '/sign-in');
+    cy.deleteAllEmails();
   });
 
   afterEach(() => {

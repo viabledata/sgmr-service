@@ -3,7 +3,8 @@ const { MailSlurp } = require('mailslurp-client');
 
 const { getFutureDate, getPastDate, terminalLog } = require('./utils');
 
-const apiKey = 'e6a3b1f5d1877486bba59baa6800bcccc252997dc7561e56065a0a0d953f75bd';
+const apiKey = Cypress.env('mailSlurpApiKey');
+
 const mailslurp = new MailSlurp({ apiKey });
 
 Cypress.Commands.add('enterUserInfo', (user) => {
@@ -58,8 +59,30 @@ Cypress.Commands.add('login', () => {
       method: 'POST',
       url: `${apiServer}/login`,
       body: user,
+      failOnStatusCode: false,
     }).then((response) => {
-      if (response.status === 200) {
+      if (response.body.message === 'User not verified, please verify registration') {
+        cy.request({
+          method: 'POST',
+          url: `${apiServer}/resend-activation-link`,
+          body: {
+            email: user.email,
+          },
+        }).then((res) => {
+          expect(res.status).to.eq(204);
+        });
+        cy.wait(3000);
+        cy.activateAccount();
+        cy.request({
+          method: 'POST',
+          url: `${apiServer}/login`,
+          body: user,
+        }).then((res) => {
+          expect(res.status).to.eq(200);
+          cy.visit('/');
+          localStorage.setItem('token', response.body.token);
+        });
+      } else if (response.status === 200) {
         cy.visit('/');
         localStorage.setItem('token', response.body.token);
       } else {
@@ -73,7 +96,6 @@ Cypress.Commands.add('login', () => {
 
 Cypress.Commands.add('registerUser', () => {
   let apiServer = Cypress.env('api_server');
-  let token;
   cy.readFile('cypress/fixtures/user-registration.json').then((registrationData) => {
     cy.request({
       method: 'POST',
@@ -82,22 +104,8 @@ Cypress.Commands.add('registerUser', () => {
       failOnStatusCode: false,
     }).then((response) => {
       if (response.status === 200) {
-        cy.waitForLatestEmail('cb52ca14-0d64-4821-9970-4e81b47e13c1').then((mail) => {
-          assert.isDefined(mail);
-          token = /token=([A-Za-z0-9-_=]+\.[A-Za-z0-9-_=]+\.?[A-Za-z0-9-_.+/=]*)/.exec(mail.body)[1];
-          const email = /email=([A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,})/i.exec(mail.body)[1];
-          cy.log('token:', token, 'email', email);
-          cy.request({
-            url: `${apiServer}/activate-account`,
-            method: 'POST',
-            body: {
-              token: `${token}`,
-            },
-          }).then((activateResponse) => {
-            expect(activateResponse.status).to.eq(200);
-            expect(activateResponse.body.email).to.eq(email);
-          });
-        });
+        cy.wait(3000);
+        cy.activateAccount();
       } else if (response.body.message === 'User already registered') {
         expect(response.status).to.eq(400);
       } else {
@@ -245,10 +253,29 @@ Cypress.Commands.add('deleteReports', () => {
   }
 });
 
-Cypress.Commands.add('createInbox', () => {
-  return mailslurp.createInbox();
+Cypress.Commands.add('waitForLatestEmail', (inboxId) => {
+  return mailslurp.waitForLatestEmail(inboxId, 30000);
 });
 
-Cypress.Commands.add('waitForLatestEmail', (inboxId) => {
-  return mailslurp.waitForLatestEmail(inboxId);
+Cypress.Commands.add('deleteAllEmails', () => {
+  mailslurp.emptyInbox('658bfbb0-47bc-4bb6-b256-412c1534b602');
+});
+
+Cypress.Commands.add('activateAccount', () => {
+  let apiServer = Cypress.env('api_server');
+  cy.waitForLatestEmail('658bfbb0-47bc-4bb6-b256-412c1534b602').then((mail) => {
+    assert.isDefined(mail);
+    const token = /token=([A-Za-z0-9-_=]+\.[A-Za-z0-9-_=]+\.?[A-Za-z0-9-_.+/=]*)/.exec(mail.body)[1];
+    const email = /email=([A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,})/i.exec(mail.body)[1];
+    cy.request({
+      url: `${apiServer}/activate-account`,
+      method: 'POST',
+      body: {
+        token: `${token}`,
+      },
+    }).then((activateResponse) => {
+      expect(activateResponse.status).to.eq(200);
+      expect(activateResponse.body.email).to.eq(email);
+    });
+  });
 });

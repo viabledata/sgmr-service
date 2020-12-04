@@ -48,18 +48,8 @@ describe('Edit Details & Submit new voyage report', () => {
       person = peopleObj;
       cy.enterPeopleInfo(person);
       cy.contains('Add to manifest').click();
-      cy.assertPeopleTable((reportData) => {
-        expect(reportData).to.have.length(1);
-        expect(reportData[0]).to.deep.include({
-          'Last name': person.lastName,
-          'First name': person.firstName,
-        });
-      });
-      cy.saveAndContinueOnPeopleManifest(true);
-      cy.contains(`People already added to the manifest:${person.firstName} ${person.lastName}`);
+      cy.saveAndContinueOnPeopleManifest(false);
     });
-    cy.saveAndContinue();
-    cy.saveAndContinueOnPeopleManifest(false);
     cy.checkNoErrors();
     cy.enterSkipperDetails();
     cy.saveAndContinue();
@@ -174,5 +164,9 @@ describe('Edit Details & Submit new voyage report', () => {
   afterEach(() => {
     cy.deleteReports();
     localStorage.removeItem('token');
+  });
+
+  after(() => {
+    cy.deleteAllEmails();
   });
 });

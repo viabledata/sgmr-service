@@ -71,4 +71,8 @@ describe('Sign-in flow', () => {
   afterEach(() => {
     localStorage.removeItem('token');
   });
+
+  after(() => {
+    cy.deleteAllEmails();
+  });
 });

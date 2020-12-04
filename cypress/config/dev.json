@@ -4,6 +4,7 @@
       "envname": "development",
       "api_server": "https://sgmr-data-api.dev.sgmr.cop.homeoffice.gov.uk/v1",
       "host": "https://www.dev.sgmr.cop.homeoffice.gov.uk",
-      "dbName": "sgmr_db"
+      "dbName": "sgmr_db",
+      "mailSlurpApiKey": "f6a68ba944c08a4c214921f604712319237fd82d2a1a3eb25512dfb6e3bc58a2"
     }  
 }

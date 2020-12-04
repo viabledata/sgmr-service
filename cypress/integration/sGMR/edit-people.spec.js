@@ -98,4 +98,8 @@ describe('Edit exiting People information in the account', () => {
   afterEach(() => {
     localStorage.removeItem('token');
   });
+
+  after(() => {
+    cy.deleteAllEmails();
+  });
 });

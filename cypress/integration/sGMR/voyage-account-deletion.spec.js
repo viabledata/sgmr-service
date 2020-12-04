@@ -53,4 +53,8 @@ describe('Account deletion', () => {
   afterEach(() => {
     localStorage.removeItem('token');
   });
+
+  after(() => {
+    cy.deleteAllEmails();
+  });
 });
