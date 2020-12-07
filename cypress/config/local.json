@@ -4,7 +4,6 @@
       "envname": "local",
       "api_server": "http://localhost:5000/v1",
       "host": "http://localhost:8080",
-      "dbName": "sgmr_test_db",
-      "mailSlurpApiKey": "f6a68ba944c08a4c214921f604712319237fd82d2a1a3eb25512dfb6e3bc58a2"
+      "dbName": "sgmr_test_db"
     }  
 }
