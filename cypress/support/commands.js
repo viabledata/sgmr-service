@@ -279,11 +279,3 @@ Cypress.Commands.add('activateAccount', () => {
     });
   });
 });
-
-Cypress.Commands.add('resetPassword', () => {
-  cy.waitForLatestEmail('658bfbb0-47bc-4bb6-b256-412c1534b602').then((mail) => {
-    assert.isDefined(mail);
-    const token = /token=([A-Za-z0-9-_=]+\.[A-Za-z0-9-_=]+\.?[A-Za-z0-9-_.+/=]*)/.exec(mail.body)[1];
-    cy.visit(`/new-password?token=${token}`);
-  });
-});
