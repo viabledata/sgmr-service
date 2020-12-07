@@ -100,10 +100,8 @@ const ManageReports = (pageData) => {
                 <tr className="govuk-table__row">
                   <th scope="col" className="govuk-table__header">Vessel</th>
                   <th scope="col" className="govuk-table__header">Departure date</th>
-                  <th scope="col" className="govuk-table__header">Departure time</th>
                   <th scope="col" className="govuk-table__header">Departure port</th>
                   <th scope="col" className="govuk-table__header">Arrival port</th>
-                  <th scope="col" className="govuk-table__header">Submission reference</th>
                 </tr>
               </thead>
               <tbody>
@@ -129,10 +127,8 @@ const ManageReports = (pageData) => {
                             {formatUIDate(voyage.departureDate)}
                           </Link>
                         </td>
-                        <td className="govuk-table__cell">{voyage.departureTime}</td>
                         <td className="govuk-table__cell">{voyage.departurePort}</td>
                         <td className="govuk-table__cell">{voyage.arrivalPort}</td>
-                        <td className="govuk-table__cell">{voyage.cbpId && voyage.cbpId}</td>
                       </tr>
                     );
                   }
