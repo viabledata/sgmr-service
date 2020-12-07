@@ -163,6 +163,9 @@ steps:
       from_secret: SGMR_SERVICE_PORT
     SGMR_SERVICE_URL:
       from_secret: DEV_SGMR_SERVICE_URL
+    MAILSLURP_API_KEY:
+      from_secret: DEV_SGMR_MAILSLURP_API_KEY
+
     WHITELIST:
       from_secret: DEV_WHITELIST
   when:
@@ -202,6 +205,8 @@ steps:
       from_secret: SGMR_SERVICE_PORT
     SGMR_SERVICE_URL:
       from_secret: STAGING_SGMR_SERVICE_URL
+    MAILSLURP_API_KEY:
+      from_secret: STAGING_SGMR_MAILSLURP_API_KEY
     WHITELIST:
       from_secret: STAGING_WHITELIST
   when:
@@ -241,6 +246,8 @@ steps:
       from_secret: SGMR_SERVICE_PORT
     SGMR_SERVICE_URL:
       from_secret: PRODUCTION_SGMR_SERVICE_URL
+    MAILSLURP_API_KEY:
+      from_secret: PRODUCTION_SGMR_MAILSLURP_API_KEY
     WHITELIST:
       from_secret: PRODUCTION_WHITELIST
   when:
