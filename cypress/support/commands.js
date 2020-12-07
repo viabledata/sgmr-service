@@ -3,13 +3,7 @@ const { MailSlurp } = require('mailslurp-client');
 
 const { getFutureDate, getPastDate, terminalLog } = require('./utils');
 
-let apiKey;
-
-if (Cypress.env('envname') === 'local') {
-  apiKey = Cypress.env('mailSlurpApiKey');
-} else {
-  apiKey = process.env.MAILSLURP_API_KEY;
-}
+const apiKey = Cypress.env('mailSlurpApiKey');
 
 const mailslurp = new MailSlurp({ apiKey });
 
