@@ -8,7 +8,6 @@ describe('Add new voyage report', () => {
   let vessel;
   let person;
   let departDate;
-  let departTime;
 
   before(() => {
     cy.registerUser();
@@ -29,7 +28,6 @@ describe('Add new voyage report', () => {
     arrivalPort = 'Felixstowe';
     departureDateTime = getFutureDate(1, 'DD/MM/YYYY HH:MM');
     departDate = departureDateTime.split(' ')[0];
-    departTime = departureDateTime.split(' ')[1];
     arrivalDateTime = getFutureDate(2, 'DD/MM/YYYY HH:MM');
 
     cy.navigation('Reports');
@@ -43,10 +41,8 @@ describe('Add new voyage report', () => {
       {
         'Vessel': vessel.name,
         'Departure date': departDate,
-        'Departure time': `${departTime}:00`,
         'Departure port': 'DVR',
         'Arrival port': 'FXT',
-        'Submission reference': '',
       },
     ];
     cy.checkAccessibility();
@@ -113,10 +109,8 @@ describe('Add new voyage report', () => {
       {
         'Vessel': vessel.name,
         'Departure date': departDate,
-        'Departure time': `${departTime}:00`,
         'Departure port': 'DVR',
         'Arrival port': 'FXT',
-        'Submission reference': '',
       },
     ];
     cy.enterDepartureDetails(departureDateTime, departurePort);
@@ -156,10 +150,8 @@ describe('Add new voyage report', () => {
       {
         'Vessel': vessel.name,
         'Departure date': departDate,
-        'Departure time': `${departTime}:00`,
         'Departure port': 'DVR',
         'Arrival port': 'FXT',
-        'Submission reference': '',
       },
     ];
     cy.enterDepartureDetails(departureDateTime, departurePort);
