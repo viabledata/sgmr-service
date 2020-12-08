@@ -24,7 +24,7 @@ Cypress.Commands.add('enterVesselInfo', (newVessel) => {
   cy.get('[name="registration"]').clear().type(newVessel.regNumber);
   cy.get('[name="hullIdentificationNumber"]').clear().type(newVessel.hullIdNumber);
   cy.get('[name="callsign"]').clear().type(newVessel.callSign);
-  cy.get('[name="vesselNationality"]').clear().type(newVessel.nationality);
+  cy.get('[name="vesselNationality"]').select(newVessel.nationality);
   cy.get('[name="portOfRegistry"]').clear().type(newVessel.port);
 });
 

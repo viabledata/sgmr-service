@@ -17,11 +17,9 @@ const FormVessels = ({
       .then((resp) => setVesselData(resp.items));
   };
 
-
   useEffect(() => {
     storeVesselData();
   }, []);
-
 
   return (
     <section>
