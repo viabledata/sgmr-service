@@ -8,7 +8,6 @@ describe('Edit Details & Submit new voyage report', () => {
   let vessel;
   let person;
   let departDate;
-  let departTime;
 
   before(() => {
     cy.registerUser();
@@ -25,7 +24,6 @@ describe('Edit Details & Submit new voyage report', () => {
     arrivalPort = 'Felixstowe';
     departureDateTime = getFutureDate(1, 'DD/MM/YYYY HH:MM');
     departDate = departureDateTime.split(' ')[0];
-    departTime = departureDateTime.split(' ')[1];
     arrivalDateTime = getFutureDate(2, 'DD/MM/YYYY HH:MM');
 
     cy.navigation('Reports');
@@ -60,17 +58,14 @@ describe('Edit Details & Submit new voyage report', () => {
     departureDateTime = getFutureDate(2, 'DD/MM/YYYY HH:MM');
     departurePort = 'London';
     departDate = departureDateTime.split(' ')[0];
-    departTime = departureDateTime.split(' ')[1];
     arrivalDateTime = getFutureDate(2, 'DD/MM/YYYY HH:MM');
     arrivalPort = 'Swansea';
     const expectedReport = [
       {
         'Vessel': vessel.name,
         'Departure date': departDate,
-        'Departure time': `${departTime}:00`,
         'Departure port': 'LGP',
         'Arrival port': 'Swansea Marina',
-        'Submission reference': '',
       },
     ];
     cy.get('a[href="/save-voyage/page-1"]').click();
@@ -117,10 +112,8 @@ describe('Edit Details & Submit new voyage report', () => {
       {
         'Vessel': vessel.name,
         'Departure date': departDate,
-        'Departure time': `${departTime}:00`,
         'Departure port': 'DVR',
         'Arrival port': 'FXT',
-        'Submission reference': '',
       },
     ];
     cy.get('a[href="/save-voyage/page-3"]').click();
