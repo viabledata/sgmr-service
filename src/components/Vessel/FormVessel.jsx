@@ -106,6 +106,7 @@ const FormVessel = ({
         <select
           className="govuk-select"
           name="vesselNationality"
+          id="vesselNationality"
           value={formData.vesselNationality || ''}
           onChange={handleChange}
         >

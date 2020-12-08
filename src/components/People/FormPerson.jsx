@@ -7,45 +7,44 @@ import FormError from '@components/Voyage/FormError';
 const FormPerson = ({
   handleSubmit, handleChange, data, formData, errors, source, voyageId,
 }) => {
-
   return (
     <section>
       <div id="firstName" className={`govuk-form-group ${errors.firstName ? 'govuk-form-group--error' : ''}`}>
         <label className="govuk-label" htmlFor="firstName">
           First name
+          <FormError error={errors.firstName} />
+          <input
+            className="govuk-input"
+            name="firstName"
+            type="text"
+            value={formData.firstName || data.firstName || ''}
+            onChange={handleChange}
+          />
         </label>
-        <FormError error={errors.firstName} />
-        <input
-          className="govuk-input"
-          name="firstName"
-          type="text"
-          value={formData.firstName || data.firstName || ''}
-          onChange={handleChange}
-        />
       </div>
 
       <div id="lastName" className={`govuk-form-group ${errors.lastName ? 'govuk-form-group--error' : ''}`}>
         <label className="govuk-label" htmlFor="lastName">
           Last Name
+          <FormError error={errors.lastName} />
+          <input
+            className="govuk-input"
+            name="lastName"
+            type="text"
+            value={formData.lastName || data.lastName || ''}
+            onChange={handleChange}
+          />
         </label>
-        <FormError error={errors.lastName} />
-        <input
-          className="govuk-input"
-          name="lastName"
-          type="text"
-          value={formData.lastName || data.lastName || ''}
-          onChange={handleChange}
-        />
       </div>
 
-      <div id="gender" className={`govuk-form-group ${errors.gender ? 'govuk-form-group--error' : ''}`}>
+      <div className={`govuk-form-group ${errors.gender ? 'govuk-form-group--error' : ''}`}>
       <fieldset className="govuk-fieldset" aria-describedby="gender-hint">
         <legend className="govuk-fieldset__legend">
-          <label className="govuk-fieldset__heading">
+          <label className="govuk-fieldset__heading" htmlFor="gender">
             Gender
           </label>
         </legend>
-        <div className="govuk-radios govuk-radios">
+        <div id="gender" className="govuk-radios govuk-radios">
           <FormError error={errors.gender} />
           <div className="govuk-radios__item">
             <input
@@ -93,7 +92,7 @@ const FormPerson = ({
       </fieldset>
       </div>
 
-      <div id="dateOfBirth" className={`govuk-form-group ${errors.dateOfBirth ? 'govuk-form-group--error' : ''}`}>
+      <div className={`govuk-form-group ${errors.dateOfBirth ? 'govuk-form-group--error' : ''}`}>
         <fieldset className="govuk-fieldset" role="group" aria-describedby="dob-hint">
           <legend className="govuk-fieldset__legend">
             <label className="govuk-label" htmlFor="dateOfBirth">
@@ -104,7 +103,7 @@ const FormPerson = ({
           <span className="govuk-hint">
             For example, 31 3 1980
           </span>
-          <div className="govuk-date-input">
+          <div id="dateOfBirth" className="govuk-date-input">
             <div className="govuk-date-input__item">
               <div className="govuk-form-group">
                 <label className="govuk-label govuk-date-input__label" htmlFor="dateOfBirthDay">
@@ -113,6 +112,7 @@ const FormPerson = ({
                 <input
                   className="govuk-input govuk-date-input__input govuk-input--width-2"
                   name="dateOfBirthDay"
+                  id="dateOfBirthDay"
                   type="text"
                   maxLength={2}
                   autoComplete="bday-day"
@@ -131,6 +131,7 @@ const FormPerson = ({
                 <input
                   className="govuk-input govuk-date-input__input govuk-input--width-2"
                   name="dateOfBirthMonth"
+                  id="dateOfBirthMonth"
                   type="text"
                   maxLength={2}
                   autoComplete="bday-month"
@@ -149,6 +150,7 @@ const FormPerson = ({
                 <input
                   className="govuk-input govuk-date-input__input govuk-input--width-4"
                   name="dateOfBirthYear"
+                  id="dateOfBirthYear"
                   type="text"
                   maxLength={4}
                   autoComplete="bday-year"
@@ -166,18 +168,18 @@ const FormPerson = ({
       <div id="placeOfBirth" className={`govuk-form-group ${errors.placeOfBirth ? 'govuk-form-group--error' : ''}`}>
         <label className="govuk-label" htmlFor="placeOfBirth">
           Place of birth
+          <FormError error={errors.placeOfBirth} />
+          <input
+            className="govuk-input"
+            name="placeOfBirth"
+            type="text"
+            value={formData.placeOfBirth || data.placeOfBirth || ''}
+            onChange={(handleChange)}
+          />
         </label>
-        <FormError error={errors.placeOfBirth} />
-        <input
-          className="govuk-input"
-          name="placeOfBirth"
-          type="text"
-          value={formData.placeOfBirth || data.placeOfBirth || ''}
-          onChange={(handleChange)}
-        />
       </div>
 
-      <div id="nationality" className={`govuk-form-group ${errors.nationality ? 'govuk-form-group--error' : ''}`}>
+      <div className={`govuk-form-group ${errors.nationality ? 'govuk-form-group--error' : ''}`}>
         <label className="govuk-label" htmlFor="nationality">
           Nationality
         </label>
@@ -185,13 +187,14 @@ const FormPerson = ({
         <select
           className="govuk-select"
           name="nationality"
+          id="nationality"
           type="text"
           value={formData.nationality || data.nationality || 'Please select'}
           onChange={handleChange}
         >
           <option disabled>Please select</option>
           {nationalities.map((nationality, index) => (
-              <option key={index} value={nationality.value}>{nationality.label}</option>
+            <option key={index} value={nationality.value}>{nationality.label}</option>
           ))}
         </select>
       </div>
@@ -199,11 +202,11 @@ const FormPerson = ({
       <div id="peopleType" className={`govuk-form-group ${errors.peopleType ? 'govuk-form-group--error' : ''}`}>
         <fieldset className="govuk-fieldset" aria-describedby="person-type-hint">
           <legend className="govuk-fieldset__legend">
-            <label className="govuk-fieldset__heading">
+            <label className="govuk-fieldset__heading" htmlFor="personType">
               Person type
             </label>
           </legend>
-          <div className="govuk-radios govuk-radios">
+          <div id="personType" className="govuk-radios govuk-radios">
             <FormError error={errors.peopleType} />
             <div className="govuk-radios__item">
               <input
@@ -255,11 +258,11 @@ const FormPerson = ({
       <div id="documentType" className={`govuk-form-group ${errors.documentType ? 'govuk-form-group--error' : ''}`}>
         <fieldset className="govuk-fieldset" aria-describedby="travel-document-type-hint">
           <legend className="govuk-fieldset__legend">
-            <label className="govuk-fieldset__heading">
+            <label className="govuk-fieldset__heading" htmlFor="travelDoc">
               Travel document type
             </label>
           </legend>
-          <div className="govuk-radios govuk-radios govuk-form-group">
+          <div id="travelDoc" className="govuk-radios govuk-radios govuk-form-group">
             <FormError error={errors.documentType} />
             <div className="govuk-radios__item">
               <input
@@ -294,18 +297,18 @@ const FormPerson = ({
               </label>
             </div>
             <div className="govuk-radios__item">
-              <input
-                className="govuk-radios__input"
-                id="documentType-3"
-                name="documentType"
-                type="radio"
-                value="Other"
-                checked={(formData.documentType === 'Other' || data.documentType === 'Other') ? 'checked' : ''}
-                onChange={(e) => {
-                  handleChange(e);
-                }}
-              />
               <label className="govuk-label govuk-radios__label" htmlFor="documentType-3">
+                <input
+                  className="govuk-radios__input"
+                  id="documentType-3"
+                  name="documentType"
+                  type="radio"
+                  value="Other"
+                  checked={(formData.documentType === 'Other' || data.documentType === 'Other') ? 'checked' : ''}
+                  onChange={(e) => {
+                    handleChange(e);
+                  }}
+                />
                 Other
               </label>
             </div>
@@ -313,13 +316,13 @@ const FormPerson = ({
           <div className="govuk-form-group">
             <label className="govuk-label" htmlFor="documentType-other">
               If &quot;Other&quot;, please specify
+              <input
+                className="govuk-input"
+                name="documentType"
+                type="text"
+                onChange={handleChange}
+              />
             </label>
-            <input
-              className="govuk-input"
-              name="documentType"
-              type="text"
-              onChange={handleChange}
-            />
           </div>
         </fieldset>
       </div>
@@ -327,36 +330,36 @@ const FormPerson = ({
       <div id="documentNumber" className={`govuk-form-group ${errors.documentNumber ? 'govuk-form-group--error' : ''}`}>
         <label className="govuk-label" htmlFor="documentNumber">
           Document number
+          <FormError error={errors.documentNumber} />
+          <input
+            className="govuk-input"
+            name="documentNumber"
+            type="text"
+            value={formData.documentNumber || data.documentNumber || ''}
+            onChange={handleChange}
+          />
         </label>
-        <FormError error={errors.documentNumber} />
-        <input
-          className="govuk-input"
-          name="documentNumber"
-          type="text"
-          value={formData.documentNumber || data.documentNumber || ''}
-          onChange={handleChange}
-        />
       </div>
 
       <div id="documentIssuingState" className={`govuk-form-group ${errors.documentIssuingState ? 'govuk-form-group--error' : ''}`}>
         <label className="govuk-label" htmlFor="documentIssuingState">
           Issuing state
+          <span className="govuk-hint">
+            Please enter 3 letter ISO country code, for example GBR
+          </span>
+          <FormError error={errors.documentIssuingState} />
+          <input
+            className="govuk-input govuk-input--width-3"
+            name="documentIssuingState"
+            type="text"
+            maxLength={3}
+            value={formData.documentIssuingState || data.documentIssuingState || ''}
+            onChange={handleChange}
+          />
         </label>
-        <span className="govuk-hint">
-          Please enter 3 letter ISO country code, for example GBR
-        </span>
-        <FormError error={errors.documentIssuingState} />
-        <input
-          className="govuk-input govuk-input--width-3"
-          name="documentIssuingState"
-          type="text"
-          maxLength={3}
-          value={formData.documentIssuingState || data.documentIssuingState || ''}
-          onChange={handleChange}
-        />
       </div>
 
-      <div id="documentExpiryDate" className={`govuk-form-group ${errors.documentExpiryDate ? 'govuk-form-group--error' : ''}`}>
+      <div className={`govuk-form-group ${errors.documentExpiryDate ? 'govuk-form-group--error' : ''}`}>
         <fieldset className="govuk-fieldset" role="group" aria-describedby="documentExpiryDate-hint">
           <legend className="govuk-fieldset__legend">
             <label className="govuk-label" htmlFor="documentExpiryDate">
@@ -366,7 +369,7 @@ const FormPerson = ({
           <span className="govuk-hint">
             For example, 31 3 2022
           </span>
-          <div className="govuk-date-input">
+          <div id="documentExpiryDate" className="govuk-date-input">
             <FormError error={errors.documentExpiryDate} />
             <div className="govuk-date-input__item">
               <div className="govuk-form-group">
@@ -376,6 +379,7 @@ const FormPerson = ({
                 <input
                   className="govuk-input govuk-date-input__input govuk-input--width-2"
                   name="documentExpiryDateDay"
+                  id="documentExpiryDateDay"
                   type="text"
                   pattern="[0-9]*"
                   inputMode="numeric"
@@ -393,6 +397,7 @@ const FormPerson = ({
                 <input
                   className="govuk-input govuk-date-input__input govuk-input--width-2"
                   name="documentExpiryDateMonth"
+                  id="documentExpiryDateMonth"
                   type="text"
                   pattern="[0-9]*"
                   inputMode="numeric"
@@ -410,6 +415,7 @@ const FormPerson = ({
                 <input
                   className="govuk-input govuk-date-input__input govuk-input--width-4"
                   name="documentExpiryDateYear"
+                  id="documentExpiryDateYear"
                   type="text"
                   pattern="[0-9]*"
                   inputMode="numeric"

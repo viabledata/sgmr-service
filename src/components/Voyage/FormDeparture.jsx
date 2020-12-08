@@ -13,7 +13,7 @@ const FormDeparture = ({
       <h1 className="govuk-heading-xl">Departure details</h1>
       <p className="govuk-body-l">You can update these details if your plans change, for example, due to bad weather</p>
 
-      <div id="departureDate" className={`govuk-form-group ${errors.departureDate ? 'govuk-form-group--error' : ''}`}>
+      <div className={`govuk-form-group ${errors.departureDate ? 'govuk-form-group--error' : ''}`}>
         <fieldset className="govuk-fieldset" role="group" aria-describedby="dob-hint">
           <legend className="govuk-fieldset__legend">
             <label className="govuk-label govuk-label--m" htmlFor="departureDate">
@@ -24,7 +24,7 @@ const FormDeparture = ({
           <span className="govuk-hint">
             For example, 20 2 2020
           </span>
-          <div className="govuk-date-input">
+          <div id="departureDate" className="govuk-date-input">
             <div className="govuk-date-input__item">
               <div className="govuk-form-group">
                 <label className="govuk-label govuk-date-input__label" htmlFor="departureDateDay">
@@ -33,6 +33,7 @@ const FormDeparture = ({
                 <input
                   className="govuk-input govuk-date-input__input govuk-input--width-2"
                   name="departureDateDay"
+                  id="departureDateDay"
                   type="text"
                   maxLength={2}
                   pattern="[0-9]*"
@@ -50,6 +51,7 @@ const FormDeparture = ({
                 <input
                   className="govuk-input govuk-date-input__input govuk-input--width-2"
                   name="departureDateMonth"
+                  id="departureDateMonth"
                   type="text"
                   maxLength={2}
                   autoComplete="bday-month"
@@ -68,6 +70,7 @@ const FormDeparture = ({
                 <input
                   className="govuk-input govuk-date-input__input govuk-input--width-4"
                   name="departureDateYear"
+                  id="departureDateYear"
                   type="text"
                   maxLength={4}
                   autoComplete="bday-year"
@@ -82,7 +85,7 @@ const FormDeparture = ({
         </fieldset>
       </div>
 
-      <div id="departureTime" className={`govuk-form-group ${errors.departureTime ? 'govuk-form-group--error' : ''}`}>
+      <div className={`govuk-form-group ${errors.departureTime ? 'govuk-form-group--error' : ''}`}>
         <fieldset className="govuk-fieldset" role="group" aria-describedby="departureTime-hint">
           <legend className="govuk-fieldset__legend govuk-fieldset__legend--m">
             <label className="govuk-label govuk-label--m" htmlFor="departureTime">
@@ -93,7 +96,7 @@ const FormDeparture = ({
           <span className="govuk-hint">
             For example, 17 30
           </span>
-          <div className="govuk-date-input">
+          <div id="departureTime" className="govuk-date-input">
             <div className="govuk-date-input__item">
               <div className="govuk-form-group">
                 <label className="govuk-label govuk-date-input__label" htmlFor="departureTimeHour">
@@ -102,6 +105,7 @@ const FormDeparture = ({
                 <input
                   className="govuk-input govuk-date-input__input govuk-input--width-2"
                   name="departureTimeHour"
+                  id="departureTimeHour"
                   type="text"
                   pattern="[0-9]*"
                   inputMode="numeric"
@@ -119,6 +123,7 @@ const FormDeparture = ({
                 <input
                   className="govuk-input govuk-date-input__input govuk-input--width-2"
                   name="departureTimeMinute"
+                  id="departureTimeMinute"
                   type="text"
                   pattern="[0-9]*"
                   inputMode="numeric"
@@ -135,7 +140,7 @@ const FormDeparture = ({
       <div id="departureLocation" className={`govuk-form-group ${errors.departureLocation ? 'govuk-form-group--error' : ''}`}>
         <FormError error={errors.departureLocation} />
 
-        <div id="departurePort" className="govuk-form-group">
+        <div className="govuk-form-group">
           <label className="govuk-label govuk-label--m" htmlFor="departurePort">
             Departure point
           </label>
