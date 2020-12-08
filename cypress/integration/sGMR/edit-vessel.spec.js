@@ -56,4 +56,12 @@ describe('Edit existing vessel information', () => {
       });
     });
   });
+
+  afterEach(() => {
+    localStorage.removeItem('token');
+  });
+
+  after(() => {
+    cy.deleteAllEmails();
+  });
 });

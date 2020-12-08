@@ -158,5 +158,10 @@ describe('Add report with saved data', () => {
 
   afterEach(() => {
     cy.deleteReports();
+    localStorage.removeItem('token');
+  });
+
+  after(() => {
+    cy.deleteAllEmails();
   });
 });

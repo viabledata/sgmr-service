@@ -196,5 +196,10 @@ describe('Add new voyage report', () => {
 
   afterEach(() => {
     cy.deleteReports();
+    localStorage.removeItem('token');
+  });
+
+  after(() => {
+    cy.deleteAllEmails();
   });
 });

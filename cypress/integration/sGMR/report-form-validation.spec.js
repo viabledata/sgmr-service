@@ -133,15 +133,10 @@ describe('Validate report form', () => {
     cy.saveAndContinue();
     cy.enterVesselInfo(vessel);
     cy.saveAndContinue();
-    cy.get('input[name=people]').eq(0).check();
-    cy.contains('Add to report and continue').click();
-    cy.assertPeopleTable((reportData) => {
-      expect(reportData).to.have.length(1);
-    });
-    cy.saveAndContinueOnPeopleManifest(true);
+    cy.checkNoErrors();
     cy.contains('add a new person').click();
     cy.enterPeopleInfo(people);
-    cy.get('.govuk-button').contains('Add to manifest').click();
+    cy.contains('Add to manifest').click();
     cy.saveAndContinueOnPeopleManifest(false);
     cy.checkNoErrors();
     cy.saveAndContinue();
@@ -154,5 +149,10 @@ describe('Validate report form', () => {
 
   afterEach(() => {
     cy.deleteReports();
+    localStorage.removeItem('token');
+  });
+
+  after(() => {
+    cy.deleteAllEmails();
   });
 });
