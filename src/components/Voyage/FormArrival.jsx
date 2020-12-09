@@ -139,7 +139,7 @@ const FormArrival = ({
 
       <div className={`govuk-form-group ${errors.arrivalLocation ? 'govuk-form-group--error' : ''}`}>
         <FormError error={errors.arrivalLocation} />
-        <div id="arrivalPort" className={`govuk-form-group ${errors.arrivalPort ? 'govuk-form-group--error' : ''}`}>
+        <div className={`govuk-form-group ${errors.arrivalPort ? 'govuk-form-group--error' : ''}`}>
           <label className="govuk-label govuk-label--m" htmlFor="arrivalPort">
             Arrival point
           </label>
