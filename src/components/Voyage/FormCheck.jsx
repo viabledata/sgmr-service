@@ -157,7 +157,7 @@ const FormCheck = ({
 
       <dl className="govuk-summary-list govuk-!-margin-bottom-9">
         <div className="govuk-summary-list__row">
-          <dt className="govuk-heading-m">Details of persons on board</dt>
+          <dt className="govuk-heading-m">People on board</dt>
           <dd className="govuk-summary-list__value">
             <Link to={{
               pathname: SAVE_VOYAGE_PEOPLE_MANIFEST_URL,
@@ -178,7 +178,7 @@ const FormCheck = ({
       <dl className="govuk-summary-list govuk-!-margin-bottom-9">
         <div className="govuk-summary-list__row">
           <dt className="govuk-heading-m">
-            Responsible person details
+            Skipper&apos;s Details
           </dt>
           <dd className="govuk-summary-list__value">
             <Link to={{
