@@ -13,7 +13,7 @@ const FormArrival = ({
       <h1 className="govuk-heading-xl">Arrival details</h1>
       <p className="govuk-body-l">You can update these details if your plans change, for example, due to bad weather</p>
 
-      <div id="arrivalDate" className={`govuk-form-group ${errors.arrivalDate ? 'govuk-form-group--error' : ''}`}>
+      <div className={`govuk-form-group ${errors.arrivalDate ? 'govuk-form-group--error' : ''}`}>
         <fieldset className="govuk-fieldset" role="group" aria-describedby="dob-hint">
           <legend className="govuk-fieldset__legend">
             <label className="govuk-label govuk-label--m" htmlFor="arrivalDate">
@@ -24,7 +24,7 @@ const FormArrival = ({
           <span className="govuk-hint">
             For example, 20 2 2020
           </span>
-          <div className="govuk-date-input">
+          <div id="arrivalDate" className="govuk-date-input">
             <div className="govuk-date-input__item">
               <div className="govuk-form-group">
                 <label className="govuk-label govuk-date-input__label" htmlFor="arrivalDateDay">
@@ -33,6 +33,7 @@ const FormArrival = ({
                 <input
                   className="govuk-input govuk-date-input__input govuk-input--width-2"
                   name="arrivalDateDay"
+                  id="arrivalDateDay"
                   type="text"
                   maxLength={2}
                   pattern="[0-9]*"
@@ -50,6 +51,7 @@ const FormArrival = ({
                 <input
                   className="govuk-input govuk-date-input__input govuk-input--width-2"
                   name="arrivalDateMonth"
+                  id="arrivalDateMonth"
                   type="text"
                   maxLength={2}
                   autoComplete="bday-month"
@@ -68,6 +70,7 @@ const FormArrival = ({
                 <input
                   className="govuk-input govuk-date-input__input govuk-input--width-4"
                   name="arrivalDateYear"
+                  id="arrivalDateYear"
                   type="text"
                   maxLength={4}
                   autoComplete="bday-year"
@@ -82,7 +85,7 @@ const FormArrival = ({
         </fieldset>
       </div>
 
-      <div id="arrivalTime" className={`govuk-form-group ${errors.arrivalTime ? 'govuk-form-group--error' : ''}`}>
+      <div className={`govuk-form-group ${errors.arrivalTime ? 'govuk-form-group--error' : ''}`}>
         <fieldset className="govuk-fieldset" role="group" aria-describedby="arrivalTime-hint">
           <legend className="govuk-fieldset__legend govuk-fieldset__legend--m">
             <label className="govuk-label govuk-label--m" htmlFor="arrivalTime">
@@ -93,7 +96,7 @@ const FormArrival = ({
           <span className="govuk-hint">
             For example, 17 30
           </span>
-          <div className="govuk-date-input">
+          <div id="arrivalTime" className="govuk-date-input">
             <div className="govuk-date-input__item">
               <div className="govuk-form-group">
                 <label className="govuk-label govuk-date-input__label" htmlFor="arrivalTimeHour">
@@ -102,6 +105,7 @@ const FormArrival = ({
                 <input
                   className="govuk-input govuk-date-input__input govuk-input--width-2"
                   name="arrivalTimeHour"
+                  id="arrivalTimeHour"
                   type="text"
                   pattern="[0-9]*"
                   inputMode="numeric"
@@ -119,6 +123,7 @@ const FormArrival = ({
                 <input
                   className="govuk-input govuk-date-input__input govuk-input--width-2"
                   name="arrivalTimeMinute"
+                  id="arrivalTimeMinute"
                   type="text"
                   pattern="[0-9]*"
                   inputMode="numeric"
@@ -132,7 +137,7 @@ const FormArrival = ({
         </fieldset>
       </div>
 
-      <div id="arrivalLocation" className={`govuk-form-group ${errors.arrivalLocation ? 'govuk-form-group--error' : ''}`}>
+      <div className={`govuk-form-group ${errors.arrivalLocation ? 'govuk-form-group--error' : ''}`}>
         <FormError error={errors.arrivalLocation} />
         <div id="arrivalPort" className={`govuk-form-group ${errors.arrivalPort ? 'govuk-form-group--error' : ''}`}>
           <label className="govuk-label govuk-label--m" htmlFor="arrivalPort">
