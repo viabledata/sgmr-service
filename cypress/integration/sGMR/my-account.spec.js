@@ -28,9 +28,6 @@ describe('My Account details verification', () => {
     cy.navigation('Signout');
     cy.url().should('include', '/sign-in');
     localStorage.removeItem('token');
-  });
-
-  after(() => {
     cy.deleteAllEmails();
   });
 });
