@@ -85,13 +85,13 @@ const Dashboard = (pageData) => {
             </div>
             <div className="govuk-grid-column-one-third panel-number">
               <p className="govuk-body-s">
-                <strong className="panel-number-large">{countVoyages('PreSubmitted')}</strong>
+                <strong className="panel-number-large">{countVoyages('PreSubmitted') + countVoyages('Submitted')}</strong>
                 Submitted
               </p>
             </div>
             <div className="govuk-grid-column-one-third panel-number">
               <p className="govuk-body-s">
-                <strong className="panel-number-large">{countVoyages('Cancelled')}</strong>
+                <strong className="panel-number-large">{countVoyages('Cancelled') + countVoyages('PreCancelled')}</strong>
                 Cancelled
               </p>
             </div>
