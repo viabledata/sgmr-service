@@ -14,15 +14,25 @@ const Help = () => {
             <p className="govuk-body">
               This is relevant to all general maritime departures sailing to and from UK  locations for pleasure craft. You are required to complete an Advance Application prior to your departure at least 2 hours prior to embarkation.
             </p>
-            <h1 className="govuk-heading-m">Applicability</h1>
+            <h2 className="govuk-heading-l">Support</h2>
+            <p className="govuk-body">
+              You can get support with using this service by emailing the Submit a Pleasure Craft Report team at:
+            </p>
+            <p className="govuk-body">
+              <a href="mailto: sgmrsupport@digital.homeoffice.gov.uk">
+                sgmrsupport@digital.homeoffice.gov.uk
+              </a>
+            </p>
+
+            <h2 className="govuk-heading-m">Applicability</h2>
             <p className="govuk-body">
               Anyone who owns, or is responsible for (captain or skipper), a pleasure craft  (such as a yacht) that sails to or from locations outside the UK is required to provide pleasure craft and goods documentation.
             </p>
-            <h1 className="govuk-heading-m">Defining a Pleasure Craft</h1>
+            <h2 className="govuk-heading-m">Defining a Pleasure Craft</h2>
             <p className="govuk-body">
               The Maritime &amp; Coastguard defines a pleasure craft as those used for sport or recreational purposes and do not operate for financial gain – See Pleasure Craft – UK Regulations in the Related Links. 
             </p>
-            <h1 className="govuk-heading-m">How the information is used </h1>
+            <h2 className="govuk-heading-m">How the information is used </h2>
             <p className="govuk-body">
               The data you provide on the Advance  Application about your trip will be used to notify Border Force and HMRC (for Duty and Customers purposes) of your arrival plans. Border Force is committed to understanding and responding to the needs of the recreational boating community.  
             </p>
