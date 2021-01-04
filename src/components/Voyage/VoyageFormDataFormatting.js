@@ -123,6 +123,7 @@ const formatVessel = (status, data, voyageData) => {
         || item[0] === 'registration'
         || item[0] === 'moorings'
         || item[0] === 'callsign'
+        || item[0] === 'portOfRegistry'
       )
       && data[item[0]] !== item[1] // and value from voyageData !== value from form
     ) {
