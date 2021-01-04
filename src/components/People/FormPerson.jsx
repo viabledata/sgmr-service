@@ -297,18 +297,18 @@ const FormPerson = ({
               </label>
             </div>
             <div className="govuk-radios__item">
+              <input
+                className="govuk-radios__input"
+                id="documentType-3"
+                name="documentType"
+                type="radio"
+                value="Other"
+                checked={(formData.documentType === 'Other' || data.documentType === 'Other') ? 'checked' : ''}
+                onChange={(e) => {
+                  handleChange(e);
+                }}
+              />
               <label className="govuk-label govuk-radios__label" htmlFor="documentType-3">
-                <input
-                  className="govuk-radios__input"
-                  id="documentType-3"
-                  name="documentType"
-                  type="radio"
-                  value="Other"
-                  checked={(formData.documentType === 'Other' || data.documentType === 'Other') ? 'checked' : ''}
-                  onChange={(e) => {
-                    handleChange(e);
-                  }}
-                />
                 Other
               </label>
             </div>
