@@ -1,6 +1,7 @@
 import * as axios from 'axios';
 import { COUNTRIES_URL } from '@constants/ApiConstants';
 import Auth from '@lib/Auth';
+import { isDateValid, isInThePast } from '@utils/date';
 
 export const VALID_EMAIL_REGEX = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
 export const COMPLEX_PASSWORD_REGEX = /(\d+)|([a-z]+)|([A-Z]+)|([!@$%^&\\(){}[\]:;<>,*.?/~_+-=|]+)+/g;
@@ -74,6 +75,22 @@ export const personValidationRules = [
     message: 'You must enter an expiry date',
   },
   {
+    inputField: 'documentExpiryDateDay',
+    errorDisplayId: 'documentExpiryDate',
+    type: 'async',
+    callback: async (value, values) => {
+      // Expiry Date must be valid and in the future
+      if (values.documentExpiryDateYear || values.documentExpiryDateMonth || values.documentExpiryDateDay) {
+        const isValidFormat = isDateValid(values.documentExpiryDateYear, values.documentExpiryDateMonth, values.documentExpiryDateDay);
+        const isExpiryDateInPast = isInThePast(values.documentExpiryDateYear, values.documentExpiryDateMonth, values.documentExpiryDateDay);
+
+        return isValidFormat && !isExpiryDateInPast;
+      }
+      return true;
+    },
+    message: 'You must enter a valid document expiry date',
+  },
+  {
     inputField: 'gender',
     errorDisplayId: 'gender',
     type: 'required',
@@ -96,6 +113,22 @@ export const personValidationRules = [
     errorDisplayId: 'dateOfBirth',
     type: 'required',
     message: 'You must enter a date of birth',
+  },
+  {
+    inputField: 'dateOfBirthDay',
+    errorDisplayId: 'dateOfBirth',
+    type: 'async',
+    callback: async (value, formData) => {
+      // DoB must be valid and not in the future
+      if (formData.dateOfBirthYear || formData.dateOfBirthMonth || formData.dateOfBirthDay) {
+        const isValidFormat = isDateValid(formData.dateOfBirthYear, formData.dateOfBirthMonth, formData.dateOfBirthDay);
+        const isDobInPast = isInThePast(formData.dateOfBirthYear, formData.dateOfBirthMonth, formData.dateOfBirthDay);
+
+        return isValidFormat && isDobInPast;
+      }
+      return true;
+    },
+    message: 'You must enter a valid date of birth',
   },
   {
     inputField: 'placeOfBirth',
@@ -435,7 +468,7 @@ export const validate = async (rules, data) => {
             break;
           case 'async':
             if (value) {
-              rule.callback(value).then((valid) => {
+              rule.callback(value, data).then((valid) => {
                 if (!valid) {
                   resolve({ [rule.errorDisplayId]: rule.message });
                 } else {

@@ -45,26 +45,6 @@ const CreateAPerson = () => {
   const validateForm = async (dataToValidate) => {
     const newErrors = await validate(personValidationRules, dataToValidate);
 
-    // DoB must be valid and not in the future
-    if (dataToValidate.dateOfBirthYear || dataToValidate.dateOfBirthMonth || dataToValidate.dateOfBirthDay) {
-      const isValidFormat = isDateValid(dataToValidate.dateOfBirthYear, dataToValidate.dateOfBirthMonth, dataToValidate.dateOfBirthDay);
-      const isDobInPast = isInThePast(dataToValidate.dateOfBirthYear, dataToValidate.dateOfBirthMonth, dataToValidate.dateOfBirthDay);
-
-      if (!isValidFormat || !isDobInPast) {
-        newErrors.dateOfBirth = 'You must enter a valid date of birth';
-      }
-    }
-
-    // Expiry Date must be valid and in the future
-    if (dataToValidate.documentExpiryDateYear || dataToValidate.documentExpiryDateMonth || dataToValidate.documentExpiryDateDay) {
-      const isValidFormat = isDateValid(dataToValidate.documentExpiryDateYear, dataToValidate.documentExpiryDateMonth, dataToValidate.documentExpiryDateDay);
-      const isExpiryDateInPast = isInThePast(dataToValidate.documentExpiryDateYear, dataToValidate.documentExpiryDateMonth, dataToValidate.documentExpiryDateDay);
-
-      if (!isValidFormat || isExpiryDateInPast) {
-        newErrors.documentExpiryDate = 'You must enter a valid document expiry date';
-      }
-    }
-
     setErrors(newErrors);
     scrollToTopOnError(newErrors);
     return Object.keys(newErrors).length > 0;
@@ -130,7 +110,6 @@ const CreateAPerson = () => {
               <FormPerson
                 handleSubmit={handleSubmit}
                 handleChange={handleChange}
-                data={formData}
                 formData={formData}
                 errors={errors}
               />
