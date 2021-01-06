@@ -4,7 +4,7 @@ import { useHistory, useLocation } from 'react-router-dom';
 import FormPerson from '@components/People/FormPerson';
 import scrollToTopOnError from '@utils/scrollToTopOnError';
 import { postData } from '@utils/apiHooks';
-import { formatDate, isDateValid, isInThePast } from '@utils/date';
+import { formatDate } from '@utils/date';
 import { PEOPLE_URL } from '@constants/ApiConstants';
 import { PEOPLE_PAGE_URL } from '@constants/ClientConstants';
 import {

@@ -7,6 +7,8 @@ import FormError from '@components/Voyage/FormError';
 const FormPerson = ({
   handleSubmit, handleChange, formData, errors, source, voyageId,
 }) => {
+  const documentTypeOther = formData.documentType !== undefined && formData.documentType !== 'Passport' && formData.documentType !== 'IdentityCard';
+
   return (
     <section>
       <div id="firstName" className={`govuk-form-group ${errors.firstName ? 'govuk-form-group--error' : ''}`}>
@@ -302,8 +304,8 @@ const FormPerson = ({
                 id="documentType-3"
                 name="documentType"
                 type="radio"
-                value="Other"
-                checked={formData.documentType === 'Other' ? 'checked' : ''}
+                value=""
+                checked={documentTypeOther ? 'checked' : ''}
                 onChange={(e) => {
                   handleChange(e);
                 }}
@@ -320,6 +322,7 @@ const FormPerson = ({
                 className="govuk-input"
                 name="documentType"
                 type="text"
+                value={documentTypeOther ? formData.documentType : ''}
                 onChange={handleChange}
               />
             </label>
