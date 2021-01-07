@@ -149,6 +149,7 @@ const FormArrival = ({
           </span>
           <PortField
             id="arrivalPort"
+            defaultValue={data.arrivalPort}
             onConfirm={(result) => {
               updateFieldValue('arrivalPort', result.unlocode || result.name);
             }}

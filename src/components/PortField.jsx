@@ -23,23 +23,38 @@ const source = debounce((query, populateResults) => {
     });
 }, 300);
 
-function template(result) {
+function inputTemplate(result) {
   if (!result) {
     return;
+  }
+  if (typeof result !== 'object') {
+    return result;
+  }
+  return result.unlocode || 'ZZZD';
+}
+
+function suggestionTemplate(result) {
+  if (!result) {
+    return;
+  }
+  if (typeof result !== 'object') {
+    return result;
   }
   const { name, unlocode } = result;
   return unlocode ? `${name} (${unlocode})` : name;
 }
 
-const PortField = ({ onConfirm = () => {}, ...props }) => {
+const PortField = ({ onConfirm = () => {}, defaultValue = '', ...props }) => {
   return (
     <Autocomplete
       source={source}
       onConfirm={onConfirm}
       showNoOptionsFound={false}
+      minLength={3}
+      defaultValue={defaultValue || ''}
       templates={{
-        inputValue: template,
-        suggestion: template,
+        inputValue: inputTemplate,
+        suggestion: suggestionTemplate,
       }}
       {...props}
     />
