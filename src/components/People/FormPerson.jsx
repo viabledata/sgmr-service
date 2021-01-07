@@ -5,8 +5,10 @@ import nationalities from '@utils/staticFormData';
 import FormError from '@components/Voyage/FormError';
 
 const FormPerson = ({
-  handleSubmit, handleChange, data, formData, errors, source, voyageId,
+  handleSubmit, handleChange, formData, errors, source, voyageId,
 }) => {
+  const documentTypeOther = formData.documentType !== undefined && formData.documentType !== 'Passport' && formData.documentType !== 'IdentityCard';
+
   return (
     <section>
       <div id="firstName" className={`govuk-form-group ${errors.firstName ? 'govuk-form-group--error' : ''}`}>
@@ -17,7 +19,7 @@ const FormPerson = ({
             className="govuk-input"
             name="firstName"
             type="text"
-            value={formData.firstName || data.firstName || ''}
+            value={formData.firstName || ''}
             onChange={handleChange}
           />
         </label>
@@ -31,7 +33,7 @@ const FormPerson = ({
             className="govuk-input"
             name="lastName"
             type="text"
-            value={formData.lastName || data.lastName || ''}
+            value={formData.lastName || ''}
             onChange={handleChange}
           />
         </label>
@@ -53,7 +55,7 @@ const FormPerson = ({
               id="female"
               type="radio"
               value="Female"
-              checked={(formData.gender === 'Female' || data.gender === 'Female') ? 'checked' : ''}
+              checked={formData.gender === 'Female' ? 'checked' : ''}
               onChange={handleChange}
             />
             <label className="govuk-label govuk-radios__label" htmlFor="female">
@@ -67,7 +69,7 @@ const FormPerson = ({
               id="male"
               type="radio"
               value="Male"
-              checked={(formData.gender === 'Male' || data.gender === 'Male') ? 'checked' : ''}
+              checked={formData.gender === 'Male' ? 'checked' : ''}
               onChange={handleChange}
             />
             <label className="govuk-label govuk-radios__label" htmlFor="male">
@@ -81,7 +83,7 @@ const FormPerson = ({
               id="non-binary"
               type="radio"
               value="Non-binary"
-              checked={(formData.gender === 'Non-binary' || data.gender === 'Non-binary') ? 'checked' : ''}
+              checked={formData.gender === 'Non-binary' ? 'checked' : ''}
               onChange={handleChange}
             />
             <label className="govuk-label govuk-radios__label" htmlFor="non-binary">
@@ -118,7 +120,7 @@ const FormPerson = ({
                   autoComplete="bday-day"
                   pattern="[0-9]*"
                   inputMode="numeric"
-                  value={formData.dateOfBirthDay || data.dateOfBirthDay || ''}
+                  value={formData.dateOfBirthDay || ''}
                   onChange={(handleChange)}
                 />
               </div>
@@ -137,7 +139,7 @@ const FormPerson = ({
                   autoComplete="bday-month"
                   pattern="[0-9]*"
                   inputMode="numeric"
-                  value={formData.dateOfBirthMonth || data.dateOfBirthMonth || ''}
+                  value={formData.dateOfBirthMonth || ''}
                   onChange={handleChange}
                 />
               </div>
@@ -156,7 +158,7 @@ const FormPerson = ({
                   autoComplete="bday-year"
                   pattern="[0-9]*"
                   inputMode="numeric"
-                  value={formData.dateOfBirthYear || data.dateOfBirthYear || ''}
+                  value={formData.dateOfBirthYear || ''}
                   onChange={handleChange}
                 />
               </div>
@@ -173,7 +175,7 @@ const FormPerson = ({
             className="govuk-input"
             name="placeOfBirth"
             type="text"
-            value={formData.placeOfBirth || data.placeOfBirth || ''}
+            value={formData.placeOfBirth || ''}
             onChange={(handleChange)}
           />
         </label>
@@ -189,7 +191,7 @@ const FormPerson = ({
           name="nationality"
           id="nationality"
           type="text"
-          value={formData.nationality || data.nationality || 'Please select'}
+          value={formData.nationality || 'Please select'}
           onChange={handleChange}
         >
           <option disabled>Please select</option>
@@ -215,7 +217,7 @@ const FormPerson = ({
                 id="peopleType-1"
                 type="radio"
                 value="Skipper"
-                checked={(formData.peopleType === 'Skipper' || (data.peopleType && data.peopleType.name === 'Skipper')) ? 'checked' : ''}
+                checked={formData.peopleType === 'Skipper' ? 'checked' : ''}
                 onChange={handleChange}
               />
               <label className="govuk-label govuk-radios__label" htmlFor="peopleType-1">
@@ -229,7 +231,7 @@ const FormPerson = ({
                 id="peopleType-2"
                 type="radio"
                 value="Crew"
-                checked={(formData.peopleType === 'Crew' || (data.peopleType && data.peopleType.name === 'Crew')) ? 'checked' : ''}
+                checked={formData.peopleType === 'Crew' ? 'checked' : ''}
                 onChange={handleChange}
               />
               <label className="govuk-label govuk-radios__label" htmlFor="peopleType-2">
@@ -243,7 +245,7 @@ const FormPerson = ({
                 id="peopleType-3"
                 type="radio"
                 value="Passenger"
-                checked={(formData.peopleType === 'Passenger' || (data.peopleType && data.peopleType.name === 'Passenger')) ? 'checked' : ''}
+                checked={formData.peopleType === 'Passenger' ? 'checked' : ''}
                 onChange={handleChange}
               />
               <label className="govuk-label govuk-radios__label" htmlFor="peopleType-3">
@@ -271,7 +273,7 @@ const FormPerson = ({
                 name="documentType"
                 type="radio"
                 value="Passport"
-                checked={(formData.documentType === 'Passport' || data.documentType === 'Passport') ? 'checked' : ''}
+                checked={formData.documentType === 'Passport' ? 'checked' : ''}
                 onChange={(e) => {
                   handleChange(e);
                 }}
@@ -287,7 +289,7 @@ const FormPerson = ({
                 name="documentType"
                 type="radio"
                 value="IdentityCard"
-                checked={(formData.documentType === 'IdentityCard' || data.documentType === 'IdentityCard') ? 'checked' : ''}
+                checked={formData.documentType === 'IdentityCard' ? 'checked' : ''}
                 onChange={(e) => {
                   handleChange(e);
                 }}
@@ -302,8 +304,8 @@ const FormPerson = ({
                 id="documentType-3"
                 name="documentType"
                 type="radio"
-                value="Other"
-                checked={(formData.documentType === 'Other' || data.documentType === 'Other') ? 'checked' : ''}
+                value=""
+                checked={documentTypeOther ? 'checked' : ''}
                 onChange={(e) => {
                   handleChange(e);
                 }}
@@ -320,6 +322,7 @@ const FormPerson = ({
                 className="govuk-input"
                 name="documentType"
                 type="text"
+                value={documentTypeOther ? formData.documentType : ''}
                 onChange={handleChange}
               />
             </label>
@@ -335,7 +338,7 @@ const FormPerson = ({
             className="govuk-input"
             name="documentNumber"
             type="text"
-            value={formData.documentNumber || data.documentNumber || ''}
+            value={formData.documentNumber || ''}
             onChange={handleChange}
           />
         </label>
@@ -353,7 +356,7 @@ const FormPerson = ({
             name="documentIssuingState"
             type="text"
             maxLength={3}
-            value={formData.documentIssuingState || data.documentIssuingState || ''}
+            value={formData.documentIssuingState || ''}
             onChange={handleChange}
           />
         </label>
@@ -384,7 +387,7 @@ const FormPerson = ({
                   pattern="[0-9]*"
                   inputMode="numeric"
                   maxLength={2}
-                  value={formData.documentExpiryDateDay || data.documentExpiryDateDay || ''}
+                  value={formData.documentExpiryDateDay || ''}
                   onChange={handleChange}
                 />
               </div>
@@ -402,7 +405,7 @@ const FormPerson = ({
                   pattern="[0-9]*"
                   inputMode="numeric"
                   maxLength={2}
-                  value={formData.documentExpiryDateMonth || data.documentExpiryDateMonth || ''}
+                  value={formData.documentExpiryDateMonth || ''}
                   onChange={handleChange}
                 />
               </div>
@@ -420,7 +423,7 @@ const FormPerson = ({
                   pattern="[0-9]*"
                   inputMode="numeric"
                   maxLength={4}
-                  value={formData.documentExpiryDateYear || data.documentExpiryDateYear || ''}
+                  value={formData.documentExpiryDateYear || ''}
                   onChange={handleChange}
                 />
               </div>

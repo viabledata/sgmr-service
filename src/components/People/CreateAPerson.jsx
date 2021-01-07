@@ -4,7 +4,7 @@ import { useHistory, useLocation } from 'react-router-dom';
 import FormPerson from '@components/People/FormPerson';
 import scrollToTopOnError from '@utils/scrollToTopOnError';
 import { postData } from '@utils/apiHooks';
-import { formatDate, isDateValid, isInThePast } from '@utils/date';
+import { formatDate } from '@utils/date';
 import { PEOPLE_URL } from '@constants/ApiConstants';
 import { PEOPLE_PAGE_URL } from '@constants/ClientConstants';
 import {
@@ -44,26 +44,6 @@ const CreateAPerson = () => {
   // Check fields that are required exist & fields with rules match
   const validateForm = async (dataToValidate) => {
     const newErrors = await validate(personValidationRules, dataToValidate);
-
-    // DoB must be valid and not in the future
-    if (dataToValidate.dateOfBirthYear || dataToValidate.dateOfBirthMonth || dataToValidate.dateOfBirthDay) {
-      const isValidFormat = isDateValid(dataToValidate.dateOfBirthYear, dataToValidate.dateOfBirthMonth, dataToValidate.dateOfBirthDay);
-      const isDobInPast = isInThePast(dataToValidate.dateOfBirthYear, dataToValidate.dateOfBirthMonth, dataToValidate.dateOfBirthDay);
-
-      if (!isValidFormat || !isDobInPast) {
-        newErrors.dateOfBirth = 'You must enter a valid date of birth';
-      }
-    }
-
-    // Expiry Date must be valid and in the future
-    if (dataToValidate.documentExpiryDateYear || dataToValidate.documentExpiryDateMonth || dataToValidate.documentExpiryDateDay) {
-      const isValidFormat = isDateValid(dataToValidate.documentExpiryDateYear, dataToValidate.documentExpiryDateMonth, dataToValidate.documentExpiryDateDay);
-      const isExpiryDateInPast = isInThePast(dataToValidate.documentExpiryDateYear, dataToValidate.documentExpiryDateMonth, dataToValidate.documentExpiryDateDay);
-
-      if (!isValidFormat || isExpiryDateInPast) {
-        newErrors.documentExpiryDate = 'You must enter a valid document expiry date';
-      }
-    }
 
     setErrors(newErrors);
     scrollToTopOnError(newErrors);
@@ -130,7 +110,6 @@ const CreateAPerson = () => {
               <FormPerson
                 handleSubmit={handleSubmit}
                 handleChange={handleChange}
-                data={formData}
                 formData={formData}
                 errors={errors}
               />

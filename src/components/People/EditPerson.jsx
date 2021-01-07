@@ -1,59 +1,42 @@
-import React, { useState, useEffect } from 'react';
-import { withRouter, useHistory } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { useHistory, withRouter } from 'react-router-dom';
 
 // App imports
 import { PEOPLE_URL } from '@constants/ApiConstants';
 import { PEOPLE_PAGE_URL } from '@constants/ClientConstants';
-import { formatDate, splitDate } from '@utils/date';
+import { formatDate } from '@utils/date';
 import { getData, patchData } from '@utils/apiHooks';
 import getId from '@utils/getIdHook';
 import scrollToTopOnError from '@utils/scrollToTopOnError';
 import FormPerson from '@components/People/FormPerson';
 import FormError from '@components/Voyage/FormError';
-
+import {
+  personValidationRules,
+  validate,
+} from '@components/Forms/validationRules';
 
 const EditPerson = () => {
   const history = useHistory();
   const [personId, setPersonId] = useState();
-  const [personData, setPersonData] = useState();
-  const [formData, setFormData] = useState(JSON.parse(localStorage.getItem('formData')) || {});
-  const [errors, setErrors] = useState(JSON.parse(localStorage.getItem('errors')) || {});
+  const [formData, setFormData] = useState({});
+  const [errors, setErrors] = useState({});
 
+  const getPersonData = async () => {
+    const resp = await getData(`${PEOPLE_URL}/${personId}`, 'people');
+    const [documentExpiryDateYear, documentExpiryDateMonth, documentExpiryDateDay] = resp.documentExpiryDate.split('-');
+    const [dateOfBirthYear, dateOfBirthMonth, dateOfBirthDay] = resp.dateOfBirth.split('-');
 
-  const formatFieldsForForm = (data) => {
-    let formattedDateFields;
-    Object.entries(data).map((item) => {
-      if (item[0].search(/date/i) !== -1) {
-        const dateFields = splitDate(item[1], item[0]);
-        formattedDateFields = { ...formattedDateFields, ...dateFields };
-      }
-    });
     setFormData({
-      ...personData,
-      ...formData,
-      ...formattedDateFields,
-      id: personId,
+      ...resp,
+      documentExpiryDateYear,
+      documentExpiryDateMonth,
+      documentExpiryDateDay,
+      dateOfBirthYear,
+      dateOfBirthMonth,
+      dateOfBirthDay,
+      peopleType: resp.peopleType.name,
     });
   };
-
-
-  const getPersonData = () => {
-    getData(`${PEOPLE_URL}/${personId}`, 'people')
-      .then((resp) => {
-        setPersonData(resp);
-        formatFieldsForForm(resp);
-        localStorage.setItem('data', JSON.stringify(resp));
-      });
-  };
-
-
-  // Clear formData from localStorage
-  const clearLocalStorage = () => {
-    setPersonData({});
-    setFormData({});
-    setErrors({ });
-  };
-
 
   // Clear errors
   const removeError = (fieldName) => {
@@ -71,71 +54,51 @@ const EditPerson = () => {
     setErrors(errorList);
   };
 
-
-  // Update form and vessel data if user changes any field
+  // Update form data as user enters it
   const handleChange = (e) => {
-    setPersonData({ ...personData, [e.target.name]: e.target.value });
     setFormData({ ...formData, [e.target.name]: e.target.value });
     removeError(e.target.name);
   };
 
+  // Check fields that are required exist & fields with rules match
+  const validateForm = async (dataToValidate) => {
+    const newErrors = await validate(personValidationRules, dataToValidate);
 
-  // Format submit data
-  const PeopleFormDataFormatting = (data) => {
-    const dataList = {
-    };
-
-    Object.entries(data).map((item) => {
-      // If this is a date item, reformat to a single item
-      if (item[0].search(/year/i) > 0) {
-        const fieldName = item[0].slice(0, (item[0].length - 4));
-        dataList[fieldName] = formatDate(data[`${fieldName}Year`], data[`${fieldName}Month`], data[`${fieldName}Day`]);
-      }
-
-      // If this is a time item, reformat to a single item
-      if (item[0].search(/hour/i) > 0) {
-        const fieldName = item[0].slice(0, (item[0].length - 4));
-        // If hour or minute are not null then add, else, skip the time field
-        if (`${data[`${fieldName}Hour`]}`.length > 0 && `${data[`${fieldName}Minute`]}`.length > 0) {
-          dataList[fieldName] = (`${data[`${fieldName}Hour`]}:${data[`${fieldName}Minute`]}`);
-        }
-      }
-
-      if (
-        item[0].search(/year/i) === -1 // it's not the year part of the date (handed above)
-            && item[0].search(/month/i) === -1 // it's not the month part of the date (handed above)
-            && item[0].search(/day/i) === -1 // it's not the day part of the date (handled above)
-            && item[0].search(/hour/i) === -1 // it's not the hour part of the time
-            && item[0].search(/minute/i) === -1 // it's not the minute part of the time
-            && item[1] // it's value is not null
-            && item[0].search(/id/i) === -1 // it's not the id field
-            && typeof item[1] !== 'object' // it's not something being passed in obj form to us from an existing voyage
-      ) {
-        // Then add it to dataList
-        dataList[item[0]] = item[1];
-      }
-    });
-    return dataList;
+    setErrors(newErrors);
+    scrollToTopOnError(newErrors);
+    return Object.keys(newErrors).length > 0;
   };
 
+  // Format data to submit
+  const formatDataToSubmit = (data) => {
+    return {
+      firstName: data.firstName,
+      lastName: data.lastName,
+      documentType: data.documentType,
+      documentNumber: data.documentNumber,
+      documentExpiryDate: formatDate(data.documentExpiryDateYear, data.documentExpiryDateMonth, data.documentExpiryDateDay),
+      documentIssuingState: data.documentIssuingState,
+      peopleType: data.peopleType,
+      gender: data.gender,
+      dateOfBirth: formatDate(data.dateOfBirthYear, data.dateOfBirthMonth, data.dateOfBirthDay),
+      placeOfBirth: data.placeOfBirth,
+      nationality: data.nationality,
+    };
+  };
 
-  // Handle Submit, including clearing localStorage
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if ((formData, personData)) {
-      patchData(`${PEOPLE_URL}/${personId}`, (PeopleFormDataFormatting(formData)))
-        .then((resp) => {
-          if (resp.errors) {
-            setErrors({ EditPerson: resp.message });
-            scrollToTopOnError('EditPerson');
-          } else {
-            clearLocalStorage();
-            history.push(PEOPLE_PAGE_URL);
-          }
-        });
+
+    if (!await validateForm(formData)) {
+      const resp = await patchData(`${PEOPLE_URL}/${personId}`, formatDataToSubmit(formData));
+      if (resp.errors) {
+        setErrors({ EditPerson: resp.message });
+        scrollToTopOnError('EditPerson');
+      } else {
+        history.push(PEOPLE_PAGE_URL);
+      }
     }
   };
-
 
   // Triggers
   useEffect(() => {
@@ -146,17 +109,6 @@ const EditPerson = () => {
     if (personId) { getPersonData(); }
   }, [personId]);
 
-  // Persist form data if page refreshed
-  useEffect(() => {
-    localStorage.setItem('formData', JSON.stringify(formData));
-  }, [formData]);
-
-  useEffect(() => {
-    localStorage.setItem('errors', JSON.stringify(errors));
-  }, [errors]);
-
-
-  if (!personData) { return null; }
   return (
     <div className="govuk-width-container ">
       <div className="govuk-breadcrumbs">
@@ -186,8 +138,6 @@ const EditPerson = () => {
               <FormPerson
                 handleChange={handleChange}
                 handleSubmit={handleSubmit}
-                clearLocalStorage={clearLocalStorage}
-                data={personData}
                 formData={formData}
                 errors={errors || ''}
               />

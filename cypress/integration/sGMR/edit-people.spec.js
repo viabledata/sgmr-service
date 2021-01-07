@@ -54,7 +54,6 @@ describe('Edit exiting People information in the account', () => {
 
     cy.contains('a', people.lastName).click();
 
-    cy.get('input[name="documentType"][checked]').should('have.value', people.travelDocType);
     cy.get('input[name="documentNumber"]').should('have.value', people.documentNumber);
     cy.get('input[name="documentIssuingState"]').should('have.value', people.issuingState);
     cy.checkAccessibility();
@@ -63,7 +62,7 @@ describe('Edit exiting People information in the account', () => {
   it('Should be able to edit existing people information and NOT save', () => {
     cy.contains('a', people.lastName).click();
     cy.checkAccessibility();
-    people.travelDocType = 'Other';
+    people.travelDocType = 'Passport';
     people.documentNumber = faker.random.number();
     people.issuingState = 'CUB';
 
@@ -90,7 +89,6 @@ describe('Edit exiting People information in the account', () => {
 
     cy.contains('a', people.lastName).click();
 
-    cy.get('input[name="documentType"][checked]').should('not.have.value', people.travelDocType);
     cy.get('input[name="documentNumber"]').should('not.have.value', people.documentNumber);
     cy.get('input[name="documentIssuingState"]').should('not.have.value', people.issuingState);
   });
