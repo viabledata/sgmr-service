@@ -9,6 +9,7 @@ describe('Add report with saved data', () => {
   let persons = [];
   let departDate;
   const numberOfPersons = 3;
+  let numberOfSubmittedReports;
 
   before(() => {
     cy.registerUser();
@@ -40,7 +41,9 @@ describe('Add report with saved data', () => {
     cy.login();
     cy.injectAxe();
     cy.url().should('include', '/reports');
-    cy.checkReports('Draft', 0);
+    cy.getNumberOfReports('Submitted').then((res) => {
+      numberOfSubmittedReports = res;
+    });
     cy.checkAccessibility();
     cy.get('.govuk-button--start').should('have.text', 'Start now').click();
   });
@@ -78,7 +81,7 @@ describe('Add report with saved data', () => {
     cy.url().should('include', '/save-voyage/page-submitted');
     cy.get('.govuk-panel__title').should('have.text', 'Pleasure Craft Report Submitted');
     cy.navigation('Reports');
-    cy.checkReports('Submitted', 1);
+    cy.checkReports('Submitted', (+numberOfSubmittedReports) + (+1));
     cy.contains('View existing reports').click();
     cy.get('.govuk-tabs__list li')
       .within(() => {
@@ -136,13 +139,14 @@ describe('Add report with saved data', () => {
     cy.url().should('include', '/save-voyage/page-submitted');
     cy.get('.govuk-panel__title').should('have.text', 'Pleasure Craft Report Submitted');
     cy.navigation('reports');
-    cy.checkReports('Submitted', 1);
+    cy.checkReports('Submitted', numberOfSubmittedReports);
     cy.contains('View existing reports').click();
     cy.get('.govuk-tabs__list li')
       .within(() => {
         cy.get('#submitted').should('have.text', 'Submitted')
           .click();
       });
+    cy.checkReports('Submitted', (+numberOfSubmittedReports) + (+1));
     cy.contains('h2', 'Submitted').next().getTable().then((reportData) => {
       cy.wait(2000);
       expect(reportData).to.not.be.empty;

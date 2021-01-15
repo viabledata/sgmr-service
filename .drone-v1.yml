@@ -132,6 +132,23 @@ steps:
     event:
     - push
 
+- name: test_image_to_quay
+  image: plugins/docker
+  settings:
+    registry: quay.io
+    repo: quay.io/ukhomeofficedigital/sgmr-service
+    dockerfile: cron-Dockerfile
+    tags:
+      - cron-${DRONE_COMMIT_SHA}
+  environment:
+    DOCKER_PASSWORD:
+      from_secret: QUAY_PASSWORD
+    DOCKER_USERNAME:
+      from_secret: QUAY_USERNAME
+  when:
+    event:
+      - push
+
 - name: deploy_to_dev
   pull: if-not-exists
   image: quay.io/ukhomeofficedigital/kd
@@ -173,6 +190,38 @@ steps:
     - master
     event:
     - push
+
+- name: create_testjob_dev
+  pull: always
+  image: quay.io/ukhomeofficedigital/kd
+  commands:
+    - export CYPRESS_CACHE_FOLDER="~/.cache/Cypress"
+    - export SGMR_SERVICE_TEST_TAG=cron-$${DRONE_COMMIT_SHA}
+    - export NAME="sgmr-e2e-tests-cron"
+    - kd --insecure-skip-tls-verify -f kube/secret.yml
+    - kd --insecure-skip-tls-verify -f kube/job.yml
+  environment:
+    MAILSLURP_API_KEY:
+      from_secret: DEV_SGMR_MAILSLURP_API_KEY
+    CYPRESS_KEY:
+      from_secret: CYPRESS_KEY
+    CYPRESS_PROJECT_ID:
+      from_secret: CYPRESS_PROJECT_ID
+    KUBE_NAMESPACE:
+      from_secret: DEV_KUBE_NAMESPACE_COP_SGMR
+    KUBE_SERVER:
+      from_secret: DEV_KUBE_SERVER
+    KUBE_TOKEN:
+      from_secret: DEV_SGMR_KUBE_TOKEN
+    SGMR_SERVICE_NAME:
+      from_secret: SGMR_SERVICE_NAME
+    CRON_SCHEDULE: "\"10 8-18/1 * * 1-5\""
+    JOB_NAME: "\"sgmr-e2e-tests-cron\""
+  when:
+    branch:
+      - master
+    event:
+      - push
 
 - name: deploy_to_staging
   pull: if-not-exists

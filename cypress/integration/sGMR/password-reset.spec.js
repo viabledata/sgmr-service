@@ -17,7 +17,7 @@ describe('User Request for Password reset', () => {
     });
     cy.get('.govuk-button').click();
     cy.get('.govuk-body-l').should('have.text', 'A link to reset your password was sent to the provided email address.');
-    cy.waitForLatestEmail('658bfbb0-47bc-4bb6-b256-412c1534b602').then((mail) => {
+    cy.waitForLatestEmail('b4e9fa15-fbd0-4699-8e49-8dfb1511a2e8').then((mail) => {
       assert.isDefined(mail);
       const token = /token=([A-Za-z0-9-_=]+\.[A-Za-z0-9-_=]+\.?[A-Za-z0-9-_.+/=]*)/.exec(mail.body)[1];
       cy.visit(`/new-password?token=${token}`);

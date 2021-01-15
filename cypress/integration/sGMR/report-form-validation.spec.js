@@ -36,7 +36,6 @@ describe('Validate report form', () => {
     cy.login();
     cy.navigation('Reports');
     cy.url().should('include', '/reports');
-    cy.checkReports('Draft', 0);
     cy.get('.govuk-button--start').should('have.text', 'Start now').click();
   });
 
