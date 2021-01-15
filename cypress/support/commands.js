@@ -232,6 +232,21 @@ Cypress.Commands.add('checkReports', (type, numberOfReports) => {
     .should('have.text', numberOfReports);
 });
 
+Cypress.Commands.add('getNumberOfReports', (type) => {
+  let numberOfReports;
+  cy.get('.govuk-grid-row')
+    .within(() => {
+      cy.get('p.govuk-body-s')
+        .filter(`:contains(${type})`)
+        .find('strong')
+        .invoke('text')
+        .then((text) => {
+          numberOfReports = text;
+        });
+    });
+  return numberOfReports;
+});
+
 Cypress.Commands.add('assertPeopleTable', (callback) => {
   cy.contains('The people you have selected for this voyage are:').next()
     .getTable().then(callback);
@@ -258,12 +273,12 @@ Cypress.Commands.add('waitForLatestEmail', (inboxId) => {
 });
 
 Cypress.Commands.add('deleteAllEmails', () => {
-  mailslurp.emptyInbox('658bfbb0-47bc-4bb6-b256-412c1534b602');
+  mailslurp.emptyInbox('b4e9fa15-fbd0-4699-8e49-8dfb1511a2e8');
 });
 
 Cypress.Commands.add('activateAccount', () => {
   let apiServer = Cypress.env('api_server');
-  cy.waitForLatestEmail('658bfbb0-47bc-4bb6-b256-412c1534b602').then((mail) => {
+  cy.waitForLatestEmail('b4e9fa15-fbd0-4699-8e49-8dfb1511a2e8').then((mail) => {
     assert.isDefined(mail);
     const token = /token=([A-Za-z0-9-_=]+\.[A-Za-z0-9-_=]+\.?[A-Za-z0-9-_.+/=]*)/.exec(mail.body)[1];
     const email = /email=([A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,})/i.exec(mail.body)[1];

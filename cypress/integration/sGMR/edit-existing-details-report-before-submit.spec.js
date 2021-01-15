@@ -8,6 +8,7 @@ describe('Edit Details & Submit new voyage report', () => {
   let vessel;
   let person;
   let departDate;
+  let numberOfSubmittedReports;
 
   before(() => {
     cy.registerUser();
@@ -28,7 +29,9 @@ describe('Edit Details & Submit new voyage report', () => {
 
     cy.navigation('Reports');
     cy.url().should('include', '/reports');
-    cy.checkReports('Draft', 0);
+    cy.getNumberOfReports('Submitted').then((res) => {
+      numberOfSubmittedReports = res;
+    });
     cy.get('.govuk-button--start').should('have.text', 'Start now').click();
     cy.enterDepartureDetails(departureDateTime, departurePort);
     cy.saveAndContinue();
@@ -91,7 +94,7 @@ describe('Edit Details & Submit new voyage report', () => {
     cy.url().should('include', '/save-voyage/page-submitted');
     cy.get('.govuk-panel__title').should('have.text', 'Pleasure Craft Report Submitted');
     cy.navigation('Reports');
-    cy.checkReports('Submitted', 1);
+    cy.checkReports('Submitted', (+numberOfSubmittedReports) + (+1));
     cy.contains('View existing reports').click();
     cy.get('.govuk-tabs__list li')
       .within(() => {
@@ -133,7 +136,7 @@ describe('Edit Details & Submit new voyage report', () => {
     cy.url().should('include', '/save-voyage/page-submitted');
     cy.get('.govuk-panel__title').should('have.text', 'Pleasure Craft Report Submitted');
     cy.navigation('Reports');
-    cy.checkReports('Submitted', 1);
+    cy.checkReports('Submitted', (+numberOfSubmittedReports) + (+1));
     cy.contains('View existing reports').click();
     cy.get('.govuk-tabs__list li')
       .within(() => {
