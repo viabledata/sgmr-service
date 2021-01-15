@@ -146,8 +146,10 @@ steps:
     DOCKER_USERNAME:
       from_secret: QUAY_USERNAME
   when:
+    branch:
+    - master
     event:
-      - push
+    - push
 
 - name: deploy_to_dev
   pull: if-not-exists
