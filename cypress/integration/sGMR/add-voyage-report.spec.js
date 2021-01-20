@@ -8,6 +8,9 @@ describe('Add new voyage report', () => {
   let vessel;
   let person;
   let departDate;
+  let numberOfDraftReports;
+  let numberOfSubmittedReports;
+  let numberOfCancelledReports;
 
   before(() => {
     cy.registerUser();
@@ -32,7 +35,15 @@ describe('Add new voyage report', () => {
 
     cy.navigation('Reports');
     cy.url().should('include', '/reports');
-    cy.checkReports('Draft', 0);
+    cy.getNumberOfReports('Draft').then((res) => {
+      numberOfDraftReports = res;
+    });
+    cy.getNumberOfReports('Submitted').then((res) => {
+      numberOfSubmittedReports = res;
+    });
+    cy.getNumberOfReports('Cancelled').then((res) => {
+      numberOfCancelledReports = res;
+    });
     cy.get('.govuk-button--start').should('have.text', 'Start now').click();
   });
 
@@ -70,7 +81,7 @@ describe('Add new voyage report', () => {
     cy.saveAndContinueOnPeopleManifest(true);
     cy.contains(`People already added to the manifest:${person.firstName} ${person.lastName}`);
     cy.saveAndContinue();
-    cy.get('input[name=people]').eq(0).check();
+    cy.get('input[type="checkbox"]').eq(0).check();
     cy.contains('Remove person').click();
     cy.contains('There are no people on the manifest.');
     cy.saveAndContinueOnPeopleManifest(true);
@@ -90,7 +101,7 @@ describe('Add new voyage report', () => {
     cy.url().should('include', '/save-voyage/page-submitted');
     cy.get('.govuk-panel__title').should('have.text', 'Pleasure Craft Report Submitted');
     cy.navigation('Reports');
-    cy.checkReports('Submitted', 1);
+    cy.checkReports('Submitted', (+numberOfSubmittedReports) + (+1));
     cy.contains('View existing reports').click();
     cy.get('.govuk-tabs__list li')
       .within(() => {
@@ -132,7 +143,7 @@ describe('Add new voyage report', () => {
     cy.contains('Cancel voyage').click();
     cy.url().should('include', '/reports');
     cy.navigation('Reports');
-    cy.checkReports('Cancelled', 1);
+    cy.checkReports('Cancelled', (+numberOfCancelledReports) + (+1));
     cy.contains('View existing reports').click();
     cy.get('.govuk-tabs__list li')
       .within(() => {
@@ -173,7 +184,7 @@ describe('Add new voyage report', () => {
     cy.contains('Exit without saving').click();
     cy.url().should('include', '/reports');
     cy.navigation('Reports');
-    cy.checkReports('Draft', 1);
+    cy.checkReports('Draft', (+numberOfDraftReports) + (+1));
     cy.contains('View existing reports').click();
     cy.get('.govuk-tabs__list li')
       .within(() => {
