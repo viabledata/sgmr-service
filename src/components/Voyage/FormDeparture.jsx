@@ -128,7 +128,6 @@ const FormDeparture = ({
                   className="govuk-input govuk-date-input__input govuk-input--width-2"
                   id="departureTimeMinute"
                   name="departureTimeMinute"
-                  id="departureTimeMinute"
                   type="text"
                   pattern="[0-9]*"
                   inputMode="numeric"
@@ -154,6 +153,7 @@ const FormDeparture = ({
           </span>
           <PortField
             id="departurePort"
+            defaultValue={data.departurePort}
             onConfirm={(result) => {
               updateFieldValue('departurePort', result.unlocode || result.name);
             }}
