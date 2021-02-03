@@ -13,7 +13,8 @@
         "test:watch": "npm run test -- --watch",
         "cypress:test:local": "cypress run",
         "cypress:test:dev": "cypress run -- --env configFile=dev",
-        "cypress:runner": "cypress open"
+        "cypress:runner": "cypress open",
+        "cypress:test:report": "node cypress_runner"
     },
     "repository": {
         "type": "git",
@@ -76,13 +77,20 @@
         "fs-extra": "^9.0.1",
         "jest": "^24.9.0",
         "mailslurp-client": "^10.0.4",
+        "ls": "^0.2.1",
+        "mocha": "^8.2.1",
+        "mochawesome": "^6.2.1",
+        "mochawesome-merge": "^4.2.0",
+        "mochawesome-report-generator": "^5.1.0",
         "msw": "^0.21.2",
         "node-sass": "^4.14.1",
         "prettier": "^1.19.1",
+        "rimraf": "^3.0.2",
         "sass-loader": "^8.0.2",
         "webpack": "^4.41.6",
         "webpack-cli": "^3.3.11",
-        "webpack-dev-server": "^3.11.0"
+        "webpack-dev-server": "^3.11.0",
+        "yargs": "^16.1.1"
     },
     "dependencies": {
         "@babel/runtime-corejs3": "^7.9.2",

@@ -34,6 +34,36 @@ spec:
                     secretKeyRef:
                       name: "{{ .NAME }}"
                       key: kube_namespace
+                - name: S3_ACCESS_KEY
+                  valueFrom:
+                    secretKeyRef:
+                      name: "{{ .NAME }}"
+                      key: s3_access_key
+                - name: S3_SECRET_KEY
+                  valueFrom:
+                    secretKeyRef:
+                      name: "{{ .NAME }}"
+                      key: s3_secret_key
+                - name: S3_BUCKET_NAME
+                  valueFrom:
+                    secretKeyRef:
+                      name: "{{ .NAME }}"
+                      key: s3_bucket_name
+                - name: SLACK_WEB_HOOK
+                  valueFrom:
+                    secretKeyRef:
+                      name: "{{ .NAME }}"
+                      key: slack_web_hook
+                - name: REPORT_BASE_URL
+                  valueFrom:
+                    secretKeyRef:
+                      name: "{{ .NAME }}"
+                      key: report_base_url
+                - name: AUTH_REALM
+                  valueFrom:
+                    secretKeyRef:
+                      name: "{{ .NAME }}"
+                      key: auth_realm
               securityContext:
                 runAsNonRoot: true
                 runAsUser: 1000
