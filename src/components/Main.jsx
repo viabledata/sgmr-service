@@ -113,6 +113,9 @@ const Main = () => {
           <Route exact path="/help">
             <Help />
           </Route>
+          <Route exact path="/500">
+            <FiveHundred />
+          </Route>
           <Route exact path="/accessibility-statement">
             <AccessibilityStatement />
           </Route>
