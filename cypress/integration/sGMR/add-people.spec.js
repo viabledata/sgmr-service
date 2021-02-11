@@ -56,7 +56,7 @@ describe('Add People in account', () => {
     cy.get('.govuk-error-message').should('contain.text', 'This person already exists').and('be.visible');
   });
 
-  it('Should not add people when Clicking on "Exit without saving" button', () => {
+  it('Should not add people when Clicking on Exit without saving button', () => {
     cy.contains('a', 'Save a person').should('have.text', 'Save a person').click();
     cy.enterPeopleInfo(people);
     cy.get('#firstName [type="text"]').clear().type('Auto-test-no-save');
