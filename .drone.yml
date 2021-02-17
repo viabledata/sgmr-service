@@ -208,8 +208,6 @@ steps:
       from_secret: DEV_KEYCLOAK_REALM
     PROTOCOL_HTTPS:
       from_secret: PROTOCOL_HTTPS
-    DEV_KEYCLOAK_URL:
-      from_secret: DEV_KEYCLOAK_URL
     REPORT_BASE_URL:
       from_secret: TESTS_REPORT_BASE_URL
     S3_ACCESS_KEY:
