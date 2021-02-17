@@ -13,7 +13,22 @@ Cypress.on('uncaught:exception', () => {
 
 Cypress.on('test:after:run', (test, runnable) => {
   if (test.state === 'failed') {
-    const screenshotFileName = `${Cypress.config('screenshotsFolder')}/${Cypress.spec.name}/${runnable.parent.title} -- ${test.title} (failed).png`;
-    addContext({ test }, `assets/${Cypress.spec.name}/${screenshotFileName}`);
+    let item = runnable;
+    const nameParts = [runnable.title];
+
+    // Iterate through all parents and grab the titles
+    while (item.parent) {
+      nameParts.unshift(item.parent.title);
+      item = item.parent;
+    }
+
+    if (runnable.hookName) {
+      nameParts.push(`${runnable.hookName} hook`);
+    }
+
+    const fullTestName = nameParts.filter(Boolean).join(' -- ');
+    const screenshotPath = `assets/${Cypress.spec.name}/${fullTestName} (failed).png`.replace('  ', ' ');
+
+    addContext({ test }, screenshotPath);
   }
 });
