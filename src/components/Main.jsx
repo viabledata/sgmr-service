@@ -11,7 +11,6 @@ import Footer from '@components/Footer';
 import Header from '@components/Header';
 import PrivacyCookiePolicy from '@components/PrivacyCookiePolicy';
 import Help from '@components/Help';
-import FiveHundred from '@components/500';
 import AccessibilityStatement from '@components/AccessibilityStatement';
 import PageContainer from '@components/PageContainer';
 
@@ -118,9 +117,6 @@ const Main = () => {
           </Route>
           <Route exact path="/help">
             <Help />
-          </Route>
-          <Route exact path="/500">
-            <FiveHundred />
           </Route>
           <Route exact path="/accessibility-statement">
             <AccessibilityStatement />
