@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { Route, Switch } from 'react-router-dom';
 
-// app imports
+import { siteMaintenance } from 'config';
+
 import ScrollToTop from '@components/ScrollToTop';
 import SecureRoute from '@lib/SecureRoute';
 
@@ -36,9 +37,14 @@ import NewPassword from '@components/User/NewPassword';
 import ForgottenPassword from '@components/User/ForgottenPassword';
 import LandingPage from '@components/LandingPage';
 import ManageReports from '@components/ManageReports';
+import SiteMaintenance from '@components/SiteMaintenance';
 
 const Main = () => {
   const [user, setUser] = useState(null);
+
+  if (siteMaintenance) {
+    return <SiteMaintenance />;
+  }
 
   return (
     <>

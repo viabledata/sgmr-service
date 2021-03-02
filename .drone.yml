@@ -173,6 +173,8 @@ steps:
       from_secret: NGINX_TAG
     SGMR_DATA_API_BASE_URL:
       from_secret: DEV_SGMR_DATA_API_BASE_URL
+    SGMR_MAINTENANCE:
+      from_secret: DEV_SGMR_MAINTENANCE
     SGMR_SERVICE_IMAGE:
       from_secret: SGMR_SERVICE_IMAGE
     SGMR_SERVICE_NAME:
@@ -261,6 +263,8 @@ steps:
       from_secret: NGINX_TAG
     SGMR_DATA_API_BASE_URL:
       from_secret: STAGING_SGMR_DATA_API_BASE_URL
+    SGMR_MAINTENANCE:
+      from_secret: STAGING_SGMR_MAINTENANCE
     SGMR_SERVICE_IMAGE:
       from_secret: SGMR_SERVICE_IMAGE
     SGMR_SERVICE_NAME:
@@ -302,6 +306,8 @@ steps:
       from_secret: NGINX_TAG
     SGMR_DATA_API_BASE_URL:
       from_secret: PRODUCTION_SGMR_DATA_API_BASE_URL
+    SGMR_MAINTENANCE:
+      from_secret: PRODUCTION_SGMR_MAINTENANCE
     SGMR_SERVICE_IMAGE:
       from_secret: SGMR_SERVICE_IMAGE
     SGMR_SERVICE_NAME:
