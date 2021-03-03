@@ -39,6 +39,8 @@ spec:
         env:
           - name: SGMR_DATA_API_BASE_URL
             value: {{.SGMR_DATA_API_BASE_URL}}
+          - name: SGMR_MAINTENANCE
+            value: {{.SGMR_MAINTENANCE}}
       - name: proxy
         image: "{{.NGINX_IMAGE}}:{{.NGINX_TAG}}"
         imagePullPolicy: Always

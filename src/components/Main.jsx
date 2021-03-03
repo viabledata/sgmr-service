@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { Route, Switch } from 'react-router-dom';
 
-// app imports
+import { siteMaintenance } from 'config';
+
 import ScrollToTop from '@components/ScrollToTop';
 import SecureRoute from '@lib/SecureRoute';
 
@@ -10,7 +11,6 @@ import Footer from '@components/Footer';
 import Header from '@components/Header';
 import PrivacyCookiePolicy from '@components/PrivacyCookiePolicy';
 import Help from '@components/Help';
-import FiveHundred from '@components/500';
 import AccessibilityStatement from '@components/AccessibilityStatement';
 import PageContainer from '@components/PageContainer';
 
@@ -36,9 +36,14 @@ import NewPassword from '@components/User/NewPassword';
 import ForgottenPassword from '@components/User/ForgottenPassword';
 import LandingPage from '@components/LandingPage';
 import ManageReports from '@components/ManageReports';
+import SiteMaintenance from '@components/SiteMaintenance';
 
 const Main = () => {
   const [user, setUser] = useState(null);
+
+  if (siteMaintenance) {
+    return <SiteMaintenance />;
+  }
 
   return (
     <>
@@ -112,9 +117,6 @@ const Main = () => {
           </Route>
           <Route exact path="/help">
             <Help />
-          </Route>
-          <Route exact path="/500">
-            <FiveHundred />
           </Route>
           <Route exact path="/accessibility-statement">
             <AccessibilityStatement />
