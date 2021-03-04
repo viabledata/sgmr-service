@@ -1,5 +1,5 @@
 import React from 'react';
-import { govUrl } from 'config';
+import { govUrl } from '../config';
 
 const Help = () => {
   return (

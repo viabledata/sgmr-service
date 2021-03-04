@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import { Route, Switch } from 'react-router-dom';
 
-import { siteMaintenance } from 'config';
-
 import ScrollToTop from '@components/ScrollToTop';
 import SecureRoute from '@lib/SecureRoute';
 
@@ -23,7 +21,6 @@ import EditAccount from '@components/User/EditAccount';
 import UserRegisterConfirmation from '@components/User/UserRegisterConfirmation';
 import AccountActivation from '@components/User/AccountActivation';
 
-
 import CreateAVessel from '@components/Vessel/CreateAVessel';
 import EditVessel from '@components/Vessel/EditVessel';
 
@@ -37,6 +34,7 @@ import ForgottenPassword from '@components/User/ForgottenPassword';
 import LandingPage from '@components/LandingPage';
 import ManageReports from '@components/ManageReports';
 import SiteMaintenance from '@components/SiteMaintenance';
+import { siteMaintenance } from '../config';
 
 const Main = () => {
   const [user, setUser] = useState(null);

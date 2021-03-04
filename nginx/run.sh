@@ -9,8 +9,8 @@ echo "== Inserting env variables =="
 for file in /usr/share/nginx/html/*.js
 do
   echo "== ENV sub for $file =="
-  sed -i 's,https://api.fake.build.com,'${SGMR_DATA_API_BASE_URL}',g' $file
-  sed -i 's,fake-environment,'${ENVIRONMENT}',g' $file
+  sed -i 's,REPLACE_SGMR_DATA_API_BASE_URL,'${SGMR_DATA_API_BASE_URL}',g' $file
+  sed -i 's,REPLACE_SGMR_MAINTENANCE,'${SGMR_MAINTENANCE}',g' $file
 done
 echo "== Finished ENV sub =="
 # --- End Insert ENV to JS bundle ---

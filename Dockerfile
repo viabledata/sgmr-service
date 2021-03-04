@@ -1,8 +1,5 @@
 FROM quay.io/ukhomeofficedigital/cop-node:12-alpine as builder
 
-ARG SGMR_DATA_API_BASE_URL=https://api.fake.build.com
-ARG ENVIRONMENT=fake-environment
-
 RUN apk update && apk upgrade
 
 RUN mkdir -p /src
@@ -12,15 +9,17 @@ COPY package*.json ./
 RUN npm ci
 COPY . /src
 
+# This allows to pass env vars on runtime, see webpack.config.js:58 and run.sh
+ENV SGMR_DATA_API_BASE_URL=REPLACE_SGMR_DATA_API_BASE_URL \
+    SGMR_MAINTENANCE=REPLACE_SGMR_MAINTENANCE
+
 RUN npm run build
 
 # Now build the final image based on Nginx
 
 FROM alpine:3.7
 
-ENV NGINX_CONFIG_FILE=/etc/nginx/nginx.conf \
-    SGMR_DATA_API_BASE_URL=https://api.fake.build.com \
-    ENVIRONMENT=fake-environment
+ENV NGINX_CONFIG_FILE=/etc/nginx/nginx.conf
 
 RUN apk upgrade --no-cache && \
     apk add --no-cache nginx bash nginx-mod-http-lua && \
