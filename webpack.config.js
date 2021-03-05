@@ -1,6 +1,7 @@
 const CopyPlugin = require('copy-webpack-plugin');
 const path = require('path');
 const webpack = require('webpack');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   // in the `entry` property there is no need to
@@ -9,7 +10,7 @@ module.exports = {
   entry: ['./src/', './src/sass/main.scss'],
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: 'bundle.js',
+    filename: 'bundle.[hash].js',
     publicPath: '/',
   },
   resolve: {
@@ -59,6 +60,7 @@ module.exports = {
       SGMR_DATA_API_BASE_URL: 'http://localhost:5000/v1',
       SGMR_MAINTENANCE: false,
     }),
+    new HtmlWebpackPlugin({ template: './index.html' }),
   ],
   node: { fs: 'empty' },
   devServer: {
