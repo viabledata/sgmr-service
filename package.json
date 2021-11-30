@@ -97,7 +97,7 @@
         "@babel/runtime-corejs3": "^7.9.2",
         "accessible-autocomplete": "^2.0.3",
         "axios": "^0.21.2",
-        "browserslist": "^4.11.0",
+        "browserslist": "^4.16.5",
         "connected-react-router": "^6.8.0",
         "core-js": "^3.6.4",
         "cors": "^2.8.5",
