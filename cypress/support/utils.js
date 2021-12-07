@@ -1,20 +1,19 @@
 exports.getFutureDate = (year, format) => {
   return ['DD/MM/YYYY', 'DD/MM/YYYY HH:MM'].includes(format)
-    ? Cypress.moment().add(year, 'year').format(format)
+    ? Cypress.dayjs().add(year, 'year').format(format)
     : null;
 };
 
 exports.getPastDate = (age, format) => {
   return ['DD/MM/YYYY', 'DD/MM/YYYY HH:MM'].includes(format)
-    ? Cypress.moment().subtract(age, 'year').format(format)
+    ? Cypress.dayjs().subtract(age, 'year').format(format)
     : null;
 };
 
 exports.terminalLog = (violations) => {
   cy.task(
     'log',
-    `${violations.length} accessibility violation${
-      violations.length === 1 ? '' : 's'
+    `${violations.length} accessibility violation${violations.length === 1 ? '' : 's'
     } ${violations.length === 1 ? 'was' : 'were'} detected`,
   );
   // pluck specific keys to keep the table readable
