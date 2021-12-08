@@ -5,7 +5,7 @@ import {
   arrivalValidationRules,
   departureValidationRules,
   personValidationRules,
-  responsiblePersonValidationRules, validate,
+  responsiblePersonValidationRules, validate, VALID_INTERNATIONAL_MOBILE_REGEX,
   vesselValidationRules,
   voyageValidationRules,
 } from '@components/Forms/validationRules';
@@ -27,6 +27,13 @@ const VoyageFormValidation = async (dataToValidate, source) => {
 
   // Required fields must not be null
   const errors = await validate(validationRules, dataToValidate);
+
+  // Validate skipper phone number
+  if (source === FORM_STEPS.RESPONSIBLE_PERSON && dataToValidate.responsibleContactNo) {
+    if (!(VALID_INTERNATIONAL_MOBILE_REGEX.test(dataToValidate.responsibleContactNo))) {
+      errors.responsibleContactNo = 'You must enter a valid phone number e.g. 07700 900982, +33 63998 010101';
+    }
+  }
 
   // Departure & Arrival must include a Port OR a Lat & Long
 
