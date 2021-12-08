@@ -6,6 +6,7 @@ import { isDateValid, isInThePast } from '@utils/date';
 export const VALID_EMAIL_REGEX = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
 export const COMPLEX_PASSWORD_REGEX = /(\d+)|([a-z]+)|([A-Z]+)|([!@$%^&\\(){}[\]:;<>,*.?/~_+-=|]+)+/g;
 export const VALID_MOBILE_REGEX = /^[0|+]([ 0-9]{3,20})$/i;
+export const VALID_INTERNATIONAL_MOBILE_REGEX = /^[0-9-+()" "]*$/;
 
 export const personValidationRules = [
   {
