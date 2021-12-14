@@ -6,6 +6,8 @@ import { LOGIN_URL } from '@constants/ApiConstants';
 import Auth from '@lib/Auth';
 
 const SignIn = () => {
+  document.title = "Sign In";
+  
   const history = useHistory();
   const [formData, setFormData] = useState({});
   const [errors, setErrors] = useState({});

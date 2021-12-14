@@ -4,6 +4,8 @@ import qs from 'qs';
 import Auth from '@lib/Auth';
 
 const UserRegisterConfirmation = () => {
+  document.title = "Account successfully created";
+
   const history = useHistory();
 
   const location = useLocation();

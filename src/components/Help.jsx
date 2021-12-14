@@ -2,6 +2,8 @@ import React from 'react';
 import { govUrl } from '../config';
 
 const Help = () => {
+  document.title = "Help";
+  
   return (
     <div className="govuk-width-container ">
       <main className="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" role="main">
