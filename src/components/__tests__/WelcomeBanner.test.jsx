@@ -32,3 +32,10 @@ test('Welcome banner displays the users details', () => {
 
   expect(screen.getByText('Welcome back, John')).toBeInTheDocument();
 });
+
+test('Welcome back text should be a paragraph', () => {
+  customRender(<WelcomeBanner />, { providerProps });
+
+  const content = screen.getByText('Welcome back, John');
+  expect(content.outerHTML).toEqual("<p>Welcome back, John</p>");
+});
