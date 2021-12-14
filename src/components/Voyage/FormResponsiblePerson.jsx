@@ -5,6 +5,8 @@ import FormError from '@components/Voyage/FormError';
 const FormResponsiblePerson = ({
   handleSubmit, handleChange, data, errors, voyageId,
 }) => {
+  document.title = "Add the skipper's address";
+
   return (
     <section>
       <h1 className="govuk-heading-xl">Add the skipper's address</h1>

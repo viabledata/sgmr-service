@@ -7,6 +7,8 @@ import { USER_VOYAGE_REPORT_URL, VOYAGE_REPORT_URL } from '@constants/ApiConstan
 import { EDIT_VOYAGE_CHECK_DETAILS_URL } from '@constants/ClientConstants';
 
 const ManageReports = (pageData) => {
+  document.title = "Manage reports";
+
   const [tabData, setTabData] = useState([]);
   const [tableName, setTableName] = useState('Draft');
   const [reportList, setReportList] = useState();

@@ -7,6 +7,8 @@ import PortField from '@components/PortField';
 const FormDeparture = ({
   handleSubmit, handleChange, updateFieldValue, data, errors, voyageId,
 }) => {
+  document.title = "Departure details";
+
   if (!data) { return null; }
   return (
     <section>

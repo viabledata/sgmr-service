@@ -6,6 +6,8 @@ import { USER_VOYAGE_REPORT_URL, VOYAGE_REPORT_URL } from '@constants/ApiConstan
 import { SAVE_VOYAGE_DEPARTURE_URL } from '@constants/ClientConstants';
 
 const Dashboard = (pageData) => {
+  document.title = "Reports";
+
   const history = useHistory();
   const [reportList, setReportList] = useState();
 

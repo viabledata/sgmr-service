@@ -79,6 +79,8 @@ const ActivationError = ({ email, error }) => {
 };
 
 const AccountActivation = () => {
+  document.title = "Account activation";
+
   const history = useHistory();
   if (Auth.isAuthorized()) {
     history.push('/reports');

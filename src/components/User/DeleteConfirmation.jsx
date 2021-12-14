@@ -3,6 +3,8 @@ import { Link, useHistory } from 'react-router-dom';
 import Auth from '@lib/Auth';
 
 const DeleteConfirmation = () => {
+  document.title = "Your account is now deleted";
+
   const history = useHistory();
   if (Auth.isAuthorized()) {
     history.push('/reports');

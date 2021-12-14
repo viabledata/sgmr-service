@@ -9,6 +9,8 @@ import FormError from '@components/Voyage/FormError';
 import PasswordField from '@components/User/PasswordField';
 
 const UserRegister = () => {
+  document.title = "Create an account";
+
   const pageName = 'userRegister';
   const history = useHistory();
   const [formData, setFormData] = useState({});

@@ -14,6 +14,8 @@ import {
 import FormError from '@components/Voyage/FormError';
 
 const CreateAPerson = () => {
+  document.title = "Save a person";
+
   const history = useHistory();
   const location = useLocation();
   const [formData, setFormData] = useState({});

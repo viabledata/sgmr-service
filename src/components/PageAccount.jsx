@@ -5,6 +5,7 @@ import { useHistory } from 'react-router-dom';
 import UserContext from './UserContext';
 
 const PageAccount = () => {
+  document.title = "Account";
   const history = useHistory();
 
   // Calling the user info
