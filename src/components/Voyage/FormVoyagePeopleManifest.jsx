@@ -9,6 +9,8 @@ import scrollToTopOnError from '@utils/scrollToTopOnError';
 const FormVoyagePeopleManifest = ({
   handleSubmit, voyageId, setPageNum, setErrors,
 }) => {
+  document.title = "People on the manifest";
+
   const [peopleData, setPeopleData] = useState([]);
   const [makeChanges, setMakeChanges] = useState(false);
   const [removeButtonDisabled, setRemoveButtonDisabled] = useState(true);

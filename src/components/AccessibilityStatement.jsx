@@ -1,6 +1,8 @@
 import React from 'react';
 
 const AccessibilityStatement = () => {
+  document.title = "Accessibility statement";
+
   return (
     <div className="govuk-width-container ">
       <main className="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" role="main">

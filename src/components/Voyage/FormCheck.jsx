@@ -14,6 +14,8 @@ import {
 const FormCheck = ({
   voyageId, voyageData, handleSubmit, errors,
 }) => {
+  document.title = "Check your information";
+
   if (!voyageData) { return null; }
   return (
     <section>
