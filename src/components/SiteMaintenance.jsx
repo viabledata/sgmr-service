@@ -5,6 +5,8 @@ import Banner from '@components/Banner';
 import Footer from '@components/Footer';
 
 const SiteMaintenance = () => {
+  document.title = "Unavailable service";
+
   return (
     <>
       <Header />

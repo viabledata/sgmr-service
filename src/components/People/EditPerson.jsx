@@ -16,6 +16,8 @@ import {
 } from '@components/Forms/validationRules';
 
 const EditPerson = () => {
+  document.title = "Edit person";
+
   const history = useHistory();
   const [personId, setPersonId] = useState();
   const [formData, setFormData] = useState({});
