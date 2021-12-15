@@ -21,27 +21,15 @@ const FormCheck = ({
         Check the information provided before submitting your voyage report
       </h1>
 
-      <dl className="govuk-summary-list govuk-!-margin-bottom-9">
-        <div className="govuk-summary-list__row">
-          <dt className="govuk-heading-m">Departure details</dt>
-          <dd className="govuk-summary-list__value">
-            <Link to={{
-              pathname: SAVE_VOYAGE_DEPARTURE_URL,
-              state: { voyageId },
-            }}
-            >
-              Change
-              <span className="govuk-visually-hidden"> Change</span>
-            </Link>
-          </dd>
-        </div>
-      </dl>
+      <div className="govuk-summary-list govuk-!-margin-bottom-9">
+        <h2 className="govuk-heading-m">Departure details</h2>
+      </div>
       <div className="govuk-form-group govuk-form-group--error">
         <p className="govuk-error-message">{errors.departureDate}</p>
         <p className="govuk-error-message">{errors.departureTime}</p>
         <p className="govuk-error-message">{errors.departurePort}</p>
       </div>
-      <dl className="govuk-summary-list govuk-!-margin-bottom-9">
+      <dl className="govuk-summary-list">
         <div className="govuk-summary-list__row">
           <dt className="govuk-summary-list__key">Departure date</dt>
 
@@ -60,27 +48,27 @@ const FormCheck = ({
           <dd className="govuk-summary-list__value">{voyageData.departurePort}</dd>
         </div>
       </dl>
-      <dl className="govuk-summary-list govuk-!-margin-bottom-9">
-        <div className="govuk-summary-list__row">
-          <dt className="govuk-heading-m">Arrival details</dt>
-          <dd className="govuk-summary-list__value">
-            <Link to={{
-              pathname: SAVE_VOYAGE_ARRIVALS_URL,
-              state: { voyageId },
-            }}
-            >
-              Change
-              <span className="govuk-visually-hidden"> Change</span>
-            </Link>
-          </dd>
-        </div>
-      </dl>
+      <div className="govuk-summary-list govuk-!-margin-bottom-9">
+        <Link
+          to={{
+            pathname: SAVE_VOYAGE_DEPARTURE_URL,
+            state: { voyageId },
+          }}
+        >
+          Change departure details
+          <span className="govuk-visually-hidden">Change departure details</span>
+        </Link>
+      </div>
+
+      <div className="govuk-summary-list govuk-!-margin-bottom-9">
+        <h2 className="govuk-heading-m">Arrival details</h2>
+      </div>
       <div className="govuk-form-group govuk-form-group--error">
         <p className="govuk-error-message">{errors.arrivalDate}</p>
         <p className="govuk-error-message">{errors.arrivalTime}</p>
         <p className="govuk-error-message">{errors.arrivalPort}</p>
       </div>
-      <dl className="govuk-summary-list govuk-!-margin-bottom-9">
+      <dl className="govuk-summary-list">
         <div className="govuk-summary-list__row">
           <dt className="govuk-summary-list__key">Arrival date</dt>
           <dd className="govuk-summary-list__value">
@@ -98,27 +86,26 @@ const FormCheck = ({
           <dd className="govuk-summary-list__value">{voyageData.arrivalPort}</dd>
         </div>
       </dl>
-      <dl className="govuk-summary-list govuk-!-margin-bottom-9">
-        <div className="govuk-summary-list__row">
-          <dt className="govuk-heading-m">Vessel details</dt>
-          <dd className="govuk-summary-list__value">
-            <Link to={{
-              pathname: SAVE_VOYAGE_VESSEL_URL,
-              state: { voyageId },
-            }}
-            >
-              Change
-              <span className="govuk-visually-hidden"> Change</span>
-            </Link>
-          </dd>
-        </div>
-      </dl>
+      <div className="govuk-summary-list govuk-!-margin-bottom-9">
+        <Link
+          to={{
+            pathname: SAVE_VOYAGE_ARRIVALS_URL,
+            state: { voyageId },
+          }}
+        >
+          Change arrival details
+          <span className="govuk-visually-hidden">Change arrival details</span>
+        </Link>
+      </div>
 
+      <div className="govuk-summary-list govuk-!-margin-bottom-9">
+        <h2 className="govuk-heading-m">Vessel details</h2>
+      </div>
       <div className="govuk-form-group govuk-form-group--error">
         <p className="govuk-error-message">{errors.vesselName}</p>
         <p className="govuk-error-message">{errors.registration}</p>
       </div>
-      <dl className="govuk-summary-list govuk-!-margin-bottom-9">
+      <dl className="govuk-summary-list">
         <div className="govuk-summary-list__row">
           <dt className="govuk-summary-list__key">Vessel name</dt>
           <dd className="govuk-summary-list__value">{voyageData.vesselName}</dd>
@@ -138,8 +125,6 @@ const FormCheck = ({
         <div className="govuk-summary-list__row">
           <dt className="govuk-summary-list__key">Hull identification number</dt>
           <dd className="govuk-summary-list__value">{voyageData.hullIdentificationNumber}</dd>
-
-
         </div>
         <div className="govuk-summary-list__row">
           <dt className="govuk-summary-list__key">Callsign</dt>
@@ -154,49 +139,43 @@ const FormCheck = ({
           <dd className="govuk-summary-list__value">{voyageData.portOfRegistry}</dd>
         </div>
       </dl>
+      <div className="govuk-summary-list govuk-!-margin-bottom-9">
+        <Link
+          to={{
+            pathname: SAVE_VOYAGE_VESSEL_URL,
+            state: { voyageId },
+          }}
+        >
+          Change vessel details
+          <span className="govuk-visually-hidden">Change vessel details</span>
+        </Link>
+      </div>
 
-      <dl className="govuk-summary-list govuk-!-margin-bottom-9">
-        <div className="govuk-summary-list__row">
-          <dt className="govuk-heading-m">People on board</dt>
-          <dd className="govuk-summary-list__value">
-            <Link to={{
-              pathname: SAVE_VOYAGE_PEOPLE_MANIFEST_URL,
-              state: { voyageId },
-            }}
-            >
-              Change
-              <span className="govuk-visually-hidden"> Change</span>
-            </Link>
-          </dd>
-        </div>
-      </dl>
+      <div className="govuk-summary-list">
+        <h2 className="govuk-heading-m">People on board</h2>
+      </div>
       <PeopleSummary
         voyageId={voyageId}
       />
+      <div className="govuk-summary-list govuk-!-margin-bottom-9">
+        <Link
+          to={{
+            pathname: SAVE_VOYAGE_PEOPLE_MANIFEST_URL,
+            state: { voyageId },
+          }}
+        >
+          Change people on board
+          <span className="govuk-visually-hidden">Change people on board</span>
+        </Link>
+      </div>
 
-
-      <dl className="govuk-summary-list govuk-!-margin-bottom-9">
-        <div className="govuk-summary-list__row">
-          <dt className="govuk-heading-m">
-            Skipper&apos;s Details
-          </dt>
-          <dd className="govuk-summary-list__value">
-            <Link to={{
-              pathname: SAVE_VOYAGE_RESPONSIBLE_PERSON_URL,
-              state: { voyageId },
-            }}
-            >
-              Change
-              <span className="govuk-visually-hidden"> Change</span>
-            </Link>
-          </dd>
-        </div>
-      </dl>
-
+      <div className="govuk-summary-list govuk-!-margin-bottom-9">
+        <h2 className="govuk-heading-m">Skipper&apos;s details</h2>
+      </div>
       <div className="govuk-form-group govuk-form-group--error">
         <p className="govuk-error-message">{errors.responsibleGivenName}</p>
       </div>
-      <dl className="govuk-summary-list govuk-!-margin-bottom-9">
+      <dl className="govuk-summary-list">
         <div className="govuk-summary-list__row">
           <dt className="govuk-summary-list__key">First name</dt>
           <dd className="govuk-summary-list__value">{voyageData.responsibleGivenName}</dd>
@@ -214,12 +193,28 @@ const FormCheck = ({
         <div className="govuk-summary-list__row">
           <dt className="govuk-summary-list__key">Address</dt>
           <dd className="govuk-summary-list__value">
-            {([voyageData.responsibleAddressLine1, voyageData.responsibleAddressLine2, voyageData.responsibleTown, voyageData.responsibleCounty, voyageData.responsiblePostcode].filter(Boolean).join(', \n'))}
+            {([voyageData.responsibleAddressLine1, voyageData.responsibleAddressLine2, voyageData.responsibleTown, voyageData.responsibleCounty, voyageData.responsiblePostcode]
+              .filter(Boolean).join(', \n'))}
           </dd>
         </div>
       </dl>
+      <div className="govuk-summary-list govuk-!-margin-bottom-9">
+        <Link
+          to={{
+            pathname: SAVE_VOYAGE_RESPONSIBLE_PERSON_URL,
+            state: { voyageId },
+          }}
+        >
+          Change skipper&apos;s details
+          <span className="govuk-visually-hidden">Change skipper&apos;s details</span>
+        </Link>
+      </div>
+
       <h2 className="govuk-heading-m">Submit your Pleasure Craft Report</h2>
-      <p>By submitting this voyage report you are confirming that, to the best of your knowledge, the information you are providing is correct and you have the explicit permission of the persons named in this report to submit information on their behalf.</p>
+      <p>
+        By submitting this voyage report you are confirming that, to the best of your knowledge,
+        the information you are providing is correct and you have the explicit permission of the persons named in this report to submit information on their behalf.
+      </p>
       <button
         type="button"
         className="govuk-button"
