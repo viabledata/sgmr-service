@@ -140,6 +140,7 @@ const EditAccount = () => {
                 <input
                   className="govuk-input"
                   name="firstName"
+                  id = "firstName"
                   type="text"
                   value={formData.firstName || ''}
                   onChange={handleChange}
@@ -153,6 +154,7 @@ const EditAccount = () => {
                 <input
                   className="govuk-input"
                   name="lastName"
+                  id ="lastName"
                   type="text"
                   value={formData.lastName || ''}
                   onChange={handleChange}
@@ -166,6 +168,7 @@ const EditAccount = () => {
                 <input
                   className="govuk-input"
                   name="mobileNumber"
+                  id="mobileNumber"
                   type="text"
                   value={formData.mobileNumber || ''}
                   onChange={handleChange}
