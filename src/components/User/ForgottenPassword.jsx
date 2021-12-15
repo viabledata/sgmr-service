@@ -22,6 +22,8 @@ const PageWrapper = ({ children }) => (
 );
 
 const ForgottenPassword = () => {
+  document.title = "Forgotten Password";
+
   const [isFormDisabled, setFormDisabled] = useState(false);
   const [error, setError] = useState(null);
   const [formSubmitted, setFormSubmitted] = useState(false);

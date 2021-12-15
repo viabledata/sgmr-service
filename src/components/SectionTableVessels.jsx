@@ -6,6 +6,8 @@ import { VESSELS_URL } from '@constants/ApiConstants';
 import VesselTable from '@components/Vessel/VesselTable';
 
 const SectionTableVessels = () => {
+  document.title = "Vessels";
+  
   const [vesselData, setVesselData] = useState();
 
   const storeData = () => {

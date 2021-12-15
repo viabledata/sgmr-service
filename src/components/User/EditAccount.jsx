@@ -8,6 +8,8 @@ import Auth from '@lib/Auth';
 import UserContext from '../UserContext';
 
 const EditAccount = () => {
+  document.title = "Edit account";
+
   const history = useHistory();
   // Calling the user from context
   const { user, setUser } = useContext(UserContext)

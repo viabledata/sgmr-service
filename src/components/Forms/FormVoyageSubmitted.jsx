@@ -2,6 +2,9 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 const FormVoyageSubmitted = () => {
+  
+  document.title = "Report Submitted";
+
   return (
     <div className="govuk-width-container">
       <main className="govuk-main-wrapper govuk-main-wrapper--l" id="main-content" role="main">
