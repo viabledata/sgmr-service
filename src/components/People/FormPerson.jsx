@@ -40,7 +40,7 @@ const FormPerson = ({
       </div>
 
       <div className={`govuk-form-group ${errors.gender ? 'govuk-form-group--error' : ''}`}>
-        <fieldset className="govuk-fieldset" aria-describedby="gender-hint">
+        <fieldset className="govuk-fieldset">
           <legend className="govuk-fieldset__legend">
             <label className="govuk-fieldset__heading" htmlFor="gender">
               Gender
