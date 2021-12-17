@@ -161,7 +161,7 @@ const UserRegister = () => {
 
               <PasswordField handleChange={handleChange} formData={formData} errors={errors} />
 
-              <h3 className="govuk-heading-s">Declaration</h3>
+              <h2 className="govuk-heading-s">Declaration</h2>
               <p className="govuk-body">By creating this account, you agree:</p>
               <ul className="govuk-list govuk-list--bullet">
                 <li>that the information you have provided is correct to the best of your knowledge</li>
