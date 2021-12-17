@@ -40,58 +40,58 @@ const FormPerson = ({
       </div>
 
       <div className={`govuk-form-group ${errors.gender ? 'govuk-form-group--error' : ''}`}>
-      <fieldset className="govuk-fieldset" aria-describedby="gender-hint">
-        <legend className="govuk-fieldset__legend">
-          <label className="govuk-fieldset__heading" htmlFor="gender">
-            Gender
-          </label>
-        </legend>
-        <div id="gender" className="govuk-radios govuk-radios">
-          <FormError error={errors.gender} />
-          <div className="govuk-radios__item">
-            <input
-              className="govuk-radios__input"
-              name="gender"
-              id="female"
-              type="radio"
-              value="Female"
-              checked={formData.gender === 'Female' ? 'checked' : ''}
-              onChange={handleChange}
-            />
-            <label className="govuk-label govuk-radios__label" htmlFor="female">
-              Female
+        <fieldset className="govuk-fieldset" aria-describedby="gender-hint">
+          <legend className="govuk-fieldset__legend">
+            <label className="govuk-fieldset__heading" htmlFor="gender">
+              Gender
             </label>
+          </legend>
+          <div id="gender" className="govuk-radios govuk-radios">
+            <FormError error={errors.gender} />
+            <div className="govuk-radios__item">
+              <input
+                className="govuk-radios__input"
+                name="gender"
+                id="female"
+                type="radio"
+                value="Female"
+                checked={formData.gender === 'Female' ? 'checked' : ''}
+                onChange={handleChange}
+              />
+              <label className="govuk-label govuk-radios__label" htmlFor="female">
+                Female
+              </label>
+            </div>
+            <div className="govuk-radios__item">
+              <input
+                className="govuk-radios__input"
+                name="gender"
+                id="male"
+                type="radio"
+                value="Male"
+                checked={formData.gender === 'Male' ? 'checked' : ''}
+                onChange={handleChange}
+              />
+              <label className="govuk-label govuk-radios__label" htmlFor="male">
+                Male
+              </label>
+            </div>
+            <div className="govuk-radios__item">
+              <input
+                className="govuk-radios__input"
+                name="gender"
+                id="non-binary"
+                type="radio"
+                value="Non-binary"
+                checked={formData.gender === 'Non-binary' ? 'checked' : ''}
+                onChange={handleChange}
+              />
+              <label className="govuk-label govuk-radios__label" htmlFor="non-binary">
+                Non-binary
+              </label>
+            </div>
           </div>
-          <div className="govuk-radios__item">
-            <input
-              className="govuk-radios__input"
-              name="gender"
-              id="male"
-              type="radio"
-              value="Male"
-              checked={formData.gender === 'Male' ? 'checked' : ''}
-              onChange={handleChange}
-            />
-            <label className="govuk-label govuk-radios__label" htmlFor="male">
-              Male
-            </label>
-          </div>
-          <div className="govuk-radios__item">
-            <input
-              className="govuk-radios__input"
-              name="gender"
-              id="non-binary"
-              type="radio"
-              value="Non-binary"
-              checked={formData.gender === 'Non-binary' ? 'checked' : ''}
-              onChange={handleChange}
-            />
-            <label className="govuk-label govuk-radios__label" htmlFor="non-binary">
-              Non-binary
-            </label>
-          </div>
-        </div>
-      </fieldset>
+        </fieldset>
       </div>
 
       <div className={`govuk-form-group ${errors.dateOfBirth ? 'govuk-form-group--error' : ''}`}>
@@ -315,9 +315,10 @@ const FormPerson = ({
               </label>
             </div>
           </div>
+          {documentTypeOther && (
           <div className="govuk-form-group">
             <label className="govuk-label" htmlFor="documentType-other">
-              If &quot;Other&quot;, please specify
+              Please specify
               <input
                 className="govuk-input"
                 name="documentType"
@@ -327,6 +328,7 @@ const FormPerson = ({
               />
             </label>
           </div>
+          )}
         </fieldset>
       </div>
 
