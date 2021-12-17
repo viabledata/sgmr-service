@@ -7,10 +7,6 @@ const PeopleTable = ({ peopleData, onSelectionChange = () => {} }) => {
     onSelectionChange(peopleToRemove);
   }, [peopleToRemove]);
 
-  const handleSelectAll = (e) => {
-    setPeopleToRemove(e.target.checked ? peopleData.map((person) => person.id) : []);
-  };
-
   const handleCheckboxes = (e) => {
     let checkedPeople = [...peopleToRemove];
     if (e.target.checked) {
@@ -28,22 +24,7 @@ const PeopleTable = ({ peopleData, onSelectionChange = () => {} }) => {
           <th
             width={1}
             className="govuk-table__header  multiple-choice--hod"
-          >
-            <div className="govuk-checkboxes__item">
-              <input
-                type="checkbox"
-                className="govuk-checkboxes__input"
-                id="radio-all"
-                onChange={handleSelectAll}
-              />
-              <label
-                className="govuk-label govuk-checkboxes__label"
-                htmlFor="radio-all"
-              >
-                &nbsp;
-              </label>
-            </div>
-          </th>
+          />
           <th className="govuk-table__header">Last name</th>
           <th className="govuk-table__header">First name</th>
         </tr>
