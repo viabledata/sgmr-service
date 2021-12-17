@@ -42,12 +42,10 @@ test('PageAccount displays the users details', () => {
 });
 
 test('Document title is displayed and changes when function is called', () => {
-
+  
   customRender(<PageAccount />, { providerProps });
-
   expect(document.title).toBe('Account');
   
   document.title = "Changed document title";
   expect(document.title).toBe('Changed document title');
-
 });
