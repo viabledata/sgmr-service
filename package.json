@@ -64,7 +64,7 @@
         "file-loader": "^5.1.0",
         "fs-extra": "^9.0.1",
         "html-webpack-plugin": "^4.5.0",
-        "jest": "^24.9.0",
+        "jest": "^27.4.5",
         "ls": "^0.2.1",
         "mailslurp-client": "^10.0.4",
         "mocha": "^8.2.1",
