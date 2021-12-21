@@ -1,5 +1,5 @@
-import VoyageFormValidation from '@components/Voyage/VoyageFormValidation';
-import { FORM_STEPS } from '@constants/ClientConstants';
+import VoyageFormValidation from '../VoyageFormValidation';
+import { FORM_STEPS } from '../../../constants/ClientConstants';
 
 describe('Voyage form validation', () => {
   it('should validate responsible person', async () => {
