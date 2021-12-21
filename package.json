@@ -26,22 +26,6 @@
         "url": "https://github.com/UKHomeOffice/sgmr-service/issues"
     },
     "homepage": "https://github.com/UKHomeOffice/sgmr-service#readme",
-    "jest": {
-        "moduleNameMapper": {
-            "^config$": "<rootDir>/src/lib/config.js",
-            "^@components(.*)$": "<rootDir>/src/components$1",
-            "^@constants(.*)$": "<rootDir>/src/constants$1",
-            "^@lib(.*)$": "<rootDir>/src/lib$1",
-            "^@state(.*)$": "<rootDir>/src/state$1",
-            "^@utils(.*)$": "<rootDir>/src/utils$1"
-        },
-        "setupFilesAfterEnv": [
-            "<rootDir>/src/setupTests.js"
-        ],
-        "modulePathIgnorePatterns": [
-            "cypress"
-        ]
-    },
     "devDependencies": {
         "@babel/core": "^7.8.4",
         "@babel/plugin-transform-runtime": "^7.12.1",
