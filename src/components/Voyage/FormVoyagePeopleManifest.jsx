@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react';
 
-import { deleteItem, getData } from '@utils/apiHooks';
-import { VOYAGE_REPORT_URL } from '@constants/ApiConstants';
-import { FORM_STEPS } from '@constants/ClientConstants';
-import PeopleTable from '@components/Voyage/PeopleTable';
-import scrollToTopOnError from '@utils/scrollToTopOnError';
+import { deleteItem, getData } from '../../utils/apiHooks';
+import { VOYAGE_REPORT_URL } from '../../constants/ApiConstants';
+import { FORM_STEPS } from '../../constants/ClientConstants';
+import PeopleTable from './PeopleTable';
+import scrollToTopOnError from '../../utils/scrollToTopOnError';
 
 const FormVoyagePeopleManifest = ({
   handleSubmit, voyageId, setPageNum, setErrors,
 }) => {
-  document.title = "People on the manifest";
+  document.title = 'People on the manifest';
 
   const [peopleData, setPeopleData] = useState([]);
   const [makeChanges, setMakeChanges] = useState(false);

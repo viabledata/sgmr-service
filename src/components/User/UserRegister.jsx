@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 
-import { REGISTRATION_URL } from '@constants/ApiConstants';
-import UserRegisterValidation from '@components/User/UserRegisterValidation';
-import { postData } from '@utils/apiHooks';
-import scrollToTopOnError from '@utils/scrollToTopOnError';
-import FormError from '@components/Voyage/FormError';
-import PasswordField from '@components/User/PasswordField';
+import { REGISTRATION_URL } from '../../constants/ApiConstants';
+import UserRegisterValidation from './UserRegisterValidation';
+import { postData } from '../../utils/apiHooks';
+import scrollToTopOnError from '../../utils/scrollToTopOnError';
+import FormError from '../Voyage/FormError';
+import PasswordField from './PasswordField';
 
 const UserRegister = () => {
-  document.title = "Create an account";
+  document.title = 'Create an account';
 
   const pageName = 'userRegister';
   const history = useHistory();

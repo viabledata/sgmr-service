@@ -1,7 +1,7 @@
 import React from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 import qs from 'qs';
-import Auth from '@lib/Auth';
+import Auth from '../../lib/Auth';
 
 const UserRegisterConfirmation = () => {
   document.title = "Account successfully created";

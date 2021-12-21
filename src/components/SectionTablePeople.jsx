@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 // App imports
-import { getData } from '@utils/apiHooks';
-import { PEOPLE_URL } from '@constants/ApiConstants';
+import { getData } from '../utils/apiHooks';
+import { PEOPLE_URL } from '../constants/ApiConstants';
 
 const SectionTablePeople = ({ page, pageData }) => {
   document.title = "People";
