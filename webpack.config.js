@@ -14,6 +14,14 @@ module.exports = {
     publicPath: '/',
   },
   resolve: {
+    alias: {
+      config: path.resolve(__dirname, 'src/lib/config.js'),
+      '@components': path.resolve(__dirname, 'src/components'),
+      '@constants': path.resolve(__dirname, 'src/constants'),
+      '@lib': path.resolve(__dirname, 'src/lib'),
+      '@state': path.resolve(__dirname, 'src/state'),
+      '@utils': path.resolve(__dirname, 'src/utils'),
+    },
     extensions: ['.js', '.jsx'],
   },
   module: {
