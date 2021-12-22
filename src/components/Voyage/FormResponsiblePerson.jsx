@@ -22,7 +22,7 @@ const FormResponsiblePerson = ({
           name="responsibleGivenName"
           id="responsibleGivenName"
           type="text"
-          defaultValue={data.responsibleGivenName || ''}
+          value={data.responsibleGivenName || ''}
           onChange={handleChange}
         />
       </div>
@@ -37,7 +37,7 @@ const FormResponsiblePerson = ({
           name="responsibleSurname"
           id="responsibleSurname"
           type="text"
-          defaultValue={data.responsibleSurname || ''}
+          value={data.responsibleSurname || ''}
           onChange={handleChange}
         />
       </div>
@@ -54,7 +54,7 @@ const FormResponsiblePerson = ({
           name="responsibleContactNo"
           id="responsibleContactNo"
           type="text"
-          defaultValue={data.responsibleContactNo || ''}
+          value={data.responsibleContactNo || ''}
           onChange={handleChange}
         />
       </div>
@@ -72,7 +72,7 @@ const FormResponsiblePerson = ({
             name="responsibleAddressLine1"
             id="responsibleAddressLine1"
             type="text"
-            defaultValue={data.responsibleAddressLine1 || ''}
+            value={data.responsibleAddressLine1 || ''}
             onChange={handleChange}
           />
         </div>
@@ -86,7 +86,7 @@ const FormResponsiblePerson = ({
             name="responsibleAddressLine2"
             id="responsibleAddressLine2"
             type="text"
-            defaultValue={data.responsibleAddressLine2 || ''}
+            value={data.responsibleAddressLine2 || ''}
             onChange={handleChange}
           />
         </div>
@@ -98,7 +98,7 @@ const FormResponsiblePerson = ({
             name="responsibleTown"
             id="responsibleTown"
             type="text"
-            defaultValue={data.responsibleTown || ''}
+            value={data.responsibleTown || ''}
             onChange={handleChange}
           />
         </div>
@@ -110,7 +110,7 @@ const FormResponsiblePerson = ({
             name="responsibleCounty"
             id="responsibleCounty"
             type="text"
-            defaultValue={data.responsibleCounty || ''}
+            value={data.responsibleCounty || ''}
             onChange={handleChange}
           />
         </div>
@@ -122,7 +122,7 @@ const FormResponsiblePerson = ({
             name="responsiblePostcode"
             id="responsiblePostcode"
             type="text"
-            defaultValue={data.responsiblePostcode || ''}
+            value={data.responsiblePostcode || ''}
             onChange={handleChange}
           />
         </div>
