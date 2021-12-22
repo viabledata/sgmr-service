@@ -24,7 +24,7 @@ const EditAccount = () => {
     {
       firstName: user.firstName,
       lastName: user.lastName,
-      phoneNumber: user.mobileNumber,
+      mobileNumber: user.mobileNumber,
     } || {},
   );
   const [errors, setErrors] = useState({});
@@ -41,7 +41,7 @@ const EditAccount = () => {
       message: 'You must enter your last name',
     },
     {
-      field: 'phoneNumber',
+      field: 'mobileNumber',
       rule: 'required',
       message: 'You must enter your telephone number',
     },
@@ -169,17 +169,17 @@ const EditAccount = () => {
               </div>
 
               <div id="mobileNumber" className={`govuk-form-group ${errors.mobileNumber ? 'govuk-form-group--error' : ''}`}>
-                <label className="govuk-label govuk-label--m" htmlFor="phoneNumber">
+                <label className="govuk-label govuk-label--m" htmlFor="mobileNumber">
                   Telephone number
                 </label>
                 <FormError error={errors.mobileNumber} />
                 <span className="govuk-hint">For international numbers include the country code.</span>
                 <input
                   className="govuk-input"
-                  name="phoneNumber"
-                  id="phoneNumber"
+                  name="mobileNumber"
+                  id="mobileNumber"
                   type="text"
-                  value={formData.phoneNumber || ''}
+                  value={formData.mobileNumber || ''}
                   onChange={handleChange}
                 />
               </div>
