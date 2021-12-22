@@ -115,10 +115,10 @@ const UserRegister = () => {
 
               <div id="mobileNumber" className={`govuk-form-group ${errors.mobileNumber ? 'govuk-form-group--error' : ''}`}>
                 <label className="govuk-label" htmlFor="mobileNumber-field">
-                  Mobile number
+                  Telephone number
                 </label>
                 <FormError error={errors.mobileNumber} />
-                <span className="govuk-hint">We will send an access code to this number. For international numbers include the country code.</span>
+                <span className="govuk-hint">For international numbers include the country code.</span>
                 <input
                   id="mobileNumber-field"
                   className="govuk-input"
