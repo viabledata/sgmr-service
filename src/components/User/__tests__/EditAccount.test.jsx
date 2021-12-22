@@ -31,13 +31,14 @@ const providerProps = {
   },
 };
 
-describe('Edit account page', () => {
-  it('should prepopulate the form with the users details', () => {
-    customRender(<EditAccount />, { providerProps });
+test('Edit Account prepopulates the form with the users details', () => {
+  customRender(<EditAccount />, { providerProps });
 
-    expect(screen.getByText('First name')).toBeInTheDocument();
-    expect(screen.getByDisplayValue('John')).toBeInTheDocument();
-    expect(screen.getByDisplayValue('07444112888')).toBeInTheDocument();
+  expect(screen.getByText('First name')).toBeInTheDocument();
+  expect(screen.getByDisplayValue('John')).toBeInTheDocument();
+  expect(screen.getByDisplayValue('07444112888')).toBeInTheDocument();
+
+  describe('Save changes button displayed', () => {
     expect(screen.getByRole('button')).toHaveTextContent('Save changes');
   });
 });
