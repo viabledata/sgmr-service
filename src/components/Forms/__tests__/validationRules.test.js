@@ -1,4 +1,4 @@
-import { passwordValidation } from '@components/Forms/validationRules';
+import { passwordValidation } from '../validationRules';
 
 describe('passwordValidation', () => {
   const passwords = [

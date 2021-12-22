@@ -1,6 +1,6 @@
 import React from 'react';
-import { FORM_STEPS } from '@constants/ClientConstants';
-import FormError from '@components/Voyage/FormError';
+import { FORM_STEPS } from '../../constants/ClientConstants';
+import FormError from './FormError';
 
 const FormResponsiblePerson = ({
   handleSubmit, handleChange, data, errors, voyageId,
@@ -22,7 +22,7 @@ const FormResponsiblePerson = ({
           name="responsibleGivenName"
           id="responsibleGivenName"
           type="text"
-          value={data.responsibleGivenName || ''}
+          defaultValue={data.responsibleGivenName || ''}
           onChange={handleChange}
         />
       </div>
@@ -37,7 +37,7 @@ const FormResponsiblePerson = ({
           name="responsibleSurname"
           id="responsibleSurname"
           type="text"
-          value={data.responsibleSurname || ''}
+          defaultValue={data.responsibleSurname || ''}
           onChange={handleChange}
         />
       </div>
@@ -54,7 +54,7 @@ const FormResponsiblePerson = ({
           name="responsibleContactNo"
           id="responsibleContactNo"
           type="text"
-          value={data.responsibleContactNo || ''}
+          defaultValue={data.responsibleContactNo || ''}
           onChange={handleChange}
         />
       </div>
@@ -72,7 +72,7 @@ const FormResponsiblePerson = ({
             name="responsibleAddressLine1"
             id="responsibleAddressLine1"
             type="text"
-            value={data.responsibleAddressLine1 || ''}
+            defaultValue={data.responsibleAddressLine1 || ''}
             onChange={handleChange}
           />
         </div>
@@ -86,7 +86,7 @@ const FormResponsiblePerson = ({
             name="responsibleAddressLine2"
             id="responsibleAddressLine2"
             type="text"
-            value={data.responsibleAddressLine2 || ''}
+            defaultValue={data.responsibleAddressLine2 || ''}
             onChange={handleChange}
           />
         </div>
@@ -98,7 +98,7 @@ const FormResponsiblePerson = ({
             name="responsibleTown"
             id="responsibleTown"
             type="text"
-            value={data.responsibleTown || ''}
+            defaultValue={data.responsibleTown || ''}
             onChange={handleChange}
           />
         </div>
@@ -110,7 +110,7 @@ const FormResponsiblePerson = ({
             name="responsibleCounty"
             id="responsibleCounty"
             type="text"
-            value={data.responsibleCounty || ''}
+            defaultValue={data.responsibleCounty || ''}
             onChange={handleChange}
           />
         </div>
@@ -122,7 +122,7 @@ const FormResponsiblePerson = ({
             name="responsiblePostcode"
             id="responsiblePostcode"
             type="text"
-            value={data.responsiblePostcode || ''}
+            defaultValue={data.responsiblePostcode || ''}
             onChange={handleChange}
           />
         </div>

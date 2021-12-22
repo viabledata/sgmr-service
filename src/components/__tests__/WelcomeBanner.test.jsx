@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
-import WelcomeBanner from '@components/WelcomeBanner';
+import WelcomeBanner from '../WelcomeBanner';
 import UserContext from '../UserContext';
 
 const customRender = (ui, { providerProps, ...renderOptions }) => {
@@ -27,15 +27,17 @@ const providerProps = {
   },
 };
 
-test('Welcome banner displays the users details', () => {
-  customRender(<WelcomeBanner />, { providerProps });
+describe('welcome banner', () => {
+  it('should displays the users details', () => {
+    customRender(<WelcomeBanner />, { providerProps });
 
-  expect(screen.getByText('Welcome back, John')).toBeInTheDocument();
-});
+    expect(screen.getByText('Welcome back, John')).toBeInTheDocument();
+  });
 
-test('Welcome back text should be a paragraph', () => {
-  customRender(<WelcomeBanner />, { providerProps });
+  it('should be a paragraph', () => {
+    customRender(<WelcomeBanner />, { providerProps });
 
-  const content = screen.getByText('Welcome back, John');
-  expect(content.outerHTML).toEqual("<p>Welcome back, John</p>");
+    const content = screen.getByText('Welcome back, John');
+    expect(content.outerHTML).toEqual('<p>Welcome back, John</p>');
+  });
 });

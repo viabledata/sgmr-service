@@ -3,8 +3,8 @@ import {
   userValidationRules,
   VALID_EMAIL_REGEX,
   VALID_MOBILE_REGEX,
-} from '@components/Forms/validationRules';
-import scrollToTopOnError from '@utils/scrollToTopOnError';
+} from '../Forms/validationRules';
+import scrollToTopOnError from '../../utils/scrollToTopOnError';
 
 const UserRegisterValidation = (dataToValidate) => {
   const fieldsErroring = {};

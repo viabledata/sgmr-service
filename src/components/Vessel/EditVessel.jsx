@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useHistory, useParams, withRouter } from 'react-router-dom';
 
-import { VESSELS_URL } from '@constants/ApiConstants';
-import { VESSELS_PAGE_URL } from '@constants/ClientConstants';
-import { vesselValidationRules } from '@components/Forms/validationRules';
-import { getData, patchData } from '@utils/apiHooks';
-import scrollToTopOnError from '@utils/scrollToTopOnError';
+import { VESSELS_URL } from '../../constants/ApiConstants';
+import { VESSELS_PAGE_URL } from '../../constants/ClientConstants';
+import { vesselValidationRules } from '../Forms/validationRules';
+import { getData, patchData } from '../../utils/apiHooks';
+import scrollToTopOnError from '../../utils/scrollToTopOnError';
 
-import FormVessel from '@components/Vessel/FormVessel';
-import VesselDataFormatting from '@components/Vessel/VesselDataFormatting';
-import FormError from '@components/Voyage/FormError';
+import FormVessel from './FormVessel';
+import VesselDataFormatting from './VesselDataFormatting';
+import FormError from '../Voyage/FormError';
 
 const EditVessel = () => {
-  document.title = "Edit vessel";
+  document.title = 'Edit vessel';
 
   const history = useHistory();
   const { vesselId } = useParams();
