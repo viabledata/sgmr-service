@@ -54,7 +54,6 @@ module.exports = {
     }),
     new HtmlWebpackPlugin({ template: './index.html' }),
   ],
-  node: { fs: 'empty' },
   devServer: {
     // in order to use `<Router>`, historyApiFallback needs to be enabled
     historyApiFallback: true,
