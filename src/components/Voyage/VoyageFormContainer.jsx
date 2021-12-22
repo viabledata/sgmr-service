@@ -4,39 +4,39 @@ import {
 } from 'react-router-dom';
 
 // App imports
-import { getData, patchData } from '../../utils/apiHooks';
-import { splitDate } from '../../utils/date';
-import { splitTime } from '../../utils/time';
+import { getData, patchData } from '@utils/apiHooks';
+import { splitDate } from '@utils/date';
+import { splitTime } from '@utils/time';
 import {
   VESSELS_URL,
   VOYAGE_REPORT_URL,
   VOYAGE_STATUSES,
-} from '../../constants/ApiConstants';
+} from '@constants/ApiConstants';
 import {
   FORM_STEPS,
   SAVE_VOYAGE_PEOPLE_URL,
-} from '../../constants/ClientConstants';
+} from '@constants/ClientConstants';
 import {
   formatDepartureArrival,
   formatNewPerson,
   formatResponsiblePerson,
   formatVessel,
-} from './VoyageFormDataFormatting';
-import getId from '../../utils/getIdHook';
-import scrollToTopOnError from '../../utils/scrollToTopOnError';
-import VoyageFormValidation from './VoyageFormValidation';
+} from '@components/Voyage/VoyageFormDataFormatting';
+import getId from '@utils/getIdHook';
+import scrollToTopOnError from '@utils/scrollToTopOnError';
+import VoyageFormValidation from '@components/Voyage/VoyageFormValidation';
 
 // App imports - forms
-import FormArrival from './FormArrival';
-import FormCheck from './FormCheck';
-import FormDeparture from './FormDeparture';
-import FormPerson from '../People/FormPerson';
-import FormResponsiblePerson from './FormResponsiblePerson';
-import FormVoyageVessels from './FormVoyageVessels';
-import FormVoyagePeople from './FormVoyagePeople';
-import FormError from './FormError';
+import FormArrival from '@components/Voyage/FormArrival';
+import FormCheck from '@components/Voyage/FormCheck';
+import FormDeparture from '@components/Voyage/FormDeparture';
+import FormPerson from '@components/People/FormPerson';
+import FormResponsiblePerson from '@components/Voyage/FormResponsiblePerson';
+import FormVoyageVessels from '@components/Voyage/FormVoyageVessels';
+import FormVoyagePeople from '@components/Voyage/FormVoyagePeople';
+import FormError from '@components/Voyage/FormError';
 import FormVoyagePeopleManifest
-from './FormVoyagePeopleManifest';
+  from '@components/Voyage/FormVoyagePeopleManifest';
 
 const FormVoyageContainer = () => {
   const location = useLocation();

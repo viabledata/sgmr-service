@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 
-import { PASSWORD_RESET_LINK } from '../../constants/ApiConstants';
-import ErrorSummary from '../ErrorSummary';
-import { VALID_EMAIL_REGEX } from '../Forms/validationRules';
-import Auth from '../../lib/Auth';
+import { PASSWORD_RESET_LINK } from '@constants/ApiConstants';
+import Auth from '@lib/Auth';
+import ErrorSummary from '@components/ErrorSummary';
+import { VALID_EMAIL_REGEX } from '@components/Forms/validationRules';
 
 const PageWrapper = ({ children }) => (
   <div className="govuk-width-container ">
@@ -22,7 +22,7 @@ const PageWrapper = ({ children }) => (
 );
 
 const ForgottenPassword = () => {
-  document.title = 'Forgotten Password';
+  document.title = "Forgotten Password";
 
   const [isFormDisabled, setFormDisabled] = useState(false);
   const [error, setError] = useState(null);

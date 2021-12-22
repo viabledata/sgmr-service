@@ -3,13 +3,13 @@ import { useHistory, useLocation, Link } from 'react-router-dom';
 import axios from 'axios';
 
 // App imports
-import Auth from '../../lib/Auth';
-import FormVessel from './FormVessel';
-import scrollToTopOnError from '../../utils/scrollToTopOnError';
-import { VESSELS_URL } from '../../constants/ApiConstants';
-import { VESSELS_PAGE_URL } from '../../constants/ClientConstants';
-import { vesselValidationRules } from '../Forms/validationRules';
-import FormError from '../Voyage/FormError';
+import Auth from '@lib/Auth';
+import FormVessel from '@components/Vessel/FormVessel';
+import scrollToTopOnError from '@utils/scrollToTopOnError';
+import { VESSELS_URL } from '@constants/ApiConstants';
+import { VESSELS_PAGE_URL } from '@constants/ClientConstants';
+import { vesselValidationRules } from '@components/Forms/validationRules';
+import FormError from '@components/Voyage/FormError';
 
 const CreateAVessel = () => {
   document.title = "Save vessel";

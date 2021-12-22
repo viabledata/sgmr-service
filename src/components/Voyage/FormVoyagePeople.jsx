@@ -1,20 +1,20 @@
 import React, { useEffect, useState } from 'react';
 
-import { getData, patchData } from '../../utils/apiHooks';
+import { getData, patchData } from '@utils/apiHooks';
 import {
   PEOPLE_URL,
   VOYAGE_REPORT_URL,
   VOYAGE_STATUSES,
-} from '../../constants/ApiConstants';
-import { FORM_STEPS } from '../../constants/ClientConstants';
-import PeopleTable from './PeopleTable';
-import scrollToTopOnError from '../../utils/scrollToTopOnError';
-import { formatPerson } from './VoyageFormDataFormatting';
+} from '@constants/ApiConstants';
+import { FORM_STEPS } from '@constants/ClientConstants';
+import PeopleTable from '@components/Voyage/PeopleTable';
+import scrollToTopOnError from '@utils/scrollToTopOnError';
+import { formatPerson } from '@components/Voyage/VoyageFormDataFormatting';
 
 const FormVoyagePeople = ({
   handleSubmit, voyageId, setErrors, setNextPage, setPageNum,
 }) => {
-  document.title = 'People on your voyage';
+  document.title = "People on your voyage";
 
   const [savedPeople, setSavedPeople] = useState([]);
   const [voyagePeople, setVoyagePeople] = useState([]);

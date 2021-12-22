@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 
-import ErrorSummary from '../ErrorSummary';
+import ErrorSummary from '@components/ErrorSummary';
 import Banner from '../Banner';
 
 test('Renders the ErrorSummary with errors', () => {

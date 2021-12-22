@@ -1,6 +1,6 @@
 // App imports
-import { isDateValid, isInThePast } from '../../utils/date';
-import { isTimeAndDateBeforeNow, isTimeValid } from '../../utils/time';
+import { isDateValid, isInThePast } from '@utils/date';
+import { isTimeAndDateBeforeNow, isTimeValid } from '@utils/time';
 import {
   arrivalValidationRules,
   departureValidationRules,
@@ -8,9 +8,9 @@ import {
   responsiblePersonValidationRules, validate, VALID_INTERNATIONAL_MOBILE_REGEX,
   vesselValidationRules,
   voyageValidationRules,
-} from '../Forms/validationRules';
-import scrollToTopOnError from '../../utils/scrollToTopOnError';
-import { FORM_STEPS } from '../../constants/ClientConstants';
+} from '@components/Forms/validationRules';
+import scrollToTopOnError from '@utils/scrollToTopOnError';
+import { FORM_STEPS } from '@constants/ClientConstants';
 
 const VoyageFormValidation = async (dataToValidate, source) => {
   let validationRules;

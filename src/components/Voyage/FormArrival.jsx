@@ -1,13 +1,13 @@
 import React from 'react';
 
-import FormError from './FormError';
-import { FORM_STEPS } from '../../constants/ClientConstants';
-import PortField from '../PortField';
+import FormError from '@components/Voyage/FormError';
+import { FORM_STEPS } from '@constants/ClientConstants';
+import PortField from '@components/PortField';
 
 const FormArrival = ({
   handleSubmit, handleChange, updateFieldValue, data, errors, voyageId,
 }) => {
-  document.title = 'Arrival details';
+  document.title = "Arrival details";
 
   if (!data) { return null; }
   return (

@@ -2,21 +2,21 @@ import React, { useEffect, useState } from 'react';
 import { useHistory, withRouter } from 'react-router-dom';
 
 // App imports
-import { PEOPLE_URL } from '../../constants/ApiConstants';
-import { PEOPLE_PAGE_URL } from '../../constants/ClientConstants';
-import { formatDate } from '../../utils/date';
-import { getData, patchData } from '../../utils/apiHooks';
-import getId from '../../utils/getIdHook';
-import scrollToTopOnError from '../../utils/scrollToTopOnError';
-import FormPerson from './FormPerson';
-import FormError from '../Voyage/FormError';
+import { PEOPLE_URL } from '@constants/ApiConstants';
+import { PEOPLE_PAGE_URL } from '@constants/ClientConstants';
+import { formatDate } from '@utils/date';
+import { getData, patchData } from '@utils/apiHooks';
+import getId from '@utils/getIdHook';
+import scrollToTopOnError from '@utils/scrollToTopOnError';
+import FormPerson from '@components/People/FormPerson';
+import FormError from '@components/Voyage/FormError';
 import {
   personValidationRules,
   validate,
-} from '../Forms/validationRules';
+} from '@components/Forms/validationRules';
 
 const EditPerson = () => {
-  document.title = 'Edit person';
+  document.title = "Edit person";
 
   const history = useHistory();
   const [personId, setPersonId] = useState();

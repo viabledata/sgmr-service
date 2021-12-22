@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, useHistory } from 'react-router-dom';
-import Auth from '../../lib/Auth';
+import Auth from '@lib/Auth';
 
 const DeleteConfirmation = () => {
   document.title = "Your account is now deleted";

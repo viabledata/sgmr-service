@@ -1,5 +1,5 @@
-import VoyageFormValidation from '../VoyageFormValidation';
-import { FORM_STEPS } from '../../../constants/ClientConstants';
+import VoyageFormValidation from '@components/Voyage/VoyageFormValidation';
+import { FORM_STEPS } from '@constants/ClientConstants';
 
 test('Validates responsible person', async () => {
   const expectedErrors = {
