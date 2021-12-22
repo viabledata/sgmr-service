@@ -34,7 +34,10 @@ test('PageAccount displays the users details', () => {
     expect(screen.getByText('John')).toBeInTheDocument();
     expect(screen.getByText('John_Doe@test.com')).toBeInTheDocument();
     expect(screen.getByText('07444112888')).toBeInTheDocument();
-    expect(screen.getByRole('button')).toHaveTextContent('Edit Account');
+
+    describe('Edit Account button displayed', () => {
+      expect(screen.getByRole('button')).toHaveTextContent('Edit Account');
+    });
   });
 
   it('should display document title and changes when function is called', () => {
