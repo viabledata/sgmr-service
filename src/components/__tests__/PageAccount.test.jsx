@@ -28,29 +28,12 @@ const providerProps = {
 };
 
 test('PageAccount displays the users details', () => {
-
-<<<<<<< HEAD
-    expect(screen.getByText('First name')).toBeInTheDocument();
-    expect(screen.getByText('John')).toBeInTheDocument();
-    expect(screen.getByText('John_Doe@test.com')).toBeInTheDocument();
-    expect(screen.getByText('07444112888')).toBeInTheDocument();
-
-    describe('Edit Account button displayed', () => {
-      expect(screen.getByRole('button')).toHaveTextContent('Edit Account');
-    });
-  });
-
-  it('should display document title and changes when function is called', () => {
-    customRender(<PageAccount />, { providerProps });
-    expect(document.title).toBe('Account');
-=======
   customRender(<PageAccount />, { providerProps });
 
   expect(screen.getByText('First name')).toBeInTheDocument();
   expect(screen.getByText('John')).toBeInTheDocument();
   expect(screen.getByText('John_Doe@test.com')).toBeInTheDocument();
   expect(screen.getByText('07444112888')).toBeInTheDocument();
->>>>>>> parent of 9825d43 (Update tests to use describe/it format)
 
   describe('Edit Account button displayed', () => {
     expect(screen.getByRole('button')).toHaveTextContent('Edit Account');
@@ -58,10 +41,9 @@ test('PageAccount displays the users details', () => {
 });
 
 test('Document title is displayed and changes when function is called', () => {
-  
   customRender(<PageAccount />, { providerProps });
   expect(document.title).toBe('Account');
-  
-  document.title = "Changed document title";
+
+  document.title = 'Changed document title';
   expect(document.title).toBe('Changed document title');
 });
