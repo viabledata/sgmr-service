@@ -20,6 +20,7 @@ test('Renders with errors', () => {
       responsibleSurname: 'responsibleSurnameError',
       responsibleContactNo: 'responsibleContactNoError',
       responsibleAddressLine1: 'responsibleAddressLine1Error',
+      responsibleAddressLine2: 'responsibleAddressLine2Error',
       responsibleTown: 'responsibleTownError',
       responsibleCounty: 'responsibleCountyError',
       responsiblePostcode: 'responsiblePostcodeError',
@@ -30,6 +31,7 @@ test('Renders with errors', () => {
   expect(screen.getByText('responsibleSurnameError')).toBeInTheDocument();
   expect(screen.getByText('responsibleContactNoError')).toBeInTheDocument();
   expect(screen.getByText('responsibleAddressLine1Error')).toBeInTheDocument();
+  expect(screen.getByText('responsibleAddressLine2Error')).toBeInTheDocument();
   expect(screen.getByText('responsibleTownError')).toBeInTheDocument();
   expect(screen.getByText('responsibleCountyError')).toBeInTheDocument();
   expect(screen.getByText('responsiblePostcodeError')).toBeInTheDocument();

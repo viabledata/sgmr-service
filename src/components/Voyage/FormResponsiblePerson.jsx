@@ -78,9 +78,9 @@ const FormResponsiblePerson = ({
         </div>
         <div className="govuk-form-group">
           <label className="govuk-label" htmlFor="responsibleAddressLine2">
-            Address line 2 (optional)
-            <span className="govuk-visually-hidden">Building and street line 2 of 2 (optional)</span>
+            <span className="govuk-visually-hidden">Building and street line 2 of 2</span>
           </label>
+          <FormError error={errors.responsibleAddressLine2} />
           <input
             className="govuk-input"
             name="responsibleAddressLine2"
