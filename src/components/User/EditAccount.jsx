@@ -2,10 +2,15 @@ import React, { useState, useContext, useEffect } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import axios from 'axios';
 
+import { VALID_MOBILE_REGEX } from '@components/Forms/validationRules';
+import scrollToTopOnError from '@utils/scrollToTopOnError';
+import FormError from '@components/Voyage/FormError';
+
 // App imports
 import { USER_URL } from '@constants/ApiConstants';
 import Auth from '@lib/Auth';
 import UserContext from '../UserContext';
+
 
 const EditAccount = () => {
   document.title = "Edit account";
@@ -19,7 +24,7 @@ const EditAccount = () => {
     {
       firstName: user.firstName,
       lastName: user.lastName,
-      phoneNumber: user.mobileNumber,
+      mobileNumber: user.mobileNumber,
     } || {},
   );
   const [errors, setErrors] = useState({});
@@ -36,7 +41,7 @@ const EditAccount = () => {
       message: 'You must enter your last name',
     },
     {
-      field: 'phoneNumber',
+      field: 'mobileNumber',
       rule: 'required',
       message: 'You must enter your telephone number',
     },
@@ -76,7 +81,7 @@ const EditAccount = () => {
   // Handle Submit
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!checkRequiredFields()) {
+    if (!checkRequiredFields() && VALID_MOBILE_REGEX.test(formData.mobileNumber)) {
       axios.patch(USER_URL, formData, {
         headers: { Authorization: `Bearer ${Auth.retrieveToken()}` },
       })
@@ -94,6 +99,8 @@ const EditAccount = () => {
         });
     } else {
     // This means there are errors, so jump user to the error box
+      const mobileNumber = 'You must enter a valid phone number e.g. 07700 900982, +33 63998 010101';
+      setErrors({mobileNumber});
       history.push('#EditUser');
     }
   };
@@ -161,17 +168,18 @@ const EditAccount = () => {
                 />
               </div>
 
-              <div id="phoneNumber" className="govuk-form-group">
-                <label className="govuk-label govuk-label--m" htmlFor="phoneNumber">
+              <div id="mobileNumber" className={`govuk-form-group ${errors.mobileNumber ? 'govuk-form-group--error' : ''}`}>
+                <label className="govuk-label govuk-label--m" htmlFor="mobileNumber">
                   Telephone number
                 </label>
+                <FormError error={errors.mobileNumber} />
                 <span className="govuk-hint">For international numbers include the country code.</span>
                 <input
                   className="govuk-input"
-                  name="phoneNumber"
-                  id="phoneNumber"
+                  name="mobileNumber"
+                  id="mobileNumber"
                   type="text"
-                  value={formData.phoneNumber || ''}
+                  value={formData.mobileNumber || ''}
                   onChange={handleChange}
                 />
               </div>
