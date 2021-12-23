@@ -125,7 +125,7 @@ steps:
       from_secret: QUAY_USERNAME
   when:
     branch:
-    - release-candidate
+    - master
     event:
     - push
 
@@ -144,7 +144,7 @@ steps:
       from_secret: QUAY_USERNAME
   when:
     branch:
-    - release-candidate
+    - master
     event:
     - push
 
@@ -187,7 +187,7 @@ steps:
       from_secret: DEV_WHITELIST
   when:
     branch:
-    - release-candidate
+    - master
     event:
     - push
 
@@ -234,7 +234,7 @@ steps:
       from_secret: TESTS_SLACK_WEBHOOK
   when:
     branch:
-    - release-candidate
+    - master
     event:
     - push
 

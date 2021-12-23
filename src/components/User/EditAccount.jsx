@@ -19,7 +19,7 @@ const EditAccount = () => {
     {
       firstName: user.firstName,
       lastName: user.lastName,
-      phoneNumber: user.mobileNumber,
+      mobileNumber: user.mobileNumber,
     } || {},
   );
   const [errors, setErrors] = useState({});
@@ -36,9 +36,9 @@ const EditAccount = () => {
       message: 'You must enter your last name',
     },
     {
-      field: 'phoneNumber',
+      field: 'mobileNumber',
       rule: 'required',
-      message: 'You must enter your telephone number',
+      message: 'You must enter your mobile number',
     },
   ];
 
@@ -161,17 +161,16 @@ const EditAccount = () => {
                 />
               </div>
 
-              <div id="phoneNumber" className="govuk-form-group">
-                <label className="govuk-label govuk-label--m" htmlFor="phoneNumber">
-                  Telephone number
+              <div id="mobileNumber" className="govuk-form-group">
+                <label className="govuk-label govuk-label--m" htmlFor="mobileNumber">
+                  Mobile number
                 </label>
-                <span className="govuk-hint">For international numbers include the country code.</span>
                 <input
                   className="govuk-input"
-                  name="phoneNumber"
-                  id="phoneNumber"
+                  name="mobileNumber"
+                  id="mobileNumber"
                   type="text"
-                  value={formData.phoneNumber || ''}
+                  value={formData.mobileNumber || ''}
                   onChange={handleChange}
                 />
               </div>
