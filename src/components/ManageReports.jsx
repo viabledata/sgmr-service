@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
-import { deleteItem, getData } from '../utils/apiHooks';
-import { formatUIDate } from '../utils/date';
-import { USER_VOYAGE_REPORT_URL, VOYAGE_REPORT_URL } from '../constants/ApiConstants';
-import { EDIT_VOYAGE_CHECK_DETAILS_URL } from '../constants/ClientConstants';
+import { deleteItem, getData } from '@utils/apiHooks';
+import { formatUIDate } from '@utils/date';
+import { USER_VOYAGE_REPORT_URL, VOYAGE_REPORT_URL } from '@constants/ApiConstants';
+import { EDIT_VOYAGE_CHECK_DETAILS_URL } from '@constants/ClientConstants';
 
 const ManageReports = (pageData) => {
   document.title = "Manage reports";

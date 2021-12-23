@@ -2,7 +2,7 @@ import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
 
 // app imports
-import Auth from './Auth';
+import Auth from '@lib/Auth';
 
 // Create a secure route you can only see when logged in
 const SecureRoute = (props) => {

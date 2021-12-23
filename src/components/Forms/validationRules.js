@@ -1,7 +1,7 @@
 import * as axios from 'axios';
-import { COUNTRIES_URL } from '../../constants/ApiConstants';
-import Auth from '../../lib/Auth';
-import { isDateValid, isInThePast } from '../../utils/date';
+import { COUNTRIES_URL } from '@constants/ApiConstants';
+import Auth from '@lib/Auth';
+import { isDateValid, isInThePast } from '@utils/date';
 
 export const VALID_EMAIL_REGEX = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
 export const COMPLEX_PASSWORD_REGEX = /(\d+)|([a-z]+)|([A-Z]+)|([!@$%^&\\(){}[\]:;<>,*.?/~_+-=|]+)+/g;

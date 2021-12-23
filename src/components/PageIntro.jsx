@@ -1,6 +1,6 @@
 import React from 'react';
 
-import PageAccount from './PageAccount';
+import PageAccount from '@components/PageAccount';
 
 const PageIntro = ({ pageData }) => {
   return (

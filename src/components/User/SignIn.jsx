@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import axios from 'axios';
 
-import { LOGIN_URL } from '../../constants/ApiConstants';
-import Auth from '../../lib/Auth';
+import { LOGIN_URL } from '@constants/ApiConstants';
+import Auth from '@lib/Auth';
 
 const SignIn = () => {
   document.title = "Sign In";

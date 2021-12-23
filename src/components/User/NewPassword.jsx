@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import axios from 'axios';
 
-import { PASSWORD_RESET_CONFIRMATION } from '../../constants/ApiConstants';
-import Auth from '../../lib/Auth';
-import ErrorSummary from '../ErrorSummary';
-import { passwordValidation } from '../Forms/validationRules';
+import { PASSWORD_RESET_CONFIRMATION } from '@constants/ApiConstants';
+import Auth from '@lib/Auth';
+import ErrorSummary from '@components/ErrorSummary';
+import { passwordValidation } from '@components/Forms/validationRules';
 
 const PageWrapper = ({ children }) => (
   <div className="govuk-width-container ">
@@ -22,7 +22,7 @@ const PageWrapper = ({ children }) => (
 );
 
 const NewPassword = () => {
-  document.title = 'Set a new password';
+  document.title = "Set a new password";
 
   const location = useLocation();
   const [isFormDisabled, setFormDisabled] = useState(false);

@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 // app imports
-import Nav from './Nav';
+import Nav from '@components/Nav';
 
 const Header = () => {
   return (
