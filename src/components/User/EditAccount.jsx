@@ -2,8 +2,7 @@ import React, { useState, useContext, useEffect } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import axios from 'axios';
 
-import { VALID_MOBILE_REGEX } from '@components/Forms/validationRules';
-import scrollToTopOnError from '@utils/scrollToTopOnError';
+import { VALID_INTERNATIONAL_MOBILE_REGEX } from '@components/Forms/validationRules';
 import FormError from '@components/Voyage/FormError';
 
 // App imports
@@ -11,13 +10,12 @@ import { USER_URL } from '@constants/ApiConstants';
 import Auth from '@lib/Auth';
 import UserContext from '../UserContext';
 
-
 const EditAccount = () => {
-  document.title = "Edit account";
+  document.title = 'Edit account';
 
   const history = useHistory();
   // Calling the user from context
-  const { user, setUser } = useContext(UserContext)
+  const { user, setUser } = useContext(UserContext);
 
   // Prepopulating the form with user info
   const [formData, setFormData] = useState(
@@ -61,6 +59,9 @@ const EditAccount = () => {
       (!(elem.field in formData) || formData[elem.field] === '')
         ? tempObj[elem.field] = elem.message
         : null;
+      if (!(VALID_INTERNATIONAL_MOBILE_REGEX.test(formData.mobileNumber))) {
+        tempObj.mobileNumber = 'You must enter a valid phone number e.g. 07700 900982, +33 63998 010101';
+      }
     });
     setErrors(tempObj);
     return Object.keys(tempObj).length > 0;
@@ -81,7 +82,7 @@ const EditAccount = () => {
   // Handle Submit
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!checkRequiredFields() && VALID_MOBILE_REGEX.test(formData.mobileNumber)) {
+    if (!checkRequiredFields()) {
       axios.patch(USER_URL, formData, {
         headers: { Authorization: `Bearer ${Auth.retrieveToken()}` },
       })
@@ -99,8 +100,6 @@ const EditAccount = () => {
         });
     } else {
     // This means there are errors, so jump user to the error box
-      const mobileNumber = 'You must enter a valid phone number e.g. 07700 900982, +33 63998 010101';
-      setErrors({mobileNumber});
       history.push('#EditUser');
     }
   };
@@ -140,28 +139,30 @@ const EditAccount = () => {
                 </div>
               )}
 
-              <div id="firstName" className="govuk-form-group">
+              <div id="firstName" className={`govuk-form-group ${errors.firstName ? 'govuk-form-group--error' : ''}`}>
                 <label className="govuk-label govuk-label--m" htmlFor="firstName">
                   First name
                 </label>
+                <FormError error={errors.firstName} />
                 <input
                   className="govuk-input"
                   name="firstName"
-                  id = "firstName"
+                  id="firstName"
                   type="text"
                   value={formData.firstName || ''}
                   onChange={handleChange}
                 />
               </div>
 
-              <div id="lastName" className="govuk-form-group">
+              <div id="lastName" className={`govuk-form-group ${errors.lastName ? 'govuk-form-group--error' : ''}`}>
                 <label className="govuk-label govuk-label--m" htmlFor="lastName">
                   Last name
                 </label>
+                <FormError error={errors.lastName} />
                 <input
                   className="govuk-input"
                   name="lastName"
-                  id ="lastName"
+                  id="lastName"
                   type="text"
                   value={formData.lastName || ''}
                   onChange={handleChange}
