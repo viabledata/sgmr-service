@@ -35,7 +35,7 @@ const contentArray = [
     buttonClass: 'govuk-button--start',
     buttonLocation: 'formIntro',
     reportType: 'people',
-    reportTitles: ['Surname', 'Given name', 'Type'],
+    reportTitles: ['Last Name', 'First Name', 'Type'],
   },
   {
     urlStub: '/account',
