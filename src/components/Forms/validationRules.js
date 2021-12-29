@@ -168,7 +168,7 @@ export const responsiblePersonValidationRules = [
     inputField: 'responsibleAddressLine1',
     errorDisplayId: 'responsibleAddressLine1',
     type: 'required',
-    message: 'You must enter the first line of your address',
+    message: 'You must enter a first address line',
   },
   {
     inputField: 'responsibleAddressLine2',
