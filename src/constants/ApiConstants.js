@@ -1,4 +1,4 @@
-import { apiUrl } from '../config';
+import { apiUrl } from '../lib/config';
 
 export const LOGOUT_URL = `${apiUrl}/logout`;
 export const LOGIN_URL = `${apiUrl}/login`;
