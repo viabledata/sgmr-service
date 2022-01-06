@@ -7,7 +7,7 @@ import { USER_VOYAGE_REPORT_URL, VOYAGE_REPORT_URL } from '@constants/ApiConstan
 import { EDIT_VOYAGE_CHECK_DETAILS_URL } from '@constants/ClientConstants';
 
 const ManageReports = (pageData) => {
-  document.title = "Manage reports";
+  document.title = 'Manage reports';
 
   const [tabData, setTabData] = useState([]);
   const [tableName, setTableName] = useState('Draft');
@@ -42,7 +42,6 @@ const ManageReports = (pageData) => {
     setTabData(tabArray);
   };
 
-
   const getReportList = () => {
     let validReports = [];
     getData(USER_VOYAGE_REPORT_URL)
@@ -70,7 +69,10 @@ const ManageReports = (pageData) => {
     <div className="govuk-width-container">
       <main className="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" role="main">
         <h1 className="govuk-heading-l">Manage your reports</h1>
-        <p className="govuk-body-l">Click on one of your reports below to view, edit, cancel or delete it, depending on its status. For example, you can edit a draft or submitted report, but you can&apos;t edit a cancelled report.</p>
+        <p className="govuk-body-l">
+          Click on one of your reports below to view, edit, cancel or delete it, depending on its status. For example, you can edit a draft or submitted report, but you
+          can&apos;t edit a cancelled report.
+        </p>
         <div className="govuk-tabs" data-module="govuk-tabs">
           <ul className="govuk-tabs__list">
             {tabData && tabData.map((tab) => {

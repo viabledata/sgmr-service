@@ -39,7 +39,7 @@ module.exports = {
     "arrow-body-style": "off",
     "consistent-return": "off",
     "func-names": ["error", "never"],
-    "max-len": ["error", { code: 185 }],
+    "max-len": ["error", { code: 185, "ignorePattern": 'd="([\\s\\S]*?)"' }],
     "no-underscore-dangle": "off",
     "no-param-reassign": "off",
     "no-restricted-globals": "off",
@@ -50,11 +50,10 @@ module.exports = {
     "import/no-extraneous-dependencies": ["error", { devDependencies: true }],
     "react/prop-types": "off",
     "react/jsx-props-no-spreading": "off",
-    "jsx-a11y/label-has-associated-control": [ "error", {
-      "required": {
-        "some": [ "nesting", "id"  ]
-      }
-    }]
+    "no-nested-ternary": "off",
+    "jsx-a11y/label-has-associated-control": [ "error", { "required": { "some": [ "nesting", "id"  ]}}],
+    "object-curly-newline": ["error", { "ImportDeclaration": { "multiline": true, "minProperties": 5 }}],
+    "no-unused-vars": ["error", { "args": "none" }]
   },
   overrides: [
     {

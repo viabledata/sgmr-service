@@ -49,8 +49,16 @@ const LandingPage = () => {
             <h3 className="govuk-heading-m">Related content</h3>
             <ul className="govuk-list govuk-!-font-size-16">
               <li><a className="govuk-link" target="blank" href="https://www.gov.uk/browse/abroad/travel-abroad">Travel abroad</a></li>
-              <li><a className="govuk-link" target="blank" href="https://www.gov.uk/government/collections/send-advance-passenger-information">Send Advance Passenger Information</a></li>
-              <li><a className="govuk-link" target="blank" href="https://www.gov.uk/government/publications/notice-8-sailing-your-pleasure-craft-to-and-from-the-uk">Notice 8: sailing your pleasure craft to and from the UK</a></li>
+              <li>
+                <a className="govuk-link" target="blank" href="https://www.gov.uk/government/collections/send-advance-passenger-information">
+                  Send Advance Passenger Information
+                </a>
+              </li>
+              <li>
+                <a className="govuk-link" target="blank" href="https://www.gov.uk/government/publications/notice-8-sailing-your-pleasure-craft-to-and-from-the-uk">
+                  Notice 8: sailing your pleasure craft to and from the UK
+                </a>
+              </li>
             </ul>
           </div>
         </div>
