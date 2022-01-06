@@ -48,7 +48,7 @@ const PageContainer = (props) => {
         setUser(resp.data);
       })
       .catch((err) => {
-        if (err.response) { history.push(`/sign-in?source=${location.pathname.substring(1)}`) }
+        if (err.response) { history.push(`/sign-in?source=${location.pathname.substring(1)}`); }
       });
   };
 

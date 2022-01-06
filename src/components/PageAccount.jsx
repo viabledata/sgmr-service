@@ -5,11 +5,11 @@ import { useHistory } from 'react-router-dom';
 import UserContext from './UserContext';
 
 const PageAccount = () => {
-  document.title = "Account";
+  document.title = 'Account';
   const history = useHistory();
 
   // Calling the user info
-  const { user, setUser } = useContext(UserContext);
+  const { user } = useContext(UserContext);
 
   if (!user) { return null; }
   return (

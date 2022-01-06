@@ -6,8 +6,8 @@ import { getData } from '@utils/apiHooks';
 import { PEOPLE_URL } from '@constants/ApiConstants';
 
 const SectionTablePeople = ({ page, pageData }) => {
-  document.title = "People";
-  
+  document.title = 'People';
+
   const [peopleData, setPeopleData] = useState();
   const [titles, setTitles] = useState([]);
 
