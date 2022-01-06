@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 const FormVoyageSubmitted = () => {
-  document.title = "Report Submitted";
+  document.title = 'Report Submitted';
 
   return (
     <div className="govuk-width-container">

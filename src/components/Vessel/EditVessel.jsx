@@ -12,7 +12,7 @@ import VesselDataFormatting from '@components/Vessel/VesselDataFormatting';
 import FormError from '@components/Voyage/FormError';
 
 const EditVessel = () => {
-  document.title = "Edit vessel";
+  document.title = 'Edit vessel';
 
   const history = useHistory();
   const { vesselId } = useParams();

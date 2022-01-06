@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useHistory, useLocation, Link } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import axios from 'axios';
 
 // App imports
@@ -12,16 +12,14 @@ import { vesselValidationRules } from '@components/Forms/validationRules';
 import FormError from '@components/Voyage/FormError';
 
 const CreateAVessel = () => {
-  document.title = "Save vessel";
-  
+  document.title = 'Save vessel';
+
   const history = useHistory();
   const location = useLocation();
   const checkIfNotVoyageForm = location.pathname.toLowerCase().indexOf('voyage') === -1;
   const path = location.pathname.slice(1);
-  const urlParams = location.search.split('source=');
   const [formData, setFormData] = useState(JSON.parse(localStorage.getItem('formData')) || {});
   const [errors, setErrors] = useState(JSON.parse(localStorage.getItem('errors')) || { });
-
 
   // Clear form field errors
   const removeError = (fieldName) => {
@@ -31,13 +29,11 @@ const CreateAVessel = () => {
     setErrors(errorList);
   };
 
-
   // Update form data as user enters it
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
     removeError(e.target.name);
   };
-
 
   // Check fields that are required exist
   const areFieldsValid = (dataToValidate) => {
@@ -54,13 +50,11 @@ const CreateAVessel = () => {
     return Object.keys(fieldsErroring).length > 0;
   };
 
-
   // Clear formData from localStorage
   const clearLocalStorage = () => {
     setFormData({});
     setErrors({ });
   };
-
 
   // Handle Submit, including clearing localStorage
   const handleSubmit = (e) => {

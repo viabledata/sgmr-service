@@ -195,8 +195,8 @@ const FormPerson = ({
           onChange={handleChange}
         >
           <option disabled>Please select</option>
-          {nationalities.map((nationality, index) => (
-            <option key={index} value={nationality.value}>{nationality.label}</option>
+          {nationalities.map((nationality) => (
+            <option key={nationality.id} value={nationality.value}>{nationality.label}</option>
           ))}
         </select>
       </div>
