@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import axios from 'axios';
 
@@ -128,8 +128,8 @@ const EditAccount = () => {
                   </h2>
                   <div className="govuk-error-summary__body">
                     <ul className="govuk-list govuk-error-summary__list">
-                      {Object.entries(errors).map((elem, i) => (
-                        <li key={i}>
+                      {Object.entries(errors).map((elem) => (
+                        <li key={elem.id}>
                           {elem[0] !== 'title'
                             && <a href={`#${elem[0]}`}>{elem[1]}</a>}
                         </li>

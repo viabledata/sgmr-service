@@ -79,7 +79,7 @@ const ActivationError = ({ email, error }) => {
 };
 
 const AccountActivation = () => {
-  document.title = "Account activation";
+  document.title = 'Account activation';
 
   const history = useHistory();
   if (Auth.isAuthorized()) {

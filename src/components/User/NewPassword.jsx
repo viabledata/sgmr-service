@@ -22,7 +22,7 @@ const PageWrapper = ({ children }) => (
 );
 
 const NewPassword = () => {
-  document.title = "Set a new password";
+  document.title = 'Set a new password';
 
   const location = useLocation();
   const [isFormDisabled, setFormDisabled] = useState(false);

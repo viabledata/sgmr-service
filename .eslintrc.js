@@ -51,6 +51,8 @@ module.exports = {
     "react/prop-types": "off",
     "react/jsx-props-no-spreading": "off",
     "no-nested-ternary": "off",
+    "no-unused-expressions": "off",
+    "jsx-a11y/anchor-is-valid": "off",
     "jsx-a11y/label-has-associated-control": [ "error", { "required": { "some": [ "nesting", "id"  ]}}],
     "object-curly-newline": ["error", { "ImportDeclaration": { "multiline": true, "minProperties": 5 }}],
     "no-unused-vars": ["error", { "args": "none" }]

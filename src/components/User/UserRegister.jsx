@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 import { REGISTRATION_URL } from '@constants/ApiConstants';
 import UserRegisterValidation from '@components/User/UserRegisterValidation';
@@ -9,7 +9,7 @@ import FormError from '@components/Voyage/FormError';
 import PasswordField from '@components/User/PasswordField';
 
 const UserRegister = () => {
-  document.title = "Create an account";
+  document.title = 'Create an account';
 
   const pageName = 'userRegister';
   const history = useHistory();
@@ -61,6 +61,7 @@ const UserRegister = () => {
   return (
     <div id="pageContainer" className="govuk-width-container ">
       <a
+        role="none"
         className="govuk-back-link"
         onClick={(e) => {
           e.preventDefault();
