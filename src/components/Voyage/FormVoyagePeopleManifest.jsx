@@ -9,7 +9,7 @@ import scrollToTopOnError from '@utils/scrollToTopOnError';
 const FormVoyagePeopleManifest = ({
   handleSubmit, voyageId, setPageNum, setErrors,
 }) => {
-  document.title = "People on the manifest";
+  document.title = 'People on the manifest';
 
   const [peopleData, setPeopleData] = useState([]);
   const [makeChanges, setMakeChanges] = useState(false);
@@ -67,6 +67,7 @@ const FormVoyagePeopleManifest = ({
           />
 
           <button
+            type="button"
             id="removePerson"
             className={`govuk-button govuk-button--warning ${removeButtonDisabled ? 'govuk-button--disabled' : ''}`}
             disabled={removeButtonDisabled}

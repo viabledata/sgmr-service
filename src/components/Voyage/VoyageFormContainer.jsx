@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {
-  Link, useHistory, useLocation, withRouter,
-} from 'react-router-dom';
+import { Link, useHistory, useLocation, withRouter } from 'react-router-dom';
 
 // App imports
 import { getData, patchData } from '@utils/apiHooks';
@@ -35,8 +33,7 @@ import FormResponsiblePerson from '@components/Voyage/FormResponsiblePerson';
 import FormVoyageVessels from '@components/Voyage/FormVoyageVessels';
 import FormVoyagePeople from '@components/Voyage/FormVoyagePeople';
 import FormError from '@components/Voyage/FormError';
-import FormVoyagePeopleManifest
-  from '@components/Voyage/FormVoyagePeopleManifest';
+import FormVoyagePeopleManifest from '@components/Voyage/FormVoyagePeopleManifest';
 
 const FormVoyageContainer = () => {
   const location = useLocation();

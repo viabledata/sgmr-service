@@ -14,7 +14,7 @@ import { formatPerson } from '@components/Voyage/VoyageFormDataFormatting';
 const FormVoyagePeople = ({
   handleSubmit, voyageId, setErrors, setNextPage, setPageNum,
 }) => {
-  document.title = "People on your voyage";
+  document.title = 'People on your voyage';
 
   const [savedPeople, setSavedPeople] = useState([]);
   const [voyagePeople, setVoyagePeople] = useState([]);

@@ -7,10 +7,8 @@ import { VOYAGE_REPORT_URL } from '@constants/ApiConstants';
 import { FORM_STEPS } from '@constants/ClientConstants';
 import Details from '@components/Details';
 
-
 const PeopleSummary = ({ voyageId, source }) => {
   const [manifestData, setManifestData] = useState();
-
 
   useEffect(() => {
     getData(`${VOYAGE_REPORT_URL}/${voyageId}/people`, location.pathname)
