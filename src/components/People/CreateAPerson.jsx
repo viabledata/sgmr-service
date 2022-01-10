@@ -73,13 +73,8 @@ const CreateAPerson = () => {
     e.preventDefault();
 
     if (!await validateForm(formData)) {
-      const resp = await postData(PEOPLE_URL, formatDataToSubmit(formData), location.pathname.substring(1));
-      if (resp.errors === true) {
-        setErrors({ CreateAPerson: resp.message });
-        scrollToTopOnError(errors);
-      } else {
-        history.push(PEOPLE_PAGE_URL);
-      }
+      await postData(PEOPLE_URL, formatDataToSubmit(formData), location.pathname.substring(1));
+      history.push(PEOPLE_PAGE_URL);
     }
   };
 
@@ -100,12 +95,20 @@ const CreateAPerson = () => {
             <p className="govuk-body-l">Provide the details of the person you want to add to your list of saved people.</p>
             <form id="CreateAPerson">
 
-              {Object.keys(errors).length > 0 && (
+            {Object.keys(errors).length >= 1 && (
               <div className="govuk-error-summary" aria-labelledby="error-summary-title" role="alert" tabIndex="-1" data-module="govuk-error-summary">
                 <h2 className="govuk-error-summary__title">
                   There is a problem
                 </h2>
-                <FormError error={errors.CreateAPerson} />
+                <div className="govuk-error-summary__body">
+                  <ul className="govuk-list govuk-error-summary__list">
+                    {Object.entries(errors).reverse().map((elem, i) => (
+                      <li key={i}>
+                        <a href={`#${elem[0]}`}>{elem[1]}</a>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               </div>
               )}
 
