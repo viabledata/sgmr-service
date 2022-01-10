@@ -112,12 +112,21 @@ const CreateAVessel = () => {
             <h1 className="govuk-heading-xl">Save vessel</h1>
             <p className="govuk-body-l">Please enter the following information. This information can be re-used when submitting a Pleasure Craft Report.</p>
             <form id="CreateAVessel">
-              {Object.keys(errors).length > 0 && (
+            {Object.keys(errors).length >= 1 && (
               <div className="govuk-error-summary" aria-labelledby="error-summary-title" role="alert" tabIndex="-1" data-module="govuk-error-summary">
                 <h2 className="govuk-error-summary__title">
                   There is a problem
                 </h2>
-                <FormError error={errors.CreateAVessel} />
+                <div className="govuk-error-summary__body">
+                  <ul className="govuk-list govuk-error-summary__list">
+                    {Object.entries(errors).map((elem, i) => (
+                      <li key={i}>
+                        {console.error(elem)}
+                        <a href={`#${elem[0]}`}>{elem[1]}</a>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               </div>
               )}
               <FormVessel

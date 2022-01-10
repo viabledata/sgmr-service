@@ -112,12 +112,20 @@ const EditVessel = () => {
             <h1 className="govuk-heading-xl">Edit a vessel</h1>
             <p className="govuk-body-l">Update the details of the vessel you want to edit.</p>
             <form id="EditVessel">
-              {Object.keys(errors).length > 0 && (
+            {Object.keys(errors).length >= 1 && (
               <div className="govuk-error-summary" aria-labelledby="error-summary-title" role="alert" tabIndex="-1" data-module="govuk-error-summary">
                 <h2 className="govuk-error-summary__title">
                   There is a problem
                 </h2>
-                <FormError error={errors.EditVessel} />
+                <div className="govuk-error-summary__body">
+                  <ul className="govuk-list govuk-error-summary__list">
+                    {Object.entries(errors).reverse().map((elem, i) => (
+                      <li key={i}>
+                        <a href={`#${elem[0]}`}>{elem[1]}</a>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               </div>
               )}
               <FormVessel

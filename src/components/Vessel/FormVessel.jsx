@@ -8,7 +8,7 @@ const FormVessel = ({
 }) => {
   return (
     <section>
-      <div className={`govuk-form-group ${errors.vesselName ? 'govuk-form-group--error' : ''}`}>
+      <div id="vesselName" className={`govuk-form-group ${errors.vesselName ? 'govuk-form-group--error' : ''}`}>
         <label className="govuk-label" htmlFor="vesselName">
           Vessel name
         </label>
@@ -17,14 +17,13 @@ const FormVessel = ({
         <input
           className="govuk-input"
           name="vesselName"
-          id="vesselName"
           type="text"
           value={formData.vesselName || ''}
           onChange={handleChange}
         />
       </div>
 
-      <div className={`govuk-form-group ${errors.vesselType ? 'govuk-form-group--error' : ''}`}>
+      <div id="vesselType" className={`govuk-form-group ${errors.vesselType ? 'govuk-form-group--error' : ''}`}>
         <label className="govuk-label" htmlFor="vesselType">
           Vessel type
         </label>
@@ -33,14 +32,13 @@ const FormVessel = ({
         <input
           className="govuk-input"
           name="vesselType"
-          id="vesselType"
           type="text"
           value={formData.vesselType || ''}
           onChange={handleChange}
         />
       </div>
 
-      <div className={`govuk-form-group ${errors.moorings ? 'govuk-form-group--error' : ''}`}>
+      <div id="moorings" className={`govuk-form-group ${errors.moorings ? 'govuk-form-group--error' : ''}`}>
         <label className="govuk-label" htmlFor="moorings">
           Usual moorings
         </label>
@@ -49,14 +47,13 @@ const FormVessel = ({
         <input
           className="govuk-input"
           name="moorings"
-          id="moorings"
           type="text"
           value={formData.moorings || ''}
           onChange={handleChange}
         />
       </div>
 
-      <div className={`govuk-form-group ${errors.registration ? 'govuk-form-group--error' : ''}`}>
+      <div id="registration" className={`govuk-form-group ${errors.registration ? 'govuk-form-group--error' : ''}`}>
         <label className="govuk-label" htmlFor="registration">
           Registration number
         </label>
@@ -64,49 +61,45 @@ const FormVessel = ({
         <input
           className="govuk-input"
           name="registration"
-          id="registration"
           type="text"
           value={formData.registration || ''}
           onChange={handleChange}
         />
       </div>
 
-      <div className="govuk-form-group">
+      <div id="hullIdentificationNumber" className="govuk-form-group">
         <label className="govuk-label" htmlFor="hullIdentificationNumber">
           Hull identification number (optional)
         </label>
         <input
           className="govuk-input"
           name="hullIdentificationNumber"
-          id="hullIdentificationNumber"
           type="text"
           value={formData.hullIdentificationNumber || ''}
           onChange={handleChange}
         />
       </div>
 
-      <div className="govuk-form-group">
+      <div id="callsign" className="govuk-form-group">
         <label className="govuk-label" htmlFor="callsign">
           Callsign (optional)
         </label>
         <input
           className="govuk-input"
           name="callsign"
-          id="callsign"
           type="text"
           value={formData.callsign || ''}
           onChange={handleChange}
         />
       </div>
 
-      <div className="govuk-form-group">
+      <div id="vesselNationality" className="govuk-form-group">
         <label className="govuk-label" htmlFor="vesselNationality">
           Vessel nationality (optional)
         </label>
         <select
           className="govuk-select"
           name="vesselNationality"
-          id="vesselNationality"
           value={formData.vesselNationality || ''}
           onChange={handleChange}
         >
@@ -117,14 +110,13 @@ const FormVessel = ({
         </select>
       </div>
 
-      <div className="govuk-form-group">
+      <div id="portOfRegistry" className="govuk-form-group">
         <label className="govuk-label" htmlFor="portOfRegistry">
           Port of registry (optional)
         </label>
         <input
           className="govuk-input"
           name="portOfRegistry"
-          id="portOfRegistry"
           type="text"
           value={formData.portOfRegistry || ''}
           onChange={handleChange}
