@@ -12,7 +12,6 @@ import { vesselValidationRules } from '@components/Forms/validationRules';
 
 const CreateAVessel = () => {
   document.title = 'Save vessel';
-
   const history = useHistory();
   const location = useLocation();
   const checkIfNotVoyageForm = location.pathname.toLowerCase().indexOf('voyage') === -1;
