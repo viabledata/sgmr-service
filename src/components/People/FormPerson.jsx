@@ -105,7 +105,7 @@ const FormPerson = ({
           <span className="govuk-hint">
             For example, 31 3 1980
           </span>
-          <div  className="govuk-date-input">
+          <div className="govuk-date-input">
             <div className="govuk-date-input__item">
               <div className="govuk-form-group">
                 <label className="govuk-label govuk-date-input__label" htmlFor="dateOfBirthDay">

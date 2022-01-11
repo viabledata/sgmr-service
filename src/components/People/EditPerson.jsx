@@ -122,7 +122,7 @@ const EditPerson = () => {
             <p className="govuk-body-l">Update the details of the person you want to edit.</p>
             <form id="EditPerson">
 
-            {Object.keys(errors).length >= 1 && (
+              {Object.keys(errors).length >= 1 && (
               <div className="govuk-error-summary" aria-labelledby="error-summary-title" role="alert" tabIndex="-1" data-module="govuk-error-summary">
                 <h2 className="govuk-error-summary__title">
                   There is a problem
@@ -131,7 +131,7 @@ const EditPerson = () => {
                   <ul className="govuk-list govuk-error-summary__list">
                     {Object.entries(errors).reverse().map((elem, i) => (
                       <li key={i}>
-                          <a href={`#${elem[0]}`}>{elem[1]}</a>
+                        <a href={`#${elem[0]}`}>{elem[1]}</a>
                       </li>
                     ))}
                   </ul>

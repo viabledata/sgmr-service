@@ -94,7 +94,7 @@ const CreateAPerson = () => {
             <p className="govuk-body-l">Provide the details of the person you want to add to your list of saved people.</p>
             <form id="CreateAPerson">
 
-            {Object.keys(errors).length >= 1 && (
+              {Object.keys(errors).length >= 1 && (
               <div className="govuk-error-summary" aria-labelledby="error-summary-title" role="alert" tabIndex="-1" data-module="govuk-error-summary">
                 <h2 className="govuk-error-summary__title">
                   There is a problem
