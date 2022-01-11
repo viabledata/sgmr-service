@@ -9,7 +9,6 @@ import scrollToTopOnError from '@utils/scrollToTopOnError';
 import { VESSELS_URL } from '@constants/ApiConstants';
 import { VESSELS_PAGE_URL } from '@constants/ClientConstants';
 import { vesselValidationRules } from '@components/Forms/validationRules';
-import FormError from '@components/Voyage/FormError';
 
 const CreateAVessel = () => {
   document.title = 'Save vessel';

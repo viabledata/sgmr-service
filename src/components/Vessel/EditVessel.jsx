@@ -11,7 +11,6 @@ import scrollToTopOnError from '@utils/scrollToTopOnError';
 
 import FormVessel from '@components/Vessel/FormVessel';
 import VesselDataFormatting from '@components/Vessel/VesselDataFormatting';
-import FormError from '@components/Voyage/FormError';
 
 const EditVessel = () => {
   document.title = 'Edit vessel';

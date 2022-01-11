@@ -9,7 +9,6 @@ import { getData, patchData } from '@utils/apiHooks';
 import getId from '@utils/getIdHook';
 import scrollToTopOnError from '@utils/scrollToTopOnError';
 import FormPerson from '@components/People/FormPerson';
-import FormError from '@components/Voyage/FormError';
 import {
   personValidationRules,
   validate,
