@@ -118,9 +118,8 @@ const CreateAVessel = () => {
                 </h2>
                 <div className="govuk-error-summary__body">
                   <ul className="govuk-list govuk-error-summary__list">
-                    {Object.entries(errors).map((elem, i) => (
-                      <li key={i}>
-                        {console.error(elem)}
+                    {Object.entries(errors).map((elem) => (
+                      <li key={elem[0]}>
                         <a href={`#${elem[0]}`}>{elem[1]}</a>
                       </li>
                     ))}

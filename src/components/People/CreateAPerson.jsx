@@ -101,8 +101,8 @@ const CreateAPerson = () => {
                 </h2>
                 <div className="govuk-error-summary__body">
                   <ul className="govuk-list govuk-error-summary__list">
-                    {Object.entries(errors).reverse().map((elem, i) => (
-                      <li key={i}>
+                    {Object.entries(errors).reverse().map((elem) => (
+                      <li key={elem[0]}>
                         <a href={`#${elem[0]}`}>{elem[1]}</a>
                       </li>
                     ))}
