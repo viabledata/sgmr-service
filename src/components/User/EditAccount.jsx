@@ -56,9 +56,11 @@ const EditAccount = () => {
   const checkRequiredFields = () => {
     const tempObj = {};
     validationRules.map((elem) => {
-      (!(elem.field in formData) || formData[elem.field] === '')
-        ? tempObj[elem.field] = elem.message
-        : null;
+      if (!(elem.field in formData) || formData[elem.field] === '') {
+        tempObj[elem.field] = elem.message;
+      } else {
+        tempObj[elem.field] = null;
+      }
       if (!(VALID_INTERNATIONAL_MOBILE_REGEX.test(formData.mobileNumber))) {
         tempObj.mobileNumber = 'You must enter a valid phone number e.g. 07700 900982, +33 63998 010101';
       }
@@ -74,7 +76,7 @@ const EditAccount = () => {
   };
 
   // Clear formData from localStorage
-  const clearFormData = (e) => {
+  const clearFormData = () => {
     setFormData({});
     setErrors({});
   };

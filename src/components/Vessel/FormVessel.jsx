@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import nationalities from '@utils/staticFormData';
 
 const FormVessel = ({
-  handleSubmit, handleChange, data, formData, errors, sourceForm,
+  handleSubmit, handleChange, formData, errors, sourceForm,
 }) => {
   return (
     <section>

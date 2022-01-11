@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useHistory, useParams, withRouter } from 'react-router-dom';
+import {
+  Link, useHistory, useParams, withRouter,
+} from 'react-router-dom';
 
 import { VESSELS_URL } from '@constants/ApiConstants';
 import { VESSELS_PAGE_URL } from '@constants/ClientConstants';

@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import { getData } from '@utils/apiHooks';
 import { PEOPLE_URL } from '@constants/ApiConstants';
 
-const SectionTablePeople = ({ page, pageData }) => {
+const SectionTablePeople = ({ pageData }) => {
   document.title = 'People';
 
   const [peopleData, setPeopleData] = useState();
@@ -18,7 +18,8 @@ const SectionTablePeople = ({ page, pageData }) => {
 
   useEffect(() => {
     storeData();
-    setTitles(pageData.reportTitles);
+    const { reportTitles } = pageData;
+    setTitles(reportTitles);
   }, [pageData]);
 
   if (!peopleData) { return null; }

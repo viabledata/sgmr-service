@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useHistory, useLocation, withRouter } from 'react-router-dom';
+import {
+  Link, useHistory, useLocation, withRouter,
+} from 'react-router-dom';
 
 // App imports
 import { getData, patchData } from '@utils/apiHooks';

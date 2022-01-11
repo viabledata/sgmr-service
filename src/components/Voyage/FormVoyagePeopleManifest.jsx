@@ -7,7 +7,7 @@ import PeopleTable from '@components/Voyage/PeopleTable';
 import scrollToTopOnError from '@utils/scrollToTopOnError';
 
 const FormVoyagePeopleManifest = ({
-  handleSubmit, voyageId, setPageNum, setErrors,
+  handleSubmit, voyageId, setErrors,
 }) => {
   document.title = 'People on the manifest';
 

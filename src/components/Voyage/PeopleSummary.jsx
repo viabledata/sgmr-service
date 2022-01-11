@@ -10,6 +10,17 @@ import Details from '@components/Details';
 const PeopleSummary = ({ voyageId, source }) => {
   const [manifestData, setManifestData] = useState();
 
+  const getPersonType = (person) => {
+    switch (person.peopleType.name) {
+      case 'Skipper':
+        return 'Skipper';
+      case 'Passenger':
+        return 'Unpaid Crew';
+      default:
+        return 'Employed Crew';
+    }
+  };
+
   useEffect(() => {
     getData(`${VOYAGE_REPORT_URL}/${voyageId}/people`, location.pathname)
       .then((resp) => { setManifestData(resp.items); });
@@ -38,7 +49,7 @@ const PeopleSummary = ({ voyageId, source }) => {
                 <td className="govuk-table__cell">{formatUIDate(person.dateOfBirth)}</td>
                 <td className="govuk-table__cell">{person.documentNumber}</td>
                 <td className="govuk-table__cell">{person.nationality}</td>
-                <td className="govuk-table__cell">{person.peopleType.name === 'Skipper' ? 'Skipper' : person.peopleType.name === 'Passenger' ? 'Unpaid Crew' : 'Employed Crew'}</td>
+                <td className="govuk-table__cell">{getPersonType(person)}</td>
               </tr>
 
               <tr className="govuk-table__row">
