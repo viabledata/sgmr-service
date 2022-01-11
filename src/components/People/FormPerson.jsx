@@ -39,7 +39,7 @@ const FormPerson = ({
         </label>
       </div>
 
-      <div id='gender' className={`govuk-form-group ${errors.gender ? 'govuk-form-group--error' : ''}`}>
+      <div id="gender" className={`govuk-form-group ${errors.gender ? 'govuk-form-group--error' : ''}`}>
         <fieldset className="govuk-fieldset">
           <legend className="govuk-fieldset__legend">
             <label className="govuk-fieldset__heading" htmlFor="gender">
@@ -189,7 +189,6 @@ const FormPerson = ({
         <select
           className="govuk-select"
           name="nationality"
-          
           type="text"
           value={formData.nationality || 'Please select'}
           onChange={handleChange}
