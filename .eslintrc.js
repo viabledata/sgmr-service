@@ -50,7 +50,6 @@ module.exports = {
     "import/no-extraneous-dependencies": ["error", { devDependencies: true }],
     "react/prop-types": "off",
     "react/jsx-props-no-spreading": "off",
-    "jsx-a11y/anchor-is-valid": "off",
     "jsx-a11y/label-has-associated-control": [ "error", { "required": { "some": [ "nesting", "id"  ]}}],
   },
   overrides: [

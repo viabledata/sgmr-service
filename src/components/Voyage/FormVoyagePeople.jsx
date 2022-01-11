@@ -73,6 +73,7 @@ const FormVoyagePeople = ({
         {savedPeople
           ? "Select people you've saved previously to add to this report, or "
           : "You don't have any saved people on your account, "}
+        {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
         <a
           href="#"
           className="govuk-link govuk-link--no-visited-state"

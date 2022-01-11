@@ -60,6 +60,7 @@ const UserRegister = () => {
 
   return (
     <div id="pageContainer" className="govuk-width-container ">
+      {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
       <a
         role="none"
         className="govuk-back-link"
