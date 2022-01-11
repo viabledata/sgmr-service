@@ -173,11 +173,7 @@ const EditAccount = () => {
 
               <div id="mobileNumber" className={`govuk-form-group ${errors.mobileNumber ? 'govuk-form-group--error' : ''}`}>
                 <label className="govuk-label govuk-label--m" htmlFor="mobileNumber">
-<<<<<<< HEAD
-                  Mobile number
-=======
                   Telephone number
->>>>>>> a711761 (Fix response error caused by merge)
                 </label>
                 <FormError error={errors.mobileNumber} />
                 <input

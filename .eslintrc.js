@@ -13,7 +13,7 @@ module.exports = {
     "plugin:react/recommended",
     "plugin:cypress/recommended",
   ],
-  parser: "babel-eslint",
+  parser: "@babel/eslint-parser",
   globals: {
     Atomics: "readonly",
     SharedArrayBuffer: "readonly",
