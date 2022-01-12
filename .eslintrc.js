@@ -45,11 +45,11 @@ module.exports = {
     'no-restricted-globals': 'off',
     'no-restricted-syntax': 'off',
     'import/no-unresolved': 'off',
-    'prefer-const': 'off',
     'prefer-destructuring': 'off',
     'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
     'react/prop-types': 'off',
     'react/jsx-props-no-spreading': 'off',
+    'react/function-component-definition': 'off',
     'jsx-a11y/label-has-associated-control': ['error', { required: { some: ['nesting', 'id'] } }],
   },
   overrides: [
