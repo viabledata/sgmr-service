@@ -3,8 +3,7 @@ import { FORM_STEPS } from '@constants/ClientConstants';
 
 test('Validates responsible person', async () => {
   const expectedErrors = {
-    responsibleAddressLine1: 'You must enter the first line of your address',
-    responsibleAddressLine2: 'You must enter the second line of your address',
+    responsibleAddressLine1: 'You must enter a first address line',
     responsibleContactNo: 'You must enter a contact number',
     responsibleCounty: 'You must enter a country name',
     responsibleGivenName: 'You must enter a first name',

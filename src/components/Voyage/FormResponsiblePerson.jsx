@@ -9,7 +9,7 @@ const FormResponsiblePerson = ({
 
   return (
     <section>
-      <h1 className="govuk-heading-xl">Add the skipper's address</h1>
+      <h1 className="govuk-heading-xl">Add the skipper&apos;s address</h1>
       <p className="govuk-body-l">Provide the details of the person responsible for this voyage. By default this is the Skipper, but could be the vessel owner if this is a charter.</p>
 
       <div className="govuk-form-group">

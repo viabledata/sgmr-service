@@ -34,7 +34,7 @@ import ForgottenPassword from '@components/User/ForgottenPassword';
 import LandingPage from '@components/LandingPage';
 import ManageReports from '@components/ManageReports';
 import SiteMaintenance from '@components/SiteMaintenance';
-import { siteMaintenance } from '../config';
+import { siteMaintenance } from '../lib/config';
 
 const Main = () => {
   const [user, setUser] = useState(null);

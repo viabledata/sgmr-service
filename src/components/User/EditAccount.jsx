@@ -1,6 +1,9 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import axios from 'axios';
+
+import { VALID_INTERNATIONAL_MOBILE_REGEX } from '@components/Forms/validationRules';
+import FormError from '@components/Voyage/FormError';
 
 // App imports
 import { USER_URL } from '@constants/ApiConstants';
@@ -8,11 +11,11 @@ import Auth from '@lib/Auth';
 import UserContext from '../UserContext';
 
 const EditAccount = () => {
-  document.title = "Edit account";
+  document.title = 'Edit account';
 
   const history = useHistory();
   // Calling the user from context
-  const { user, setUser } = useContext(UserContext)
+  const { user, setUser } = useContext(UserContext);
 
   // Prepopulating the form with user info
   const [formData, setFormData] = useState(
@@ -53,9 +56,14 @@ const EditAccount = () => {
   const checkRequiredFields = () => {
     const tempObj = {};
     validationRules.map((elem) => {
-      (!(elem.field in formData) || formData[elem.field] === '')
-        ? tempObj[elem.field] = elem.message
-        : null;
+      if (!(elem.field in formData) || formData[elem.field] === '') {
+        tempObj[elem.field] = elem.message;
+      } else {
+        tempObj[elem.field] = null;
+      }
+      if (!(VALID_INTERNATIONAL_MOBILE_REGEX.test(formData.mobileNumber))) {
+        tempObj.mobileNumber = 'You must enter a valid phone number e.g. 07700 900982, +33 63998 010101';
+      }
     });
     setErrors(tempObj);
     return Object.keys(tempObj).length > 0;
@@ -68,7 +76,7 @@ const EditAccount = () => {
   };
 
   // Clear formData from localStorage
-  const clearFormData = (e) => {
+  const clearFormData = () => {
     setFormData({});
     setErrors({});
   };
@@ -122,8 +130,8 @@ const EditAccount = () => {
                   </h2>
                   <div className="govuk-error-summary__body">
                     <ul className="govuk-list govuk-error-summary__list">
-                      {Object.entries(errors).map((elem, i) => (
-                        <li key={i}>
+                      {Object.entries(errors).map((elem) => (
+                        <li key={elem.id}>
                           {elem[0] !== 'title'
                             && <a href={`#${elem[0]}`}>{elem[1]}</a>}
                         </li>
@@ -133,38 +141,41 @@ const EditAccount = () => {
                 </div>
               )}
 
-              <div id="firstName" className="govuk-form-group">
+              <div id="firstName" className={`govuk-form-group ${errors.firstName ? 'govuk-form-group--error' : ''}`}>
                 <label className="govuk-label govuk-label--m" htmlFor="firstName">
                   First name
                 </label>
+                <FormError error={errors.firstName} />
                 <input
                   className="govuk-input"
                   name="firstName"
-                  id = "firstName"
+                  id="firstName"
                   type="text"
                   value={formData.firstName || ''}
                   onChange={handleChange}
                 />
               </div>
 
-              <div id="lastName" className="govuk-form-group">
+              <div id="lastName" className={`govuk-form-group ${errors.lastName ? 'govuk-form-group--error' : ''}`}>
                 <label className="govuk-label govuk-label--m" htmlFor="lastName">
                   Last name
                 </label>
+                <FormError error={errors.lastName} />
                 <input
                   className="govuk-input"
                   name="lastName"
-                  id ="lastName"
+                  id="lastName"
                   type="text"
                   value={formData.lastName || ''}
                   onChange={handleChange}
                 />
               </div>
 
-              <div id="mobileNumber" className="govuk-form-group">
+              <div id="mobileNumber" className={`govuk-form-group ${errors.mobileNumber ? 'govuk-form-group--error' : ''}`}>
                 <label className="govuk-label govuk-label--m" htmlFor="mobileNumber">
-                  Mobile number
+                  Telephone number
                 </label>
+                <FormError error={errors.mobileNumber} />
                 <input
                   className="govuk-input"
                   name="mobileNumber"

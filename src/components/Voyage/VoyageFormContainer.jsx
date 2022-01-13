@@ -35,8 +35,7 @@ import FormResponsiblePerson from '@components/Voyage/FormResponsiblePerson';
 import FormVoyageVessels from '@components/Voyage/FormVoyageVessels';
 import FormVoyagePeople from '@components/Voyage/FormVoyagePeople';
 import FormError from '@components/Voyage/FormError';
-import FormVoyagePeopleManifest
-  from '@components/Voyage/FormVoyagePeopleManifest';
+import FormVoyagePeopleManifest from '@components/Voyage/FormVoyagePeopleManifest';
 
 const FormVoyageContainer = () => {
   const location = useLocation();

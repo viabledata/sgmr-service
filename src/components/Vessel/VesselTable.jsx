@@ -1,7 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-const VesselTable = ({ vesselData, checkboxes, link, handleCheckboxes }) => {
+const VesselTable = ({
+  vesselData, checkboxes, link, handleCheckboxes,
+}) => {
   return (
     <table className="table-clickable govuk-table">
       <thead className="govuk-table__head">

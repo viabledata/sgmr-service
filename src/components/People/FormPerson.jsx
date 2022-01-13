@@ -39,14 +39,14 @@ const FormPerson = ({
         </label>
       </div>
 
-      <div className={`govuk-form-group ${errors.gender ? 'govuk-form-group--error' : ''}`}>
+      <div id="gender" className={`govuk-form-group ${errors.gender ? 'govuk-form-group--error' : ''}`}>
         <fieldset className="govuk-fieldset">
           <legend className="govuk-fieldset__legend">
             <label className="govuk-fieldset__heading" htmlFor="gender">
               Gender
             </label>
           </legend>
-          <div id="gender" className="govuk-radios govuk-radios">
+          <div className="govuk-radios govuk-radios">
             <FormError error={errors.gender} />
             <div className="govuk-radios__item">
               <input
@@ -94,7 +94,7 @@ const FormPerson = ({
         </fieldset>
       </div>
 
-      <div className={`govuk-form-group ${errors.dateOfBirth ? 'govuk-form-group--error' : ''}`}>
+      <div id="dateOfBirth" className={`govuk-form-group ${errors.dateOfBirth ? 'govuk-form-group--error' : ''}`}>
         <fieldset className="govuk-fieldset" role="group" aria-describedby="dob-hint">
           <legend className="govuk-fieldset__legend">
             <label className="govuk-label" htmlFor="dateOfBirth">
@@ -105,7 +105,7 @@ const FormPerson = ({
           <span className="govuk-hint">
             For example, 31 3 1980
           </span>
-          <div id="dateOfBirth" className="govuk-date-input">
+          <div className="govuk-date-input">
             <div className="govuk-date-input__item">
               <div className="govuk-form-group">
                 <label className="govuk-label govuk-date-input__label" htmlFor="dateOfBirthDay">
@@ -181,7 +181,7 @@ const FormPerson = ({
         </label>
       </div>
 
-      <div className={`govuk-form-group ${errors.nationality ? 'govuk-form-group--error' : ''}`}>
+      <div id="nationality" className={`govuk-form-group ${errors.nationality ? 'govuk-form-group--error' : ''}`}>
         <label className="govuk-label" htmlFor="nationality">
           Nationality
         </label>
@@ -189,14 +189,13 @@ const FormPerson = ({
         <select
           className="govuk-select"
           name="nationality"
-          id="nationality"
           type="text"
           value={formData.nationality || 'Please select'}
           onChange={handleChange}
         >
           <option disabled>Please select</option>
-          {nationalities.map((nationality, index) => (
-            <option key={index} value={nationality.value}>{nationality.label}</option>
+          {nationalities.map((nationality) => (
+            <option key={nationality.id} value={nationality.value}>{nationality.label}</option>
           ))}
         </select>
       </div>
@@ -364,7 +363,7 @@ const FormPerson = ({
         </label>
       </div>
 
-      <div className={`govuk-form-group ${errors.documentExpiryDate ? 'govuk-form-group--error' : ''}`}>
+      <div id="documentExpiryDate" className={`govuk-form-group ${errors.documentExpiryDate ? 'govuk-form-group--error' : ''}`}>
         <fieldset className="govuk-fieldset" role="group" aria-describedby="documentExpiryDate-hint">
           <legend className="govuk-fieldset__legend">
             <label className="govuk-label" htmlFor="documentExpiryDate">
@@ -374,7 +373,7 @@ const FormPerson = ({
           <span className="govuk-hint">
             For example, 31 3 2022
           </span>
-          <div id="documentExpiryDate" className="govuk-date-input">
+          <div className="govuk-date-input">
             <FormError error={errors.documentExpiryDate} />
             <div className="govuk-date-input__item">
               <div className="govuk-form-group">

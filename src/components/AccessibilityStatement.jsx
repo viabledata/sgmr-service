@@ -1,7 +1,7 @@
 import React from 'react';
 
 const AccessibilityStatement = () => {
-  document.title = "Accessibility statement";
+  document.title = 'Accessibility statement';
 
   return (
     <div className="govuk-width-container ">
@@ -39,21 +39,40 @@ const AccessibilityStatement = () => {
             <p className="govuk-body">Some people may find parts of this service difficult to use because:</p>
             <ul className="govuk-list govuk-list--bullet">
               <li>Fields are only auto completed from information in the user’s profile on Submit a Pleasure Craft Report and not from their browser.</li>
-              <li>The JAWS screen reader does not read options in drop down lists and users are unable to use their keyboard to navigate through drop down lists with JAWS running in the background.</li>
-              <li>Questions on the form and some labels in names, are unable to be identified by the NVDA screen reader. NVDA is able to read text fields, tabs, links and radio buttons.</li>
-              <li>Multiple “Change” links on page 6 of the reports are read out by the Screenreader, there are no extra label text for screenreaders that differentiates the links.</li>
+              <li>
+                The JAWS screen reader does not read options in drop down lists and users are unable to use their keyboard to navigate through drop down lists with
+                JAWS running in the background.
+              </li>
+              <li>
+                Questions on the form and some labels in names, are unable to be identified by the NVDA screen reader. NVDA is able to read text fields, tabs, links
+                and radio buttons.
+              </li>
+              <li>
+                Multiple “Change” links on page 6 of the reports are read out by the Screenreader, there are no extra label text for screenreaders that differentiates
+                the links.
+              </li>
             </ul>
-            <p className="govuk-body">We know some parts of this website are not fully accessible. You can see a full list of any issues we currently know about in the Non-accessible content section of this statement.</p>
+            <p className="govuk-body">
+              We know some parts of this website are not fully accessible. You can see a full list of any issues we currently know about in the Non-accessible content
+              section of this statement.
+            </p>
 
             <h2 className="govuk-heading-l">Feedback and contact information</h2>
             <p className="govuk-body">If you have difficulty using this service, contact us by:</p>
             <ul className="govuk-list govuk-list--bullet">
-              <li>Email address: <a href="mailto:sgmrsupport@digital.homeoffice.gov.uk">sgmrsupport@digital.homeoffice.gov.uk</a></li>
+              <li>
+                Email address:
+                &nbsp;
+                <a href="mailto:sgmrsupport@digital.homeoffice.gov.uk">
+                  sgmrsupport@digital.homeoffice.gov.uk
+                </a>
+              </li>
             </ul>
 
             <h2 className="govuk-heading-l">Enforcement procedure</h2>
             <p className="govuk-body">
-              The Equality and Human Rights Commission (EHRC) is responsible for enforcing the Public Sector Bodies (Websites and Mobile Applications) (No. 2) Accessibility Regulations 2018 (the ‘accessibility regulations’). If you’re not happy with how we respond to your complaint, contact the
+              The Equality and Human Rights Commission (EHRC) is responsible for enforcing the Public Sector Bodies (Websites and Mobile Applications) (No. 2)
+              Accessibility Regulations 2018 (the ‘accessibility regulations’). If you’re not happy with how we respond to your complaint, contact the
               {' '}
               <a className="govuk-link" target="blank" href="https://www.equalityadvisoryservice.com/">Equality Advisory and Support Service (EASS) (opens in new tab).</a>
             </p>
@@ -62,16 +81,22 @@ const AccessibilityStatement = () => {
               {' '}
               <a className="govuk-link" target="blank" href="https://www.equalityni.org/home">Equality Commission for Northern Ireland (opens in new tab)</a>
               {' '}
-              who are responsible for enforcing the Public Sector Bodies (Websites and Mobile Applications) (No. 2) Accessibility Regulations 2018 (the ‘accessibility regulations’) in Northern Ireland.
+              who are responsible for enforcing the Public Sector Bodies (Websites and Mobile Applications) (No. 2) Accessibility Regulations 2018
+              (the ‘accessibility regulations’) in Northern Ireland.
             </p>
             <h2 className="govuk-heading-l">Technical information about this website’s accessibility</h2>
-            <p className="govuk-body"> The Home Office is committed to making its website accessible, in accordance with the Public Sector Bodies (Websites and Mobile Applications) (No. 2) Accessibility Regulations 2018.</p>
+            <p className="govuk-body">
+              The Home Office is committed to making its website accessible, in accordance with the Public Sector Bodies (Websites and Mobile
+              Applications) (No. 2) Accessibility Regulations 2018.
+            </p>
             <h2 className="govuk-heading-l">Compliance status</h2>
             <p className="govuk-body">
 
               This website is partially compliant with the
               {' '}
-              <a className="govuk-link" target="blank" href="https://www.w3.org/TR/WCAG21/">Web Content Accessibility Guidelines version 2.1 AA standard (opens in new tab).</a>
+              <a className="govuk-link" target="blank" href="https://www.w3.org/TR/WCAG21/">
+                Web Content Accessibility Guidelines version 2.1 AA standard (opens in new tab).
+              </a>
               {' '}
               The non-compliances are listed below.
             </p>
@@ -105,7 +130,7 @@ const AccessibilityStatement = () => {
             <h2 className="govuk-heading-l">Preparation of this accessibility statement</h2>
             <p className="govuk-body">This statement was prepared on 8th October 2020. It was last reviewed on 12th October 2020.</p>
             <p className="govuk-body">This website was last tested on 8th October 2020. The test was carried out by the Home Office’s Quality Assurance and Testing team.</p>
-            <p className="govuk-body">We tested the service based on a user's ability to complete key journeys. All parts of the chosen journeys were tested.</p>
+            <p className="govuk-body">We tested the service based on a user&apos;s ability to complete key journeys. All parts of the chosen journeys were tested.</p>
           </div>
         </div>
       </main>

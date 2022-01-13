@@ -22,6 +22,58 @@ export const personValidationRules = [
     message: 'You must enter a last name',
   },
   {
+    inputField: 'gender',
+    errorDisplayId: 'gender',
+    type: 'required',
+    message: 'You must select a gender',
+  },
+  {
+    inputField: 'dateOfBirthYear',
+    errorDisplayId: 'dateOfBirth',
+    type: 'required',
+    message: 'You must enter a date of birth',
+  },
+  {
+    inputField: 'dateOfBirthMonth',
+    errorDisplayId: 'dateOfBirth',
+    type: 'required',
+    message: 'You must enter a date of birth',
+  },
+  {
+    inputField: 'dateOfBirthDay',
+    errorDisplayId: 'dateOfBirth',
+    type: 'required',
+    message: 'You must enter a date of birth',
+  },
+  {
+    inputField: 'dateOfBirthDay',
+    errorDisplayId: 'dateOfBirth',
+    type: 'async',
+    callback: async (value, formData) => {
+      // DoB must be valid and not in the future
+      if (formData.dateOfBirthYear || formData.dateOfBirthMonth || formData.dateOfBirthDay) {
+        const isValidFormat = isDateValid(formData.dateOfBirthYear, formData.dateOfBirthMonth, formData.dateOfBirthDay);
+        const isDobInPast = isInThePast(formData.dateOfBirthYear, formData.dateOfBirthMonth, formData.dateOfBirthDay);
+
+        return isValidFormat && isDobInPast;
+      }
+      return true;
+    },
+    message: 'You must enter a valid date of birth',
+  },
+  {
+    inputField: 'placeOfBirth',
+    errorDisplayId: 'placeOfBirth',
+    type: 'required',
+    message: 'You must enter a place of birth',
+  },
+  {
+    inputField: 'nationality',
+    errorDisplayId: 'nationality',
+    type: 'required',
+    message: 'You must enter a nationality',
+  },
+  {
     inputField: 'peopleType',
     errorDisplayId: 'peopleType',
     type: 'required',
@@ -91,58 +143,6 @@ export const personValidationRules = [
     },
     message: 'You must enter a valid document expiry date',
   },
-  {
-    inputField: 'gender',
-    errorDisplayId: 'gender',
-    type: 'required',
-    message: 'You must select a gender',
-  },
-  {
-    inputField: 'dateOfBirthYear',
-    errorDisplayId: 'dateOfBirth',
-    type: 'required',
-    message: 'You must enter a date of birth',
-  },
-  {
-    inputField: 'dateOfBirthMonth',
-    errorDisplayId: 'dateOfBirth',
-    type: 'required',
-    message: 'You must enter a date of birth',
-  },
-  {
-    inputField: 'dateOfBirthDay',
-    errorDisplayId: 'dateOfBirth',
-    type: 'required',
-    message: 'You must enter a date of birth',
-  },
-  {
-    inputField: 'dateOfBirthDay',
-    errorDisplayId: 'dateOfBirth',
-    type: 'async',
-    callback: async (value, formData) => {
-      // DoB must be valid and not in the future
-      if (formData.dateOfBirthYear || formData.dateOfBirthMonth || formData.dateOfBirthDay) {
-        const isValidFormat = isDateValid(formData.dateOfBirthYear, formData.dateOfBirthMonth, formData.dateOfBirthDay);
-        const isDobInPast = isInThePast(formData.dateOfBirthYear, formData.dateOfBirthMonth, formData.dateOfBirthDay);
-
-        return isValidFormat && isDobInPast;
-      }
-      return true;
-    },
-    message: 'You must enter a valid date of birth',
-  },
-  {
-    inputField: 'placeOfBirth',
-    errorDisplayId: 'placeOfBirth',
-    type: 'required',
-    message: 'You must enter a place of birth',
-  },
-  {
-    inputField: 'nationality',
-    errorDisplayId: 'nationality',
-    type: 'required',
-    message: 'You must enter a nationality',
-  },
 ];
 
 export const responsiblePersonValidationRules = [
@@ -168,13 +168,7 @@ export const responsiblePersonValidationRules = [
     inputField: 'responsibleAddressLine1',
     errorDisplayId: 'responsibleAddressLine1',
     type: 'required',
-    message: 'You must enter the first line of your address',
-  },
-  {
-    inputField: 'responsibleAddressLine2',
-    errorDisplayId: 'responsibleAddressLine2',
-    type: 'required',
-    message: 'You must enter the second line of your address',
+    message: 'You must enter a first address line',
   },
   {
     inputField: 'responsibleTown',

@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useHistory, useParams, withRouter } from 'react-router-dom';
+import {
+  Link, useHistory, useParams, withRouter,
+} from 'react-router-dom';
 
 import { VESSELS_URL } from '@constants/ApiConstants';
 import { VESSELS_PAGE_URL } from '@constants/ClientConstants';
@@ -9,10 +11,9 @@ import scrollToTopOnError from '@utils/scrollToTopOnError';
 
 import FormVessel from '@components/Vessel/FormVessel';
 import VesselDataFormatting from '@components/Vessel/VesselDataFormatting';
-import FormError from '@components/Voyage/FormError';
 
 const EditVessel = () => {
-  document.title = "Edit vessel";
+  document.title = 'Edit vessel';
 
   const history = useHistory();
   const { vesselId } = useParams();
@@ -110,12 +111,20 @@ const EditVessel = () => {
             <h1 className="govuk-heading-xl">Edit a vessel</h1>
             <p className="govuk-body-l">Update the details of the vessel you want to edit.</p>
             <form id="EditVessel">
-              {Object.keys(errors).length > 0 && (
+              {Object.keys(errors).length >= 1 && (
               <div className="govuk-error-summary" aria-labelledby="error-summary-title" role="alert" tabIndex="-1" data-module="govuk-error-summary">
                 <h2 className="govuk-error-summary__title">
                   There is a problem
                 </h2>
-                <FormError error={errors.EditVessel} />
+                <div className="govuk-error-summary__body">
+                  <ul className="govuk-list govuk-error-summary__list">
+                    {Object.entries(errors).reverse().map((elem) => (
+                      <li key={elem[0]}>
+                        <a href={`#${elem[0]}`}>{elem[1]}</a>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               </div>
               )}
               <FormVessel

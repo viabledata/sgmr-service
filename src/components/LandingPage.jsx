@@ -1,8 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
+import Auth from '@lib/Auth';
+
 const LandingPage = () => {
-  document.title = "Submit a Pleasure Craft Report";
+  document.title = 'Submit a Pleasure Craft Report';
 
   return (
     <div className="govuk-width-container">
@@ -15,7 +17,13 @@ const LandingPage = () => {
               <li>Tell Border Force you are sailing to or from the UK in a General Maritime Pleasure Craft</li>
               <li>Change or update your information </li>
             </ul>
-            <Link to="/sign-in" role="button" draggable="false" className="govuk-button govuk-!-margin-bottom-7 govuk-button--start" data-module="govuk-button">
+            <Link
+              to={Auth.isAuthorized() ? '/reports' : '/sign-in'}
+              role="button"
+              draggable="false"
+              className="govuk-button govuk-!-margin-bottom-7 govuk-button--start"
+              data-module="govuk-button"
+            >
               Start now
               <svg
                 className="govuk-button__start-icon"
@@ -38,12 +46,20 @@ const LandingPage = () => {
             </ul>
           </div>
           <div className="govuk-grid-column-one-third">
-              <h3 className="govuk-heading-m">Related content</h3>
-              <ul className="govuk-list govuk-!-font-size-16">
-                <li><a className="govuk-link" target="blank" href="https://www.gov.uk/browse/abroad/travel-abroad">Travel abroad</a></li>
-                <li><a className="govuk-link" target="blank" href="https://www.gov.uk/government/collections/send-advance-passenger-information">Send Advance Passenger Information</a></li>
-                <li><a className="govuk-link" target="blank" href="https://www.gov.uk/government/publications/notice-8-sailing-your-pleasure-craft-to-and-from-the-uk">Notice 8: sailing your pleasure craft to and from the UK</a></li>
-              </ul>
+            <h3 className="govuk-heading-m">Related content</h3>
+            <ul className="govuk-list govuk-!-font-size-16">
+              <li><a className="govuk-link" target="blank" href="https://www.gov.uk/browse/abroad/travel-abroad">Travel abroad</a></li>
+              <li>
+                <a className="govuk-link" target="blank" href="https://www.gov.uk/government/collections/send-advance-passenger-information">
+                  Send Advance Passenger Information
+                </a>
+              </li>
+              <li>
+                <a className="govuk-link" target="blank" href="https://www.gov.uk/government/publications/notice-8-sailing-your-pleasure-craft-to-and-from-the-uk">
+                  Notice 8: sailing your pleasure craft to and from the UK
+                </a>
+              </li>
+            </ul>
           </div>
         </div>
       </main>

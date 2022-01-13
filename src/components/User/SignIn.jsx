@@ -6,8 +6,8 @@ import { LOGIN_URL } from '@constants/ApiConstants';
 import Auth from '@lib/Auth';
 
 const SignIn = () => {
-  document.title = "Sign In";
-  
+  document.title = 'Sign In';
+
   const history = useHistory();
   const [formData, setFormData] = useState({});
   const [errors, setErrors] = useState({});
@@ -26,11 +26,13 @@ const SignIn = () => {
     if (!e.target.value) { setErrors({ ...errors, [name]: errorText }); }
     switch (name) {
       case 'email':
-        (/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(formData.email))
-          ? removeError('email')
-          : setErrors({ ...errors, email: errorText });
+        if (/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(formData.email)) {
+          removeError('email');
+        } else {
+          setErrors({ ...errors, email: errorText });
+        }
         break;
-      default: null;
+      default: return null;
     }
   };
 
@@ -83,8 +85,8 @@ const SignIn = () => {
                   </h2>
                   <div className="govuk-error-summary__body">
                     <ul className="govuk-list govuk-error-summary__list">
-                      {Object.entries(errors).map((elem, i) => (
-                        <li key={i}>
+                      {Object.entries(errors).map((elem) => (
+                        <li key={elem.id}>
                           {elem[0] !== 'title'
                           && <a href={`#${elem[0]}`}>{elem[1]}</a>}
                         </li>

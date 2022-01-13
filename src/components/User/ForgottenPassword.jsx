@@ -22,7 +22,7 @@ const PageWrapper = ({ children }) => (
 );
 
 const ForgottenPassword = () => {
-  document.title = "Forgotten Password";
+  document.title = 'Forgotten Password';
 
   const [isFormDisabled, setFormDisabled] = useState(false);
   const [error, setError] = useState(null);
@@ -79,7 +79,7 @@ const ForgottenPassword = () => {
       <h1 className="govuk-heading-xl">Forgotten password</h1>
 
       <p className="govuk-body-l">
-        We'll email you a link to reset your password.
+        We&apos;ll email you a link to reset your password.
       </p>
 
       <ErrorSummary errors={[error]} />

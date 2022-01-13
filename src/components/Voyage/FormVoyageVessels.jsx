@@ -10,7 +10,7 @@ import VesselTable from '@components/Vessel/VesselTable';
 const FormVessels = ({
   handleSubmit, handleChange, handleCheckboxes, handleAddVesselButton, voyageId, errors, formData,
 }) => {
-  document.title = "Vessel details";
+  document.title = 'Vessel details';
 
   const [vesselData, setVesselData] = useState();
 

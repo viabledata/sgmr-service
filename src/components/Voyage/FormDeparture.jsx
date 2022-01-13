@@ -7,7 +7,7 @@ import PortField from '@components/PortField';
 const FormDeparture = ({
   handleSubmit, handleChange, updateFieldValue, data, errors, voyageId,
 }) => {
-  document.title = "Departure details";
+  document.title = 'Departure details';
 
   if (!data) { return null; }
   return (
@@ -36,7 +36,6 @@ const FormDeparture = ({
                   className="govuk-input govuk-date-input__input govuk-input--width-2"
                   id="departureDateDay"
                   name="departureDateDay"
-                  id="departureDateDay"
                   type="text"
                   maxLength={2}
                   pattern="[0-9]*"
@@ -55,7 +54,6 @@ const FormDeparture = ({
                   className="govuk-input govuk-date-input__input govuk-input--width-2"
                   id="departureDateMonth"
                   name="departureDateMonth"
-                  id="departureDateMonth"
                   type="text"
                   maxLength={2}
                   autoComplete="bday-month"
@@ -75,7 +73,6 @@ const FormDeparture = ({
                   className="govuk-input govuk-date-input__input govuk-input--width-4"
                   id="departureDateYear"
                   name="departureDateYear"
-                  id="departureDateYear"
                   type="text"
                   maxLength={4}
                   autoComplete="bday-year"
@@ -111,7 +108,6 @@ const FormDeparture = ({
                   className="govuk-input govuk-date-input__input govuk-input--width-2"
                   id="departureTimeHour"
                   name="departureTimeHour"
-                  id="departureTimeHour"
                   type="text"
                   pattern="[0-9]*"
                   inputMode="numeric"

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useHistory, useLocation, Link } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import axios from 'axios';
 
 // App imports
@@ -9,19 +9,16 @@ import scrollToTopOnError from '@utils/scrollToTopOnError';
 import { VESSELS_URL } from '@constants/ApiConstants';
 import { VESSELS_PAGE_URL } from '@constants/ClientConstants';
 import { vesselValidationRules } from '@components/Forms/validationRules';
-import FormError from '@components/Voyage/FormError';
 
 const CreateAVessel = () => {
-  document.title = "Save vessel";
-  
+  document.title = 'Save vessel';
+
   const history = useHistory();
   const location = useLocation();
   const checkIfNotVoyageForm = location.pathname.toLowerCase().indexOf('voyage') === -1;
   const path = location.pathname.slice(1);
-  const urlParams = location.search.split('source=');
   const [formData, setFormData] = useState(JSON.parse(localStorage.getItem('formData')) || {});
   const [errors, setErrors] = useState(JSON.parse(localStorage.getItem('errors')) || { });
-
 
   // Clear form field errors
   const removeError = (fieldName) => {
@@ -31,13 +28,11 @@ const CreateAVessel = () => {
     setErrors(errorList);
   };
 
-
   // Update form data as user enters it
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
     removeError(e.target.name);
   };
-
 
   // Check fields that are required exist
   const areFieldsValid = (dataToValidate) => {
@@ -54,13 +49,11 @@ const CreateAVessel = () => {
     return Object.keys(fieldsErroring).length > 0;
   };
 
-
   // Clear formData from localStorage
   const clearLocalStorage = () => {
     setFormData({});
     setErrors({ });
   };
-
 
   // Handle Submit, including clearing localStorage
   const handleSubmit = (e) => {
@@ -118,12 +111,20 @@ const CreateAVessel = () => {
             <h1 className="govuk-heading-xl">Save vessel</h1>
             <p className="govuk-body-l">Please enter the following information. This information can be re-used when submitting a Pleasure Craft Report.</p>
             <form id="CreateAVessel">
-              {Object.keys(errors).length > 0 && (
+              {Object.keys(errors).length >= 1 && (
               <div className="govuk-error-summary" aria-labelledby="error-summary-title" role="alert" tabIndex="-1" data-module="govuk-error-summary">
                 <h2 className="govuk-error-summary__title">
                   There is a problem
                 </h2>
-                <FormError error={errors.CreateAVessel} />
+                <div className="govuk-error-summary__body">
+                  <ul className="govuk-list govuk-error-summary__list">
+                    {Object.entries(errors).map((elem) => (
+                      <li key={elem[0]}>
+                        <a href={`#${elem[0]}`}>{elem[1]}</a>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               </div>
               )}
               <FormVessel

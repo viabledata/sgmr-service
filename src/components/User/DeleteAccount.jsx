@@ -7,7 +7,7 @@ import { USER_URL } from '@constants/ApiConstants';
 import Auth from '@lib/Auth';
 
 const DeleteAccount = () => {
-  document.title = "Delete account";
+  document.title = 'Delete account';
 
   const history = useHistory();
   const [isFormDisabled, setFormDisabled] = useState(false);
