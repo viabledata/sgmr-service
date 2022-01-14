@@ -27,9 +27,9 @@ const FormCheck = ({
         <h2 className="govuk-heading-m">Departure details</h2>
       </div>
       <div className="govuk-form-group govuk-form-group--error">
-        <p className="govuk-error-message">{errors.departureDate}</p>
-        <p className="govuk-error-message">{errors.departureTime}</p>
-        <p className="govuk-error-message">{errors.departurePort}</p>
+        <p id="departureDate" className="govuk-error-message">{errors.departureDate}</p>
+        <p id="departureTime" className="govuk-error-message">{errors.departureTime}</p>
+        <p id="departurePort" className="govuk-error-message">{errors.departurePort}</p>
       </div>
       <dl className="govuk-summary-list">
         <div className="govuk-summary-list__row">
@@ -66,9 +66,9 @@ const FormCheck = ({
         <h2 className="govuk-heading-m">Arrival details</h2>
       </div>
       <div className="govuk-form-group govuk-form-group--error">
-        <p className="govuk-error-message">{errors.arrivalDate}</p>
-        <p className="govuk-error-message">{errors.arrivalTime}</p>
-        <p className="govuk-error-message">{errors.arrivalPort}</p>
+        <p id="arrivalTime" className="govuk-error-message">{errors.arrivalTime}</p>
+        <p id="arrivalDate" className="govuk-error-message">{errors.arrivalDate}</p>
+        <p id="arrivalPort" className="govuk-error-message">{errors.arrivalPort}</p>
       </div>
       <dl className="govuk-summary-list">
         <div className="govuk-summary-list__row">
@@ -104,8 +104,8 @@ const FormCheck = ({
         <h2 className="govuk-heading-m">Vessel details</h2>
       </div>
       <div className="govuk-form-group govuk-form-group--error">
-        <p className="govuk-error-message">{errors.vesselName}</p>
-        <p className="govuk-error-message">{errors.registration}</p>
+        <p id="vesselName" className="govuk-error-message">{errors.vesselName}</p>
+        <p id="registration" className="govuk-error-message">{errors.registration}</p>
       </div>
       <dl className="govuk-summary-list">
         <div className="govuk-summary-list__row">
@@ -175,7 +175,7 @@ const FormCheck = ({
         <h2 className="govuk-heading-m">Skipper&apos;s details</h2>
       </div>
       <div className="govuk-form-group govuk-form-group--error">
-        <p className="govuk-error-message">{errors.responsibleGivenName}</p>
+        <p id="responsibleGivenName" className="govuk-error-message">{errors.responsibleGivenName}</p>
       </div>
       <dl className="govuk-summary-list">
         <div className="govuk-summary-list__row">
