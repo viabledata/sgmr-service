@@ -19,7 +19,7 @@ const Help = () => {
             </p>
             <h2 className="govuk-heading-l">Support</h2>
             <p className="govuk-body">
-              You can get support with using this service by emailing the Submit a Pleasure Craft Report team at:
+              You can get support with using this service by emailing the Tell Border Force and HMRC you are sailing to or from the UK in a pleasure craft team at:
             </p>
             <p className="govuk-body">
               <a href="mailto: sgmrsupport@digital.homeoffice.gov.uk">

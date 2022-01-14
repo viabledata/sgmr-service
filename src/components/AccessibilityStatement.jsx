@@ -8,22 +8,22 @@ const AccessibilityStatement = () => {
       <main className="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" role="main">
         <div className="govuk-grid-row">
           <div className="govuk-width-container">
-            <h1 className="govuk-heading-xl">Accessibility statement for Submit a Pleasure Craft Report</h1>
+            <h1 className="govuk-heading-xl">Accessibility statement for Tell Border Force and HMRC you are sailing to or from the UK in a pleasure craft</h1>
             <p className="govuk-body">
               We want everyone to be able to get and do what they need with this service, regardless of access needs, due to a disability or condition.
             </p>
             <p className="govuk-body">
-              This accessibility statement contains information about Submit a Pleasure Craft Report, available at
+              This accessibility statement contains information about Tell Border Force and HMRC you are sailing to or from the UK in a pleasure craft, available at
               {' '}
-              <a className="govuk-link" target="blank" href="/reports">Submit a Pleasure Craft Report (opens in new tab).</a>
+              <a className="govuk-link" target="blank" href="/reports">Tell Border Force and HMRC you are sailing to or from the UK in a pleasure craft (opens in new tab).</a>
             </p>
             <p className="govuk-body">
               This website is run by Border Force. We want as many people as possible to be able to use this website. For example, that means you should be able to:
             </p>
             <ul className="govuk-list govuk-list--bullet">
               <li>Navigate most of the website using just a keyboard.</li>
-              <li>Reach the main reports page from every page on Submit a Pleasure Craft Report</li>
-              <li>Read and navigate the order on Submit a Pleasure Craft Report as it is logical and intuitive/clear.</li>
+              <li>Reach the main reports page from every page on Tell Border Force and HMRC you are sailing to or from the UK in a pleasure craft</li>
+              <li>Read and navigate the order on Tell Border Force and HMRC you are sailing to or from the UK in a pleasure craft as it is logical and intuitive/clear.</li>
               <li>Tab through questions in the form whilst always having the focus visible.</li>
             </ul>
             <p className="govuk-body">
@@ -38,7 +38,7 @@ const AccessibilityStatement = () => {
             <p className="govuk-body">We aim to meet international accessibility guidelines. However, this may not always be possible, or we may have missed a problem.</p>
             <p className="govuk-body">Some people may find parts of this service difficult to use because:</p>
             <ul className="govuk-list govuk-list--bullet">
-              <li>Fields are only auto completed from information in the user’s profile on Submit a Pleasure Craft Report and not from their browser.</li>
+              <li>Fields are only auto completed from information in the user’s profile on Tell Border Force and HMRC you are sailing to or from the UK in a pleasure craft and not from their browser.</li>
               <li>
                 The JAWS screen reader does not read options in drop down lists and users are unable to use their keyboard to navigate through drop down lists with
                 JAWS running in the background.

@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import Auth from '@lib/Auth';
 
 const LandingPage = () => {
-  document.title = 'Submit a Pleasure Craft Report';
+  document.title = 'Tell Border Force and HMRC you are sailing to or from the UK in a pleasure craft';
 
   return (
     <div className="govuk-width-container">
