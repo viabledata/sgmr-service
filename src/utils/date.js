@@ -9,7 +9,7 @@ export const formatUIDate = (date) => {
 };
 
 export const isDateValid = (year, month, day) => {
-  const numbers = /'^[0-9]+$'/;
+  const numbers = /^[0-9]+$/;
   if ((year < 1900 || month > 12 || month < 1 || day > 31 || day < 1)
     || !numbers.test(year) || !numbers.test(month) || !numbers.test(day)) {
     return false;
