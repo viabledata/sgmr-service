@@ -12,7 +12,7 @@ import scrollToTopOnError from '@utils/scrollToTopOnError';
 import { formatPerson } from '@components/Voyage/VoyageFormDataFormatting';
 
 const FormVoyagePeople = ({
-  handleSubmit, voyageId, setErrors, setNextPage, setPageNum,
+  handleSubmit, voyageId, setErrors, createNextPage, setPageNum,
 }) => {
   document.title = 'People on your voyage';
 
@@ -23,6 +23,7 @@ const FormVoyagePeople = ({
   const handleLinkToNewPersonForm = (e) => {
     e.preventDefault();
     setPageNum('4b');
+    setErrors({});
   };
 
   const handleAddPeopleButton = async () => {
@@ -40,7 +41,7 @@ const FormVoyagePeople = ({
           people: people.map(formatPerson),
         },
       );
-      setNextPage(FORM_STEPS.PEOPLE);
+      createNextPage(FORM_STEPS.PEOPLE);
     }
   };
 

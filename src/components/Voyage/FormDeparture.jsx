@@ -15,7 +15,7 @@ const FormDeparture = ({
       <h1 className="govuk-heading-xl">Departure details</h1>
       <p className="govuk-body-l">You can update these details if your plans change, for example, due to bad weather</p>
 
-      <div className={`govuk-form-group ${errors.departureDate ? 'govuk-form-group--error' : ''}`}>
+      <div id="departureDate" className={`govuk-form-group ${errors.departureDate ? 'govuk-form-group--error' : ''}`}>
         <fieldset className="govuk-fieldset" role="group" aria-describedby="dob-hint">
           <legend className="govuk-fieldset__legend">
             <label className="govuk-label govuk-label--m" htmlFor="departureDate">
@@ -26,7 +26,7 @@ const FormDeparture = ({
           <span className="govuk-hint">
             For example, 20 2 2020
           </span>
-          <div id="departureDate" className="govuk-date-input">
+          <div className="govuk-date-input">
             <div className="govuk-date-input__item">
               <div className="govuk-form-group">
                 <label className="govuk-label govuk-date-input__label" htmlFor="departureDateDay">
@@ -87,7 +87,7 @@ const FormDeparture = ({
         </fieldset>
       </div>
 
-      <div className={`govuk-form-group ${errors.departureTime ? 'govuk-form-group--error' : ''}`}>
+      <div id="departureTime" className={`govuk-form-group ${errors.departureTime ? 'govuk-form-group--error' : ''}`}>
         <fieldset className="govuk-fieldset" role="group" aria-describedby="departureTime-hint">
           <legend className="govuk-fieldset__legend govuk-fieldset__legend--m">
             <label className="govuk-label govuk-label--m" htmlFor="departureTime">
@@ -98,7 +98,7 @@ const FormDeparture = ({
           <span className="govuk-hint">
             For example, 17 30
           </span>
-          <div id="departureTime" className="govuk-date-input">
+          <div className="govuk-date-input">
             <div className="govuk-date-input__item">
               <div className="govuk-form-group">
                 <label className="govuk-label govuk-date-input__label" htmlFor="departureTimeHour">
@@ -139,7 +139,7 @@ const FormDeparture = ({
         </fieldset>
       </div>
 
-      <div className={`govuk-form-group ${errors.departureLocation ? 'govuk-form-group--error' : ''}`}>
+      <div id="departureLocation" className={`govuk-form-group ${errors.departureLocation ? 'govuk-form-group--error' : ''}`}>
         <FormError error={errors.departureLocation} />
 
         <div className="govuk-form-group">
@@ -150,7 +150,6 @@ const FormDeparture = ({
             You can enter a port, marina or anchorage name
           </span>
           <PortField
-            id="departurePort"
             defaultValue={data.departurePort}
             onConfirm={(result) => {
               updateFieldValue('departurePort', result.unlocode || result.name);

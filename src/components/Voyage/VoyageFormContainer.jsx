@@ -34,7 +34,6 @@ import FormPerson from '@components/People/FormPerson';
 import FormResponsiblePerson from '@components/Voyage/FormResponsiblePerson';
 import FormVoyageVessels from '@components/Voyage/FormVoyageVessels';
 import FormVoyagePeople from '@components/Voyage/FormVoyagePeople';
-import FormError from '@components/Voyage/FormError';
 import FormVoyagePeopleManifest from '@components/Voyage/FormVoyagePeopleManifest';
 
 const FormVoyageContainer = () => {
@@ -140,6 +139,7 @@ const FormVoyageContainer = () => {
         vesselType: checkboxData.vesselType,
       };
       setFormData(formatCheckboxData);
+      setErrors({});
     }
   };
 
@@ -152,7 +152,7 @@ const FormVoyageContainer = () => {
       });
   };
 
-  const setNextPage = (sourceForm) => {
+  const createNextPage = (sourceForm) => {
     let nextPage;
     const currentPage = parseInt(pageNum, 10);
     switch (sourceForm) {
@@ -186,7 +186,7 @@ const FormVoyageContainer = () => {
         if (extraParams.makeChanges) {
           history.push(SAVE_VOYAGE_PEOPLE_URL, { voyageId });
         } else {
-          setNextPage(sourceForm);
+          createNextPage(sourceForm);
         }
         return;
       case FORM_STEPS.RESPONSIBLE_PERSON:
@@ -214,7 +214,7 @@ const FormVoyageContainer = () => {
       setErrors(validationErrors);
       if (Object.keys(validationErrors).length === 0 && Object.keys(errors).length === 0) {
         await patchData(`${VOYAGE_REPORT_URL}/${voyageId}`, dataToSubmit, location.pathname.substring(1));
-        setNextPage(sourceForm);
+        createNextPage(sourceForm);
       }
     }
   };
@@ -223,6 +223,13 @@ const FormVoyageContainer = () => {
   const getPageNum = () => {
     const thisPage = location.pathname.split('page-');
     setPageNum(parseInt(thisPage[1], 10));
+  };
+
+  // Prevents anchor tag from adding # to url
+  const handleClick = (e, id) => {
+    e.preventDefault();
+    const scrollToError = document.getElementById(id);
+    scrollToError.scrollIntoView();
   };
 
   // Trigger functions
@@ -256,12 +263,24 @@ const FormVoyageContainer = () => {
             {pageNum !== '4b' && <span className="govuk-caption-xl">{`Page ${pageNum} of ${maxPages}`}</span>}
             {pageNum === '4b' && <span className="govuk-caption-xl">{`Page 4 of ${maxPages}`}</span>}
             <form id="voyageForm">
-              {Object.keys(errors).length > 0 && (
+              {Object.keys(errors).length >= 1 && (
               <div className="govuk-error-summary" aria-labelledby="error-summary-title" role="alert" tabIndex="-1" data-module="govuk-error-summary">
                 <h2 className="govuk-error-summary__title">
                   There is a problem
                 </h2>
-                <FormError error={errors.voyageForm} />
+                <div className="govuk-error-summary__body">
+                  <ul className="govuk-list govuk-error-summary__list">
+                    {Object.entries(errors).reverse().map((elem) => (
+
+                      <li key={elem[0]}>
+
+                        {elem[0] !== 'title'
+                        //  eslint-disable-next-line jsx-a11y/anchor-is-valid
+                            && <a onClick={(e) => handleClick(e, elem[0])} href="#">{elem[1]}</a>}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               </div>
               )}
               {pageNum === 1 && (
@@ -299,7 +318,7 @@ const FormVoyageContainer = () => {
                 <FormVoyagePeople
                   handleSubmit={handleSubmit}
                   voyageId={voyageId}
-                  setNextPage={setNextPage}
+                  createNextPage={createNextPage}
                   setErrors={setErrors}
                   setPageNum={setPageNum}
                 />
