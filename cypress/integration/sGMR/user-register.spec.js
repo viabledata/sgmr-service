@@ -18,7 +18,7 @@ describe('User Registration', () => {
     cy.visit('/');
     cy.injectAxe();
     cy.checkAccessibility();
-    cy.get('.govuk-heading-l').should('have.text', 'Submit a Pleasure Craft Report');
+    cy.get('.govuk-heading-l').should('have.text', 'Tell Border Force and HMRC you are sailing to or from the UK in a pleasure craft');
     cy.get('.govuk-list .govuk-link').each((link, index) => {
       cy.wrap(link).should('contain.text', externalURLs[index]);
     });
