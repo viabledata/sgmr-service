@@ -1,5 +1,5 @@
 const isTimeValid = (hour, minute) => {
-  const numbers = /'^[0-9]+$'/;
+  const numbers = /^[0-9]+$/;
   if ((hour > 23 || minute > 59)
   || !numbers.test(hour) || !numbers.test(minute)) {
     return false;
