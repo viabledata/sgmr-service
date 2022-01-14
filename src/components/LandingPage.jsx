@@ -11,12 +11,20 @@ const LandingPage = () => {
       <main className="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" role="main">
         <div className="govuk-grid-row">
           <div className="govuk-grid-column-two-thirds">
-            <h1 className="govuk-heading-l">Submit a Pleasure Craft Report</h1>
+            <h1 className="govuk-heading-l">Tell Border Force and HMRC you are sailing to or from the UK in a pleasure craft</h1>
             <p className="govuk-body">Use this service to:</p>
             <ul className="govuk-list govuk-list--bullet govuk-!-margin-bottom-7">
-              <li>Tell Border Force you are sailing to or from the UK in a General Maritime Pleasure Craft</li>
-              <li>Change or update your information </li>
+              <li>Tell Border Force and HMRC about your next voyage plan</li>
+              <li>Update an existing voyage plan</li>
             </ul>
+            <h2 className="govuk-heading-m">What you&apos;ll need:</h2>
+            <ul className="govuk-list govuk-list--bullet">
+              <li>your pleasure craft details, including registration if applicable</li>
+              <li>the skipper&apos;s details</li>
+              <li>the passport or travel document details for all people on board</li>
+              <li>date and estimated departure and arrival times for your plan</li>
+            </ul>
+            <p className="govuk-body">You&apos;ll also need to sign in or create and account to use this service.</p>
             <Link
               to={Auth.isAuthorized() ? '/reports' : '/sign-in'}
               role="button"
@@ -37,13 +45,6 @@ const LandingPage = () => {
                 <path fill="currentColor" d="M0 0h13l20 20-20 20H0l20-20z" />
               </svg>
             </Link>
-            <h2 className="govuk-heading-m">Before you start</h2>
-            <p className="govuk-body">You will need:</p>
-            <ul className="govuk-list govuk-list--bullet">
-              <li>details of your vessel</li>
-              <li>names and passport details for everyone who will be on board</li>
-              <li>Details of the ports you plan to use</li>
-            </ul>
           </div>
           <div className="govuk-grid-column-one-third">
             <h3 className="govuk-heading-m">Related content</h3>
