@@ -1,7 +1,7 @@
 module.exports = {
   env: {
     browser: true,
-    es6: true,
+    es2021: true,
     jest: true,
   },
   extends: [
@@ -22,7 +22,7 @@ module.exports = {
     ecmaFeatures: {
       jsx: true,
     },
-    ecmaVersion: 2018,
+    ecmaVersion: 13,
     sourceType: 'module',
   },
   plugins: [
@@ -42,13 +42,15 @@ module.exports = {
     'max-len': ['error', { code: 185, ignorePattern: 'd="([\\s\\S]*?)"' }],
     'no-underscore-dangle': 'off',
     'no-param-reassign': 'off',
+    'no-promise-executor-return': 'off',
     'no-restricted-globals': 'off',
     'no-restricted-syntax': 'off',
     'import/no-unresolved': 'off',
-    'prefer-const': 'off',
     'prefer-destructuring': 'off',
     'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
     'react/prop-types': 'off',
+    'react/function-component-definition': 'off',
+    'react/jsx-no-constructed-context-values': 'off',
     'react/jsx-props-no-spreading': 'off',
     'jsx-a11y/label-has-associated-control': ['error', { required: { some: ['nesting', 'id'] } }],
   },

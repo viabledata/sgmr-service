@@ -474,7 +474,6 @@ export const validate = async (rules, data) => {
               resolve(undefined);
             }
             break;
-          default:
           case 'required':
             if (value === '' || !value) {
               resolve({ [rule.errorDisplayId]: rule.message });
@@ -482,6 +481,7 @@ export const validate = async (rules, data) => {
               resolve(undefined);
             }
             break;
+          default:
         }
       });
     });

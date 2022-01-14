@@ -12,7 +12,7 @@ const Dashboard = (pageData) => {
   const [reportList, setReportList] = useState();
 
   const getReportList = () => {
-    let validReports = [];
+    const validReports = [];
     getData(USER_VOYAGE_REPORT_URL)
       .then((resp) => {
         if (!resp.errors) {
