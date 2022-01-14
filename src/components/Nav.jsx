@@ -3,8 +3,8 @@ import { useLocation, useHistory, Link } from 'react-router-dom';
 import axios from 'axios';
 
 // App imports
-import Auth from '@lib/Auth';
-import { LOGOUT_URL } from '@constants/ApiConstants';
+import { LOGOUT_URL } from '../constants/ApiConstants';
+import Auth from '../lib/Auth';
 
 const Nav = () => {
   const location = useLocation();

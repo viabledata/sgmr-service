@@ -2,17 +2,14 @@ import React, { useEffect, useState } from 'react';
 import { useHistory, withRouter } from 'react-router-dom';
 
 // App imports
-import { PEOPLE_URL } from '@constants/ApiConstants';
-import { PEOPLE_PAGE_URL } from '@constants/ClientConstants';
-import { formatDate } from '@utils/date';
-import { getData, patchData } from '@utils/apiHooks';
-import getId from '@utils/getIdHook';
-import scrollToTopOnError from '@utils/scrollToTopOnError';
-import FormPerson from '@components/People/FormPerson';
-import {
-  personValidationRules,
-  validate,
-} from '@components/Forms/validationRules';
+import FormPerson from './FormPerson';
+import { personValidationRules, validate } from '../Forms/validationRules';
+import { PEOPLE_URL } from '../../constants/ApiConstants';
+import { PEOPLE_PAGE_URL } from '../../constants/ClientConstants';
+import { getData, patchData } from '../../utils/apiHooks';
+import { formatDate } from '../../utils/date';
+import getId from '../../utils/getIdHook';
+import scrollToTopOnError from '../../utils/scrollToTopOnError';
 
 const EditPerson = () => {
   document.title = 'Edit person';

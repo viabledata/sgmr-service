@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 
 // App imports
-import { getData } from '@utils/apiHooks';
-import { VESSELS_URL } from '@constants/ApiConstants';
-import VesselTable from '@components/Vessel/VesselTable';
+import { getData } from '../utils/apiHooks';
+import { VESSELS_URL } from '../constants/ApiConstants';
+import VesselTable from './Vessel/VesselTable';
 
 const SectionTableVessels = () => {
   document.title = 'Vessels';

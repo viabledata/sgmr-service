@@ -1,15 +1,15 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import { formatUIDate } from '@utils/date';
-import PeopleSummary from '@components/Voyage/PeopleSummary';
 import {
   FORM_STEPS,
   SAVE_VOYAGE_ARRIVALS_URL, SAVE_VOYAGE_DEPARTURE_URL,
   SAVE_VOYAGE_PEOPLE_MANIFEST_URL,
   SAVE_VOYAGE_RESPONSIBLE_PERSON_URL,
   SAVE_VOYAGE_VESSEL_URL,
-} from '@constants/ClientConstants';
+} from '../../constants/ClientConstants';
+import { formatUIDate } from '../../utils/date';
+import PeopleSummary from './PeopleSummary';
 
 const FormCheck = ({
   voyageId, voyageData, handleSubmit, errors,

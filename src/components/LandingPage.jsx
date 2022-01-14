@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import Auth from '@lib/Auth';
+import Auth from '../lib/Auth';
 
 const LandingPage = () => {
   document.title = 'Submit a Pleasure Craft Report';

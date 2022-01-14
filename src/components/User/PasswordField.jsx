@@ -1,7 +1,7 @@
 import React from 'react';
 
-import FormError from '@components/Voyage/FormError';
-import Details from '@components/Details';
+import FormError from '../Voyage/FormError';
+import Details from '../Details';
 
 const PasswordField = ({ handleChange, formData = {}, errors = {} }) => (
   <>
