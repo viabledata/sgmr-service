@@ -10,7 +10,7 @@ const FormVessel = ({
     <section>
       <div id="vesselName" className={`govuk-form-group ${errors.vesselName ? 'govuk-form-group--error' : ''}`}>
         <label className="govuk-label" htmlFor="vesselName">
-          Vessel name
+          Pleasure craft name
         </label>
         <FormError error={errors.vesselName} />
         <span className="govuk-hint">For example Baroness</span>
@@ -25,7 +25,7 @@ const FormVessel = ({
 
       <div id="vesselType" className={`govuk-form-group ${errors.vesselType ? 'govuk-form-group--error' : ''}`}>
         <label className="govuk-label" htmlFor="vesselType">
-          Vessel type
+          Pleasure craft type
         </label>
         <FormError error={errors.vesselType} />
         <span className="govuk-hint">For example Yacht or Sailboat</span>
@@ -42,7 +42,7 @@ const FormVessel = ({
         <label className="govuk-label" htmlFor="moorings">
           Usual moorings
         </label>
-        <span className="govuk-hint">A description, UNLOCODE or set of Coordinates for where the vessel is usually moored</span>
+        <span className="govuk-hint">A description, UNLOCODE or set of Coordinates for where the pleasure craft is usually moored</span>
         <FormError error={errors.moorings} />
         <input
           className="govuk-input"
@@ -95,7 +95,7 @@ const FormVessel = ({
 
       <div id="vesselNationality" className="govuk-form-group">
         <label className="govuk-label" htmlFor="vesselNationality">
-          Vessel nationality (optional)
+          Pleasure craft nationality (optional)
         </label>
         <select
           className="govuk-select"
@@ -137,7 +137,7 @@ const FormVessel = ({
               </button>
             </div>
             <p>
-              <Link to="/vessels" className="govuk-link govuk-link--no-visited-state">Exit without saving</Link>
+              <Link to="/pleasure-crafts" className="govuk-link govuk-link--no-visited-state">Exit without saving</Link>
             </p>
           </>
         )}

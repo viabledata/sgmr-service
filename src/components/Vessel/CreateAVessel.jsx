@@ -11,7 +11,7 @@ import { VESSELS_PAGE_URL } from '@constants/ClientConstants';
 import { vesselValidationRules } from '@components/Forms/validationRules';
 
 const CreateAVessel = () => {
-  document.title = 'Save vessel';
+  document.title = 'Save pleasure craft';
   const history = useHistory();
   const location = useLocation();
   const checkIfNotVoyageForm = location.pathname.toLowerCase().indexOf('voyage') === -1;
@@ -63,7 +63,7 @@ const CreateAVessel = () => {
         headers: { Authorization: `Bearer ${Auth.retrieveToken()}` },
       })
         .then(() => {
-          // If this is not the voyage form then take user to vessels page, otherwise leave the user here
+          // If this is not the voyage form then take user to pleasure crafts page, otherwise leave the user here
           if (checkIfNotVoyageForm) {
             clearLocalStorage();
             history.push(VESSELS_PAGE_URL);
@@ -73,7 +73,7 @@ const CreateAVessel = () => {
           if (err.response) {
             switch (err.response.status) {
               case 400:
-                setErrors({ ...errors, CreateAVessel: 'This vessel already exists' });
+                setErrors({ ...errors, CreateAVessel: 'This pleasure craft already exists' });
                 scrollToTopOnError('CreateAVessel');
                 break;
               case 422: history.push(`/sign-in?source=${path}`); break;
@@ -99,15 +99,15 @@ const CreateAVessel = () => {
       <div className="govuk-breadcrumbs">
         <ol className="govuk-breadcrumbs__list">
           <li className="govuk-breadcrumbs__list-item">
-            <a className="govuk-breadcrumbs__link" href="/vessels">Vessels</a>
+            <a className="govuk-breadcrumbs__link" href="/pleasure-crafts">Pleasure crafts</a>
           </li>
-          <li className="govuk-breadcrumbs__list-item" aria-current="page">Save vessel</li>
+          <li className="govuk-breadcrumbs__list-item" aria-current="page">Save pleasure craft</li>
         </ol>
       </div>
       <main className="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" role="main">
         <div className="govuk-grid-row">
           <div className="govuk-grid-column-two-thirds">
-            <h1 className="govuk-heading-xl">Save vessel</h1>
+            <h1 className="govuk-heading-xl">Save pleasure craft</h1>
             <p className="govuk-body-l">Please enter the following information. This information can be re-used when submitting a Pleasure Craft Report.</p>
             <form id="CreateAVessel">
               {Object.keys(errors).length >= 1 && (

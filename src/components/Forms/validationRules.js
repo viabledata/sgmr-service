@@ -195,25 +195,25 @@ export const vesselValidationRules = [
     inputField: 'vesselName',
     errorDisplayId: 'vesselName',
     type: 'required',
-    message: 'You must enter a vessel name',
+    message: 'You must enter a pleasure craft name',
   },
   {
     inputField: 'vesselType',
     errorDisplayId: 'vesselType',
     type: 'required',
-    message: 'You must enter a vessel type',
+    message: 'You must enter a pleasure craft type',
   },
   {
     inputField: 'moorings',
     errorDisplayId: 'moorings',
     type: 'required',
-    message: 'You must enter the vessel usual mooring',
+    message: 'You must enter the pleasure craft usual mooring',
   },
   {
     inputField: 'registration',
     errorDisplayId: 'registration',
     type: 'required',
-    message: 'You must enter the vessel registration',
+    message: 'You must enter the pleasure craft registration',
   },
 ];
 
@@ -375,13 +375,13 @@ export const voyageValidationRules = [
     inputField: 'vesselName',
     errorDisplayId: 'vesselName',
     type: 'required',
-    message: 'You must enter a vessel name',
+    message: 'You must enter a pleasure craft name',
   },
   {
     inputField: 'registration',
     errorDisplayId: 'registration',
     type: 'required',
-    message: 'You must enter a vessel registration',
+    message: 'You must enter a pleasure craft registration',
   },
   {
     inputField: 'responsibleGivenName',
