@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 const FormVoyageSubmitted = () => {
-  document.title = 'Pleasure Craft Report Submitted';
+  document.title = 'Pleasure Craft Voyage Plan Submitted';
 
   return (
 
@@ -12,17 +12,17 @@ const FormVoyageSubmitted = () => {
           <div className="govuk-grid-column-two-thirds">
             <div className="govuk-panel govuk-panel--confirmation">
               <h1 className="govuk-panel__title">
-                Pleasure Craft Report Submitted
+                Pleasure Craft Voyage Plan Submitted
               </h1>
             </div>
             <p className="govuk-body" />
             <h2 className="govuk-heading-m">What happens next</h2>
             <p className="govuk-body">
-              We’ve sent your Pleasure Craft Report to UK Border Force.
+              We’ve sent your Pleasure Craft Voyage Plan to UK Border Force.
             </p>
             <p>
-              If you need to make any changes to this report you will need to submit another report with the new information and cancel this one. This can be done on the&nbsp;
-              <Link to="/reports">Manage Pleasure Craft Reports</Link>
+              If you need to make any changes to this voyage plan you will need to submit another voyage plan with the new information and cancel this one. This can be done on the&nbsp;
+              <Link to="/voyage-plans">Manage Pleasure Craft Voyage Plans</Link>
               &nbsp;page.
             </p>
           </div>

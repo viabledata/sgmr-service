@@ -72,7 +72,7 @@ const FormVoyagePeople = ({
 
       <p className="govuk-body-l">
         {savedPeople
-          ? "Select people you've saved previously to add to this report, or "
+          ? "Select people you've saved previously to add to this voyage plan, or "
           : "You don't have any saved people on your account, "}
         {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
         <a
@@ -98,7 +98,7 @@ const FormVoyagePeople = ({
             data-module="govuk-button"
             onClick={(e) => handleAddPeopleButton(e)}
           >
-            Add to report and continue
+            Add to voyage plan and continue
           </button>
         </>
       )}

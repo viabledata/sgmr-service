@@ -7,7 +7,7 @@ import { USER_VOYAGE_REPORT_URL, VOYAGE_REPORT_URL } from '@constants/ApiConstan
 import { EDIT_VOYAGE_CHECK_DETAILS_URL } from '@constants/ClientConstants';
 
 const ManageReports = (pageData) => {
-  document.title = 'Manage reports';
+  document.title = 'Manage voyage plans';
 
   const [tabData, setTabData] = useState([]);
   const [tableName, setTableName] = useState('Draft');
@@ -68,10 +68,10 @@ const ManageReports = (pageData) => {
   return (
     <div className="govuk-width-container">
       <main className="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" role="main">
-        <h1 className="govuk-heading-l">Manage your reports</h1>
+        <h1 className="govuk-heading-l">Manage your voyage plans</h1>
         <p className="govuk-body-l">
-          Click on one of your reports below to view, edit, cancel or delete it, depending on its status. For example, you can edit a draft or submitted report, but you
-          can&apos;t edit a cancelled report.
+          Click on one of your voyage plans below to view, edit, cancel or delete it, depending on its status. For example, you can edit a draft or submitted voyage plan, but you
+          can&apos;t edit a cancelled voyage plan.
         </p>
         <div className="govuk-tabs" data-module="govuk-tabs">
           <ul className="govuk-tabs__list">
