@@ -1,7 +1,7 @@
 import React from 'react';
-import FormError from '@components/Voyage/FormError';
 import { Link } from 'react-router-dom';
-import nationalities from '@utils/staticFormData';
+import nationalities from '../../utils/staticFormData';
+import FormError from '../Voyage/FormError';
 
 const FormVessel = ({
   handleSubmit, handleChange, formData, errors, sourceForm,

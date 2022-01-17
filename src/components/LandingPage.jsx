@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import Auth from '@lib/Auth';
+import Auth from '../lib/Auth';
 
 const LandingPage = () => {
   document.title = 'Tell Border Force and HMRC you are sailing to or from the UK in a pleasure craft';

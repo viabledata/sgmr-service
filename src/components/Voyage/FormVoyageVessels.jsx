@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 
 // App imports
-import { getData } from '@utils/apiHooks';
-import { VESSELS_URL } from '@constants/ApiConstants';
-import { FORM_STEPS } from '@constants/ClientConstants';
-import FormVessel from '@components/Vessel/FormVessel';
-import VesselTable from '@components/Vessel/VesselTable';
+import { VESSELS_URL } from '../../constants/ApiConstants';
+import { FORM_STEPS } from '../../constants/ClientConstants';
+import { getData } from '../../utils/apiHooks';
+import FormVessel from '../Vessel/FormVessel';
+import VesselTable from '../Vessel/VesselTable';
 
 const FormVessels = ({
   handleSubmit, handleChange, handleCheckboxes, handleAddVesselButton, voyageId, errors, formData,

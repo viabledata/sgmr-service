@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 
-import { deleteItem, getData } from '@utils/apiHooks';
-import { VOYAGE_REPORT_URL } from '@constants/ApiConstants';
-import { FORM_STEPS } from '@constants/ClientConstants';
-import PeopleTable from '@components/Voyage/PeopleTable';
-import scrollToTopOnError from '@utils/scrollToTopOnError';
+import { VOYAGE_REPORT_URL } from '../../constants/ApiConstants';
+import { FORM_STEPS } from '../../constants/ClientConstants';
+import { deleteItem, getData } from '../../utils/apiHooks';
+import scrollToTopOnError from '../../utils/scrollToTopOnError';
+import PeopleTable from './PeopleTable';
 
 const FormVoyagePeopleManifest = ({
   handleSubmit, voyageId, setErrors,

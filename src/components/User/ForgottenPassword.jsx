@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 
-import { PASSWORD_RESET_LINK } from '@constants/ApiConstants';
-import Auth from '@lib/Auth';
-import ErrorSummary from '@components/ErrorSummary';
-import { VALID_EMAIL_REGEX } from '@components/Forms/validationRules';
+import { PASSWORD_RESET_LINK } from '../../constants/ApiConstants';
+import Auth from '../../lib/Auth';
+import ErrorSummary from '../ErrorSummary';
+import { VALID_EMAIL_REGEX } from '../Forms/validationRules';
 
 const PageWrapper = ({ children }) => (
   <div className="govuk-width-container ">

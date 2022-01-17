@@ -1,4 +1,4 @@
-import { formatDepartureArrival } from '@components/Voyage/VoyageFormDataFormatting';
+import { formatDepartureArrival } from '../VoyageFormDataFormatting';
 
 test('Return default departure and arrival ports if field is null', () => {
   const data = {

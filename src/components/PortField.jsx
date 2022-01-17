@@ -3,8 +3,8 @@ import Autocomplete from 'accessible-autocomplete/react';
 import debounce from 'lodash.debounce';
 import axios from 'axios';
 
-import { PORTS_URL } from '@constants/ApiConstants';
-import Auth from '@lib/Auth';
+import { PORTS_URL } from '../constants/ApiConstants';
+import Auth from '../lib/Auth';
 
 const source = debounce((query, populateResults) => {
   if (query.length < 3) {

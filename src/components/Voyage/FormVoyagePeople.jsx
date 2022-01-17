@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react';
 
-import { getData, patchData } from '@utils/apiHooks';
 import {
   PEOPLE_URL,
   VOYAGE_REPORT_URL,
   VOYAGE_STATUSES,
-} from '@constants/ApiConstants';
-import { FORM_STEPS } from '@constants/ClientConstants';
-import PeopleTable from '@components/Voyage/PeopleTable';
-import scrollToTopOnError from '@utils/scrollToTopOnError';
-import { formatPerson } from '@components/Voyage/VoyageFormDataFormatting';
+} from '../../constants/ApiConstants';
+import { FORM_STEPS } from '../../constants/ClientConstants';
+import { getData, patchData } from '../../utils/apiHooks';
+import scrollToTopOnError from '../../utils/scrollToTopOnError';
+import PeopleTable from './PeopleTable';
+import { formatPerson } from './VoyageFormDataFormatting';
 
 const FormVoyagePeople = ({
   handleSubmit, voyageId, setErrors, createNextPage, setPageNum,

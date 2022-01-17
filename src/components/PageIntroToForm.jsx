@@ -1,7 +1,7 @@
 import React from 'react';
 
 // app imports
-import StartButton from '@components/StartButton';
+import StartButton from './StartButton';
 
 const PageIntroToForm = ({ pageData }) => {
   return (
