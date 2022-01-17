@@ -13,8 +13,8 @@ const VesselTable = ({
               &nbsp;
           </th>
           )}
-          <th className="govuk-table__header">Vessel name</th>
-          <th className="govuk-table__header">Vessel type</th>
+          <th className="govuk-table__header">Pleasure craft name</th>
+          <th className="govuk-table__header">Pleasure craft type</th>
           <th className="govuk-table__header">Usual moorings</th>
         </tr>
       </thead>

@@ -62,13 +62,13 @@ const Main = () => {
           <SecureRoute exact path="/save-voyage/page-submitted">
             <FormVoyageSubmitted />
           </SecureRoute>
-          <SecureRoute exact path="/vessels">
+          <SecureRoute exact path="/pleasure-crafts">
             <PageContainer />
           </SecureRoute>
-          <SecureRoute exact path="/vessels/save-vessel">
+          <SecureRoute exact path="/pleasure-crafts/save-pleasure-craft">
             <CreateAVessel />
           </SecureRoute>
-          <SecureRoute exact path="/vessels/:vesselId">
+          <SecureRoute exact path="/pleasure-crafts/:vesselId">
             <EditVessel />
           </SecureRoute>
           <SecureRoute exact path="/people">

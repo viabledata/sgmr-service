@@ -19,8 +19,8 @@ const Nav = () => {
       active: false,
     },
     {
-      urlStem: '/vessels',
-      text: 'Vessels',
+      urlStem: '/pleasure-crafts',
+      text: 'Pleasure Crafts',
       active: false,
     },
     {

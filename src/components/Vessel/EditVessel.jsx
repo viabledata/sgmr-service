@@ -100,16 +100,16 @@ const EditVessel = () => {
       <div className="govuk-breadcrumbs">
         <ol className="govuk-breadcrumbs__list">
           <li className="govuk-breadcrumbs__list-item">
-            <Link className="govuk-breadcrumbs__link" to="/vessels">Vessels</Link>
+            <Link className="govuk-breadcrumbs__link" to="/pleasure-crafts">Pleasure crafts</Link>
           </li>
-          <li className="govuk-breadcrumbs__list-item" aria-current="page">Edit vessel</li>
+          <li className="govuk-breadcrumbs__list-item" aria-current="page">Edit pleasure craft</li>
         </ol>
       </div>
       <main className="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" role="main">
         <div className="govuk-grid-row">
           <div className="govuk-grid-column-two-thirds">
-            <h1 className="govuk-heading-xl">Edit a vessel</h1>
-            <p className="govuk-body-l">Update the details of the vessel you want to edit.</p>
+            <h1 className="govuk-heading-xl">Edit a pleasure craft</h1>
+            <p className="govuk-body-l">Update the details of the pleasure craft you want to edit.</p>
             <form id="EditVessel">
               {Object.keys(errors).length >= 1 && (
               <div className="govuk-error-summary" aria-labelledby="error-summary-title" role="alert" tabIndex="-1" data-module="govuk-error-summary">

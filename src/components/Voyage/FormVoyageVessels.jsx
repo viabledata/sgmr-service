@@ -10,7 +10,7 @@ import VesselTable from '@components/Vessel/VesselTable';
 const FormVessels = ({
   handleSubmit, handleChange, handleCheckboxes, handleAddVesselButton, voyageId, errors, formData,
 }) => {
-  document.title = 'Vessel details';
+  document.title = 'Pleasure craft details';
 
   const [vesselData, setVesselData] = useState();
 
@@ -25,9 +25,9 @@ const FormVessels = ({
 
   return (
     <section>
-      <h1 className="govuk-heading-xl">Vessel details</h1>
-      <h2 className="govuk-heading-l">Saved vessels</h2>
-      <p className="govuk-body-l">Add the details of a vessel you have saved previously to the report</p>
+      <h1 className="govuk-heading-xl">Pleasure craft details</h1>
+      <h2 className="govuk-heading-l">Saved pleasure crafts</h2>
+      <p className="govuk-body-l">Add the details of a pleasure craft you have saved previously to the report</p>
       {vesselData && (
       <VesselTable
         vesselData={vesselData}
@@ -45,9 +45,9 @@ const FormVessels = ({
       >
         Add to report
       </button>
-      <h2 className="govuk-heading-l">New vessel</h2>
+      <h2 className="govuk-heading-l">New pleasure craft</h2>
       <p className="govuk-body-l">
-        Add the details of a new vessel you have not already saved
+        Add the details of a new pleasure craft you have not already saved
       </p>
       <FormVessel
         handleSubmit={handleSubmit}
