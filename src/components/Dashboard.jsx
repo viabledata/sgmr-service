@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 
-import { deleteItem, getData, postData } from '@utils/apiHooks';
-import { USER_VOYAGE_REPORT_URL, VOYAGE_REPORT_URL } from '@constants/ApiConstants';
-import { SAVE_VOYAGE_DEPARTURE_URL } from '@constants/ClientConstants';
+import { USER_VOYAGE_REPORT_URL, VOYAGE_REPORT_URL } from '../constants/ApiConstants';
+import { SAVE_VOYAGE_DEPARTURE_URL } from '../constants/ClientConstants';
+import { deleteItem, getData, postData } from '../utils/apiHooks';
 
 const Dashboard = (pageData) => {
   document.title = 'Voyage plans';

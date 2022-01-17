@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useHistory, useLocation } from 'react-router-dom';
-import qs from 'qs';
-import Auth from '@lib/Auth';
 import axios from 'axios';
+import qs from 'qs';
 
-import { ACTIVATE_ACCOUNT, RESEND_ACTIVATION_LINK } from '@constants/ApiConstants';
+import { ACTIVATE_ACCOUNT, RESEND_ACTIVATION_LINK } from '../../constants/ApiConstants';
+import Auth from '../../lib/Auth';
 
 const ActivationSuccess = () => (
   <>

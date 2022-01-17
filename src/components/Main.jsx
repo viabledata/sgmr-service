@@ -1,39 +1,39 @@
 import React, { useState } from 'react';
 import { Route, Switch } from 'react-router-dom';
 
-import ScrollToTop from '@components/ScrollToTop';
-import SecureRoute from '@lib/SecureRoute';
+import ScrollToTop from './ScrollToTop';
+import SecureRoute from '../lib/SecureRoute';
 
-import Banner from '@components/Banner';
-import Footer from '@components/Footer';
-import Header from '@components/Header';
-import PrivacyCookiePolicy from '@components/PrivacyCookiePolicy';
-import Help from '@components/Help';
-import AccessibilityStatement from '@components/AccessibilityStatement';
-import PageContainer from '@components/PageContainer';
+import Banner from './Banner';
+import Footer from './Footer';
+import Header from './Header';
+import PrivacyCookiePolicy from './PrivacyCookiePolicy';
+import Help from './Help';
+import AccessibilityStatement from './AccessibilityStatement';
+import PageContainer from './PageContainer';
 
-import CreateAPerson from '@components/People/CreateAPerson';
-import EditPerson from '@components/People/EditPerson';
+import CreateAPerson from './People/CreateAPerson';
+import EditPerson from './People/EditPerson';
 
-import SignIn from '@components/User/SignIn';
-import UserRegister from '@components/User/UserRegister';
-import EditAccount from '@components/User/EditAccount';
-import UserRegisterConfirmation from '@components/User/UserRegisterConfirmation';
-import AccountActivation from '@components/User/AccountActivation';
+import SignIn from './User/SignIn';
+import UserRegister from './User/UserRegister';
+import EditAccount from './User/EditAccount';
+import UserRegisterConfirmation from './User/UserRegisterConfirmation';
+import AccountActivation from './User/AccountActivation';
 
-import CreateAVessel from '@components/Vessel/CreateAVessel';
-import EditVessel from '@components/Vessel/EditVessel';
+import CreateAVessel from './Vessel/CreateAVessel';
+import EditVessel from './Vessel/EditVessel';
 
-import VoyageFormContainer from '@components/Voyage/VoyageFormContainer';
-import FormVoyageSubmitted from '@components/Forms/FormVoyageSubmitted';
-import UserContext from '@components/UserContext';
-import DeleteAccount from '@components/User/DeleteAccount';
-import DeleteConfirmation from '@components/User/DeleteConfirmation';
-import NewPassword from '@components/User/NewPassword';
-import ForgottenPassword from '@components/User/ForgottenPassword';
-import LandingPage from '@components/LandingPage';
-import ManageReports from '@components/ManageReports';
-import SiteMaintenance from '@components/SiteMaintenance';
+import VoyageFormContainer from './Voyage/VoyageFormContainer';
+import FormVoyageSubmitted from './Forms/FormVoyageSubmitted';
+import UserContext from './UserContext';
+import DeleteAccount from './User/DeleteAccount';
+import DeleteConfirmation from './User/DeleteConfirmation';
+import NewPassword from './User/NewPassword';
+import ForgottenPassword from './User/ForgottenPassword';
+import LandingPage from './LandingPage';
+import ManageReports from './ManageReports';
+import SiteMaintenance from './SiteMaintenance';
 import { siteMaintenance } from '../lib/config';
 
 const Main = () => {

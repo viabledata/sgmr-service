@@ -1,8 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import nationalities from '@utils/staticFormData';
-import FormError from '@components/Voyage/FormError';
+import FormError from '../Voyage/FormError';
+import nationalities from '../../utils/staticFormData';
 
 const FormPerson = ({
   handleSubmit, handleChange, formData, errors, source, voyageId,

@@ -1,6 +1,6 @@
 import React from 'react';
-import { FORM_STEPS } from '@constants/ClientConstants';
-import FormError from '@components/Voyage/FormError';
+import { FORM_STEPS } from '../../constants/ClientConstants';
+import FormError from './FormError';
 
 const FormResponsiblePerson = ({
   handleSubmit, handleChange, data, errors, voyageId,

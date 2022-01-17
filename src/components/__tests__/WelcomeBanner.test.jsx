@@ -1,8 +1,8 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
-import WelcomeBanner from '@components/WelcomeBanner';
 import UserContext from '../UserContext';
+import WelcomeBanner from '../WelcomeBanner';
 
 const customRender = (ui, { providerProps, ...renderOptions }) => {
   return render(

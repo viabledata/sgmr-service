@@ -3,14 +3,14 @@ import { useLocation, useHistory } from 'react-router-dom';
 import axios from 'axios';
 
 // app imports
-import contentArray from '@components/contentArray';
-import PageIntro from '@components/PageIntro';
-import PageIntroToForm from '@components/PageIntroToForm';
-import SectionTablePeople from '@components/SectionTablePeople';
-import SectionTableVessels from '@components/SectionTableVessels';
-import Dashboard from '@components/Dashboard';
-import { USER_URL } from '@constants/ApiConstants';
-import Auth from '@lib/Auth';
+import contentArray from './contentArray';
+import PageIntro from './PageIntro';
+import PageIntroToForm from './PageIntroToForm';
+import SectionTablePeople from './SectionTablePeople';
+import SectionTableVessels from './SectionTableVessels';
+import Dashboard from './Dashboard';
+import { USER_URL } from '../constants/ApiConstants';
+import Auth from '../lib/Auth';
 import UserContext from './UserContext';
 import WelcomeBanner from './WelcomeBanner';
 

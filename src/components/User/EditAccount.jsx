@@ -2,13 +2,12 @@ import React, { useState, useContext } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import axios from 'axios';
 
-import { VALID_INTERNATIONAL_MOBILE_REGEX } from '@components/Forms/validationRules';
-import FormError from '@components/Voyage/FormError';
-
 // App imports
-import { USER_URL } from '@constants/ApiConstants';
-import Auth from '@lib/Auth';
 import UserContext from '../UserContext';
+import { USER_URL } from '../../constants/ApiConstants';
+import { VALID_INTERNATIONAL_MOBILE_REGEX } from '../Forms/validationRules';
+import Auth from '../../lib/Auth';
+import FormError from '../Voyage/FormError';
 
 const EditAccount = () => {
   document.title = 'Edit account';

@@ -1,16 +1,13 @@
 import React, { useState } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 
-import FormPerson from '@components/People/FormPerson';
-import scrollToTopOnError from '@utils/scrollToTopOnError';
-import { postData } from '@utils/apiHooks';
-import { formatDate } from '@utils/date';
-import { PEOPLE_URL } from '@constants/ApiConstants';
-import { PEOPLE_PAGE_URL } from '@constants/ClientConstants';
-import {
-  personValidationRules,
-  validate,
-} from '@components/Forms/validationRules';
+import FormPerson from './FormPerson';
+import { personValidationRules, validate } from '../Forms/validationRules';
+import { PEOPLE_URL } from '../../constants/ApiConstants';
+import { PEOPLE_PAGE_URL } from '../../constants/ClientConstants';
+import scrollToTopOnError from '../../utils/scrollToTopOnError';
+import { postData } from '../../utils/apiHooks';
+import { formatDate } from '../../utils/date';
 
 const CreateAPerson = () => {
   document.title = 'Save a person';

@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 // App imports
-import Auth from '@lib/Auth';
+import Auth from '../lib/Auth';
 
 const postData = (url, dataToSubmit, pageSource) => {
   const source = pageSource || location.pathname.substring(1);
