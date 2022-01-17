@@ -102,7 +102,7 @@ const ManageReports = (pageData) => {
             <table className="govuk-table">
               <thead className="govuk-table__head">
                 <tr className="govuk-table__row">
-                  <th scope="col" className="govuk-table__header">Vessel</th>
+                  <th scope="col" className="govuk-table__header">Pleasure craft</th>
                   <th scope="col" className="govuk-table__header">Departure date</th>
                   <th scope="col" className="govuk-table__header">Departure port</th>
                   <th scope="col" className="govuk-table__header">Arrival port</th>

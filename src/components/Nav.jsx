@@ -9,7 +9,7 @@ import Auth from '../lib/Auth';
 const Nav = () => {
   const location = useLocation();
   const history = useHistory();
-  const serviceName = 'Submit a Pleasure Craft Report';
+  const serviceName = 'Tell Border Force and HMRC you are sailing to or from the UK in a pleasure craft';
   const [navArray, setNavArray] = useState([]);
 
   const navData = [
@@ -19,8 +19,8 @@ const Nav = () => {
       active: false,
     },
     {
-      urlStem: '/vessels',
-      text: 'Vessels',
+      urlStem: '/pleasure-crafts',
+      text: 'Pleasure Crafts',
       active: false,
     },
     {

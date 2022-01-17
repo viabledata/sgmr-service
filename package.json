@@ -50,8 +50,6 @@
         "cypress": "^5.2.0",
         "cypress-axe": "^0.10.0",
         "cypress-get-table": "^1.0.1",
-        "enzyme": "^3.11.0",
-        "enzyme-adapter-react-16": "^1.15.2",
         "eslint": "^8.6.0",
         "eslint-config-airbnb": "^19.0.4",
         "eslint-formatter-table": "^7.32.1",
@@ -85,7 +83,6 @@
     "dependencies": {
         "accessible-autocomplete": "^2.0.3",
         "axios": "^0.21.2",
-        "browserslist": "^4.16.5",
         "core-js": "^3.6.4",
         "dayjs": "^1.10.7",
         "govuk-frontend": "^3.5.0",

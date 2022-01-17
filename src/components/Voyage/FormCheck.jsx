@@ -101,7 +101,7 @@ const FormCheck = ({
       </div>
 
       <div className="govuk-summary-list govuk-!-margin-bottom-9">
-        <h2 className="govuk-heading-m">Vessel details</h2>
+        <h2 className="govuk-heading-m">Pleasure craft details</h2>
       </div>
       <div className="govuk-form-group govuk-form-group--error">
         <p id="vesselName" className="govuk-error-message">{errors.vesselName}</p>
@@ -109,7 +109,7 @@ const FormCheck = ({
       </div>
       <dl className="govuk-summary-list">
         <div className="govuk-summary-list__row">
-          <dt className="govuk-summary-list__key">Vessel name</dt>
+          <dt className="govuk-summary-list__key">Pleasure craft name</dt>
           <dd className="govuk-summary-list__value">{voyageData.vesselName}</dd>
         </div>
         <div className="govuk-summary-list__row">
@@ -121,7 +121,7 @@ const FormCheck = ({
           <dd className="govuk-summary-list__value">{voyageData.registration}</dd>
         </div>
         <div className="govuk-summary-list__row">
-          <dt className="govuk-summary-list__key">Vessel type</dt>
+          <dt className="govuk-summary-list__key">Pleasure craft type</dt>
           <dd className="govuk-summary-list__value">{voyageData.vesselType}</dd>
         </div>
         <div className="govuk-summary-list__row">
@@ -133,7 +133,7 @@ const FormCheck = ({
           <dd className="govuk-summary-list__value">{voyageData.callsign}</dd>
         </div>
         <div className="govuk-summary-list__row">
-          <dt className="govuk-summary-list__key">Vessel nationality</dt>
+          <dt className="govuk-summary-list__key">Pleasure craft nationality</dt>
           <dd className="govuk-summary-list__value">{voyageData.vesselNationality}</dd>
         </div>
         <div className="govuk-summary-list__row">
@@ -148,8 +148,8 @@ const FormCheck = ({
             state: { voyageId },
           }}
         >
-          Change vessel details
-          <span className="govuk-visually-hidden">Change vessel details</span>
+          Change pleasure craft details
+          <span className="govuk-visually-hidden">Change pleasure craft details</span>
         </Link>
       </div>
 

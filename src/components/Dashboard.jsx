@@ -54,7 +54,7 @@ const Dashboard = (pageData) => {
       <div className="govuk-grid-row">
         <div className="govuk-grid-column-one-half">
           <h2 className="govuk-heading-m">Create a new report</h2>
-          <p className="govuk-body">You can use this online form to create and submit a Pleasure Craft Report to UK Border Force, notifying them of your travel plans.</p>
+          <p className="govuk-body">You can use this online form to create and tell Border Force and HMRC you are sailing to or from the UK in a pleasure craft to UK Border Force, notifying them of your travel plans.</p>
           <button
             type="button"
             className="govuk-button govuk-button--start"

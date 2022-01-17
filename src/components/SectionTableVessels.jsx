@@ -6,7 +6,7 @@ import { VESSELS_URL } from '../constants/ApiConstants';
 import VesselTable from './Vessel/VesselTable';
 
 const SectionTableVessels = () => {
-  document.title = 'Vessels';
+  document.title = 'Pleasure crafts';
 
   const [vesselData, setVesselData] = useState();
 
@@ -29,7 +29,7 @@ const SectionTableVessels = () => {
         <div className="govuk-grid-row">
           <div className="govuk-grid-column-full">
             <h2 className="govuk-heading-l">
-              Saved vessels
+              Saved pleasure crafts
             </h2>
             <VesselTable
               vesselData={vesselData}
