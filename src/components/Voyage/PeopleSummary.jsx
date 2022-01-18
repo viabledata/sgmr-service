@@ -10,8 +10,8 @@ import Details from '../Details';
 const PeopleSummary = ({ voyageId, source }) => {
   const [manifestData, setManifestData] = useState();
 
-  const getPersonType = (person) => {
-    switch (person.peopleType.name) {
+  const getPersonType = (personType) => {
+    switch (personType) {
       case 'Skipper':
         return 'Skipper';
       case 'Passenger':
@@ -49,7 +49,7 @@ const PeopleSummary = ({ voyageId, source }) => {
                 <td className="govuk-table__cell">{formatUIDate(person.dateOfBirth)}</td>
                 <td className="govuk-table__cell">{person.documentNumber}</td>
                 <td className="govuk-table__cell">{person.nationality}</td>
-                <td className="govuk-table__cell">{getPersonType(person)}</td>
+                <td className="govuk-table__cell">{getPersonType(person.peopleType.name)}</td>
               </tr>
 
               <tr className="govuk-table__row">
