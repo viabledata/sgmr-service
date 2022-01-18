@@ -1,21 +1,22 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import { BrowserRouter } from 'react-router-dom';
 import EditAccount from '../EditAccount';
 import UserContext from '../../UserContext';
 
-const customRender = (ui, { providerProps, ...renderOptions }) => {
+// Creates the EditAccount page filled with user details
+const renderPage = (page, { userDetails }) => {
   return render(
-    <UserContext.Provider value={providerProps}>{ui}</UserContext.Provider>,
-    {
-      wrapper: BrowserRouter,
-      ...renderOptions,
-    },
+    <BrowserRouter>
+      <UserContext.Provider value={userDetails}>
+        {page}
+      </UserContext.Provider>
+    </BrowserRouter>,
   );
 };
 
-const providerProps = {
+const userDetails = {
   user: {
     dateCreated: '2020-10-05T09:39:21.824679',
     email: 'John_Doe@test.com',
@@ -31,13 +32,69 @@ const providerProps = {
   },
 };
 
-describe('Edit account tests', () => {
+describe('Edit Account page details', () => {
   it('should prepopulate the form with the users details', () => {
-    customRender(<EditAccount />, { providerProps });
+    renderPage(<EditAccount />, { userDetails });
 
     expect(screen.getByText('First name')).toBeInTheDocument();
+    expect(screen.getByText('Last name')).toBeInTheDocument();
+    expect(screen.getByText('Telephone number')).toBeInTheDocument();
     expect(screen.getByDisplayValue('John')).toBeInTheDocument();
+    expect(screen.getByDisplayValue('Doe')).toBeInTheDocument();
     expect(screen.getByDisplayValue('07444112888')).toBeInTheDocument();
     expect(screen.getByRole('button')).toHaveTextContent('Save changes');
+  });
+});
+
+describe('Edit Account page errors', () => {
+  // Remove values from inputs
+  beforeEach(() => {
+    renderPage(<EditAccount />, { userDetails });
+    const saveChanges = screen.getByText('Save changes');
+    fireEvent.change(screen.getByTestId('test-firstName'), { target: { value: '' } });
+    fireEvent.change(screen.getByTestId('test-lastName'), { target: { value: '' } });
+    fireEvent.change(screen.getByTestId('test-mobileNumber'), { target: { value: '' } });
+
+    fireEvent.click(saveChanges);
+  });
+
+  it('should render errors when save changes is clicked and inputs are empty', () => {
+    expect(screen.queryAllByText('You must enter your first name')).toHaveLength(2);
+    expect(screen.queryAllByText('You must enter your last name')).toHaveLength(2);
+    expect(screen.queryAllByText('You must enter your telephone number')).toHaveLength(2);
+  });
+
+  it('should remove errors when the user types', () => {
+    fireEvent.change(screen.getByTestId('test-firstName'), { target: { value: 'J' } });
+    fireEvent.change(screen.getByTestId('test-lastName'), { target: { value: 'D' } });
+    fireEvent.change(screen.getByTestId('test-mobileNumber'), { target: { value: '0' } });
+
+    expect(screen.queryByText('You must enter your first name')).not.toBeInTheDocument();
+    expect(screen.queryByText('You must enter your last name')).not.toBeInTheDocument();
+    expect(screen.queryByText('You must enter your telephone number')).not.toBeInTheDocument();
+    expect(screen.queryByText('You must enter a valid telephone number e.g. 07700 900982, +33 63998 010101')).not.toBeInTheDocument();
+  });
+
+  it('should throw an error when telephone number is not valid', () => {
+    const saveChanges = screen.getByText('Save changes');
+    fireEvent.change(screen.getByTestId('test-mobileNumber'), { target: { value: 'a' } });
+    fireEvent.click(saveChanges);
+
+    expect(screen.queryAllByText('You must enter a valid telephone number e.g. 07700 900982, +33 63998 010101')).toHaveLength(2);
+  });
+
+  it('should navigate to the input error when error summary link is clicked', () => {
+    const firstName = screen.getByTestId('firstName');
+    const lastName = screen.getByTestId('lastName');
+    const telephone = screen.getByTestId('mobileNumber');
+
+    fireEvent.click(firstName);
+    expect(firstName).toHaveAttribute('href', '#firstName');
+
+    fireEvent.click(lastName);
+    expect(lastName).toHaveAttribute('href', '#lastName');
+
+    fireEvent.click(telephone);
+    expect(telephone).toHaveAttribute('href', '#mobileNumber');
   });
 });
