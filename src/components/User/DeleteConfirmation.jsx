@@ -7,7 +7,7 @@ const DeleteConfirmation = () => {
 
   const history = useHistory();
   if (Auth.isAuthorized()) {
-    history.push('/reports');
+    history.push('/voyage-plans');
     return null;
   }
   return (

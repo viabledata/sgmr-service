@@ -20,7 +20,7 @@ const FormCheck = ({
   return (
     <section>
       <h1 className="govuk-heading-xl">
-        Check the information provided before submitting your voyage report
+        Check the information provided before submitting your voyage plan
       </h1>
 
       <div className="govuk-summary-list govuk-!-margin-bottom-9">
@@ -212,10 +212,10 @@ const FormCheck = ({
         </Link>
       </div>
 
-      <h2 className="govuk-heading-m">Submit your Pleasure Craft Report</h2>
+      <h2 className="govuk-heading-m">Submit your Pleasure Craft Voyage Plan</h2>
       <p>
-        By submitting this voyage report you are confirming that, to the best of your knowledge,
-        the information you are providing is correct and you have the explicit permission of the persons named in this report to submit information on their behalf.
+        By submitting this voyage plan you are confirming that, to the best of your knowledge,
+        the information you are providing is correct and you have the explicit permission of the persons named in this voyage plan to submit information on their behalf.
       </p>
       <button
         type="button"
@@ -223,7 +223,7 @@ const FormCheck = ({
         data-module="govuk-button"
         onClick={(e) => handleSubmit(e, 'check', voyageId)}
       >
-        Accept and submit report
+        Accept and submit voyage plan
       </button>
       <button
         type="button"

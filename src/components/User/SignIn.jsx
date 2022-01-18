@@ -63,7 +63,7 @@ const SignIn = () => {
       try {
         const response = await axios.post(LOGIN_URL, formData);
         if (response.data.token) { Auth.storeToken(response.data.token); }
-        history.push('/reports');
+        history.push('/voyage-plans');
       } catch (err) {
         setErrors({ ...errors, main: 'Email and password combination is invalid' });
       }
@@ -137,7 +137,7 @@ const SignIn = () => {
           </div>
           <div className="govuk-grid-column-one-third">
             <h3 className="govuk-heading-m">Create an account</h3>
-            <p className="govuk-body"><Link to="/register">Create an account to submit and update reports</Link></p>
+            <p className="govuk-body"><Link to="/register">Create an account to submit and update voyage plans</Link></p>
           </div>
         </div>
       </main>

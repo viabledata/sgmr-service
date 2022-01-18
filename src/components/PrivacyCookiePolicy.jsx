@@ -10,7 +10,8 @@ const PrivacyCookiePolicy = () => {
           <div className="govuk-width-container">
             <h1 className="govuk-heading-l">Privacy notice for Tell Border Force and HMRC you are sailing to or from the UK in a pleasure craft</h1>
             <p className="govuk-body">
-              Provision of the Tell Border Force and HMRC you are sailing to or from the UK in a pleasure craft service is from the borders, immigration and citizenship system, which is part of the Home Office.
+              Provision of the Tell Border Force and HMRC you are sailing to or from the UK in a pleasure craft service is from the borders, immigration
+              and citizenship system, which is part of the Home Office.
               Please visit the guidance at
               {' '}
               <a href="https://www.gov.uk/government/publications/personal-information-use-in-borders-immigration-and-citizenship">
@@ -20,7 +21,9 @@ const PrivacyCookiePolicy = () => {
               for full information on how your personal information may be used within the Home Office Borders, Immigration and Citizenship System.
             </p>
             <h2 className="govuk-heading-m">What data we need</h2>
-            <p className="govuk-body">The personal data we collect from you on the Tell Border Force and HMRC you are sailing to or from the UK in a pleasure craft service may include:</p>
+            <p className="govuk-body">
+              The personal data we collect from you on the Tell Border Force and HMRC you are sailing to or from the UK in a pleasure craft service may include:
+            </p>
             <ul className="govuk-list govuk-list--bullet">
               <li>your full name</li>
               <li>other travel document information such as document number and expiry date</li>
@@ -38,21 +41,21 @@ const PrivacyCookiePolicy = () => {
             <p className="govuk-body">
               Under the Data Protection Act 2018, we are processing your personal information on a performance-of-a-public-task basis to allow Border Force to discharge our
               duties around your entry into the United Kingdom.
-              We may process your information in systems other that the Tell Border Force and HMRC you are sailing to or from the UK in a pleasure craft Service. The legislative basis for collecting this information is the
-              Immigration Act of 1971 Paragraph 27B.
+              We may process your information in systems other that the Tell Border Force and HMRC you are sailing to or from the UK in a pleasure craft Service. The legislative
+              basis for collecting this information is the Immigration Act of 1971 Paragraph 27B.
             </p>
             <h2 className="govuk-heading-l">Cookies</h2>
             <p className="govuk-body">This service puts small files (known as &apos;cookies&apos;) onto your computer to collect information about how you browse the site.</p>
             <p className="govuk-body">
               Cookies are used to help identify you when you return to the site and improves the way you can access the site by storing your logon information for a limited
-              period when you complete the Pleasure Craft Report.
+              period when you complete the Pleasure Craft Voyage Plan.
             </p>
             <h2 className="govuk-heading-m">How cookies are used</h2>
             <h3 className="govuk-heading-s">Measuring website usage</h3>
             <p className="govuk-body">
-              We use cookies to collect information as you interact with the Tell Border Force and HMRC you are sailing to or from the UK in a pleasure craft. We do this to help make sure the site is meeting the needs of
-              its users and to help us make improvements. Cookies will be used to monitor specific user information to improve your access to the form by remembering your
-              non-personal details for the next time you submit a form.
+              We use cookies to collect information as you interact with the Tell Border Force and HMRC you are sailing to or from the UK in a pleasure craft. We do this to
+              help make sure the site is meeting the needs of its users and to help us make improvements. Cookies will be used to monitor specific user information to improve
+              your access to the form by remembering your non-personal details for the next time you submit a form.
             </p>
             <h3 className="govuk-heading-s">Cookie Details</h3>
             <p className="govuk-body">Tell Border Force and HMRC you are sailing to or from the UK in a pleasure craft uses cookies. The two types of persistent cookies are:</p>
@@ -67,13 +70,14 @@ const PrivacyCookiePolicy = () => {
             </ul>
             <h2 className="govuk-heading-m">Cookie Introductory Message</h2>
             <p className="govuk-body">
-              You may see a Cookie Notice pop-up message when you first tell Border Force and HMRC you are sailing to or from the UK in a pleasure craft. This message is to advise you that the process will capture cookies
-              as described above. By accessing the Pleasure Craft Report form, you are consenting to the use of cookies described above.
+              You may see a Cookie Notice pop-up message when you first tell Border Force and HMRC you are sailing to or from the UK in a pleasure craft. This message is to
+              advise you that the process will capture cookies as described above. By accessing the Pleasure Craft Voyage Plan form, you are consenting to the use of cookies
+              described above.
             </p>
             <h2 className="govuk-heading-m">Why we need this data</h2>
             <p className="govuk-body">
-              We use cookie information to enable you to log into the service that we provide and to link information you add into Tell Border Force and HMRC you are sailing to or from the UK in a pleasure craft to your
-              account.
+              We use cookie information to enable you to log into the service that we provide and to link information you add into Tell Border Force and HMRC you are sailing
+              to or from the UK in a pleasure craft to your account.
             </p>
             <p className="govuk-body">We use the information you provide to help ensure that we can enforce access control and keep data secure.</p>
             <p className="govuk-body">

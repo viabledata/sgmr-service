@@ -6,7 +6,7 @@ import { SAVE_VOYAGE_DEPARTURE_URL } from '../constants/ClientConstants';
 import { deleteItem, getData, postData } from '../utils/apiHooks';
 
 const Dashboard = (pageData) => {
-  document.title = 'Reports';
+  document.title = 'Voyage plans';
 
   const history = useHistory();
   const [reportList, setReportList] = useState();
@@ -53,8 +53,11 @@ const Dashboard = (pageData) => {
     <div className="govuk-width-container">
       <div className="govuk-grid-row">
         <div className="govuk-grid-column-one-half">
-          <h2 className="govuk-heading-m">Create a new report</h2>
-          <p className="govuk-body">You can use this online form to create and tell Border Force and HMRC you are sailing to or from the UK in a pleasure craft to UK Border Force, notifying them of your travel plans.</p>
+          <h2 className="govuk-heading-m">Create a new voyage plan</h2>
+          <p className="govuk-body">
+            You can use this online form to create and tell Border Force and HMRC you are sailing to or from the UK in a pleasure craft to UK Border Force, notifying them of
+            your travel plans.
+          </p>
           <button
             type="button"
             className="govuk-button govuk-button--start"
@@ -76,8 +79,8 @@ const Dashboard = (pageData) => {
           </button>
         </div>
         <div className="govuk-grid-column-one-half">
-          <h2 className="govuk-heading-m">Manage existing reports</h2>
-          <p className="govuk-body">View your reports to edit, cancel or delete them, depending on its status.</p>
+          <h2 className="govuk-heading-m">Manage existing voyage plans</h2>
+          <p className="govuk-body">View your voyage plans to edit, cancel or delete them, depending on its status.</p>
           <div className="govuk-grid-row">
             <div className="govuk-grid-column-one-third panel-number">
               <p className="govuk-body-s">
@@ -98,7 +101,7 @@ const Dashboard = (pageData) => {
               </p>
             </div>
           </div>
-          <Link className="govuk-link govuk-body" to="/manage-reports">View existing reports</Link>
+          <Link className="govuk-link govuk-body" to="/manage-voyage-plans">View existing voyage plans</Link>
         </div>
       </div>
     </div>

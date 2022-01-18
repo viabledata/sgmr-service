@@ -15,14 +15,14 @@ const AccessibilityStatement = () => {
             <p className="govuk-body">
               This accessibility statement contains information about Tell Border Force and HMRC you are sailing to or from the UK in a pleasure craft, available at
               {' '}
-              <a className="govuk-link" target="blank" href="/reports">Tell Border Force and HMRC you are sailing to or from the UK in a pleasure craft (opens in new tab).</a>
+              <a className="govuk-link" target="blank" href="/voyage-plans">Tell Border Force and HMRC you are sailing to or from the UK in a pleasure craft (opens in new tab).</a>
             </p>
             <p className="govuk-body">
               This website is run by Border Force. We want as many people as possible to be able to use this website. For example, that means you should be able to:
             </p>
             <ul className="govuk-list govuk-list--bullet">
               <li>Navigate most of the website using just a keyboard.</li>
-              <li>Reach the main reports page from every page on Tell Border Force and HMRC you are sailing to or from the UK in a pleasure craft</li>
+              <li>Reach the main voyage plans page from every page on Tell Border Force and HMRC you are sailing to or from the UK in a pleasure craft</li>
               <li>Read and navigate the order on Tell Border Force and HMRC you are sailing to or from the UK in a pleasure craft as it is logical and intuitive/clear.</li>
               <li>Tab through questions in the form whilst always having the focus visible.</li>
             </ul>
@@ -38,7 +38,10 @@ const AccessibilityStatement = () => {
             <p className="govuk-body">We aim to meet international accessibility guidelines. However, this may not always be possible, or we may have missed a problem.</p>
             <p className="govuk-body">Some people may find parts of this service difficult to use because:</p>
             <ul className="govuk-list govuk-list--bullet">
-              <li>Fields are only auto completed from information in the user’s profile on Tell Border Force and HMRC you are sailing to or from the UK in a pleasure craft and not from their browser.</li>
+              <li>
+                Fields are only auto completed from information in the user’s profile on Tell Border Force and HMRC you are sailing to or from the UK in a pleasure craft and
+                not from their browser.
+              </li>
               <li>
                 The JAWS screen reader does not read options in drop down lists and users are unable to use their keyboard to navigate through drop down lists with
                 JAWS running in the background.
@@ -48,7 +51,7 @@ const AccessibilityStatement = () => {
                 and radio buttons.
               </li>
               <li>
-                Multiple “Change” links on page 6 of the reports are read out by the Screenreader, there are no extra label text for screenreaders that differentiates
+                Multiple “Change” links on page 6 of the voyage plans are read out by the Screenreader, there are no extra label text for screenreaders that differentiates
                 the links.
               </li>
             </ul>
@@ -106,7 +109,7 @@ const AccessibilityStatement = () => {
             <ul className="govuk-list govuk-list--bullet">
               <li>Identify input purpose (1.3.5) – we autocomplete from information in the user’s profile in our forms, not from the browser.</li>
               <li>Labels or instructions (3.3.2) – Effective form labels are required to make forms accessible</li>
-              <li>Parsing (4.1.1) – ID must be unique to differentiate each element from another in single sign-on, reports and forms page.</li>
+              <li>Parsing (4.1.1) – ID must be unique to differentiate each element from another in single sign-on, voyage plans and forms page.</li>
               <li>Multiple “Change” links on page 6 should include an extra label text for screen readers to differentiate the links.</li>
             </ul>
             <h2 className="govuk-heading-m">What we&apos;re doing to improve accessibility</h2>
@@ -125,7 +128,7 @@ const AccessibilityStatement = () => {
             <p className="govuk-body">By end March 2021</p>
             <ul className="govuk-list govuk-list--bullet">
               <li>Labels or instructions (3.3.2) – Effective form labels are required to make forms accessible.</li>
-              <li>Parsing (4.1.1) – ID must be unique to differentiate each element from another in single sign-on, reports and forms page.</li>
+              <li>Parsing (4.1.1) – ID must be unique to differentiate each element from another in single sign-on, voyage plans and forms page.</li>
             </ul>
             <h2 className="govuk-heading-l">Preparation of this accessibility statement</h2>
             <p className="govuk-body">This statement was prepared on 8th October 2020. It was last reviewed on 12th October 2020.</p>

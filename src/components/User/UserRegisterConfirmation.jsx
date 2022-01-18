@@ -12,7 +12,7 @@ const UserRegisterConfirmation = () => {
   const { email } = qs.parse(location.search, { ignoreQueryPrefix: true });
 
   if (Auth.isAuthorized() || !email) {
-    history.push('/reports');
+    history.push('/voyage-plans');
     return null;
   }
 

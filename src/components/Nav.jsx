@@ -14,8 +14,8 @@ const Nav = () => {
 
   const navData = [
     {
-      urlStem: '/reports',
-      text: 'Reports',
+      urlStem: '/voyage-plans',
+      text: 'Voyage Plans',
       active: false,
     },
     {

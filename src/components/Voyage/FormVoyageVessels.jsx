@@ -27,7 +27,7 @@ const FormVessels = ({
     <section>
       <h1 className="govuk-heading-xl">Pleasure craft details</h1>
       <h2 className="govuk-heading-l">Saved pleasure crafts</h2>
-      <p className="govuk-body-l">Add the details of a pleasure craft you have saved previously to the report</p>
+      <p className="govuk-body-l">Add the details of a pleasure craft you have saved previously to the voyage plan</p>
       {vesselData && (
       <VesselTable
         vesselData={vesselData}
@@ -43,7 +43,7 @@ const FormVessels = ({
         data-module="govuk-button"
         onClick={(e) => handleAddVesselButton(e)}
       >
-        Add to report
+        Add to voyage plan
       </button>
       <h2 className="govuk-heading-l">New pleasure craft</h2>
       <p className="govuk-body-l">

@@ -53,7 +53,7 @@ const Main = () => {
           <Route exact path="/">
             <LandingPage />
           </Route>
-          <SecureRoute exact path="/reports">
+          <SecureRoute exact path="/voyage-plans">
             <PageContainer />
           </SecureRoute>
           <SecureRoute exact path="/save-voyage/page-([1-7]{1})">
@@ -119,7 +119,7 @@ const Main = () => {
           <Route exact path="/accessibility-statement">
             <AccessibilityStatement />
           </Route>
-          <SecureRoute exact path="/manage-reports">
+          <SecureRoute exact path="/manage-voyage-plans">
             <ManageReports />
           </SecureRoute>
         </Switch>

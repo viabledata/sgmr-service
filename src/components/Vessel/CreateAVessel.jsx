@@ -108,7 +108,7 @@ const CreateAVessel = () => {
         <div className="govuk-grid-row">
           <div className="govuk-grid-column-two-thirds">
             <h1 className="govuk-heading-xl">Save pleasure craft</h1>
-            <p className="govuk-body-l">Please enter the following information. This information can be re-used when submitting a Pleasure Craft Report.</p>
+            <p className="govuk-body-l">Please enter the following information. This information can be re-used when submitting a Pleasure Craft Voyage Plan.</p>
             <form id="CreateAVessel">
               {Object.keys(errors).length >= 1 && (
               <div className="govuk-error-summary" aria-labelledby="error-summary-title" role="alert" tabIndex="-1" data-module="govuk-error-summary">

@@ -1,7 +1,7 @@
 const contentArray = [
   {
-    urlStub: '/reports',
-    pageHeading: 'Reports Dashboard',
+    urlStub: '/voyage-plans',
+    pageHeading: 'Voyage Plans Dashboard',
     pageBlurb: null,
     formIntroHeading: null,
     formIntroBlurb: null,
@@ -14,9 +14,9 @@ const contentArray = [
   {
     urlStub: '/pleasure-crafts',
     pageHeading: 'Pleasure crafts',
-    pageBlurb: 'You can view, edit or delete pleasure crafts that you regularly add to Pleasure Craft Reports.',
+    pageBlurb: 'You can view, edit or delete pleasure crafts that you regularly add to Pleasure Craft Voyage Plans.',
     formIntroHeading: 'Save a new pleasure craft',
-    formIntroBlurb: 'Save the details of pleasure crafts that you regularly Submit Pleasure Craft Reports for.',
+    formIntroBlurb: 'Save the details of pleasure crafts that you regularly Submit Pleasure Craft Voyage Plans for.',
     buttonText: 'Save a pleasure craft',
     buttonLink: 'pleasure-crafts/save-pleasure-craft?source=pleasure-crafts',
     buttonClass: 'govuk-button--start',

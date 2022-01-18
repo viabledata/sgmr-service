@@ -26,7 +26,7 @@ const LandingPage = () => {
             </ul>
             <p className="govuk-body">You&apos;ll also need to sign in or create and account to use this service.</p>
             <Link
-              to={Auth.isAuthorized() ? '/reports' : '/sign-in'}
+              to={Auth.isAuthorized() ? '/voyage-plans' : '/sign-in'}
               role="button"
               draggable="false"
               className="govuk-button govuk-!-margin-bottom-7 govuk-button--start"

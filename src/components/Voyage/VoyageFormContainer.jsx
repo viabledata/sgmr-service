@@ -197,7 +197,7 @@ const FormVoyageContainer = () => {
 
     // Handle missing voyageId (for if user comes to a subpage directly, and we haven't got the id)
     if (!voyageId) {
-      setErrors({ voyageForm: 'There was a problem locating your voyage, please return to "Reports" and try again' });
+      setErrors({ voyageForm: 'There was a problem locating your voyage, please return to "Voyage Plans" and try again' });
       scrollToTopOnError('voyageForm');
     } else {
       const validationErrors = await VoyageFormValidation(formData, sourceForm);
@@ -356,7 +356,7 @@ const FormVoyageContainer = () => {
               )}
             </form>
             <p>
-              <Link to="/reports" className="govuk-link govuk-link--no-visited-state">
+              <Link to="/voyage-plans" className="govuk-link govuk-link--no-visited-state">
                 Exit without saving
               </Link>
             </p>
