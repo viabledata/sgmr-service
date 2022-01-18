@@ -25,10 +25,10 @@ describe('validate', () => {
     responsiblePostcode: 'AB1 2CD',
     responsibleGivenName: null,
     responsibleSurname: '',
-    responsibleTown: 'Town'
-  }
-  it ('should validate the data and create an error object when data is missing', async () => {
+    responsibleTown: 'Town',
+  };
+  it('should validate the data and create an error object when data is missing', async () => {
     expect(await validate(responsiblePersonValidationRules, data))
-    .toEqual({responsibleGivenName: 'You must enter a first name', responsibleSurname: 'You must enter a last name'})
-  })
-})
+      .toEqual({ responsibleGivenName: 'You must enter a first name', responsibleSurname: 'You must enter a last name' });
+  });
+});
