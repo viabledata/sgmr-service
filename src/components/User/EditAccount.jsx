@@ -8,6 +8,7 @@ import { USER_URL } from '../../constants/ApiConstants';
 import { VALID_INTERNATIONAL_MOBILE_REGEX } from '../Forms/validationRules';
 import Auth from '../../lib/Auth';
 import FormError from '../Voyage/FormError';
+import scrollToTopOnError from '../../utils/scrollToTopOnError';
 
 const EditAccount = () => {
   document.title = 'Edit account';
@@ -40,7 +41,7 @@ const EditAccount = () => {
     {
       field: 'mobileNumber',
       rule: 'required',
-      message: 'You must enter your mobile number',
+      message: 'You must enter your telephone number',
     },
   ];
 
@@ -58,10 +59,10 @@ const EditAccount = () => {
       if (!(elem.field in formData) || formData[elem.field] === '') {
         tempObj[elem.field] = elem.message;
       } else {
-        tempObj[elem.field] = null;
+        null;
       }
       if (!(VALID_INTERNATIONAL_MOBILE_REGEX.test(formData.mobileNumber))) {
-        tempObj.mobileNumber = 'You must enter a valid phone number e.g. 07700 900982, +33 63998 010101';
+        tempObj.mobileNumber = 'You must enter a valid telephone number e.g. 07700 900982, +33 63998 010101';
       }
     });
     setErrors(tempObj);
@@ -101,7 +102,7 @@ const EditAccount = () => {
         });
     } else {
     // This means there are errors, so jump user to the error box
-      history.push('#EditUser');
+      scrollToTopOnError(errors);
     }
   };
 
@@ -122,7 +123,7 @@ const EditAccount = () => {
             <p className="govuk-body-l">Edit the details of your account</p>
             <form id="EditUser">
 
-              {Object.keys(errors).length > 1 && (
+              {Object.keys(errors).length > 0 && (
                 <div className="govuk-error-summary" aria-labelledby="error-summary-title" role="alert" tabIndex="-1" data-module="govuk-error-summary">
                   <h2 className="govuk-error-summary__title">
                     There is a problem
@@ -130,9 +131,9 @@ const EditAccount = () => {
                   <div className="govuk-error-summary__body">
                     <ul className="govuk-list govuk-error-summary__list">
                       {Object.entries(errors).map((elem) => (
-                        <li key={elem.id}>
+                        <li key={elem[0]} >
                           {elem[0] !== 'title'
-                            && <a href={`#${elem[0]}`}>{elem[1]}</a>}
+                            && <a data-testid={elem[0]} href={`#${elem[0]}`}>{elem[1]}</a>}
                         </li>
                       ))}
                     </ul>
@@ -148,6 +149,7 @@ const EditAccount = () => {
                 <input
                   className="govuk-input"
                   name="firstName"
+                  data-testid="test-firstName"
                   id="firstName"
                   type="text"
                   value={formData.firstName || ''}
@@ -163,6 +165,7 @@ const EditAccount = () => {
                 <input
                   className="govuk-input"
                   name="lastName"
+                  data-testid="test-lastName"
                   id="lastName"
                   type="text"
                   value={formData.lastName || ''}
@@ -178,6 +181,7 @@ const EditAccount = () => {
                 <input
                   className="govuk-input"
                   name="mobileNumber"
+                  data-testid="test-mobileNumber"
                   id="mobileNumber"
                   type="text"
                   value={formData.mobileNumber || ''}
