@@ -16,6 +16,17 @@ const SectionTablePeople = ({ pageData }) => {
       .then((resp) => { setPeopleData(resp); });
   };
 
+  const getPersonType = (personType) => {
+    switch (personType) {
+      case 'Skipper':
+        return 'Skipper';
+      case 'Passenger':
+        return 'Unpaid Crew';
+      default:
+        return 'Employed Crew';
+    }
+  };
+
   useEffect(() => {
     storeData();
     const { reportTitles } = pageData;
@@ -59,7 +70,7 @@ const SectionTablePeople = ({ pageData }) => {
                         </Link>
                       </td>
                       <td className="govuk-table__cell">{person[1].firstName}</td>
-                      <td className="govuk-table__cell">{person[1].peopleType.name}</td>
+                      <td className="govuk-table__cell">{getPersonType(person[1].peopleType.name)}</td>
                     </tr>
                   );
                 })}
