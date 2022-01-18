@@ -9,7 +9,7 @@ import PeopleTable from './PeopleTable';
 const FormVoyagePeopleManifest = ({
   handleSubmit, voyageId, setErrors,
 }) => {
-  document.title = 'People on the manifest';
+  document.title = 'People on the voyage plan';
 
   const [peopleData, setPeopleData] = useState([]);
   const [makeChanges, setMakeChanges] = useState(false);
@@ -49,12 +49,12 @@ const FormVoyagePeopleManifest = ({
 
   return (
     <section>
-      <h1 className="govuk-heading-xl">People on the manifest</h1>
+      <h1 className="govuk-heading-xl">People on the voyage plan</h1>
 
       <p className="govuk-body-l">
         {peopleData.length
           ? 'The people you have selected for this voyage are:'
-          : 'There are no people on the manifest.'}
+          : 'There are no people on the voyage plan.'}
       </p>
 
       {!!peopleData.length && (

@@ -106,7 +106,7 @@ const FormVoyagePeople = ({
       {!!voyagePeople.length && (
         <>
           <p className="govuk-body-l">
-            People already added to the manifest:
+            People already added to the voyage plan:
             <br />
             {voyagePeople.map(({ firstName, lastName }) => `${firstName} ${lastName}`).join(', ')}
           </p>
