@@ -440,7 +440,7 @@ const FormPerson = ({
           data-module="govuk-button"
           onClick={(e) => handleSubmit(e, 'newPerson', voyageId)}
         >
-          {source === 'voyage' ? 'Add to manifest' : 'Add to saved people list'}
+          {source === 'voyage' ? 'Add to voyage plan' : 'Add to saved people list'}
         </button>
       </div>
 
