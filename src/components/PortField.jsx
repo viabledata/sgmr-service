@@ -14,7 +14,7 @@ const source = debounce((query, populateResults) => {
     headers: { Authorization: `Bearer ${Auth.retrieveToken()}` },
   })
     .then((resp) => {
-      populateResults(resp.data.data);
+      populateResults(resp.data);
     })
     .catch((err) => {
       if (err.response) {
