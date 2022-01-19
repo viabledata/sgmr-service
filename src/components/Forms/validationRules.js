@@ -391,50 +391,6 @@ export const voyageValidationRules = [
   },
 ];
 
-export const dateValidation = (name, value) => {
-  switch (name) {
-    case 'documentExpiryDateYear':
-      return /^(19|20)\d{2}$/i.test(value)
-        ? { documentExpiryDateYear: value }
-        : 'error';
-    case 'documentExpiryDateMonth':
-      return /^(0?[1-9]|1[012])$/i.test(value)
-        ? { documentExpiryDateMonth: value }
-        : 'error';
-    case 'documentExpiryDateDay':
-      return /^(0?[1-9]|[12][0-9]|3[01])$/i.test(value)
-        ? { documentExpiryDateDay: value }
-        : 'error';
-
-    case 'dateOfBirthYear':
-      return /^(19|20)\d{2}$/i.test(value)
-        ? { dateOfBirthYear: value }
-        : 'error';
-    case 'dateOfBirthMonth':
-      return /^(0?[1-9]|1[012])$/i.test(value)
-        ? { dateOfBirthMonth: value }
-        : 'error';
-    case 'dateOfBirthDay':
-      return /^(0?[1-9]|[12][0-9]|3[01])$/i.test(value)
-        ? { dateOfBirthDay: value }
-        : 'error';
-
-    case 'departureDateYear':
-      return /^(19|20)\d{2}$/i.test(value)
-        ? { departureDateYear: value }
-        : 'error';
-    case 'departureDateMonth':
-      return /^(0?[1-9]|1[012])$/i.test(value)
-        ? { departureDateMonth: value }
-        : 'error';
-    case 'departureDateDay':
-      return /^(0?[1-9]|[12][0-9]|3[01])$/i.test(value)
-        ? { departureDateDay: value }
-        : 'error';
-    default: return null;
-  }
-};
-
 // Validates if password is 8 characters long and contain 3 of the following:
 // an uppercase letter, a lowercase letter, a symbol, a number
 export const passwordValidation = (password) => {

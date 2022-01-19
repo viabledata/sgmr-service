@@ -1,4 +1,4 @@
-import { passwordValidation } from '../validationRules';
+import { passwordValidation, responsiblePersonValidationRules, validate } from '../validationRules';
 
 describe('passwordValidation', () => {
   const passwords = [
@@ -13,5 +13,22 @@ describe('passwordValidation', () => {
     it(`Should validate ${password || '[empty string]'}`, () => {
       expect(passwordValidation(password)).toEqual(message);
     });
+  });
+});
+
+describe('validate', () => {
+  // Testing errors when inputs are null or empty
+  const data = {
+    responsibleAddressLine1: '123 Street',
+    responsibleContactNo: '01234567891',
+    responsibleCounty: 'County',
+    responsiblePostcode: 'AB1 2CD',
+    responsibleGivenName: null,
+    responsibleSurname: '',
+    responsibleTown: 'Town',
+  };
+  it('should validate the data and create an error object when data is missing', async () => {
+    expect(await validate(responsiblePersonValidationRules, data))
+      .toEqual({ responsibleGivenName: 'You must enter a first name', responsibleSurname: 'You must enter a last name' });
   });
 });
