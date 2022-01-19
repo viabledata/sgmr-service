@@ -61,7 +61,7 @@
         "jest": "^27.4.7",
         "ls": "^0.2.1",
         "mailslurp-client": "^10.0.4",
-        "mocha": "^8.2.1",
+        "mocha": "^9.1.4",
         "mochawesome": "^6.2.1",
         "mochawesome-merge": "^4.2.0",
         "mochawesome-report-generator": "^6.0.1",
