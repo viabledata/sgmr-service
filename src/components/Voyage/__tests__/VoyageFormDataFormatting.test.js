@@ -178,7 +178,7 @@ describe('Voyage form data formatting', () => {
       vesselType: 'Boat',
       status: 'Draft',
     };
-    
+
     const result = formatVessel('Draft', data, voyageData);
     expect(result).toEqual(data);
   });
