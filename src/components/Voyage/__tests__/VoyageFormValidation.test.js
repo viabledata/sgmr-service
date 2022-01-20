@@ -1,7 +1,7 @@
 import { FORM_STEPS } from '../../../constants/ClientConstants';
 import VoyageFormValidation from '../VoyageFormValidation';
 
-describe('Voyage form errors', () => {
+describe('Voyage form required fields errors', () => {
   it('should validate responsible person', async () => {
     const expectedErrors = {
       responsibleAddressLine1: 'You must enter a first address line',
@@ -65,7 +65,7 @@ describe('Voyage form errors', () => {
     expect(result).toEqual(expectedErrors);
   });
 
-  it('should validatealidates voyage', async () => {
+  it('should validate voyage check', async () => {
     const expectedErrors = {
       arrivalDate: 'You must enter an arrival date',
       arrivalTime: 'You must enter an arrival time',
