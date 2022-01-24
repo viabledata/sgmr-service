@@ -3,11 +3,6 @@ $govuk-compatibility-govuktemplate: true;
 $govuk-compatibility-govukelements: true;
 $govuk-global-styles: true;
 
-@import './fonts/Inter-3.7/inter.css';
-
-// Override the govuk-frontend font stack
-$govuk-font-family: 'Inter', sans-serif;
-
 @import '~accessible-autocomplete/dist/accessible-autocomplete.min';
 @import '~govuk-frontend/govuk/all';
 
