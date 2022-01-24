@@ -72,7 +72,9 @@ const Nav = () => {
 
   return (
     <div className="govuk-header__content">
-      <p className="govuk-header__link govuk-header__link--service-name">{serviceName}</p>
+      <Link className="govuk-header__link govuk-header__link--service-name" to="/">
+        {serviceName}
+      </Link>
 
       <button
         type="button"
