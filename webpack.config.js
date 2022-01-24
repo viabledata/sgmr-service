@@ -1,13 +1,11 @@
 const CopyPlugin = require('copy-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
 const webpack = require('webpack');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-  // in the `entry` property there is no need to
-  // specify `filename.js` at the end, its smart enough to figure out
   devtool: 'source-map',
-  entry: ['./src/', './src/sass/main.scss'],
+  entry: ['./src/', './src/assets/main.scss'],
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'bundle.[hash].js',
@@ -15,13 +13,16 @@ module.exports = {
   },
   resolve: {
     alias: {
+      '/assets': path.resolve(__dirname, 'node_modules/govuk-frontend/govuk/assets'),
       config: path.resolve(__dirname, 'src/lib/config.js'),
     },
     extensions: ['.js', '.jsx'],
+    fallback: {
+      fs: false,
+    },
   },
   module: {
     rules: [
-      // only allow `.js` or `.jsx` to be compiled
       {
         test: /\.jsx?/,
         exclude: /(node_modules|bower_components)/,
@@ -30,16 +31,12 @@ module.exports = {
         },
       },
       {
-        test: /\.(s*)css$/,
-        use: [
-          {
-            loader: 'file-loader',
-            options: {
-              name: 'assets/css/[name].css',
-            },
-          },
-          'sass-loader',
-        ],
+        test: /\.s[ac]ss$/i,
+        use: ['style-loader', 'css-loader', 'sass-loader'],
+      },
+      {
+        test: /\.(png|woff|woff2|eot|ttf|svg)$/,
+        type: 'asset/inline',
       },
     ],
   },
@@ -61,7 +58,6 @@ module.exports = {
     }),
     new HtmlWebpackPlugin({ template: './index.html' }),
   ],
-  node: { fs: 'empty' },
   devServer: {
     // in order to use `<Router>`, historyApiFallback needs to be enabled
     historyApiFallback: true,
