@@ -41,7 +41,7 @@ const PageAccount = () => {
         </div>
         <div className="govuk-summary-list__row">
           <dt className="govuk-summary-list__key">
-            Mobile number
+            Telephone number
           </dt>
           <dd className="govuk-summary-list__value">
             {user.mobileNumber}
