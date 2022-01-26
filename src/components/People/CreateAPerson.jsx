@@ -1,19 +1,22 @@
 import React, { useState } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 
+import axios from 'axios';
 import FormPerson from './FormPerson';
 import { personValidationRules, validate } from '../Forms/validationRules';
 import { PEOPLE_URL } from '../../constants/ApiConstants';
 import { PEOPLE_PAGE_URL } from '../../constants/ClientConstants';
 import scrollToTopOnError from '../../utils/scrollToTopOnError';
-import { postData } from '../../utils/apiHooks';
 import { formatDate } from '../../utils/date';
+import Auth from '../../lib/Auth';
 
 const CreateAPerson = () => {
   document.title = 'Save a person';
 
   const history = useHistory();
   const location = useLocation();
+  const checkIfNotVoyageForm = location.pathname.toLowerCase().indexOf('voyage') === -1;
+  const path = location.pathname.slice(1);
   const [formData, setFormData] = useState({});
   const [errors, setErrors] = useState({});
 
@@ -65,12 +68,39 @@ const CreateAPerson = () => {
     };
   };
 
+  // Clear formData from localStorage
+  const clearLocalStorage = () => {
+    setFormData({});
+    setErrors({ });
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!await validateForm(formData)) {
-      await postData(PEOPLE_URL, formatDataToSubmit(formData), location.pathname.substring(1));
-      history.push(PEOPLE_PAGE_URL);
+      axios.post(PEOPLE_URL, formatDataToSubmit(formData), {
+        headers: { Authorization: `Bearer ${Auth.retrieveToken()}` },
+      })
+        .then(() => {
+          // If this is not the voyage form then take user to people page, otherwise leave the user here
+          if (checkIfNotVoyageForm) {
+            clearLocalStorage();
+            history.push(PEOPLE_PAGE_URL);
+          }
+        })
+        .catch((err) => {
+          if (err.response) {
+            switch (err.response.status) {
+              case 400:
+                setErrors({ ...errors, CreateAPerson: 'This document already exists' });
+                scrollToTopOnError('CreateAPerson');
+                break;
+              case 422: history.push(`/sign-in?source=${path}`); break;
+              case 405: history.push(`/sign-in?source=${path}`); break;
+              default: history.push(`/sign-in?source=${location}`);
+            }
+          }
+        });
     }
   };
 
