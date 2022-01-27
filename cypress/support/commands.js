@@ -203,14 +203,14 @@ Cypress.Commands.add('addPeople', (person) => {
 });
 
 Cypress.Commands.add('addVessel', (vessel) => {
-  cy.contains('a', 'Save a vessel').should('have.text', 'Save a vessel').click();
+  cy.contains('a', 'Save a pleasure craft').should('have.text', 'Save a pleasure craft').click();
   cy.enterVesselInfo(vessel);
   cy.get('.govuk-button').click();
   cy.get('.govuk-error-message').should('not.be.visible');
   cy.get('table').getTable().then((vesselData) => {
     expect(vesselData).to.deep.include({
-      'Vessel name': vessel.name,
-      'Vessel type': vessel.type,
+      'Pleasure craft name': vessel.name,
+      'Pleasure craft type': vessel.type,
       'Usual moorings': vessel.moorings,
     });
   });

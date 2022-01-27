@@ -19,7 +19,7 @@ describe('Validate report form', () => {
       cy.addPeople(people);
     });
 
-    cy.navigation('Vessels');
+    cy.navigation('Pleasure Crafts');
 
     cy.getVesselObj().then((vesselObj) => {
       vessel = vesselObj;
@@ -67,12 +67,12 @@ describe('Validate report form', () => {
     });
   });
 
-  it('Should verify Vessel details mandatory data', () => {
+  it('Should verify Pleasure Craft details mandatory data', () => {
     const errors = [
-      'You must enter a vessel name',
-      'You must enter a vessel type',
-      'You must enter the vessel usual mooring',
-      'You must enter the vessel registration',
+      'You must enter a pleasure craft name',
+      'You must enter a pleasure craft type',
+      'You must enter the pleasure craft usual mooring',
+      'You must enter the pleasure craft registration',
     ];
 
     cy.enterDepartureDetails(departureDateTime, departurePort);
