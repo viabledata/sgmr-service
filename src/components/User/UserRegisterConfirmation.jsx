@@ -1,7 +1,9 @@
-import React from 'react';
-import { useHistory, useLocation } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Link, useHistory, useLocation } from 'react-router-dom';
+import axios from 'axios';
 import qs from 'qs';
 import Auth from '../../lib/Auth';
+import { RESEND_ACTIVATION_LINK } from '../../constants/ApiConstants';
 
 const UserRegisterConfirmation = () => {
   document.title = 'Account successfully created';
@@ -10,6 +12,15 @@ const UserRegisterConfirmation = () => {
 
   const location = useLocation();
   const { email } = qs.parse(location.search, { ignoreQueryPrefix: true });
+
+  const [title, setTitle] = useState('Account successfully created');
+
+  const resendCode = async (e, userEmail) => {
+    await axios.post(RESEND_ACTIVATION_LINK, {
+      email: userEmail,
+    });
+    setTitle('Verification email sent');
+  };
 
   if (Auth.isAuthorized() || !email) {
     history.push('/voyage-plans');
@@ -22,7 +33,7 @@ const UserRegisterConfirmation = () => {
         <div className="govuk-grid-row">
           <div className="govuk-grid-column-two-thirds">
             <div className="govuk-panel govuk-panel--confirmation">
-              <h1 className="govuk-panel__title">Account successfully created</h1>
+              <h1 className="govuk-panel__title">{title}</h1>
             </div>
             <p>
               Please check your inbox. We have sent a verification email to
@@ -32,8 +43,9 @@ const UserRegisterConfirmation = () => {
             <h2 className="govuk-heading-m">What happens next</h2>
             <p>
               Click the verification link inside the email. This link will remain valid
-              for 3 hours. If you can’t see the email, please check any spam folders.
+              for 3 hours. If you can&apos;t see the email, please check any spam folders.
             </p>
+            <Link to={`/registration-confirmation?email=${email}`} onClick={(e) => resendCode(e, email)}>Resend verification email</Link>
           </div>
         </div>
       </main>
