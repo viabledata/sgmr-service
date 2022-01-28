@@ -23,7 +23,7 @@ describe('Add report with saved data', () => {
       });
     }
 
-    cy.navigation('Vessels');
+    cy.navigation('Pleasure Crafts');
 
     cy.getVesselObj().then((vesselObj) => {
       vessel = vesselObj;
@@ -48,7 +48,7 @@ describe('Add report with saved data', () => {
     cy.get('.govuk-button--start').should('have.text', 'Start now').click();
   });
 
-  it('Should be able to Cancel a submitted report using Saved People & Vessel', () => {
+  it('Should be able to Cancel a submitted report using Saved People & Pleasure Craft', () => {
     const expectedReport = [
       {
         'Vessel': vessel.name,

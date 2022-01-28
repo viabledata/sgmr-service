@@ -107,7 +107,7 @@ describe('Edit Details & Submit new voyage report', () => {
     });
   });
 
-  it('Should be able to edit Vessel and Person details before submit the report', () => {
+  it('Should be able to edit Pleasure Craft and Person details before submit the report', () => {
     cy.getVesselObj().then((vesselObj) => {
       vessel = vesselObj;
     });

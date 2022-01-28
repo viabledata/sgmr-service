@@ -102,9 +102,9 @@ const FormPerson = ({
             </label>
             <FormError error={errors.dateOfBirth} />
           </legend>
-          <span className="govuk-hint">
+          <div className="govuk-hint">
             For example, 31 3 1980
-          </span>
+          </div>
           <div className="govuk-date-input">
             <div className="govuk-date-input__item">
               <div className="govuk-form-group">
@@ -348,19 +348,19 @@ const FormPerson = ({
       <div id="documentIssuingState" className={`govuk-form-group ${errors.documentIssuingState ? 'govuk-form-group--error' : ''}`}>
         <label className="govuk-label" htmlFor="documentIssuingState">
           Issuing state
-          <span className="govuk-hint">
-            Please enter 3 letter ISO country code, for example GBR
-          </span>
-          <FormError error={errors.documentIssuingState} />
-          <input
-            className="govuk-input govuk-input--width-3"
-            name="documentIssuingState"
-            type="text"
-            maxLength={3}
-            value={formData.documentIssuingState || ''}
-            onChange={handleChange}
-          />
         </label>
+        <FormError error={errors.documentIssuingState} />
+        <div className="govuk-hint">
+          Please enter 3 letter ISO country code, for example GBR
+        </div>
+        <input
+          className="govuk-input govuk-input--width-3"
+          name="documentIssuingState"
+          type="text"
+          maxLength={3}
+          value={formData.documentIssuingState || ''}
+          onChange={handleChange}
+        />
       </div>
 
       <div id="documentExpiryDate" className={`govuk-form-group ${errors.documentExpiryDate ? 'govuk-form-group--error' : ''}`}>
@@ -370,9 +370,9 @@ const FormPerson = ({
               Expiry date
             </label>
           </legend>
-          <span className="govuk-hint">
+          <div className="govuk-hint">
             For example, 31 3 2022
-          </span>
+          </div>
           <div className="govuk-date-input">
             <FormError error={errors.documentExpiryDate} />
             <div className="govuk-date-input__item">
@@ -444,7 +444,7 @@ const FormPerson = ({
         </button>
       </div>
 
-      <p>
+      <p className="govuk-body">
         {source !== 'voyage'
           && (
           <Link
