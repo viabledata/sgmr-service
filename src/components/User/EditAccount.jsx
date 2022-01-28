@@ -59,7 +59,7 @@ const EditAccount = () => {
       if (!(elem.field in formData) || formData[elem.field] === '') {
         tempObj[elem.field] = elem.message;
       } else {
-        null;
+        return null;
       }
       if (!(VALID_INTERNATIONAL_MOBILE_REGEX.test(formData.mobileNumber))) {
         tempObj.mobileNumber = 'You must enter a valid telephone number e.g. 07700 900982, +33 63998 010101';
@@ -131,7 +131,7 @@ const EditAccount = () => {
                   <div className="govuk-error-summary__body">
                     <ul className="govuk-list govuk-error-summary__list">
                       {Object.entries(errors).map((elem) => (
-                        <li key={elem[0]} >
+                        <li key={elem[0]}>
                           {elem[0] !== 'title'
                             && <a data-testid={elem[0]} href={`#${elem[0]}`}>{elem[1]}</a>}
                         </li>
@@ -200,7 +200,7 @@ const EditAccount = () => {
                 </button>
               </div>
 
-              <p>
+              <p className="govuk-body">
                 <Link to="/account" className="govuk-link govuk-link--no-visited-state" onClick={clearFormData}>Exit without saving</Link>
               </p>
             </form>
@@ -213,8 +213,8 @@ const EditAccount = () => {
         </div>
 
         <h2 className="govuk-heading-m">Delete account</h2>
-        <p className="govuk-body-l">Delete this account and stop using the service.</p>
-        <p>
+        <p className="govuk-body-m">Delete this account and stop using the service.</p>
+        <p className="govuk-body">
           <Link className="govuk-button govuk-button--warning" to="/account/delete">
             Delete this account
           </Link>
