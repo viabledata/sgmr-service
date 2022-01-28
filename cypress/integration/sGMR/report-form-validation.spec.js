@@ -1,6 +1,6 @@
 const { getFutureDate } = require('../../support/utils');
 
-describe('Validate report form', () => {
+describe('Validate voyage plan form', () => {
   let departureDateTime;
   let departurePort;
   let arrivalDateTime;
@@ -34,8 +34,8 @@ describe('Validate report form', () => {
 
   beforeEach(() => {
     cy.login();
-    cy.navigation('Reports');
-    cy.url().should('include', '/reports');
+    cy.navigation('Voyage Plans');
+    cy.url().should('include', '/voyage-plans');
     cy.get('.govuk-button--start').should('have.text', 'Start now').click();
   });
 

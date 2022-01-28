@@ -90,7 +90,7 @@ Cypress.Commands.add('login', () => {
       }
     });
   });
-  cy.navigation('Reports');
+  cy.navigation('Voyage Plans');
   cy.get('.govuk-button--start').should('have.text', 'Start now');
 });
 
