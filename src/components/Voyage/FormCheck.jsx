@@ -213,7 +213,7 @@ const FormCheck = ({
       </div>
 
       <h2 className="govuk-heading-m">Submit your Pleasure Craft Voyage Plan</h2>
-      <p>
+      <p className="govuk-body">
         By submitting this voyage plan you are confirming that, to the best of your knowledge,
         the information you are providing is correct and you have the explicit permission of the persons named in this voyage plan to submit information on their behalf.
       </p>

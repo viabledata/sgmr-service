@@ -1,0 +1,37 @@
+@import '~accessible-autocomplete/dist/accessible-autocomplete.min';
+@import '~govuk-frontend/govuk/all';
+
+// header
+.govuk-header__logotype-crown {
+    margin-right: 10px;
+}
+
+// Make td align to middle not top
+.govuk-table__cell {
+  vertical-align: middle;
+}
+
+// Make block buttons display block
+.block-button {
+  display: block;
+}
+
+.page-notice {
+  color: #FFFFFF;
+  background-color: #1d70b8;
+}
+
+.panel-number-large {
+  font-size: 53px;
+  line-height: 1.0377358491;
+  font-weight: bold;
+  display: block;
+}
+
+// Autocomplete widget
+.autocomplete__wrapper {
+  font-family: $govuk-font-family;
+}
+.autocomplete__input--focused {
+  outline: $govuk-focus-width solid $govuk-focus-colour;
+}

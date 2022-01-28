@@ -3,8 +3,6 @@ import 'cypress-axe';
 
 const addContext = require('mochawesome/addContext');
 
-require('cypress-get-table');
-
 Cypress.on('uncaught:exception', () => {
   // returning false here prevents Cypress from
   // failing the test

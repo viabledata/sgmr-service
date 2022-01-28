@@ -13,10 +13,10 @@ const FormVoyageSubmitted = () => {
             <div className="govuk-panel govuk-panel--confirmation">
               <h1 className="govuk-panel__title">Pleasure Craft Voyage Plan Submitted</h1>
             </div>
-            <p>We have sent you a confirmation email.</p>
+            <p className="govuk-body">We have sent you a confirmation email.</p>
             <h2 className="govuk-heading-m">What happens next</h2>
-            <p>We’ve sent your voyage plan to UK Border Force.</p>
-            <p>
+            <p className="govuk-body">We&apos;ve sent your voyage plan to UK Border Force.</p>
+            <p className="govuk-body">
               You can&nbsp;
               <Link to="/voyage-plans">add a return voyage or manage your voyage plans.</Link>
             </p>

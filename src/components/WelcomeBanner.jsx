@@ -9,7 +9,7 @@ const WelcomeBanner = () => {
     <div className="govuk-width-container">
       <div className="govuk-grid-row">
         <div className="govuk-grid-column-full">
-          <p>{`Welcome back, ${user.firstName}`}</p>
+          <p className="govuk-body">{`Welcome back, ${user.firstName}`}</p>
         </div>
       </div>
       <hr className="govuk-section-break govuk-section-break--visible govuk-section-break--xl govuk-!-margin-top-0" />
