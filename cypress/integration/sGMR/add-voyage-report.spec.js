@@ -1,6 +1,6 @@
 const { getFutureDate } = require('../../support/utils');
 
-describe('Add new voyage report', () => {
+describe('Add new voyage plan', () => {
   let departureDateTime;
   let departurePort;
   let arrivalDateTime;
@@ -33,8 +33,8 @@ describe('Add new voyage report', () => {
     departDate = departureDateTime.split(' ')[0];
     arrivalDateTime = getFutureDate(2, 'DD/MM/YYYY HH:MM');
 
-    cy.navigation('Reports');
-    cy.url().should('include', '/reports');
+    cy.navigation('Voyage Plans');
+    cy.url().should('include', '/voyage-plans');
     cy.getNumberOfReports('Draft').then((res) => {
       numberOfDraftReports = res;
     });
@@ -47,7 +47,7 @@ describe('Add new voyage report', () => {
     cy.get('.govuk-button--start').should('have.text', 'Start now').click();
   });
 
-  it('Should submit report successfully', () => {
+  it('Should submit voyage plan successfully', () => {
     const expectedReport = [
       {
         'Vessel': vessel.name,
@@ -97,12 +97,12 @@ describe('Add new voyage report', () => {
     cy.saveAndContinue();
     cy.checkNoErrors();
     cy.checkAccessibility();
-    cy.contains('Accept and submit report').click();
+    cy.contains('Accept and submit voyage plan').click();
     cy.url().should('include', '/save-voyage/page-submitted');
-    cy.get('.govuk-panel__title').should('have.text', 'Pleasure Craft Report Submitted');
-    cy.navigation('Reports');
+    cy.get('.govuk-panel__title').should('have.text', 'Pleasure Craft Voyage Plan Submitted');
+    cy.navigation('Voyage Plans');
     cy.checkReports('Submitted', (+numberOfSubmittedReports) + (+1));
-    cy.contains('View existing reports').click();
+    cy.contains('View existing voyage plans').click();
     cy.get('.govuk-tabs__list li')
       .within(() => {
         cy.get('#submitted').should('have.text', 'Submitted')
@@ -115,7 +115,7 @@ describe('Add new voyage report', () => {
     cy.checkAccessibility();
   });
 
-  it('Should be able to cancel report', () => {
+  it('Should be able to cancel voyage plan', () => {
     const expectedReport = [
       {
         'Vessel': vessel.name,
@@ -141,10 +141,10 @@ describe('Add new voyage report', () => {
     cy.saveAndContinue();
     cy.checkNoErrors();
     cy.contains('Cancel voyage').click();
-    cy.url().should('include', '/reports');
-    cy.navigation('Reports');
+    cy.url().should('include', '/voyage-plans');
+    cy.navigation('Voyage Plans');
     cy.checkReports('Cancelled', (+numberOfCancelledReports) + (+1));
-    cy.contains('View existing reports').click();
+    cy.contains('View existing voyage plans').click();
     cy.get('.govuk-tabs__list li')
       .within(() => {
         cy.get('#cancelled').should('have.text', 'Cancelled')
@@ -156,7 +156,7 @@ describe('Add new voyage report', () => {
     });
   });
 
-  it('Should be able to save report for later', () => {
+  it('Should be able to save voyage plan for later', () => {
     const expectedReport = [
       {
         'Vessel': vessel.name,
@@ -182,10 +182,10 @@ describe('Add new voyage report', () => {
     cy.saveAndContinue();
     cy.checkNoErrors();
     cy.contains('Exit without saving').click();
-    cy.url().should('include', '/reports');
-    cy.navigation('Reports');
+    cy.url().should('include', '/voyage-plans');
+    cy.navigation('Voyage Plans');
     cy.checkReports('Draft', (+numberOfDraftReports) + (+1));
-    cy.contains('View existing reports').click();
+    cy.contains('View existing voyage plans').click();
     cy.get('.govuk-tabs__list li')
       .within(() => {
         cy.get('#draft').should('have.text', 'Draft')

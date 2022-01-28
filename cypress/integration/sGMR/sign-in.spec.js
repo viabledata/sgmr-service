@@ -21,7 +21,7 @@ describe('Sign-in flow', () => {
         expect(xhr.status).to.eq(200);
       });
     });
-    cy.url().should('include', '/reports');
+    cy.url().should('include', '/voyage-plans');
     cy.get('.govuk-button--start').should('have.text', 'Start now');
     cy.injectAxe();
     cy.checkAccessibility();
