@@ -21,7 +21,8 @@ const Footer = () => {
           <div className="govuk-footer__meta-item">
             <Link
               className="govuk-footer__link govuk-footer__copyright-logo"
-              to="https://www.nationalarchives.gov.uk/information-management/re-using-public-sector-information/uk-government-licensing-framework/crown-copyright/"
+              to={{ pathname: 'https://www.nationalarchives.gov.uk/information-management/re-using-public-sector-information/uk-government-licensing-framework/crown-copyright/' }}
+              target="_blank"
             >
               © Crown copyright
             </Link>
