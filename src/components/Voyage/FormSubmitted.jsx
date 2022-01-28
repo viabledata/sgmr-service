@@ -15,12 +15,11 @@ const FormVoyageSubmitted = () => {
                 Pleasure Craft Voyage Plan Submitted
               </h1>
             </div>
-            <p className="govuk-body" />
             <h2 className="govuk-heading-m">What happens next</h2>
             <p className="govuk-body">
-              We’ve sent your Pleasure Craft Voyage Plan to UK Border Force.
+              We&apos;ve sent your Pleasure Craft Voyage Plan to UK Border Force.
             </p>
-            <p>
+            <p className="govuk-body">
               If you need to make any changes to this voyage plan you will need to submit another voyage plan with the new information and cancel this one. This can be done on the&nbsp;
               <Link to="/voyage-plans">Manage Pleasure Craft Voyage Plans</Link>
               &nbsp;page.

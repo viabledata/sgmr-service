@@ -136,7 +136,7 @@ const FormVessel = ({
                 Save
               </button>
             </div>
-            <p>
+            <p className="govuk-body">
               <Link to="/pleasure-crafts" className="govuk-link govuk-link--no-visited-state">Exit without saving</Link>
             </p>
           </>

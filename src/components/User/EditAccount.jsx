@@ -200,7 +200,7 @@ const EditAccount = () => {
                 </button>
               </div>
 
-              <p>
+              <p className="govuk-body">
                 <Link to="/account" className="govuk-link govuk-link--no-visited-state" onClick={clearFormData}>Exit without saving</Link>
               </p>
             </form>
@@ -213,8 +213,8 @@ const EditAccount = () => {
         </div>
 
         <h2 className="govuk-heading-m">Delete account</h2>
-        <p className="govuk-body-l">Delete this account and stop using the service.</p>
-        <p>
+        <p className="govuk-body-m">Delete this account and stop using the service.</p>
+        <p className="govuk-body">
           <Link className="govuk-button govuk-button--warning" to="/account/delete">
             Delete this account
           </Link>
