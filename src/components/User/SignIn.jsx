@@ -100,7 +100,7 @@ const SignIn = () => {
                 <label className="govuk-label" htmlFor="email">
                   Email address
                 </label>
-                <span className="govuk-hint">Enter the email address you used when you created your account</span>
+                <div className="govuk-hint">Enter the email address you used when you created your account</div>
                 <input
                   className="govuk-input"
                   id="email"
