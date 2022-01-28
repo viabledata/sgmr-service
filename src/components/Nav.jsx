@@ -86,8 +86,8 @@ const Nav = () => {
       </button>
 
       {Auth.isAuthorized() && (
-        <nav>
-          <ul id="navigation" className="govuk-header__navigation " aria-label="Top Level Navigation">
+        <nav aria-label="Menu" className="govuk-header__navigation">
+          <ul id="navigation" className="govuk-header__navigation-list" aria-label="Top Level Navigation">
             {navArray.map((elem) => {
               const activeState = elem.active === true ? 'govuk-header__navigation-item govuk-header__navigation-item--active' : 'govuk-header__navigation-item';
               return (
