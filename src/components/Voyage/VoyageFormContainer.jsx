@@ -355,7 +355,7 @@ const FormVoyageContainer = () => {
                 />
               )}
             </form>
-            <p>
+            <p className="govuk-body">
               <Link to="/voyage-plans" className="govuk-link govuk-link--no-visited-state">
                 Exit without saving
               </Link>

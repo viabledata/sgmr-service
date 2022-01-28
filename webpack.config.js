@@ -8,7 +8,7 @@ module.exports = {
   entry: ['./src/', './src/assets/main.scss'],
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: 'bundle.[hash].js',
+    filename: 'bundle.[contenthash].js',
     publicPath: '/',
   },
   resolve: {
@@ -45,7 +45,6 @@ module.exports = {
       {
         patterns: [
           { from: 'src/assets/images', to: 'assets/images' },
-          { from: 'src/assets/fonts', to: 'assets/fonts' },
           { from: 'node_modules/govuk-frontend/govuk/all.js', to: 'javascript/all.js' },
           { from: 'node_modules/govuk-frontend/govuk/assets', to: 'assets' },
         ],

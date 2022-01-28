@@ -46,9 +46,9 @@ const FormResponsiblePerson = ({
           Contact telephone number
         </label>
         <FormError error={errors.responsibleContactNo} />
-        <span className="govuk-hint">
+        <div className="govuk-hint">
           For international numbers include the country code
-        </span>
+        </div>
         <input
           className="govuk-input"
           name="responsibleContactNo"

@@ -13,7 +13,7 @@ const FormVessel = ({
           Pleasure craft name
         </label>
         <FormError error={errors.vesselName} />
-        <span className="govuk-hint">For example Baroness</span>
+        <div className="govuk-hint">For example Baroness</div>
         <input
           className="govuk-input"
           name="vesselName"
@@ -28,7 +28,7 @@ const FormVessel = ({
           Pleasure craft type
         </label>
         <FormError error={errors.vesselType} />
-        <span className="govuk-hint">For example Yacht or Sailboat</span>
+        <div className="govuk-hint">For example Yacht or Sailboat</div>
         <input
           className="govuk-input"
           name="vesselType"
@@ -42,7 +42,7 @@ const FormVessel = ({
         <label className="govuk-label" htmlFor="moorings">
           Usual moorings
         </label>
-        <span className="govuk-hint">A description, UNLOCODE or set of Coordinates for where the pleasure craft is usually moored</span>
+        <div className="govuk-hint">A description, UNLOCODE or set of Coordinates for where the pleasure craft is usually moored</div>
         <FormError error={errors.moorings} />
         <input
           className="govuk-input"
@@ -136,7 +136,7 @@ const FormVessel = ({
                 Save
               </button>
             </div>
-            <p>
+            <p className="govuk-body">
               <Link to="/pleasure-crafts" className="govuk-link govuk-link--no-visited-state">Exit without saving</Link>
             </p>
           </>

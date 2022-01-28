@@ -79,7 +79,7 @@ const AccessibilityStatement = () => {
               {' '}
               <a className="govuk-link" target="blank" href="https://www.equalityadvisoryservice.com/">Equality Advisory and Support Service (EASS) (opens in new tab).</a>
             </p>
-            <p>
+            <p className="govuk-body">
               If you are in Northern Ireland and are not happy with how we respond to your complaint you can contact the
               {' '}
               <a className="govuk-link" target="blank" href="https://www.equalityni.org/home">Equality Commission for Northern Ireland (opens in new tab)</a>

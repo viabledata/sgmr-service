@@ -35,13 +35,13 @@ const UserRegisterConfirmation = () => {
             <div className="govuk-panel govuk-panel--confirmation">
               <h1 className="govuk-panel__title">{title}</h1>
             </div>
-            <p>
+            <p className="govuk-body">
               Please check your inbox. We have sent a verification email to
               {' '}
               {email}
             </p>
             <h2 className="govuk-heading-m">What happens next</h2>
-            <p>
+            <p className="govuk-body">
               Click the verification link inside the email. This link will remain valid
               for 3 hours. If you can&apos;t see the email, please check any spam folders.
             </p>

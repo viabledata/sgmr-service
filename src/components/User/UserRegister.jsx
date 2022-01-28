@@ -120,7 +120,7 @@ const UserRegister = () => {
                   Mobile number
                 </label>
                 <FormError error={errors.mobileNumber} />
-                <span className="govuk-hint">We will send an access code to this number. For international numbers include the country code.</span>
+                <div className="govuk-hint">We will send an access code to this number. For international numbers include the country code.</div>
                 <input
                   id="mobileNumber-field"
                   className="govuk-input"
@@ -135,7 +135,7 @@ const UserRegister = () => {
                   Email address
                 </label>
                 <FormError error={errors.email} />
-                <span className="govuk-hint">You will use this to sign into your account.</span>
+                <div className="govuk-hint">You will use this to sign into your account.</div>
                 <input
                   id="email-field"
                   className="govuk-input"

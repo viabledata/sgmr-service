@@ -23,9 +23,9 @@ const FormDeparture = ({
             </label>
             <FormError error={errors.departureDate} />
           </legend>
-          <span className="govuk-hint">
+          <div className="govuk-hint">
             For example, 20 2 2020
-          </span>
+          </div>
           <div className="govuk-date-input">
             <div className="govuk-date-input__item">
               <div className="govuk-form-group">
@@ -95,9 +95,9 @@ const FormDeparture = ({
             </label>
             <FormError error={errors.departureTime} />
           </legend>
-          <span className="govuk-hint">
+          <div className="govuk-hint">
             For example, 17 30
-          </span>
+          </div>
           <div className="govuk-date-input">
             <div className="govuk-date-input__item">
               <div className="govuk-form-group">
@@ -146,9 +146,9 @@ const FormDeparture = ({
           <label className="govuk-label govuk-label--m" htmlFor="departurePort">
             Departure point
           </label>
-          <span className="govuk-hint">
+          <div className="govuk-hint">
             You can enter a port, marina or anchorage name
-          </span>
+          </div>
           <PortField
             defaultValue={data.departurePort}
             onConfirm={(result) => {
