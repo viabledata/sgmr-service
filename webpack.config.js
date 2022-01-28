@@ -52,7 +52,7 @@ module.exports = {
     ),
     // This allows to pass env vars on runtime, see /nginx/run.sh and Dockerfile
     new webpack.EnvironmentPlugin({
-      SGMR_DATA_API_BASE_URL: 'https://sgmr-data-api.dev.sgmr.cop.homeoffice.gov.uk',
+      SGMR_DATA_API_BASE_URL: 'http://localhost:5000/v1',
       SGMR_MAINTENANCE: false,
     }),
     new HtmlWebpackPlugin({ template: './index.html' }),

@@ -37,5 +37,5 @@ test('Welcome back text should be a paragraph', () => {
   customRender(<WelcomeBanner />, { providerProps });
 
   const content = screen.getByText('Welcome back, John');
-  expect(content.outerHTML).toEqual('<p className="govuk-body">Welcome back, John</p>');
+  expect(content.outerHTML).toEqual('<p class="govuk-body">Welcome back, John</p>');
 });
