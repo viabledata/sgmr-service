@@ -6,11 +6,6 @@
     margin-right: 10px;
 }
 
-// Replicate inline styles on dt
-.govuk-heading-m + .govuk-summary-list__value {
- border-bottom: none;
-}
-
 // Make td align to middle not top
 .govuk-table__cell {
   vertical-align: middle;
