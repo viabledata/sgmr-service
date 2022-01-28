@@ -3,21 +3,6 @@ import {
 } from '../VoyageFormDataFormatting';
 
 describe('Voyage form data formatting', () => {
-  it('Should return default departure and arrival ports if field is null', () => {
-    const data = {
-      arrivalPort: null,
-      departurePort: null,
-    };
-    const expectedDataList = {
-      arrivalPort: 'ZZZA',
-      departurePort: 'ZZZD',
-      status: 'Draft',
-    };
-
-    const result = formatDepartureArrival('Draft', data);
-    expect(result).toEqual(expectedDataList);
-  });
-
   it('should return user departure and arrival ports if field is not null', () => {
     const data = {
       arrivalPort: 'Portsmouth',
@@ -33,7 +18,7 @@ describe('Voyage form data formatting', () => {
     expect(result).toEqual(expectedDataList);
   });
 
-  it('shoild format departure and arrival dates', () => {
+  it('should format departure and arrival dates', () => {
     const data = {
       arrivalDateDay: '5',
       arrivalDateMonth: '2',
