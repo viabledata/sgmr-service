@@ -6,20 +6,6 @@
     margin-right: 10px;
 }
 
-// Force tabs & back links to look clickable without using a href=
-p.govuk-tabs__tab {
-  cursor: pointer;
-}
-.govuk-back-link {
-  border-bottom: 1px solid #0b0c0c;
-  text-decoration: none;
-  cursor: pointer;
-}
-.govuk-back-link:before {
-  top: 0;
-  bottom: 0;
-}
-
 // Replicate inline styles on dt
 .govuk-heading-m + .govuk-summary-list__value {
  border-bottom: none;
