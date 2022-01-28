@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Route, Switch } from 'react-router-dom';
+import { VESSELS_URL } from '../constants/ApiConstants';
 
 import ScrollToTop from './ScrollToTop';
 import SecureRoute from '../lib/SecureRoute';
@@ -29,12 +30,14 @@ import FormVoyageSubmitted from './Forms/FormVoyageSubmitted';
 import UserContext from './UserContext';
 import DeleteAccount from './User/DeleteAccount';
 import DeleteConfirmation from './User/DeleteConfirmation';
+import DeleteEntity from './DeleteEntity';
 import NewPassword from './User/NewPassword';
 import ForgottenPassword from './User/ForgottenPassword';
 import LandingPage from './LandingPage';
 import ManageReports from './ManageReports';
 import SiteMaintenance from './SiteMaintenance';
 import { siteMaintenance } from '../lib/config';
+import { AlertContextProvider } from './AlertContext';
 
 const Main = () => {
   const [user, setUser] = useState(null);
@@ -47,82 +50,97 @@ const Main = () => {
     <>
       <ScrollToTop />
       <UserContext.Provider value={{ user, setUser }}>
-        <Header />
-        <Banner />
-        <Switch>
-          <Route exact path="/">
-            <LandingPage />
-          </Route>
-          <SecureRoute exact path="/voyage-plans">
-            <PageContainer />
-          </SecureRoute>
-          <SecureRoute exact path="/save-voyage/page-([1-7]{1})">
-            <VoyageFormContainer />
-          </SecureRoute>
-          <SecureRoute exact path="/save-voyage/page-submitted">
-            <FormVoyageSubmitted />
-          </SecureRoute>
-          <SecureRoute exact path="/pleasure-crafts">
-            <PageContainer />
-          </SecureRoute>
-          <SecureRoute exact path="/pleasure-crafts/save-pleasure-craft">
-            <CreateAVessel />
-          </SecureRoute>
-          <SecureRoute exact path="/pleasure-crafts/:vesselId">
-            <EditVessel />
-          </SecureRoute>
-          <SecureRoute exact path="/people">
-            <PageContainer />
-          </SecureRoute>
-          <SecureRoute exact path="/people/save-person">
-            <CreateAPerson />
-          </SecureRoute>
-          <SecureRoute exact path="/people/edit-person">
-            <EditPerson />
-          </SecureRoute>
-          <SecureRoute exact path="/account">
-            <PageContainer />
-          </SecureRoute>
-          <SecureRoute exact path="/account/edit">
-            <EditAccount />
-          </SecureRoute>
-          <SecureRoute exact path="/account/delete">
-            <DeleteAccount />
-          </SecureRoute>
-          <Route exact path="/account/delete-confirmation">
-            <DeleteConfirmation />
-          </Route>
-          <Route exact path="/sign-in">
-            <SignIn />
-          </Route>
-          <Route exact path="/forgotten-password">
-            <ForgottenPassword />
-          </Route>
-          <Route exact path="/new-password">
-            <NewPassword />
-          </Route>
-          <Route exact path="/register">
-            <UserRegister />
-          </Route>
-          <Route exact path="/registration-confirmation">
-            <UserRegisterConfirmation />
-          </Route>
-          <Route exact path="/activate-account">
-            <AccountActivation />
-          </Route>
-          <Route exact path="/privacy-and-cookie-policy">
-            <PrivacyCookiePolicy />
-          </Route>
-          <Route exact path="/help">
-            <Help />
-          </Route>
-          <Route exact path="/accessibility-statement">
-            <AccessibilityStatement />
-          </Route>
-          <SecureRoute exact path="/manage-voyage-plans">
-            <ManageReports />
-          </SecureRoute>
-        </Switch>
+        <AlertContextProvider>
+          <Header />
+          <Banner />
+          <Switch>
+            <Route exact path="/">
+              <LandingPage />
+            </Route>
+            <SecureRoute exact path="/voyage-plans">
+              <PageContainer />
+            </SecureRoute>
+            <SecureRoute exact path="/save-voyage/page-([1-7]{1})">
+              <VoyageFormContainer />
+            </SecureRoute>
+            <SecureRoute exact path="/save-voyage/page-submitted">
+              <FormVoyageSubmitted />
+            </SecureRoute>
+            <SecureRoute exact path="/pleasure-crafts">
+              <PageContainer />
+            </SecureRoute>
+            <SecureRoute exact path="/pleasure-crafts/save-pleasure-craft">
+              <CreateAVessel />
+            </SecureRoute>
+            <SecureRoute exact path="/pleasure-crafts/:vesselId">
+              <EditVessel />
+            </SecureRoute>
+            <SecureRoute exact path="/pleasure-crafts/:entityId/delete">
+              <DeleteEntity
+                notification={
+                {
+                  title: 'Success',
+                  heading: 'Pleasure craft successfully deleted.',
+                  entity: 'pleasure craft',
+                  baseURL: VESSELS_URL,
+                  redirectURL: '/pleasure-crafts',
+                }
+              }
+              />
+            </SecureRoute>
+            <SecureRoute exact path="/people">
+              <PageContainer />
+            </SecureRoute>
+            <SecureRoute exact path="/people/save-person">
+              <CreateAPerson />
+            </SecureRoute>
+            <SecureRoute exact path="/people/edit-person">
+              <EditPerson />
+            </SecureRoute>
+            <SecureRoute exact path="/account">
+              <PageContainer />
+            </SecureRoute>
+            <SecureRoute exact path="/account/edit">
+              <EditAccount />
+            </SecureRoute>
+            <SecureRoute exact path="/account/delete">
+              <DeleteAccount />
+            </SecureRoute>
+            <Route exact path="/account/delete-confirmation">
+              <DeleteConfirmation />
+            </Route>
+            <Route exact path="/sign-in">
+              <SignIn />
+            </Route>
+            <Route exact path="/forgotten-password">
+              <ForgottenPassword />
+            </Route>
+            <Route exact path="/new-password">
+              <NewPassword />
+            </Route>
+            <Route exact path="/register">
+              <UserRegister />
+            </Route>
+            <Route exact path="/registration-confirmation">
+              <UserRegisterConfirmation />
+            </Route>
+            <Route exact path="/activate-account">
+              <AccountActivation />
+            </Route>
+            <Route exact path="/privacy-and-cookie-policy">
+              <PrivacyCookiePolicy />
+            </Route>
+            <Route exact path="/help">
+              <Help />
+            </Route>
+            <Route exact path="/accessibility-statement">
+              <AccessibilityStatement />
+            </Route>
+            <SecureRoute exact path="/manage-voyage-plans">
+              <ManageReports />
+            </SecureRoute>
+          </Switch>
+        </AlertContextProvider>
       </UserContext.Provider>
       <Footer />
     </>
