@@ -48,7 +48,7 @@ describe('Edit Details & Submit new voyage plan', () => {
     cy.getPersonObj().then((peopleObj) => {
       person = peopleObj;
       cy.enterPeopleInfo(person);
-      cy.contains('Add to manifest').click();
+      cy.contains('Add to voyage plan').click();
       cy.saveAndContinueOnPeopleManifest(false);
     });
     cy.checkNoErrors();

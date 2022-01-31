@@ -109,7 +109,7 @@ describe('Validate voyage plan form', () => {
     cy.saveAndContinue();
     cy.url().should('include', '/page-4');
     cy.contains('add a new person').click();
-    cy.get('.govuk-button').contains('Add to manifest').click();
+    cy.get('.govuk-button').contains('Add to voyage plan').click();
     cy.get('.govuk-error-message').each((error, index) => {
       cy.wrap(error).should('contain.text', errors[index]).and('be.visible');
     });
@@ -135,7 +135,7 @@ describe('Validate voyage plan form', () => {
     cy.checkNoErrors();
     cy.contains('add a new person').click();
     cy.enterPeopleInfo(people);
-    cy.contains('Add to manifest').click();
+    cy.contains('Add to voyage plan').click();
     cy.saveAndContinueOnPeopleManifest(false);
     cy.checkNoErrors();
     cy.saveAndContinue();
