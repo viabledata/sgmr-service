@@ -13,6 +13,7 @@ import { USER_URL } from '../constants/ApiConstants';
 import Auth from '../lib/Auth';
 import UserContext from './UserContext';
 import WelcomeBanner from './WelcomeBanner';
+import NotificationBanner from './NotificationBanner';
 
 const PageContainer = (props) => {
   const location = useLocation();
@@ -74,6 +75,7 @@ const PageContainer = (props) => {
   return (
     <div className="govuk-width-container">
       <main className="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" role="main">
+        <NotificationBanner />
         <div className="govuk-grid-row">
           {pageData.urlStub === '/reports' && <WelcomeBanner />}
           <PageIntro pageData={pageData} />
