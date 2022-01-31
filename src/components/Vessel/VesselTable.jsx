@@ -39,7 +39,7 @@ const VesselTable = ({
               {link === 'true'
                 && (
                 <td className="govuk-table__cell">
-                  <Link to={`/vessels/${vessel.id}`}>
+                  <Link to={`/pleasure-crafts/${vessel.id}`}>
                     {vessel.vesselName}
                   </Link>
                 </td>

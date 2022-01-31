@@ -133,6 +133,7 @@ const EditVessel = () => {
                 data={vesselData}
                 formData={formData || ''}
                 errors={errors || ''}
+                vesselId={vesselId}
               />
             </form>
           </div>

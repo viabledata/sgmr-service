@@ -4,7 +4,7 @@ import nationalities from '../../utils/staticFormData';
 import FormError from '../Voyage/FormError';
 
 const FormVessel = ({
-  handleSubmit, handleChange, formData, errors, sourceForm,
+  handleSubmit, handleChange, formData, errors, sourceForm, vesselId,
 }) => {
   return (
     <section>
@@ -126,7 +126,7 @@ const FormVessel = ({
       {sourceForm !== 'voyage'
         && (
           <>
-            <div id="submitBlock">
+            <div id="submitBlock" className="govuk-button-group">
               <button
                 type="submit"
                 className="govuk-button"
@@ -135,6 +135,12 @@ const FormVessel = ({
               >
                 Save
               </button>
+              {vesselId
+                && (
+                <Link className="govuk-button govuk-button--warning" to={`/pleasure-crafts/${vesselId}/delete`}>
+                  Delete this pleasure craft
+                </Link>
+                )}
             </div>
             <p className="govuk-body">
               <Link to="/pleasure-crafts" className="govuk-link govuk-link--no-visited-state">Exit without saving</Link>
