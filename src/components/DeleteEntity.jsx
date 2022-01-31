@@ -7,8 +7,6 @@ import Auth from '../lib/Auth';
 import { AlertContext } from './AlertContext';
 
 const DeleteEntity = ({ notification }) => {
-  document.title = 'Delete pleasure craft';
-
   const { setAlertContext } = useContext(AlertContext);
   const history = useHistory();
   const { entityId } = useParams();
@@ -18,6 +16,8 @@ const DeleteEntity = ({ notification }) => {
   const {
     title, heading, entity, baseURL, redirectURL,
   } = notification;
+  
+  document.title = `Delete ${entity}`;
 
   const formSubmitHandler = async (e) => {
     e.preventDefault();

@@ -5,7 +5,7 @@ import FormError from '../Voyage/FormError';
 import nationalities from '../../utils/staticFormData';
 
 const FormPerson = ({
-  handleSubmit, handleChange, formData, errors, source, voyageId,
+  handleSubmit, handleChange, formData, errors, personId, source, voyageId,
 }) => {
   const documentTypeOther = formData.documentType !== undefined && formData.documentType !== 'Passport' && formData.documentType !== 'IdentityCard';
 
@@ -433,7 +433,7 @@ const FormPerson = ({
         </fieldset>
       </div>
 
-      <div id="submitBlock">
+      <div id="submitBlock" className="govuk-button-group">
         <button
           type="submit"
           className="govuk-button"
@@ -442,6 +442,12 @@ const FormPerson = ({
         >
           {source === 'voyage' ? 'Add to voyage plan' : 'Add to saved people list'}
         </button>
+        {source !== 'voyage' && personId
+                && (
+                <Link className="govuk-button govuk-button--warning" to={`/people/${personId}/delete`}>
+                  Delete this person
+                </Link>
+                )}
       </div>
 
       <p className="govuk-body">
