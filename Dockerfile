@@ -1,6 +1,6 @@
-FROM quay.io/ukhomeofficedigital/cop-node:12-alpine as builder
+FROM quay.io/ukhomeofficedigital/cop-node:14 as builder
 
-RUN apk update && apk upgrade
+RUN apt update && apt upgrade -y
 
 RUN mkdir -p /src
 WORKDIR /src
