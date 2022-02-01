@@ -315,18 +315,18 @@ const FormPerson = ({
             </div>
           </div>
           {documentTypeOther && (
-          <div className="govuk-form-group">
-            <label className="govuk-label" htmlFor="documentType-other">
-              Please specify
-              <input
-                className="govuk-input"
-                name="documentType"
-                type="text"
-                value={documentTypeOther ? formData.documentType : ''}
-                onChange={handleChange}
-              />
-            </label>
-          </div>
+            <div className="govuk-form-group">
+              <label className="govuk-label" htmlFor="documentType-other">
+                Please specify
+                <input
+                  className="govuk-input"
+                  name="documentType"
+                  type="text"
+                  value={documentTypeOther ? formData.documentType : ''}
+                  onChange={handleChange}
+                />
+              </label>
+            </div>
           )}
         </fieldset>
       </div>
@@ -443,22 +443,22 @@ const FormPerson = ({
           {source === 'voyage' ? 'Add to voyage plan' : 'Add to saved people list'}
         </button>
         {source !== 'voyage' && personId
-                && (
-                <Link className="govuk-button govuk-button--warning" to={`/people/${personId}/delete`}>
-                  Delete this person
-                </Link>
-                )}
+          && (
+            <Link className="govuk-button govuk-button--warning" to={`/people/${personId}/delete`}>
+              Delete this person
+            </Link>
+          )}
       </div>
 
       <p className="govuk-body">
         {source !== 'voyage'
           && (
-          <Link
-            to="/people"
-            className="govuk-link govuk-link--no-visited-state"
-          >
-            Exit without saving
-          </Link>
+            <Link
+              to="/people"
+              className="govuk-link govuk-link--no-visited-state"
+            >
+              Exit without saving
+            </Link>
           )}
       </p>
     </section>
