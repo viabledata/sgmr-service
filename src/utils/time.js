@@ -7,19 +7,15 @@ const isTimeValid = (hour, minute) => {
   return true;
 };
 
-const isCurrentDateWithTimeBeforeNow = (year, month, day, hour, minute) => {
-  const [currentDate, currentTime] = [1, 2].map(() => new Date());
-  const [testDate, testTime] = [1, 2].map(() => new Date(year, (month - 1), day, hour, minute));
+const isDateToday = (year, month, day) => {
+  const today = new Date();
+  const testDate = new Date(year, (month - 1), day);
 
-  currentDate.setHours(0, 0, 0, 0);
+  // Set the times to an equal value for a simpler date comparison with timestamps
+  today.setHours(0, 0, 0, 0);
   testDate.setHours(0, 0, 0, 0);
-  currentTime.setDate(0, 0, 0);
-  testTime.setDate(0, 0, 0);
 
-  if (currentDate.getTime() === testDate.getTime()) {
-    return currentTime.getTime() >= testTime.getTime();
-  }
-  return false;
+  return today.getTime() === testDate.getTime();
 };
 
 const isTimeAndDateBeforeNow = (year, month, day, hour, minute) => {
@@ -35,7 +31,7 @@ const splitTime = (time, fieldName) => {
 
 export {
   isTimeValid,
-  isCurrentDateWithTimeBeforeNow,
+  isDateToday,
   isTimeAndDateBeforeNow,
   splitTime,
 };

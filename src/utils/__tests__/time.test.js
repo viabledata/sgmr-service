@@ -1,5 +1,5 @@
 import {
-  isTimeValid, isCurrentDateWithTimeBeforeNow, isTimeAndDateBeforeNow, splitTime,
+  isTimeValid, isDateToday, isTimeAndDateBeforeNow, splitTime,
 } from '../time';
 
 describe('time.js', () => {
@@ -13,9 +13,9 @@ describe('time.js', () => {
     expect(result).toEqual(false);
   });
 
-  it('should return true if the time is in the past but the date is current', () => {
+  it('should return true if the date is current', () => {
     const testDate = new Date();
-    const result = isCurrentDateWithTimeBeforeNow(testDate.getFullYear(), testDate.getMonth() + 1, testDate.getDate(), testDate.getHours(), testDate.getMinutes() - 5);
+    const result = isDateToday(testDate.getFullYear(), testDate.getMonth() + 1, testDate.getDate());
     expect(result).toEqual(true);
   });
 
