@@ -1,4 +1,6 @@
-import { isTimeValid, isTimeAndDateBeforeNow, splitTime } from '../time';
+import {
+  isTimeValid, isCurrentDateWithTimeBeforeNow, isTimeAndDateBeforeNow, splitTime,
+} from '../time';
 
 describe('time.js', () => {
   it('should validate correct times', () => {
@@ -9,6 +11,12 @@ describe('time.js', () => {
   it('should not validate incorrect times', () => {
     const result = isTimeValid('08', '70');
     expect(result).toEqual(false);
+  });
+
+  it('should return true if the time is in the past but the date is current', () => {
+    const testDate = new Date();
+    const result = isCurrentDateWithTimeBeforeNow(testDate.getFullYear(), testDate.getMonth() + 1, testDate.getDate(), testDate.getHours(), testDate.getMinutes() - 5);
+    expect(result).toEqual(true);
   });
 
   it('should validate times before the current time', () => {
