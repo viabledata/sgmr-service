@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Route, Switch } from 'react-router-dom';
-import { VESSELS_URL } from '../constants/ApiConstants';
+import { PEOPLE_URL, VESSELS_URL } from '../constants/ApiConstants';
 
 import ScrollToTop from './ScrollToTop';
 import SecureRoute from '../lib/SecureRoute';
@@ -96,6 +96,19 @@ const Main = () => {
             </SecureRoute>
             <SecureRoute exact path="/people/edit-person">
               <EditPerson />
+            </SecureRoute>
+            <SecureRoute exact path="/people/:entityId/delete">
+              <DeleteEntity
+                notification={
+                {
+                  title: 'Success',
+                  heading: 'Person successfully deleted.',
+                  entity: 'person',
+                  baseURL: PEOPLE_URL,
+                  redirectURL: '/people',
+                }
+              }
+              />
             </SecureRoute>
             <SecureRoute exact path="/account">
               <PageContainer />
