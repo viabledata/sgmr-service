@@ -211,9 +211,9 @@ const FormVoyageContainer = () => {
       // update data for submitting
       const updatedData = { ...data, ...autocompleteNameValue };
       const dataToSubmit = formatDataToSubmit(sourceForm, updatedData, extraParams);
+      setFormData(updatedData);
 
       // validate data
-
       const validationErrors = await VoyageFormValidation(updatedData, sourceForm);
       setErrors(validationErrors);
 
