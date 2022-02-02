@@ -155,7 +155,7 @@ const FormVoyageContainer = () => {
     }
   };
 
-  const formatDataToSubmit = (sourceForm, dataToFormat, extraParams) => {
+  const formatDataToSubmit = (sourceForm, dataToFormat) => {
     let dataToSubmit;
 
     switch (sourceForm) {
@@ -171,13 +171,6 @@ const FormVoyageContainer = () => {
       case FORM_STEPS.NEW_PERSON:
         dataToSubmit = formatNewPerson(VOYAGE_STATUSES.DRAFT, dataToFormat, voyageData);
         break;
-      case FORM_STEPS.PEOPLE_MANIFEST:
-        if (extraParams.makeChanges) {
-          history.push(SAVE_VOYAGE_PEOPLE_URL, { voyageId });
-        } else {
-          createNextPage(sourceForm);
-        }
-        return;
       case FORM_STEPS.RESPONSIBLE_PERSON:
         dataToSubmit = formatResponsiblePerson(VOYAGE_STATUSES.DRAFT, dataToFormat, voyageData);
         break;
@@ -199,33 +192,42 @@ const FormVoyageContainer = () => {
   const handleSubmit = async (e, sourceForm, voyageIdLocal, extraParams = {}) => {
     e.preventDefault();
 
-    // get initial data set from formData
-    const data = formData;
+    // handle peopleManifest page (no PATCH required)
+    if (sourceForm === FORM_STEPS.PEOPLE_MANIFEST) {
+      if (extraParams.makeChanges) {
+        history.push(SAVE_VOYAGE_PEOPLE_URL, { voyageId });
+      } else {
+        createNextPage(sourceForm);
+      }
+    } else {
+      // get initial data set from formData
+      const data = formData;
 
-    // check for autocomplete field current value
-    const autocompleteField = document.getElementById('autocomplete')?.name ? document.getElementById('autocomplete').name : null;
-    const autocompleteValue = document.getElementById('autocomplete')?.value === '' ? null : document.getElementById('autocomplete')?.value;
-    const autocompleteNameValue = autocompleteField ? { [autocompleteField]: autocompleteValue } : null;
+      // check for autocomplete field current value
+      const autocompleteField = document.getElementById('autocomplete')?.name ? document.getElementById('autocomplete').name : null;
+      const autocompleteValue = document.getElementById('autocomplete')?.value === '' ? null : document.getElementById('autocomplete')?.value;
+      const autocompleteNameValue = autocompleteField ? { [autocompleteField]: autocompleteValue } : null;
 
-    // update data for submitting
-    const updatedData = { ...data, ...autocompleteNameValue };
-    const dataToSubmit = formatDataToSubmit(sourceForm, updatedData, extraParams);
+      // update data for submitting
+      const updatedData = { ...data, ...autocompleteNameValue };
+      const dataToSubmit = formatDataToSubmit(sourceForm, updatedData, extraParams);
 
-    // validate data
+      // validate data
 
-    const validationErrors = await VoyageFormValidation(updatedData, sourceForm);
-    setErrors(validationErrors);
+      const validationErrors = await VoyageFormValidation(updatedData, sourceForm);
+      setErrors(validationErrors);
 
-    // store updated data in state & local storage
-    setFormData(updatedData);
+      // store updated data in state & local storage
+      setFormData(updatedData);
 
-    // Handle missing voyageId (for if user comes to a subpage directly, and we haven't got the id)
-    if (!voyageId) {
-      setErrors({ voyageForm: 'There was a problem locating your voyage, please return to "Voyage Plans" and try again' });
-      scrollToTopOnError('voyageForm');
-    } else if (Object.keys(validationErrors).length === 0 && Object.keys(errors).length === 0) {
-      await patchData(`${VOYAGE_REPORT_URL}/${voyageId}`, dataToSubmit, location.pathname.substring(1));
-      createNextPage(sourceForm);
+      // Handle missing voyageId (for if user comes to a subpage directly, and we haven't got the id)
+      if (!voyageId) {
+        setErrors({ voyageForm: 'There was a problem locating your voyage, please return to "Voyage Plans" and try again' });
+        scrollToTopOnError('voyageForm');
+      } else if (Object.keys(validationErrors).length === 0 && Object.keys(errors).length === 0) {
+        await patchData(`${VOYAGE_REPORT_URL}/${voyageId}`, dataToSubmit, location.pathname.substring(1));
+        createNextPage(sourceForm);
+      }
     }
   };
 
