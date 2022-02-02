@@ -70,7 +70,7 @@ describe('Add new voyage plan', () => {
     cy.checkAccessibility();
     cy.contains('add a new person').click();
     cy.enterPeopleInfo(person);
-    cy.contains('Add to manifest').click();
+    cy.contains('Add to voyage plan').click();
     cy.assertPeopleTable((reportData) => {
       expect(reportData).to.have.length(1);
       expect(reportData[0]).to.deep.include({
@@ -79,14 +79,14 @@ describe('Add new voyage plan', () => {
       });
     });
     cy.saveAndContinueOnPeopleManifest(true);
-    cy.contains(`People already added to the manifest:${person.firstName} ${person.lastName}`);
+    cy.contains(`People already added to the voyage plan:${person.firstName} ${person.lastName}`);
     cy.saveAndContinue();
     cy.get('input[type="checkbox"]').eq(0).check();
     cy.contains('Remove person').click();
-    cy.contains('There are no people on the manifest.');
+    cy.contains('There are no people on the voyage plan.');
     cy.saveAndContinueOnPeopleManifest(true);
     cy.contains('add a new person').click();
-    cy.contains('Add to manifest').click();
+    cy.contains('Add to voyage plan').click();
     cy.assertPeopleTable((reportData) => {
       expect(reportData).to.have.length(1);
     });
@@ -134,7 +134,7 @@ describe('Add new voyage plan', () => {
     cy.checkNoErrors();
     cy.contains('add a new person').click();
     cy.enterPeopleInfo(person);
-    cy.contains('Add to manifest').click();
+    cy.contains('Add to voyage plan').click();
     cy.saveAndContinueOnPeopleManifest(false);
     cy.checkNoErrors();
     cy.enterSkipperDetails();
@@ -175,7 +175,7 @@ describe('Add new voyage plan', () => {
     cy.checkNoErrors();
     cy.contains('add a new person').click();
     cy.enterPeopleInfo(person);
-    cy.contains('Add to manifest').click();
+    cy.contains('Add to voyage plan').click();
     cy.saveAndContinueOnPeopleManifest(false);
     cy.checkNoErrors();
     cy.enterSkipperDetails();
