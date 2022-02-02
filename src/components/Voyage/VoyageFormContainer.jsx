@@ -199,21 +199,35 @@ const FormVoyageContainer = () => {
   const handleSubmit = async (e, sourceForm, voyageIdLocal, extraParams = {}) => {
     e.preventDefault();
 
-    const dataToSubmit = formatDataToSubmit(sourceForm, formData, extraParams);
+    // get initial data set from formData
+    const data = formData;
 
-    console.log(dataToSubmit)
+    // check for autocomplete field current value
+    const autocompleteField = document.getElementById('autocomplete')?.name ? document.getElementById('autocomplete').name : null;
+    const autocompleteValue = document.getElementById('autocomplete')?.value === '' ? null : document.getElementById('autocomplete')?.value;
+    const autocompleteNameValue = autocompleteField ? {
+      [autocompleteField
+      ]: autocompleteValue,
+    } : null;
+
+    // update data for submitting
+    const updatedData = { ...data, ...autocompleteNameValue };
+    const dataToSubmit = formatDataToSubmit(sourceForm, updatedData, extraParams);
+
+    // validate data
+    const validationErrors = await VoyageFormValidation(updatedData, sourceForm);
+    setErrors(validationErrors);
+
+    // store updated data in state & local storage
+    setFormData(updatedData);
 
     // Handle missing voyageId (for if user comes to a subpage directly, and we haven't got the id)
     if (!voyageId) {
       setErrors({ voyageForm: 'There was a problem locating your voyage, please return to "Voyage Plans" and try again' });
       scrollToTopOnError('voyageForm');
-    } else {
-      const validationErrors = await VoyageFormValidation(formData, sourceForm);
-      setErrors(validationErrors);
-      if (Object.keys(validationErrors).length === 0 && Object.keys(errors).length === 0) {
-        await patchData(`${VOYAGE_REPORT_URL}/${voyageId}`, dataToSubmit, location.pathname.substring(1));
-        createNextPage(sourceForm);
-      }
+    } else if (Object.keys(validationErrors).length === 0 && Object.keys(errors).length === 0) {
+      await patchData(`${VOYAGE_REPORT_URL}/${voyageId}`, dataToSubmit, location.pathname.substring(1));
+      createNextPage(sourceForm);
     }
   };
 
