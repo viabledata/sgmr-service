@@ -155,22 +155,21 @@ const FormVoyageContainer = () => {
     }
   };
 
-  const handleSubmit = async (e, sourceForm, voyageIdLocal, extraParams = {}) => {
-    e.preventDefault();
+  const formatDataToSubmit = (sourceForm, dataToFormat, extraParams) => {
     let dataToSubmit;
 
     switch (sourceForm) {
       case FORM_STEPS.ARRIVAL:
-        dataToSubmit = formatDepartureArrival(VOYAGE_STATUSES.DRAFT, formData, voyageData);
+        dataToSubmit = formatDepartureArrival(VOYAGE_STATUSES.DRAFT, dataToFormat, voyageData);
         break;
       case FORM_STEPS.CHECK:
         dataToSubmit = { status: VOYAGE_STATUSES.PRE_SUBMITTED };
         break;
       case FORM_STEPS.DEPARTURE:
-        dataToSubmit = formatDepartureArrival(VOYAGE_STATUSES.DRAFT, formData, voyageData);
+        dataToSubmit = formatDepartureArrival(VOYAGE_STATUSES.DRAFT, dataToFormat, voyageData);
         break;
       case FORM_STEPS.NEW_PERSON:
-        dataToSubmit = formatNewPerson(VOYAGE_STATUSES.DRAFT, formData, voyageData);
+        dataToSubmit = formatNewPerson(VOYAGE_STATUSES.DRAFT, dataToFormat, voyageData);
         break;
       case FORM_STEPS.PEOPLE_MANIFEST:
         if (extraParams.makeChanges) {
@@ -180,10 +179,10 @@ const FormVoyageContainer = () => {
         }
         return;
       case FORM_STEPS.RESPONSIBLE_PERSON:
-        dataToSubmit = formatResponsiblePerson(VOYAGE_STATUSES.DRAFT, formData, voyageData);
+        dataToSubmit = formatResponsiblePerson(VOYAGE_STATUSES.DRAFT, dataToFormat, voyageData);
         break;
       case FORM_STEPS.VESSEL:
-        dataToSubmit = formatVessel(VOYAGE_STATUSES.DRAFT, formData, voyageData);
+        dataToSubmit = formatVessel(VOYAGE_STATUSES.DRAFT, dataToFormat, voyageData);
         break;
       case FORM_STEPS.VOYAGE:
         dataToSubmit = { status: VOYAGE_STATUSES.PRE_SUBMITTED };
@@ -194,6 +193,15 @@ const FormVoyageContainer = () => {
       default:
         dataToSubmit = null;
     }
+    return dataToSubmit;
+  };
+
+  const handleSubmit = async (e, sourceForm, voyageIdLocal, extraParams = {}) => {
+    e.preventDefault();
+
+    const dataToSubmit = formatDataToSubmit(sourceForm, formData, extraParams);
+
+    console.log(dataToSubmit)
 
     // Handle missing voyageId (for if user comes to a subpage directly, and we haven't got the id)
     if (!voyageId) {
