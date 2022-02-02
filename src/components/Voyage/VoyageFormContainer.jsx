@@ -205,16 +205,14 @@ const FormVoyageContainer = () => {
     // check for autocomplete field current value
     const autocompleteField = document.getElementById('autocomplete')?.name ? document.getElementById('autocomplete').name : null;
     const autocompleteValue = document.getElementById('autocomplete')?.value === '' ? null : document.getElementById('autocomplete')?.value;
-    const autocompleteNameValue = autocompleteField ? {
-      [autocompleteField
-      ]: autocompleteValue,
-    } : null;
+    const autocompleteNameValue = autocompleteField ? { [autocompleteField]: autocompleteValue } : null;
 
     // update data for submitting
     const updatedData = { ...data, ...autocompleteNameValue };
     const dataToSubmit = formatDataToSubmit(sourceForm, updatedData, extraParams);
 
     // validate data
+
     const validationErrors = await VoyageFormValidation(updatedData, sourceForm);
     setErrors(validationErrors);
 
