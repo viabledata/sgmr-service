@@ -146,7 +146,6 @@ const FormVoyageContainer = () => {
     let nextPage;
     const currentPage = parseInt(pageNum, 10);
     switch (sourceForm) {
-      case FORM_STEPS.CANCEL: history.push('/reports'); break;
       case FORM_STEPS.CHECK: history.push('/save-voyage/page-submitted'); break;
       default:
         nextPage = currentPage < maxPages ? currentPage + 1 : currentPage;
@@ -187,9 +186,6 @@ const FormVoyageContainer = () => {
         break;
       case FORM_STEPS.VOYAGE:
         dataToSubmit = { status: VOYAGE_STATUSES.PRE_SUBMITTED };
-        break;
-      case FORM_STEPS.CANCEL:
-        dataToSubmit = { status: VOYAGE_STATUSES.PRE_CANCELLED };
         break;
       default:
         dataToSubmit = null;
@@ -254,24 +250,24 @@ const FormVoyageContainer = () => {
             {pageNum === '4b' && <span className="govuk-caption-xl">{`Page 4 of ${maxPages}`}</span>}
             <form id="voyageForm">
               {Object.keys(errors).length >= 1 && (
-              <div className="govuk-error-summary" aria-labelledby="error-summary-title" role="alert" tabIndex="-1" data-module="govuk-error-summary">
-                <h2 className="govuk-error-summary__title">
-                  There is a problem
-                </h2>
-                <div className="govuk-error-summary__body">
-                  <ul className="govuk-list govuk-error-summary__list">
-                    {Object.entries(errors).reverse().map((elem) => (
+                <div className="govuk-error-summary" aria-labelledby="error-summary-title" role="alert" tabIndex="-1" data-module="govuk-error-summary">
+                  <h2 className="govuk-error-summary__title">
+                    There is a problem
+                  </h2>
+                  <div className="govuk-error-summary__body">
+                    <ul className="govuk-list govuk-error-summary__list">
+                      {Object.entries(errors).reverse().map((elem) => (
 
-                      <li key={elem[0]}>
+                        <li key={elem[0]}>
 
-                        {elem[0] !== 'title'
-                        //  eslint-disable-next-line jsx-a11y/anchor-is-valid
+                          {elem[0] !== 'title'
+                            //  eslint-disable-next-line jsx-a11y/anchor-is-valid
                             && <a onClick={(e) => handleClick(e, elem[0])} href="#">{elem[1]}</a>}
-                      </li>
-                    ))}
-                  </ul>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
                 </div>
-              </div>
               )}
               {pageNum === 1 && (
                 <FormDeparture
