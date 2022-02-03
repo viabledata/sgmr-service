@@ -79,9 +79,17 @@ const deleteItem = (url, pageSource) => {
   return data;
 };
 
+const deleteData = async (url) => {
+  const response = await axios.delete(url, {
+    headers: { Authorization: `Bearer ${Auth.retrieveToken()}` },
+  })
+  return response.data
+}
+
 export {
   postData,
   getData,
   patchData,
   deleteItem,
+  deleteData
 };
