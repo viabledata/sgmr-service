@@ -2,7 +2,7 @@
 import { FORM_STEPS } from '../../constants/ClientConstants';
 import { isDateValid, isInThePast } from '../../utils/date';
 import scrollToTopOnError from '../../utils/scrollToTopOnError';
-import { isTimeAndDateBeforeNow, isTimeValid } from '../../utils/time';
+import { isDateToday, isTimeAndDateBeforeNow, isTimeValid } from '../../utils/time';
 import {
   arrivalValidationRules,
   departureValidationRules,
@@ -94,7 +94,11 @@ const VoyageFormValidation = async (dataToValidate, source) => {
     dataToValidate.departureTimeHour,
     dataToValidate.departureTimeMinute,
   )) {
-    errors.departureDate = 'You must enter a departure time in the future';
+    if (isDateToday(dataToValidate.departureDateYear, dataToValidate.departureDateMonth, dataToValidate.departureDateDay)) {
+      errors.departureTime = 'You must enter a departure time in the future';
+    } else {
+      errors.departureDate = 'You must enter a departure time in the future';
+    }
   }
   // Arrival date must be in the future
   if (isTimeAndDateBeforeNow(
@@ -104,7 +108,11 @@ const VoyageFormValidation = async (dataToValidate, source) => {
     dataToValidate.arrivalTimeHour,
     dataToValidate.arrivalTimeMinute,
   )) {
-    errors.arrivalDate = 'You must enter an arrival time in the future';
+    if (isDateToday(dataToValidate.arrivalDateYear, dataToValidate.arrivalDateMonth, dataToValidate.arrivalDateDay)) {
+      errors.arrivalTime = 'You must enter an arrival time in the future';
+    } else {
+      errors.arrivalDate = 'You must enter an arrival time in the future';
+    }
   }
   // Arrival date must be after the departure date
   if (
