@@ -5,7 +5,7 @@ import { MemoryRouter } from 'react-router-dom';
 import FormDeparture from '../FormDeparture';
 import FormVoyageContainer from '../VoyageFormContainer';
 
-describe('ForArrival', () => {
+describe('FormDeparture', () => {
   it('should render without errors', async () => {
     render(
       <MemoryRouter initialEntries={[{ pathname: '/save-voyage/page-1' }]}>
