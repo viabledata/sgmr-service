@@ -12,22 +12,21 @@ import { AlertContextProvider } from '../AlertContext';
 import ActionEntity from '../ActionEntity';
 import { VESSELS_URL, VOYAGE_REPORT_URL, VOYAGE_STATUSES } from '../../constants/ApiConstants';
 
-
-let mockApiHook = jest.fn()
-const mockHistoryReplace = jest.fn()
-const mockHistoryGoBack = jest.fn()
+let mockApiHook = jest.fn();
+const mockHistoryReplace = jest.fn();
+const mockHistoryGoBack = jest.fn();
 
 // Mocking params
 jest.mock('react-router-dom', () => ({
   ...jest.requireActual('react-router-dom'),
   useParams: () => ({
-    entityId: '1a2b3c'
+    entityId: '1a2b3c',
   }),
   useHistory: () => ({
     replace: mockHistoryReplace,
-    goBack: mockHistoryGoBack
-  })
-}))
+    goBack: mockHistoryGoBack,
+  }),
+}));
 
 // Mocking AlertContext
 const renderPage = (props = {
@@ -37,7 +36,7 @@ const renderPage = (props = {
   baseURL: VESSELS_URL,
   redirectURL: '/pleasure-crafts',
   apiHook: mockApiHook,
-  action: 'Delete'
+  action: 'Delete',
 }, alertContext = null, setAlertContext = jest.fn()) => {
   return render(
     <BrowserRouter>
@@ -49,10 +48,9 @@ const renderPage = (props = {
 };
 
 describe('ActionEntity', () => {
-
   afterEach(() => {
-    jest.resetAllMocks()
-  })
+    jest.resetAllMocks();
+  });
 
   it('should render page and elements correctly', () => {
     renderPage();
@@ -67,37 +65,39 @@ describe('ActionEntity', () => {
     fireEvent.click(screen.getByTestId('confirm-no'));
     fireEvent.click(screen.getByText('Continue'));
 
-    expect(mockHistoryReplace).toHaveBeenCalled()
-    expect(mockHistoryReplace).toBeCalledWith('/pleasure-crafts')
-  })
+    expect(mockHistoryReplace).toHaveBeenCalled();
+    expect(mockHistoryReplace).toBeCalledWith('/pleasure-crafts');
+  });
 
   it('should go back when user clicks back', () => {
     renderPage();
 
     fireEvent.click(screen.getByText('Back'));
 
-    expect(mockHistoryGoBack).toHaveBeenCalled()
-  })
+    expect(mockHistoryGoBack).toHaveBeenCalled();
+  });
 
   it('should invoke delete function on submit', async () => {
-    renderPage()
+    renderPage();
 
     fireEvent.click(screen.getByTestId('confirm-yes'));
     fireEvent.click(screen.getByText('Continue'));
 
     await waitFor(() => {
-      expect(mockApiHook).toHaveBeenCalled()
-      expect(mockApiHook).toHaveBeenCalledWith(`${VESSELS_URL}/1a2b3c`)
+      expect(mockApiHook).toHaveBeenCalled();
+      expect(mockApiHook).toHaveBeenCalledWith(`${VESSELS_URL}/1a2b3c`);
     });
   });
 
   it('should handle errors correctly', async () => {
     mockApiHook = jest.fn().mockImplementation(() => {
-      // how to mock response property
-      throw { response: 'Foo' }
-    })
+      throw Object.assign(
+        new Error('Error'),
+        { response: 'Foo' },
+      );
+    });
 
-    renderPage()
+    renderPage();
 
     fireEvent.click(screen.getByTestId('confirm-yes'));
     fireEvent.click(screen.getByText('Continue'));
@@ -116,14 +116,14 @@ describe('ActionEntity', () => {
       redirectURL: '/voyage-plans',
       apiHook: mockApiHook,
       apiHookConfig: [{ status: VOYAGE_STATUSES.PRE_CANCELLED }],
-      action: 'Cancel'
-    })
+      action: 'Cancel',
+    });
 
     fireEvent.click(screen.getByTestId('confirm-yes'));
     fireEvent.click(screen.getByText('Continue'));
 
     await waitFor(() => {
-      expect(mockApiHook).toHaveBeenCalledWith(`${VOYAGE_REPORT_URL}/1a2b3c`, { status: VOYAGE_STATUSES.PRE_CANCELLED })
-    })
+      expect(mockApiHook).toHaveBeenCalledWith(`${VOYAGE_REPORT_URL}/1a2b3c`, { status: VOYAGE_STATUSES.PRE_CANCELLED });
+    });
   });
 });
