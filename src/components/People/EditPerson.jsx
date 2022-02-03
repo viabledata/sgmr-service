@@ -141,6 +141,7 @@ const EditPerson = () => {
                 handleSubmit={handleSubmit}
                 formData={formData}
                 errors={errors || ''}
+                personId={personId}
               />
 
             </form>
