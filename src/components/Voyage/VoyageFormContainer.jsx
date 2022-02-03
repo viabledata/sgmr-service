@@ -155,35 +155,27 @@ const FormVoyageContainer = () => {
     }
   };
 
-  const handleSubmit = async (e, sourceForm, voyageIdLocal, extraParams = {}) => {
-    e.preventDefault();
+  const formatDataToSubmit = (sourceForm, dataToFormat) => {
     let dataToSubmit;
 
     switch (sourceForm) {
       case FORM_STEPS.ARRIVAL:
-        dataToSubmit = formatDepartureArrival(VOYAGE_STATUSES.DRAFT, formData, voyageData);
+        dataToSubmit = formatDepartureArrival(VOYAGE_STATUSES.DRAFT, dataToFormat, voyageData);
         break;
       case FORM_STEPS.CHECK:
         dataToSubmit = { status: VOYAGE_STATUSES.PRE_SUBMITTED };
         break;
       case FORM_STEPS.DEPARTURE:
-        dataToSubmit = formatDepartureArrival(VOYAGE_STATUSES.DRAFT, formData, voyageData);
+        dataToSubmit = formatDepartureArrival(VOYAGE_STATUSES.DRAFT, dataToFormat, voyageData);
         break;
       case FORM_STEPS.NEW_PERSON:
-        dataToSubmit = formatNewPerson(VOYAGE_STATUSES.DRAFT, formData, voyageData);
+        dataToSubmit = formatNewPerson(VOYAGE_STATUSES.DRAFT, dataToFormat, voyageData);
         break;
-      case FORM_STEPS.PEOPLE_MANIFEST:
-        if (extraParams.makeChanges) {
-          history.push(SAVE_VOYAGE_PEOPLE_URL, { voyageId });
-        } else {
-          createNextPage(sourceForm);
-        }
-        return;
       case FORM_STEPS.RESPONSIBLE_PERSON:
-        dataToSubmit = formatResponsiblePerson(VOYAGE_STATUSES.DRAFT, formData, voyageData);
+        dataToSubmit = formatResponsiblePerson(VOYAGE_STATUSES.DRAFT, dataToFormat, voyageData);
         break;
       case FORM_STEPS.VESSEL:
-        dataToSubmit = formatVessel(VOYAGE_STATUSES.DRAFT, formData, voyageData);
+        dataToSubmit = formatVessel(VOYAGE_STATUSES.DRAFT, dataToFormat, voyageData);
         break;
       case FORM_STEPS.VOYAGE:
         dataToSubmit = { status: VOYAGE_STATUSES.PRE_SUBMITTED };
@@ -194,15 +186,45 @@ const FormVoyageContainer = () => {
       default:
         dataToSubmit = null;
     }
+    return dataToSubmit;
+  };
 
-    // Handle missing voyageId (for if user comes to a subpage directly, and we haven't got the id)
-    if (!voyageId) {
-      setErrors({ voyageForm: 'There was a problem locating your voyage, please return to "Voyage Plans" and try again' });
-      scrollToTopOnError('voyageForm');
+  const handleSubmit = async (e, sourceForm, voyageIdLocal, extraParams = {}) => {
+    e.preventDefault();
+
+    // handle peopleManifest page (no PATCH required)
+    if (sourceForm === FORM_STEPS.PEOPLE_MANIFEST) {
+      if (extraParams.makeChanges) {
+        history.push(SAVE_VOYAGE_PEOPLE_URL, { voyageId });
+      } else {
+        createNextPage(sourceForm);
+      }
     } else {
-      const validationErrors = await VoyageFormValidation(formData, sourceForm);
+      // get initial data set from formData
+      const data = formData;
+
+      // check for autocomplete field current value
+      const autocompleteField = document.getElementById('autocomplete')?.name ? document.getElementById('autocomplete').name : null;
+      const autocompleteValue = document.getElementById('autocomplete')?.value === '' ? null : document.getElementById('autocomplete')?.value;
+      const autocompleteNameValue = autocompleteField ? { [autocompleteField]: autocompleteValue } : null;
+
+      // update data for submitting
+      const updatedData = { ...data, ...autocompleteNameValue };
+      const dataToSubmit = formatDataToSubmit(sourceForm, updatedData, extraParams);
+      setFormData(updatedData);
+
+      // validate data
+      const validationErrors = await VoyageFormValidation(updatedData, sourceForm);
       setErrors(validationErrors);
-      if (Object.keys(validationErrors).length === 0 && Object.keys(errors).length === 0) {
+
+      // store updated data in state & local storage
+      setFormData(updatedData);
+
+      // Handle missing voyageId (for if user comes to a subpage directly, and we haven't got the id)
+      if (!voyageId) {
+        setErrors({ voyageForm: 'There was a problem locating your voyage, please return to "Voyage Plans" and try again' });
+        scrollToTopOnError('voyageForm');
+      } else if (Object.keys(validationErrors).length === 0 && Object.keys(errors).length === 0) {
         await patchData(`${VOYAGE_REPORT_URL}/${voyageId}`, dataToSubmit, location.pathname.substring(1));
         createNextPage(sourceForm);
       }
