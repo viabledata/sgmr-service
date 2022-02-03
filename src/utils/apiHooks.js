@@ -82,14 +82,14 @@ const deleteItem = (url, pageSource) => {
 const deleteData = async (url) => {
   const response = await axios.delete(url, {
     headers: { Authorization: `Bearer ${Auth.retrieveToken()}` },
-  })
-  return response.data
-}
+  });
+  return response.data;
+};
 
 export {
   postData,
   getData,
   patchData,
   deleteItem,
-  deleteData
+  deleteData,
 };

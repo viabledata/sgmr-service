@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Route, Switch } from 'react-router-dom';
-import { PEOPLE_URL, VESSELS_URL, VOYAGE_REPORT_URL, VOYAGE_STATUSES } from '../constants/ApiConstants';
+import {
+  PEOPLE_URL, VESSELS_URL, VOYAGE_REPORT_URL, VOYAGE_STATUSES,
+} from '../constants/ApiConstants';
 
 import ScrollToTop from './ScrollToTop';
 import SecureRoute from '../lib/SecureRoute';
@@ -75,7 +77,7 @@ const Main = () => {
                     redirectURL: '/voyage-plans',
                     apiHook: patchData,
                     apiHookConfig: [{ status: VOYAGE_STATUSES.PRE_CANCELLED }],
-                    action: 'Cancel'
+                    action: 'Cancel',
                   }
                 }
               />
@@ -102,7 +104,7 @@ const Main = () => {
                     baseURL: VESSELS_URL,
                     redirectURL: '/pleasure-crafts',
                     apiHook: deleteData,
-                    action: 'Delete'
+                    action: 'Delete',
                   }
                 }
               />
@@ -126,7 +128,7 @@ const Main = () => {
                     baseURL: PEOPLE_URL,
                     redirectURL: '/people',
                     apiHook: deleteData,
-                    action: 'Delete'
+                    action: 'Delete',
                   }
                 }
               />

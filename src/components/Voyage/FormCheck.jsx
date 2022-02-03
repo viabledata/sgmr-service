@@ -2,7 +2,6 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 import {
-  FORM_STEPS,
   SAVE_VOYAGE_ARRIVALS_URL, SAVE_VOYAGE_DEPARTURE_URL,
   SAVE_VOYAGE_PEOPLE_MANIFEST_URL,
   SAVE_VOYAGE_RESPONSIBLE_PERSON_URL,

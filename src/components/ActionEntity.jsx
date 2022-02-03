@@ -4,7 +4,6 @@ import { useHistory, useParams } from 'react-router-dom';
 // App imports
 import { AlertContext } from './AlertContext';
 
-
 const ActionEntity = ({ notification }) => {
   const { setAlertContext } = useContext(AlertContext);
   const history = useHistory();
@@ -13,9 +12,9 @@ const ActionEntity = ({ notification }) => {
   const [error, setError] = useState(null);
   const [deletionConfirmed, setDeletionConfirmed] = useState(false);
   const {
-    title, heading, entity, baseURL, redirectURL, apiHook, apiHookConfig = [], action
+    title, heading, entity, baseURL, redirectURL, apiHook, apiHookConfig = [], action,
   } = notification;
-  const entityURL = `${baseURL}/${entityId}`
+  const entityURL = `${baseURL}/${entityId}`;
 
   document.title = `${action} ${entity}`;
 
@@ -24,7 +23,7 @@ const ActionEntity = ({ notification }) => {
     setFormDisabled(true);
     try {
       if (deletionConfirmed) {
-        await apiHook(entityURL, ...apiHookConfig)
+        await apiHook(entityURL, ...apiHookConfig);
         history.replace(redirectURL);
         setAlertContext({
           heading,
