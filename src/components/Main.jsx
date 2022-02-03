@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Route, Switch } from 'react-router-dom';
-import { PEOPLE_URL, VESSELS_URL } from '../constants/ApiConstants';
+import { PEOPLE_URL, VESSELS_URL, VOYAGE_REPORT_URL, VOYAGE_STATUSES } from '../constants/ApiConstants';
 
 import ScrollToTop from './ScrollToTop';
 import SecureRoute from '../lib/SecureRoute';
@@ -30,7 +30,7 @@ import FormVoyageSubmitted from './Forms/FormVoyageSubmitted';
 import UserContext from './UserContext';
 import DeleteAccount from './User/DeleteAccount';
 import DeleteConfirmation from './User/DeleteConfirmation';
-import DeleteEntity from './DeleteEntity';
+import ActionEntity from './ActionEntity';
 import NewPassword from './User/NewPassword';
 import ForgottenPassword from './User/ForgottenPassword';
 import LandingPage from './LandingPage';
@@ -38,6 +38,7 @@ import ManageReports from './ManageReports';
 import SiteMaintenance from './SiteMaintenance';
 import { siteMaintenance } from '../lib/config';
 import { AlertContextProvider } from './AlertContext';
+import { patchData, deleteData } from '../utils/apiHooks';
 
 const Main = () => {
   const [user, setUser] = useState(null);
@@ -63,6 +64,22 @@ const Main = () => {
             <SecureRoute exact path="/save-voyage/page-([1-7]{1})">
               <VoyageFormContainer />
             </SecureRoute>
+            <SecureRoute exact path="/voyage-plans/:entityId/delete">
+              <ActionEntity
+                notification={
+                  {
+                    title: 'Success',
+                    heading: 'Voyage plan has been successfully cancelled.',
+                    entity: 'voyage plan',
+                    baseURL: VOYAGE_REPORT_URL,
+                    redirectURL: '/voyage-plans',
+                    apiHook: patchData,
+                    apiHookConfig: [{ status: VOYAGE_STATUSES.PRE_CANCELLED }],
+                    action: 'Cancel'
+                  }
+                }
+              />
+            </SecureRoute>
             <SecureRoute exact path="/save-voyage/page-submitted">
               <FormVoyageSubmitted />
             </SecureRoute>
@@ -76,16 +93,18 @@ const Main = () => {
               <EditVessel />
             </SecureRoute>
             <SecureRoute exact path="/pleasure-crafts/:entityId/delete">
-              <DeleteEntity
+              <ActionEntity
                 notification={
-                {
-                  title: 'Success',
-                  heading: 'Pleasure craft successfully deleted.',
-                  entity: 'pleasure craft',
-                  baseURL: VESSELS_URL,
-                  redirectURL: '/pleasure-crafts',
+                  {
+                    title: 'Success',
+                    heading: 'Pleasure craft successfully deleted.',
+                    entity: 'pleasure craft',
+                    baseURL: VESSELS_URL,
+                    redirectURL: '/pleasure-crafts',
+                    apiHook: deleteData,
+                    action: 'Delete'
+                  }
                 }
-              }
               />
             </SecureRoute>
             <SecureRoute exact path="/people">
@@ -98,16 +117,18 @@ const Main = () => {
               <EditPerson />
             </SecureRoute>
             <SecureRoute exact path="/people/:entityId/delete">
-              <DeleteEntity
+              <ActionEntity
                 notification={
-                {
-                  title: 'Success',
-                  heading: 'Person successfully deleted.',
-                  entity: 'person',
-                  baseURL: PEOPLE_URL,
-                  redirectURL: '/people',
+                  {
+                    title: 'Success',
+                    heading: 'Person successfully deleted.',
+                    entity: 'person',
+                    baseURL: PEOPLE_URL,
+                    redirectURL: '/people',
+                    apiHook: deleteData,
+                    action: 'Delete'
+                  }
                 }
-              }
               />
             </SecureRoute>
             <SecureRoute exact path="/account">
