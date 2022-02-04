@@ -1,4 +1,4 @@
-FROM quay.io/ukhomeofficedigital/cop-node:14 as builder
+FROM quay.io/ukhomeofficedigital/cop-node:16 as builder
 
 RUN apt update && apt upgrade -y
 
