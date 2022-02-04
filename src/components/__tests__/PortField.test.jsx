@@ -35,6 +35,10 @@ describe('PortField', () => {
           name: 'FOO',
           unlocode: 'BAR',
         },
+        {
+          name: 'NO_UNLOCODE',
+          unlocode: null,
+        },
       ]);
 
     render(<PortField />);
@@ -42,9 +46,10 @@ describe('PortField', () => {
     await waitFor(() => fireEvent.change(screen.getByRole('combobox'), { target: { value: 'test' } }));
 
     expect(mockAxios.history.get.length).toBe(1);
-    expect(screen.getAllByRole('option').length).toBe(2);
+    expect(screen.getAllByRole('option').length).toBe(3);
     expect(screen.queryByText('TEST_NAME (TEST_UNLOCODE)')).toBeInTheDocument();
     expect(screen.queryByText('FOO (BAR)')).toBeInTheDocument();
+    expect(screen.queryByText('NO_UNLOCODE')).toBeInTheDocument();
   });
 
   it('should render default unlocode when user clicks on port with no unlocode', async () => {
@@ -53,7 +58,7 @@ describe('PortField', () => {
       .reply(200, [
         {
           name: 'TEST_NAME',
-          unlocode: '',
+          unlocode: null,
         },
       ]);
 
