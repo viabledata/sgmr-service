@@ -1,6 +1,6 @@
 FROM quay.io/ukhomeofficedigital/cop-node:16 as builder
 
-RUN apt update && apt upgrade -y
+RUN apt-get update && apt-get upgrade -y
 
 RUN mkdir -p /src
 WORKDIR /src
