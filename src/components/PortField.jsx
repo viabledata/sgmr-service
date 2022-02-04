@@ -44,9 +44,12 @@ function suggestionTemplate(result) {
   return unlocode ? `${name} (${unlocode})` : name;
 }
 
-const PortField = ({ onConfirm = () => {}, defaultValue = '', ...props }) => {
+const PortField = ({
+  onConfirm = () => {}, defaultValue = '', fieldName, ...props
+}) => {
   return (
     <Autocomplete
+      id="autocomplete"
       source={source}
       onConfirm={onConfirm}
       showNoOptionsFound={false}
@@ -56,6 +59,7 @@ const PortField = ({ onConfirm = () => {}, defaultValue = '', ...props }) => {
         inputValue: inputTemplate,
         suggestion: suggestionTemplate,
       }}
+      name={fieldName}
       {...props}
     />
   );
