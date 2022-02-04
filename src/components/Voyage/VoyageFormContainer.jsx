@@ -146,7 +146,7 @@ const FormVoyageContainer = () => {
     let nextPage;
     const currentPage = parseInt(pageNum, 10);
     switch (sourceForm) {
-      case FORM_STEPS.CANCEL: history.push('/reports'); break;
+      case FORM_STEPS.CANCEL: history.push('/voyage-plans'); break;
       case FORM_STEPS.CHECK: history.push('/save-voyage/page-submitted'); break;
       default:
         nextPage = currentPage < maxPages ? currentPage + 1 : currentPage;
