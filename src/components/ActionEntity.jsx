@@ -1,12 +1,10 @@
 import React, { useState, useContext } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
-import axios from 'axios';
 
 // App imports
-import Auth from '../lib/Auth';
 import { AlertContext } from './AlertContext';
 
-const DeleteEntity = ({ notification }) => {
+const ActionEntity = ({ notification }) => {
   const { setAlertContext } = useContext(AlertContext);
   const history = useHistory();
   const { entityId } = useParams();
@@ -14,19 +12,18 @@ const DeleteEntity = ({ notification }) => {
   const [error, setError] = useState(null);
   const [deletionConfirmed, setDeletionConfirmed] = useState(false);
   const {
-    title, heading, entity, baseURL, redirectURL,
+    title, heading, entity, baseURL, redirectURL, apiHook, apiHookConfig = [], action,
   } = notification;
-  
-  document.title = `Delete ${entity}`;
+  const entityURL = `${baseURL}/${entityId}`;
+
+  document.title = `${action} ${entity}`;
 
   const formSubmitHandler = async (e) => {
     e.preventDefault();
     setFormDisabled(true);
     try {
       if (deletionConfirmed) {
-        await axios.delete(`${baseURL}/${entityId}`, {
-          headers: { Authorization: `Bearer ${Auth.retrieveToken()}` },
-        });
+        await apiHook(entityURL, ...apiHookConfig);
         history.replace(redirectURL);
         setAlertContext({
           heading,
@@ -37,7 +34,7 @@ const DeleteEntity = ({ notification }) => {
       }
     } catch (err) {
       if (err.response) {
-        setError(`Cannot delete this ${entity} right now, try again later`);
+        setError(`Cannot ${action.toLowerCase()} this ${entity} right now, try again later`);
         setFormDisabled(false);
       }
     }
@@ -65,7 +62,7 @@ const DeleteEntity = ({ notification }) => {
                     className="govuk-fieldset__legend govuk-fieldset__legend--l"
                   >
                     <h1 className="govuk-fieldset__heading">
-                      {`Are you sure you want to delete this ${entity}?`}
+                      {`Are you sure you want to ${action.toLowerCase()} this ${entity}?`}
                     </h1>
                   </legend>
 
@@ -95,6 +92,7 @@ const DeleteEntity = ({ notification }) => {
                       <input
                         className="govuk-radios__input"
                         id="confirm-no"
+                        data-testid="confirm-no"
                         name="confirm_deletion"
                         type="radio"
                         value="no"
@@ -122,4 +120,4 @@ const DeleteEntity = ({ notification }) => {
   );
 };
 
-export default DeleteEntity;
+export default ActionEntity;
