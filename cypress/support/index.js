@@ -1,5 +1,6 @@
 import './commands';
 import 'cypress-axe';
+import 'cypress-get-table';
 
 const addContext = require('mochawesome/addContext');
 
