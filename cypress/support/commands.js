@@ -155,7 +155,7 @@ Cypress.Commands.add('enterSkipperDetails', () => {
 });
 
 Cypress.Commands.add('checkNoErrors', () => {
-  cy.get('.govuk-error-message').should('not.be.visible');
+  cy.get('.govuk-error-message').should('not.exist');
 });
 
 Cypress.Commands.add('saveAndContinue', () => {
@@ -192,11 +192,11 @@ Cypress.Commands.add('addPeople', (person) => {
   cy.contains('a', 'Save a person').should('have.text', 'Save a person').click();
   cy.enterPeopleInfo(person);
   cy.get('.govuk-button').click();
-  cy.get('.govuk-error-message').should('not.be.visible');
+  cy.get('.govuk-error-message').should('not.exist');
   cy.get('table').getTable().then((peopleData) => {
     expect(peopleData).to.deep.include({
-      'Surname': person.lastName,
-      'Given name': person.firstName,
+      'Last Name': person.lastName,
+      'First Name': person.firstName,
       'Type': person.personType,
     });
   });
@@ -206,7 +206,7 @@ Cypress.Commands.add('addVessel', (vessel) => {
   cy.contains('a', 'Save a pleasure craft').should('have.text', 'Save a pleasure craft').click();
   cy.enterVesselInfo(vessel);
   cy.get('.govuk-button').click();
-  cy.get('.govuk-error-message').should('not.be.visible');
+  cy.get('.govuk-error-message').should('not.exist');
   cy.get('table').getTable().then((vesselData) => {
     expect(vesselData).to.deep.include({
       'Pleasure craft name': vessel.name,
