@@ -171,7 +171,7 @@ Cypress.Commands.add('saveAndContinueOnPeopleManifest', (makeChanges) => {
 
 Cypress.Commands.add('getPersonObj', () => {
   cy.fixture('people.json').then((personObj) => {
-    personObj.documentNumber = faker.random.number();
+    personObj.documentNumber = faker.datatype.number();
     personObj.firstName = `Auto-${faker.name.firstName()}`;
     personObj.lastName = faker.name.lastName();
     personObj.dateOfBirth = getPastDate(30, 'DD/MM/YYYY');
@@ -182,8 +182,8 @@ Cypress.Commands.add('getPersonObj', () => {
 
 Cypress.Commands.add('getVesselObj', () => {
   cy.fixture('vessel.json').then((vesselObj) => {
-    vesselObj.regNumber = faker.random.number();
-    vesselObj.name = `${vesselObj.name}${faker.random.number()}`;
+    vesselObj.regNumber = faker.datatype.number();
+    vesselObj.name = `${vesselObj.name}${faker.datatype.number()}`;
     return cy.wrap(vesselObj);
   });
 });
@@ -273,12 +273,13 @@ Cypress.Commands.add('waitForLatestEmail', (inboxId) => {
 });
 
 Cypress.Commands.add('deleteAllEmails', () => {
-  mailslurp.emptyInbox('b4e9fa15-fbd0-4699-8e49-8dfb1511a2e8');
+  mailslurp.emptyInbox('64536d92-2cdc-499e-aa3a-c532fbc60f02');
 });
 
 Cypress.Commands.add('activateAccount', () => {
   let apiServer = Cypress.env('api_server');
-  cy.waitForLatestEmail('b4e9fa15-fbd0-4699-8e49-8dfb1511a2e8').then((mail) => {
+  cy.waitForLatestEmail('64536d92-2cdc-499e-aa3a-c532fbc60f02').then((mail) => {
+    console.log(mail)
     assert.isDefined(mail);
     const token = /token=([A-Za-z0-9-_=]+\.[A-Za-z0-9-_=]+\.?[A-Za-z0-9-_.+/=]*)/.exec(mail.body)[1];
     const email = /email=([A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,})/i.exec(mail.body)[1];

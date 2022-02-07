@@ -28,7 +28,7 @@ describe('Edit exiting People information in the account', () => {
     people.lastName = faker.name.lastName();
     people.personType = 'Crew';
     people.travelDocType = 'IdentityCard';
-    people.documentNumber = faker.random.number();
+    people.documentNumber = faker.datatype.number();
     people.issuingState = 'AUS';
 
     const expectedPerson = [
@@ -63,7 +63,7 @@ describe('Edit exiting People information in the account', () => {
     cy.contains('a', people.lastName).click();
     cy.checkAccessibility();
     people.travelDocType = 'Passport';
-    people.documentNumber = faker.random.number();
+    people.documentNumber = faker.datatype.number();
     people.issuingState = 'CUB';
 
     const expectedPerson = [
