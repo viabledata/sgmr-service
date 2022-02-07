@@ -279,7 +279,6 @@ Cypress.Commands.add('deleteAllEmails', () => {
 Cypress.Commands.add('activateAccount', () => {
   let apiServer = Cypress.env('api_server');
   cy.waitForLatestEmail('64536d92-2cdc-499e-aa3a-c532fbc60f02').then((mail) => {
-    console.log(mail)
     assert.isDefined(mail);
     const token = /token=([A-Za-z0-9-_=]+\.[A-Za-z0-9-_=]+\.?[A-Za-z0-9-_.+/=]*)/.exec(mail.body)[1];
     const email = /email=([A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,})/i.exec(mail.body)[1];
