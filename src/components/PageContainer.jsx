@@ -77,7 +77,7 @@ const PageContainer = (props) => {
       <main className="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" role="main">
         <NotificationBanner />
         <div className="govuk-grid-row">
-          {pageData.urlStub === '/reports' && <WelcomeBanner />}
+          {pageData.urlStub === '/voyage-plans' && <WelcomeBanner />}
           <PageIntro pageData={pageData} />
           {pageData.formIntroHeading && <PageIntroToForm pageData={pageData} />}
           {pageData.reportType && sectionReport}
