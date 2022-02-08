@@ -48,7 +48,7 @@ const SectionTablePeople = ({ pageData }) => {
             {!peopleData.errors && (
             <table className="govuk-table">
               <thead className="govuk-table__head">
-                <tr className="govuk-table__row">
+                <tr className="govuk-table__row" role="row">
                   {titles.map((elem) => {
                     return (
                       <th className="govuk-table__header" scope="col" key={elem}>{elem}</th>
@@ -59,8 +59,11 @@ const SectionTablePeople = ({ pageData }) => {
               <tbody className="govuk-table__body">
                 {Object.entries(peopleData).map((person) => {
                   return (
-                    <tr className="govuk-table__row" key={person[1].id}>
-                      <td className="govuk-table__cell">
+                    <tr className="govuk-table__row" key={person[1].id} role="row">
+                      <td className="govuk-table__cell" role="cell">
+                        <span className="responsive-table__heading" aria-hidden="true">
+                          Last Name
+                        </span>
                         <Link to={{
                           pathname: '/people/edit-person',
                           state: { peopleId: person[1].id },
@@ -69,8 +72,18 @@ const SectionTablePeople = ({ pageData }) => {
                           {person[1].lastName}
                         </Link>
                       </td>
-                      <td className="govuk-table__cell">{person[1].firstName}</td>
-                      <td className="govuk-table__cell">{getPersonType(person[1].peopleType.name)}</td>
+                      <td className="govuk-table__cell" role="cell">
+                        <span className="responsive-table__heading" aria-hidden="true">
+                          First Name
+                        </span>
+                        {person[1].firstName}
+                      </td>
+                      <td className="govuk-table__cell" role="cell">
+                        <span className="responsive-table__heading" aria-hidden="true">
+                          Type
+                        </span>
+                        {getPersonType(person[1].peopleType.name)}
+                      </td>
                     </tr>
                   );
                 })}

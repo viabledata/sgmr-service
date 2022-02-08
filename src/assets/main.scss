@@ -11,6 +11,10 @@
   vertical-align: middle;
 }
 
+.govuk-table__cell:last-child {
+  padding: 10px 20px 10px 0;
+}
+
 // Make block buttons display block
 .block-button {
   display: block;
@@ -34,4 +38,61 @@
 }
 .autocomplete__input--focused {
   outline: $govuk-focus-width solid $govuk-focus-colour;
+}
+
+.responsive-table {
+  margin-bottom: 0;
+  width: 100%;
+}
+
+tbody tr {
+  display: block;
+  margin-bottom: 1.5em;
+  padding: 0 0.5em;
+}
+
+@media (min-width: 769px) {
+  tbody tr {
+    display: table-row;
+  }
+}
+
+tbody tr td {
+  display: flex;
+  justify-content: space-between;
+  min-width: 1px;
+  text-align: right;
+}
+
+@media (max-width: 768px) {
+  tbody tr td {
+    padding-right: 0;
+  }
+  tbody tr td:last-child {
+    border-bottom: 0
+  }
+  tbody tr {
+    border-bottom: 3px solid grey;
+  }
+  thead {
+    display: none;
+  }
+}
+
+@media (min-width: 769px) {
+  tbody tr td {
+    display: table-cell;
+    text-align: left;
+  }
+}
+
+.responsive-table__heading {
+  font-weight: 700;
+  text-align: left;
+  word-break: initial;
+}
+@media (min-width: 769px) {
+  .responsive-table__heading {
+    display: none;
+  }
 }
