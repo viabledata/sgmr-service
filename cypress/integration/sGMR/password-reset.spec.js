@@ -36,7 +36,7 @@ describe('User Request for Password reset', () => {
     cy.visit('/sign-in');
     cy.login();
     cy.fixture('user-registration.json').then((userDetails) => {
-      cy.get('h3.govuk-heading-m').should('have.text', `Welcome back, ${userDetails.firstName}`);
+      cy.get('.govuk-body').contains('Welcome back').should('have.text', `Welcome back, ${userDetails.firstName}`);
     });
   });
 
