@@ -11,6 +11,12 @@ const Nav = () => {
   const history = useHistory();
   const serviceName = 'Tell Border Force and HMRC you are sailing to or from the UK in a pleasure craft';
   const [navArray, setNavArray] = useState([]);
+  const [menuState, setMenuState] = useState(false);
+
+  const menuToggle = (e) => {
+    e.preventDefault();
+    setMenuState(!menuState);
+  };
 
   const navData = [
     {
@@ -76,18 +82,31 @@ const Nav = () => {
         {serviceName}
       </Link>
 
-      <button
-        type="button"
-        className="govuk-header__menu-button govuk-js-header-toggle"
-        aria-controls="navigation"
-        aria-label="Show or hide navigation menu"
-      >
-        Menu
-      </button>
-
       {Auth.isAuthorized() && (
-        <nav aria-label="Menu" className="govuk-header__navigation">
-          <ul id="navigation" className="govuk-header__navigation-list" aria-label="Top Level Navigation">
+        <nav aria-label="Menu" className="govuk-header__navigation ">
+          <button
+            type="button"
+            onClick={(e) => menuToggle(e)}
+            className={
+              menuState === false
+                ? 'govuk-header__menu-button govuk-js-header-toggle'
+                : 'govuk-header__menu-button govuk-js-header-toggle govuk-header__menu-button--open'
+            }
+            aria-controls="navigation"
+            aria-label="Show or hide navigation menu"
+            aria-expanded="false"
+          >
+            Menu
+          </button>
+          <ul
+            id="navigation"
+            className={
+              menuState === false
+                ? 'govuk-header__navigation-list'
+                : 'govuk-header__navigation-list govuk-header__navigation-list--open'
+            }
+            aria-label="Top Level Navigation"
+          >
             {navArray.map((elem) => {
               const activeState = elem.active === true ? 'govuk-header__navigation-item govuk-header__navigation-item--active' : 'govuk-header__navigation-item';
               return (

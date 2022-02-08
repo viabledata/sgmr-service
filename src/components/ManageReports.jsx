@@ -101,7 +101,7 @@ const ManageReports = (pageData) => {
             <h2 className="govuk-heading-l">{tableName}</h2>
             <table className="govuk-table">
               <thead className="govuk-table__head">
-                <tr className="govuk-table__row">
+                <tr className="govuk-table__row" role="row">
                   <th scope="col" className="govuk-table__header">Pleasure craft</th>
                   <th scope="col" className="govuk-table__header">Departure date</th>
                   <th scope="col" className="govuk-table__header">Departure port</th>
@@ -112,8 +112,11 @@ const ManageReports = (pageData) => {
                 {reportList && reportList.map((voyage) => {
                   if (voyage.status.name === tableName || voyage.status.name === `Pre${tableName}`) {
                     return (
-                      <tr className="govuk-table__row" key={voyage.id}>
-                        <td className="govuk-table__cell">
+                      <tr className="govuk-table__row" key={voyage.id} role="row">
+                        <td className="govuk-table__cell" role="cell">
+                          <span className="responsive-table__heading" aria-hidden="true">
+                            Pleasure craft
+                          </span>
                           <Link to={{
                             pathname: EDIT_VOYAGE_CHECK_DETAILS_URL,
                             state: { voyageId: voyage.id },
@@ -122,7 +125,10 @@ const ManageReports = (pageData) => {
                             {voyage.vesselName}
                           </Link>
                         </td>
-                        <td className="govuk-table__cell">
+                        <td className="govuk-table__cell" role="cell">
+                          <span className="responsive-table__heading" aria-hidden="true">
+                            Departure date
+                          </span>
                           <Link to={{
                             pathname: EDIT_VOYAGE_CHECK_DETAILS_URL,
                             state: { voyageId: voyage.id },
@@ -131,8 +137,18 @@ const ManageReports = (pageData) => {
                             {formatUIDate(voyage.departureDate)}
                           </Link>
                         </td>
-                        <td className="govuk-table__cell">{voyage.departurePort}</td>
-                        <td className="govuk-table__cell">{voyage.arrivalPort}</td>
+                        <td className="govuk-table__cell" role="cell">
+                          <span className="responsive-table__heading" aria-hidden="true">
+                            Departure port
+                          </span>
+                          {voyage.departurePort}
+                        </td>
+                        <td className="govuk-table__cell" role="cell">
+                          <span className="responsive-table__heading" aria-hidden="true">
+                            Arrival port
+                          </span>
+                          {voyage.arrivalPort}
+                        </td>
                       </tr>
                     );
                   }

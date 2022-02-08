@@ -1,12 +1,14 @@
 exports.getFutureDate = (year, format) => {
+  const dayjs = require('dayjs');
   return ['DD/MM/YYYY', 'DD/MM/YYYY HH:MM'].includes(format)
-    ? Cypress.dayjs().add(year, 'year').format(format)
+    ? dayjs().add(year, 'year').format(format)
     : null;
 };
 
 exports.getPastDate = (age, format) => {
+  const dayjs = require('dayjs');
   return ['DD/MM/YYYY', 'DD/MM/YYYY HH:MM'].includes(format)
-    ? Cypress.dayjs().subtract(age, 'year').format(format)
+    ? dayjs().subtract(age, 'year').format(format)
     : null;
 };
 
