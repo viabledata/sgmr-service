@@ -125,8 +125,8 @@ Cypress.Commands.add('enterDepartureDetails', (date, port) => {
   cy.get('input[name="departureTimeHour"]').clear().type(departureTime[0]);
   cy.get('input[name="departureTimeMinute"]').clear().type(departureTime[1]);
   cy.log(port);
-  cy.get('input[id="departurePort"]').clear().type(port);
-  cy.get('ul[id="departurePort__listbox"] .autocomplete__option').contains(port).click();
+  cy.get('input[id="autocomplete"]').clear().type(port);
+  cy.get('ul[id="autocomplete__listbox"] .autocomplete__option').contains(port).click();
 });
 
 Cypress.Commands.add('enterArrivalDetails', (date, port) => {
@@ -138,8 +138,8 @@ Cypress.Commands.add('enterArrivalDetails', (date, port) => {
   cy.get('input[name="arrivalDateYear"]').clear().type(arrivalDate[2]);
   cy.get('input[name="arrivalTimeHour"]').clear().type(arrivalTime[0]);
   cy.get('input[name="arrivalTimeMinute"]').clear().type(arrivalTime[1]);
-  cy.get('input[id="arrivalPort"]').clear().type(port);
-  cy.get('ul[id="arrivalPort__listbox"] .autocomplete__option').contains(port).click();
+  cy.get('input[id="autocomplete"]').clear().type(port);
+  cy.get('ul[id="autocomplete__listbox"] .autocomplete__option').contains(port).click();
 });
 
 Cypress.Commands.add('enterSkipperDetails', () => {
