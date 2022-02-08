@@ -74,9 +74,10 @@ describe('Add new voyage plan', () => {
     cy.assertPeopleTable((reportData) => {
       expect(reportData).to.have.length(1);
       expect(reportData[0]).to.deep.include({
-        'Last name': person.lastName,
-        'First name': person.firstName,
+      'Last Name': `Last Name${person.lastName}`,
+      'First Name': `First Name${person.firstName}`
       });
+      cy.get('.responsive-table__heading').should('not.be.visible');
     });
     cy.saveAndContinueOnPeopleManifest(true);
     cy.contains(`People already added to the voyage plan:${person.firstName} ${person.lastName}`);
