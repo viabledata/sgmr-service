@@ -25,11 +25,13 @@ const FormCheck = ({
       <div className="govuk-summary-list govuk-!-margin-bottom-9">
         <h2 className="govuk-heading-m">Departure details</h2>
       </div>
+      {Object.entries(errors).length > 0 && (
       <div className="govuk-form-group govuk-form-group--error">
         <p id="departureDate" className="govuk-error-message">{errors.departureDate}</p>
         <p id="departureTime" className="govuk-error-message">{errors.departureTime}</p>
         <p id="departurePort" className="govuk-error-message">{errors.departurePort}</p>
       </div>
+      )}
       <dl className="govuk-summary-list">
         <div className="govuk-summary-list__row">
           <dt className="govuk-summary-list__key">Departure date</dt>
@@ -64,11 +66,14 @@ const FormCheck = ({
       <div className="govuk-summary-list govuk-!-margin-bottom-9">
         <h2 className="govuk-heading-m">Arrival details</h2>
       </div>
+
+      {Object.entries(errors).length > 0 && (
       <div className="govuk-form-group govuk-form-group--error">
         <p id="arrivalTime" className="govuk-error-message">{errors.arrivalTime}</p>
         <p id="arrivalDate" className="govuk-error-message">{errors.arrivalDate}</p>
         <p id="arrivalPort" className="govuk-error-message">{errors.arrivalPort}</p>
       </div>
+      )}
       <dl className="govuk-summary-list">
         <div className="govuk-summary-list__row">
           <dt className="govuk-summary-list__key">Arrival date</dt>
@@ -102,10 +107,13 @@ const FormCheck = ({
       <div className="govuk-summary-list govuk-!-margin-bottom-9">
         <h2 className="govuk-heading-m">Pleasure craft details</h2>
       </div>
+
+      {Object.entries(errors).length > 0 && (
       <div className="govuk-form-group govuk-form-group--error">
         <p id="vesselName" className="govuk-error-message">{errors.vesselName}</p>
         <p id="registration" className="govuk-error-message">{errors.registration}</p>
       </div>
+      )}
       <dl className="govuk-summary-list">
         <div className="govuk-summary-list__row">
           <dt className="govuk-summary-list__key">Pleasure craft name</dt>
@@ -173,9 +181,12 @@ const FormCheck = ({
       <div className="govuk-summary-list govuk-!-margin-bottom-9">
         <h2 className="govuk-heading-m">Skipper&apos;s details</h2>
       </div>
+
+      {Object.entries(errors).length > 0 && (
       <div className="govuk-form-group govuk-form-group--error">
         <p id="responsibleGivenName" className="govuk-error-message">{errors.responsibleGivenName}</p>
       </div>
+      )}
       <dl className="govuk-summary-list">
         <div className="govuk-summary-list__row">
           <dt className="govuk-summary-list__key">First name</dt>
