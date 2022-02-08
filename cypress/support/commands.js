@@ -188,6 +188,12 @@ Cypress.Commands.add('getVesselObj', () => {
   });
 });
 
+/* 
+ * Field titles are displayed on each item in narrow screens
+ * and hidden on wide screens
+ * getTable returns the version with titles
+ * then we test that titles are hidden as this is widescreen
+ */
 Cypress.Commands.add('addPeople', (person) => {
   cy.contains('a', 'Save a person').should('have.text', 'Save a person').click();
   cy.enterPeopleInfo(person);
@@ -195,10 +201,11 @@ Cypress.Commands.add('addPeople', (person) => {
   cy.get('.govuk-error-message').should('not.exist');
   cy.get('table').getTable().then((peopleData) => {
     expect(peopleData).to.deep.include({
-      'Last Name': person.lastName,
-      'First Name': person.firstName,
-      'Type': person.personType,
+      'Last Name': `Last Name${person.lastName}`,
+      'First Name': `First Name${person.firstName}`,
+      'Type': `Type${person.personType}`,
     });
+    cy.get('.responsive-table__heading').should('not.be.visible');
   });
 });
 
@@ -241,10 +248,13 @@ Cypress.Commands.add('getNumberOfReports', (type) => {
         .find('strong')
         .invoke('text')
         .then((text) => {
+          console.log(text);
           numberOfReports = text;
         });
+    })
+    .then(() => {
+      return numberOfReports;
     });
-  return numberOfReports;
 });
 
 Cypress.Commands.add('assertPeopleTable', (callback) => {
