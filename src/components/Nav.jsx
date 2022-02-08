@@ -57,7 +57,7 @@ const Nav = () => {
     })
       .then(() => {
         Auth.logout();
-        localStorage.clear();
+        sessionStorage.clear();
         history.push('/sign-in');
       })
       .catch(() => {

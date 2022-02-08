@@ -3,7 +3,7 @@ import { apiUrl } from '../lib/config';
 export const LOGOUT_URL = `${apiUrl}/logout`;
 export const LOGIN_URL = `${apiUrl}/login`;
 export const USER_URL = `${apiUrl}/user`;
-export const USER_VOYAGE_REPORT_URL = `${apiUrl}/user/voyagereport`;
+export const USER_VOYAGE_REPORT_URL = `${apiUrl}/user/voyagereport?per_page=1000`;
 export const PASSWORD_RESET_LINK = `${apiUrl}/password-reset-link`;
 export const PASSWORD_RESET_CONFIRMATION = `${apiUrl}/password-reset-confirmation`;
 export const VOYAGE_REPORT_URL = `${apiUrl}/voyagereport`;
