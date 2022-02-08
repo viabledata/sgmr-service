@@ -20,7 +20,7 @@ const PeopleTable = ({ peopleData, onSelectionChange = () => {} }) => {
   return (
     <table className="table-clickable govuk-table">
       <thead className="govuk-table__head">
-        <tr className="govuk-table__row">
+        <tr className="govuk-table__row" role="row">
           <th
             width={1}
             className="govuk-table__header  multiple-choice--hod"
@@ -33,8 +33,8 @@ const PeopleTable = ({ peopleData, onSelectionChange = () => {} }) => {
       <tbody className="govuk-table__body">
         {peopleData.map((person) => {
           return (
-            <tr className="govuk-table__row" key={person.id}>
-              <td className="govuk-table__cell multiple-choice--hod">
+            <tr className="govuk-table__row" key={person.id} role="row">
+              <td className="govuk-table__cell multiple-choice--hod" role="cell">
                 <div className="govuk-checkboxes__item">
                   <input
                     type="checkbox"
@@ -47,8 +47,18 @@ const PeopleTable = ({ peopleData, onSelectionChange = () => {} }) => {
                   <label className="govuk-label govuk-checkboxes__label" htmlFor={person.id}>&nbsp;</label>
                 </div>
               </td>
-              <td className="govuk-table__cell">{person.lastName}</td>
-              <td className="govuk-table__cell">{person.firstName}</td>
+              <td className="govuk-table__cell" role="cell">
+                <span className="responsive-table__heading" aria-hidden="true">
+                  Last name
+                </span>
+                {person.lastName}
+              </td>
+              <td className="govuk-table__cell" role="cell">
+                <span className="responsive-table__heading" aria-hidden="true">
+                  Pleasure craft type
+                </span>
+                {person.firstName}
+              </td>
             </tr>
           );
         })}
