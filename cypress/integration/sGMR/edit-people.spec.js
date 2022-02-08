@@ -26,26 +26,27 @@ describe('Edit exiting People information in the account', () => {
     cy.checkAccessibility();
     people.firstName = `Auto-${faker.name.firstName()}`;
     people.lastName = faker.name.lastName();
-    people.personType = 'Crew';
+    people.personType = 'Employed Crew';
     people.travelDocType = 'IdentityCard';
     people.documentNumber = faker.datatype.number();
     people.issuingState = 'AUS';
+    people.personTypeValue = 'Crew';
 
     const expectedPerson = [
       {
-        'Surname': people.lastName,
-        'Given name': people.firstName,
-        'Type': people.personType,
-      },
+        'Last Name': `Last Name${people.lastName}`,
+        'First Name': `First Name${people.firstName}`,
+        'Type': `Type${people.personType}`,
+      }
     ];
     cy.get('input[name="firstName"]').clear().type(people.firstName);
     cy.get('input[name="lastName"]').clear().type(people.lastName);
-    cy.get('[type="radio"]').check(people.personType).should('be.checked');
+    cy.get('[type="radio"]').check(people.personTypeValue).should('be.checked');
     cy.get('[type="radio"]').check(people.travelDocType).should('be.checked');
     cy.get('input[name="documentNumber"]').clear().type(people.documentNumber);
     cy.get('input[name="documentIssuingState"]').clear().type(people.issuingState);
-    cy.get('.govuk-button').click();
-    cy.get('.govuk-error-message').should('not.be.visible');
+    cy.get('.govuk-button').contains('Add to saved people list').click();
+    cy.get('.govuk-error-message').should('not.exist');
 
     cy.get('table').getTable().then((peopleData) => {
       expect(peopleData).to.not.be.empty;
@@ -68,19 +69,19 @@ describe('Edit exiting People information in the account', () => {
 
     const expectedPerson = [
       {
-        'Surname': people.lastName,
-        'Given name': people.firstName,
-        'Type': people.personType,
-      },
+        'Last Name': `Last Name${people.lastName}`,
+        'First Name': `First Name${people.firstName}`,
+        'Type': `Type${people.personType}`,
+      }
     ];
     cy.get('input[name="firstName"]').clear().type(`Auto-${faker.name.firstName()}`);
     cy.get('input[name="lastName"]').clear().type(faker.name.lastName());
-    cy.get('[type="radio"]').check('Crew').should('be.checked');
+    cy.get('[type="radio"]').check(people.personTypeValue).should('be.checked');
     cy.get('[type="radio"]').check(people.travelDocType).should('be.checked');
     cy.get('input[name="documentNumber"]').clear().type(people.documentNumber);
     cy.get('input[name="documentIssuingState"]').clear().type(people.issuingState);
     cy.get('.govuk-link--no-visited-state').click();
-    cy.get('.govuk-error-message').should('not.be.visible');
+    cy.get('.govuk-error-message').should('not.exist');
 
     cy.get('table').getTable().then((peopleData) => {
       expect(peopleData).to.not.be.empty;
