@@ -23,7 +23,7 @@ describe('PortField', () => {
     mockAxios.reset();
   });
 
-  it('should render ports without error', async () => {
+  it('should render ports in the autosuggest field when we have suggestions', async () => {
     mockAxios
       .onGet(`${PORTS_URL}?name=test`)
       .reply(200, [
@@ -32,11 +32,11 @@ describe('PortField', () => {
           unlocode: 'TEST_UNLOCODE',
         },
         {
-          name: 'FOO',
+          name: 'TEST_FOO',
           unlocode: 'BAR',
         },
         {
-          name: 'NO_UNLOCODE',
+          name: 'TEST_NO_UNLOCODE',
           unlocode: null,
         },
       ]);
@@ -48,8 +48,8 @@ describe('PortField', () => {
     expect(mockAxios.history.get.length).toBe(1);
     expect(screen.getAllByRole('option').length).toBe(3);
     expect(screen.queryByText('TEST_NAME (TEST_UNLOCODE)')).toBeInTheDocument();
-    expect(screen.queryByText('FOO (BAR)')).toBeInTheDocument();
-    expect(screen.queryByText('NO_UNLOCODE')).toBeInTheDocument();
+    expect(screen.queryByText('TEST_FOO (BAR)')).toBeInTheDocument();
+    expect(screen.queryByText('TEST_NO_UNLOCODE')).toBeInTheDocument();
   });
 
   it('should render default unlocode when user clicks on port with no unlocode', async () => {
@@ -68,18 +68,14 @@ describe('PortField', () => {
     await waitFor(() => fireEvent.click(screen.getByText('TEST_NAME')));
 
     expect(screen.queryByRole('combobox').value).toBe('ZZZD');
+    expect(screen.getByTestId('portOtherInput')).not.toBeVisible();
   });
 
-  it('should handle 500 response when getting ports gracefully', async () => {
-    mockAxios
-      .onGet(`${PORTS_URL}?name=test`)
-      .reply(500);
-
+  it('should allow user to enter a location in a free text field if they click cannot find location in list', async () => {
     render(<PortField />);
 
-    await waitFor(() => fireEvent.change(screen.getByRole('combobox'), { target: { value: 'test' } }));
-
-    expect(screen.queryAllByRole('option').length).toBe(0);
-    expect(screen.queryByRole('combobox').value).toBe('test');
+    expect(screen.getByTestId('portOtherInput')).not.toBeVisible();
+    await waitFor(() => fireEvent.click(screen.getByText('I cannot find the location in the list')));
+    expect(screen.getByTestId('portOtherInput')).toBeVisible();
   });
 });

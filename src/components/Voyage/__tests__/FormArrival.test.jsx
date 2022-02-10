@@ -16,7 +16,7 @@ describe('FormArrival', () => {
     );
 
     expect(screen.getByText('Arrival details')).toBeInTheDocument();
-    expect(screen.getAllByRole('textbox').length).toBe(5); // day, month, year, hour, minute
+    expect(screen.getAllByRole('textbox').length).toBe(6); // day, month, year, hour, minute
     expect(screen.getAllByRole('combobox').length).toBe(1); // port
     expect(screen.getByRole('combobox')).toHaveAttribute('id', 'autocomplete');
     expect(screen.getByRole('combobox')).toHaveAttribute('name', 'arrivalPort');
