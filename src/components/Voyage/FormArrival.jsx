@@ -142,12 +142,11 @@ const FormArrival = ({
       <div id="arrivalLocation" className={`govuk-form-group ${errors.arrivalLocation ? 'govuk-form-group--error' : ''}`}>
         <FormError error={errors.arrivalLocation} />
         <div className={`govuk-form-group ${errors.arrivalPort ? 'govuk-form-group--error' : ''}`}>
-          <label className="govuk-label govuk-label--m" htmlFor="arrivalPort">
-            Arrival point
+          <label className="govuk-label govuk-label--m" htmlFor="departurePort">
+            Name of arrival port or location
           </label>
-
           <div className="govuk-hint">
-            You can enter a port, marina or anchorage name
+            For example MDL Hamble Point Marina
           </div>
           <PortField
             defaultValue={data.arrivalPort}

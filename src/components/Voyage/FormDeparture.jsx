@@ -144,10 +144,10 @@ const FormDeparture = ({
 
         <div className="govuk-form-group">
           <label className="govuk-label govuk-label--m" htmlFor="departurePort">
-            Departure point
+            Name of departure port or location
           </label>
           <div className="govuk-hint">
-            You can enter a port, marina or anchorage name
+            For example MDL Hamble Point Marina
           </div>
           <PortField
             defaultValue={data.departurePort}
