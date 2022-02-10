@@ -68,14 +68,16 @@ describe('PortField', () => {
     await waitFor(() => fireEvent.click(screen.getByText('TEST_NAME')));
 
     expect(screen.queryByRole('combobox').value).toBe('ZZZD');
-    expect(screen.getByTestId('portOtherInput')).not.toBeVisible();
+    expect(screen.getByTestId('portOther')).not.toBeVisible();
   });
 
   it('should allow user to enter a location in a free text field if they click cannot find location in list', async () => {
     render(<PortField />);
-
-    expect(screen.getByTestId('portOtherInput')).not.toBeVisible();
+    expect(screen.getByTestId('portOther')).not.toBeVisible();
     await waitFor(() => fireEvent.click(screen.getByText('I cannot find the location in the list')));
+    expect(screen.getByTestId('portOther')).toBeVisible();
     expect(screen.getByTestId('portOtherInput')).toBeVisible();
+    fireEvent.change(screen.getByTestId('portOtherInput'), { target: { value: 'TEST' } });
+    expect(screen.getByTestId('portOtherInput').value).toBe('TEST');
   });
 });

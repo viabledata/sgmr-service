@@ -69,7 +69,7 @@ const PortField = ({
             I cannot find the location in the list
           </span>
         </summary>
-        <div className="govuk-details__text" data-testId="portOtherInput">
+        <div className="govuk-details__text" data-testId="portOther">
           <label className="govuk-label govuk-label--m" htmlFor={`${fieldName}other`}>
             Other location (please specify)
           </label>
@@ -80,8 +80,8 @@ const PortField = ({
             className="govuk-input"
             name={`${fieldName}other`}
             type="text"
-            value={defaultValue || ''}
             onChange={onConfirm}
+            data-testId="portOtherInput"
           />
         </div>
       </details>
