@@ -48,20 +48,44 @@ const PortField = ({
   onConfirm = () => {}, defaultValue = '', fieldName, ...props
 }) => {
   return (
-    <Autocomplete
-      id="autocomplete"
-      source={source}
-      onConfirm={onConfirm}
-      showNoOptionsFound={false}
-      minLength={3}
-      defaultValue={defaultValue || ''}
-      templates={{
-        inputValue: inputTemplate,
-        suggestion: suggestionTemplate,
-      }}
-      name={fieldName}
-      {...props}
-    />
+    <>
+      <Autocomplete
+        id="autocomplete"
+        source={source}
+        onConfirm={onConfirm}
+        showNoOptionsFound={false}
+        minLength={3}
+        defaultValue={defaultValue || ''}
+        templates={{
+          inputValue: inputTemplate,
+          suggestion: suggestionTemplate,
+        }}
+        name={fieldName}
+        {...props}
+      />
+      <details className="govuk-details" data-module="govuk-details">
+        <summary className="govuk-details__summary">
+          <span className="govuk-details__summary-text">
+            I cannot find the location in the list
+          </span>
+        </summary>
+        <div className="govuk-details__text" data-testId="portOtherInput">
+          <label className="govuk-label govuk-label--m" htmlFor={`${fieldName}other`}>
+            Other location (please specify)
+          </label>
+          <div className="govuk-hint">
+            Please enter the location if it&apos;s not available in the dropdown
+          </div>
+          <input
+            className="govuk-input"
+            name={`${fieldName}other`}
+            type="text"
+            value={defaultValue || ''}
+            onChange={onConfirm}
+          />
+        </div>
+      </details>
+    </>
   );
 };
 
