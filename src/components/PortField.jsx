@@ -47,15 +47,9 @@ function suggestionTemplate(result) {
 const PortField = ({
   onConfirm = () => {}, defaultValue = '', fieldName, ...props
 }) => {
-  console.log('port field');
   const [portEntered, setPortEntered] = useState('');
-  // on select in autocomplete, set other value to null
-  // on enter in other, set autocomplete to null
-  // onConfirm of autoselect setPortEntered(whatisselected)
-  // add useEffect, when setPortEntered changes, run onConfirm
 
   useEffect(() => {
-    console.log(portEntered);
     onConfirm(portEntered);
   }, [portEntered]);
 
@@ -64,7 +58,7 @@ const PortField = ({
       <Autocomplete
         id="autocomplete"
         source={source}
-        onConfirm={(e) => setPortEntered(e.target)}
+        onConfirm={(e) => setPortEntered(e)}
         showNoOptionsFound={false}
         minLength={3}
         defaultValue={defaultValue || ''}
@@ -92,7 +86,7 @@ const PortField = ({
             className="govuk-input"
             name={`${fieldName}other`}
             type="text"
-            onChange={(e) => setPortEntered(e.target.value)}
+            onChange={(e) => setPortEntered({ name: e.target.value, unlocode: null })}
             data-testId="portOtherInput"
           />
         </div>
