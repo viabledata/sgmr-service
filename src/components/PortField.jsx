@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Autocomplete from 'accessible-autocomplete/react';
 import debounce from 'lodash.debounce';
 import axios from 'axios';
@@ -47,12 +47,24 @@ function suggestionTemplate(result) {
 const PortField = ({
   onConfirm = () => {}, defaultValue = '', fieldName, ...props
 }) => {
+  console.log('port field');
+  const [portEntered, setPortEntered] = useState('');
+  // on select in autocomplete, set other value to null
+  // on enter in other, set autocomplete to null
+  // onConfirm of autoselect setPortEntered(whatisselected)
+  // add useEffect, when setPortEntered changes, run onConfirm
+
+  useEffect(() => {
+    console.log(portEntered);
+    onConfirm(portEntered);
+  }, [portEntered]);
+
   return (
     <>
       <Autocomplete
         id="autocomplete"
         source={source}
-        onConfirm={onConfirm}
+        onConfirm={(e) => setPortEntered(e.target)}
         showNoOptionsFound={false}
         minLength={3}
         defaultValue={defaultValue || ''}
@@ -80,7 +92,7 @@ const PortField = ({
             className="govuk-input"
             name={`${fieldName}other`}
             type="text"
-            onChange={onConfirm}
+            onChange={(e) => setPortEntered(e.target.value)}
             data-testId="portOtherInput"
           />
         </div>
