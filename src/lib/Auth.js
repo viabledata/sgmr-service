@@ -1,14 +1,14 @@
 class Auth {
   static storeToken(token) {
-    localStorage.setItem('token', token);
+    sessionStorage.setItem('token', token);
   }
 
   static retrieveToken() {
-    return localStorage.getItem('token');
+    return sessionStorage.getItem('token');
   }
 
   static logout() {
-    localStorage.clear();
+    sessionStorage.clear();
   }
 
   static isAuthorized() {

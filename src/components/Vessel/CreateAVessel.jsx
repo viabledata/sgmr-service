@@ -16,8 +16,8 @@ const CreateAVessel = () => {
   const location = useLocation();
   const checkIfNotVoyageForm = location.pathname.toLowerCase().indexOf('voyage') === -1;
   const path = location.pathname.slice(1);
-  const [formData, setFormData] = useState(JSON.parse(localStorage.getItem('formData')) || {});
-  const [errors, setErrors] = useState(JSON.parse(localStorage.getItem('errors')) || { });
+  const [formData, setFormData] = useState(JSON.parse(sessionStorage.getItem('formData')) || {});
+  const [errors, setErrors] = useState(JSON.parse(sessionStorage.getItem('errors')) || {});
 
   // Clear form field errors
   const removeError = (fieldName) => {
@@ -48,13 +48,13 @@ const CreateAVessel = () => {
     return Object.keys(fieldsErroring).length > 0;
   };
 
-  // Clear formData from localStorage
-  const clearLocalStorage = () => {
+  // Clear formData from sessionStorage
+  const clearSessionStorage = () => {
     setFormData({});
-    setErrors({ });
+    setErrors({});
   };
 
-  // Handle Submit, including clearing localStorage
+  // Handle Submit, including clearing sessionStorage
   const handleSubmit = (e) => {
     e.preventDefault();
     // Test for any errors
@@ -65,7 +65,7 @@ const CreateAVessel = () => {
         .then(() => {
           // If this is not the voyage form then take user to pleasure crafts page, otherwise leave the user here
           if (checkIfNotVoyageForm) {
-            clearLocalStorage();
+            clearSessionStorage();
             history.push(VESSELS_PAGE_URL);
           }
         })
@@ -85,13 +85,13 @@ const CreateAVessel = () => {
     }
   };
 
-  // Update localStorage to persist data if user refreshes the page
+  // Update sessionStorage to persist data if user refreshes the page
   useEffect(() => {
-    localStorage.setItem('formData', JSON.stringify(formData));
+    sessionStorage.setItem('formData', JSON.stringify(formData));
   }, [formData]);
 
   useEffect(() => {
-    localStorage.setItem('errors', JSON.stringify(errors));
+    sessionStorage.setItem('errors', JSON.stringify(errors));
   }, [errors]);
 
   return (
@@ -111,25 +111,24 @@ const CreateAVessel = () => {
             <p className="govuk-body-l">Please enter the following information. This information can be re-used when submitting a Pleasure Craft Voyage Plan.</p>
             <form id="CreateAVessel">
               {Object.keys(errors).length >= 1 && (
-              <div className="govuk-error-summary" aria-labelledby="error-summary-title" role="alert" tabIndex="-1" data-module="govuk-error-summary">
-                <h2 className="govuk-error-summary__title">
-                  There is a problem
-                </h2>
-                <div className="govuk-error-summary__body">
-                  <ul className="govuk-list govuk-error-summary__list">
-                    {Object.entries(errors).map((elem) => (
-                      <li key={elem[0]}>
-                        <a href={`#${elem[0]}`}>{elem[1]}</a>
-                      </li>
-                    ))}
-                  </ul>
+                <div className="govuk-error-summary" aria-labelledby="error-summary-title" role="alert" tabIndex="-1" data-module="govuk-error-summary">
+                  <h2 className="govuk-error-summary__title">
+                    There is a problem
+                  </h2>
+                  <div className="govuk-error-summary__body">
+                    <ul className="govuk-list govuk-error-summary__list">
+                      {Object.entries(errors).map((elem) => (
+                        <li key={elem[0]}>
+                          <a href={`#${elem[0]}`}>{elem[1]}</a>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
                 </div>
-              </div>
               )}
               <FormVessel
                 handleSubmit={handleSubmit}
                 handleChange={handleChange}
-                clearLocalStorage={clearLocalStorage}
                 data=""
                 formData={formData}
                 errors={errors}
