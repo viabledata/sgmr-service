@@ -5,8 +5,8 @@ const getId = (form) => {
     id = location.state[idType];
   } else if (history && history.state && history.state.state && history.state.state[idType]) {
     id = history.state.state[idType];
-  } else if (JSON.parse(localStorage.getItem('formData')).id) {
-    id = JSON.parse(localStorage.getItem('formData')).id;
+  } else if (JSON.parse(sessionStorage.getItem('formData')).id) {
+    id = JSON.parse(sessionStorage.getItem('formData')).id;
   }
   return id;
 };
