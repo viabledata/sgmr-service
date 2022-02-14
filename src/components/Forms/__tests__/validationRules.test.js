@@ -1,19 +1,20 @@
 import { passwordValidation, responsiblePersonValidationRules, validate } from '../validationRules';
 
 describe('passwordValidation', () => {
+  const defaultErrorMessage = 'The password must contain 3 of the following: an uppercase letter, a lowercase letter, a symbol, a number';
   const passwords = [
     ['', 'Enter your new password'],
     ['123', 'Passwords must be at least 8 characters long'],
-    ['12345678', 'The password must contain 3 of the following: an uppercase letter, a lowercase letter, a symbol, a number'],
-    ['abcdefgh', 'The password must contain 3 of the following: an uppercase letter, a lowercase letter, a symbol, a number'],
-    ['ABCDEFGH', 'The password must contain 3 of the following: an uppercase letter, a lowercase letter, a symbol, a number'],
-    ['abcdEFGH', 'The password must contain 3 of the following: an uppercase letter, a lowercase letter, a symbol, a number'],
-    ['!@#$%^&*', 'The password must contain 3 of the following: an uppercase letter, a lowercase letter, a symbol, a number'],
-    ['ABC@@@@@', 'The password must contain 3 of the following: an uppercase letter, a lowercase letter, a symbol, a number'],
-    ['abc@@@@@', 'The password must contain 3 of the following: an uppercase letter, a lowercase letter, a symbol, a number'],
-    ['ABC12345', 'The password must contain 3 of the following: an uppercase letter, a lowercase letter, a symbol, a number'],
-    ['abc12345', 'The password must contain 3 of the following: an uppercase letter, a lowercase letter, a symbol, a number'],
-    ['1234@@@@', 'The password must contain 3 of the following: an uppercase letter, a lowercase letter, a symbol, a number'],
+    ['12345678', defaultErrorMessage],
+    ['abcdefgh', defaultErrorMessage],
+    ['ABCDEFGH', defaultErrorMessage],
+    ['abcdEFGH', defaultErrorMessage],
+    ['!@#$%^&*', defaultErrorMessage],
+    ['ABC@@@@@', defaultErrorMessage],
+    ['abc@@@@@', defaultErrorMessage],
+    ['ABC12345', defaultErrorMessage],
+    ['abc12345', defaultErrorMessage],
+    ['1234@@@@', defaultErrorMessage],
     ['abcEFG12345', undefined],
     ['abcEFG!@#$%^&', undefined],
     ['abc123!@#$%^&', undefined],
