@@ -13,7 +13,7 @@ describe('UserRegister page', () => {
     );
   });
 
-  it('should render page elements', async () => {
+  it('should render page elements', () => {
     expect(screen.getByText('Create an account')).toBeInTheDocument();
     expect(screen.getByText('First name')).toBeInTheDocument();
     expect(screen.getByText('Last name')).toBeInTheDocument();
@@ -32,7 +32,7 @@ describe('UserRegister page', () => {
     expect(screen.getByText('Agree and submit')).toBeInTheDocument();
   });
 
-  it('should render errors', async () => {
+  it('should render errors', () => {
     const submit = screen.getByText('Agree and submit');
     fireEvent.click(submit);
 

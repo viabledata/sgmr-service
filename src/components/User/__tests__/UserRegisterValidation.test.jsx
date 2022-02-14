@@ -22,11 +22,11 @@ const invalidData = {
 };
 
 describe('UserRegisterValidation', () => {
-  it('should have no errors', async () => {
+  it('should have no errors', () => {
     expect(Object.keys(UserRegisterValidation(validData)).length).toEqual(0);
   });
 
-  it('should have errors', async () => {
+  it('should have errors', () => {
     expect(Object.keys(UserRegisterValidation(invalidData)).length).not.toEqual(0);
   });
 });
