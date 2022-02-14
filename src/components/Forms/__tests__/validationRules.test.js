@@ -2,18 +2,30 @@ import { passwordValidation, responsiblePersonValidationRules, validate } from '
 
 describe('passwordValidation', () => {
   const passwords = [
-    { password: '', message: 'Enter your new password' },
-    { password: '123', message: 'Passwords must be at least 8 characters long' },
-    { password: '12345678', message: 'The password must contain 3 of the following: an uppercase letter, a lowercase letter, a symbol, a number' },
-    { password: 'abc@@@@@', message: 'The password must contain 3 of the following: an uppercase letter, a lowercase letter, a symbol, a number' },
-    { password: 'abcEFG1234' },
-    { password: 'abc123!@#$%^&' },
+    ['', 'Enter your new password'],
+    ['123', 'Passwords must be at least 8 characters long'],
+    ['12345678', 'The password must contain 3 of the following: an uppercase letter, a lowercase letter, a symbol, a number'],
+    ['abcdefgh', 'The password must contain 3 of the following: an uppercase letter, a lowercase letter, a symbol, a number'],
+    ['ABCDEFGH', 'The password must contain 3 of the following: an uppercase letter, a lowercase letter, a symbol, a number'],
+    ['abcdEFGH', 'The password must contain 3 of the following: an uppercase letter, a lowercase letter, a symbol, a number'],
+    ['!@#$%^&*', 'The password must contain 3 of the following: an uppercase letter, a lowercase letter, a symbol, a number'],
+    ['ABC@@@@@', 'The password must contain 3 of the following: an uppercase letter, a lowercase letter, a symbol, a number'],
+    ['abc@@@@@', 'The password must contain 3 of the following: an uppercase letter, a lowercase letter, a symbol, a number'],
+    ['ABC12345', 'The password must contain 3 of the following: an uppercase letter, a lowercase letter, a symbol, a number'],
+    ['abc12345', 'The password must contain 3 of the following: an uppercase letter, a lowercase letter, a symbol, a number'],
+    ['1234@@@@', 'The password must contain 3 of the following: an uppercase letter, a lowercase letter, a symbol, a number'],
+    ['abcEFG12345', undefined],
+    ['abcEFG!@#$%^&', undefined],
+    ['abc123!@#$%^&', undefined],
+    ['ABC123!@#$%^&', undefined],
   ];
-  passwords.forEach(({ password, message }) => {
-    it(`Should validate ${password || '[empty string]'}`, () => {
+
+  test.each(passwords)(
+    'Should validate %s as &s',
+    (password, message) => {
       expect(passwordValidation(password)).toEqual(message);
-    });
-  });
+    },
+  );
 });
 
 describe('validate', () => {
