@@ -64,6 +64,6 @@ describe('Add new pleasure craft in account', () => {
   });
 
   afterEach(() => {
-    localStorage.removeItem('token');
+    sessionStorage.removeItem('token');
   });
 });
