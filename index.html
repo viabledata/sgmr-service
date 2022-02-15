@@ -19,19 +19,15 @@
   <div id="main"></div>
   <script src="/javascript/all.js"></script>
   <script>window.GOVUKFrontend.initAll()</script>
-  <!-- Matomo Analytics-->
-  <script type="text/javascript">
-    var _paq = window._paq = window._paq || [];
-    _paq.push(['trackPageView']);
-    _paq.push(['enableLinkTracking']);
-    (function() {
-      var u="https://matomo.cop.homeoffice.gov.uk/";
-      _paq.push(['setTrackerUrl', u+'matomo.php']);
-      _paq.push(['setSiteId', '9']);
-      var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
-      g.type='text/javascript'; g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
-    })();
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-5Q6EZYQ2BV"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'G-5Q6EZYQ2BV');
   </script>
-  <!-- End Matomo Code -->
+  <!-- End Google Analytics -->
 </body>
 </html>
