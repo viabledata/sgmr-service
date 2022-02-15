@@ -52,14 +52,6 @@ describe('Add new voyage plan', () => {
   });
 
   it('Should submit voyage plan successfully', () => {
-    const expectedReport = [
-      {
-        'Vessel': vessel.name,
-        'Departure date': departDate,
-        'Departure port': 'DVR',
-        'Arrival port': 'FXT',
-      },
-    ];
     cy.checkAccessibility();
     cy.enterDepartureDetails(departureDateTime, departurePort);
     cy.saveAndContinue();
@@ -75,14 +67,14 @@ describe('Add new voyage plan', () => {
     cy.contains('add a new person').click();
     cy.enterPeopleInfo(person);
     cy.contains('Add to voyage plan').click();
-    // cy.assertPeopleTable((reportData) => {
-    //   expect(reportData).to.have.length(1);
-    //   expect(reportData[0]).to.deep.include({
-    //   'Last name': `Last name${person.lastName}`,
-    //   'First name': `First name${person.firstName}`
-    //   });
-    //   cy.get('.responsive-table__heading').should('not.be.visible');
-    // });
+    cy.assertPeopleTable((reportData) => {
+      expect(reportData).to.have.length(1);
+      expect(reportData[0]).to.deep.include({
+      'Last name': `Last name${person.lastName}`,
+      'First name': `First name${person.firstName}`
+      });
+      cy.get('.responsive-table__heading').should('not.be.visible');
+    });
     cy.saveAndContinueOnPeopleManifest(true);
     cy.contains(`People already added to the voyage plan:${person.firstName} ${person.lastName}`);
     cy.saveAndContinue();
@@ -126,14 +118,6 @@ describe('Add new voyage plan', () => {
   });
 
   it('Should be able to cancel voyage plan', () => {
-    const expectedReport = [
-      {
-        'Vessel': vessel.name,
-        'Departure date': departDate,
-        'Departure port': 'DVR',
-        'Arrival port': 'FXT',
-      },
-    ];
     cy.enterDepartureDetails(departureDateTime, departurePort);
     cy.saveAndContinue();
     cy.enterArrivalDetails(arrivalDateTime, arrivalPort);
@@ -151,9 +135,11 @@ describe('Add new voyage plan', () => {
     cy.saveAndContinue();
     cy.get('.govuk-error-message').should('not.be.visible');
     cy.contains('Cancel voyage').click();
+    cy.get('#confirm-yes').check();
+    cy.contains('Continue').click();
     cy.url().should('include', '/voyage-plans');
     cy.navigation('Voyage Plans');
-    // cy.checkReports('Cancelled', (+numberOfCancelledReports) + (+1));
+    cy.checkReports('Cancelled', (+numberOfCancelledReports) + (+1));
     cy.contains('View existing voyage plans').click();
     cy.get('.govuk-tabs__list li')
       .within(() => {
@@ -172,14 +158,6 @@ describe('Add new voyage plan', () => {
   });
 
   it('Should be able to save voyage plan for later', () => {
-    const expectedReport = [
-      {
-        'Vessel': vessel.name,
-        'Departure date': departDate,
-        'Departure port': 'DVR',
-        'Arrival port': 'FXT',
-      },
-    ];
     cy.enterDepartureDetails(departureDateTime, departurePort);
     cy.saveAndContinue();
     cy.enterArrivalDetails(arrivalDateTime, arrivalPort);
@@ -199,7 +177,7 @@ describe('Add new voyage plan', () => {
     cy.contains('Exit without saving').click();
     cy.url().should('include', '/voyage-plans');
     cy.navigation('Voyage Plans');
-    // cy.checkReports('Draft', (+numberOfDraftReports) + (+1));
+    cy.checkReports('Draft', (+numberOfDraftReports) + (+1));
     cy.contains('View existing voyage plans').click();
     cy.get('.govuk-tabs__list li')
       .within(() => {
@@ -217,14 +195,9 @@ describe('Add new voyage plan', () => {
     });
   });
 
-  afterEach(() => {
-    cy.deleteReports();
-  });
-
-  /* Should move the get and delete voyages to a command that can run after any tests that creates voyages (or vessels) */
   after(() => {
     cy.deleteAllEmails();
-    let token =  localStorage.getItem('token');
+    let token =  sessionStorage.getItem('token');
     let apiServer = Cypress.env('api_server');
     let voyageIds = cy.request({
       url: `${apiServer}/user/voyagereport?per_page=100`,
@@ -244,6 +217,6 @@ describe('Add new voyage plan', () => {
       });
     });
 
-    localStorage.removeItem('token');
+    sessionStorage.removeItem('token');
   });
 });
