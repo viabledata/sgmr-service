@@ -197,12 +197,7 @@ describe('Add new voyage plan', () => {
     });
   });
 
-  afterEach(() => {
-    cy.deleteReports();
-    sessionStorage.removeItem('token');
-  });
-
   after(() => {
-    cy.deleteAllEmails();
+    cy.removeTestData();
   });
 });
