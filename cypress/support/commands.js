@@ -195,10 +195,11 @@ Cypress.Commands.add('addPeople', (person) => {
   cy.get('.govuk-error-message').should('not.exist');
   cy.get('table').getTable().then((peopleData) => {
     expect(peopleData).to.deep.include({
-      'Last Name': person.lastName,
-      'First Name': person.firstName,
-      'Type': person.personType,
+      'Last Name': `Last Name${person.lastName}`,
+      'First Name': `First Name${person.firstName}`,
+      'Type': `Type${person.personType}`,
     });
+    cy.get('.responsive-table__heading').should('not.be.visible');
   });
 });
 
@@ -209,10 +210,11 @@ Cypress.Commands.add('addVessel', (vessel) => {
   cy.get('.govuk-error-message').should('not.exist');
   cy.get('table').getTable().then((vesselData) => {
     expect(vesselData).to.deep.include({
-      'Pleasure craft name': vessel.name,
-      'Pleasure craft type': vessel.type,
-      'Usual moorings': vessel.moorings,
+      'Pleasure craft name': `Pleasure craft name${vessel.name}`,
+      'Pleasure craft type': `Pleasure craft type${vessel.type}`,
+      'Usual moorings': `Usual moorings${vessel.moorings}`,
     });
+    cy.get('.responsive-table__heading').should('not.be.visible');
   });
 });
 
