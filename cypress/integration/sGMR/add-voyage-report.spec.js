@@ -98,7 +98,7 @@ describe('Add new voyage plan', () => {
     cy.url().should('include', '/save-voyage/page-submitted');
     cy.get('.govuk-panel__title').should('have.text', 'Pleasure Craft Voyage Plan Submitted');
     cy.navigation('Voyage Plans');
-    // cy.checkReports('Submitted', (+numberOfSubmittedReports) + (+1));
+    cy.checkReports('Submitted', (+numberOfSubmittedReports) + (+1));
     cy.contains('View existing voyage plans').click();
     cy.get('.govuk-tabs__list li')
       .within(() => {
@@ -209,6 +209,23 @@ describe('Add new voyage plan', () => {
         response.body.items.forEach((voyage) => {
         cy.request({
           url: `${apiServer}/voyagereport/${voyage.id}`,
+          method: 'DELETE',
+          auth: {
+            'bearer': token
+          }
+        });
+      });
+    });
+    let vesselIds = cy.request({
+      url: `${apiServer}/user/vessels?per_page=100`,
+      method: 'GET',
+      auth: {
+        'bearer': token
+      }
+    }).then((response) => {
+        response.body.items.forEach((vessel) => {
+        cy.request({
+          url: `${apiServer}/user/vessels/${vessel.id}`,
           method: 'DELETE',
           auth: {
             'bearer': token

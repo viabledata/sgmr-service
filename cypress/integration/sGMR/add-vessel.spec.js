@@ -61,9 +61,26 @@ describe('Add new pleasure craft in account', () => {
     cy.navigation('Signout');
     cy.url().should('include', '/sign-in');
     cy.deleteAllEmails();
-  });
+    let token =  sessionStorage.getItem('token');
+    let apiServer = Cypress.env('api_server');
+    let vesselIds = cy.request({
+      url: `${apiServer}/user/vessels?per_page=100`,
+      method: 'GET',
+      auth: {
+        'bearer': token
+      }
+    }).then((response) => {
+        response.body.items.forEach((vessel) => {
+        cy.request({
+          url: `${apiServer}/user/vessels/${vessel.id}`,
+          method: 'DELETE',
+          auth: {
+            'bearer': token
+          }
+        });
+      });
+    });
 
-  afterEach(() => {
     sessionStorage.removeItem('token');
   });
 });

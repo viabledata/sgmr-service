@@ -249,7 +249,6 @@ Cypress.Commands.add('getNumberOfReports', (type) => {
         .find('strong')
         .invoke('text')
         .then((text) => {
-          console.log(text);
           numberOfReports = text;
         });
     })
