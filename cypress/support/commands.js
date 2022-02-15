@@ -308,15 +308,17 @@ Cypress.Commands.add('removeTestData', () => {
       'bearer': token
     }
   }).then((response) => {
-      response.body.items.forEach((voyage) => {
-      cy.request({
-        url: `${apiServer}/voyagereport/${voyage.id}`,
-        method: 'DELETE',
-        auth: {
-          'bearer': token
-        }
+      if (response.body.length > 0) {
+        response.body.items.forEach((voyage) => {
+        cy.request({
+          url: `${apiServer}/voyagereport/${voyage.id}`,
+          method: 'DELETE',
+          auth: {
+            'bearer': token
+          }
+        });
       });
-    });
+    }
   });
   let vesselIds = cy.request({
     url: `${apiServer}/user/vessels?per_page=100`,
@@ -325,15 +327,36 @@ Cypress.Commands.add('removeTestData', () => {
       'bearer': token
     }
   }).then((response) => {
-      response.body.items.forEach((vessel) => {
-      cy.request({
-        url: `${apiServer}/user/vessels/${vessel.id}`,
-        method: 'DELETE',
-        auth: {
-          'bearer': token
-        }
+      if (response.body.length > 0) {
+        response.body.items.forEach((vessel) => {
+        cy.request({
+          url: `${apiServer}/user/vessels/${vessel.id}`,
+          method: 'DELETE',
+          auth: {
+            'bearer': token
+          }
+        });
       });
-    });
+    }
+  });
+  let peopleIds = cy.request({
+    url: `${apiServer}/user/people?per_page=100`,
+    method: 'GET',
+    auth: {
+      'bearer': token
+    }
+  }).then((response) => {
+      if (response.body.length > 0) {
+        response.body.forEach((person) => {
+        cy.request({
+          url: `${apiServer}/user/people/${person.id}`,
+          method: 'DELETE',
+          auth: {
+            'bearer': token
+          }
+        });
+      });
+    }
   });
 
   sessionStorage.removeItem('token');
