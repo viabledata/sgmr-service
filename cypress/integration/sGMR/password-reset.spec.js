@@ -58,6 +58,6 @@ describe('User Request for Password reset', () => {
   });
 
   afterEach(() => {
-    localStorage.removeItem('token');
+    sessionStorage.removeItem('token');
   });
 });

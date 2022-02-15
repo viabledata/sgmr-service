@@ -58,7 +58,7 @@ describe('Edit existing pleasure craft information', () => {
   });
 
   afterEach(() => {
-    localStorage.removeItem('token');
+    sessionStorage.removeItem('token');
   });
 
   after(() => {

@@ -95,7 +95,7 @@ describe('Edit exiting People information in the account', () => {
   });
 
   afterEach(() => {
-    localStorage.removeItem('token');
+    sessionStorage.removeItem('token');
   });
 
   after(() => {

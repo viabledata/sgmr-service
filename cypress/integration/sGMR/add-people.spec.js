@@ -75,6 +75,6 @@ describe('Add People in account', () => {
   });
 
   afterEach(() => {
-    localStorage.removeItem('token');
+    sessionStorage.removeItem('token');
   });
 });

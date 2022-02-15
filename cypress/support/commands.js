@@ -84,7 +84,7 @@ Cypress.Commands.add('login', () => {
         });
       } else if (response.status === 200) {
         cy.visit('/');
-        localStorage.setItem('token', response.body.token);
+        sessionStorage.setItem('token', response.body.token);
       } else {
         throw Error(`Login Failed for user: ${user.email}`);
       }
