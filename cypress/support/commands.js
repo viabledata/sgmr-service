@@ -209,9 +209,9 @@ Cypress.Commands.add('addVessel', (vessel) => {
   cy.get('.govuk-error-message').should('not.exist');
   cy.get('table').getTable().then((vesselData) => {
     expect(vesselData).to.deep.include({
-      'Pleasure craft name': vessel.name,
-      'Pleasure craft type': vessel.type,
-      'Usual moorings': vessel.moorings,
+      'Pleasure craft name': `Pleasure craft name${vessel.name}`,
+      'Pleasure craft type': `Pleasure craft type${vessel.type}`,
+      'Usual moorings': `Usual moorings${vessel.moorings}`,
     });
   });
 });

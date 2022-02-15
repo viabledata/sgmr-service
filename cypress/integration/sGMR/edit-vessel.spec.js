@@ -32,9 +32,9 @@ describe('Edit existing pleasure craft information', () => {
     cy.get('table').getTable().then((vesselData) => {
       expect(vesselData).to.not.be.empty;
       expect(vesselData).to.deep.include({
-        'Pleasure craft name': vessel.name,
-        'Pleasure craft type': vessel.type,
-        'Usual moorings': vessel.moorings,
+        'Pleasure craft name': `Pleasure craft name${vessel.name}`,
+        'Pleasure craft type': `Pleasure craft type${vessel.type}`,
+        'Usual moorings': `Usual moorings${vessel.moorings}`,
       });
     });
   });
@@ -50,9 +50,9 @@ describe('Edit existing pleasure craft information', () => {
     cy.get('table').getTable().then((vesselData) => {
       expect(vesselData).to.not.be.empty;
       expect(vesselData).to.deep.include({
-        'Pleasure craft name': vessel.name,
-        'Pleasure craft type': vessel.type,
-        'Usual moorings': vessel.moorings,
+        'Pleasure craft name': `Pleasure craft name${vessel.name}`,
+        'Pleasure craft type': `Pleasure craft type${vessel.type}`,
+        'Usual moorings': `Usual moorings${vessel.moorings}`,
       });
     });
   });
