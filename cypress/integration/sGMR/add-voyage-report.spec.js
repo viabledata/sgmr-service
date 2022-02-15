@@ -3,8 +3,10 @@ const { getFutureDate } = require('../../support/utils');
 describe('Add new voyage plan', () => {
   let departureDateTime;
   let departurePort;
+  let departurePortCode;
   let arrivalDateTime;
   let arrivalPort;
+  let arrivalPortCode;
   let vessel;
   let person;
   let departDate;
@@ -28,7 +30,9 @@ describe('Add new voyage plan', () => {
     });
 
     departurePort = 'Dover';
+    departurePortCode = 'GB DVR';
     arrivalPort = 'Felixstowe';
+    arrivalPortCode = 'GB FXT';
     departureDateTime = getFutureDate(1, 'DD/MM/YYYY HH:MM');
     departDate = departureDateTime.split(' ')[0];
     arrivalDateTime = getFutureDate(2, 'DD/MM/YYYY HH:MM');
@@ -48,14 +52,6 @@ describe('Add new voyage plan', () => {
   });
 
   it('Should submit voyage plan successfully', () => {
-    const expectedReport = [
-      {
-        'Vessel': vessel.name,
-        'Departure date': departDate,
-        'Departure port': 'DVR',
-        'Arrival port': 'FXT',
-      },
-    ];
     cy.checkAccessibility();
     cy.enterDepartureDetails(departureDateTime, departurePort);
     cy.saveAndContinue();
@@ -74,9 +70,10 @@ describe('Add new voyage plan', () => {
     cy.assertPeopleTable((reportData) => {
       expect(reportData).to.have.length(1);
       expect(reportData[0]).to.deep.include({
-        'Last name': person.lastName,
-        'First name': person.firstName,
+      'Last name': `Last name${person.lastName}`,
+      'First name': `First name${person.firstName}`
       });
+      cy.get('.responsive-table__heading').should('not.be.visible');
     });
     cy.saveAndContinueOnPeopleManifest(true);
     cy.contains(`People already added to the voyage plan:${person.firstName} ${person.lastName}`);
@@ -95,7 +92,7 @@ describe('Add new voyage plan', () => {
     cy.checkAccessibility();
     cy.enterSkipperDetails();
     cy.saveAndContinue();
-    cy.checkNoErrors();
+    cy.get('.govuk-error-message').should('not.be.visible');
     cy.checkAccessibility();
     cy.contains('Accept and submit voyage plan').click();
     cy.url().should('include', '/save-voyage/page-submitted');
@@ -110,20 +107,17 @@ describe('Add new voyage plan', () => {
         cy.wait(2000);
       });
     cy.contains('h2', 'Submitted').next().getTable().should((reportData) => {
-      expectedReport.forEach((item) => expect(reportData).to.deep.include(item));
+      expect(reportData).to.deep.include({
+        'Pleasure craft': `Pleasure craft${vessel.name}`,
+        'Departure date': `Departure date${departDate}`,
+        'Departure port': `Departure port${departurePortCode}`,
+        'Arrival port': `Arrival port${arrivalPortCode}`
+      });
     });
     cy.checkAccessibility();
   });
 
   it('Should be able to cancel voyage plan', () => {
-    const expectedReport = [
-      {
-        'Vessel': vessel.name,
-        'Departure date': departDate,
-        'Departure port': 'DVR',
-        'Arrival port': 'FXT',
-      },
-    ];
     cy.enterDepartureDetails(departureDateTime, departurePort);
     cy.saveAndContinue();
     cy.enterArrivalDetails(arrivalDateTime, arrivalPort);
@@ -139,8 +133,10 @@ describe('Add new voyage plan', () => {
     cy.checkNoErrors();
     cy.enterSkipperDetails();
     cy.saveAndContinue();
-    cy.checkNoErrors();
+    cy.get('.govuk-error-message').should('not.be.visible');
     cy.contains('Cancel voyage').click();
+    cy.get('#confirm-yes').check();
+    cy.contains('Continue').click();
     cy.url().should('include', '/voyage-plans');
     cy.navigation('Voyage Plans');
     cy.checkReports('Cancelled', (+numberOfCancelledReports) + (+1));
@@ -152,19 +148,16 @@ describe('Add new voyage plan', () => {
         cy.wait(2000);
       });
     cy.contains('h2', 'Cancelled').next().getTable().should((reportData) => {
-      expectedReport.forEach((item) => expect(reportData).to.deep.include(item));
+      expect(reportData).to.deep.include({
+        'Pleasure craft': `Pleasure craft${vessel.name}`,
+        'Departure date': `Departure date${departDate}`,
+        'Departure port': `Departure port${departurePortCode}`,
+        'Arrival port': `Arrival port${arrivalPortCode}`
+      });
     });
   });
 
   it('Should be able to save voyage plan for later', () => {
-    const expectedReport = [
-      {
-        'Vessel': vessel.name,
-        'Departure date': departDate,
-        'Departure port': 'DVR',
-        'Arrival port': 'FXT',
-      },
-    ];
     cy.enterDepartureDetails(departureDateTime, departurePort);
     cy.saveAndContinue();
     cy.enterArrivalDetails(arrivalDateTime, arrivalPort);
@@ -180,7 +173,7 @@ describe('Add new voyage plan', () => {
     cy.checkNoErrors();
     cy.enterSkipperDetails();
     cy.saveAndContinue();
-    cy.checkNoErrors();
+    cy.get('.govuk-error-message').should('not.be.visible');
     cy.contains('Exit without saving').click();
     cy.url().should('include', '/voyage-plans');
     cy.navigation('Voyage Plans');
@@ -193,7 +186,12 @@ describe('Add new voyage plan', () => {
         cy.wait(2000);
       });
     cy.contains('h2', 'Draft').next().getTable().should((reportData) => {
-      expectedReport.forEach((item) => expect(reportData).to.deep.include(item));
+      expect(reportData).to.deep.include({
+        'Pleasure craft': `Pleasure craft${vessel.name}`,
+        'Departure date': `Departure date${departDate}`,
+        'Departure port': `Departure port${departurePortCode}`,
+        'Arrival port': `Arrival port${arrivalPortCode}`
+      });
     });
   });
 
