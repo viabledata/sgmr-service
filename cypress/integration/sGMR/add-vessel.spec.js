@@ -42,7 +42,7 @@ describe('Add new pleasure craft in account', () => {
     cy.contains('a', 'Save a pleasure craft').should('have.text', 'Save a pleasure craft').click();
     cy.enterVesselInfo(vessel);
     cy.get('.govuk-button').click();
-    cy.get('.govuk-error-message').should('contain.text', 'This pleasure craft already exists').and('be.visible');
+    cy.get('.govuk-error-summary').should('contain.text', 'This pleasure craft already exists').and('be.visible');
   });
 
   it('Should not add a pleasure craft when Clicking on "Exit without saving" button', () => {
@@ -64,6 +64,6 @@ describe('Add new pleasure craft in account', () => {
   });
 
   afterEach(() => {
-    localStorage.removeItem('token');
+    sessionStorage.removeItem('token');
   });
 });
