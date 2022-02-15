@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 import { FORM_STEPS } from '../../constants/ClientConstants';
 import FormError from './FormError';
@@ -12,8 +13,10 @@ const FormDeparture = ({
   if (!data) { return null; }
   return (
     <section>
-      <h1 className="govuk-heading-xl">Departure details</h1>
-      <p className="govuk-body-l">You can update these details if your plans change, for example, due to bad weather</p>
+      <h1 className="govuk-heading-xl">Intended departure details</h1>
+      <p className="govuk-body-l">
+        Provide the intended departure details for the voyage. You can update these details if your voyage plan changes because of the weather or an emergency on board.
+      </p>
 
       <div id="departureDate" className={`govuk-form-group ${errors.departureDate ? 'govuk-form-group--error' : ''}`}>
         <fieldset className="govuk-fieldset" role="group" aria-describedby="dob-hint">
@@ -153,6 +156,7 @@ const FormDeparture = ({
             defaultValue={data.departurePort}
             fieldName="departurePort"
             onConfirm={(result) => {
+              console.log(result);
               updateFieldValue('departurePort', result.unlocode || result.name);
             }}
           />
@@ -167,6 +171,11 @@ const FormDeparture = ({
       >
         Save and continue
       </button>
+      <p className="govuk-body">
+        <Link to="/voyage-plans" className="govuk-link govuk-link--no-visited-state" onClick={(e) => handleSubmit(e, FORM_STEPS.DEPARTURE, voyageId)}>
+          Save and come back later
+        </Link>
+      </p>
     </section>
   );
 };

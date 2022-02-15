@@ -80,4 +80,15 @@ describe('PortField', () => {
     fireEvent.change(screen.getByTestId('portOtherInput'), { target: { value: 'TEST' } });
     expect(screen.getByTestId('portOtherInput').value).toBe('TEST');
   });
+
+  it('should clear the value of combo box when optional field entered and vice versa', async () => {
+    render(<PortField />);
+    fireEvent.change(screen.getByRole('combobox'), { target: { value: 'TEST' } });
+    await waitFor(() => fireEvent.click(screen.getByText('I cannot find the location in the list')));
+    fireEvent.change(screen.getByTestId('portOtherInput'), { target: { value: 'TEST' } });
+    expect(screen.getByRole('combobox').value).toBe('');
+
+    fireEvent.change(screen.getByTestId('combobox'), { target: { value: 'TEST2' } });
+    expect(screen.getByTestId('portOtherInput').value).toBe('');
+  });
 });

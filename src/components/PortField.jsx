@@ -58,7 +58,7 @@ const PortField = ({
       <Autocomplete
         id="autocomplete"
         source={source}
-        onConfirm={(e) => setPortEntered(e)}
+        onChange={(e) => setPortEntered({ name: e.target.value, unlocode: null })}
         showNoOptionsFound={false}
         minLength={3}
         defaultValue={defaultValue || ''}
