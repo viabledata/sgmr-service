@@ -156,7 +156,7 @@ describe('Add voyage plan with saved data', () => {
 
   afterEach(() => {
     cy.deleteReports();
-    localStorage.removeItem('token');
+    sessionStorage.removeItem('token');
   });
 
   after(() => {
