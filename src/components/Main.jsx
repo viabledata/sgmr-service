@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Route, Switch } from 'react-router-dom';
+import ReactGA from 'react-ga4';
 import {
   PEOPLE_URL, VESSELS_URL, VOYAGE_REPORT_URL, VOYAGE_STATUSES,
 } from '../constants/ApiConstants';
@@ -48,6 +49,10 @@ const Main = () => {
   if (siteMaintenance) {
     return <SiteMaintenance />;
   }
+
+  useEffect(() => {
+    ReactGA.send('pageview');
+  });
 
   return (
     <>
