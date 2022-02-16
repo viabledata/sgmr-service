@@ -26,8 +26,8 @@ describe('Edit existing pleasure craft information', () => {
     cy.get('[name="vesselName"]').click().clear().type(vessel.name);
     cy.get('[name="vesselType"]').clear().type(vessel.type);
     cy.get('[name="moorings"]').clear().type(vessel.moorings);
-    cy.get('.govuk-button').click();
-    cy.get('.govuk-error-message').should('not.be.visible');
+    cy.get('.govuk-button').contains('Save').click();
+    cy.get('.govuk-error-message').should('not.exist');
 
     cy.get('table').getTable().then((vesselData) => {
       expect(vesselData).to.not.be.empty;
@@ -45,7 +45,7 @@ describe('Edit existing pleasure craft information', () => {
     cy.get('[name="vesselType"]').clear().type('Sailboat');
     cy.get('[name="moorings"]').clear().type('FR');
     cy.get('.govuk-link--no-visited-state').click();
-    cy.get('.govuk-error-message').should('not.be.visible');
+    cy.get('.govuk-error-message').should('not.exist');
 
     cy.get('table').getTable().then((vesselData) => {
       expect(vesselData).to.not.be.empty;
@@ -57,11 +57,8 @@ describe('Edit existing pleasure craft information', () => {
     });
   });
 
-  afterEach(() => {
-    sessionStorage.removeItem('token');
-  });
-
   after(() => {
     cy.deleteAllEmails();
+    cy.removeTestData();
   });
 });

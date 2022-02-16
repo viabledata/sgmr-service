@@ -26,7 +26,7 @@ describe('Sign-in flow', () => {
     cy.injectAxe();
     cy.checkAccessibility();
     cy.fixture('user-registration.json').then((userDetails) => {
-      cy.get('h3.govuk-heading-m').should('have.text', `Welcome back, ${userDetails.firstName}`);
+      cy.get('.govuk-heading-m').contains('Welcome back').should('have.text', `Welcome back, ${userDetails.firstName}`);
     });
 
     cy.navigation('Signout');
