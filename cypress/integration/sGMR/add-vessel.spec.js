@@ -58,12 +58,9 @@ describe('Add new pleasure craft in account', () => {
   });
 
   after(() => {
+    cy.removeTestData();
     cy.navigation('Signout');
     cy.url().should('include', '/sign-in');
     cy.deleteAllEmails();
-  });
-
-  afterEach(() => {
-    sessionStorage.removeItem('token');
   });
 });
