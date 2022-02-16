@@ -148,7 +148,7 @@ describe('Validate voyage plan form', () => {
 
   afterEach(() => {
     cy.deleteReports();
-    localStorage.removeItem('token');
+    sessionStorage.removeItem('token');
   });
 
   after(() => {

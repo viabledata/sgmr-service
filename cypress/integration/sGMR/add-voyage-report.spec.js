@@ -199,7 +199,7 @@ describe('Add new voyage plan', () => {
 
   afterEach(() => {
     cy.deleteReports();
-    localStorage.removeItem('token');
+    sessionStorage.removeItem('token');
   });
 
   after(() => {
