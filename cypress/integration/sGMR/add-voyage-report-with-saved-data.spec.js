@@ -157,7 +157,7 @@ describe('Add voyage plan with saved data', () => {
       });
     });
   });
-
+  
   after(() => {
     cy.removeTestData();
   });

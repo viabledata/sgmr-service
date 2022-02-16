@@ -74,5 +74,4 @@ describe('Add People in account', () => {
     cy.url().should('include', '/sign-in');
     cy.deleteAllEmails();
   });
-
 });

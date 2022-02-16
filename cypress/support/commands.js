@@ -199,6 +199,7 @@ Cypress.Commands.add('addPeople', (person) => {
       'First Name': `First Name${person.firstName}`,
       'Type': `Type${person.personType}`,
     });
+    cy.get('.responsive-table__heading').should('not.be.visible');
   });
 });
 
@@ -213,6 +214,7 @@ Cypress.Commands.add('addVessel', (vessel) => {
       'Pleasure craft type': `Pleasure craft type${vessel.type}`,
       'Usual moorings': `Usual moorings${vessel.moorings}`,
     });
+    cy.get('.responsive-table__heading').should('not.be.visible');
   });
 });
 
