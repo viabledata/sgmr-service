@@ -39,6 +39,11 @@ const Nav = () => {
       text: 'Account',
       active: false,
     },
+    {
+      urlStem: '/page/help',
+      text: 'Help',
+      active: false,
+    },
   ];
 
   const setActivePage = (url) => {
