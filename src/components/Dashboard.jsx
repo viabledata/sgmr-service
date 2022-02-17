@@ -62,7 +62,7 @@ const Dashboard = (pageData) => {
             type="button"
             className="govuk-button govuk-button--start"
             data-module="govuk-button"
-            onClick={handleStart}
+            onClick={() => history.push('/voyage-plans/start')}
           >
             Start now
             <svg

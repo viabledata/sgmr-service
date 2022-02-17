@@ -1,7 +1,23 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 
-const Help = (source) => {
-  document.title = 'Help';
+import { USER_VOYAGE_REPORT_URL } from '../../constants/ApiConstants';
+import { SAVE_VOYAGE_DEPARTURE_URL } from '../../constants/ClientConstants';
+import { postData } from '../../utils/apiHooks';
+
+const Help = () => {
+  document.title = 'Telling us about your voyage plan';
+  const history = useHistory();
+
+  const source = 'voyage'
+
+  const handleStart = async () => {
+    const resp = await postData(USER_VOYAGE_REPORT_URL, null, 'reports');
+    history.push({
+      pathname: SAVE_VOYAGE_DEPARTURE_URL,
+      state: { voyageId: resp.id },
+    });
+  };
 
   return (
     <div className="govuk-width-container ">
@@ -45,19 +61,28 @@ const Help = (source) => {
                 <li>Central: +44 (0)300 072 4322</li>
               </ul>
               {source === 'voyage' && (
-              <form action="create-voyage-plan-departure">
-                <div className="govuk-button-group">
-                  <button type="submit" className="govuk-button" data-module="govuk-button">
-                    Continue
+                <>
+                  <button
+                    title="saveButton"
+                    type="button"
+                    className="govuk-button"
+                    data-module="govuk-button"
+                    onClick={handleStart}
+                  >
+                    Save and continue
                   </button>
-                  <a href="home.html" className="govuk-button govuk-button--secondary" data-module="govuk-button">
+                  <button
+                    title="cancelButton"
+                    type="button"
+                    className="govuk-button govuk-button--secondary"
+                    data-module="govuk-button"
+                    onClick={() => history.push('/voyage-plans')}
+                  >
                     Cancel
-                  </a>
-                </div>
-              </form>
+                  </button>
+                </>
               )}
             </div>
-            <div className="govuk-grid-column-one-third" />
           </div>
         </div>
       </main>
