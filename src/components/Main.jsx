@@ -71,7 +71,7 @@ const Main = () => {
               <VoyageHelp />
             </SecureRoute>
             <SecureRoute exact path="/voyage-plans/start">
-              <VoyageHelp />
+              <VoyageHelp source="voyage" />
             </SecureRoute>
             <SecureRoute exact path="/voyage-plans">
               <PageContainer />
