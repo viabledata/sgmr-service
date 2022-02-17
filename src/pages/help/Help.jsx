@@ -29,13 +29,12 @@ const Help = ({ source }) => {
                 hours before you depart, but no more than 24 hours before you depart.
               </p>
               <p className="govuk-body">
-                We&apos;ll ask you when you plan to depart and arrive, and where from. You can enter a time range of up to 6 hours for your intended departure and arrival times.
+                We&apos;ll ask you when you plan to depart and arrive, and where from. You can enter a time range of up to 1 hour for your intended departure and arrival times.
               </p>
               <h2 className="govuk-heading-s">If your voyage plan changes</h2>
               <p className="govuk-body">We expect you to update your voyage plan for our records, as soon as possible.</p>
               <p className="govuk-body">
-                This includes changes to the date, departure or arrival point, people on board and significant changes to your intended departure or arrival time
-                (where these change by more than six hours).
+                This includes changes to the date, departure or arrival point, people on board and significant changes to your intended departure or arrival time.
               </p>
               <p className="govuk-body">You can sign into your account to change the voyage plan you submitted.</p>
               <h3 className="govuk-heading-s">

@@ -12,7 +12,7 @@ test('Renders the help with the CTAs for the voyage form', () => {
     'You can draft a voyage plan anytime. You should submit your plan at least two hours before you depart, but no more than 24 hours before you depart.',
   )).toBeInTheDocument();
   expect(screen.getByText(
-    'We\'ll ask you when you plan to depart and arrive, and where from. You can enter a time range of up to 6 hours for your intended departure and arrival times.',
+    'We\'ll ask you when you plan to depart and arrive, and where from. You can enter a time range of up to 1 hour for your intended departure and arrival times.',
   )).toBeInTheDocument();
 
   const contentH2 = screen.getByText('If your voyage plan changes');
@@ -21,8 +21,7 @@ test('Renders the help with the CTAs for the voyage form', () => {
     'We expect you to update your voyage plan for our records, as soon as possible.',
   )).toBeInTheDocument();
   expect(screen.getByText(
-    'This includes changes to the date, departure or arrival point, people on board and significant changes to your intended departure or arrival time'
-    + ' (where these change by more than six hours).',
+    'This includes changes to the date, departure or arrival point, people on board and significant changes to your intended departure or arrival time.',
   )).toBeInTheDocument();
   expect(screen.getByText('You can sign into your account to change the voyage plan you submitted.')).toBeInTheDocument();
 
