@@ -52,7 +52,7 @@ const Help = ({ source }) => {
                 <li>Central: +44 (0)300 072 4322</li>
               </ul>
               {source === 'voyage' && (
-                <>
+                <div className="govuk-button-group">
                   <button
                     title="saveButton"
                     type="button"
@@ -71,7 +71,7 @@ const Help = ({ source }) => {
                   >
                     Cancel
                   </button>
-                </>
+                </div>
               )}
             </div>
           </div>
