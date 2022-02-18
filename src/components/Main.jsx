@@ -20,6 +20,7 @@ import PageContainer from './PageContainer';
 
 import CreateAPerson from './People/CreateAPerson';
 import EditPerson from './People/EditPerson';
+import PersonForm from '../pages/people/PersonForm';
 
 import SignIn from './User/SignIn';
 import UserRegister from './User/UserRegister';
@@ -126,10 +127,10 @@ const Main = () => {
               <PageContainer />
             </SecureRoute>
             <SecureRoute exact path="/people/save-person">
-              <CreateAPerson />
+              <PersonForm />
             </SecureRoute>
             <SecureRoute exact path="/people/edit-person">
-              <EditPerson />
+              <PersonForm type="edit" />
             </SecureRoute>
             <SecureRoute exact path="/people/:entityId/delete">
               <ActionEntity
