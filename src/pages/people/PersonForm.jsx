@@ -1,6 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useHistory, useLocation, withRouter } from 'react-router-dom';
 import { PEOPLE_PAGE_URL } from '../../constants/ClientConstants';
+
+/*
+  how to handle user clicking back button in browser from page 2
+  need to add page to url or hash page in url so they can go 'back' to page 1
+*/
 
 const PersonForm = ({ type, source }) => {
   const history = useHistory();
@@ -21,6 +26,7 @@ const PersonForm = ({ type, source }) => {
   const goToNextPage = (e) => {
     e.preventDefault();
     setFormPage(formPage + 1);
+    history.push('/people/save-person');
   };
 
   const handleSubmit = (e) => {
@@ -192,4 +198,4 @@ const PersonForm = ({ type, source }) => {
   );
 };
 
-export default PersonForm;
+export default withRouter(PersonForm);
