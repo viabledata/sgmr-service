@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
-import PersonFormPage2 from './PersonFormPage2';
+import { useHistory, useLocation } from 'react-router-dom';
+import { PEOPLE_PAGE_URL } from '../../constants/ClientConstants';
 
 const PersonForm = ({ type, source }) => {
+  const history = useHistory();
   const location = useLocation();
   const data = location.state;
   const [errors, setErrors] = useState();
@@ -17,8 +18,15 @@ const PersonForm = ({ type, source }) => {
     console.log('change');
   };
 
-  const goToNextPage = () => {
+  const goToNextPage = (e) => {
+    e.preventDefault();
     setFormPage(formPage + 1);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log('submit');
+    history.push(submittedNextPage);
   };
 
   useEffect(() => {
@@ -32,11 +40,11 @@ const PersonForm = ({ type, source }) => {
         break;
       case 'edit':
         setTitle('Update details of the person you sail with');
-        setSubmittedNextPage('/people');
+        setSubmittedNextPage(PEOPLE_PAGE_URL);
         break;
       default:
         setTitle('Add details of the person you frequently sail with');
-        setSubmittedNextPage('/people');
+        setSubmittedNextPage(PEOPLE_PAGE_URL);
     }
   }, [source]);
 
@@ -62,7 +70,7 @@ const PersonForm = ({ type, source }) => {
                       name="firstName"
                       type="text"
                       value={formData?.firstName || ''}
-                      onChange={handleChange}
+                      onChange={(e) => { handleChange(e); }}
                     />
                   </div>
                   <div id="lastName" className="govuk-form-group">
@@ -149,7 +157,7 @@ const PersonForm = ({ type, source }) => {
                       type="button"
                       className="govuk-button"
                       data-module="govuk-button"
-                      onClick={goToNextPage}
+                      onClick={(e) => { goToNextPage(e); }}
                     >
                       Continue
                     </button>
@@ -159,7 +167,19 @@ const PersonForm = ({ type, source }) => {
 
               {formPage === 2
               && (
-                <h1> TWO </h1>
+                <>
+                  <h1> TWO </h1>
+                  <div className="govuk-button-group">
+                    <button
+                      type="button"
+                      className="govuk-button"
+                      data-module="govuk-button"
+                      onClick={(e) => { handleSubmit(e); }}
+                    >
+                      Continue
+                    </button>
+                  </div>
+                </>
               )}
             </div>
           </div>
