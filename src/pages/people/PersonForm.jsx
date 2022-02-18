@@ -14,8 +14,8 @@ const PersonForm = ({ type, source }) => {
 
   document.title = type === 'edit' ? 'Edit person' : 'Save person';
 
-  const handleChange = () => {
-    console.log('change');
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   const goToNextPage = (e) => {
@@ -25,7 +25,6 @@ const PersonForm = ({ type, source }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('submit');
     history.push(submittedNextPage);
   };
 
@@ -47,6 +46,10 @@ const PersonForm = ({ type, source }) => {
         setSubmittedNextPage(PEOPLE_PAGE_URL);
     }
   }, [source]);
+
+  useEffect(() => {
+    sessionStorage.setItem('formData', JSON.stringify(formData));
+  }, [formData]);
 
   return (
     <div className="govuk-width-container ">
