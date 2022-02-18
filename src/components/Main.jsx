@@ -8,6 +8,8 @@ import {
 import ScrollToTop from './ScrollToTop';
 import SecureRoute from '../lib/SecureRoute';
 
+import VoyageHelp from '../pages/help/Help';
+
 import Banner from './Banner';
 import Footer from './Footer';
 import Header from './Header';
@@ -65,6 +67,12 @@ const Main = () => {
             <Route exact path="/">
               <LandingPage />
             </Route>
+            <SecureRoute exact path="/page/help">
+              <VoyageHelp />
+            </SecureRoute>
+            <SecureRoute exact path="/voyage-plans/start">
+              <VoyageHelp source="voyage" />
+            </SecureRoute>
             <SecureRoute exact path="/voyage-plans">
               <PageContainer />
             </SecureRoute>
