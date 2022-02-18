@@ -7,7 +7,7 @@ const PersonForm = ({ type, source }) => {
   const location = useLocation();
   const data = location.state;
   const [errors, setErrors] = useState();
-  const [formData, setFormData] = useState();
+  const [formData, setFormData] = useState(JSON.parse(sessionStorage.getItem('formData')) || {});
   const [formPage, setFormPage] = useState(1);
   const [title, setTitle] = useState();
   const [submittedNextPage, setSubmittedNextPage] = useState();
