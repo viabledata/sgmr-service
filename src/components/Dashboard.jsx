@@ -12,7 +12,8 @@ const Dashboard = (pageData) => {
 
   const getReportList = () => {
     const validReports = [];
-    getData(USER_VOYAGE_REPORT_URL)
+    // Temporarily allows user to see all reports
+    getData(`${USER_VOYAGE_REPORT_URL}?per_page=100`)
       .then((resp) => {
         if (!resp.errors) {
           resp.items.map((report) => {
