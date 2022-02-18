@@ -5,6 +5,7 @@ import { USER_VOYAGE_REPORT_URL, VOYAGE_REPORT_URL } from '../constants/ApiConst
 import { EDIT_VOYAGE_CHECK_DETAILS_URL } from '../constants/ClientConstants';
 import { deleteItem, getData } from '../utils/apiHooks';
 import { formatUIDate } from '../utils/date';
+import Pagination from './Pagination';
 
 const ManageReports = (pageData) => {
   document.title = 'Manage voyage plans';
@@ -12,6 +13,8 @@ const ManageReports = (pageData) => {
   const [tabData, setTabData] = useState([]);
   const [tableName, setTableName] = useState('Draft');
   const [reportList, setReportList] = useState();
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalCount, setTotalCount] = useState('');
   const tabs = [
     {
       name: 'draft',
@@ -29,7 +32,9 @@ const ManageReports = (pageData) => {
     },
   ];
 
-  const setActiveTab = (e) => {
+  const pageSize = 10;
+
+  const createActiveTab = (e) => {
     const tabArray = [...tabData];
     tabArray.map((elem) => {
       if (e.target.id === elem.name) {
@@ -44,8 +49,10 @@ const ManageReports = (pageData) => {
 
   const getReportList = () => {
     const validReports = [];
-    getData(USER_VOYAGE_REPORT_URL)
+    // Defualt page size on api is 10 so only page number needed
+    getData(`${USER_VOYAGE_REPORT_URL}?page=${currentPage}`)
       .then((resp) => {
+        setTotalCount(resp._meta.totalItems);
         if (!resp.errors) {
           resp.items.map((report) => {
             if (!report.departureDate && !report.departureTime && !report.departurePort) {
@@ -59,10 +66,15 @@ const ManageReports = (pageData) => {
       });
   };
 
+  // Sets tab data on load
   useEffect(() => {
     setTabData(tabs);
-    getReportList();
   }, [pageData]);
+
+  // Calls api whenever current page changes
+  useEffect(() => {
+    getReportList();
+  }, [pageData, currentPage]);
 
   if (!pageData || !tabData || tabData.length === 0) { return null; }
   return (
@@ -86,7 +98,7 @@ const ManageReports = (pageData) => {
                     id={tab.name}
                     className="govuk-tabs__tab"
                     onClick={(e) => {
-                      setActiveTab(e);
+                      createActiveTab(e);
                       e.preventDefault();
                     }}
                   >
@@ -156,6 +168,12 @@ const ManageReports = (pageData) => {
               </tbody>
             </table>
           </div>
+          <Pagination
+            currentPage={currentPage}
+            totalCount={totalCount}
+            pageSize={pageSize}
+            onPageChange={(page) => setCurrentPage(page)}
+          />
         </div>
       </main>
     </div>
