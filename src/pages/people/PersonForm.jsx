@@ -388,7 +388,7 @@ const PersonForm = ({ type, source }) => {
                       data-module="govuk-button"
                       onClick={(e) => { handleSubmit(e); }}
                     >
-                      Continue
+                      Save
                     </button>
                   </div>
                 </>
