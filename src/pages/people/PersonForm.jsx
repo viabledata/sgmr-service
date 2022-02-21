@@ -10,8 +10,9 @@ import { PEOPLE_PAGE_URL } from '../../constants/ClientConstants';
 const PersonForm = ({ type, source }) => {
   const history = useHistory();
   const location = useLocation();
-  const locationState = location.state;
   const locationPath = location.pathname;
+  const locationState = location.state;
+
   const [errors, setErrors] = useState();
   const [formData, setFormData] = useState(JSON.parse(sessionStorage.getItem('formData')) || {});
   const [formPage, setFormPage] = useState(1);
@@ -19,6 +20,7 @@ const PersonForm = ({ type, source }) => {
   const [submittedNextPage, setSubmittedNextPage] = useState();
 
   document.title = type === 'edit' ? 'Edit person' : 'Save person';
+  const documentTypeOther = formData.documentType !== undefined && formData.documentType !== 'Passport' && formData.documentType !== 'IdentityCard';
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -182,7 +184,68 @@ const PersonForm = ({ type, source }) => {
               {formPage === 2
               && (
                 <>
-                  <h1>Travel document details</h1>
+                  <h1 className="govuk-heading-l">Travel document details</h1>
+                  <div className="govuk-radios govuk-radios--conditional">
+                    <div className="govuk-radios__item">
+                      <input
+                        className="govuk-radios__input"
+                        id="documentTypePassport"
+                        name="documentType"
+                        type="radio"
+                        value="Passport"
+                        checked={formData.documentType === 'Passport' ? 'checked' : ''}
+                        onChange={(e) => { handleChange(e); }}
+                        data-aria-controls="documentTypePassport"
+                      />
+                      <label className="govuk-label govuk-radios__label" htmlFor="documentTypePassport">
+                        Passport
+                      </label>
+                    </div>
+                    <div className="govuk-radios__item">
+                      <input
+                        className="govuk-radios__input"
+                        id="documentTypeIdentityCard"
+                        name="documentType"
+                        type="radio"
+                        value="IdentityCard"
+                        checked={formData.documentType === 'IdentityCard' ? 'checked' : ''}
+                        onChange={(e) => { handleChange(e); }}
+                        data-aria-controls="documentTypeIdentityCard"
+                      />
+                      <label className="govuk-label govuk-radios__label" htmlFor="documentTypeIdentityCard">
+                        Identity card
+                      </label>
+                    </div>
+                    <div className="govuk-radios__item">
+                      <input
+                        className="govuk-radios__input"
+                        id="documentTypeOther"
+                        name="documentType"
+                        type="radio"
+                        value=""
+                        checked={documentTypeOther ? 'checked' : ''}
+                        onChange={(e) => { handleChange(e); }}
+                        data-aria-controls="documentTypeOther"
+                      />
+                      <label className="govuk-label govuk-radios__label" htmlFor="documentTypeOther">
+                        Another travel document
+                      </label>
+                    </div>
+                    {documentTypeOther && (
+                      <div className="govuk-form-group">
+                        <label className="govuk-label" htmlFor="documentType-other">
+                          Please specify
+                          <input
+                            className="govuk-input"
+                            name="documentType"
+                            type="text"
+                            value={documentTypeOther ? formData.documentType : ''}
+                            onChange={handleChange}
+                          />
+                        </label>
+                      </div>
+                    )}
+                  </div>
                   <div className="govuk-button-group">
                     <button
                       type="button"
