@@ -126,10 +126,10 @@ const Main = () => {
             <SecureRoute exact path="/people">
               <PageContainer />
             </SecureRoute>
-            <SecureRoute exact path="/people/save-person">
+            <SecureRoute exact path="/people/save-person/page-([1-2]{1})">
               <PersonForm />
             </SecureRoute>
-            <SecureRoute exact path="/people/edit-person">
+            <SecureRoute exact path="/people/edit-person/page-([1-2]{1})">
               <PersonForm type="edit" />
             </SecureRoute>
             <SecureRoute exact path="/people/:entityId/delete">

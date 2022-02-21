@@ -10,7 +10,8 @@ import { PEOPLE_PAGE_URL } from '../../constants/ClientConstants';
 const PersonForm = ({ type, source }) => {
   const history = useHistory();
   const location = useLocation();
-  const data = location.state;
+  const locationState = location.state;
+  const locationPath = location.pathname;
   const [errors, setErrors] = useState();
   const [formData, setFormData] = useState(JSON.parse(sessionStorage.getItem('formData')) || {});
   const [formPage, setFormPage] = useState(1);
@@ -26,7 +27,7 @@ const PersonForm = ({ type, source }) => {
   const goToNextPage = (e) => {
     e.preventDefault();
     setFormPage(formPage + 1);
-    history.push('/people/save-person');
+    history.push(`/people/${type || 'save'}-person/page-${formPage + 1}`);
   };
 
   const handleSubmit = (e) => {
@@ -35,7 +36,11 @@ const PersonForm = ({ type, source }) => {
   };
 
   useEffect(() => {
-    if (data?.source === 'edit') { source = 'edit'; }
+    setFormPage(parseInt(locationPath.split('page-').pop(), 10));
+  }, [locationPath]);
+
+  useEffect(() => {
+    if (locationState?.source === 'edit') { source = 'edit'; }
     switch (source) {
       case 'onboarding':
         setTitle('Add details of a person you frequently sail with');
@@ -63,11 +68,11 @@ const PersonForm = ({ type, source }) => {
         <div className="govuk-width-container ">
           <div className="govuk-grid-row">
             <div className="govuk-grid-column-two-thirds">
-              <h1 className="govuk-heading-l">{title}</h1>
 
               {formPage === 1
                 && (
                 <>
+                  <h1 className="govuk-heading-l">{title}</h1>
                   <div id="firstName" className="govuk-form-group">
                     <label className="govuk-label" htmlFor="firstNameInput">
                       Given name(s)
@@ -177,7 +182,7 @@ const PersonForm = ({ type, source }) => {
               {formPage === 2
               && (
                 <>
-                  <h1> TWO </h1>
+                  <h1>Travel document details</h1>
                   <div className="govuk-button-group">
                     <button
                       type="button"

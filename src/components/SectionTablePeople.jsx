@@ -65,7 +65,7 @@ const SectionTablePeople = ({ pageData }) => {
                           Last Name
                         </span>
                         <Link to={{
-                          pathname: '/people/edit-person',
+                          pathname: '/people/edit-person/page-1',
                           state: { peopleId: person[1].id, source: 'edit' },
                         }}
                         >
