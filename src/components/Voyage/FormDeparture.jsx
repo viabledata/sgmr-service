@@ -8,7 +8,7 @@ import PortField from '../PortField';
 const FormDeparture = ({
   handleSubmit, handleChange, updateFieldValue, data, errors, voyageId,
 }) => {
-  document.title = 'Departure details';
+  document.title = 'Intended departure details';
 
   if (!data) { return null; }
   return (
@@ -156,7 +156,6 @@ const FormDeparture = ({
             defaultValue={data.departurePort}
             fieldName="departurePort"
             onConfirm={(result) => {
-              console.log(result);
               updateFieldValue('departurePort', result.unlocode || result.name);
             }}
           />
@@ -172,7 +171,7 @@ const FormDeparture = ({
         Save and continue
       </button>
       <p className="govuk-body">
-        <Link to="/voyage-plans" className="govuk-link govuk-link--no-visited-state" onClick={(e) => handleSubmit(e, FORM_STEPS.DEPARTURE, voyageId)}>
+        <Link to="/voyage-plans" className="govuk-link govuk-link--no-visited-state" onClick={(e) => handleSubmit(e, FORM_STEPS.DEPARTURE_SAVE_AND_EXIT, voyageId)}>
           Save and come back later
         </Link>
       </p>

@@ -146,7 +146,14 @@ const FormVoyageContainer = () => {
     let nextPage;
     const currentPage = parseInt(pageNum, 10);
     switch (sourceForm) {
-      case FORM_STEPS.CHECK: history.push('/save-voyage/page-submitted'); break;
+      case FORM_STEPS.CHECK: history.push('/save-voyage/page-submitted');
+        break;
+      case FORM_STEPS.ARRIVAL_SAVE_AND_EXIT:
+        history.push('/voyage-plans');
+        break;
+      case FORM_STEPS.DEPARTURE_SAVE_AND_EXIT:
+        history.push('/voyage-plans');
+        break;
       default:
         nextPage = currentPage < maxPages ? currentPage + 1 : currentPage;
         setPageNum(nextPage);
@@ -158,13 +165,13 @@ const FormVoyageContainer = () => {
     let dataToSubmit;
 
     switch (sourceForm) {
-      case FORM_STEPS.ARRIVAL:
+      case FORM_STEPS.ARRIVAL || FORM_STEPS.ARRIVAL_SAVE_AND_EXIT:
         dataToSubmit = formatDepartureArrival(VOYAGE_STATUSES.DRAFT, dataToFormat, voyageData);
         break;
       case FORM_STEPS.CHECK:
         dataToSubmit = { status: VOYAGE_STATUSES.PRE_SUBMITTED };
         break;
-      case FORM_STEPS.DEPARTURE:
+      case FORM_STEPS.DEPARTURE || FORM_STEPS.DEPARTURE_SAVE_AND_EXIT:
         dataToSubmit = formatDepartureArrival(VOYAGE_STATUSES.DRAFT, dataToFormat, voyageData);
         break;
       case FORM_STEPS.NEW_PERSON:

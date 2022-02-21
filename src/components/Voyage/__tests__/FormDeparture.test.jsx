@@ -15,10 +15,10 @@ describe('FormDeparture', () => {
       </MemoryRouter>,
     );
 
-    expect(screen.getByText('Departure details')).toBeInTheDocument();
-    expect(screen.getAllByRole('textbox').length).toBe(6); // day, month, year, hour, minute
+    expect(screen.getByText('Intended departure details')).toBeInTheDocument();
+    expect(screen.getAllByRole('textbox').length).toBe(7); // day, month, year, hour, minute, port input
     expect(screen.getAllByRole('combobox').length).toBe(1); // port
-    expect(screen.getByRole('combobox')).toHaveAttribute('id', 'autocomplete');
+    expect(screen.getByRole('combobox')).toHaveAttribute('id', 'portsCombobox');
     expect(screen.getByRole('combobox')).toHaveAttribute('name', 'departurePort');
   });
 });
