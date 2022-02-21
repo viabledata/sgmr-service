@@ -107,7 +107,7 @@ const PersonForm = ({ type, source }) => {
                     <label className="govuk-label" htmlFor="dateOfBirthDay">
                       Date of birth
                     </label>
-                    <div id="lastName-hint" className="govuk-hint">Enter this as shown on your passport, for example, 31 03 1980</div>
+                    <div id="dateOfBirth-hint" className="govuk-hint">Enter this as shown on your passport, for example, 31 03 1980</div>
                     <div className="govuk-date-input">
                       <div className="govuk-date-input__item">
                         <div className="govuk-form-group">
@@ -185,7 +185,7 @@ const PersonForm = ({ type, source }) => {
               && (
                 <>
                   <h1 className="govuk-heading-l">Travel document details</h1>
-                  <div className="govuk-radios govuk-radios--conditional">
+                  <div className="govuk-radios govuk-form-group">
                     <div className="govuk-radios__item">
                       <input
                         className="govuk-radios__input"
@@ -245,6 +245,20 @@ const PersonForm = ({ type, source }) => {
                         </label>
                       </div>
                     )}
+                  </div>
+                  <div id="documentNumber" className="govuk-form-group">
+                    <label className="govuk-label" htmlFor="documentNumberInput">
+                      Travel document number
+                    </label>
+                    <div id="documentNumber-hint" className="govuk-hint">This can contain letters and numbers. For example, 120382978A</div>
+                    <input
+                      id="documentNumberInput"
+                      className="govuk-input"
+                      name="documentNumber"
+                      type="text"
+                      value={formData?.documentNumber || ''}
+                      onChange={handleChange}
+                    />
                   </div>
                   <div className="govuk-button-group">
                     <button
