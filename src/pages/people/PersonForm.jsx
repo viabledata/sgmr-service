@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useHistory, useLocation, withRouter } from 'react-router-dom';
 import { PEOPLE_PAGE_URL } from '../../constants/ClientConstants';
 import nationalities from '../../utils/staticFormData';
+import { validate } from '../../components/Forms/validationRules';
+import personValidationRules from './personValidationRules';
 
 const PersonForm = ({ type, source }) => {
   const history = useHistory();
@@ -22,15 +24,30 @@ const PersonForm = ({ type, source }) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const goToNextPage = (e) => {
-    e.preventDefault();
-    setFormPage(formPage + 1);
-    history.push(`/people/${type || 'save'}-person/page-${formPage + 1}`);
+  const validateForm = async () => {
+    const newErrors = await validate(personValidationRules[`page${formPage}`], formData);
+    setErrors(newErrors);
+    // scrollToTopOnError(newErrors);
+    return Object.keys(newErrors).length > 0;
   };
 
-  const handleSubmit = (e) => {
+  const goToNextPage = async (e) => {
     e.preventDefault();
-    history.push(submittedNextPage);
+    if (!await validateForm()) {
+      setFormPage(formPage + 1);
+      history.push(`/people/${type || 'save'}-person/page-${formPage + 1}`);
+    }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!await validateForm()) {
+    // do not error if expiryDate is NO
+    // display errors
+    // format data for submission
+    // POST or PATCH
+      history.push(submittedNextPage);
+    }
   };
 
   useEffect(() => {
