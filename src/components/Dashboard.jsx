@@ -2,8 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 
 import { USER_VOYAGE_REPORT_URL, VOYAGE_REPORT_URL } from '../constants/ApiConstants';
-import { SAVE_VOYAGE_DEPARTURE_URL } from '../constants/ClientConstants';
-import { deleteItem, getData, postData } from '../utils/apiHooks';
+import { deleteItem, getData } from '../utils/apiHooks';
 
 const Dashboard = (pageData) => {
   document.title = 'Voyage plans';
@@ -26,14 +25,6 @@ const Dashboard = (pageData) => {
           setReportList(validReports);
         }
       });
-  };
-
-  const handleStart = async () => {
-    const resp = await postData(USER_VOYAGE_REPORT_URL, null, 'reports');
-    history.push({
-      pathname: SAVE_VOYAGE_DEPARTURE_URL,
-      state: { voyageId: resp.id },
-    });
   };
 
   const countVoyages = (currentStatus) => {
@@ -62,7 +53,7 @@ const Dashboard = (pageData) => {
             type="button"
             className="govuk-button govuk-button--start"
             data-module="govuk-button"
-            onClick={handleStart}
+            onClick={() => history.push('/voyage-plans/start')}
           >
             Start now
             <svg
