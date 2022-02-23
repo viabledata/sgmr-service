@@ -1,6 +1,8 @@
 import React from 'react';
 import { MemoryRouter } from 'react-router-dom';
-import { fireEvent, getByLabelText, render, screen, waitFor } from '@testing-library/react';
+import {
+  fireEvent, getByLabelText, render, screen, waitFor,
+} from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import PersonForm from '../PersonForm';
 
@@ -13,6 +15,10 @@ const renderPage = (pageNumber, source) => {
 };
 
 describe('Creating and editing people', () => {
+  beforeEach(() => {
+    window.sessionStorage.removeItem('formData');
+  });
+
   it('should render different titles based on where the user comes from', () => {
     const testTitle = (text) => {
       expect(screen.getByText(text).outerHTML).toEqual(`<h1 class="govuk-heading-l">${text}</h1>`);
@@ -77,10 +83,14 @@ describe('Creating and editing people', () => {
     expect(screen.queryAllByText('You must enter an expiry date')).toHaveLength(2);
   });
 
-  it('should render correct fields on page1 of the form', () => {
+  it('should store form data in the session for use on refresh', () => {
+    const expectedFormData = '{"firstName":"Joe","lastName":"Bloggs","dateOfBirthDay":"1","dateOfBirthMonth":"11","dateOfBirthYear":"1990"}';
     renderPage(1);
-    expect(screen.queryByText('There is a problem')).not.toBeInTheDocument();
-    // on submit expect sessionStorage to have formData
-    // expect formData to match formData
+    fireEvent.change(screen.getByLabelText('Given name(s)'), { target: { value: 'Joe' } });
+    fireEvent.change(screen.getByLabelText('Surname'), { target: { value: 'Bloggs' } });
+    fireEvent.change(screen.getByLabelText('Day'), { target: { value: '1' } });
+    fireEvent.change(screen.getByLabelText('Month'), { target: { value: '11' } });
+    fireEvent.change(screen.getByLabelText('Year'), { target: { value: '1990' } });
+    expect(window.sessionStorage.getItem('formData')).toStrictEqual(expectedFormData);
   });
 });
