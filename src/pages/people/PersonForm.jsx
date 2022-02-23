@@ -52,8 +52,6 @@ const PersonForm = ({ type, source }) => {
     e.preventDefault();
     if (!await validateForm()) {
     // do not error if expiryDate is NO
-    // do not show error on 'back to page 1'
-    // display errors
     // format data for submission
     // POST or PATCH
       history.push(submittedNextPage);
@@ -118,7 +116,8 @@ const PersonForm = ({ type, source }) => {
                     </div>
                   </div>
                   )}
-                  <div id="firstName" className="govuk-form-group">
+
+                  <div id="firstName" className={`govuk-form-group ${errors.firstName ? 'govuk-form-group--error' : ''}`}>
                     <label className="govuk-label" htmlFor="firstNameInput">
                       Given name(s)
                     </label>
@@ -133,7 +132,7 @@ const PersonForm = ({ type, source }) => {
                       onChange={(e) => { handleChange(e); }}
                     />
                   </div>
-                  <div id="lastName" className="govuk-form-group">
+                  <div id="lastName" className={`govuk-form-group ${errors.lastName ? 'govuk-form-group--error' : ''}`}>
                     <label className="govuk-label" htmlFor="lastNameInput">
                       Surname
                     </label>
@@ -148,7 +147,7 @@ const PersonForm = ({ type, source }) => {
                       onChange={handleChange}
                     />
                   </div>
-                  <div id="dateOfBirth" className="govuk-form-group">
+                  <div id="dateOfBirth" className={`govuk-form-group ${errors.dateOfBirth ? 'govuk-form-group--error' : ''}`}>
                     <label className="govuk-label" htmlFor="dateOfBirthDay">
                       Date of birth
                     </label>
@@ -249,7 +248,7 @@ const PersonForm = ({ type, source }) => {
                     </div>
                   </div>
                   )}
-                  <div className="govuk-form-group">
+                  <div className={`govuk-form-group ${errors.documentType ? 'govuk-form-group--error' : ''}`}>
                     <fieldset id="documentType" className="govuk-fieldset">
                       <legend className="govuk-fieldset__legend govuk-fieldset__legend">Select a travel document type</legend>
                       <div id="documentType-hint" className="govuk-hint">
@@ -321,7 +320,7 @@ const PersonForm = ({ type, source }) => {
                       </div>
                     </fieldset>
                   </div>
-                  <div id="documentNumber" className="govuk-form-group">
+                  <div id="documentNumber" className={`govuk-form-group ${errors.documentNumber ? 'govuk-form-group--error' : ''}`}>
                     <label className="govuk-label" htmlFor="documentNumberInput">
                       Travel document number
                     </label>
@@ -336,7 +335,7 @@ const PersonForm = ({ type, source }) => {
                       onChange={handleChange}
                     />
                   </div>
-                  <div id="nationality" className="govuk-form-group">
+                  <div id="nationality" className={`govuk-form-group ${errors.nationality ? 'govuk-form-group--error' : ''}`}>
                     <label className="govuk-label" htmlFor="nationality">
                       Nationality
                     </label>
@@ -353,10 +352,9 @@ const PersonForm = ({ type, source }) => {
                       ))}
                     </select>
                   </div>
-                  <div className=" govuk-form-group">
+                  <div className={`govuk-form-group ${errors.documentExpiryDateYes ? 'govuk-form-group--error' : ''}`}>
                     <fieldset className="govuk-fieldset" aria-describedby="expiry-date-hint">
                       <legend className="govuk-fieldset__legend govuk-fieldset__legend">Does your document have an expiry date?</legend>
-                      <FormFieldError error={errors.documentExpiryDateYes} />
                       <div className="govuk-radios" data-module="govuk-radios">
                         <div className="govuk-radios__item">
                           <input
@@ -379,6 +377,7 @@ const PersonForm = ({ type, source }) => {
                             <fieldset className="govuk-fieldset" aria-describedby="documentExpiryDate-hint" role="group">
                               <legend className="govuk-fieldset__legend"> Expiry date</legend>
                               <div id="documentExpiryDate-hint" className="govuk-hint">For example 31 03 1980</div>
+                              <FormFieldError error={errors.documentExpiryDateYes} />
                               <div className="govuk-date-input" id="documentExpiryDate">
                                 <div className="govuk-date-input__item">
                                   <div className="govuk-form-group">
