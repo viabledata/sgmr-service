@@ -66,32 +66,38 @@ const personValidationRules = {
       inputField: 'nationality',
       errorDisplayId: 'nationality',
       type: 'required',
-      message: 'You must enter a nationality',
+      message: 'You must select a nationality',
+    },
+    {
+      inputField: 'documentExpiryDate',
+      errorDisplayId: 'documentExpiryDate',
+      type: 'required',
+      message: 'You must select a document expiry',
     },
     {
       inputField: 'documentExpiryDateYear',
-      errorDisplayId: 'documentExpiryDateYes',
+      errorDisplayId: 'documentExpiryDate',
       type: 'requiredOnVisible',
       visibilityIndicator: 'documentExpiryDateYes',
       message: 'You must enter an expiry date',
     },
     {
       inputField: 'documentExpiryDateMonth',
-      errorDisplayId: 'documentExpiryDateYes',
+      errorDisplayId: 'documentExpiryDate',
       type: 'requiredOnVisible',
       visibilityIndicator: 'documentExpiryDateYes',
       message: 'You must enter an expiry date',
     },
     {
       inputField: 'documentExpiryDateDay',
-      errorDisplayId: 'documentExpiryDateYes',
+      errorDisplayId: 'documentExpiryDate',
       type: 'requiredOnVisible',
       visibilityIndicator: 'documentExpiryDateYes',
       message: 'You must enter an expiry date',
     },
     {
       inputField: 'documentExpiryDateDay',
-      errorDisplayId: 'documentExpiryDateYes',
+      errorDisplayId: 'documentExpiryDate',
       type: 'async',
       callback: async (value, values) => {
         // Expiry Date must be valid and in the future

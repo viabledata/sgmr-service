@@ -395,6 +395,7 @@ const PersonForm = ({ type, source, personId }) => {
                     <label className="govuk-label" htmlFor="nationality">
                       Nationality
                     </label>
+                    <FormFieldError error={errors.nationality} />
                     <select
                       className="govuk-select"
                       name="nationality"
@@ -408,9 +409,10 @@ const PersonForm = ({ type, source, personId }) => {
                       ))}
                     </select>
                   </div>
-                  <div className={`govuk-form-group ${errors.documentExpiryDateYes ? 'govuk-form-group--error' : ''}`}>
+                  <div id="documentExpiryDate" className={`govuk-form-group ${errors.documentExpiryDate ? 'govuk-form-group--error' : ''}`}>
                     <fieldset className="govuk-fieldset" aria-describedby="expiry-date-hint">
                       <legend className="govuk-fieldset__legend govuk-fieldset__legend">Does your document have an expiry date?</legend>
+                      <FormFieldError error={errors.documentExpiryDate} />
                       <div className="govuk-radios" data-module="govuk-radios">
                         <div className="govuk-radios__item">
                           <input
@@ -433,7 +435,6 @@ const PersonForm = ({ type, source, personId }) => {
                             <fieldset className="govuk-fieldset" aria-describedby="documentExpiryDate-hint" role="group">
                               <legend className="govuk-fieldset__legend"> Expiry date</legend>
                               <div id="documentExpiryDate-hint" className="govuk-hint">For example 31 03 1980</div>
-                              <FormFieldError error={errors.documentExpiryDateYes} />
                               <div className="govuk-date-input" id="documentExpiryDate">
                                 <div className="govuk-date-input__item">
                                   <div className="govuk-form-group">

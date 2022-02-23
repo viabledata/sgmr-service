@@ -439,7 +439,7 @@ export const validate = async (rules, data) => {
             break;
           case 'requiredOnVisible':
             if (Object.values(data).includes(rule.visibilityIndicator)) {
-              if (value === '') {
+              if (value === '' || !value) {
                 resolve({ [rule.errorDisplayId]: rule.message });
               } else {
                 resolve(undefined);
