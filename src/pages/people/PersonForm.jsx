@@ -39,7 +39,6 @@ const PersonForm = ({ type, source }) => {
       history.push(`/people/${type || 'save'}-person/page-${formPage + 1}`);
     }
   };
-  console.log(errors);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -216,11 +215,26 @@ const PersonForm = ({ type, source }) => {
               && (
                 <>
                   <h1 className="govuk-heading-l">Travel document details</h1>
-
+                  {Object.keys(errors).length >= 1 && (
+                  <div className="govuk-error-summary" aria-labelledby="error-summary-title" role="alert" tabIndex="-1" data-module="govuk-error-summary">
+                    <h2 className="govuk-error-summary__title">
+                      There is a problem
+                    </h2>
+                    <div className="govuk-error-summary__body">
+                      <ul className="govuk-list govuk-error-summary__list">
+                        {Object.entries(errors).reverse().map((elem) => (
+                          <li key={elem[0]}>
+                            <a href={`#${elem[0]}`}>{elem[1]}</a>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+                  )}
                   <div className="govuk-form-group">
-                    <fieldset className="govuk-fieldset">
+                    <fieldset id="documentType" className="govuk-fieldset">
                       <legend className="govuk-fieldset__legend govuk-fieldset__legend">Select a travel document type</legend>
-                      <div id="passportNumber-hint" className="govuk-hint">
+                      <div id="documentType-hint" className="govuk-hint">
                         Read advice on
                         {' '}
                         <a href="https://www.gov.uk/uk-border-control" target="_blank" rel="noreferrer" className="govuk-link">Entering the UK</a>
