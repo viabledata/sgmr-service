@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory, useLocation, withRouter } from 'react-router-dom';
+import { validate } from '../../components/Forms/validationRules';
 import { PEOPLE_PAGE_URL } from '../../constants/ClientConstants';
 import nationalities from '../../utils/staticFormData';
-import { validate } from '../../components/Forms/validationRules';
+import scrollToTopOnError from '../../utils/scrollToTopOnError';
 import personValidationRules from './personValidationRules';
 
 const PersonForm = ({ type, source }) => {
@@ -11,7 +12,7 @@ const PersonForm = ({ type, source }) => {
   const locationPath = location.pathname;
   const locationState = location.state;
 
-  const [errors, setErrors] = useState();
+  const [errors, setErrors] = useState({});
   const [formData, setFormData] = useState(JSON.parse(sessionStorage.getItem('formData')) || {});
   const [formPage, setFormPage] = useState(1);
   const [title, setTitle] = useState();
@@ -27,7 +28,7 @@ const PersonForm = ({ type, source }) => {
   const validateForm = async () => {
     const newErrors = await validate(personValidationRules[`page${formPage}`], formData);
     setErrors(newErrors);
-    // scrollToTopOnError(newErrors);
+    scrollToTopOnError(newErrors);
     return Object.keys(newErrors).length > 0;
   };
 
@@ -38,6 +39,7 @@ const PersonForm = ({ type, source }) => {
       history.push(`/people/${type || 'save'}-person/page-${formPage + 1}`);
     }
   };
+  console.log(errors);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -88,6 +90,22 @@ const PersonForm = ({ type, source }) => {
                 && (
                 <>
                   <h1 className="govuk-heading-l">{title}</h1>
+                  {Object.keys(errors).length >= 1 && (
+                  <div className="govuk-error-summary" aria-labelledby="error-summary-title" role="alert" tabIndex="-1" data-module="govuk-error-summary">
+                    <h2 className="govuk-error-summary__title">
+                      There is a problem
+                    </h2>
+                    <div className="govuk-error-summary__body">
+                      <ul className="govuk-list govuk-error-summary__list">
+                        {Object.entries(errors).reverse().map((elem) => (
+                          <li key={elem[0]}>
+                            <a href={`#${elem[0]}`}>{elem[1]}</a>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+                  )}
                   <div id="firstName" className="govuk-form-group">
                     <label className="govuk-label" htmlFor="firstNameInput">
                       Given name(s)
