@@ -6,6 +6,8 @@ import nationalities from '../../utils/staticFormData';
 import scrollToTopOnError from '../../utils/scrollToTopOnError';
 import personValidationRules from './personValidationRules';
 
+import FormFieldError from '../../components-v2/FormFieldError';
+
 const PersonForm = ({ type, source }) => {
   const history = useHistory();
   const location = useLocation();
@@ -23,6 +25,12 @@ const PersonForm = ({ type, source }) => {
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleErrorClick = (e, id) => {
+    e.preventDefault();
+    const scrollToError = document.getElementById(id);
+    scrollToError.scrollIntoView();
   };
 
   const validateForm = async () => {
@@ -44,6 +52,7 @@ const PersonForm = ({ type, source }) => {
     e.preventDefault();
     if (!await validateForm()) {
     // do not error if expiryDate is NO
+    // do not show error on 'back to page 1'
     // display errors
     // format data for submission
     // POST or PATCH
@@ -98,7 +107,9 @@ const PersonForm = ({ type, source }) => {
                       <ul className="govuk-list govuk-error-summary__list">
                         {Object.entries(errors).reverse().map((elem) => (
                           <li key={elem[0]}>
-                            <a href={`#${elem[0]}`}>{elem[1]}</a>
+                            {elem[0] !== 'title'
+                            //  eslint-disable-next-line jsx-a11y/anchor-is-valid
+                            && <a onClick={(e) => handleErrorClick(e, elem[0])} href="#">{elem[1]}</a>}
                           </li>
                         ))}
                       </ul>
@@ -110,6 +121,7 @@ const PersonForm = ({ type, source }) => {
                       Given name(s)
                     </label>
                     <div id="firstName-hint" className="govuk-hint">The person&apos;s first and middle names</div>
+                    <FormFieldError error={errors.firstName} />
                     <input
                       id="firstNameInput"
                       className="govuk-input"
@@ -124,6 +136,7 @@ const PersonForm = ({ type, source }) => {
                       Surname
                     </label>
                     <div id="lastName-hint" className="govuk-hint">If the person has more than one surname, enter them all</div>
+                    <FormFieldError error={errors.lastName} />
                     <input
                       id="lastNameInput"
                       className="govuk-input"
@@ -138,6 +151,7 @@ const PersonForm = ({ type, source }) => {
                       Date of birth
                     </label>
                     <div id="dateOfBirth-hint" className="govuk-hint">Enter this as shown on your passport, for example, 31 03 1980</div>
+                    <FormFieldError error={errors.dateOfBirth} />
                     <div className="govuk-date-input">
                       <div className="govuk-date-input__item">
                         <div className="govuk-form-group">
@@ -224,7 +238,9 @@ const PersonForm = ({ type, source }) => {
                       <ul className="govuk-list govuk-error-summary__list">
                         {Object.entries(errors).reverse().map((elem) => (
                           <li key={elem[0]}>
-                            <a href={`#${elem[0]}`}>{elem[1]}</a>
+                            {elem[0] !== 'title'
+                            //  eslint-disable-next-line jsx-a11y/anchor-is-valid
+                            && <a onClick={(e) => handleErrorClick(e, elem[0])} href="#">{elem[1]}</a>}
                           </li>
                         ))}
                       </ul>
@@ -239,6 +255,7 @@ const PersonForm = ({ type, source }) => {
                         {' '}
                         <a href="https://www.gov.uk/uk-border-control" target="_blank" rel="noreferrer" className="govuk-link">Entering the UK</a>
                       </div>
+                      <FormFieldError error={errors.documentType} />
                       <div className="govuk-radios" data-module="govuk-radios">
                         <div className="govuk-radios__item">
                           <input
@@ -307,6 +324,7 @@ const PersonForm = ({ type, source }) => {
                       Travel document number
                     </label>
                     <div id="documentNumber-hint" className="govuk-hint">This can contain letters and numbers. For example, 120382978A</div>
+                    <FormFieldError error={errors.documentNumber} />
                     <input
                       id="documentNumberInput"
                       className="govuk-input"
@@ -336,6 +354,7 @@ const PersonForm = ({ type, source }) => {
                   <div className=" govuk-form-group">
                     <fieldset className="govuk-fieldset" aria-describedby="expiry-date-hint">
                       <legend className="govuk-fieldset__legend govuk-fieldset__legend">Does your document have an expiry date?</legend>
+                      <FormFieldError error={errors.documentExpiryDateYes} />
                       <div className="govuk-radios" data-module="govuk-radios">
                         <div className="govuk-radios__item">
                           <input
@@ -353,64 +372,64 @@ const PersonForm = ({ type, source }) => {
                           </label>
                         </div>
                         {formData.documentExpiryDate === 'documentExpiryDateYes' && (
-                          <div className="govuk-radios__conditional" id="documentExpiryDate">
-                            <div className="govuk-form-group">
-                              <fieldset className="govuk-fieldset" aria-describedby="documentExpiryDate-hint" role="group">
-                                <legend className="govuk-fieldset__legend"> Expiry date</legend>
-                                <div id="documentExpiryDate-hint" className="govuk-hint">For example 31 03 1980</div>
-                                <div className="govuk-date-input" id="documentExpiryDate">
-                                  <div className="govuk-date-input__item">
-                                    <div className="govuk-form-group">
-                                      <label className="govuk-label govuk-date-input__label" htmlFor="documentExpiryDateDay">Day</label>
-                                      <input
-                                        className="govuk-input govuk-date-input__input govuk-input--width-2"
-                                        name="documentExpiryDateDay"
-                                        id="documentExpiryDateDay"
-                                        type="text"
-                                        maxLength={2}
-                                        pattern="[0-9]*"
-                                        inputMode="numeric"
-                                        value={formData?.documentExpiryDateDay || ''}
-                                        onChange={(handleChange)}
-                                      />
-                                    </div>
-                                  </div>
-                                  <div className="govuk-date-input__item">
-                                    <div className="govuk-form-group">
-                                      <label className="govuk-label govuk-date-input__label" htmlFor="documentExpiryDateMonth">Month</label>
-                                      <input
-                                        className="govuk-input govuk-date-input__input govuk-input--width-2"
-                                        name="documentExpiryDateMonth"
-                                        id="documentExpiryDateMonth"
-                                        type="text"
-                                        maxLength={2}
-                                        pattern="[0-9]*"
-                                        inputMode="numeric"
-                                        value={formData?.documentExpiryDateMonth || ''}
-                                        onChange={(handleChange)}
-                                      />
-                                    </div>
-                                  </div>
-                                  <div className="govuk-date-input__item">
-                                    <div className="govuk-form-group">
-                                      <label className="govuk-label govuk-date-input__label" htmlFor="documentExpiryDateYear">Year</label>
-                                      <input
-                                        className="govuk-input govuk-date-input__input govuk-input--width-4"
-                                        name="documentExpiryDateYear"
-                                        id="documentExpiryDateYear"
-                                        type="text"
-                                        maxLength={4}
-                                        pattern="[0-9]*"
-                                        inputMode="numeric"
-                                        value={formData?.documentExpiryDateYear || ''}
-                                        onChange={handleChange}
-                                      />
-                                    </div>
+                        <div className="govuk-radios__conditional" id="documentExpiryDate">
+                          <div className="govuk-form-group">
+                            <fieldset className="govuk-fieldset" aria-describedby="documentExpiryDate-hint" role="group">
+                              <legend className="govuk-fieldset__legend"> Expiry date</legend>
+                              <div id="documentExpiryDate-hint" className="govuk-hint">For example 31 03 1980</div>
+                              <div className="govuk-date-input" id="documentExpiryDate">
+                                <div className="govuk-date-input__item">
+                                  <div className="govuk-form-group">
+                                    <label className="govuk-label govuk-date-input__label" htmlFor="documentExpiryDateDay">Day</label>
+                                    <input
+                                      className="govuk-input govuk-date-input__input govuk-input--width-2"
+                                      name="documentExpiryDateDay"
+                                      id="documentExpiryDateDay"
+                                      type="text"
+                                      maxLength={2}
+                                      pattern="[0-9]*"
+                                      inputMode="numeric"
+                                      value={formData?.documentExpiryDateDay || ''}
+                                      onChange={(handleChange)}
+                                    />
                                   </div>
                                 </div>
-                              </fieldset>
-                            </div>
+                                <div className="govuk-date-input__item">
+                                  <div className="govuk-form-group">
+                                    <label className="govuk-label govuk-date-input__label" htmlFor="documentExpiryDateMonth">Month</label>
+                                    <input
+                                      className="govuk-input govuk-date-input__input govuk-input--width-2"
+                                      name="documentExpiryDateMonth"
+                                      id="documentExpiryDateMonth"
+                                      type="text"
+                                      maxLength={2}
+                                      pattern="[0-9]*"
+                                      inputMode="numeric"
+                                      value={formData?.documentExpiryDateMonth || ''}
+                                      onChange={(handleChange)}
+                                    />
+                                  </div>
+                                </div>
+                                <div className="govuk-date-input__item">
+                                  <div className="govuk-form-group">
+                                    <label className="govuk-label govuk-date-input__label" htmlFor="documentExpiryDateYear">Year</label>
+                                    <input
+                                      className="govuk-input govuk-date-input__input govuk-input--width-4"
+                                      name="documentExpiryDateYear"
+                                      id="documentExpiryDateYear"
+                                      type="text"
+                                      maxLength={4}
+                                      pattern="[0-9]*"
+                                      inputMode="numeric"
+                                      value={formData?.documentExpiryDateYear || ''}
+                                      onChange={handleChange}
+                                    />
+                                  </div>
+                                </div>
+                              </div>
+                            </fieldset>
                           </div>
+                        </div>
                         )}
                         <div className="govuk-radios__item">
                           <input
