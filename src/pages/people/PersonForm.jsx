@@ -4,7 +4,7 @@ import { useHistory, useLocation, withRouter } from 'react-router-dom';
 import { validate } from '../../components/Forms/validationRules';
 import { PEOPLE_URL } from '../../constants/ApiConstants';
 import { PEOPLE_PAGE_URL } from '../../constants/ClientConstants';
-import { patchData, postData } from '../../utils/apiHooks';
+import { getData, patchData, postData } from '../../utils/apiHooks';
 import { formatDate } from '../../utils/date';
 import nationalities from '../../utils/staticFormData';
 import scrollToTop from '../../utils/scrollToTop';
@@ -17,7 +17,6 @@ const PersonForm = ({ type, source, personId }) => {
   const location = useLocation();
   const locationPath = location.pathname;
   const locationState = location.state;
-
   const [errors, setErrors] = useState({});
   const [formData, setFormData] = useState(JSON.parse(sessionStorage.getItem('formData')) || {});
   const [formPage, setFormPage] = useState(1);
@@ -27,6 +26,22 @@ const PersonForm = ({ type, source, personId }) => {
 
   document.title = type === 'edit' ? 'Edit person' : 'Save person';
   const documentTypeOther = formData.documentType !== undefined && formData.documentType !== 'Passport' && formData.documentType !== 'IdentityCard';
+
+  const getPersonData = async () => {
+    const resp = await getData(`${PEOPLE_URL}/${personId}`, 'people');
+    const [documentExpiryDateYear, documentExpiryDateMonth, documentExpiryDateDay] = resp.documentExpiryDate.split('-');
+    const [dateOfBirthYear, dateOfBirthMonth, dateOfBirthDay] = resp.dateOfBirth.split('-');
+
+    setFormData({
+      ...resp,
+      documentExpiryDateYear,
+      documentExpiryDateMonth,
+      documentExpiryDateDay,
+      dateOfBirthYear,
+      dateOfBirthMonth,
+      dateOfBirthDay,
+    });
+  };
 
   const removeError = (fieldName) => {
     const errorList = { ...errors };
@@ -99,7 +114,10 @@ const PersonForm = ({ type, source, personId }) => {
   }, [locationPath]);
 
   useEffect(() => {
-    if (locationState?.source === 'edit') { source = 'edit'; }
+    if (locationState?.source === 'edit') {
+      source = 'edit';
+      if (personId) { getPersonData(); }
+    }
     switch (source) {
       case 'onboarding':
         setTitle('Add details of a person you frequently sail with');
