@@ -71,19 +71,22 @@ const personValidationRules = {
     {
       inputField: 'documentExpiryDateYear',
       errorDisplayId: 'documentExpiryDateYes',
-      type: 'required',
+      type: 'requiredOnVisible',
+      visibilityIndicator: 'documentExpiryDateYes',
       message: 'You must enter an expiry date',
     },
     {
       inputField: 'documentExpiryDateMonth',
       errorDisplayId: 'documentExpiryDateYes',
-      type: 'required',
+      type: 'requiredOnVisible',
+      visibilityIndicator: 'documentExpiryDateYes',
       message: 'You must enter an expiry date',
     },
     {
       inputField: 'documentExpiryDateDay',
       errorDisplayId: 'documentExpiryDateYes',
-      type: 'required',
+      type: 'requiredOnVisible',
+      visibilityIndicator: 'documentExpiryDateYes',
       message: 'You must enter an expiry date',
     },
     {
