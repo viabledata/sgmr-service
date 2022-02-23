@@ -1,14 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory, useLocation, withRouter } from 'react-router-dom';
+
 import { validate } from '../../components/Forms/validationRules';
+import { PEOPLE_URL } from '../../constants/ApiConstants';
 import { PEOPLE_PAGE_URL } from '../../constants/ClientConstants';
+import { patchData, postData } from '../../utils/apiHooks';
+import { formatDate } from '../../utils/date';
 import nationalities from '../../utils/staticFormData';
 import scrollToTop from '../../utils/scrollToTop';
 import personValidationRules from './personValidationRules';
 
 import FormFieldError from '../../components-v2/FormFieldError';
 
-const PersonForm = ({ type, source }) => {
+const PersonForm = ({ type, source, personId }) => {
   const history = useHistory();
   const location = useLocation();
   const locationPath = location.pathname;
@@ -19,6 +23,7 @@ const PersonForm = ({ type, source }) => {
   const [formPage, setFormPage] = useState(1);
   const [title, setTitle] = useState();
   const [submittedNextPage, setSubmittedNextPage] = useState();
+  const [submitType, setSubmitType] = useState();
 
   document.title = type === 'edit' ? 'Edit person' : 'Save person';
   const documentTypeOther = formData.documentType !== undefined && formData.documentType !== 'Passport' && formData.documentType !== 'IdentityCard';
@@ -26,7 +31,6 @@ const PersonForm = ({ type, source }) => {
   const removeError = (fieldName) => {
     const errorList = { ...errors };
     let key;
-
     if (fieldName.includes('dateOfBirth')) {
       key = 'dateOfBirth';
     } else if (fieldName.includes('documentExpiryDate')) {
@@ -34,7 +38,6 @@ const PersonForm = ({ type, source }) => {
     } else {
       key = fieldName;
     }
-
     delete errorList[key];
     setErrors(errorList);
   };
@@ -65,12 +68,26 @@ const PersonForm = ({ type, source }) => {
     }
   };
 
+  const formatDataToSubmit = () => {
+    return {
+      firstName: formData.firstName,
+      lastName: formData.lastName,
+      documentType: formData.documentType,
+      documentNumber: formData.documentNumber,
+      documentExpiryDate: formData.documentExpiryDateYes ? formatDate(formData.documentExpiryDateYear, formData.documentExpiryDateMonth, formData.documentExpiryDateDay) : null,
+      dateOfBirth: formatDate(formData.dateOfBirthYear, formData.dateOfBirthMonth, formData.dateOfBirthDay),
+      nationality: formData.nationality,
+    };
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!await validateForm()) {
-    // do not error if expiryDate is NO
-    // format data for submission
-    // POST or PATCH
+      if (submitType === 'PATCH') {
+        await patchData(`${PEOPLE_URL}/${personId}`, formatDataToSubmit(formData));
+      } else {
+        await postData(PEOPLE_URL, formatDataToSubmit(formData), locationPath);
+      }
       history.push(submittedNextPage);
     }
   };
@@ -86,16 +103,20 @@ const PersonForm = ({ type, source }) => {
     switch (source) {
       case 'onboarding':
         setTitle('Add details of a person you frequently sail with');
+        setSubmitType('POST');
         break;
       case 'voyage':
         setTitle('Add details of the person you are sailing with');
+        setSubmitType('POST');
         break;
       case 'edit':
         setTitle('Update details of the person you sail with');
+        setSubmitType('PATCH');
         setSubmittedNextPage(PEOPLE_PAGE_URL);
         break;
       default:
         setTitle('Add details of the person you frequently sail with');
+        setSubmitType('POST');
         setSubmittedNextPage(PEOPLE_PAGE_URL);
     }
   }, [source]);
