@@ -3,7 +3,7 @@ import { useHistory, useLocation, withRouter } from 'react-router-dom';
 import { validate } from '../../components/Forms/validationRules';
 import { PEOPLE_PAGE_URL } from '../../constants/ClientConstants';
 import nationalities from '../../utils/staticFormData';
-import scrollToTopOnError from '../../utils/scrollToTopOnError';
+import scrollToTop from '../../utils/scrollToTop';
 import personValidationRules from './personValidationRules';
 
 import FormFieldError from '../../components-v2/FormFieldError';
@@ -36,7 +36,7 @@ const PersonForm = ({ type, source }) => {
   const validateForm = async () => {
     const newErrors = await validate(personValidationRules[`page${formPage}`], formData);
     setErrors(newErrors);
-    scrollToTopOnError(newErrors);
+    scrollToTop(newErrors);
     return Object.keys(newErrors).length > 0;
   };
 
@@ -61,7 +61,9 @@ const PersonForm = ({ type, source }) => {
   };
 
   useEffect(() => {
+    setErrors({}); // always clear errors when changing page
     setFormPage(parseInt(locationPath.split('page-').pop(), 10));
+    scrollToTop();
   }, [locationPath]);
 
   useEffect(() => {
