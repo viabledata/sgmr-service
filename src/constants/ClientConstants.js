@@ -28,7 +28,8 @@ export const FORM_STEPS = {
   NEW_PERSON: 'newPerson',
   RESPONSIBLE_PERSON: 'responsiblePerson',
   PERSON: 'person',
-  VESSEL: 'vessel',
+  PLEASURE_CRAFT_FIRST: 'pleasureCraftFirst',
+  PLEASURE_CRAFT_SECOND: 'pleasureCraftSecond',
   VOYAGE: 'voyage',
   CANCEL: 'cancel',
 };
