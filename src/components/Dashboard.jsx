@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 
 import { USER_VOYAGE_REPORT_URL, VOYAGE_REPORT_URL } from '../constants/ApiConstants';
+import { pageSizeParam } from '../lib/config';
 import { deleteItem, getData } from '../utils/apiHooks';
 
 const Dashboard = (pageData) => {
@@ -13,7 +14,7 @@ const Dashboard = (pageData) => {
   const getReportList = () => {
     const validReports = [];
     // Temporarily allows user to see all reports
-    getData(`${USER_VOYAGE_REPORT_URL}?per_page=100`)
+    getData(`${USER_VOYAGE_REPORT_URL}${pageSizeParam}`)
       .then((resp) => {
         if (!resp.errors) {
           resp.items.map((report) => {

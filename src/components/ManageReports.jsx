@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 
 import { USER_VOYAGE_REPORT_URL, VOYAGE_REPORT_URL } from '../constants/ApiConstants';
 import { EDIT_VOYAGE_CHECK_DETAILS_URL } from '../constants/ClientConstants';
+import { pageSizeParam } from '../lib/config';
 import { deleteItem, getData } from '../utils/apiHooks';
 import { formatUIDate } from '../utils/date';
 import Pagination from './Pagination';
@@ -50,7 +51,7 @@ const ManageReports = (pageData) => {
   const getReportList = () => {
     const validReports = [];
     // Defualt page size on api is 10 so only page number needed
-    getData(`${USER_VOYAGE_REPORT_URL}?page=${currentPage}`)
+    getData(`${USER_VOYAGE_REPORT_URL}${pageSizeParam}&page=${currentPage}`)
       .then((resp) => {
         setTotalCount(resp._meta.totalItems);
         if (!resp.errors) {

@@ -6,3 +6,4 @@ const apiBaseUrl = process.env.SGMR_DATA_API_BASE_URL || 'http://localhost:5000'
 export const apiUrl = `${apiBaseUrl}/${apiVersion}`;
 export const govUrl = 'https://www.gov.uk/';
 export const siteMaintenance = !!JSON.parse(process.env.SGMR_MAINTENANCE || false);
+export const pageSizeParam = '?per-page=10'
