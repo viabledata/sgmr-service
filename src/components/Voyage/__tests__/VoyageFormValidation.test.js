@@ -34,7 +34,7 @@ describe('Voyage form required fields errors', () => {
     expect(result).toEqual(expectedErrors);
   });
 
-  it('should validate vessel', async () => {
+  it('should validate pleasure craft', async () => {
     const expectedErrors = {
       vesselName: 'You must enter a pleasure craft name',
       vesselType: 'You must enter a pleasure craft type',
@@ -43,8 +43,11 @@ describe('Voyage form required fields errors', () => {
       mmsi: 'You must specify if the pleasure craft has a MMSI',
       callsign: 'You must specify if the pleasure craft has a call sign',
     };
-    const result = await VoyageFormValidation({}, FORM_STEPS.VESSEL);
-    expect(result).toEqual(expectedErrors);
+    const result1 = await VoyageFormValidation({}, FORM_STEPS.PLEASURE_CRAFT_FIRST);
+    expect(result1).toEqual(expectedErrors);
+
+    const result2 = await VoyageFormValidation({}, FORM_STEPS.PLEASURE_CRAFT_SECOND);
+    expect(result2).toEqual(expectedErrors);
   });
 
   it('should validate arrival', async () => {
