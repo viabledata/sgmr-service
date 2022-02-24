@@ -5,15 +5,15 @@ import {
 
 import { VESSELS_URL } from '../../constants/ApiConstants';
 import { VESSELS_PAGE_URL } from '../../constants/ClientConstants';
-import { vesselValidationRules } from '../Forms/validationRules';
+import { vesselValidationRules } from '../../components/Forms/validationRules';
 import { getData, patchData } from '../../utils/apiHooks';
 import scrollToTopOnError from '../../utils/scrollToTopOnError';
 
-import FormVessel from './FormVessel';
-import VesselDataFormatting from './VesselDataFormatting';
+import FormVessel from '../../components/Vessel/FormVessel';
+import VesselDataFormatting from '../../components/Vessel/VesselDataFormatting';
 
-const EditVessel = () => {
-  document.title = 'Edit vessel';
+const EditPleasureCraft = () => {
+  document.title = 'Edit pleasure craft';
 
   const history = useHistory();
   const { vesselId } = useParams();
@@ -81,8 +81,8 @@ const EditVessel = () => {
       patchData(`${VESSELS_URL}/${vesselId}`, VesselDataFormatting('na', formData, vesselData))
         .then((resp) => {
           if (resp.errors) {
-            setErrors({ EditVessel: resp.message });
-            scrollToTopOnError('EditVessel');
+            setErrors({ EditPleasureCraft: resp.message });
+            scrollToTopOnError('EditPleasureCraft');
           } else {
             history.push(VESSELS_PAGE_URL);
           }
@@ -110,7 +110,7 @@ const EditVessel = () => {
           <div className="govuk-grid-column-two-thirds">
             <h1 className="govuk-heading-xl">Edit a pleasure craft</h1>
             <p className="govuk-body-l">Update the details of the pleasure craft you want to edit.</p>
-            <form id="EditVessel">
+            <form id="EditPleasureCraft">
               {Object.keys(errors).length >= 1 && (
               <div className="govuk-error-summary" aria-labelledby="error-summary-title" role="alert" tabIndex="-1" data-module="govuk-error-summary">
                 <h2 className="govuk-error-summary__title">
@@ -143,4 +143,4 @@ const EditVessel = () => {
   );
 };
 
-export default withRouter(EditVessel);
+export default withRouter(EditPleasureCraft);
