@@ -4,13 +4,14 @@ import axios from 'axios';
 
 // App imports
 import Auth from '../../lib/Auth';
-import FormVessel from './FormVessel';
+import FormPleasureCraft from './FormPleasureCraft';
+import FormPleasureCraftDetails from './FormPleasureCraftDetails';
 import scrollToTopOnError from '../../utils/scrollToTopOnError';
 import { VESSELS_URL } from '../../constants/ApiConstants';
 import { VESSELS_PAGE_URL } from '../../constants/ClientConstants';
-import { vesselValidationRules } from '../Forms/validationRules';
+import { vesselValidationRules } from '../../components/Forms/validationRules';
 
-const CreateAVessel = () => {
+const CreateAPleasureCraft = () => {
   document.title = 'Save pleasure craft';
   const history = useHistory();
   const location = useLocation();
@@ -18,6 +19,7 @@ const CreateAVessel = () => {
   const path = location.pathname.slice(1);
   const [formData, setFormData] = useState(JSON.parse(sessionStorage.getItem('formData')) || {});
   const [errors, setErrors] = useState(JSON.parse(sessionStorage.getItem('errors')) || {});
+  const [isFirstPage, setIsFirstPage] = useState(true);
 
   // Clear form field errors
   const removeError = (fieldName) => {
@@ -64,17 +66,19 @@ const CreateAVessel = () => {
       })
         .then(() => {
           // If this is not the voyage form then take user to pleasure crafts page, otherwise leave the user here
-          if (checkIfNotVoyageForm) {
+          if (checkIfNotVoyageForm && !isFirstPage) {
             clearSessionStorage();
             history.push(VESSELS_PAGE_URL);
+          } else {
+            setIsFirstPage(false);
           }
         })
         .catch((err) => {
           if (err.response) {
             switch (err.response.status) {
               case 400:
-                setErrors({ ...errors, CreateAVessel: 'This pleasure craft already exists' });
-                scrollToTopOnError('CreateAVessel');
+                setErrors({ ...errors, CreateAPleasureCraft: 'This pleasure craft already exists' });
+                scrollToTopOnError('CreateAPleasureCraft');
                 break;
               case 422: history.push(`/sign-in?source=${path}`); break;
               case 405: history.push(`/sign-in?source=${path}`); break;
@@ -109,7 +113,7 @@ const CreateAVessel = () => {
           <div className="govuk-grid-column-two-thirds">
             <h1 className="govuk-heading-xl">Save pleasure craft</h1>
             <p className="govuk-body-l">Please enter the following information. This information can be re-used when submitting a Pleasure Craft Voyage Plan.</p>
-            <form id="CreateAVessel">
+            <form id="CreateAPleasureCraft">
               {Object.keys(errors).length >= 1 && (
                 <div className="govuk-error-summary" aria-labelledby="error-summary-title" role="alert" tabIndex="-1" data-module="govuk-error-summary">
                   <h2 className="govuk-error-summary__title">
@@ -126,13 +130,23 @@ const CreateAVessel = () => {
                   </div>
                 </div>
               )}
-              <FormVessel
-                handleSubmit={handleSubmit}
-                handleChange={handleChange}
-                data=""
-                formData={formData}
-                errors={errors}
-              />
+              {isFirstPage ? (
+                <FormPleasureCraft
+                  handleSubmit={handleSubmit}
+                  handleChange={handleChange}
+                  data=""
+                  formData={formData}
+                  errors={errors}
+                />
+              ) : (
+                <FormPleasureCraftDetails
+                  handleSubmit={handleSubmit}
+                  handleChange={handleChange}
+                  data=""
+                  formData={formData}
+                  errors={errors}
+                />
+              )}
             </form>
           </div>
         </div>
@@ -141,4 +155,4 @@ const CreateAVessel = () => {
   );
 };
 
-export default CreateAVessel;
+export default CreateAPleasureCraft;

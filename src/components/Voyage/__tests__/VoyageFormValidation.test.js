@@ -38,8 +38,10 @@ describe('Voyage form required fields errors', () => {
     const expectedErrors = {
       vesselName: 'You must enter a pleasure craft name',
       vesselType: 'You must enter a pleasure craft type',
-      moorings: 'You must enter the pleasure craft usual mooring',
-      registration: 'You must enter the pleasure craft registration',
+      registration: 'You must select an option for the pleasure craft registration number',
+      ais: 'You must specify if the pleasure craft has an AIS',
+      mmsi: 'You must specify if the pleasure craft has a MMSI',
+      callsign: 'You must specify if the pleasure craft has a call sign',
     };
     const result = await VoyageFormValidation({}, FORM_STEPS.VESSEL);
     expect(result).toEqual(expectedErrors);
