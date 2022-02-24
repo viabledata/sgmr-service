@@ -21,7 +21,8 @@ const VoyageFormValidation = async (dataToValidate, source) => {
     case FORM_STEPS.NEW_PERSON: validationRules = personValidationRules; break;
     case FORM_STEPS.PERSON: validationRules = personValidationRules; break;
     case FORM_STEPS.RESPONSIBLE_PERSON: validationRules = responsiblePersonValidationRules; break;
-    case FORM_STEPS.VESSEL: validationRules = vesselValidationRules; break;
+    case FORM_STEPS.PLEASURE_CRAFT_FIRST: validationRules = vesselValidationRules; break;
+    case FORM_STEPS.PLEASURE_CRAFT_SECOND: validationRules = vesselValidationRules; break;
     default: validationRules = null;
   }
 

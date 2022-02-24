@@ -9,7 +9,8 @@ import { vesselValidationRules } from '../../components/Forms/validationRules';
 import { getData, patchData } from '../../utils/apiHooks';
 import scrollToTopOnError from '../../utils/scrollToTopOnError';
 
-import FormVessel from '../../components/Vessel/FormVessel';
+import FormPleasureCraft from './FormPleasureCraft';
+import FormPleasureCraftDetails from './FormPleasureCraftDetails';
 import VesselDataFormatting from '../../components/Vessel/VesselDataFormatting';
 
 const EditPleasureCraft = () => {
@@ -20,6 +21,7 @@ const EditPleasureCraft = () => {
   const [vesselData, setVesselData] = useState();
   const [formData, setFormData] = useState({});
   const [errors, setErrors] = useState({});
+  const [isFirstPage, setIsFirstPage] = useState(true);
 
   // Populate the form with this vessel's data
   const getVesselData = () => {
@@ -83,8 +85,10 @@ const EditPleasureCraft = () => {
           if (resp.errors) {
             setErrors({ EditPleasureCraft: resp.message });
             scrollToTopOnError('EditPleasureCraft');
-          } else {
+          } else if (!isFirstPage) {
             history.push(VESSELS_PAGE_URL);
+          } else {
+            setIsFirstPage(false);
           }
         });
     }
@@ -127,14 +131,23 @@ const EditPleasureCraft = () => {
                 </div>
               </div>
               )}
-              <FormVessel
-                handleChange={handleChange}
-                handleSubmit={handleSubmit}
-                data={vesselData}
-                formData={formData || ''}
-                errors={errors || ''}
-                vesselId={vesselId}
-              />
+              {isFirstPage ? (
+                <FormPleasureCraft
+                  handleSubmit={handleSubmit}
+                  handleChange={handleChange}
+                  data=""
+                  formData={formData}
+                  errors={errors}
+                />
+              ) : (
+                <FormPleasureCraftDetails
+                  handleSubmit={handleSubmit}
+                  handleChange={handleChange}
+                  data=""
+                  formData={formData}
+                  errors={errors}
+                />
+              )}
             </form>
           </div>
         </div>

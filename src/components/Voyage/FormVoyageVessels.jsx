@@ -4,7 +4,8 @@ import React, { useState, useEffect } from 'react';
 import { VESSELS_URL } from '../../constants/ApiConstants';
 import { FORM_STEPS } from '../../constants/ClientConstants';
 import { getData } from '../../utils/apiHooks';
-import FormVessel from '../Vessel/FormVessel';
+import FormPleasureCraft from '../../pages/pleasurecrafts/FormPleasureCraft';
+import FormPleasureCraftDetails from '../../pages/pleasurecrafts/FormPleasureCraftDetails';
 import VesselTable from '../Vessel/VesselTable';
 
 const FormVessels = ({
@@ -13,6 +14,7 @@ const FormVessels = ({
   document.title = 'Pleasure craft details';
 
   const [vesselData, setVesselData] = useState();
+  const [isFirstPage, setIsFirstPage] = useState(true);
 
   const storeVesselData = () => {
     getData(VESSELS_URL)
@@ -22,6 +24,15 @@ const FormVessels = ({
   useEffect(() => {
     storeVesselData();
   }, []);
+
+  const handleSaveAndContinue = (e, id) => {
+    if (isFirstPage) {
+      handleSubmit(e, FORM_STEPS.PLEASURE_CRAFT_FIRST, id);
+      setIsFirstPage(false);
+    } else {
+      handleSubmit(e, FORM_STEPS.PLEASURE_CRAFT_SECOND, id);
+    }
+  };
 
   return (
     <section>
@@ -49,20 +60,32 @@ const FormVessels = ({
       <p className="govuk-body-l">
         Add the details of a new pleasure craft you have not already saved
       </p>
-      <FormVessel
-        handleSubmit={handleSubmit}
-        handleChange={handleChange}
-        voyageId={voyageId}
-        data={formData}
-        formData={formData}
-        errors={errors}
-        sourceForm="voyage"
-      />
+      {isFirstPage ? (
+        <FormPleasureCraft
+          handleSubmit={handleSubmit}
+          handleChange={handleChange}
+          voyageId={voyageId}
+          data={formData}
+          formData={formData}
+          errors={errors}
+          sourceForm="voyage"
+        />
+      ) : (
+        <FormPleasureCraftDetails
+          handleSubmit={handleSubmit}
+          handleChange={handleChange}
+          voyageId={voyageId}
+          data={formData}
+          formData={formData}
+          errors={errors}
+          sourceForm="voyage"
+        />
+      )}
       <button
         type="button"
         className="govuk-button"
         data-module="govuk-button"
-        onClick={(e) => handleSubmit(e, FORM_STEPS.VESSEL, voyageId)}
+        onClick={(e) => handleSaveAndContinue(e, voyageId)}
       >
         Save and continue
       </button>
