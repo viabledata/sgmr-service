@@ -137,19 +137,42 @@ describe('Creating and editing people', () => {
   it('should prefill person details if type is edit', async () => {
     mockAxios
       .onGet(`${PEOPLE_URL}/person123`)
-      .reply(200, [
-        {
-          firstName: 'Joe',
-          lastName: 'Blogs',
-        },
-      ]);
+      .reply(200, {
+        id: 'person123',
+        firstName: 'Joe',
+        lastName: 'Blogs',
+        dateOfBirth: '1990-11-01',
+        nationality: 'AIA',
+        documentType: 'Passport',
+        documentNumber: '12345',
+        documentExpiryDate: '2025-02-22',
+      });
 
-    renderPage({
-      type: 'edit', source: 'edit', personId: 'person123', pageNumber: 1,
+    await waitFor(() => {
+      renderPage({
+        type: 'edit', source: 'edit', personId: 'person123', pageNumber: 1,
+      });
     });
+
     expect(screen.getByText('Update details of the person you sail with').outerHTML).toEqual('<h1 class="govuk-heading-l">Update details of the person you sail with</h1>');
     expect(screen.getByDisplayValue('Joe')).toBeInTheDocument();
     expect(screen.getByDisplayValue('Blogs')).toBeInTheDocument();
+    expect(screen.getByDisplayValue('01')).toBeInTheDocument();
+    expect(screen.getByDisplayValue('11')).toBeInTheDocument();
+    expect(screen.getByDisplayValue('1990')).toBeInTheDocument();
+
+    await waitFor(() => {
+      renderPage({
+        type: 'edit', source: 'edit', personId: 'person123', pageNumber: 2,
+      });
+    });
+    expect(screen.getByDisplayValue('Passport')).toBeChecked();
+    expect(screen.getByDisplayValue('12345')).toBeInTheDocument();
+    expect(screen.queryByRole('combobox').value).toBe('AIA');
+    expect(screen.getByLabelText('Yes')).toBeChecked();
+    expect(screen.getByDisplayValue('2025')).toBeInTheDocument();
+    expect(screen.getByDisplayValue('02')).toBeInTheDocument();
+    expect(screen.getByDisplayValue('22')).toBeInTheDocument();
   });
 
   // it('should load next page when user clicks continue and there are no errors', async () => { });

@@ -31,15 +31,17 @@ const PersonForm = ({ type, source, personId }) => {
     const resp = await getData(`${PEOPLE_URL}/${personId}`, 'people');
     const [documentExpiryDateYear, documentExpiryDateMonth, documentExpiryDateDay] = resp.documentExpiryDate.split('-');
     const [dateOfBirthYear, dateOfBirthMonth, dateOfBirthDay] = resp.dateOfBirth.split('-');
+    const documentExpiryDate = !resp.documentExpiryDate ? 'documentExpiryDateNo' : 'documentExpiryDateYes';
 
     setFormData({
       ...resp,
-      documentExpiryDateYear,
-      documentExpiryDateMonth,
-      documentExpiryDateDay,
-      dateOfBirthYear,
-      dateOfBirthMonth,
-      dateOfBirthDay,
+      documentExpiryDate,
+      documentExpiryDateYear: documentExpiryDateYear || null,
+      documentExpiryDateMonth: documentExpiryDateMonth || null,
+      documentExpiryDateDay: documentExpiryDateDay || null,
+      dateOfBirthYear: dateOfBirthYear || null,
+      dateOfBirthMonth: dateOfBirthMonth || null,
+      dateOfBirthDay: dateOfBirthDay || null,
     });
   };
 
@@ -114,7 +116,7 @@ const PersonForm = ({ type, source, personId }) => {
   }, [locationPath]);
 
   useEffect(() => {
-    if (locationState?.source === 'edit') {
+    if (locationState?.source === 'edit' || source === 'edit') {
       source = 'edit';
       if (personId) { getPersonData(); }
     }
