@@ -24,8 +24,8 @@ describe('Creating and editing people', () => {
   const mockAxios = new MockAdapter(axios);
 
   beforeEach(() => {
-    window.sessionStorage.removeItem('formData');
     mockAxios.reset();
+    window.sessionStorage.removeItem('formData');
   });
 
   it('should render different titles based on where the user comes from', () => {
@@ -56,6 +56,29 @@ describe('Creating and editing people', () => {
 
     renderPage({ pageNumber: 2 });
     testTitle('Add details of the person you frequently sail with');
+  });
+
+  it('should load next page when user clicks continue and there are no errors', async () => {
+    renderPage({ pageNumber: 1 });
+    fireEvent.change(screen.getByLabelText('Given name(s)'), { target: { value: 'Joe' } });
+    fireEvent.change(screen.getByLabelText('Surname'), { target: { value: 'Bloggs' } });
+    fireEvent.change(screen.getByLabelText('Day'), { target: { value: '1' } });
+    fireEvent.change(screen.getByLabelText('Month'), { target: { value: '11' } });
+    fireEvent.change(screen.getByLabelText('Year'), { target: { value: '1990' } });
+    await waitFor(() => fireEvent.click(screen.getByText('Continue')));
+    expect(screen.getByText('Select a travel document type')).toBeInTheDocument();
+  });
+
+  it('should load previous page when user clicks back regardless of errors', async () => {
+    renderPage({ pageNumber: 2 });
+    await waitFor(() => fireEvent.click(screen.getByText('Back')));
+    expect(screen.getByText('Given name(s)')).toBeInTheDocument();
+  });
+
+  it('should allow you to exit without saving even if required fields arent valid', async () => {
+    renderPage({ pageNumber: 1 });
+    await waitFor(() => fireEvent.click(screen.getByText('Exit without saving')));
+    expect(screen.queryAllByText('There is a problem')).toHaveLength(0);
   });
 
   it('should render errors on save if fields on page 1 are empty', async () => {
@@ -175,7 +198,18 @@ describe('Creating and editing people', () => {
     expect(screen.getByDisplayValue('22')).toBeInTheDocument();
   });
 
-  // it('should load next page when user clicks continue and there are no errors', async () => { });
+  it('should show a delete option if you are in edit type', async () => {
+    renderPage({ type: 'edit', source: 'edit', pageNumber: 1 });
+    expect(screen.getByText('Delete this person')).toBeInTheDocument();
+  });
+
+  it('should show NOT a delete option if you are NOT in edit type', async () => {
+    renderPage({ pageNumber: 1 });
+    expect(screen.queryByText('Delete this person')).not.toBeInTheDocument();
+  });
+
   // it('should submit data in the correct format on submit click when there are no errors', async () => { });
   // it('should submit data as a PATCH when type is edit', async () => { });
+
+  // it('should open the confirm delete page if you click delete', async () => {});
 });

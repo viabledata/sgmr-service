@@ -20,9 +20,10 @@ const PersonForm = ({ type, source, personId }) => {
   const [errors, setErrors] = useState({});
   const [formData, setFormData] = useState(JSON.parse(sessionStorage.getItem('formData')) || {});
   const [formPage, setFormPage] = useState(1);
-  const [title, setTitle] = useState();
-  const [submittedNextPage, setSubmittedNextPage] = useState();
+  const [sourcePage, setSourcePage] = useState(PEOPLE_PAGE_URL);
+  const [submittedNextPage, setSubmittedNextPage] = useState(PEOPLE_PAGE_URL);
   const [submitType, setSubmitType] = useState();
+  const [title, setTitle] = useState();
 
   document.title = type === 'edit' ? 'Edit person' : 'Save person';
   const documentTypeOther = formData.documentType !== undefined && formData.documentType !== 'Passport' && formData.documentType !== 'IdentityCard';
@@ -77,11 +78,27 @@ const PersonForm = ({ type, source, personId }) => {
     return Object.keys(newErrors).length > 0;
   };
 
-  const goToNextPage = async (e) => {
+  const goToNextPage = async (e, { url, runValidation }) => {
     e.preventDefault();
-    if (!await validateForm()) {
-      setFormPage(formPage + 1);
-      history.push(`/people/${type || 'save'}-person/page-${formPage + 1}`);
+    let nextPageUrl;
+    switch (url) {
+      case 'nextFormPage':
+        nextPageUrl = `/people/${type || 'save'}-person/page-${formPage + 1}`;
+        break;
+      case 'previousFormPage':
+        nextPageUrl = `/people/${type || 'save'}-person/page-${formPage - 1}`;
+        setFormPage(formPage - 1);
+        break;
+      default: nextPageUrl = url;
+    }
+
+    if (runValidation) {
+      if (!await validateForm()) {
+        history.push(nextPageUrl);
+        setFormPage(url === 'nextFormPage' ? (formPage + 1) : formPage);
+      }
+    } else {
+      history.push(nextPageUrl);
     }
   };
 
@@ -133,11 +150,13 @@ const PersonForm = ({ type, source, personId }) => {
         setTitle('Update details of the person you sail with');
         setSubmitType('PATCH');
         setSubmittedNextPage(PEOPLE_PAGE_URL);
+        setSourcePage(PEOPLE_PAGE_URL);
         break;
       default:
         setTitle('Add details of the person you frequently sail with');
         setSubmitType('POST');
         setSubmittedNextPage(PEOPLE_PAGE_URL);
+        setSourcePage(PEOPLE_PAGE_URL);
     }
   }, [source]);
 
@@ -276,11 +295,29 @@ const PersonForm = ({ type, source, personId }) => {
                       type="button"
                       className="govuk-button"
                       data-module="govuk-button"
-                      onClick={(e) => { goToNextPage(e); }}
+                      onClick={(e) => {
+                        goToNextPage(e, { url: 'nextFormPage', runValidation: true });
+                      }}
                     >
                       Continue
                     </button>
+                    {type === 'edit' && (
+                    <button
+                      type="button"
+                      className="govuk-button govuk-button--warning"
+                      onClick={(e) => { goToNextPage(e, { url: `/people/${personId}/delete`, runValidation: false }); }}
+                    >
+                      Delete this person
+                    </button>
+                    )}
                   </div>
+                  <button
+                    type="button"
+                    className="govuk-button govuk-button--text"
+                    onClick={(e) => { goToNextPage(e, { url: sourcePage, runValidation: false }); }}
+                  >
+                    Exit without saving
+                  </button>
                 </>
                 )}
 
@@ -514,9 +551,26 @@ const PersonForm = ({ type, source, personId }) => {
                       type="button"
                       className="govuk-button"
                       data-module="govuk-button"
+                      onClick={(e) => {
+                        goToNextPage(e, { url: 'previousFormPage', runValidation: true });
+                      }}
+                    >
+                      Back
+                    </button>
+                    <button
+                      type="button"
+                      className="govuk-button"
+                      data-module="govuk-button"
                       onClick={(e) => { handleSubmit(e); }}
                     >
                       Save
+                    </button>
+                    <button
+                      type="button"
+                      className="govuk-button govuk-button--text"
+                      onClick={(e) => { goToNextPage(e, { url: sourcePage, runValidation: false }); }}
+                    >
+                      Exit without saving
                     </button>
                   </div>
                 </>
