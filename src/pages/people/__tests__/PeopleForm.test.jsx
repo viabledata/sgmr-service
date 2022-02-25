@@ -121,4 +121,10 @@ describe('Creating and editing people', () => {
     expect(screen.queryAllByText('You must enter a surname')).toHaveLength(2);
     expect(screen.queryAllByText('You must enter a date of birth')).toHaveLength(2);
   });
+
+  it('should allow you to exit without saving even if required fields arent valid', async () => {
+    renderPage({ pageNumber: 1 });
+    await waitFor(() => fireEvent.click(screen.getByText('Exit without saving')));
+    expect(screen.queryAllByText('There is a problem')).toHaveLength(0);
+  });
 });

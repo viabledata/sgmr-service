@@ -15,6 +15,7 @@ const PersonForm = ({ source, type }) => {
   const [errors, setErrors] = useState({});
   const [formData, setFormData] = useState({});
   const [formPageIs, setFormPageIs] = useState(1);
+  const [sourcePage, setSourcePage] = useState(PEOPLE_PAGE_URL);
   const [submittedNextPage, setSubmittedNextPage] = useState(PEOPLE_PAGE_URL);
   const [title, setTitle] = useState();
 
@@ -95,10 +96,12 @@ const PersonForm = ({ source, type }) => {
       case 'edit':
         setTitle('Update details of the person you sail with');
         setSubmittedNextPage(PEOPLE_PAGE_URL);
+        setSourcePage(PEOPLE_PAGE_URL);
         break;
       default:
         setTitle('Add details of the person you frequently sail with');
         setSubmittedNextPage(PEOPLE_PAGE_URL);
+        setSourcePage(PEOPLE_PAGE_URL);
     }
   }, [source]);
 
@@ -244,6 +247,13 @@ const PersonForm = ({ source, type }) => {
                       Continue
                     </button>
                   </div>
+                  <button
+                    type="button"
+                    className="govuk-button govuk-button--text"
+                    onClick={(e) => { goToNextPage(e, { url: sourcePage, runValidation: false }); }}
+                  >
+                    Exit without saving
+                  </button>
                 </>
                 )}
               {formPageIs === 2
@@ -491,6 +501,13 @@ const PersonForm = ({ source, type }) => {
                       Save
                     </button>
                   </div>
+                  <button
+                    type="button"
+                    className="govuk-button govuk-button--text"
+                    onClick={(e) => { goToNextPage(e, { url: sourcePage, runValidation: false }); }}
+                  >
+                    Exit without saving
+                  </button>
                 </>
               )}
             </div>
