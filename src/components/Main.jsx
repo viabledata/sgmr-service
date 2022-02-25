@@ -18,8 +18,7 @@ import Help from './Help';
 import AccessibilityStatement from './AccessibilityStatement';
 import PageContainer from './PageContainer';
 
-import CreateAPerson from './People/CreateAPerson';
-import EditPerson from './People/EditPerson';
+import PeopleForm from '../pages/people/PeopleForm';
 
 import SignIn from './User/SignIn';
 import UserRegister from './User/UserRegister';
@@ -125,11 +124,11 @@ const Main = () => {
             <SecureRoute exact path="/people">
               <PageContainer />
             </SecureRoute>
-            <SecureRoute exact path="/people/save-person">
-              <CreateAPerson />
+            <SecureRoute exact path="/people/save-person/page-([1-2]{1})">
+              <PeopleForm />
             </SecureRoute>
-            <SecureRoute exact path="/people/edit-person">
-              <EditPerson />
+            <SecureRoute exact path="/people/edit-person/page-([1-2]{1})">
+              <PeopleForm type="edit" />
             </SecureRoute>
             <SecureRoute exact path="/people/:entityId/delete">
               <ActionEntity
