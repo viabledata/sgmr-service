@@ -274,6 +274,15 @@ const PersonForm = ({ source, type, personId }) => {
                     >
                       Continue
                     </button>
+                    {type === 'edit' && (
+                    <button
+                      type="button"
+                      className="govuk-button govuk-button--warning"
+                      onClick={(e) => { goToNextPage(e, { url: `/people/${personId}/delete`, runValidation: false }); }}
+                    >
+                      Delete this person
+                    </button>
+                    )}
                   </div>
                   <button
                     type="button"

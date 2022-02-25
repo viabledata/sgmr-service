@@ -195,4 +195,14 @@ describe('Creating and editing people', () => {
     expect(screen.getByDisplayValue('02')).toBeInTheDocument();
     expect(screen.getByDisplayValue('22')).toBeInTheDocument();
   });
+
+  it('should show a delete option if you are in edit type', async () => {
+    renderPage({ type: 'edit', source: 'edit', pageNumber: 1 });
+    expect(screen.getByText('Delete this person')).toBeInTheDocument();
+  });
+
+  it('should show NOT a delete option if you are NOT in edit type', async () => {
+    renderPage({ pageNumber: 1 });
+    expect(screen.queryByText('Delete this person')).not.toBeInTheDocument();
+  });
 });
