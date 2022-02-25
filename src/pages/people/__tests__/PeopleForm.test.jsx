@@ -73,4 +73,13 @@ describe('Creating and editing people', () => {
     await waitFor(() => fireEvent.click(screen.getByText('Back')));
     expect(screen.getByText('Given name(s)')).toBeInTheDocument();
   });
+
+  it('should render errors on save if fields on page 2 are empty', async () => {
+    renderPage({ pageNumber: 2 });
+    await waitFor(() => fireEvent.click(screen.getByText('Save')));
+    expect(screen.queryAllByText('You must select a document type')).toHaveLength(2);
+    expect(screen.queryAllByText('You must enter a document number')).toHaveLength(2);
+    expect(screen.queryAllByText('You must select a nationality')).toHaveLength(2);
+    expect(screen.queryAllByText('You must select a document expiry')).toHaveLength(2);
+  });
 });

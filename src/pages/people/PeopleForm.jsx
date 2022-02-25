@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 
-import validate from '../../utils/formValidator';
+import { validate } from '../../components/Forms/validationRules';
 import FormFieldError from '../../components-v2/FormFieldError';
+import { PEOPLE_PAGE_URL } from '../../constants/ClientConstants';
 import scrollToTop from '../../utils/scrollToTop';
 import nationalities from '../../utils/staticFormData';
 import PeopleValidation from './PeopleValidation';
@@ -14,6 +15,7 @@ const PersonForm = ({ source, type }) => {
   const [errors, setErrors] = useState({});
   const [formData, setFormData] = useState({});
   const [formPageIs, setFormPageIs] = useState(1);
+  const [submittedNextPage, setSubmittedNextPage] = useState(PEOPLE_PAGE_URL);
   const [title, setTitle] = useState();
 
   document.title = 'Save person';
@@ -60,6 +62,13 @@ const PersonForm = ({ source, type }) => {
     }
   };
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!await validateForm()) {
+      history.push(submittedNextPage);
+    }
+  };
+
   useEffect(() => {
     switch (source) {
       case 'onboarding':
@@ -70,9 +79,11 @@ const PersonForm = ({ source, type }) => {
         break;
       case 'edit':
         setTitle('Update details of the person you sail with');
+        setSubmittedNextPage(PEOPLE_PAGE_URL);
         break;
       default:
         setTitle('Add details of the person you frequently sail with');
+        setSubmittedNextPage(PEOPLE_PAGE_URL);
     }
   }, [source]);
 
@@ -460,7 +471,7 @@ const PersonForm = ({ source, type }) => {
                       type="button"
                       className="govuk-button"
                       data-module="govuk-button"
-                      // onClick={(e) => { handleSubmit(e); }}
+                      onClick={(e) => { handleSubmit(e); }}
                     >
                       Save
                     </button>
