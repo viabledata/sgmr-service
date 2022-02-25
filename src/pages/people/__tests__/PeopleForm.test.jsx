@@ -82,4 +82,30 @@ describe('Creating and editing people', () => {
     expect(screen.queryAllByText('You must select a nationality')).toHaveLength(2);
     expect(screen.queryAllByText('You must select a document expiry')).toHaveLength(2);
   });
+
+  it('should render errors on save if document type is OTHER and other text input is null', async () => {
+    renderPage({ pageNumber: 2 });
+    expect(screen.queryByText('Please specify')).not.toBeInTheDocument();
+    fireEvent.click(screen.getByLabelText('Another travel document'));
+    expect(screen.getByLabelText('Another travel document')).toBeChecked();
+    expect(screen.getByText('Please specify')).toBeInTheDocument();
+
+    await waitFor(() => fireEvent.click(screen.getByText('Save')));
+    expect(screen.queryAllByText('You must select a document type')).toHaveLength(2);
+  });
+
+  it('should render errors on save if document expiry is YES and expiry date is null or invalid', async () => {
+    renderPage({ pageNumber: 2 });
+    fireEvent.click(screen.getByLabelText('No'));
+    expect(screen.getByLabelText('No')).toBeChecked();
+    expect(screen.queryByText('Expiry date')).not.toBeInTheDocument();
+
+    fireEvent.click(screen.getByLabelText('Yes'));
+    expect(screen.getByLabelText('Yes')).toBeChecked();
+    expect(screen.getByLabelText('No')).not.toBeChecked();
+    expect(screen.getByText('Expiry date')).toBeInTheDocument();
+
+    await waitFor(() => fireEvent.click(screen.getByText('Save')));
+    expect(screen.queryAllByText('You must enter an expiry date')).toHaveLength(2);
+  });
 });
