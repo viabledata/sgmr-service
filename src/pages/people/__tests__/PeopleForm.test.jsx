@@ -56,4 +56,21 @@ describe('Creating and editing people', () => {
     expect(screen.queryAllByText('You must enter a surname')).toHaveLength(2);
     expect(screen.queryAllByText('You must enter a date of birth')).toHaveLength(2);
   });
+
+  it('should load next page when user clicks continue and there are no errors', async () => {
+    renderPage({ pageNumber: 1 });
+    fireEvent.change(screen.getByLabelText('Given name(s)'), { target: { value: 'Joe' } });
+    fireEvent.change(screen.getByLabelText('Surname'), { target: { value: 'Bloggs' } });
+    fireEvent.change(screen.getByLabelText('Day'), { target: { value: '1' } });
+    fireEvent.change(screen.getByLabelText('Month'), { target: { value: '11' } });
+    fireEvent.change(screen.getByLabelText('Year'), { target: { value: '1990' } });
+    await waitFor(() => fireEvent.click(screen.getByText('Continue')));
+    expect(screen.getByText('Select a travel document type')).toBeInTheDocument();
+  });
+
+  it('should load previous page when user clicks back regardless of errors', async () => {
+    renderPage({ pageNumber: 2 });
+    await waitFor(() => fireEvent.click(screen.getByText('Back')));
+    expect(screen.getByText('Given name(s)')).toBeInTheDocument();
+  });
 });

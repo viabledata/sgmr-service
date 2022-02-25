@@ -40,10 +40,10 @@ const PersonForm = ({ source, type }) => {
     e.preventDefault();
     let nextPageUrl;
     switch (url) {
-      case 'nextformPageIs':
+      case 'nextFormPageIs':
         nextPageUrl = `/people/${type || 'save'}-person/page-${formPageIs + 1}`;
         break;
-      case 'previousformPageIs':
+      case 'previousFormPageIs':
         nextPageUrl = `/people/${type || 'save'}-person/page-${formPageIs - 1}`;
         setFormPageIs(formPageIs - 1);
         break;
@@ -53,7 +53,7 @@ const PersonForm = ({ source, type }) => {
     if (runValidation) {
       if (!await validateForm()) {
         history.push(nextPageUrl);
-        setFormPageIs(url === 'nextformPageIs' ? (formPageIs + 1) : formPageIs); // only relevant if user going to next page of a form and validation passes
+        setFormPageIs(url === 'nextFormPageIs' ? (formPageIs + 1) : formPageIs); // only relevant if user going to next page of a form and validation passes
       }
     } else {
       history.push(nextPageUrl);
@@ -212,7 +212,7 @@ const PersonForm = ({ source, type }) => {
                       className="govuk-button"
                       data-module="govuk-button"
                       onClick={(e) => {
-                        goToNextPage(e, { url: 'nextformPageIs', runValidation: true });
+                        goToNextPage(e, { url: 'nextFormPageIs', runValidation: true });
                       }}
                     >
                       Continue
@@ -451,7 +451,7 @@ const PersonForm = ({ source, type }) => {
                       className="govuk-button"
                       data-module="govuk-button"
                       onClick={(e) => {
-                        goToNextPage(e, { url: 'previouscurrentFormPage', runValidation: true });
+                        goToNextPage(e, { url: 'previousFormPageIs', runValidation: false });
                       }}
                     >
                       Back
