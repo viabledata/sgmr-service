@@ -4,8 +4,8 @@ import React, { useState, useEffect } from 'react';
 import { VESSELS_URL } from '../../constants/ApiConstants';
 import { FORM_STEPS } from '../../constants/ClientConstants';
 import { getData } from '../../utils/apiHooks';
-import FormPleasureCraft from '../../pages/pleasurecrafts/FormPleasureCraft';
-import FormPleasureCraftDetails from '../../pages/pleasurecrafts/FormPleasureCraftDetails';
+import PleasureCraftForm from '../../pages/pleasurecrafts/PleasureCraftForm';
+import PleasureCraftDetailsForm from '../../pages/pleasurecrafts/PleasureCraftDetailsForm';
 import VesselTable from '../Vessel/VesselTable';
 
 const FormVessels = ({
@@ -61,7 +61,7 @@ const FormVessels = ({
         Add the details of a new pleasure craft you have not already saved
       </p>
       {isFirstPage ? (
-        <FormPleasureCraft
+        <PleasureCraftForm
           handleSubmit={handleSubmit}
           handleChange={handleChange}
           voyageId={voyageId}
@@ -71,7 +71,7 @@ const FormVessels = ({
           sourceForm="voyage"
         />
       ) : (
-        <FormPleasureCraftDetails
+        <PleasureCraftDetailsForm
           handleSubmit={handleSubmit}
           handleChange={handleChange}
           voyageId={voyageId}

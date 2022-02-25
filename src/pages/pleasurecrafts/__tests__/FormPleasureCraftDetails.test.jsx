@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
-import FormPleasureCraftDetails from '../FormPleasureCraftDetails';
+import PleasureCraftDetailsForm from '../PleasureCraftDetailsForm';
 
 const emptyFormData = {
   undefined,
@@ -30,7 +30,7 @@ const expectedErrors = {
 };
 
 test('Render the first page of the pleasure craft form with no new data, no errors, coming from a voyage source', () => {
-  render(<FormPleasureCraftDetails formData={emptyFormData} errors={emptyErrors} sourceForm="voyage" />);
+  render(<PleasureCraftDetailsForm formData={emptyFormData} errors={emptyErrors} sourceForm="voyage" />);
 
   expect(screen.getByText('Does this pleasure craft have a registration number?')).toBeInTheDocument();
   expect(screen.getByText('Does this pleasure craft have an Automatic Identification System (AIS)?')).toBeInTheDocument();
@@ -53,7 +53,7 @@ test('Render the first page of the pleasure craft form with no new data, no erro
 });
 
 test('Render the first page of the pleasure craft form with existing data, no errors, coming from a non-voyage source', () => {
-  render(<FormPleasureCraftDetails formData={existingFormData} errors={emptyErrors} sourceForm={undefined} vesselId={22312398} />);
+  render(<PleasureCraftDetailsForm formData={existingFormData} errors={emptyErrors} sourceForm={undefined} vesselId={22312398} />);
 
   expect(screen.getByText('Registration number')).toBeInTheDocument();
   expect(screen.getByText('Country of registration')).toBeInTheDocument();
@@ -64,7 +64,7 @@ test('Render the first page of the pleasure craft form with existing data, no er
 });
 
 test('Render the first page of the pleasure craft form with no new data and existing errors, coming from a non-voyage source', () => {
-  render(<FormPleasureCraftDetails formData={emptyFormData} errors={expectedErrors} sourceForm={undefined} />);
+  render(<PleasureCraftDetailsForm formData={emptyFormData} errors={expectedErrors} sourceForm={undefined} />);
 
   expect(screen.getByText('You must select an option for the pleasure craft registration number')).toBeInTheDocument();
   expect(screen.getByText('You must specify if the pleasure craft has an AIS')).toBeInTheDocument();
