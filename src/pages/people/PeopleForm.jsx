@@ -107,9 +107,11 @@ const PersonForm = ({ source, type, personId }) => {
       lastName: formData.lastName,
       documentType: formData.documentType,
       documentNumber: formData.documentNumber,
-      documentExpiryDate: formData.documentExpiryDateYes ? formatDate(formData.documentExpiryDateYear, formData.documentExpiryDateMonth, formData.documentExpiryDateDay) : null,
+      documentExpiryDate:
+        formData.documentExpiryDate === 'documentExpiryDateYes' ? formatDate(formData.documentExpiryDateYear, formData.documentExpiryDateMonth, formData.documentExpiryDateDay) : null,
       dateOfBirth: formatDate(formData.dateOfBirthYear, formData.dateOfBirthMonth, formData.dateOfBirthDay),
       nationality: formData.nationality,
+      peopleType: 'crew',
     };
   };
 
