@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useHistory, useLocation, withRouter } from 'react-router-dom';
 
 import { validate } from '../../components/Forms/validationRules';
 import FormFieldError from '../../components-v2/FormFieldError';
 import { PEOPLE_URL } from '../../constants/ApiConstants';
 import { PEOPLE_PAGE_URL } from '../../constants/ClientConstants';
-import { getData } from '../../utils/apiHooks';
+import { getData, patchData, postData } from '../../utils/apiHooks';
+import { formatDate } from '../../utils/date';
 import scrollToTop from '../../utils/scrollToTop';
 import nationalities from '../../utils/staticFormData';
 import PeopleValidation from './PeopleValidation';
@@ -20,6 +21,7 @@ const PersonForm = ({ source, type, personId }) => {
   const [formPageIs, setFormPageIs] = useState(1);
   const [sourcePage, setSourcePage] = useState(PEOPLE_PAGE_URL);
   const [submittedNextPage, setSubmittedNextPage] = useState(PEOPLE_PAGE_URL);
+  const [submitType, setSubmitType] = useState();
   const [title, setTitle] = useState();
 
   document.title = type === 'edit' ? 'Edit person' : 'Save person';
@@ -42,6 +44,7 @@ const PersonForm = ({ source, type, personId }) => {
       dateOfBirthDay: dateOfBirthDay || null,
     });
   };
+
   const removeError = (fieldName) => {
     const errorList = { ...errors };
     let key;
@@ -98,9 +101,26 @@ const PersonForm = ({ source, type, personId }) => {
     }
   };
 
+  const formatDataToSubmit = () => {
+    return {
+      firstName: formData.firstName,
+      lastName: formData.lastName,
+      documentType: formData.documentType,
+      documentNumber: formData.documentNumber,
+      documentExpiryDate: formData.documentExpiryDateYes ? formatDate(formData.documentExpiryDateYear, formData.documentExpiryDateMonth, formData.documentExpiryDateDay) : null,
+      dateOfBirth: formatDate(formData.dateOfBirthYear, formData.dateOfBirthMonth, formData.dateOfBirthDay),
+      nationality: formData.nationality,
+    };
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!await validateForm()) {
+      if (submitType === 'PATCH') {
+        await patchData(`${PEOPLE_URL}/${personId}`, formatDataToSubmit(formData), locationPath);
+      } else {
+        await postData(PEOPLE_URL, formatDataToSubmit(formData), locationPath);
+      }
       history.push(submittedNextPage);
     }
   };
@@ -119,17 +139,21 @@ const PersonForm = ({ source, type, personId }) => {
     switch (source) {
       case 'onboarding':
         setTitle('Add details of a person you frequently sail with');
+        setSubmitType('POST');
         break;
       case 'voyage':
         setTitle('Add details of the person you are sailing with');
+        setSubmitType('POST');
         break;
       case 'edit':
         setTitle('Update details of the person you sail with');
+        setSubmitType('PATCH');
         setSubmittedNextPage(PEOPLE_PAGE_URL);
         setSourcePage(PEOPLE_PAGE_URL);
         break;
       default:
         setTitle('Add details of the person you frequently sail with');
+        setSubmitType('POST');
         setSubmittedNextPage(PEOPLE_PAGE_URL);
         setSourcePage(PEOPLE_PAGE_URL);
     }
@@ -551,9 +575,8 @@ const PersonForm = ({ source, type, personId }) => {
           </div>
         </div>
       </main>
-
     </div>
   );
 };
 
-export default PersonForm;
+export default withRouter(PersonForm);
