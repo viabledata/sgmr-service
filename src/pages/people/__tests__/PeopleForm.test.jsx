@@ -108,4 +108,17 @@ describe('Creating and editing people', () => {
     await waitFor(() => fireEvent.click(screen.getByText('Save')));
     expect(screen.queryAllByText('You must enter an expiry date')).toHaveLength(2);
   });
+
+  it('should clear error for a field if user interacts with that field', async () => {
+    renderPage({ pageNumber: 1 });
+    await waitFor(() => fireEvent.click(screen.getByText('Continue')));
+    expect(screen.queryAllByText('You must enter a given name')).toHaveLength(2);
+    expect(screen.queryAllByText('You must enter a surname')).toHaveLength(2);
+    expect(screen.queryAllByText('You must enter a date of birth')).toHaveLength(2);
+
+    fireEvent.change(screen.getByLabelText('Given name(s)'), { target: { value: 'J' } });
+    expect(screen.queryAllByText('You must enter a given name')).toHaveLength(0);
+    expect(screen.queryAllByText('You must enter a surname')).toHaveLength(2);
+    expect(screen.queryAllByText('You must enter a date of birth')).toHaveLength(2);
+  });
 });

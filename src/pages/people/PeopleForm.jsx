@@ -21,8 +21,23 @@ const PersonForm = ({ source, type }) => {
   document.title = 'Save person';
   const documentTypeOther = formData.documentType !== undefined && formData.documentType !== 'Passport' && formData.documentType !== 'IdentityCard';
 
+  const removeError = (fieldName) => {
+    const errorList = { ...errors };
+    let key;
+    if (fieldName.includes('dateOfBirth')) {
+      key = 'dateOfBirth';
+    } else if (fieldName.includes('documentExpiryDate')) {
+      key = 'documentExpiryDateYes';
+    } else {
+      key = fieldName;
+    }
+    delete errorList[key];
+    setErrors(errorList);
+  };
+
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+    removeError(e.target.name);
   };
 
   const handleErrorClick = (e, id) => {
