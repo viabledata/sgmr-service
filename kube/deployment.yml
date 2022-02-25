@@ -80,3 +80,4 @@ spec:
       - name: certs
         secret:
           secretName: "{{.SGMR_SERVICE_NAME}}-pod-cmio"
+          defaultMode: 0400
