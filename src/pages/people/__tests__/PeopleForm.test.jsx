@@ -127,4 +127,24 @@ describe('Creating and editing people', () => {
     await waitFor(() => fireEvent.click(screen.getByText('Exit without saving')));
     expect(screen.queryAllByText('There is a problem')).toHaveLength(0);
   });
+
+  it('should store form data in the session for use on refresh', async () => {
+    const expectedPage1FormData = '{"firstName":"Joe","lastName":"Bloggs","dateOfBirthDay":"1","dateOfBirthMonth":"11","dateOfBirthYear":"1990"}';
+    // eslint-disable-next-line max-len
+    const expectedPage2FormData = '{"firstName":"Joe","lastName":"Bloggs","dateOfBirthDay":"1","dateOfBirthMonth":"11","dateOfBirthYear":"1990","documentType":"Passport","documentNumber":"abc123","nationality":"","documentExpiryDate":"documentExpiryDateNo"}';
+    renderPage({ pageNumber: 1 });
+    fireEvent.change(screen.getByLabelText('Given name(s)'), { target: { value: 'Joe' } });
+    fireEvent.change(screen.getByLabelText('Surname'), { target: { value: 'Bloggs' } });
+    fireEvent.change(screen.getByLabelText('Day'), { target: { value: '1' } });
+    fireEvent.change(screen.getByLabelText('Month'), { target: { value: '11' } });
+    fireEvent.change(screen.getByLabelText('Year'), { target: { value: '1990' } });
+    expect(window.sessionStorage.getItem('formData')).toStrictEqual(expectedPage1FormData);
+
+    renderPage({ pageNumber: 2 });
+    fireEvent.click(screen.getByLabelText('Passport'));
+    fireEvent.change(screen.getByLabelText('Travel document number'), { target: { value: 'abc123' } });
+    await waitFor(() => fireEvent.change(screen.getByRole('combobox'), { target: { value: 'Australia' } }));
+    fireEvent.click(screen.getByLabelText('No'));
+    expect(window.sessionStorage.getItem('formData')).toStrictEqual(expectedPage2FormData);
+  });
 });

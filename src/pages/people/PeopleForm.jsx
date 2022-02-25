@@ -13,7 +13,7 @@ const PersonForm = ({ source, type }) => {
   const location = useLocation();
   const locationPath = location.pathname;
   const [errors, setErrors] = useState({});
-  const [formData, setFormData] = useState({});
+  const [formData, setFormData] = useState(JSON.parse(sessionStorage.getItem('formData')) || {});
   const [formPageIs, setFormPageIs] = useState(1);
   const [sourcePage, setSourcePage] = useState(PEOPLE_PAGE_URL);
   const [submittedNextPage, setSubmittedNextPage] = useState(PEOPLE_PAGE_URL);
@@ -104,6 +104,10 @@ const PersonForm = ({ source, type }) => {
         setSourcePage(PEOPLE_PAGE_URL);
     }
   }, [source]);
+
+  useEffect(() => {
+    sessionStorage.setItem('formData', JSON.stringify(formData));
+  }, [formData]);
 
   useEffect(() => {
     setErrors({}); // always clear errors when changing page
