@@ -207,9 +207,4 @@ describe('Creating and editing people', () => {
     renderPage({ pageNumber: 1 });
     expect(screen.queryByText('Delete this person')).not.toBeInTheDocument();
   });
-
-  // it('should submit data in the correct format on submit click when there are no errors', async () => { });
-  // it('should submit data as a PATCH when type is edit', async () => { });
-
-  // it('should open the confirm delete page if you click delete', async () => {});
 });
