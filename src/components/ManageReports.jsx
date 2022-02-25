@@ -31,6 +31,20 @@ const ManageReports = (pageData) => {
       text: 'Cancelled',
       active: false,
     },
+    {
+      name: 'presubmitted',
+      text: 'Presubmitted',
+      active: true,
+    },
+    {
+      name: 'precancelled',
+      text: 'Precancelled',
+      active: false,
+    }, {
+      name: 'failed',
+      text: 'Failed',
+      active: false,
+    },
   ];
 
   const pageSize = 10;
