@@ -3,15 +3,18 @@ import { useHistory, useLocation } from 'react-router-dom';
 
 import { validate } from '../../components/Forms/validationRules';
 import FormFieldError from '../../components-v2/FormFieldError';
+import { PEOPLE_URL } from '../../constants/ApiConstants';
 import { PEOPLE_PAGE_URL } from '../../constants/ClientConstants';
+import { getData } from '../../utils/apiHooks';
 import scrollToTop from '../../utils/scrollToTop';
 import nationalities from '../../utils/staticFormData';
 import PeopleValidation from './PeopleValidation';
 
-const PersonForm = ({ source, type }) => {
+const PersonForm = ({ source, type, personId }) => {
   const history = useHistory();
   const location = useLocation();
   const locationPath = location.pathname;
+  const locationState = location.state;
   const [errors, setErrors] = useState({});
   const [formData, setFormData] = useState(JSON.parse(sessionStorage.getItem('formData')) || {});
   const [formPageIs, setFormPageIs] = useState(1);
@@ -19,9 +22,26 @@ const PersonForm = ({ source, type }) => {
   const [submittedNextPage, setSubmittedNextPage] = useState(PEOPLE_PAGE_URL);
   const [title, setTitle] = useState();
 
-  document.title = 'Save person';
+  document.title = type === 'edit' ? 'Edit person' : 'Save person';
   const documentTypeOther = formData.documentType !== undefined && formData.documentType !== 'Passport' && formData.documentType !== 'IdentityCard';
 
+  const getPersonData = async () => {
+    const resp = await getData(`${PEOPLE_URL}/${personId}`, 'people');
+    const [documentExpiryDateYear, documentExpiryDateMonth, documentExpiryDateDay] = resp.documentExpiryDate.split('-');
+    const [dateOfBirthYear, dateOfBirthMonth, dateOfBirthDay] = resp.dateOfBirth.split('-');
+    const documentExpiryDate = !resp.documentExpiryDate ? 'documentExpiryDateNo' : 'documentExpiryDateYes';
+
+    setFormData({
+      ...resp,
+      documentExpiryDate,
+      documentExpiryDateYear: documentExpiryDateYear || null,
+      documentExpiryDateMonth: documentExpiryDateMonth || null,
+      documentExpiryDateDay: documentExpiryDateDay || null,
+      dateOfBirthYear: dateOfBirthYear || null,
+      dateOfBirthMonth: dateOfBirthMonth || null,
+      dateOfBirthDay: dateOfBirthDay || null,
+    });
+  };
   const removeError = (fieldName) => {
     const errorList = { ...errors };
     let key;
@@ -86,6 +106,16 @@ const PersonForm = ({ source, type }) => {
   };
 
   useEffect(() => {
+    setErrors({}); // always clear errors when changing page
+    setFormPageIs(parseInt(locationPath.split('page-').pop(), 10));
+    scrollToTop();
+  }, [locationPath]);
+
+  useEffect(() => {
+    if (locationState?.source === 'edit' || source === 'edit') {
+      source = 'edit';
+      if (personId) { getPersonData(); }
+    }
     switch (source) {
       case 'onboarding':
         setTitle('Add details of a person you frequently sail with');
@@ -108,12 +138,6 @@ const PersonForm = ({ source, type }) => {
   useEffect(() => {
     sessionStorage.setItem('formData', JSON.stringify(formData));
   }, [formData]);
-
-  useEffect(() => {
-    setErrors({}); // always clear errors when changing page
-    setFormPageIs(parseInt(locationPath.split('page-').pop(), 10));
-    scrollToTop();
-  }, [locationPath]);
 
   return (
     <div className="govuk-width-container ">
