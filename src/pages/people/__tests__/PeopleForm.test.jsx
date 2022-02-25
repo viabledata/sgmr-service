@@ -1,6 +1,8 @@
 import React from 'react';
 import { MemoryRouter } from 'react-router-dom';
-import { render, screen } from '@testing-library/react';
+import {
+  fireEvent, render, screen, waitFor,
+} from '@testing-library/react';
 
 import PeopleForm from '../PeopleForm';
 
@@ -29,5 +31,13 @@ describe('Creating and editing people', () => {
 
     renderPage({ pageNumber: 1 });
     testTitle('Add details of the person you frequently sail with');
+  });
+
+  it('should render errors on save if fields on page 1 are empty', async () => {
+    renderPage({ pageNumber: 1 });
+    await waitFor(() => fireEvent.click(screen.getByText('Continue')));
+    expect(screen.queryAllByText('You must enter a given name')).toHaveLength(2);
+    expect(screen.queryAllByText('You must enter a surname')).toHaveLength(2);
+    expect(screen.queryAllByText('You must enter a date of birth')).toHaveLength(2);
   });
 });
