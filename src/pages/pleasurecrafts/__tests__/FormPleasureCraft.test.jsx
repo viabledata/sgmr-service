@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
-import FormPleasureCraft from '../FormPleasureCraft';
+import PleasureCraftForm from '../PleasureCraftForm';
 
 const emptyFormData = {
   undefined,
@@ -30,7 +30,7 @@ const expectedErrors = {
 };
 
 test('Render the first page of the pleasure craft form with no new data, no errors, coming from a voyage source', () => {
-  render(<FormPleasureCraft formData={emptyFormData} errors={emptyErrors} sourceForm="voyage" />);
+  render(<PleasureCraftForm formData={emptyFormData} errors={emptyErrors} sourceForm="voyage" />);
 
   expect(screen.getByText('Name of pleasure craft')).toBeInTheDocument();
   expect(screen.getByText('Type of pleasure craft')).toBeInTheDocument();
@@ -45,14 +45,14 @@ test('Render the first page of the pleasure craft form with no new data, no erro
 });
 
 test('Render the first page of the pleasure craft form with existing data, no errors, coming from a non-voyage source', () => {
-  render(<FormPleasureCraft formData={existingFormData} errors={emptyErrors} sourceForm={undefined} vesselId={22312398} />);
+  render(<PleasureCraftForm formData={existingFormData} errors={emptyErrors} sourceForm={undefined} vesselId={22312398} />);
 
   expect(screen.getByText('Save and continue')).toBeInTheDocument();
   expect(screen.getByText('Delete this pleasure craft')).toBeInTheDocument();
 });
 
 test('Render the first page of the pleasure craft form with no new data and existing errors, coming from a non-voyage source', () => {
-  render(<FormPleasureCraft formData={emptyFormData} errors={expectedErrors} sourceForm={undefined} />);
+  render(<PleasureCraftForm formData={emptyFormData} errors={expectedErrors} sourceForm={undefined} />);
 
   expect(screen.getByText('You must enter a pleasure craft name')).toBeInTheDocument();
   expect(screen.getByText('You must enter a pleasure craft type')).toBeInTheDocument();

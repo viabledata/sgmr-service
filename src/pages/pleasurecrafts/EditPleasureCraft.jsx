@@ -5,12 +5,12 @@ import {
 
 import { VESSELS_URL } from '../../constants/ApiConstants';
 import { VESSELS_PAGE_URL } from '../../constants/ClientConstants';
-import { vesselValidationRules } from '../../components/Forms/validationRules';
+import pleasureCraftValidationRules from './pleasureCraftValidationRules';
 import { getData, patchData } from '../../utils/apiHooks';
 import scrollToTopOnError from '../../utils/scrollToTopOnError';
 
-import FormPleasureCraft from './FormPleasureCraft';
-import FormPleasureCraftDetails from './FormPleasureCraftDetails';
+import PleasureCraftForm from './PleasureCraftForm';
+import PleasureCraftDetailsForm from './PleasureCraftDetailsForm';
 import VesselDataFormatting from '../../components/Vessel/VesselDataFormatting';
 
 const EditPleasureCraft = () => {
@@ -57,7 +57,7 @@ const EditPleasureCraft = () => {
       const fieldValue = field[1];
 
       // Test for empty required fields
-      vesselValidationRules.find((object) => {
+      pleasureCraftValidationRules.find((object) => {
         if (!fieldValue && object.inputField === fieldName) {
           fieldsErroring[fieldName] = object.message;
         }
@@ -132,7 +132,7 @@ const EditPleasureCraft = () => {
               </div>
               )}
               {isFirstPage ? (
-                <FormPleasureCraft
+                <PleasureCraftForm
                   handleSubmit={handleSubmit}
                   handleChange={handleChange}
                   data=""
@@ -140,7 +140,7 @@ const EditPleasureCraft = () => {
                   errors={errors}
                 />
               ) : (
-                <FormPleasureCraftDetails
+                <PleasureCraftDetailsForm
                   handleSubmit={handleSubmit}
                   handleChange={handleChange}
                   data=""

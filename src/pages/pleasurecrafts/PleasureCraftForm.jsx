@@ -1,7 +1,7 @@
 import React from 'react';
 import FormError from '../../components/Voyage/FormError';
 
-const FormPleasureCraft = ({
+const PleasureCraftForm = ({
   handleSubmit, handleChange, formData, errors, sourceForm, vesselId,
 }) => {
   const vesselTypeOther = formData.vesselType !== undefined && formData.vesselType !== 'sailingBoat' && formData.vesselType !== 'motorboat';
@@ -114,4 +114,4 @@ const FormPleasureCraft = ({
   );
 };
 
-export default FormPleasureCraft;
+export default PleasureCraftForm;
