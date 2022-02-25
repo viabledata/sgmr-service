@@ -49,6 +49,69 @@ const personValidationRules = {
       message: 'You must enter a valid date of birth',
     },
   ],
+  page2: [
+    {
+      inputField: 'documentType',
+      errorDisplayId: 'documentType',
+      type: 'required',
+      message: 'You must select a document type',
+    },
+    {
+      inputField: 'documentNumber',
+      errorDisplayId: 'documentNumber',
+      type: 'required',
+      message: 'You must enter a document number',
+    },
+    {
+      inputField: 'nationality',
+      errorDisplayId: 'nationality',
+      type: 'required',
+      message: 'You must select a nationality',
+    },
+    {
+      inputField: 'documentExpiryDate',
+      errorDisplayId: 'documentExpiryDate',
+      type: 'required',
+      message: 'You must select a document expiry',
+    },
+    {
+      inputField: 'documentExpiryDateYear',
+      errorDisplayId: 'documentExpiryDate',
+      type: 'requiredOnVisible',
+      visibilityIndicator: 'documentExpiryDateYes',
+      message: 'You must enter an expiry date',
+    },
+    {
+      inputField: 'documentExpiryDateMonth',
+      errorDisplayId: 'documentExpiryDate',
+      type: 'requiredOnVisible',
+      visibilityIndicator: 'documentExpiryDateYes',
+      message: 'You must enter an expiry date',
+    },
+    {
+      inputField: 'documentExpiryDateDay',
+      errorDisplayId: 'documentExpiryDate',
+      type: 'requiredOnVisible',
+      visibilityIndicator: 'documentExpiryDateYes',
+      message: 'You must enter an expiry date',
+    },
+    {
+      inputField: 'documentExpiryDateDay',
+      errorDisplayId: 'documentExpiryDate',
+      type: 'async',
+      callback: async (value, values) => {
+        // Expiry Date must be valid and in the future
+        if (values.documentExpiryDateYear || values.documentExpiryDateMonth || values.documentExpiryDateDay) {
+          const isValidFormat = isDateValid(values.documentExpiryDateYear, values.documentExpiryDateMonth, values.documentExpiryDateDay);
+          const isExpiryDateInPast = isInThePast(values.documentExpiryDateYear, values.documentExpiryDateMonth, values.documentExpiryDateDay);
+
+          return isValidFormat && !isExpiryDateInPast;
+        }
+        return true;
+      },
+      message: 'You must enter a valid document expiry date',
+    },
+  ],
 };
 
 export default personValidationRules;

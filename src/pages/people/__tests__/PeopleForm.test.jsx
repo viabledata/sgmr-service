@@ -15,6 +15,10 @@ const renderPage = ({ source, pageNumber }) => {
 };
 
 describe('Creating and editing people', () => {
+  beforeEach(() => {
+    window.sessionStorage.removeItem('formData');
+  });
+
   it('should render different titles based on where the user comes from', () => {
     const testTitle = (text) => {
       expect(screen.getByText(text).outerHTML).toEqual(`<h1 class="govuk-heading-l">${text}</h1>`);
@@ -23,13 +27,25 @@ describe('Creating and editing people', () => {
     renderPage({ pageNumber: 1, source: 'onboarding' });
     testTitle('Add details of a person you frequently sail with');
 
+    renderPage({ pageNumber: 2, source: 'onboarding' });
+    testTitle('Add details of a person you frequently sail with');
+
     renderPage({ pageNumber: 1, source: 'voyage' });
+    testTitle('Add details of the person you are sailing with');
+
+    renderPage({ pageNumber: 2, source: 'voyage' });
     testTitle('Add details of the person you are sailing with');
 
     renderPage({ pageNumber: 1, source: 'edit' });
     testTitle('Update details of the person you sail with');
 
+    renderPage({ pageNumber: 2, source: 'edit' });
+    testTitle('Update details of the person you sail with');
+
     renderPage({ pageNumber: 1 });
+    testTitle('Add details of the person you frequently sail with');
+
+    renderPage({ pageNumber: 2 });
     testTitle('Add details of the person you frequently sail with');
   });
 
