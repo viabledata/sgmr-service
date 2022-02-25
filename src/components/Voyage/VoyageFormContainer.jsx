@@ -373,11 +373,13 @@ const FormVoyageContainer = () => {
                 />
               )}
             </form>
-            <p className="govuk-body">
-              <Link to="/voyage-plans" className="govuk-link govuk-link--no-visited-state">
-                Exit without saving
-              </Link>
-            </p>
+            {pageNum === 7 && voyageData && (voyageData.status.name === 'Cancelled' || voyageData.status.name !== 'PreCancelled') ? null : (
+              <p className="govuk-body">
+                <Link to="/voyage-plans" className="govuk-link govuk-link--no-visited-state">
+                  Exit without saving
+                </Link>
+              </p>
+            )}
           </div>
         </div>
       </main>
