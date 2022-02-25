@@ -19,7 +19,7 @@ const PersonForm = ({ type, source, personId }) => {
   const locationState = location.state;
   const [errors, setErrors] = useState({});
   const [formData, setFormData] = useState(JSON.parse(sessionStorage.getItem('formData')) || {});
-  const [formPage, setFormPage] = useState(1);
+  const [currentFormPage, setCurrentFormPage] = useState(1);
   const [sourcePage, setSourcePage] = useState(PEOPLE_PAGE_URL);
   const [submittedNextPage, setSubmittedNextPage] = useState(PEOPLE_PAGE_URL);
   const [submitType, setSubmitType] = useState();
@@ -72,7 +72,7 @@ const PersonForm = ({ type, source, personId }) => {
   };
 
   const validateForm = async () => {
-    const newErrors = await validate(personValidationRules[`page${formPage}`], formData);
+    const newErrors = await validate(personValidationRules[`page${currentFormPage}`], formData);
     setErrors(newErrors);
     scrollToTop(newErrors);
     return Object.keys(newErrors).length > 0;
@@ -82,12 +82,12 @@ const PersonForm = ({ type, source, personId }) => {
     e.preventDefault();
     let nextPageUrl;
     switch (url) {
-      case 'nextFormPage':
-        nextPageUrl = `/people/${type || 'save'}-person/page-${formPage + 1}`;
+      case 'nextCurrentFormPage':
+        nextPageUrl = `/people/${type || 'save'}-person/page-${currentFormPage + 1}`;
         break;
-      case 'previousFormPage':
-        nextPageUrl = `/people/${type || 'save'}-person/page-${formPage - 1}`;
-        setFormPage(formPage - 1);
+      case 'previousCurrentFormPage':
+        nextPageUrl = `/people/${type || 'save'}-person/page-${currentFormPage - 1}`;
+        setCurrentFormPage(currentFormPage - 1);
         break;
       default: nextPageUrl = url;
     }
@@ -95,7 +95,7 @@ const PersonForm = ({ type, source, personId }) => {
     if (runValidation) {
       if (!await validateForm()) {
         history.push(nextPageUrl);
-        setFormPage(url === 'nextFormPage' ? (formPage + 1) : formPage);
+        setCurrentFormPage(url === 'nextCurrentFormPage' ? (currentFormPage + 1) : currentFormPage); // only relevant if user going to next page of a form and validation passes
       }
     } else {
       history.push(nextPageUrl);
@@ -118,7 +118,7 @@ const PersonForm = ({ type, source, personId }) => {
     e.preventDefault();
     if (!await validateForm()) {
       if (submitType === 'PATCH') {
-        await patchData(`${PEOPLE_URL}/${personId}`, formatDataToSubmit(formData));
+        await patchData(`${PEOPLE_URL}/${personId}`, formatDataToSubmit(formData), locationPath);
       } else {
         await postData(PEOPLE_URL, formatDataToSubmit(formData), locationPath);
       }
@@ -128,7 +128,7 @@ const PersonForm = ({ type, source, personId }) => {
 
   useEffect(() => {
     setErrors({}); // always clear errors when changing page
-    setFormPage(parseInt(locationPath.split('page-').pop(), 10));
+    setCurrentFormPage(parseInt(locationPath.split('page-').pop(), 10));
     scrollToTop();
   }, [locationPath]);
 
@@ -171,7 +171,7 @@ const PersonForm = ({ type, source, personId }) => {
           <div className="govuk-grid-row">
             <div className="govuk-grid-column-two-thirds">
 
-              {formPage === 1
+              {currentFormPage === 1
                 && (
                 <>
                   <h1 className="govuk-heading-l">{title}</h1>
@@ -296,7 +296,7 @@ const PersonForm = ({ type, source, personId }) => {
                       className="govuk-button"
                       data-module="govuk-button"
                       onClick={(e) => {
-                        goToNextPage(e, { url: 'nextFormPage', runValidation: true });
+                        goToNextPage(e, { url: 'nextcurrentFormPage', runValidation: true });
                       }}
                     >
                       Continue
@@ -321,7 +321,7 @@ const PersonForm = ({ type, source, personId }) => {
                 </>
                 )}
 
-              {formPage === 2
+              {currentFormPage === 2
               && (
                 <>
                   <h1 className="govuk-heading-l">Travel document details</h1>
@@ -552,7 +552,7 @@ const PersonForm = ({ type, source, personId }) => {
                       className="govuk-button"
                       data-module="govuk-button"
                       onClick={(e) => {
-                        goToNextPage(e, { url: 'previousFormPage', runValidation: true });
+                        goToNextPage(e, { url: 'previouscurrentFormPage', runValidation: true });
                       }}
                     >
                       Back
