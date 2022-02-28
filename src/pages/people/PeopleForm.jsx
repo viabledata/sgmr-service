@@ -108,7 +108,9 @@ const PersonForm = ({ source, type, personId }) => {
       documentType: formData.documentType,
       documentNumber: formData.documentNumber,
       documentExpiryDate:
-        formData.documentExpiryDate === 'documentExpiryDateYes' ? formatDate(formData.documentExpiryDateYear, formData.documentExpiryDateMonth, formData.documentExpiryDateDay) : null,
+        formData.documentExpiryDate === 'documentExpiryDateYes'
+          ? formatDate(formData.documentExpiryDateYear, formData.documentExpiryDateMonth, formData.documentExpiryDateDay)
+          : '2025-1-1',
       dateOfBirth: formatDate(formData.dateOfBirthYear, formData.dateOfBirthMonth, formData.dateOfBirthDay),
       nationality: formData.nationality,
       peopleType: 'crew',
@@ -117,13 +119,19 @@ const PersonForm = ({ source, type, personId }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    let response;
     if (!await validateForm()) {
       if (submitType === 'PATCH') {
-        await patchData(`${PEOPLE_URL}/${personId}`, formatDataToSubmit(formData), locationPath);
+        response = await patchData(`${PEOPLE_URL}/${personId}`, formatDataToSubmit(formData), locationPath);
       } else {
-        await postData(PEOPLE_URL, formatDataToSubmit(formData), locationPath);
+        response = await postData(PEOPLE_URL, formatDataToSubmit(formData), locationPath);
       }
+    }
+
+    if (response.status && response.status === 200) {
       history.push(submittedNextPage);
+    } else {
+      setErrors({ [response.id]: response.message });
     }
   };
 
@@ -332,16 +340,18 @@ const PersonForm = ({ source, type, personId }) => {
                       <ul className="govuk-list govuk-error-summary__list">
                         {Object.entries(errors).reverse().map((elem) => (
                           <li key={elem[0]}>
-                            {elem[0] !== 'title'
+                            {(elem[0] !== 'title' && elem[0] !== 'helpError')
                             //  eslint-disable-next-line jsx-a11y/anchor-is-valid
                             && <a onClick={(e) => handleErrorClick(e, elem[0])} href="#">{elem[1]}</a>}
+                            {elem[0] === 'helpError'
+                            && <a href="/page/help">{elem[1]}</a>}
                           </li>
                         ))}
                       </ul>
                     </div>
                   </div>
                   )}
-                  <div className={`govuk-form-group ${errors.documentType ? 'govuk-form-group--error' : ''}`}>
+                  <div id="pageError" className={`govuk-form-group ${errors.documentType ? 'govuk-form-group--error' : ''}`}>
                     <fieldset id="documentType" className="govuk-fieldset">
                       <legend className="govuk-fieldset__legend govuk-fieldset__legend">Select a travel document type</legend>
                       <div id="documentType-hint" className="govuk-hint">
@@ -547,7 +557,7 @@ const PersonForm = ({ source, type, personId }) => {
                   <div className="govuk-button-group">
                     <button
                       type="button"
-                      className="govuk-button"
+                      className="govuk-button govuk-button--secondary"
                       data-module="govuk-button"
                       onClick={(e) => {
                         goToNextPage(e, { url: 'previousFormPageIs', runValidation: false });
