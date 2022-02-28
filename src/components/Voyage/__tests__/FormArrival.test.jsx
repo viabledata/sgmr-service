@@ -16,9 +16,9 @@ describe('FormArrival', () => {
     );
 
     expect(screen.getByText('Intended arrival details')).toBeInTheDocument();
-    expect(screen.getAllByRole('textbox').length).toBe(7); // day, month, year, hour, minute, port input
+    expect(screen.getAllByRole('textbox').length).toBe(6); // day, month, year, hour, minute
     expect(screen.getAllByRole('combobox').length).toBe(1); // port
-    expect(screen.getByRole('combobox')).toHaveAttribute('id', 'portsCombobox');
-    expect(screen.getByRole('combobox')).toHaveAttribute('name', 'arrivalPort');
+    expect(screen.getByTestId('portContainer')).toHaveAttribute('id', 'portsCombobox');
+    expect(screen.getByTestId('portContainer')).toHaveAttribute('name', 'arrivalPort');
   });
 });

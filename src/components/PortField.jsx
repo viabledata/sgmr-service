@@ -73,7 +73,6 @@ const PortField = ({
     <>
       <Combobox
         id="portsCombobox"
-        role="combobox"
         name={fieldName}
         data-testid="portContainer"
         aria-label="Ports"
@@ -82,7 +81,6 @@ const PortField = ({
         <ComboboxInput
           className="govuk-input"
           data-testid="port"
-          role="textbox"
           onChange={handleSearchTermChange}
           value={searchTerm}
         />

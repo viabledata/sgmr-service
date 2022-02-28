@@ -5,6 +5,7 @@ import {
   waitFor,
   fireEvent,
 } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 
@@ -43,32 +44,12 @@ describe('PortField', () => {
 
     render(<PortField />);
 
-    await waitFor(() => fireEvent.change(screen.getByRole('combobox'), { target: { value: 'test' } }));
+    await waitFor(() => fireEvent.change(screen.getByRole('combobox'), { target: { value: 'TEST_FOO' } }));
 
-    expect(mockAxios.history.get.length).toBe(1);
-    expect(screen.getAllByRole('option').length).toBe(3);
+    expect(mockAxios.history.get.length).toBe(2);
     expect(screen.queryByText('TEST_NAME (TEST_UNLOCODE)')).toBeInTheDocument();
     expect(screen.queryByText('TEST_FOO (BAR)')).toBeInTheDocument();
     expect(screen.queryByText('TEST_NO_UNLOCODE')).toBeInTheDocument();
-  });
-
-  it('should render default unlocode when user clicks on port with no unlocode', async () => {
-    mockAxios
-      .onGet(`${PORTS_URL}?name=test`)
-      .reply(200, [
-        {
-          name: 'TEST_NAME',
-          unlocode: null,
-        },
-      ]);
-
-    render(<PortField />);
-
-    await waitFor(() => fireEvent.change(screen.getByRole('combobox'), { target: { value: 'test' } }));
-    await waitFor(() => fireEvent.click(screen.getByText('TEST_NAME')));
-
-    expect(screen.queryByRole('combobox').value).toBe('ZZZD');
-    expect(screen.getByTestId('portOther')).not.toBeVisible();
   });
 
   it('should allow user to enter a location in a free text field if they click cannot find location in list', async () => {
@@ -82,13 +63,25 @@ describe('PortField', () => {
   });
 
   it('should clear the value of combo box when optional field entered and vice versa', async () => {
+    mockAxios
+      .onGet(`${PORTS_URL}?name=test`)
+      .reply(200, [
+        {
+          name: 'TEST_NAME',
+          unlocode: null,
+        },
+      ]);
+
     render(<PortField />);
-    fireEvent.change(screen.getByRole('combobox'), { target: { value: 'TEST' } });
+
+    expect(screen.getByTestId('portOther')).not.toBeVisible();
+    fireEvent.change(screen.getByTestId('port'), { target: { value: 'TEST2' } });
     await waitFor(() => fireEvent.click(screen.getByText('I cannot find the location in the list')));
     fireEvent.change(screen.getByTestId('portOtherInput'), { target: { value: 'TEST' } });
-    expect(screen.getByRole('combobox').value).toBe('');
+    expect(screen.getByTestId('port').value).toBe('');
 
-    fireEvent.change(screen.getByTestId('combobox'), { target: { value: 'TEST2' } });
+    fireEvent.change(screen.getByTestId('port'), { target: { value: 'test' } });
+    userEvent.selectOptions(screen.getByTestId('portContainer'), 'TEST_NAME');
     expect(screen.getByTestId('portOtherInput').value).toBe('');
   });
 });
