@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory, useLocation, withRouter } from 'react-router-dom';
 
-import { validate } from '../../components/Forms/validationRules';
 import FormFieldError from '../../components-v2/FormFieldError';
 import { PEOPLE_URL } from '../../constants/ApiConstants';
 import { PEOPLE_PAGE_URL } from '../../constants/ClientConstants';
 import { getData, patchData, postData } from '../../utils/apiHooks';
 import { formatDate } from '../../utils/date';
 import removeError from '../../utils/errorHooks';
+import validate from '../../utils/formSubmitHooks';
 import scrollToTop from '../../utils/scrollToTop';
 import nationalities from '../../utils/staticFormData';
 import PeopleValidation from './PeopleValidation';
