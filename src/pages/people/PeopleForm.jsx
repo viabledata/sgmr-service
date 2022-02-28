@@ -115,9 +115,9 @@ const PersonForm = ({ source, type, personId }) => {
       }
     }
 
-    if (response.status && response.status === 200) {
+    if (response && response.status === 200) {
       history.push(submittedNextPage);
-    } else {
+    } else if (response) {
       setErrors({ [response.id]: response.message });
     }
   };
