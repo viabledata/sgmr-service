@@ -1,11 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Route, Switch } from 'react-router-dom';
+import ReactGA from 'react-ga4';
 import {
   PEOPLE_URL, VESSELS_URL, VOYAGE_REPORT_URL, VOYAGE_STATUSES,
 } from '../constants/ApiConstants';
 
 import ScrollToTop from './ScrollToTop';
 import SecureRoute from '../lib/SecureRoute';
+
+import VoyageHelp from '../pages/help/Help';
 
 import Banner from './Banner';
 import Footer from './Footer';
@@ -49,6 +52,10 @@ const Main = () => {
     return <SiteMaintenance />;
   }
 
+  useEffect(() => {
+    ReactGA.send('pageview');
+  });
+
   return (
     <>
       <ScrollToTop />
@@ -60,6 +67,12 @@ const Main = () => {
             <Route exact path="/">
               <LandingPage />
             </Route>
+            <SecureRoute exact path="/page/help">
+              <VoyageHelp />
+            </SecureRoute>
+            <SecureRoute exact path="/voyage-plans/start">
+              <VoyageHelp source="voyage" />
+            </SecureRoute>
             <SecureRoute exact path="/voyage-plans">
               <PageContainer />
             </SecureRoute>

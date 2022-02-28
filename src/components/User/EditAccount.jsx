@@ -75,7 +75,7 @@ const EditAccount = () => {
     removeError(e.target.name);
   };
 
-  // Clear formData from localStorage
+  // Clear formData from sessionStorage
   const clearFormData = () => {
     setFormData({});
     setErrors({});

@@ -69,12 +69,9 @@ describe('Add People in account', () => {
   });
 
   after(() => {
+    cy.removeTestData();
     cy.navigation('Signout');
     cy.url().should('include', '/sign-in');
     cy.deleteAllEmails();
-  });
-
-  afterEach(() => {
-    localStorage.removeItem('token');
   });
 });

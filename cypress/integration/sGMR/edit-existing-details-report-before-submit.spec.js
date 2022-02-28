@@ -3,8 +3,10 @@ const { getFutureDate } = require('../../support/utils');
 describe('Edit Details & Submit new voyage plan', () => {
   let departureDateTime;
   let departurePort;
+  let departurePortCode;
   let arrivalDateTime;
   let arrivalPort;
+  let arrivalPortCode;
   let vessel;
   let person;
   let departDate;
@@ -20,9 +22,19 @@ describe('Edit Details & Submit new voyage plan', () => {
 
   beforeEach(() => {
     cy.login();
+    cy.injectAxe();
+    cy.getPersonObj().then((personObj) => {
+      person = personObj;
+    });
+
+    cy.getVesselObj().then((vesselObj) => {
+      vessel = vesselObj;
+    });
 
     departurePort = 'Dover';
+    departurePortCode = 'GB DVR';
     arrivalPort = 'Felixstowe';
+    arrivalPortCode = 'GB FXT';
     departureDateTime = getFutureDate(1, 'DD/MM/YYYY HH:MM');
     departDate = departureDateTime.split(' ')[0];
     arrivalDateTime = getFutureDate(2, 'DD/MM/YYYY HH:MM');
@@ -54,23 +66,18 @@ describe('Edit Details & Submit new voyage plan', () => {
     cy.checkNoErrors();
     cy.enterSkipperDetails();
     cy.saveAndContinue();
-    cy.checkNoErrors();
+    cy.get('.govuk-error-message').should('not.be.visible');
   });
 
   it('Should be able to edit Departure and Arrival details before submit the voyage plan', () => {
     departureDateTime = getFutureDate(2, 'DD/MM/YYYY HH:MM');
     departurePort = 'London';
+    departurePortCode = 'GB BKG';
     departDate = departureDateTime.split(' ')[0];
     arrivalDateTime = getFutureDate(2, 'DD/MM/YYYY HH:MM');
     arrivalPort = 'Swansea';
-    const expectedReport = [
-      {
-        'Vessel': vessel.name,
-        'Departure date': departDate,
-        'Departure port': 'LGP',
-        'Arrival port': 'Swansea Marina',
-      },
-    ];
+    arrivalPortCode = 'GB SWA';
+
     cy.get('a[href="/save-voyage/page-1"]').click();
     cy.enterDepartureDetails(departureDateTime, departurePort);
     cy.saveAndContinue();
@@ -89,7 +96,7 @@ describe('Edit Details & Submit new voyage plan', () => {
     cy.checkNoErrors();
     cy.url().should('include', 'page-6');
     cy.saveAndContinue();
-    cy.checkNoErrors();
+    cy.get('.govuk-error-message').should('not.be.visible');
     cy.contains('Accept and submit voyage plan').click();
     cy.url().should('include', '/save-voyage/page-submitted');
     cy.get('.govuk-panel__title').should('have.text', 'Pleasure Craft Voyage Plan Submitted');
@@ -103,22 +110,16 @@ describe('Edit Details & Submit new voyage plan', () => {
         cy.wait(2000);
       });
     cy.contains('h2', 'Submitted').next().getTable().should((reportData) => {
-      expectedReport.forEach((item) => expect(reportData).to.deep.include(item));
+      expect(reportData).to.deep.include({
+        'Pleasure craft': `Pleasure craft${vessel.name}`,
+        'Departure date': `Departure date${departDate}`,
+        'Departure port': `Departure port${departurePortCode}`,
+        'Arrival port': `Arrival port${arrivalPortCode}`
+      });
     });
   });
 
   it('Should be able to edit Pleasure Craft and Person details before submit the voyage plan', () => {
-    cy.getVesselObj().then((vesselObj) => {
-      vessel = vesselObj;
-    });
-    const expectedReport = [
-      {
-        'Vessel': vessel.name,
-        'Departure date': departDate,
-        'Departure port': 'DVR',
-        'Arrival port': 'FXT',
-      },
-    ];
     cy.get('a[href="/save-voyage/page-3"]').click();
     cy.enterVesselInfo(vessel);
     cy.saveAndContinue();
@@ -131,7 +132,7 @@ describe('Edit Details & Submit new voyage plan', () => {
     cy.checkNoErrors();
     cy.url().should('include', 'page-6');
     cy.saveAndContinue();
-    cy.checkNoErrors();
+    cy.get('.govuk-error-message').should('not.be.visible');
     cy.contains('Accept and submit voyage plan').click();
     cy.url().should('include', '/save-voyage/page-submitted');
     cy.get('.govuk-panel__title').should('have.text', 'Pleasure Craft Voyage Plan Submitted');
@@ -145,7 +146,12 @@ describe('Edit Details & Submit new voyage plan', () => {
         cy.wait(2000);
       });
     cy.contains('h2', 'Submitted').next().getTable().should((reportData) => {
-      expectedReport.forEach((item) => expect(reportData).to.deep.include(item));
+      expect(reportData).to.deep.include({
+        'Pleasure craft': `Pleasure craft${vessel.name}`,
+        'Departure date': `Departure date${departDate}`,
+        'Departure port': `Departure port${departurePortCode}`,
+        'Arrival port': `Arrival port${arrivalPortCode}`
+      });
     });
 
     cy.contains('a', vessel.name).click();
@@ -157,12 +163,8 @@ describe('Edit Details & Submit new voyage plan', () => {
     cy.get('[name="registration"]').should('have.value', vessel.regNumber);
   });
 
-  afterEach(() => {
-    cy.deleteReports();
-    localStorage.removeItem('token');
-  });
-
   after(() => {
     cy.deleteAllEmails();
+    cy.removeTestData();
   });
 });

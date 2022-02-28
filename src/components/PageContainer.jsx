@@ -59,11 +59,11 @@ const PageContainer = (props) => {
 
   useEffect(() => {
     checkPageReportsSection();
-    localStorage.removeItem('errors');
-    localStorage.removeItem('formData');
-    localStorage.removeItem('accountData');
-    localStorage.removeItem('data');
-    localStorage.removeItem('email');
+    sessionStorage.removeItem('errors');
+    sessionStorage.removeItem('formData');
+    sessionStorage.removeItem('accountData');
+    sessionStorage.removeItem('data');
+    sessionStorage.removeItem('email');
   }, [pageData]);
 
   // Setting user context ....

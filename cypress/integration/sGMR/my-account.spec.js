@@ -18,16 +18,16 @@ describe('My Account details verification', () => {
         cy.get('.govuk-summary-list__value').eq(1).should('have.text', accountInfo.lastName);
         cy.get('.govuk-summary-list__key').eq(2).should('have.text', 'Email');
         cy.get('.govuk-summary-list__value').eq(2).should('have.text', accountInfo.email);
-        cy.get('.govuk-summary-list__key').eq(3).should('have.text', 'Mobile number');
+        cy.get('.govuk-summary-list__key').eq(3).should('have.text', 'Telephone number');
         cy.get('.govuk-summary-list__value').eq(3).should('have.text', accountInfo.mobileNumber);
       });
     });
   });
 
   after(() => {
+    cy.removeTestData();
     cy.navigation('Signout');
     cy.url().should('include', '/sign-in');
-    localStorage.removeItem('token');
     cy.deleteAllEmails();
   });
 });

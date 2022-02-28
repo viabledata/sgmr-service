@@ -34,7 +34,7 @@ const FormVoyageContainer = () => {
   const [voyageId, setVoyageId] = useState();
   const [voyageData, setVoyageData] = useState();
   const [checkboxData, setCheckboxData] = useState();
-  const [formData, setFormData] = useState(JSON.parse(localStorage.getItem('formData')) || {});
+  const [formData, setFormData] = useState(JSON.parse(sessionStorage.getItem('formData')) || {});
   const [errors, setErrors] = useState({});
 
   // Handle errors
@@ -220,7 +220,7 @@ const FormVoyageContainer = () => {
       const validationErrors = await VoyageFormValidation(updatedData, sourceForm);
       setErrors(validationErrors);
 
-      // store updated data in state & local storage
+      // store updated data in state & session storage
       setFormData(updatedData);
 
       // Handle missing voyageId (for if user comes to a subpage directly, and we haven't got the id)
@@ -264,7 +264,7 @@ const FormVoyageContainer = () => {
 
   // Persist form data if page refreshed
   useEffect(() => {
-    localStorage.setItem('formData', JSON.stringify(formData));
+    sessionStorage.setItem('formData', JSON.stringify(formData));
   }, [formData]);
 
   if (!formData) { return null; }
@@ -380,11 +380,13 @@ const FormVoyageContainer = () => {
                 />
               )}
             </form>
-            <p className="govuk-body">
-              <Link to="/voyage-plans" className="govuk-link govuk-link--no-visited-state">
-                Exit without saving
-              </Link>
-            </p>
+            {pageNum === 7 && voyageData && (voyageData.status.name === 'Cancelled' || voyageData.status.name !== 'PreCancelled') ? null : (
+              <p className="govuk-body">
+                <Link to="/voyage-plans" className="govuk-link govuk-link--no-visited-state">
+                  Exit without saving
+                </Link>
+              </p>
+            )}
           </div>
         </div>
       </main>

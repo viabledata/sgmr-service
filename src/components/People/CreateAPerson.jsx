@@ -68,8 +68,8 @@ const CreateAPerson = () => {
     };
   };
 
-  // Clear formData from localStorage
-  const clearLocalStorage = () => {
+  // Clear formData from sessionStorage
+  const clearSessionStorage = () => {
     setFormData({});
     setErrors({ });
   };
@@ -84,7 +84,7 @@ const CreateAPerson = () => {
         .then(() => {
           // If this is not the voyage form then take user to people page, otherwise leave the user here
           if (checkIfNotVoyageForm) {
-            clearLocalStorage();
+            clearSessionStorage();
             history.push(PEOPLE_PAGE_URL);
           }
         })

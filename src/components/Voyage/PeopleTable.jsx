@@ -35,6 +35,9 @@ const PeopleTable = ({ peopleData, onSelectionChange = () => {} }) => {
           return (
             <tr className="govuk-table__row" key={person.id} role="row">
               <td className="govuk-table__cell multiple-choice--hod" role="cell">
+                <span className="responsive-table__heading" aria-hidden="true">
+                  (Tick to select)
+                </span>
                 <div className="govuk-checkboxes__item">
                   <input
                     type="checkbox"
@@ -55,7 +58,7 @@ const PeopleTable = ({ peopleData, onSelectionChange = () => {} }) => {
               </td>
               <td className="govuk-table__cell" role="cell">
                 <span className="responsive-table__heading" aria-hidden="true">
-                  Pleasure craft type
+                  First name
                 </span>
                 {person.firstName}
               </td>

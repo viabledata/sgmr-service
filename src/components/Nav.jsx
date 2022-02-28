@@ -39,6 +39,11 @@ const Nav = () => {
       text: 'Account',
       active: false,
     },
+    {
+      urlStem: '/page/help',
+      text: 'Help',
+      active: false,
+    },
   ];
 
   const setActivePage = (url) => {
@@ -63,7 +68,7 @@ const Nav = () => {
     })
       .then(() => {
         Auth.logout();
-        localStorage.clear();
+        sessionStorage.clear();
         history.push('/sign-in');
       })
       .catch(() => {
