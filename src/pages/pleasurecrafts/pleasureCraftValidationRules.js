@@ -1,16 +1,4 @@
-const pleasureCraftValidationRules = [
-  {
-    inputField: 'vesselName',
-    errorDisplayId: 'vesselName',
-    type: 'required',
-    message: 'You must enter a pleasure craft name',
-  },
-  {
-    inputField: 'vesselType',
-    errorDisplayId: 'vesselType',
-    type: 'required',
-    message: 'You must enter a pleasure craft type',
-  },
+export const pleasureCraftDetailsValidationRules = [
   {
     inputField: 'registration',
     errorDisplayId: 'registration',
@@ -37,4 +25,17 @@ const pleasureCraftValidationRules = [
   },
 ];
 
-export default pleasureCraftValidationRules;
+export const pleasureCraftValidationRules = [
+  {
+    inputField: 'vesselName',
+    errorDisplayId: 'vesselName',
+    type: 'required',
+    message: 'You must enter a pleasure craft name',
+  },
+  {
+    inputField: 'vesselType',
+    errorDisplayId: 'vesselType',
+    type: 'required',
+    message: 'You must enter a pleasure craft type',
+  },
+];

@@ -9,7 +9,7 @@ import PleasureCraftDetailsForm from './PleasureCraftDetailsForm';
 import scrollToTopOnError from '../../utils/scrollToTopOnError';
 import { VESSELS_URL } from '../../constants/ApiConstants';
 import { VESSELS_PAGE_URL } from '../../constants/ClientConstants';
-import pleasureCraftValidationRules from './pleasureCraftValidationRules';
+import { pleasureCraftValidationRules, pleasureCraftDetailsValidationRules } from './pleasureCraftValidationRules';
 
 const CreateAPleasureCraft = () => {
   document.title = 'Save pleasure craft';
@@ -38,8 +38,12 @@ const CreateAPleasureCraft = () => {
   // Check fields that are required exist
   const areFieldsValid = (dataToValidate) => {
     const fieldsErroring = {};
+    let validationRules = pleasureCraftValidationRules;
 
-    pleasureCraftValidationRules.map((rule) => {
+    if (!isFirstPage) {
+      validationRules = pleasureCraftDetailsValidationRules;
+    }
+    validationRules.map((rule) => {
       if (!(rule.inputField in dataToValidate) || formData[rule.inputField] === '') {
         fieldsErroring[rule.inputField] = rule.message;
       }
