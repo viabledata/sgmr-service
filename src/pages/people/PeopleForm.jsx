@@ -7,6 +7,7 @@ import { PEOPLE_URL } from '../../constants/ApiConstants';
 import { PEOPLE_PAGE_URL } from '../../constants/ClientConstants';
 import { getData, patchData, postData } from '../../utils/apiHooks';
 import { formatDate } from '../../utils/date';
+import removeError from '../../utils/errorHooks';
 import scrollToTop from '../../utils/scrollToTop';
 import nationalities from '../../utils/staticFormData';
 import PeopleValidation from './PeopleValidation';
@@ -45,23 +46,9 @@ const PersonForm = ({ source, type, personId }) => {
     });
   };
 
-  const removeError = (fieldName) => {
-    const errorList = { ...errors };
-    let key;
-    if (fieldName.includes('dateOfBirth')) {
-      key = 'dateOfBirth';
-    } else if (fieldName.includes('documentExpiryDate')) {
-      key = 'documentExpiryDateYes';
-    } else {
-      key = fieldName;
-    }
-    delete errorList[key];
-    setErrors(errorList);
-  };
-
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
-    removeError(e.target.name);
+    setErrors(removeError(e.target.name, errors));
   };
 
   const handleErrorClick = (e, id) => {
@@ -468,7 +455,7 @@ const PersonForm = ({ source, type, personId }) => {
                             name="documentExpiryDate"
                             type="radio"
                             value="documentExpiryDateYes"
-                            aria-controls="documentExpiryDateYes"
+                            data-aria-controls="documentExpiryDateYes"
                             checked={formData.documentExpiryDate === 'documentExpiryDateYes' ? 'checked' : ''}
                             onChange={(e) => { handleChange(e); }}
                           />
