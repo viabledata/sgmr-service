@@ -5,7 +5,7 @@ import {
 
 import { VESSELS_URL } from '../../constants/ApiConstants';
 import { VESSELS_PAGE_URL } from '../../constants/ClientConstants';
-import pleasureCraftValidationRules from './pleasureCraftValidationRules';
+import { pleasureCraftValidationRules, pleasureCraftDetailsValidationRules } from './pleasureCraftValidationRules';
 import { getData, patchData } from '../../utils/apiHooks';
 import scrollToTopOnError from '../../utils/scrollToTopOnError';
 
@@ -57,7 +57,13 @@ const EditPleasureCraft = () => {
       const fieldValue = field[1];
 
       // Test for empty required fields
-      pleasureCraftValidationRules.find((object) => {
+      let validationRules = pleasureCraftValidationRules;
+
+      if (!isFirstPage) {
+        validationRules = pleasureCraftDetailsValidationRules;
+      }
+
+      validationRules.find((object) => {
         if (!fieldValue && object.inputField === fieldName) {
           fieldsErroring[fieldName] = object.message;
         }
