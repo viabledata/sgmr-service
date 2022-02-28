@@ -1,9 +1,9 @@
-@import '~accessible-autocomplete/dist/accessible-autocomplete.min';
-@import '~govuk-frontend/govuk/all';
+@import "~accessible-autocomplete/dist/accessible-autocomplete.min";
+@import "~govuk-frontend/govuk/all";
 
 // header
 .govuk-header__logotype-crown {
-    margin-right: 10px;
+  margin-right: 10px;
 }
 
 // Make td align to middle not top
@@ -20,8 +20,34 @@
   display: block;
 }
 
+// Style button like text links
+.govuk-button--text {
+  color: #1d70b8;
+  text-decoration: underline;
+  background-color: transparent;
+  box-shadow: none;
+  padding: 0;
+}
+.govuk-button--text:hover {
+  color: #003078;
+  background-color: transparent;
+  box-shadow: none;
+}
+.govuk-button--text:active {
+  color: #0b0c0c;
+  background-color: transparent;
+  box-shadow: none;
+}
+.govuk-button--text:focus {
+  outline: 3px solid transparent;
+  color: #0b0c0c;
+  background-color: #fd0;
+  box-shadow: 0 -2px #fd0, 0 4px #0b0c0c;
+  text-decoration: none;
+}
+
 .page-notice {
-  color: #FFFFFF;
+  color: #ffffff;
   background-color: #1d70b8;
 }
 
@@ -69,7 +95,7 @@ tbody tr td {
     padding-right: 0;
   }
   tbody tr td:last-child {
-    border-bottom: 0
+    border-bottom: 0;
   }
   tbody tr {
     border-bottom: 3px solid grey;
@@ -98,5 +124,5 @@ tbody tr td {
 }
 
 .govuk-checkboxes__item {
-  padding-left: 5px; 
+  padding-left: 5px;
 }
