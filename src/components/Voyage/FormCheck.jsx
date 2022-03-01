@@ -211,24 +211,30 @@ const FormCheck = ({
         </Link>
       </div>
 
-      <h2 className="govuk-heading-m">Submit your Pleasure Craft Voyage Plan</h2>
-      <p className="govuk-body">
-        By submitting this voyage plan you are confirming that, to the best of your knowledge,
-        the information you are providing is correct and you have the explicit permission of the persons named in this voyage plan to submit information on their behalf.
-      </p>
-      <div id="submitBlock" className="govuk-button-group">
-        <button
-          type="button"
-          className="govuk-button"
-          data-module="govuk-button"
-          onClick={(e) => handleSubmit(e, 'check', voyageId)}
-        >
-          Accept and submit voyage plan
-        </button>
-        <Link className="govuk-button govuk-button--warning" to={`/voyage-plans/${voyageId}/delete`}>
-          Cancel voyage plan
-        </Link>
-      </div>
+      {voyageData.status.name !== 'Cancelled' && voyageData.status.name !== 'PreCancelled'
+        && (
+        <>
+          <h2 className="govuk-heading-m">Submit your Pleasure Craft Voyage Plan</h2>
+          <p className="govuk-body">
+            By submitting this voyage plan you are confirming that, to the best of your knowledge,
+            the information you are providing is correct and you have the explicit permission of the persons named in this voyage plan to submit information on their behalf.
+          </p>
+
+          <div id="submitBlock" className="govuk-button-group">
+            <button
+              type="button"
+              className="govuk-button"
+              data-module="govuk-button"
+              onClick={(e) => handleSubmit(e, 'check', voyageId)}
+            >
+              Accept and submit voyage plan
+            </button>
+            <Link className="govuk-button govuk-button--warning" to={`/voyage-plans/${voyageId}/delete`}>
+              Cancel voyage plan
+            </Link>
+          </div>
+        </>
+        )}
     </section>
   );
 };
