@@ -56,12 +56,24 @@ describe('Creating and editing people', () => {
     testTitle('Add details of the person you frequently sail with');
   });
 
-  it('should render errors on save if fields on page 1 are empty', async () => {
+  it('should render errors on continue if fields on page 1 are empty', async () => {
     renderPage({ pageNumber: 1 });
     await waitFor(() => fireEvent.click(screen.getByText('Continue')));
     expect(screen.queryAllByText('You must enter a given name')).toHaveLength(2);
     expect(screen.queryAllByText('You must enter a surname')).toHaveLength(2);
     expect(screen.queryAllByText('You must enter a date of birth')).toHaveLength(2);
+  });
+
+  it('should scroll to error if user clicks on error text', async () => {
+    renderPage({ pageNumber: 1 });
+    await waitFor(() => fireEvent.click(screen.getByText('Continue')));
+    expect(screen.queryAllByText('You must enter a given name')).toHaveLength(2);
+    expect(screen.getByRole('link', { name: 'You must enter a given name' })).toBeInTheDocument();
+
+    const scrollIntoViewMock = jest.fn();
+    window.HTMLElement.prototype.scrollIntoView = scrollIntoViewMock;
+    await waitFor(() => fireEvent.click(screen.getByRole('link', { name: 'You must enter a given name' })));
+    expect(scrollIntoViewMock).toBeCalled();
   });
 
   it('should load next page when user clicks continue and there are no errors', async () => {

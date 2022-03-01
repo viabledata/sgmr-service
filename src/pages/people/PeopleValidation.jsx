@@ -36,7 +36,7 @@ const personValidationRules = {
       inputField: 'dateOfBirthDay',
       errorDisplayId: 'dateOfBirth',
       type: 'async',
-      callback: async (value, formData) => {
+      callback: async (formData) => {
         // DoB must be valid and not in the future
         if (formData.dateOfBirthYear || formData.dateOfBirthMonth || formData.dateOfBirthDay) {
           const isValidFormat = isDateValid(formData.dateOfBirthYear, formData.dateOfBirthMonth, formData.dateOfBirthDay);
@@ -99,7 +99,7 @@ const personValidationRules = {
       inputField: 'documentExpiryDateDay',
       errorDisplayId: 'documentExpiryDate',
       type: 'async',
-      callback: async (value, values) => {
+      callback: async (values) => {
         // Expiry Date must be valid and in the future
         if (values.documentExpiryDateYear || values.documentExpiryDateMonth || values.documentExpiryDateDay) {
           const isValidFormat = isDateValid(values.documentExpiryDateYear, values.documentExpiryDateMonth, values.documentExpiryDateDay);
