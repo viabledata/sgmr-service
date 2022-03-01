@@ -200,7 +200,7 @@ const PersonForm = ({ source, type, personId }) => {
                       name="firstName"
                       type="text"
                       value={formData?.firstName || ''}
-                      onChange={(e) => { handleChange(e); }}
+                      onChange={handleChange}
                     />
                   </div>
                   <div id="lastName" className={`govuk-form-group ${errors.lastName ? 'govuk-form-group--error' : ''}`}>
@@ -240,7 +240,7 @@ const PersonForm = ({ source, type, personId }) => {
                             pattern="[0-9]*"
                             inputMode="numeric"
                             value={formData?.dateOfBirthDay || ''}
-                            onChange={(handleChange)}
+                            onChange={handleChange}
                           />
                         </div>
                       </div>
@@ -356,7 +356,7 @@ const PersonForm = ({ source, type, personId }) => {
                             type="radio"
                             value="Passport"
                             checked={formData.documentType === 'Passport' ? 'checked' : ''}
-                            onChange={(e) => { handleChange(e); }}
+                            onChange={handleChange}
                             data-aria-controls="documentTypePassport"
                           />
                           <label className="govuk-label govuk-radios__label" htmlFor="documentTypePassport">
@@ -371,7 +371,7 @@ const PersonForm = ({ source, type, personId }) => {
                             type="radio"
                             value="IdentityCard"
                             checked={formData.documentType === 'IdentityCard' ? 'checked' : ''}
-                            onChange={(e) => { handleChange(e); }}
+                            onChange={handleChange}
                             data-aria-controls="documentTypeIdentityCard"
                           />
                           <label className="govuk-label govuk-radios__label" htmlFor="documentTypeIdentityCard">
@@ -386,7 +386,7 @@ const PersonForm = ({ source, type, personId }) => {
                             type="radio"
                             value=""
                             checked={documentTypeOther ? 'checked' : ''}
-                            onChange={(e) => { handleChange(e); }}
+                            onChange={handleChange}
                             data-aria-controls="documentTypeOther"
                           />
                           <label className="govuk-label govuk-radios__label" htmlFor="documentTypeOther">
@@ -457,7 +457,7 @@ const PersonForm = ({ source, type, personId }) => {
                             value="documentExpiryDateYes"
                             data-aria-controls="documentExpiryDateYes"
                             checked={formData.documentExpiryDate === 'documentExpiryDateYes' ? 'checked' : ''}
-                            onChange={(e) => { handleChange(e); }}
+                            onChange={handleChange}
                           />
                           <label className="govuk-label govuk-radios__label" htmlFor="documentExpiryDateYes">
                             Yes
@@ -482,7 +482,7 @@ const PersonForm = ({ source, type, personId }) => {
                                       pattern="[0-9]*"
                                       inputMode="numeric"
                                       value={formData?.documentExpiryDateDay || ''}
-                                      onChange={(handleChange)}
+                                      onChange={handleChange}
                                     />
                                   </div>
                                 </div>
@@ -498,7 +498,7 @@ const PersonForm = ({ source, type, personId }) => {
                                       pattern="[0-9]*"
                                       inputMode="numeric"
                                       value={formData?.documentExpiryDateMonth || ''}
-                                      onChange={(handleChange)}
+                                      onChange={handleChange}
                                     />
                                   </div>
                                 </div>
@@ -532,7 +532,7 @@ const PersonForm = ({ source, type, personId }) => {
                             value="documentExpiryDateNo"
                             data-aria-controls="documentExpiryDateNo"
                             checked={formData.documentExpiryDate === 'documentExpiryDateNo' ? 'checked' : ''}
-                            onChange={(e) => { handleChange(e); }}
+                            onChange={handleChange}
                           />
                           <label className="govuk-label govuk-radios__label" htmlFor="documentExpiryDateNo">
                             No
