@@ -24,7 +24,7 @@ const validate = async (rules, data) => {
             }
             break;
           case 'required':
-            if (value === '' || !value) {
+            if (!value) {
               resolve({ [rule.errorDisplayId]: rule.message });
             } else {
               resolve(undefined);
@@ -32,7 +32,7 @@ const validate = async (rules, data) => {
             break;
           case 'requiredOnVisible':
             if (Object.values(data).includes(rule.visibilityIndicator)) {
-              if (value === '' || !value) {
+              if (!value) {
                 resolve({ [rule.errorDisplayId]: rule.message });
               } else {
                 resolve(undefined);

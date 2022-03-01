@@ -4,7 +4,7 @@ import { useHistory, useLocation, withRouter } from 'react-router-dom';
 import FormFieldError from '../../components-v2/FormFieldError';
 import { PEOPLE_URL } from '../../constants/ApiConstants';
 import { PEOPLE_PAGE_URL } from '../../constants/ClientConstants';
-import { getData, patchData, postData } from '../../utils/apiHooks';
+import { getData, patchData, postData } from '../../utils/v2ApiHooks';
 import { formatDate } from '../../utils/date';
 import removeError from '../../utils/errorHooks';
 import validate from '../../utils/formSubmitHooks';
