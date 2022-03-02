@@ -100,7 +100,7 @@ const PersonForm = ({ source, type, personId }) => {
           : '2025-1-1',
       dateOfBirth: formatDate(formData.dateOfBirthYear, formData.dateOfBirthMonth, formData.dateOfBirthDay),
       nationality: formData.nationality,
-      peopleType: 'crew',
+      peopleType: 'Crew',
     };
   };
 
