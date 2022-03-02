@@ -12,14 +12,15 @@ import scrollToTop from '../../utils/scrollToTop';
 import nationalities from '../../utils/staticFormData';
 import PeopleValidation from './PeopleValidation';
 
-const PersonForm = ({ source, type, personId }) => {
+const PersonForm = ({ source, type }) => {
   const history = useHistory();
   const location = useLocation();
   const locationPath = location.pathname;
-  const locationState = location.state;
   const [errors, setErrors] = useState({});
   const [formData, setFormData] = useState(JSON.parse(sessionStorage.getItem('formData')) || {});
   const [formPageIs, setFormPageIs] = useState(1);
+  const [personId, setPersonId] = useState();
+  const [sourceLocation, setSourceLocation] = useState();
   const [sourcePage, setSourcePage] = useState(PEOPLE_PAGE_URL);
   const [submittedNextPage, setSubmittedNextPage] = useState(PEOPLE_PAGE_URL);
   const [submitType, setSubmitType] = useState();
@@ -28,14 +29,19 @@ const PersonForm = ({ source, type, personId }) => {
   document.title = type === 'edit' ? 'Edit person' : 'Save person';
   const documentTypeOther = formData.documentType !== undefined && formData.documentType !== 'Passport' && formData.documentType !== 'IdentityCard';
 
-  const getPersonData = async () => {
-    const resp = await getData(`${PEOPLE_URL}/${personId}`, 'people');
-    const [documentExpiryDateYear, documentExpiryDateMonth, documentExpiryDateDay] = resp.documentExpiryDate.split('-');
-    const [dateOfBirthYear, dateOfBirthMonth, dateOfBirthDay] = resp.dateOfBirth.split('-');
-    const documentExpiryDate = !resp.documentExpiryDate ? 'documentExpiryDateNo' : 'documentExpiryDateYes';
+  const getPersonData = async (forThisPersonId) => {
+    let documentExpiryDateDay;
+    let documentExpiryDateMonth;
+    let documentExpiryDateYear;
+    const resp = await getData(`${PEOPLE_URL}/${forThisPersonId}`, 'people');
+    const [dateOfBirthYear, dateOfBirthMonth, dateOfBirthDay] = resp.data.dateOfBirth.split('-');
+    const documentExpiryDate = !resp.data.documentExpiryDate ? 'documentExpiryDateNo' : 'documentExpiryDateYes';
+    if (resp.data.documentExpiryDate) {
+      [documentExpiryDateYear, documentExpiryDateMonth, documentExpiryDateDay] = resp.data.documentExpiryDate.split('-');
+    }
 
     setFormData({
-      ...resp,
+      ...resp.data,
       documentExpiryDate,
       documentExpiryDateYear: documentExpiryDateYear || null,
       documentExpiryDateMonth: documentExpiryDateMonth || null,
@@ -129,11 +135,7 @@ const PersonForm = ({ source, type, personId }) => {
   }, [locationPath]);
 
   useEffect(() => {
-    if (locationState?.source === 'edit' || source === 'edit') {
-      source = 'edit';
-      if (personId) { getPersonData(); }
-    }
-    switch (source) {
+    switch (sourceLocation) {
       case 'onboarding':
         setTitle('Add details of a person you frequently sail with');
         setSubmitType('POST');
@@ -154,11 +156,23 @@ const PersonForm = ({ source, type, personId }) => {
         setSubmittedNextPage(PEOPLE_PAGE_URL);
         setSourcePage(PEOPLE_PAGE_URL);
     }
-  }, [source]);
+  }, [sourceLocation]);
 
   useEffect(() => {
     sessionStorage.setItem('formData', JSON.stringify(formData));
   }, [formData]);
+
+  useEffect(() => {
+    if (location.state?.source) {
+      setSourceLocation(location.state?.source);
+    } else {
+      setSourceLocation(source);
+    }
+    if (location.state?.peopleId) {
+      setPersonId(location.state.peopleId);
+      getPersonData(location.state.peopleId);
+    }
+  }, []);
 
   return (
     <div className="govuk-width-container ">
