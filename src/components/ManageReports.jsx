@@ -31,20 +31,6 @@ const ManageReports = (pageData) => {
       text: 'Cancelled',
       active: false,
     },
-    {
-      name: 'presubmitted',
-      text: 'Presubmitted',
-      active: true,
-    },
-    {
-      name: 'precancelled',
-      text: 'Precancelled',
-      active: false,
-    }, {
-      name: 'failed',
-      text: 'Failed',
-      active: false,
-    },
   ];
 
   const pageSize = 10;
@@ -137,7 +123,7 @@ const ManageReports = (pageData) => {
               </thead>
               <tbody>
                 {reportList && reportList.map((voyage) => {
-                  if (voyage.status.name === tableName || voyage.status.name === `Pre${tableName}`) {
+                  if (voyage.status.name === tableName || voyage.status.name === `Pre${tableName}` || (voyage.status.name === 'failed' && tableName === 'Submitted')) {
                     return (
                       <tr className="govuk-table__row" key={voyage.id} role="row">
                         <td className="govuk-table__cell" role="cell">
