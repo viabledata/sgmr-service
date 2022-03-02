@@ -147,7 +147,6 @@ const FormVoyageContainer = () => {
     const currentPage = parseInt(pageNum, 10);
     switch (sourceForm) {
       case FORM_STEPS.CHECK: history.push('/save-voyage/page-submitted'); break;
-      case FORM_STEPS.PLEASURE_CRAFT_FIRST: history.push(`save-voyage/page-${currentPage}`); break;
       default:
         nextPage = currentPage < maxPages ? currentPage + 1 : currentPage;
         setPageNum(nextPage);
@@ -174,7 +173,7 @@ const FormVoyageContainer = () => {
       case FORM_STEPS.RESPONSIBLE_PERSON:
         dataToSubmit = formatResponsiblePerson(VOYAGE_STATUSES.DRAFT, dataToFormat, voyageData);
         break;
-      case FORM_STEPS.PLEASURE_CRAFT_FIRST || FORM_STEPS.PLEASURE_CRAFT_SECOND:
+      case FORM_STEPS.PLEASURE_CRAFT:
         dataToSubmit = formatVessel(VOYAGE_STATUSES.DRAFT, dataToFormat, voyageData);
         break;
       case FORM_STEPS.VOYAGE:
@@ -315,12 +314,9 @@ const FormVoyageContainer = () => {
               {pageNum === 3 && (
                 <FormVoyageVessels
                   handleSubmit={handleSubmit}
-                  handleChange={handleChange}
                   handleCheckboxes={handleVesselCheckboxes}
                   handleAddVesselButton={handleAddVesselButton}
                   voyageId={voyageId}
-                  formData={formData || voyageData}
-                  errors={errors}
                 />
               )}
               {pageNum === 4 && (
