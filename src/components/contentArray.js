@@ -18,7 +18,7 @@ const contentArray = [
     formIntroHeading: 'Save a new pleasure craft',
     formIntroBlurb: 'Save the details of pleasure crafts that you regularly Submit Pleasure Craft Voyage Plans for.',
     buttonText: 'Save a pleasure craft',
-    buttonLink: 'pleasure-crafts/save-pleasure-craft?source=pleasure-crafts',
+    buttonLink: 'pleasure-crafts/save-pleasure-craft/page-1',
     buttonClass: 'govuk-button--start',
     buttonLocation: 'formIntro',
     reportType: 'vessels',

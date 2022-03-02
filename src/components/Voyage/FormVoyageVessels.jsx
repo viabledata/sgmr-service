@@ -5,11 +5,10 @@ import { VESSELS_URL } from '../../constants/ApiConstants';
 import { FORM_STEPS } from '../../constants/ClientConstants';
 import { getData } from '../../utils/apiHooks';
 import PleasureCraftForm from '../../pages/pleasurecrafts/PleasureCraftForm';
-import PleasureCraftDetailsForm from '../../pages/pleasurecrafts/PleasureCraftDetailsForm';
 import VesselTable from '../Vessel/VesselTable';
 
 const FormVessels = ({
-  handleSubmit, handleChange, handleCheckboxes, handleAddVesselButton, voyageId, errors, formData,
+  handleSubmit, handleCheckboxes, handleAddVesselButton, voyageId,
 }) => {
   document.title = 'Pleasure craft details';
 
@@ -60,27 +59,9 @@ const FormVessels = ({
       <p className="govuk-body-l">
         Add the details of a new pleasure craft you have not already saved
       </p>
-      {isFirstPage ? (
-        <PleasureCraftForm
-          handleSubmit={handleSubmit}
-          handleChange={handleChange}
-          voyageId={voyageId}
-          data={formData}
-          formData={formData}
-          errors={errors}
-          sourceForm="voyage"
-        />
-      ) : (
-        <PleasureCraftDetailsForm
-          handleSubmit={handleSubmit}
-          handleChange={handleChange}
-          voyageId={voyageId}
-          data={formData}
-          formData={formData}
-          errors={errors}
-          sourceForm="voyage"
-        />
-      )}
+      <PleasureCraftForm
+        source="voyage"
+      />
       <button
         type="button"
         className="govuk-button"

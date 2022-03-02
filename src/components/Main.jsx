@@ -27,9 +27,6 @@ import EditAccount from './User/EditAccount';
 import UserRegisterConfirmation from './User/UserRegisterConfirmation';
 import AccountActivation from './User/AccountActivation';
 
-import CreateAPleasureCraft from '../pages/pleasurecrafts/CreateAPleasureCraft';
-import EditPleasureCraft from '../pages/pleasurecrafts/EditPleasureCraft';
-
 import VoyageFormContainer from './Voyage/VoyageFormContainer';
 import FormVoyageSubmitted from './Forms/FormVoyageSubmitted';
 import UserContext from './UserContext';
@@ -44,6 +41,7 @@ import SiteMaintenance from './SiteMaintenance';
 import { siteMaintenance } from '../lib/config';
 import { AlertContextProvider } from './AlertContext';
 import { patchData, deleteData } from '../utils/apiHooks';
+import PleasureCraftForm from '../pages/pleasurecrafts/PleasureCraftForm';
 
 const Main = () => {
   const [user, setUser] = useState(null);
@@ -101,11 +99,11 @@ const Main = () => {
             <SecureRoute exact path="/pleasure-crafts">
               <PageContainer />
             </SecureRoute>
-            <SecureRoute exact path="/pleasure-crafts/save-pleasure-craft">
-              <CreateAPleasureCraft />
+            <SecureRoute exact path="/pleasure-crafts/save-pleasure-craft/page-([1-2]{1})">
+              <PleasureCraftForm />
             </SecureRoute>
-            <SecureRoute exact path="/pleasure-crafts/:vesselId">
-              <EditPleasureCraft />
+            <SecureRoute exact path="/pleasure-crafts/:vesselId/page-([1-2]{1})">
+              <PleasureCraftForm type="edit" />
             </SecureRoute>
             <SecureRoute exact path="/pleasure-crafts/:entityId/delete">
               <ActionEntity
