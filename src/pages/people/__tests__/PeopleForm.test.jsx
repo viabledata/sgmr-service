@@ -1,19 +1,21 @@
 import React from 'react';
-import { MemoryRouter } from 'react-router-dom';
+import { MemoryRouter, Router } from 'react-router-dom';
 import {
   fireEvent, render, screen, waitFor,
 } from '@testing-library/react';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { createMemoryHistory } from 'history';
 import { PEOPLE_URL } from '../../../constants/ApiConstants';
 import PeopleForm from '../PeopleForm';
 
 const renderPage = ({
-  type, source, personId, pageNumber,
+  type, source, pageNumber,
 }) => {
   render(
     <MemoryRouter initialEntries={[{ pathname: `/page-${pageNumber}` }]}>
-      <PeopleForm type={type} source={source} personId={personId} />
+      <PeopleForm type={type} source={source} />
     </MemoryRouter>,
   );
 };
@@ -168,6 +170,9 @@ describe('Creating and editing people', () => {
   });
 
   it('should prefill person details if type is edit', async () => {
+    const history = createMemoryHistory();
+    const state = { peopleId: 'person123', source: 'edit' };
+    history.push('/people/edit-person/page-1', state);
     mockAxios
       .onGet(`${PEOPLE_URL}/person123`)
       .reply(200, {
@@ -182,9 +187,11 @@ describe('Creating and editing people', () => {
       });
 
     await waitFor(() => {
-      renderPage({
-        type: 'edit', source: 'edit', personId: 'person123', pageNumber: 1,
-      });
+      render(
+        <Router history={history}>
+          <PeopleForm type="edit" source="edit" />
+        </Router>,
+      );
     });
 
     expect(screen.getByText('Update details of the person you sail with').outerHTML).toEqual('<h1 class="govuk-heading-l">Update details of the person you sail with</h1>');
@@ -196,7 +203,7 @@ describe('Creating and editing people', () => {
 
     await waitFor(() => {
       renderPage({
-        type: 'edit', source: 'edit', personId: 'person123', pageNumber: 2,
+        type: 'edit', source: 'edit', pageNumber: 2,
       });
     });
     expect(screen.getByDisplayValue('Passport')).toBeChecked();
