@@ -15,15 +15,23 @@ const pleasureCraftValidationRules = {
   ],
   page2: [
     {
-      inputField: 'registration',
-      errorDisplayId: 'registration',
+      inputField: 'hasRegistration',
+      errorDisplayId: 'hasRegistration',
       type: 'required',
       message: 'You must select an option for the pleasure craft registration number',
     },
     {
+      inputField: 'registration',
+      errorDisplayId: 'registration',
+      visibilityIndicator: 'registrationYes',
+      type: 'requiredOnVisible',
+      message: 'You must enter the pleasure craft registration number',
+    },
+    {
       inputField: 'nationality',
       errorDisplayId: 'nationality',
-      type: 'required',
+      visibilityIndicator: 'registrationYes',
+      type: 'requiredOnVisible',
       message: 'You must enter the pleasure craft nationality',
     },
     {
@@ -33,16 +41,30 @@ const pleasureCraftValidationRules = {
       message: 'You must specify if the pleasure craft has an AIS',
     },
     {
-      inputField: 'mmsi',
-      errorDisplayId: 'mmsi',
+      inputField: 'hasMMSI',
+      errorDisplayId: 'hasMMSI',
       type: 'required',
       message: 'You must specify if the pleasure craft has a MMSI',
     },
     {
-      inputField: 'callsign',
-      errorDisplayId: 'callsign',
+      inputField: 'mmsi',
+      errorDisplayId: 'mmsi',
+      visibilityIndicator: 'mmsiYes',
+      type: 'requiredOnVisible',
+      message: 'You must enter the pleasure craft MMSI',
+    },
+    {
+      inputField: 'hasCallsign',
+      errorDisplayId: 'hasCallsign',
       type: 'required',
       message: 'You must specify if the pleasure craft has a call sign',
+    },
+    {
+      inputField: 'callsign',
+      errorDisplayId: 'callsign',
+      visibilityIndicator: 'callsignYes',
+      type: 'requiredOnVisible',
+      message: 'You must enter the pleasure craft call sign',
     },
   ],
 };
