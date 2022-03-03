@@ -19,8 +19,5 @@ describe('Manage Reports', () => {
     expect(screen.getAllByText('Draft').length).toBe(2);
     expect(screen.getByText('Submitted')).toBeInTheDocument();
     expect(screen.getByText('Cancelled')).toBeInTheDocument();
-    expect(screen.getByText('Presubmitted')).toBeInTheDocument();
-    expect(screen.getByText('Precancelled')).toBeInTheDocument();
-    expect(screen.getByText('Failed')).toBeInTheDocument();
   });
 });
