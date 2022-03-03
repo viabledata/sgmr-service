@@ -93,10 +93,9 @@ describe('Creating and editing people', () => {
     renderPage({ pageNumber: 2 });
     await waitFor(() => fireEvent.click(screen.getByText('Save')));
     expect(screen.queryAllByText('You must select an option for the pleasure craft registration number')).toHaveLength(2);
-    expect(screen.queryAllByText('You must enter the pleasure craft nationality')).toHaveLength(2);
     expect(screen.queryAllByText('You must specify if the pleasure craft has an AIS')).toHaveLength(2);
     expect(screen.queryAllByText('You must specify if the pleasure craft has a MMSI')).toHaveLength(2);
-    expect(screen.queryAllByText('You must specify if the pleasure craft has a callsign')).toHaveLength(2);
+    expect(screen.queryAllByText('You must specify if the pleasure craft has a call sign')).toHaveLength(2);
   });
 
   it('should render errors on save if pleasure craft type is OTHER and other text input is null', async () => {
@@ -130,7 +129,7 @@ describe('Creating and editing people', () => {
   it('should store form data in the session for use on refresh', async () => {
     const expectedPage1FormData = '{"vesselName":"Viable Cruiser","vesselType":"sailingBoat"}';
     // eslint-disable-next-line max-len
-    const expectedPage2FormData = '{"vesselName":"Viable Cruiser","vesselType":"sailingBoat","registration":"3278462","nationality":"GBR","ais":"yes","mmsi":"324838","callsign":"V14BL"}';
+    const expectedPage2FormData = '{"vesselName":"Viable Cruiser","vesselType":"sailingBoat","hasRegistration":"registrationYes","registration":"3278462","nationality":"GBR","ais":"aisYes","hasMMSI":"mmsiYes","mmsi":"324838","hasCallsign":"callsignYes","callsign":"V14BL"}';
     renderPage({ pageNumber: 1 });
     fireEvent.change(screen.getByLabelText('Name of pleasure craft'), { target: { value: 'Viable Cruiser' } });
     fireEvent.click(screen.getByLabelText('Sailing boat'));
@@ -143,8 +142,8 @@ describe('Creating and editing people', () => {
     // await waitFor(() => fireEvent.change(screen.getByRole('combobox'), { target: { value: 'Australia' } }));
     fireEvent.click(screen.getAllByLabelText('Yes')[1]);
     fireEvent.click(screen.getAllByLabelText('Yes')[2]);
-    fireEvent.click(screen.getAllByLabelText('Yes')[3]);
     fireEvent.change(screen.getByLabelText('MMSI number'), { target: { value: '324838' } });
+    fireEvent.click(screen.getAllByLabelText('Yes')[3]);
     fireEvent.change(screen.getByLabelText('Call sign'), { target: { value: 'V14BL' } });
     expect(window.sessionStorage.getItem('formData')).toStrictEqual(expectedPage2FormData);
   });
@@ -153,13 +152,16 @@ describe('Creating and editing people', () => {
     mockAxios
       .onGet(`${VESSELS_URL}/vessel123`)
       .reply(200, {
-        vesselId: 'vessel123',
+        id: 'vessel123',
         vesselName: 'Viable Cruiser',
         vesselType: 'sailingBoat',
+        hasRegistration: 'registrationYes',
         registration: '3278462',
         nationality: 'GBR',
-        ais: 'yes',
+        ais: 'aisYes',
+        hasMMSI: 'mmsiYes',
         mmsi: '324838',
+        hasCallsign: 'callsignYes',
         callsign: 'V14BL',
       });
 
@@ -171,7 +173,7 @@ describe('Creating and editing people', () => {
 
     // eslint-disable-next-line max-len
     expect(screen.getByText('Update details of a pleasure craft you sail with').outerHTML).toEqual('<h1 class="govuk-heading-l">Update details of a pleasure craft you sail with</h1>');
-    // expect(screen.getByDisplayValue('Viable Cruiser')).toBeInTheDocument();
+    expect(screen.getByDisplayValue('Viable Cruiser')).toBeInTheDocument();
     expect(screen.getByLabelText('Sailing boat')).toBeChecked();
 
     await waitFor(() => {
@@ -184,7 +186,7 @@ describe('Creating and editing people', () => {
     expect(screen.getByDisplayValue('GBR')).toBeInTheDocument();
     // expect(screen.queryByRole('combobox').value).toBe('AIA');
     expect(screen.getAllByLabelText('Yes')[1]).toBeChecked();
-    expect(screen.getByDisplayValue('yes')).toBeInTheDocument();
+    expect(screen.getByDisplayValue('aisYes')).toBeInTheDocument();
     expect(screen.getAllByLabelText('Yes')[2]).toBeChecked();
     expect(screen.getByDisplayValue('324838')).toBeInTheDocument();
     expect(screen.getAllByLabelText('Yes')[3]).toBeChecked();

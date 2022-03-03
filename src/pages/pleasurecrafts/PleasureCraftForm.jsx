@@ -25,28 +25,31 @@ const PleasureCraftForm = ({ source, type, vesselId }) => {
 
   document.title = type === 'edit' ? 'Edit pleasure craft' : 'Save pleasure craft';
   const vesselTypeOther = formData.vesselType !== undefined && formData.vesselType !== 'sailingBoat' && formData.vesselType !== 'motorboat';
-  const hasRegistration = formData.registration !== undefined;
-  const hasMMSI = formData.mmsi !== undefined;
-  const hasCallsign = formData.callsign !== undefined;
 
   const getPleasureCraftData = async () => {
     const resp = await getData(`${VESSELS_PAGE_URL}/${vesselId}`, 'vessels');
     const vesselName = resp.vesselName;
     const vesselType = resp.vesselType;
+    const hasRegistration = resp.hasRegistration;
     const registration = resp.registration;
     const nationality = resp.nationality;
     const ais = resp.ais;
+    const hasMMSI = resp.hasMMSI;
     const mmsi = resp.mmsi;
+    const hasCallsign = resp.hasCallsign;
     const callsign = resp.callsign;
 
     setFormData({
       ...resp,
       vesselName,
       vesselType,
+      hasRegistration: hasRegistration || null,
       registration: registration || null,
       nationality: nationality || null,
       ais: ais || null,
+      hasMMSI: hasMMSI || null,
       mmsi: mmsi || null,
+      hasCallsign: hasCallsign || null,
       callsign: callsign || null,
     });
   };
@@ -97,10 +100,13 @@ const PleasureCraftForm = ({ source, type, vesselId }) => {
     return {
       vesselName: formData.vesselName,
       vesselType: formData.vesselType,
+      hasRegistration: formData.hasRegistration,
       registration: formData.registration,
       nationality: formData.nationality,
       ais: formData.ais,
+      hasMMSI: formData.hasMMSI,
       mmsi: formData.mmsi,
+      hasCallsign: formData.hasCallsign,
       callsign: formData.callsign,
     };
   };
@@ -320,62 +326,69 @@ const PleasureCraftForm = ({ source, type, vesselId }) => {
                       </div>
                     </div>
                     )}
-                    <div id="registration" className={`govuk-form-group ${errors.registration || errors.nationality ? 'govuk-form-group--error' : ''}`}>
+                    <div id="registration" className={`govuk-form-group ${errors.hasRegistration ? 'govuk-form-group--error' : ''}`}>
                       <label className="govuk-label" htmlFor="registration">
                         Does this pleasure craft have a registration number?
                       </label>
                       <div className="govuk-radios" data-module="govuk-radios">
-                        <FormFieldError error={errors.registration} />
+                        <FormFieldError error={errors.hasRegistration} />
                         <div className="govuk-radios__item">
                           <input
                             className="govuk-radios__input"
-                            id="registration-1"
-                            name="registration"
+                            id="registration-yes"
+                            name="hasRegistration"
                             type="radio"
-                            value=""
-                            checked={hasRegistration ? 'checked' : ''}
+                            value="registrationYes"
+                            checked={formData.hasRegistration === 'registrationYes' ? 'checked' : ''}
                             onChange={(e) => handleChange(e)}
                           />
-                          <label className="govuk-label govuk-radios__label" htmlFor="registration-1">
+                          <label className="govuk-label govuk-radios__label" htmlFor="registration-yes">
                             Yes
                           </label>
                         </div>
-                        {hasRegistration && (
-                        <div className="govuk-form-group">
-                          <label className="govuk-label">
-                            Registration number
+                        {formData.hasRegistration === 'registrationYes' && (
+                        <div className="govuk-radios__conditional" id="conditional-registration">
+                          <div className={`govuk-form-group ${errors.registration ? 'govuk-form-group--error' : ''}`}>
+                            <label className="govuk-label" htmlFor="registration-input">
+                              Registration number
+                            </label>
+                            <FormFieldError error={errors.registration} />
                             <input
+                              id="registration-input"
                               className="govuk-input"
-                              name="registration-2"
+                              name="registration"
                               type="text"
-                              value={hasRegistration ? formData.registration : ''}
+                              value={formData.hasRegistration === 'registrationYes' ? formData.registration : ''}
                               onChange={handleChange}
                             />
-                          </label>
-                          <FormFieldError error={errors.nationality} />
-                          <label className="govuk-label">
-                            Country of registration
+                          </div>
+                          <div className={`govuk-form-group ${errors.nationality ? 'govuk-form-group--error' : ''}`}>
+                            <label className="govuk-label" htmlFor="nationality-input">
+                              Country of registration
+                            </label>
+                            <FormFieldError error={errors.nationality} />
                             <input
+                              id="nationality-input"
                               className="govuk-input"
                               name="nationality"
                               type="text"
-                              value={hasRegistration ? formData.nationality : ''}
+                              value={formData.hasRegistration === 'registrationYes' ? formData.nationality : ''}
                               onChange={handleChange}
                             />
-                          </label>
+                          </div>
                         </div>
                         )}
                         <div className="govuk-radios__item">
                           <input
                             className="govuk-radios__input"
-                            id="pleasure-craft-registration-number-4"
-                            name="pleasure-craft-registration-number"
+                            id="registration-no"
+                            name="hasRegistration"
                             type="radio"
-                            value="no"
-                            checked={!hasRegistration ? 'checked' : ''}
+                            value="registrationNo"
+                            checked={formData.hasRegistration === 'registrationNo' ? 'checked' : ''}
                             onChange={(e) => handleChange(e)}
                           />
-                          <label className="govuk-label govuk-radios__label" htmlFor="pleasure-craft-registration-number-4">
+                          <label className="govuk-label govuk-radios__label" htmlFor="registration-no">
                             No
                           </label>
                         </div>
@@ -391,130 +404,138 @@ const PleasureCraftForm = ({ source, type, vesselId }) => {
                         <div className="govuk-radios__item">
                           <input
                             className="govuk-radios__input"
-                            id="pleasure-craft-ais-yes"
-                            name="pleasure-craft-ais"
+                            id="ais-yes"
+                            name="ais"
                             type="radio"
-                            value="yes"
-                            checked={formData.ais === 'yes' ? 'checked' : ''}
+                            value="aisYes"
+                            checked={formData.ais === 'aisYes' ? 'checked' : ''}
                             onChange={(e) => handleChange(e)}
                           />
-                          <label className="govuk-label govuk-radios__label" htmlFor="pleasure-craft-ais-yes">
+                          <label className="govuk-label govuk-radios__label" htmlFor="ais-yes">
                             Yes
                           </label>
                         </div>
                         <div className="govuk-radios__item">
                           <input
                             className="govuk-radios__input"
-                            id="pleasure-craft-ais-no"
-                            name="pleasure-craft-ais"
+                            id="ais-no"
+                            name="ais"
                             type="radio"
-                            value="no"
-                            checked={formData.ais === 'no' ? 'checked' : ''}
+                            value="aisNo"
+                            checked={formData.ais === 'aisNo' ? 'checked' : ''}
                             onChange={(e) => handleChange(e)}
                           />
-                          <label className="govuk-label govuk-radios__label" htmlFor="pleasure-craft-ais-no">
+                          <label className="govuk-label govuk-radios__label" htmlFor="ais-no">
                             No
                           </label>
                         </div>
                       </div>
                     </div>
 
-                    <div id="mmsi" className={`govuk-form-group ${errors.mmsi ? 'govuk-form-group--error' : ''}`}>
+                    <div id="mmsi" className={`govuk-form-group ${errors.hasMMSI ? 'govuk-form-group--error' : ''}`}>
                       <label className="govuk-label" htmlFor="mmsi">
                         Does this pleasure craft have a Maritime Mobile Service Identify number (MMSI)?
                       </label>
                       <div className="govuk-radios" data-module="govuk-radios">
-                        <FormFieldError error={errors.mmsi} />
+                        <FormFieldError error={errors.hasMMSI} />
                         <div className="govuk-radios__item">
                           <input
                             className="govuk-radios__input"
-                            id="pleasure-craft-mmsi"
-                            name="pleasure-craft-mmsi"
+                            id="mmsi-yes"
+                            name="hasMMSI"
                             type="radio"
-                            value="yes"
-                            checked={formData.mmsi !== undefined ? 'checked' : ''}
+                            value="mmsiYes"
+                            checked={formData.hasMMSI === 'mmsiYes' ? 'checked' : ''}
                             onChange={(e) => handleChange(e)}
                           />
-                          <label className="govuk-label govuk-radios__label" htmlFor="pleasure-craft-mmsi">
+                          <label className="govuk-label govuk-radios__label" htmlFor="mmsi-yes">
                             Yes
                           </label>
                         </div>
-                        {formData.mmsi !== undefined && (
-                        <div className="govuk-form-group">
-                          <label className="govuk-label">
-                            MMSI number
+                        {formData.hasMMSI === 'mmsiYes' && (
+                        <div className="govuk-radios__conditional" id="conditional-mmsi">
+                          <div className={`govuk-form-group ${errors.mmsi ? 'govuk-form-group--error' : ''}`}>
+                            <label className="govuk-label" htmlFor="mmsi-input">
+                              MMSI number
+                            </label>
+                            <FormFieldError error={errors.mmsi} />
                             <input
+                              id="mmsi-input"
                               className="govuk-input"
                               name="mmsi"
                               type="text"
-                              value={formData.mmsi !== undefined ? formData.mmsi : ''}
+                              value={formData.hasMMSI === 'mmsiYes' ? formData.mmsi : ''}
                               onChange={handleChange}
                             />
-                          </label>
+                          </div>
                         </div>
                         )}
                         <div className="govuk-radios__item">
                           <input
                             className="govuk-radios__input"
-                            id="pleasure-craft-mmsi-3"
-                            name="pleasure-craft-mmsi"
+                            id="mmsi-no"
+                            name="hasMMSI"
                             type="radio"
-                            value="no"
-                            checked={formData.mmsi === undefined ? 'checked' : ''}
+                            value="mmsiNo"
+                            checked={formData.hasMMSI === 'mmsiNo' ? 'checked' : ''}
                             onChange={(e) => handleChange(e)}
                           />
-                          <label className="govuk-label govuk-radios__label" htmlFor="pleasure-craft-mmsi-3">
+                          <label className="govuk-label govuk-radios__label" htmlFor="mmsi-no">
                             No
                           </label>
                         </div>
                       </div>
                     </div>
 
-                    <div id="callsign" className={`govuk-form-group ${errors.callsign ? 'govuk-form-group--error' : ''}`}>
+                    <div id="callsign" className={`govuk-form-group ${errors.hasCallsign ? 'govuk-form-group--error' : ''}`}>
                       <label className="govuk-label" htmlFor="callsign">
                         Does this pleasure craft have a callsign?
                       </label>
                       <div className="govuk-radios" data-module="govuk-radios">
-                        <FormFieldError error={errors.callsign} />
+                        <FormFieldError error={errors.hasCallsign} />
                         <div className="govuk-radios__item">
                           <input
                             className="govuk-radios__input"
-                            id="pleasure-craft-callsign"
-                            name="pleasure-craft-callsign"
+                            id="callsign-yes"
+                            name="hasCallsign"
                             type="radio"
-                            value="yes"
-                            checked={hasCallsign ? 'checked' : ''}
+                            value="callsignYes"
+                            checked={formData.hasCallsign === 'callsignYes' ? 'checked' : ''}
                             onChange={(e) => handleChange(e)}
                           />
-                          <label className="govuk-label govuk-radios__label" htmlFor="pleasure-craft-callsign">
+                          <label className="govuk-label govuk-radios__label" htmlFor="callsign-yes">
                             Yes
                           </label>
                         </div>
-                        {hasCallsign && (
-                        <div className="govuk-form-group">
-                          <label className="govuk-label" htmlFor="callsign">
-                            Call sign
+                        {formData.hasCallsign === 'callsignYes' && (
+                        <div className="govuk-radios__conditional" id="conditional-callsign">
+                          <div className={`govuk-form-group ${errors.callsign ? 'govuk-form-group--error' : ''}`}>
+                            <label className="govuk-label" htmlFor="callsign-input">
+                              Call sign
+                            </label>
+                            <FormFieldError error={errors.callsign} />
                             <input
+                              id="callsign-input"
                               className="govuk-input"
                               name="callsign"
                               type="text"
-                              value={hasCallsign ? formData.callsign : ''}
+                              value={formData.hasCallsign === 'callsignYes' ? formData.callsign : ''}
                               onChange={handleChange}
                             />
-                          </label>
+                          </div>
                         </div>
                         )}
                         <div className="govuk-radios__item">
                           <input
                             className="govuk-radios__input"
-                            id="pleasure-craft-callsign-2"
-                            name="pleasure-craft-callsign"
+                            id="callsign-no"
+                            name="hasCallsign"
                             type="radio"
-                            value="no"
-                            checked={!hasCallsign ? 'checked' : ''}
+                            value="callsignNo"
+                            checked={formData.hasCallsign === 'callsignNo' || formData.callsign === '' ? 'checked' : ''}
                             onChange={(e) => handleChange(e)}
                           />
-                          <label className="govuk-label govuk-radios__label" htmlFor="pleasure-craft-callsign-2">
+                          <label className="govuk-label govuk-radios__label" htmlFor="callsign-no">
                             No
                           </label>
                         </div>
