@@ -67,7 +67,7 @@ steps:
 
 - name: unit_test
   pull: if-not-exists
-  image: quay.io/ukhomeofficedigital/cop-node:12-alpine
+  image: quay.io/ukhomeofficedigital/cop-node:16
   commands:
   - node -v
   - npm -v
@@ -79,7 +79,7 @@ steps:
 
 - name: linting
   pull: if-not-exists
-  image: quay.io/ukhomeofficedigital/cop-node:12-alpine
+  image: quay.io/ukhomeofficedigital/cop-node:16
   commands:
   - npm run lint -- .
   when:
