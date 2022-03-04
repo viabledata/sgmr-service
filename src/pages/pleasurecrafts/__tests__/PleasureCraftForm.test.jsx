@@ -129,7 +129,7 @@ describe('Creating and editing people', () => {
   it('should store form data in the session for use on refresh', async () => {
     const expectedPage1FormData = '{"vesselName":"Viable Cruiser","vesselType":"sailingBoat"}';
     // eslint-disable-next-line max-len
-    const expectedPage2FormData = '{"vesselName":"Viable Cruiser","vesselType":"sailingBoat","hasRegistration":"registrationYes","registration":"3278462","nationality":"GBR","ais":"aisYes","hasMMSI":"mmsiYes","mmsi":"324838","hasCallsign":"callsignYes","callsign":"V14BL"}';
+    const expectedPage2FormData = '{"vesselName":"Viable Cruiser","vesselType":"sailingBoat","hasRegistration":"registrationYes","registration":"3278462","vesselNationality":"GBR","ais":"aisYes","hasMMSI":"mmsiYes","mmsi":"324838","hasCallsign":"callsignYes","callsign":"V14BL"}';
     renderPage({ pageNumber: 1 });
     fireEvent.change(screen.getByLabelText('Name of pleasure craft'), { target: { value: 'Viable Cruiser' } });
     fireEvent.click(screen.getByLabelText('Sailing boat'));
@@ -157,7 +157,7 @@ describe('Creating and editing people', () => {
         vesselType: 'sailingBoat',
         hasRegistration: 'registrationYes',
         registration: '3278462',
-        nationality: 'GBR',
+        vesselNationality: 'GBR',
         ais: 'aisYes',
         hasMMSI: 'mmsiYes',
         mmsi: '324838',
