@@ -32,7 +32,7 @@ const PleasureCraftForm = ({ source, type, vesselId }) => {
     const vesselType = resp.vesselType;
     const hasRegistration = resp.hasRegistration;
     const registration = resp.registration;
-    const nationality = resp.nationality;
+    const vesselNationality = resp.vesselNationality;
     const ais = resp.ais;
     const hasMMSI = resp.hasMMSI;
     const mmsi = resp.mmsi;
@@ -45,7 +45,7 @@ const PleasureCraftForm = ({ source, type, vesselId }) => {
       vesselType,
       hasRegistration: hasRegistration || null,
       registration: registration || null,
-      nationality: nationality || null,
+      vesselNationality: vesselNationality || null,
       ais: ais || null,
       hasMMSI: hasMMSI || null,
       mmsi: mmsi || null,
@@ -102,7 +102,7 @@ const PleasureCraftForm = ({ source, type, vesselId }) => {
       vesselType: formData.vesselType,
       hasRegistration: formData.hasRegistration,
       registration: formData.registration,
-      nationality: formData.nationality,
+      vesselNationality: formData.vesselNationality,
       ais: formData.ais,
       hasMMSI: formData.hasMMSI,
       mmsi: formData.mmsi,
@@ -210,66 +210,72 @@ const PleasureCraftForm = ({ source, type, vesselId }) => {
                       />
                     </div>
 
-                    <div id="vesselType" className={`govuk-form-group ${errors.vesselType ? 'govuk-form-group--error' : ''}`}>
+                    <div id="vesselType" className={`govuk-form-group ${!vesselTypeOther && errors.vesselType ? 'govuk-form-group--error' : ''}`}>
                       <label className="govuk-label" htmlFor="vesselType">
                         Type of pleasure craft
                       </label>
                       <div className="govuk-radios" data-module="govuk-radios">
-                        <FormFieldError error={errors.vesselType} />
+                        {!vesselTypeOther && (
+                          <FormFieldError error={errors.vesselType} />
+                        )}
                         <div className="govuk-radios__item">
                           <input
                             className="govuk-radios__input"
-                            id="vesselTypeInput"
+                            id="vesselTypeSailboat"
                             name="vesselType"
                             type="radio"
                             value="sailingBoat"
                             checked={formData.vesselType === 'sailingBoat' ? 'checked' : ''}
                             onChange={(e) => handleChange(e)}
                           />
-                          <label className="govuk-label govuk-radios__label" htmlFor="vesselTypeInput">
+                          <label className="govuk-label govuk-radios__label" htmlFor="vesselTypeSailboat">
                             Sailing boat
                           </label>
                         </div>
                         <div className="govuk-radios__item">
                           <input
                             className="govuk-radios__input"
-                            id="vesselType-2"
+                            id="vesselTypeMotorboat"
                             name="vesselType"
                             type="radio"
                             value="motorboat"
                             checked={formData.vesselType === 'motorboat' ? 'checked' : ''}
                             onChange={(e) => handleChange(e)}
                           />
-                          <label className="govuk-label govuk-radios__label" htmlFor="vesselType-2">
+                          <label className="govuk-label govuk-radios__label" htmlFor="vesselTypeMotorboat">
                             Motorboat
                           </label>
                         </div>
                         <div className="govuk-radios__item">
                           <input
                             className="govuk-radios__input"
-                            id="vesselType-3"
+                            id="vesselTypeOther"
                             name="vesselType"
                             type="radio"
                             value=""
                             checked={vesselTypeOther ? 'checked' : ''}
                             onChange={(e) => handleChange(e)}
                           />
-                          <label className="govuk-label govuk-radios__label" htmlFor="vesselType-3">
+                          <label className="govuk-label govuk-radios__label" htmlFor="vesselTypeOther">
                             Other
                           </label>
                         </div>
                         {vesselTypeOther && (
-                        <div className="govuk-form-group">
-                          <label className="govuk-label" htmlFor="vesselType-other">
-                            Please specify
+                        <div className="govuk-radios__conditional" id="conditional-other">
+                          <div className={`govuk-form-group ${errors.vesselTypeOther ? 'govuk-form-group--error' : ''}`}>
+                            <label className="govuk-label" htmlFor="other-input">
+                              Please specify
+                            </label>
+                            <FormFieldError error={errors.vesselTypeOther} />
                             <input
+                              id="other-input"
                               className="govuk-input"
                               name="vesselType"
                               type="text"
                               value={vesselTypeOther ? formData.vesselType : ''}
                               onChange={handleChange}
                             />
-                          </label>
+                          </div>
                         </div>
                         )}
                       </div>
@@ -362,17 +368,17 @@ const PleasureCraftForm = ({ source, type, vesselId }) => {
                               onChange={handleChange}
                             />
                           </div>
-                          <div className={`govuk-form-group ${errors.nationality ? 'govuk-form-group--error' : ''}`}>
-                            <label className="govuk-label" htmlFor="nationality-input">
+                          <div className={`govuk-form-group ${errors.vesselNationality ? 'govuk-form-group--error' : ''}`}>
+                            <label className="govuk-label" htmlFor="vesselNationality-input">
                               Country of registration
                             </label>
-                            <FormFieldError error={errors.nationality} />
+                            <FormFieldError error={errors.vesselNationality} />
                             <input
-                              id="nationality-input"
+                              id="vesselNationality-input"
                               className="govuk-input"
-                              name="nationality"
+                              name="vesselNationality"
                               type="text"
-                              value={formData.hasRegistration === 'registrationYes' ? formData.nationality : ''}
+                              value={formData.hasRegistration === 'registrationYes' ? formData.vesselNationality : ''}
                               onChange={handleChange}
                             />
                           </div>
