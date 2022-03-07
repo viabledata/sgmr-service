@@ -1,19 +1,21 @@
 import React from 'react';
-import { MemoryRouter } from 'react-router-dom';
+import { MemoryRouter, Router } from 'react-router-dom';
 import {
   fireEvent, render, screen, waitFor,
 } from '@testing-library/react';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { createMemoryHistory } from 'history';
 import { VESSELS_URL } from '../../../constants/ApiConstants';
 import PleasureCraftForm from '../PleasureCraftForm';
 
 const renderPage = ({
-  type, source, vesselId, pageNumber,
+  type, source, pageNumber,
 }) => {
   render(
     <MemoryRouter initialEntries={[{ pathname: `/page-${pageNumber}` }]}>
-      <PleasureCraftForm type={type} source={source} vesselId={vesselId} />
+      <PleasureCraftForm type={type} source={source} />
     </MemoryRouter>,
   );
 };
@@ -60,7 +62,7 @@ describe('Creating and editing people', () => {
     renderPage({ pageNumber: 1 });
     await waitFor(() => fireEvent.click(screen.getByText('Continue')));
     expect(screen.queryAllByText('You must enter a pleasure craft name')).toHaveLength(2);
-    expect(screen.queryAllByText('You must enter a pleasure craft type')).toHaveLength(2);
+    expect(screen.queryAllByText('You must select a pleasure craft type')).toHaveLength(2);
   });
 
   it('should scroll to error if user clicks on error text', async () => {
@@ -113,11 +115,11 @@ describe('Creating and editing people', () => {
     renderPage({ pageNumber: 1 });
     await waitFor(() => fireEvent.click(screen.getByText('Continue')));
     expect(screen.queryAllByText('You must enter a pleasure craft name')).toHaveLength(2);
-    expect(screen.queryAllByText('You must enter a pleasure craft type')).toHaveLength(2);
+    expect(screen.queryAllByText('You must select a pleasure craft type')).toHaveLength(2);
 
     fireEvent.change(screen.getByLabelText('Name of pleasure craft'), { target: { value: 'J' } });
     expect(screen.queryAllByText('You must enter a pleasure craft name')).toHaveLength(0);
-    expect(screen.queryAllByText('You must enter a pleasure craft type')).toHaveLength(2);
+    expect(screen.queryAllByText('You must select a pleasure craft type')).toHaveLength(2);
   });
 
   it('should allow you to exit without saving even if required fields arent valid', async () => {
@@ -149,6 +151,10 @@ describe('Creating and editing people', () => {
   });
 
   it('should prefill pleasure craft details if type is edit', async () => {
+    const history = createMemoryHistory();
+    const state = { peopleId: 'person123', source: 'edit' };
+    history.push('/people/edit-person/page-1', state);
+
     mockAxios
       .onGet(`${VESSELS_URL}/vessel123`)
       .reply(200, {
@@ -166,9 +172,11 @@ describe('Creating and editing people', () => {
       });
 
     await waitFor(() => {
-      renderPage({
-        type: 'edit', source: 'edit', vesselId: 'vessel123', pageNumber: 1,
-      });
+      render(
+        <Router history={history}>
+          <PleasureCraftForm type="edit" source="edit" />
+        </Router>,
+      );
     });
 
     // eslint-disable-next-line max-len
@@ -178,9 +186,10 @@ describe('Creating and editing people', () => {
 
     await waitFor(() => {
       renderPage({
-        type: 'edit', source: 'edit', vesselId: 'vessel123', pageNumber: 2,
+        type: 'edit', source: 'edit', pageNumber: 2,
       });
     });
+
     expect(screen.getAllByLabelText('Yes')[0]).toBeChecked();
     expect(screen.getByDisplayValue('3278462')).toBeInTheDocument();
     expect(screen.getByDisplayValue('GBR')).toBeInTheDocument();
