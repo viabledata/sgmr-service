@@ -31,7 +31,6 @@ const VesselTable = ({
                     id={vessel.id}
                     onChange={(e) => handleCheckboxes(e)}
                     name="vessel"
-
                   />
                   <label className="govuk-label govuk-checkboxes__label" htmlFor={vessel.id}>&nbsp;</label>
                 </div>
