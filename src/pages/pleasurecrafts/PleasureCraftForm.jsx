@@ -10,14 +10,15 @@ import validate from '../../utils/validateFormData';
 import scrollToTop from '../../utils/scrollToTop';
 import PleasureCraftValidation from './PleasureCraftValidation';
 
-const PleasureCraftForm = ({ source, type, vesselId }) => {
+const PleasureCraftForm = ({ source, type }) => {
   const history = useHistory();
   const location = useLocation();
   const locationPath = location.pathname;
-  const locationState = location.state;
   const [errors, setErrors] = useState({});
   const [formData, setFormData] = useState(JSON.parse(sessionStorage.getItem('formData')) || {});
   const [formPageIs, setFormPageIs] = useState(1);
+  const [vesselId, setVesselId] = useState();
+  const [sourceLocation, setSourceLocation] = useState();
   const [sourcePage, setSourcePage] = useState(VESSELS_PAGE_URL);
   const [submittedNextPage, setSubmittedNextPage] = useState(VESSELS_PAGE_URL);
   const [submitType, setSubmitType] = useState();
@@ -26,8 +27,8 @@ const PleasureCraftForm = ({ source, type, vesselId }) => {
   document.title = type === 'edit' ? 'Edit pleasure craft' : 'Save pleasure craft';
   const vesselTypeOther = formData.vesselType !== undefined && formData.vesselType !== 'sailingBoat' && formData.vesselType !== 'motorboat';
 
-  const getPleasureCraftData = async () => {
-    const resp = await getData(`${VESSELS_PAGE_URL}/${vesselId}`, 'vessels');
+  const getPleasureCraftData = async (forThisVesselId) => {
+    const resp = await getData(`${VESSELS_PAGE_URL}/${forThisVesselId}`, 'vessels');
     const vesselName = resp.vesselName;
     const vesselType = resp.vesselType;
     const hasRegistration = resp.hasRegistration;
@@ -40,7 +41,7 @@ const PleasureCraftForm = ({ source, type, vesselId }) => {
     const callsign = resp.callsign;
 
     setFormData({
-      ...resp,
+      ...resp.data,
       vesselName,
       vesselType,
       hasRegistration: hasRegistration || null,
@@ -136,11 +137,7 @@ const PleasureCraftForm = ({ source, type, vesselId }) => {
   }, [locationPath]);
 
   useEffect(() => {
-    if (locationState?.source === 'edit' || source === 'edit') {
-      source = 'edit';
-      if (vesselId) { getPleasureCraftData(); }
-    }
-    switch (source) {
+    switch (sourceLocation) {
       case 'onboarding':
         setTitle('Add details of a pleasure craft you frequently sail with');
         setSubmitType('POST');
@@ -161,11 +158,23 @@ const PleasureCraftForm = ({ source, type, vesselId }) => {
         setSubmittedNextPage(VESSELS_PAGE_URL);
         setSourcePage(VESSELS_PAGE_URL);
     }
-  }, [source]);
+  }, [sourceLocation]);
 
   useEffect(() => {
     sessionStorage.setItem('formData', JSON.stringify(formData));
   }, [formData]);
+
+  useEffect(() => {
+    if (location.state?.source) {
+      setSourceLocation(location.state?.source);
+    } else {
+      setSourceLocation(source);
+    }
+    if (location.state?.peopleId) {
+      setVesselId(location.state.peopleId);
+      getPleasureCraftData(location.state.peopleId);
+    }
+  }, []);
 
   return (
     <div className="govuk-width-container ">
