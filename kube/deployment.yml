@@ -24,6 +24,7 @@ spec:
         image: "{{.SGMR_SERVICE_IMAGE}}:{{.SGMR_SERVICE_TAG}}"
         imagePullPolicy: Always
         securityContext:
+          allowPrivilegeEscalation: false
           runAsNonRoot: true
           runAsUser: 100
         resources:
@@ -45,6 +46,7 @@ spec:
         image: "{{.NGINX_IMAGE}}:{{.NGINX_TAG}}"
         imagePullPolicy: Always
         securityContext:
+          allowPrivilegeEscalation: false
           runAsNonRoot: true
         resources:
          limits:
@@ -80,3 +82,4 @@ spec:
       - name: certs
         secret:
           secretName: "{{.SGMR_SERVICE_NAME}}-pod-cmio"
+          defaultMode: 0400
