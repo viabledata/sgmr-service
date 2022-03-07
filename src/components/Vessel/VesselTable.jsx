@@ -31,6 +31,7 @@ const VesselTable = ({
                     id={vessel.id}
                     onChange={(e) => handleCheckboxes(e)}
                     name="vessel"
+
                   />
                   <label className="govuk-label govuk-checkboxes__label" htmlFor={vessel.id}>&nbsp;</label>
                 </div>
@@ -52,7 +53,7 @@ const VesselTable = ({
                 <span className="responsive-table__heading" aria-hidden="true">
                   Pleasure craft name
                 </span>
-                {vessel.vesselName}
+                <label htmlFor={vessel.id}>{vessel.vesselName}</label>
               </td>
               ) }
               <td className="govuk-table__cell" role="cell">
