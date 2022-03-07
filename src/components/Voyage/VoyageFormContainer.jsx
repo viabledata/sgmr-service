@@ -69,6 +69,17 @@ const FormVoyageContainer = () => {
     setFormData({ ...formData, [name]: value });
     removeError(name);
   };
+
+  const updatePortFields = (isDeparture, portDetails) => {
+    if (isDeparture) {
+      setFormData({ ...formData, departurePort: portDetails.unlocode, departurePortName: portDetails.name });
+      removeError('departureLocation');
+    } else {
+      setFormData({ ...formData, arrivalPort: portDetails.unlocode, arrivalPortName: portDetails.name });
+      removeError('arrivalLocation');
+    }
+  };
+
   const handleChange = (e) => {
     updateFieldValue(e.target.name, e.target.value);
   };
@@ -302,7 +313,7 @@ const FormVoyageContainer = () => {
                 <FormDeparture
                   handleSubmit={handleSubmit}
                   handleChange={handleChange}
-                  updateFieldValue={updateFieldValue}
+                  updatePortFields={updatePortFields}
                   data={formData || voyageData}
                   errors={errors}
                   voyageId={voyageId}
@@ -312,7 +323,7 @@ const FormVoyageContainer = () => {
                 <FormArrival
                   handleSubmit={handleSubmit}
                   handleChange={handleChange}
-                  updateFieldValue={updateFieldValue}
+                  updatePortFields={updatePortFields}
                   data={formData || voyageData}
                   errors={errors}
                   voyageId={voyageId}

@@ -6,7 +6,7 @@ import FormError from './FormError';
 import PortField from '../PortField';
 
 const FormArrival = ({
-  handleSubmit, handleChange, updateFieldValue, data, errors, voyageId,
+  handleSubmit, handleChange, updatePortFields, data, errors, voyageId,
 }) => {
   document.title = 'Intended arrival details';
 
@@ -155,7 +155,7 @@ const FormArrival = ({
             defaultValue={data.arrivalPort}
             fieldName="arrivalPort"
             onConfirm={(result) => {
-              updateFieldValue('arrivalPort', result.unlocode || result.name);
+              updatePortFields(false, { name: result.name, unlocode: result.unlocode });
             }}
           />
         </div>

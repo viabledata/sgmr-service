@@ -32,10 +32,10 @@ function fetchPorts(query) {
 }
 
 const PortField = ({
-  onConfirm = () => {}, fieldName,
+  onConfirm = () => {}, fieldName, defaultValue = '', ...props
 }) => {
   const [portEntered, setPortEntered] = useState('');
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState(defaultValue || '');
   const [otherValue, setOtherValue] = useState('');
 
   const handleSearchTermChange = (event) => {
@@ -73,10 +73,11 @@ const PortField = ({
     <>
       <Combobox
         id="portsCombobox"
-        name={fieldName}
         data-testid="portContainer"
         aria-label="Ports"
         onSelect={(e) => handlePortSelection(e)}
+        name={fieldName}
+        {...props}
       >
         <ComboboxInput
           className="govuk-input"
