@@ -17,18 +17,19 @@ let ports = [];
 function fetchPorts(query) {
   if (query.length < 3) {
     ports = [];
-  }
-  axios.get(`${PORTS_URL}?name=${encodeURIComponent(query)}`, {
-    headers: { Authorization: `Bearer ${Auth.retrieveToken()}` },
-  })
-    .then((resp) => {
-      ports = resp.data;
+  } else {
+    axios.get(`${PORTS_URL}?name=${encodeURIComponent(query)}`, {
+      headers: { Authorization: `Bearer ${Auth.retrieveToken()}` },
     })
-    .catch((err) => {
-      if (err.response) {
-        ports = [];
-      }
-    });
+      .then((resp) => {
+        ports = resp.data;
+      })
+      .catch((err) => {
+        if (err.response) {
+          ports = [];
+        }
+      });
+  }
 }
 
 const PortField = ({
