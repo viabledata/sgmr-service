@@ -123,7 +123,7 @@ const Nav = () => {
               );
             })}
             <li className="govuk-header__navigation-item">
-              <a href="#sign-out" className="govuk-header__link" aria-label="Sign out link" onClick={() => handleSignout()}>Sign out</a>
+              <a href="#sign-out" className="govuk-header__link" onClick={() => handleSignout()}>Sign out</a>
             </li>
           </ul>
         </nav>
