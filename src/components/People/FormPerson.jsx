@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 import FormError from '../Voyage/FormError';
-import nationalities from '../../utils/staticFormData';
+import { nationalities } from '../../utils/staticFormData';
 
 const FormPerson = ({
   handleSubmit, handleChange, formData, errors, personId, source, voyageId,

@@ -49,6 +49,7 @@ describe('Voyage form required fields errors', () => {
     const expectedErrors = {
       arrivalDate: 'You must enter an arrival date',
       arrivalTime: 'You must enter an arrival time',
+      arrivalCountry: 'You must select an arrival country',
       arrivalLocation: 'You must enter an arrival point',
     };
     const result = await VoyageFormValidation({}, FORM_STEPS.ARRIVAL);
@@ -59,6 +60,7 @@ describe('Voyage form required fields errors', () => {
     const expectedErrors = {
       departureDate: 'You must enter a departure date',
       departureTime: 'You must enter a departure time',
+      departureCountry: 'You must select a departure country',
       departureLocation: 'You must enter a departure point',
     };
     const result = await VoyageFormValidation({}, FORM_STEPS.DEPARTURE);
@@ -93,6 +95,7 @@ describe('Voyage form invalid inputs', () => {
       arrivalDateYear: '2022',
       arrivalTimeHour: '24',
       arrivalTimeMinute: '00',
+      arrivalCountry: 'GB',
       arrivalPort: 'BRP',
       arrivalPortName: 'Bridport',
     };
@@ -113,6 +116,7 @@ describe('Voyage form invalid inputs', () => {
       departureDateYear: '2022',
       departureTimeHour: '24',
       departureTimeMinute: '00',
+      departureCountry: 'GB',
       departurePort: 'BRP',
       departurePortName: 'Bridport',
     };
@@ -131,6 +135,7 @@ describe('Voyage form invalid inputs', () => {
       arrivalDateYear: '2020',
       arrivalTimeHour: '12',
       arrivalTimeMinute: '00',
+      arrivalCountry: 'GB',
       arrivalPort: 'BRP',
       arrivalPortName: 'Bridport',
     };
@@ -149,6 +154,7 @@ describe('Voyage form invalid inputs', () => {
       departureDateYear: '2020',
       departureTimeHour: '12',
       departureTimeMinute: '00',
+      departureCountry: 'GB',
       departurePort: 'BRP',
       departurePortName: 'Bridport',
     };
@@ -168,6 +174,7 @@ describe('Voyage form invalid inputs', () => {
       arrivalDateYear: '2023',
       arrivalTimeHour: '12',
       arrivalTimeMinute: '00',
+      arrivalCountry: 'GB',
       arrivalPort: 'BRP',
       arrivalPortName: 'Bridport',
       departureDateDay: '02',

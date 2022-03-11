@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { FORM_STEPS } from '../../constants/ClientConstants';
 import FormError from './FormError';
 import PortField from '../PortField';
+import { countries } from '../../utils/staticFormData';
 
 const FormArrival = ({
   handleSubmit, handleChange, updatePortFields, data, errors, voyageId,
@@ -15,14 +16,14 @@ const FormArrival = ({
     <section>
       <h1 className="govuk-heading-xl">Intended arrival details</h1>
       <p className="govuk-body-l">
-        Provide the intended departure details for the voyage. You can update these details if your voyage plan changes because of the weather or an emergency on board.
+        Provide the intended arrival details for the voyage. You can update these details if your voyage plan changes because of the weather or an emergency on board.
       </p>
 
       <div id="arrivalDate" className={`govuk-form-group ${errors.arrivalDate ? 'govuk-form-group--error' : ''}`}>
         <fieldset className="govuk-fieldset" role="group" aria-describedby="dob-hint">
           <legend className="govuk-fieldset__legend">
             <label className="govuk-label govuk-label--m" htmlFor="arrivalDate">
-              Intended arrival date
+              Arrival date
             </label>
             <FormError error={errors.arrivalDate} />
           </legend>
@@ -142,10 +143,29 @@ const FormArrival = ({
         </fieldset>
       </div>
 
+      <div id="arrivalCountry" className={`govuk-form-group ${errors.arrivalCountry ? 'govuk-form-group--error' : ''}`}>
+        <FormError error={errors.arrivalCountry} />
+        <label className="govuk-label govuk-label--m" htmlFor="arrivalCountry">
+          Country of arrival
+        </label>
+        <select
+          className="govuk-select"
+          name="arrivalCountry"
+          type="text"
+          value={data.arrivalCountry || 'Please select'}
+          onChange={handleChange}
+        >
+          <option disabled>Please select</option>
+          {countries.map((arrivalCountry) => (
+            <option key={arrivalCountry.id} value={arrivalCountry.value}>{arrivalCountry.label}</option>
+          ))}
+        </select>
+      </div>
+
       <div id="arrivalLocation" className={`govuk-form-group ${errors.arrivalLocation ? 'govuk-form-group--error' : ''}`}>
         <FormError error={errors.arrivalLocation} />
         <div className={`govuk-form-group ${errors.arrivalPort ? 'govuk-form-group--error' : ''}`}>
-          <label className="govuk-label govuk-label--m" htmlFor="departurePort">
+          <label className="govuk-label govuk-label--m" htmlFor="arrivalPort">
             Name of arrival port or location
           </label>
           <div className="govuk-hint">

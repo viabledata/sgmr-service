@@ -1,14 +1,26 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import { FORM_STEPS } from '../../constants/ClientConstants';
 import FormError from './FormError';
 import PortField from '../PortField';
+import { countries } from '../../utils/staticFormData';
 
 const FormDeparture = ({
   handleSubmit, handleChange, updatePortFields, data, errors, voyageId,
 }) => {
   document.title = 'Intended departure details';
+
+  const [isCountrySelected, setIsCountrySelected] = useState(false);
+
+  const handleSelect = () => {
+    setIsCountrySelected(true);
+    handleChange();
+  };
+
+  if (voyageId) {
+    setIsCountrySelected(true);
+  }
 
   if (!data) { return null; }
   return (
@@ -142,6 +154,25 @@ const FormDeparture = ({
         </fieldset>
       </div>
 
+      <div id="departureCountry" className={`govuk-form-group ${errors.departureCountry ? 'govuk-form-group--error' : ''}`}>
+        <FormError error={errors.departureCountry} />
+        <label className="govuk-label govuk-label--m" htmlFor="depFtureCountry">
+          Country of departure
+        </label>
+        <select
+          className="govuk-select"
+          name="departureCountry"
+          type="text"
+          value={data.departureCountry || 'Please select'}
+          onChange={handleSelect}
+        >
+          <option disabled>Please select</option>
+          {countries.map((departureCountry) => (
+            <option key={departureCountry.id} value={departureCountry.value}>{departureCountry.label}</option>
+          ))}
+        </select>
+      </div>
+
       <div id="departureLocation" className={`govuk-form-group ${errors.departureLocation ? 'govuk-form-group--error' : ''}`}>
         <FormError error={errors.departureLocation} />
 
@@ -155,6 +186,7 @@ const FormDeparture = ({
           <PortField
             defaultValue={data.departurePort}
             fieldName="departurePort"
+            isCountrySelected={isCountrySelected}
             onConfirm={(result) => {
               updatePortFields(true, { name: result.name, unlocode: result.unlocode });
             }}

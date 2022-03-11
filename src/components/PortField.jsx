@@ -14,8 +14,10 @@ import Auth from '../lib/Auth';
 
 let ports = [];
 
-function fetchPorts(query) {
+function fetchPorts(query, isCountrySelected) {
   if (query.length < 3) {
+    ports = [];
+  } else if (!isCountrySelected) {
     ports = [];
   } else {
     axios.get(`${PORTS_URL}?name=${encodeURIComponent(query)}`, {
@@ -33,7 +35,7 @@ function fetchPorts(query) {
 }
 
 const PortField = ({
-  onConfirm = () => {}, fieldName, defaultValue = '', ...props
+  onConfirm = () => {}, fieldName, defaultValue = '', isCountrySelected, ...props
 }) => {
   const [portEntered, setPortEntered] = useState('');
   const [searchTerm, setSearchTerm] = useState(defaultValue || '');
@@ -86,7 +88,7 @@ const PortField = ({
           onChange={handleSearchTermChange}
           value={searchTerm}
         />
-        {fetchPorts(searchTerm)}
+        {fetchPorts(searchTerm, isCountrySelected)}
         {ports && (
           <ComboboxPopover className="shadow-popup">
             {ports.length > 0 ? (

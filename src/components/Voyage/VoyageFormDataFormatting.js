@@ -25,6 +25,10 @@ const formatDepartureArrival = (status, data) => {
     }
   }
 
+  if (data.departureCountry) {
+    dataList.departureCountry = data.departureCountry;
+  }
+
   if (!data.departurePort) { // null value departure port
     dataList.departurePort = 'ZZZD';
   } else {
@@ -33,6 +37,10 @@ const formatDepartureArrival = (status, data) => {
 
   if (data.departurePortName) {
     dataList.departurePortName = data.departurePortName;
+  }
+
+  if (data.arrivalCountry) {
+    dataList.arrivalCountry = data.arrivalCountry;
   }
 
   if (!data.arrivalPort) { // null value arrival port

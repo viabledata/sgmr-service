@@ -35,8 +35,15 @@ const VoyageFormValidation = async (dataToValidate, source) => {
     }
   }
 
-  // Departure & Arrival must include a Port OR a Lat & Long
+  // Departure & Arrival must include a country destination
+  if (source === FORM_STEPS.DEPARTURE && !dataToValidate.departureCountry) {
+    errors.departureCountry = 'You must select a departure country';
+  }
+  if (source === FORM_STEPS.ARRIVAL && !dataToValidate.arrivalCountry) {
+    errors.arrivalCountry = 'You must select an arrival country';
+  }
 
+  // Departure & Arrival must include a Port OR a Lat & Long
   if (
     source === FORM_STEPS.DEPARTURE
     && !dataToValidate.departurePortName
