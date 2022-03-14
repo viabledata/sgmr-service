@@ -25,14 +25,17 @@ const VesselTable = ({
               {checkboxes === 'true' && (
               <td className="govuk-table__cell multiple-choice--hod" role="cell">
                 <div className="govuk-checkboxes__item">
-                  <input
-                    type="checkbox"
-                    className="govuk-checkboxes__input jsCheckbox"
-                    id={vessel.id}
-                    onChange={(e) => handleCheckboxes(e)}
-                    name="vessel"
-                  />
-                  <label className="govuk-label govuk-checkboxes__label" htmlFor={vessel.id}>&nbsp;</label>
+                  <label className="govuk-label govuk-checkboxes__label" htmlFor={vessel.id}>
+                    <input
+                      type="checkbox"
+                      className="govuk-checkboxes__input jsCheckbox"
+                      id={vessel.id}
+                      onChange={(e) => handleCheckboxes(e)}
+                      name="vessel"
+                      aria-labelledby="vesselLabel"
+                    />
+                    <span className="govuk-visually-hidden">{vessel.vesselName}</span>
+                  </label>
                 </div>
               </td>
               )}
@@ -42,7 +45,10 @@ const VesselTable = ({
                   <span className="responsive-table__heading" aria-hidden="true">
                     Pleasure craft name
                   </span>
-                  <Link to={`/pleasure-crafts/${vessel.id}`}>
+                  <Link
+                    to={`/pleasure-crafts/${vessel.id}`}
+                    aria-label={`Edit the ${vessel.vesselType} named ${vessel.vesselName}`}
+                  >
                     {vessel.vesselName}
                   </Link>
                 </td>
@@ -52,7 +58,7 @@ const VesselTable = ({
                 <span className="responsive-table__heading" aria-hidden="true">
                   Pleasure craft name
                 </span>
-                <label htmlFor={vessel.id}>{vessel.vesselName}</label>
+                <span>{vessel.vesselName}</span>
               </td>
               ) }
               <td className="govuk-table__cell" role="cell">
