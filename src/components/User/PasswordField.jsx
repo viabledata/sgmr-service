@@ -14,6 +14,7 @@ const PasswordField = ({ handleChange, formData = {}, errors = {} }) => (
         className="govuk-input"
         name="password"
         id="password-field"
+        data-testid="password-field"
         type="password"
         value={formData.password || ''}
         onChange={handleChange}
@@ -37,6 +38,7 @@ const PasswordField = ({ handleChange, formData = {}, errors = {} }) => (
       <input
         className="govuk-input"
         id="confirmPassword-field"
+        data-testid="confirmPassword-field"
         name="confirmPassword"
         type="password"
         value={formData.confirmPassword || ''}
