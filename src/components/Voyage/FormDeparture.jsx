@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import { FORM_STEPS } from '../../constants/ClientConstants';
@@ -8,7 +8,26 @@ import PortField from '../PortField';
 const FormDeparture = ({
   handleSubmit, handleChange, updatePortFields, data, errors, voyageId,
 }) => {
+  const [fieldType, setFieldType] = useState();
+  const [portValue, setPortValue] = useState();
   document.title = 'Intended departure details';
+
+  const formatPortValue = () => {
+    if (!data.departurePort && !data.departurePortName) {
+      setPortValue();
+      setFieldType();
+    } else if (!data.departurePort) {
+      setPortValue(data.departurePortName);
+      setFieldType('not-combo');
+    } else {
+      setPortValue(`${data.departurePortName} (${data.departurePort})`);
+      setFieldType('combo');
+    }
+  };
+
+  useEffect(() => {
+    formatPortValue();
+  }, [data]);
 
   if (!data) { return null; }
   return (
@@ -153,10 +172,11 @@ const FormDeparture = ({
             For example MDL Hamble Point Marina
           </div>
           <PortField
-            defaultValue={data.departurePort}
+            defaultValue={portValue}
             fieldName="departurePort"
+            fieldType={fieldType}
             onConfirm={(result) => {
-              updatePortFields(true, { name: result.name, unlocode: result.unlocode });
+              updatePortFields('departurePort', { name: result.name, unlocode: result.unlocode });
             }}
           />
         </div>

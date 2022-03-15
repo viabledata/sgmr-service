@@ -70,14 +70,9 @@ const FormVoyageContainer = () => {
     removeError(name);
   };
 
-  const updatePortFields = (isDeparture, portDetails) => {
-    if (isDeparture) {
-      setFormData({ ...formData, departurePort: portDetails.unlocode, departurePortName: portDetails.name });
-      removeError('departureLocation');
-    } else {
-      setFormData({ ...formData, arrivalPort: portDetails.unlocode, arrivalPortName: portDetails.name });
-      removeError('arrivalLocation');
-    }
+  const updatePortFields = (portField, portDetails) => {
+    setFormData({ ...formData, [portField]: portDetails.unlocode, [`${portField}Name`]: portDetails.name });
+    removeError(`${portField}location`);
   };
 
   const handleChange = (e) => {

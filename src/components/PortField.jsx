@@ -15,9 +15,7 @@ import Auth from '../lib/Auth';
 let ports = [];
 
 function fetchPorts(query) {
-  if (query.length < 3) {
-    ports = [];
-  } else {
+  if (query.length >= 2) {
     axios.get(`${PORTS_URL}?name=${encodeURIComponent(query)}`, {
       headers: { Authorization: `Bearer ${Auth.retrieveToken()}` },
     })
@@ -41,6 +39,7 @@ const PortField = ({
 
   const handleSearchTermChange = (event) => {
     setSearchTerm(event.target.value);
+    fetchPorts(event.target.value);
   };
 
   const togglePortField = (other, value) => {
@@ -86,7 +85,6 @@ const PortField = ({
           onChange={handleSearchTermChange}
           value={searchTerm}
         />
-        {fetchPorts(searchTerm)}
         {ports && (
           <ComboboxPopover className="shadow-popup">
             {ports.length > 0 ? (
@@ -97,9 +95,9 @@ const PortField = ({
                 })}
               </ComboboxList>
             ) : (
-              <span style={{ display: 'none' }}>
+              <ComboboxList className="comboBoxListItem">
                 No results found
-              </span>
+              </ComboboxList>
             )}
           </ComboboxPopover>
         )}
