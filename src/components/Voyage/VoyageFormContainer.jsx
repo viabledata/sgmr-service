@@ -213,7 +213,7 @@ const FormVoyageContainer = () => {
       const data = formData;
 
       const fieldType = !document.getElementById('autocomplete')?.value ? (document.getElementById('autocomplete').name).replace('autocomplete', '') : null;
-      const updatedPortValues = fieldType ? { [fieldType]: null, [`${fieldType}Name`]: null } : null
+      const updatedPortValues = fieldType ? { [fieldType]: null, [`${fieldType}Name`]: null } : null;
 
       // update data for submitting
       const updatedData = { ...data, ...updatedPortValues };
