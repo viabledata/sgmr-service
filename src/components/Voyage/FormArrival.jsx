@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import { FORM_STEPS } from '../../constants/ClientConstants';
@@ -8,7 +8,22 @@ import PortField from '../PortField';
 const FormArrival = ({
   handleSubmit, handleChange, updatePortFields, data, errors, voyageId,
 }) => {
+  const [portValue, setPortValue] = useState();
   document.title = 'Intended arrival details';
+
+  const formatPortValue = () => {
+    if (!data.arrivalPort && !data.arrivalPortName) {
+      setPortValue();
+    } else if (!data.arrivalPort) {
+      setPortValue(data.arrivalPortName);
+    } else {
+      setPortValue(`${data.arrivalPortName} (${data.arrivalPort})`);
+    }
+  };
+
+  useEffect(() => {
+    formatPortValue();
+  }, [data]);
 
   if (!data) { return null; }
   return (
@@ -145,14 +160,14 @@ const FormArrival = ({
       <div id="arrivalLocation" className={`govuk-form-group ${errors.arrivalLocation ? 'govuk-form-group--error' : ''}`}>
         <FormError error={errors.arrivalLocation} />
         <div className={`govuk-form-group ${errors.arrivalPort ? 'govuk-form-group--error' : ''}`}>
-          <label className="govuk-label govuk-label--m" htmlFor="departurePort">
+          <label className="govuk-label govuk-label--m" htmlFor="arrivalPort">
             Name of arrival port or location
           </label>
           <div className="govuk-hint">
             For example MDL Hamble Point Marina
           </div>
           <PortField
-            defaultValue={data.arrivalPort}
+            defaultValue={portValue}
             fieldName="arrivalPort"
             onConfirm={(result) => {
               updatePortFields('arrivalPort', { name: result.name, unlocode: result.unlocode });

@@ -8,20 +8,16 @@ import PortField from '../PortField';
 const FormDeparture = ({
   handleSubmit, handleChange, updatePortFields, data, errors, voyageId,
 }) => {
-  const [fieldType, setFieldType] = useState();
   const [portValue, setPortValue] = useState();
   document.title = 'Intended departure details';
 
   const formatPortValue = () => {
     if (!data.departurePort && !data.departurePortName) {
       setPortValue();
-      setFieldType();
     } else if (!data.departurePort) {
       setPortValue(data.departurePortName);
-      setFieldType('not-combo');
     } else {
       setPortValue(`${data.departurePortName} (${data.departurePort})`);
-      setFieldType('combo');
     }
   };
 
@@ -174,7 +170,6 @@ const FormDeparture = ({
           <PortField
             defaultValue={portValue}
             fieldName="departurePort"
-            fieldType={fieldType}
             onConfirm={(result) => {
               updatePortFields('departurePort', { name: result.name, unlocode: result.unlocode });
             }}
