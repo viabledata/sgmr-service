@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory, useLocation, withRouter } from 'react-router-dom';
-import { useThrottle } from 'react-use';
 import { matchSorter } from 'match-sorter';
 
 import {
@@ -22,14 +21,13 @@ import PleasureCraftValidation from './PleasureCraftValidation';
 import { countries } from '../../utils/staticFormData';
 
 const useCountryMatch = (term) => {
-  const throttledTerm = useThrottle(term, 100);
   return React.useMemo(
     () => (term.trim() === ''
       ? null
       : matchSorter(countries, term, {
         keys: [(item) => `${item.label}`],
       })),
-    [throttledTerm],
+    [term],
   );
 };
 
@@ -48,7 +46,8 @@ const PleasureCraftForm = ({ source, type }) => {
   const [title, setTitle] = useState();
   const [searchTerm, setSearchTerm] = useState('');
 
-  const searchResults = useCountryMatch(searchTerm);
+  const results = useCountryMatch(searchTerm);
+  const [searchResults, setSearchResults] = useState(results);
 
   document.title = type === 'edit' ? 'Edit pleasure craft' : 'Save pleasure craft';
   const vesselTypeOther = formData.vesselType !== undefined && formData.vesselType !== 'sailingBoat' && formData.vesselType !== 'motorboat';
@@ -83,12 +82,14 @@ const PleasureCraftForm = ({ source, type }) => {
 
   const handleSelect = (e) => {
     setSearchTerm(e);
+    setSearchResults([]);
     setFormData({ ...formData, vesselNationality: e });
     setErrors(removeError('vesselNationality', errors));
   };
 
   const handleComboboxInputChange = (e) => {
     setSearchTerm(e.target.value);
+    setSearchResults(results);
     setFormData({ ...formData, [e.target.name]: '' });
     setErrors(removeError(e.target.name, errors));
   };
