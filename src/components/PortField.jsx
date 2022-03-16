@@ -41,11 +41,12 @@ const PortField = ({
     fetchPorts(event.target.value);
   };
 
-  const togglePortField = (other, value) => {
-    if (other) {
-      setOtherValue('');
+  const togglePortField = (isSelectorField, value) => {
+    if (isSelectorField) {
+      setOtherValue(''); // user selects from the autoselect
+      setPortList([]);
     } else {
-      setSearchTerm('');
+      setSearchTerm(''); // user is typing in the 'other' field
       setOtherValue(value);
       setPortEntered({ name: value, unlocode: null });
     }
