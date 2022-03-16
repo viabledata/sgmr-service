@@ -42,10 +42,11 @@ const VesselTable = ({
                   <span className="responsive-table__heading" aria-hidden="true">
                     Pleasure craft name
                   </span>
-                  <Link to={`/pleasure-crafts/${vessel.id}`}>
+                  <Link
+                    to={`/pleasure-crafts/${vessel.id}`}
+                    aria-label={`Edit the ${vessel.vesselType} named ${vessel.vesselName}`}
+                  >
                     {vessel.vesselName}
-                    aria-label=
-                    {`Edit the ${vessel.vesselType} named ${vessel.vesselName}`}
                   </Link>
                 </td>
                 ) }
