@@ -64,10 +64,6 @@ const PortField = ({
     togglePortField(true);
   };
 
-  const clearInput = (e) => {
-    e.target.value = '';
-  };
-
   useEffect(() => {
     onConfirm(portEntered);
   }, [portEntered]);
@@ -75,8 +71,6 @@ const PortField = ({
   useEffect(() => {
     setSearchTerm(defaultValue);
   }, [defaultValue]);
-
-  console.log(portList);
 
   return (
     <>
@@ -93,7 +87,6 @@ const PortField = ({
           data-testid="port"
           onChange={handleSearchTermChange}
           value={searchTerm}
-          onFocus={(e) => clearInput(e)}
         />
         {portList.length > 0 && (
           <ComboboxPopover className="shadow-popup">
