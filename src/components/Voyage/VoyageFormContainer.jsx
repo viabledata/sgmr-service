@@ -212,13 +212,11 @@ const FormVoyageContainer = () => {
       // get initial data set from formData
       const data = formData;
 
-      // check for autocomplete field current value
-      const autocompleteField = document.getElementById('autocomplete')?.name ? document.getElementById('autocomplete').name : null;
-      const autocompleteValue = document.getElementById('autocomplete')?.value === '' ? null : document.getElementById('autocomplete')?.value;
-      const autocompleteNameValue = autocompleteField ? { [autocompleteField]: autocompleteValue } : null;
+      const fieldType = !document.getElementById('autocomplete')?.value ? (document.getElementById('autocomplete').name).replace('autocomplete', '') : null;
+      const updatedPortValues = fieldType ? { [fieldType]: null, [`${fieldType}Name`]: null } : null
 
       // update data for submitting
-      const updatedData = { ...data, ...autocompleteNameValue };
+      const updatedData = { ...data, ...updatedPortValues };
       const dataToSubmit = formatDataToSubmit(sourceForm, updatedData, extraParams);
       setFormData(updatedData);
 

@@ -13,7 +13,7 @@ import { PORTS_URL } from '../constants/ApiConstants';
 import Auth from '../lib/Auth';
 
 const PortField = ({
-  onConfirm = () => {}, fieldName, defaultValue, ...props
+  onConfirm = () => {}, fieldName, defaultValue,
 }) => {
   const [portList, setPortList] = useState([]);
   const [portEntered, setPortEntered] = useState('');
@@ -80,12 +80,12 @@ const PortField = ({
         data-testid="portContainer"
         aria-label="Ports"
         onSelect={(e) => handlePortSelection(e)}
-        name={fieldName}
-        {...props}
       >
         <ComboboxInput
+          id="autocomplete"
           className="govuk-input"
           data-testid="port"
+          name={`autocomplete${fieldName}`}
           onChange={handleSearchTermChange}
           value={searchTerm}
         />
