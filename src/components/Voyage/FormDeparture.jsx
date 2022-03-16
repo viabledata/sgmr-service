@@ -1,26 +1,55 @@
 import React, { useState } from 'react';
+import { useThrottle } from 'react-use';
 import { Link } from 'react-router-dom';
+import { matchSorter } from 'match-sorter';
+
+import {
+  Combobox,
+  ComboboxInput,
+  ComboboxPopover,
+  ComboboxList,
+  ComboboxOption,
+} from '@reach/combobox';
 
 import { FORM_STEPS } from '../../constants/ClientConstants';
 import FormError from './FormError';
 import PortField from '../PortField';
 import { countries } from '../../utils/staticFormData';
 
+const useCountryMatch = (term) => {
+  const throttledTerm = useThrottle(term, 100);
+  return React.useMemo(
+    () => (term.trim() === ''
+      ? null
+      : matchSorter(countries, term, {
+        keys: [(item) => `${item.label}`],
+      })),
+    [throttledTerm],
+  );
+};
+
 const FormDeparture = ({
-  handleSubmit, handleChange, updatePortFields, data, errors, voyageId,
+  handleSubmit, handleChange, updateFieldValue, updatePortFields, setCountryError, data, errors, voyageId,
 }) => {
-  document.title = 'Intended departure details';
+  const [searchTerm, setSearchTerm] = useState('');
 
-  const [isCountrySelected, setIsCountrySelected] = useState(false);
+  const results = useCountryMatch(searchTerm);
 
-  const handleSelect = () => {
-    setIsCountrySelected(true);
-    handleChange();
+  const [searchResults, setSearchResults] = useState(results);
+
+  const handleSelect = (e) => {
+    setSearchTerm(e);
+    updateFieldValue('departureCountry', e);
+    setSearchResults([]);
   };
 
-  if (voyageId) {
-    setIsCountrySelected(true);
-  }
+  const handleComboboxInputChange = (e) => {
+    setSearchTerm(e.target.value);
+    updateFieldValue('departureCountry', null);
+    setSearchResults(results);
+  };
+
+  document.title = 'Intended departure details';
 
   if (!data) { return null; }
   return (
@@ -156,21 +185,37 @@ const FormDeparture = ({
 
       <div id="departureCountry" className={`govuk-form-group ${errors.departureCountry ? 'govuk-form-group--error' : ''}`}>
         <FormError error={errors.departureCountry} />
-        <label className="govuk-label govuk-label--m" htmlFor="depFtureCountry">
+        <label className="govuk-label govuk-label--m" htmlFor="country-input">
           Country of departure
         </label>
-        <select
-          className="govuk-select"
-          name="departureCountry"
-          type="text"
-          value={data.departureCountry || 'Please select'}
-          onChange={handleSelect}
+        <Combobox
+          aria-label="Country of Registration"
+          onSelect={(e) => handleSelect(e)}
         >
-          <option disabled>Please select</option>
-          {countries.map((departureCountry) => (
-            <option key={departureCountry.id} value={departureCountry.value}>{departureCountry.label}</option>
-          ))}
-        </select>
+          <ComboboxInput
+            id="country-input"
+            className="govuk-input"
+            name="departureCountry"
+            value={searchTerm}
+            onChange={(e) => handleComboboxInputChange(e)}
+          />
+          {searchResults && (
+          <ComboboxPopover className="shadow-popup">
+            {searchResults.length > 0 ? (
+              <ComboboxList className="comboBoxListItem">
+                {searchResults.slice(0, 10).map((searchResult) => (
+                  <ComboboxOption
+                    key={searchResult.id}
+                    value={`${searchResult.label}`}
+                  />
+                ))}
+              </ComboboxList>
+            ) : (
+              <span />
+            )}
+          </ComboboxPopover>
+          )}
+        </Combobox>
       </div>
 
       <div id="departureLocation" className={`govuk-form-group ${errors.departureLocation ? 'govuk-form-group--error' : ''}`}>
@@ -186,7 +231,8 @@ const FormDeparture = ({
           <PortField
             defaultValue={data.departurePort}
             fieldName="departurePort"
-            isCountrySelected={isCountrySelected}
+            country={data.departureCountry}
+            setCountryError={setCountryError}
             onConfirm={(result) => {
               updatePortFields(true, { name: result.name, unlocode: result.unlocode });
             }}

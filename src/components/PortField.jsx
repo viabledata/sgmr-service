@@ -12,34 +12,38 @@ import {
 import { PORTS_URL } from '../constants/ApiConstants';
 import Auth from '../lib/Auth';
 
-let ports = [];
-
-function fetchPorts(query, isCountrySelected) {
-  if (query.length < 3) {
-    ports = [];
-  } else if (!isCountrySelected) {
-    ports = [];
-  } else {
-    axios.get(`${PORTS_URL}?name=${encodeURIComponent(query)}`, {
-      headers: { Authorization: `Bearer ${Auth.retrieveToken()}` },
-    })
-      .then((resp) => {
-        ports = resp.data;
-      })
-      .catch((err) => {
-        if (err.response) {
-          ports = [];
-        }
-      });
-  }
-}
-
 const PortField = ({
-  onConfirm = () => {}, fieldName, defaultValue = '', isCountrySelected, ...props
+  onConfirm = () => {}, fieldName, defaultValue = '', country, setCountryError, ...props
 }) => {
   const [portEntered, setPortEntered] = useState('');
   const [searchTerm, setSearchTerm] = useState(defaultValue || '');
   const [otherValue, setOtherValue] = useState('');
+
+  let ports = [];
+
+  const fetchPorts = (query) => {
+    if (query.length < 3) {
+      ports = [];
+    } else if (!country) {
+      ports = [];
+      // add trigger for country error
+      useEffect(() => {
+        setCountryError();
+      }, [query]);
+    } else {
+      axios.get(`${PORTS_URL}?name=${encodeURIComponent(query)}`, {
+        headers: { Authorization: `Bearer ${Auth.retrieveToken()}` },
+      })
+        .then((resp) => {
+          ports = resp.data;
+        })
+        .catch((err) => {
+          if (err.response) {
+            ports = [];
+          }
+        });
+    }
+  };
 
   const handleSearchTermChange = (event) => {
     setSearchTerm(event.target.value);
@@ -88,7 +92,7 @@ const PortField = ({
           onChange={handleSearchTermChange}
           value={searchTerm}
         />
-        {fetchPorts(searchTerm, isCountrySelected)}
+        {fetchPorts(searchTerm)}
         {ports && (
           <ComboboxPopover className="shadow-popup">
             {ports.length > 0 ? (

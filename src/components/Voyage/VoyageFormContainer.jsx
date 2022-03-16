@@ -80,6 +80,10 @@ const FormVoyageContainer = () => {
     }
   };
 
+  const setCountryError = () => {
+    setErrors({ departureCountry: 'You must select a departure country' });
+  };
+
   const handleChange = (e) => {
     updateFieldValue(e.target.name, e.target.value);
   };
@@ -230,6 +234,7 @@ const FormVoyageContainer = () => {
       // validate data
       const validationErrors = await VoyageFormValidation(updatedData, sourceForm);
       setErrors(validationErrors);
+      console.log(validationErrors);
 
       // store updated data in state & session storage
       setFormData(updatedData);
@@ -313,7 +318,9 @@ const FormVoyageContainer = () => {
                 <FormDeparture
                   handleSubmit={handleSubmit}
                   handleChange={handleChange}
+                  updateFieldValue={updateFieldValue}
                   updatePortFields={updatePortFields}
+                  setCountryError={setCountryError}
                   data={formData || voyageData}
                   errors={errors}
                   voyageId={voyageId}
@@ -323,7 +330,9 @@ const FormVoyageContainer = () => {
                 <FormArrival
                   handleSubmit={handleSubmit}
                   handleChange={handleChange}
+                  updateFieldValue={updateFieldValue}
                   updatePortFields={updatePortFields}
+                  setCountryError={setCountryError}
                   data={formData || voyageData}
                   errors={errors}
                   voyageId={voyageId}
