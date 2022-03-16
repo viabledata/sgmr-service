@@ -163,7 +163,7 @@ const FormArrival = ({
             defaultValue={portValue}
             fieldName="arrivalPort"
             onConfirm={(result) => {
-              updatePortFields('arrivalPort', { name: result.name, unlocode: result.unlocode });
+              updatePortFields('arrivalPort', { name: result?.name || '', unlocode: result?.unlocode || '' });
             }}
           />
         </div>

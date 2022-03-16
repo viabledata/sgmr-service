@@ -70,7 +70,7 @@ const PortField = ({
   }, [portEntered]);
 
   useEffect(() => {
-    setSearchTerm(defaultValue);
+    setSearchTerm(defaultValue || '');
   }, [defaultValue]);
 
   return (
@@ -94,7 +94,7 @@ const PortField = ({
             {portList.length > 0 ? (
               <ComboboxList className="comboBoxListItem">
                 {portList.slice(0, 10).map((port) => {
-                  const str = port.unlocode === '' ? `${port.name}` : `${port.name} (${port.unlocode})`;
+                  const str = port.unlocode === '' ? `${port?.name}` : `${port.name} (${port.unlocode})`;
                   return <ComboboxOption role="option" key={str} value={str} />;
                 })}
               </ComboboxList>
