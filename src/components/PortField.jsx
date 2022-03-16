@@ -12,30 +12,29 @@ import {
 import { PORTS_URL } from '../constants/ApiConstants';
 import Auth from '../lib/Auth';
 
-let ports = [];
-
-function fetchPorts(query) {
-  if (query.length >= 2) {
-    axios.get(`${PORTS_URL}?name=${encodeURIComponent(query)}`, {
-      headers: { Authorization: `Bearer ${Auth.retrieveToken()}` },
-    })
-      .then((resp) => {
-        ports = resp.data;
-      })
-      .catch((err) => {
-        if (err.response) {
-          ports = [];
-        }
-      });
-  }
-}
-
 const PortField = ({
-  onConfirm = () => {}, fieldName, defaultValue = '', ...props
+  onConfirm = () => {}, fieldName, defaultValue, ...props
 }) => {
+  const [portList, setPortList] = useState([]);
   const [portEntered, setPortEntered] = useState('');
-  const [searchTerm, setSearchTerm] = useState(defaultValue || '');
+  const [searchTerm, setSearchTerm] = useState('');
   const [otherValue, setOtherValue] = useState('');
+
+  const fetchPorts = (query) => {
+    if (query.length >= 2) {
+      axios.get(`${PORTS_URL}?name=${encodeURIComponent(query)}`, {
+        headers: { Authorization: `Bearer ${Auth.retrieveToken()}` },
+      })
+        .then((resp) => {
+          setPortList(resp.data);
+        })
+        .catch((err) => {
+          if (err.response) {
+            setPortList([]);
+          }
+        });
+    }
+  };
 
   const handleSearchTermChange = (event) => {
     setSearchTerm(event.target.value);
@@ -65,9 +64,19 @@ const PortField = ({
     togglePortField(true);
   };
 
+  const clearInput = (e) => {
+    e.target.value = '';
+  };
+
   useEffect(() => {
     onConfirm(portEntered);
   }, [portEntered]);
+
+  useEffect(() => {
+    setSearchTerm(defaultValue);
+  }, [defaultValue]);
+
+  console.log(portList);
 
   return (
     <>
@@ -84,12 +93,13 @@ const PortField = ({
           data-testid="port"
           onChange={handleSearchTermChange}
           value={searchTerm}
+          onFocus={(e) => clearInput(e)}
         />
-        {ports && (
+        {portList.length > 0 && (
           <ComboboxPopover className="shadow-popup">
-            {ports.length > 0 ? (
+            {portList.length > 0 ? (
               <ComboboxList className="comboBoxListItem">
-                {ports.slice(0, 10).map((port) => {
+                {portList.slice(0, 10).map((port) => {
                   const str = port.unlocode === '' ? `${port.name}` : `${port.name} (${port.unlocode})`;
                   return <ComboboxOption role="option" key={str} value={str} />;
                 })}
