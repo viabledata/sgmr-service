@@ -44,6 +44,8 @@ const VesselTable = ({
                   </span>
                   <Link to={`/pleasure-crafts/${vessel.id}`}>
                     {vessel.vesselName}
+                    aria-label=
+                    {`Edit the ${vessel.vesselType} named ${vessel.vesselName}`}
                   </Link>
                 </td>
                 ) }
