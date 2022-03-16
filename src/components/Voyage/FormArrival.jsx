@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import { FORM_STEPS } from '../../constants/ClientConstants';
+import formatPortValue from '../../utils/formatPortData';
 import FormError from './FormError';
 import PortField from '../PortField';
 
@@ -11,18 +12,10 @@ const FormArrival = ({
   const [portValue, setPortValue] = useState();
   document.title = 'Intended arrival details';
 
-  const formatPortValue = () => {
-    if (!data.arrivalPort && !data.arrivalPortName) {
-      setPortValue();
-    } else if (!data.arrivalPort) {
-      setPortValue(data.arrivalPortName);
-    } else {
-      setPortValue(`${data.arrivalPortName} (${data.arrivalPort})`);
-    }
-  };
-
   useEffect(() => {
-    formatPortValue();
+    if (data.departurePort || data.departurePortName) {
+      setPortValue(formatPortValue(data, 'arrival'));
+    }
   }, [data]);
 
   if (!data) { return null; }
