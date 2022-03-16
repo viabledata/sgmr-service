@@ -20,31 +20,6 @@
 .block-button {
   display: block;
 }
-// Style button like text links
-.govuk-button--text {
-  color: #1d70b8;
-  text-decoration: underline;
-  background-color: transparent;
-  box-shadow: none;
-  padding: 0;
-}
-.govuk-button--text:hover {
-  color: #003078;
-  background-color: transparent;
-  box-shadow: none;
-}
-.govuk-button--text:active {
-  color: #0b0c0c;
-  background-color: transparent;
-  box-shadow: none;
-}
-.govuk-button--text:focus {
-  outline: 3px solid transparent;
-  color: #0b0c0c;
-  background-color: #fd0;
-  box-shadow: 0 -2px #fd0, 0 4px #0b0c0c;
-  text-decoration: none;
-}
 
 .page-notice {
   color: #FFFFFF;
