@@ -1,5 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory, useLocation, withRouter } from 'react-router-dom';
+import { matchSorter } from 'match-sorter';
+
+import {
+  Combobox,
+  ComboboxInput,
+  ComboboxPopover,
+  ComboboxList,
+  ComboboxOption,
+} from '@reach/combobox';
 
 import FormFieldError from '../../components-v2/FormFieldError';
 import { VESSELS_URL } from '../../constants/ApiConstants';
@@ -9,6 +18,18 @@ import removeError from '../../utils/errorHandlers';
 import validate from '../../utils/validateFormData';
 import scrollToTop from '../../utils/scrollToTop';
 import PleasureCraftValidation from './PleasureCraftValidation';
+import { countries } from '../../utils/staticFormData';
+
+const useCountryMatch = (term) => {
+  return React.useMemo(
+    () => (term.trim() === ''
+      ? null
+      : matchSorter(countries, term, {
+        keys: [(item) => `${item.label}`],
+      })),
+    [term],
+  );
+};
 
 const PleasureCraftForm = ({ source, type }) => {
   const history = useHistory();
@@ -23,6 +44,10 @@ const PleasureCraftForm = ({ source, type }) => {
   const [submittedNextPage, setSubmittedNextPage] = useState(VESSELS_PAGE_URL);
   const [submitType, setSubmitType] = useState();
   const [title, setTitle] = useState();
+  const [searchTerm, setSearchTerm] = useState('');
+
+  const results = useCountryMatch(searchTerm);
+  const [searchResults, setSearchResults] = useState(results);
 
   document.title = type === 'edit' ? 'Edit pleasure craft' : 'Save pleasure craft';
   const vesselTypeOther = formData.vesselType !== undefined && formData.vesselType !== 'sailingBoat' && formData.vesselType !== 'motorboat';
@@ -53,6 +78,20 @@ const PleasureCraftForm = ({ source, type }) => {
       hasCallsign: hasCallsign || null,
       callsign: callsign || null,
     });
+  };
+
+  const handleSelect = (e) => {
+    setSearchTerm(e);
+    setSearchResults([]);
+    setFormData({ ...formData, vesselNationality: e });
+    setErrors(removeError('vesselNationality', errors));
+  };
+
+  const handleComboboxInputChange = (e) => {
+    setSearchTerm(e.target.value);
+    setSearchResults(results);
+    setFormData({ ...formData, [e.target.name]: '' });
+    setErrors(removeError(e.target.name, errors));
   };
 
   const handleChange = (e) => {
@@ -173,6 +212,12 @@ const PleasureCraftForm = ({ source, type }) => {
     if (location.state?.peopleId) {
       setVesselId(location.state.peopleId);
       getPleasureCraftData(location.state.peopleId);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (formData.vesselNationality) {
+      setSearchTerm(formData.vesselNationality);
     }
   }, []);
 
@@ -382,14 +427,34 @@ const PleasureCraftForm = ({ source, type }) => {
                               Country of registration
                             </label>
                             <FormFieldError error={errors.vesselNationality} />
-                            <input
-                              id="vesselNationality-input"
-                              className="govuk-input"
-                              name="vesselNationality"
-                              type="text"
-                              value={formData.hasRegistration === 'registrationYes' ? formData.vesselNationality : ''}
-                              onChange={handleChange}
-                            />
+                            <Combobox
+                              aria-label="Country of Registration"
+                              onSelect={(e) => handleSelect(e)}
+                            >
+                              <ComboboxInput
+                                id="vesselNationality-input"
+                                className="govuk-input"
+                                name="vesselNationality"
+                                value={searchTerm}
+                                onChange={(e) => handleComboboxInputChange(e)}
+                              />
+                              {searchResults && (
+                              <ComboboxPopover className="shadow-popup">
+                                {searchResults.length > 0 ? (
+                                  <ComboboxList className="comboBoxListItem">
+                                    {searchResults.slice(0, 10).map((searchResult) => (
+                                      <ComboboxOption
+                                        key={searchResult.id}
+                                        value={`${searchResult.label}`}
+                                      />
+                                    ))}
+                                  </ComboboxList>
+                                ) : (
+                                  <span />
+                                )}
+                              </ComboboxPopover>
+                              )}
+                            </Combobox>
                           </div>
                         </div>
                         )}
