@@ -150,7 +150,7 @@ Cypress.Commands.add('enterSkipperDetails', () => {
   cy.get('input[name="responsibleAddressLine1"]').clear().type(faker.address.streetAddress());
   cy.get('input[name="responsibleAddressLine2"]').clear().type(faker.address.streetName());
   cy.get('input[name="responsibleTown"]').clear().type(faker.address.city());
-  cy.get('input[name="responsibleCounty"]').clear().type(faker.address.county());
+  cy.get('input[name="responsibleCountry"]').clear().type(faker.address.county());
   cy.get('input[name="responsiblePostcode"]').clear().type(faker.address.zipCode());
 });
 

@@ -12,7 +12,7 @@ test('Renders with errors', () => {
       responsibleAddressLine1: 'responsibleAddressLine1Value',
       responsibleAddressLine2: 'responsibleAddressLine2Value',
       responsibleTown: 'responsibleTownValue',
-      responsibleCounty: 'responsibleCountyValue',
+      responsibleCountry: 'responsibleCountryValue',
       responsiblePostcode: 'responsiblePostcodeValue',
     }}
     errors={{
@@ -22,7 +22,7 @@ test('Renders with errors', () => {
       responsibleAddressLine1: 'responsibleAddressLine1Error',
       responsibleAddressLine2: 'responsibleAddressLine2Error',
       responsibleTown: 'responsibleTownError',
-      responsibleCounty: 'responsibleCountyError',
+      responsibleCountry: 'responsibleCountryError',
       responsiblePostcode: 'responsiblePostcodeError',
     }}
   />);
@@ -33,6 +33,6 @@ test('Renders with errors', () => {
   expect(screen.getByText('responsibleAddressLine1Error')).toBeInTheDocument();
   expect(screen.getByText('responsibleAddressLine2Error')).toBeInTheDocument();
   expect(screen.getByText('responsibleTownError')).toBeInTheDocument();
-  expect(screen.getByText('responsibleCountyError')).toBeInTheDocument();
+  expect(screen.getByText('responsibleCountryError')).toBeInTheDocument();
   expect(screen.getByText('responsiblePostcodeError')).toBeInTheDocument();
 });

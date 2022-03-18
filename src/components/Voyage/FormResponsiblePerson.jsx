@@ -98,14 +98,14 @@ const FormResponsiblePerson = ({
             onChange={handleChange}
           />
         </div>
-        <div id="responsibleCounty" className={`govuk-form-group ${errors.responsibleCounty ? 'govuk-form-group--error' : ''}`}>
-          <label className="govuk-label" htmlFor="responsibleCounty">County</label>
-          <FormError error={errors.responsibleCounty} />
+        <div id="responsibleCountry" className={`govuk-form-group ${errors.responsibleCountry ? 'govuk-form-group--error' : ''}`}>
+          <label className="govuk-label" htmlFor="responsibleCountry">Country</label>
+          <FormError error={errors.responsibleCountry} />
           <input
             className="govuk-input govuk-!-width-two-thirds"
-            name="responsibleCounty"
+            name="responsibleCountry"
             type="text"
-            value={data.responsibleCounty || ''}
+            value={data.responsibleCountry || ''}
             onChange={handleChange}
           />
         </div>

@@ -4,7 +4,7 @@ import { fireEvent, render, screen } from '@testing-library/react';
 
 import FormCheck from '../FormCheck';
 
-let mockHandleSubmit = jest.fn();
+const mockHandleSubmit = jest.fn();
 
 const renderPage = (props = {
   voyageData: {
@@ -29,7 +29,7 @@ const renderPage = (props = {
     registration: 'Boat',
     responsibleAddressLine1: 'Address',
     responsibleContactNo: '12345678910',
-    responsibleCounty: 'County',
+    responsibleCountry: 'Country',
     responsibleGivenName: 'John',
     responsiblePostcode: 'A1B2C3D4',
     responsibleSurname: 'Doe',
@@ -50,28 +50,23 @@ const renderPage = (props = {
 };
 
 describe('FormCheck', () => {
-  it('should render the page', () => {
-    renderPage();
-  });
-
   it('should render the page without errors', () => {
     renderPage();
 
     expect(screen.getByText('Check the information provided before submitting your voyage plan')).toBeInTheDocument();
-    expect(screen.getByText('Departure details')).toBeInTheDocument()
-    expect(screen.getByText('27/01/2022')).toBeInTheDocument()
-    expect(screen.getByText('06/06/2022')).toBeInTheDocument()
-    expect(screen.getByText('Address, Town, County, A1B2C3D4')).toBeInTheDocument()
-    expect(screen.getByText('Cancel voyage plan')).toBeInTheDocument()
-    expect(screen.getByText('Accept and submit voyage plan')).toBeInTheDocument()
-
+    expect(screen.getByText('Departure details')).toBeInTheDocument();
+    expect(screen.getByText('27/01/2022')).toBeInTheDocument();
+    expect(screen.getByText('06/06/2022')).toBeInTheDocument();
+    expect(screen.getByText('Address, Town, Country, A1B2C3D4')).toBeInTheDocument();
+    expect(screen.getByText('Cancel voyage plan')).toBeInTheDocument();
+    expect(screen.getByText('Accept and submit voyage plan')).toBeInTheDocument();
   });
 
   it('should call handleSubmit when submit is clicked', () => {
     renderPage();
 
     fireEvent.click(screen.getByText('Accept and submit voyage plan'));
-    expect(mockHandleSubmit).toHaveBeenCalled()
+    expect(mockHandleSubmit).toHaveBeenCalled();
   });
 
   it('should not render CTAs if report has a status of cancelled', () => {
@@ -98,7 +93,7 @@ describe('FormCheck', () => {
         registration: 'Boat',
         responsibleAddressLine1: 'Address',
         responsibleContactNo: '12345678910',
-        responsibleCounty: 'County',
+        responsibleCountry: 'Country',
         responsibleGivenName: 'John',
         responsiblePostcode: 'A1B2C3D4',
         responsibleSurname: 'Doe',
@@ -109,9 +104,8 @@ describe('FormCheck', () => {
       },
       voyageId: '1234',
       handleSubmit: () => { },
-      errors: {}
-    })
-
+      errors: {},
+    });
 
     expect(screen.queryByText('Accept and submit voyage plan')).not.toBeInTheDocument();
     expect(screen.queryByText('Cancel voyage plan')).not.toBeInTheDocument();
@@ -122,8 +116,8 @@ describe('FormCheck', () => {
       voyageData: null,
       voyageId: '1234',
       handleSubmit: () => { },
-      errors: {}
-    })
+      errors: {},
+    });
     // expect empty component
     expect(container.childElementCount).toEqual(0);
   });

@@ -124,7 +124,7 @@ describe('Voyage form data formatting', () => {
       responsibleAddressLine1: null,
       responsibleAddressLine2: null,
       responsibleContactNo: null,
-      responsibleCounty: null,
+      responsibleCountry: null,
       responsibleGivenName: null,
       responsiblePostcode: null,
       responsibleSurname: null,
@@ -133,7 +133,7 @@ describe('Voyage form data formatting', () => {
     const data = {
       responsibleAddressLine1: '123 Street',
       responsibleContactNo: '01234567891',
-      responsibleCounty: 'County',
+      responsibleCountry: 'Country',
       responsibleGivenName: 'John',
       responsiblePostcode: 'AB1 2CD',
       responsibleSurname: 'Doe',
