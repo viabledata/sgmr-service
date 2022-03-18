@@ -113,9 +113,8 @@ const FormResponsiblePerson = ({
             onChange={handleChange}
           />
         </div>
-        <div id="responsiblePostcode" className={`govuk-form-group ${errors.responsiblePostcode ? 'govuk-form-group--error' : ''}`}>
+        <div id="responsiblePostcode" className="govuk-form-group">
           <label className="govuk-label" htmlFor="responsiblePostcode">Postcode or ZIP</label>
-          <FormError error={errors.responsiblePostcode} />
           <input
             className="govuk-input govuk-input--width-10"
             name="responsiblePostcode"
