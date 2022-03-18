@@ -66,7 +66,7 @@ const SectionTablePeople = ({ pageData }) => {
               <tbody className="govuk-table__body">
                 {Object.entries(peopleData).map((person) => {
                   return (
-                    <tr className="govuk-table__row" key={person[1].id} role="row">
+                    <tr className="govuk-table__row" data-testid="row" key={person[1].id} role="row">
                       <td className="govuk-table__cell" role="cell">
                         <span className="responsive-table__heading" aria-hidden="true">
                           Last Name
