@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
-import { useThrottle } from 'react-use';
 import { Link } from 'react-router-dom';
-import { matchSorter } from 'match-sorter';
 
 import {
   Combobox,
@@ -11,42 +9,48 @@ import {
   ComboboxOption,
 } from '@reach/combobox';
 
+import axios from 'axios';
+import Auth from '../../lib/Auth';
 import { FORM_STEPS } from '../../constants/ClientConstants';
+import { COUNTRIES_URL } from '../../constants/ApiConstants';
 import FormError from './FormError';
 import PortField from '../PortField';
-import { countries } from '../../utils/staticFormData';
 
-const useCountryMatch = (term) => {
-  const throttledTerm = useThrottle(term, 100);
-  return React.useMemo(
-    () => (term.trim() === ''
-      ? null
-      : matchSorter(countries, term, {
-        keys: [(item) => `${item.label}`],
-      })),
-    [throttledTerm],
-  );
-};
+let countries = [];
 
 const FormDeparture = ({
-  handleSubmit, handleChange, updateFieldValue, updatePortFields, setCountryError, data, errors, voyageId,
+  handleSubmit, handleChange, updateFieldValue, updatePortFields, data, errors, voyageId,
 }) => {
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState(data.departureCountry || '');
 
-  const results = useCountryMatch(searchTerm);
-
-  const [searchResults, setSearchResults] = useState(results);
+  const fetchCountries = (query) => {
+    if (query.length < 3) {
+      countries = [];
+    } else {
+      axios.get(`${COUNTRIES_URL}?name=${encodeURIComponent(query)}`, {
+        headers: { Authorization: `Bearer ${Auth.retrieveToken()}` },
+      })
+        .then((resp) => {
+          countries = resp.data.data;
+        })
+        .catch((err) => {
+          if (err.response) {
+            countries = [];
+          }
+        });
+    }
+  };
 
   const handleSelect = (e) => {
-    setSearchTerm(e);
     updateFieldValue('departureCountry', e);
-    setSearchResults([]);
+    console.log(e);
+    setSearchTerm(e);
+    countries = [];
   };
 
   const handleComboboxInputChange = (e) => {
-    setSearchTerm(e.target.value);
     updateFieldValue('departureCountry', null);
-    setSearchResults(results);
+    setSearchTerm(e.target.value);
   };
 
   document.title = 'Intended departure details';
@@ -199,14 +203,15 @@ const FormDeparture = ({
             value={searchTerm}
             onChange={(e) => handleComboboxInputChange(e)}
           />
-          {searchResults && (
+          {fetchCountries(searchTerm)}
+          {countries && (
           <ComboboxPopover className="shadow-popup">
-            {searchResults.length > 0 ? (
+            {countries.length > 0 ? (
               <ComboboxList className="comboBoxListItem">
-                {searchResults.slice(0, 10).map((searchResult) => (
+                {countries.slice(0, 10).map((country) => (
                   <ComboboxOption
-                    key={searchResult.id}
-                    value={`${searchResult.label}`}
+                    key={country.iso31661alpha3}
+                    value={`${country.name}`}
                   />
                 ))}
               </ComboboxList>
@@ -232,7 +237,6 @@ const FormDeparture = ({
             defaultValue={data.departurePort}
             fieldName="departurePort"
             country={data.departureCountry}
-            setCountryError={setCountryError}
             onConfirm={(result) => {
               updatePortFields(true, { name: result.name, unlocode: result.unlocode });
             }}
