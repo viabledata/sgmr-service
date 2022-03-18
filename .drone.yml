@@ -13,9 +13,9 @@ steps:
   image: quay.io/ukhomeofficedigital/cop-secrets
   environment:
     AWS_ACCESS_KEY_ID:
-      from_secret: DEV_DRONE_AWS_ACCESS_KEY_ID
+      from_secret:  DEV_DRONE_SPCR_AWS_ACCESS_KEY_ID
     AWS_SECRET_ACCESS_KEY:
-      from_secret: DEV_DRONE_AWS_SECRET_ACCESS_KEY
+      from_secret: DEV_DRONE_SPCR_AWS_SECRET_ACCESS_KEY
     DEPLOY_ENV: dev
     DRONE_SERVER: https://drone-gh.acp.homeoffice.gov.uk
     DRONE_TOKEN:
@@ -107,7 +107,7 @@ steps:
     WHITELIST_FILE: whitelist
   when:
     branch:
-    - master
+    - spcr
     event:
     - push
 
@@ -132,7 +132,7 @@ steps:
       from_secret: QUAY_USERNAME
   when:
     branch:
-    - master
+    - spcr
     event:
     - push
 
@@ -151,7 +151,7 @@ steps:
       from_secret: QUAY_USERNAME
   when:
     branch:
-    - master
+    - spcr
     event:
     - push
 
@@ -167,34 +167,34 @@ steps:
   - kd --insecure-skip-tls-verify -f kube/ingress.yml
   environment:
     KUBE_NAMESPACE:
-      from_secret: DEV_KUBE_NAMESPACE_COP_SGMR
+      from_secret: DEV_KUBE_NAMESPACE_SPCR
     KUBE_SERVER:
       from_secret: DEV_KUBE_SERVER
     KUBE_TOKEN:
-      from_secret: DEV_SGMR_KUBE_TOKEN
+      from_secret: DEV_SPCR_KUBE_TOKEN
     MAILSLURP_API_KEY:
-      from_secret: DEV_SGMR_MAILSLURP_API_KEY
+      from_secret: DEV_SPCR_MAILSLURP_API_KEY
     NGINX_IMAGE:
       from_secret: NGINX_IMAGE
     NGINX_TAG:
       from_secret: NGINX_TAG
     SGMR_DATA_API_BASE_URL:
-      from_secret: DEV_SGMR_DATA_API_BASE_URL
+      from_secret: DEV_SPCR_DATA_API_BASE_URL
     SGMR_MAINTENANCE:
-      from_secret: DEV_SGMR_MAINTENANCE
+      from_secret: DEV_SPCR_MAINTENANCE
     SGMR_SERVICE_IMAGE:
-      from_secret: SGMR_SERVICE_IMAGE
+      from_secret: DEV_SPCR_SERVICE_IMAGE
     SGMR_SERVICE_NAME:
-      from_secret: SGMR_SERVICE_NAME
+      from_secret: DEV_SPCR_SERVICE_NAME
     SGMR_SERVICE_PORT:
-      from_secret: SGMR_SERVICE_PORT
+      from_secret: DEV_SPCR_SERVICE_PORT
     SGMR_SERVICE_URL:
-      from_secret: DEV_SGMR_SERVICE_URL
+      from_secret: DEV_SPCR_SERVICE_URL
     WHITELIST:
       from_secret: DEV_WHITELIST
   when:
     branch:
-    - master
+    - spcr
     event:
     - push
 
