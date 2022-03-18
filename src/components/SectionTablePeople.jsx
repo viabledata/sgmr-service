@@ -13,7 +13,14 @@ const SectionTablePeople = ({ pageData }) => {
 
   const storeData = () => {
     getData(`${PEOPLE_URL}?pagination=false`)
-      .then((resp) => { setPeopleData(resp); });
+      .then((resp) => {
+        setPeopleData(resp.sort((a, b) => {
+          if (a.lastName === b.lastName) {
+            return a.firstName < b.firstName ? -1 : 1;
+          }
+          return a.lastName < b.lastName ? -1 : 1;
+        }));
+      });
   };
 
   const getPersonType = (personType) => {
