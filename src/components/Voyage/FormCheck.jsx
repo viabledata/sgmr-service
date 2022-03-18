@@ -194,7 +194,7 @@ const FormCheck = ({
         <div className="govuk-summary-list__row">
           <dt className="govuk-summary-list__key">Address</dt>
           <dd className="govuk-summary-list__value">
-            {([voyageData.responsibleAddressLine1, voyageData.responsibleAddressLine2, voyageData.responsibleTown, voyageData.responsibleCountry, voyageData.responsiblePostcode]
+            {([voyageData.responsibleAddressLine1, voyageData.responsibleAddressLine2, voyageData.responsibleTown, voyageData.responsibleCounty, voyageData.responsiblePostcode]
               .filter(Boolean).join(', \n'))}
           </dd>
         </div>

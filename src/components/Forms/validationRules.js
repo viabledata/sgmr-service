@@ -177,8 +177,8 @@ export const responsiblePersonValidationRules = [
     message: 'You must enter a town or a city name',
   },
   {
-    inputField: 'responsibleCountry',
-    errorDisplayId: 'responsibleCountry',
+    inputField: 'responsibleCounty',
+    errorDisplayId: 'responsibleCounty',
     type: 'required',
     message: 'You must enter a country name',
   },

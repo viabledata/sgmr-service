@@ -34,7 +34,7 @@ describe('validate', () => {
   const data = {
     responsibleAddressLine1: '123 Street',
     responsibleContactNo: '01234567891',
-    responsibleCountry: 'Country',
+    responsibleCounty: 'Country',
     responsiblePostcode: 'AB1 2CD',
     responsibleGivenName: null,
     responsibleSurname: '',
