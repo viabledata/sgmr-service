@@ -98,6 +98,10 @@ const FormResponsiblePerson = ({
             onChange={handleChange}
           />
         </div>
+        {
+          /* It should be noted that responsibleCounty should actually be responsibleCountry, however this has not been changed currently as the
+             backend needs to be updated first */
+        }
         <div id="responsibleCounty" className={`govuk-form-group ${errors.responsibleCounty ? 'govuk-form-group--error' : ''}`}>
           <label className="govuk-label" htmlFor="responsibleCounty">Country</label>
           <FormError error={errors.responsibleCounty} />
