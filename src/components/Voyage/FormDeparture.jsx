@@ -1,19 +1,22 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 import { FORM_STEPS } from '../../constants/ClientConstants';
 import FormError from './FormError';
 import PortField from '../PortField';
 
 const FormDeparture = ({
-  handleSubmit, handleChange, updateFieldValue, data, errors, voyageId,
+  handleSubmit, handleChange, updatePortFields, data, errors, voyageId,
 }) => {
-  document.title = 'Departure details';
+  document.title = 'Intended departure details';
 
   if (!data) { return null; }
   return (
     <section>
-      <h1 className="govuk-heading-xl">Departure details</h1>
-      <p className="govuk-body-l">You can update these details if your plans change, for example, due to bad weather</p>
+      <h1 className="govuk-heading-xl">Intended departure details</h1>
+      <p className="govuk-body-l">
+        Provide the intended departure details for the voyage. You can update these details if your voyage plan changes because of the weather or an emergency on board.
+      </p>
 
       <div id="departureDate" className={`govuk-form-group ${errors.departureDate ? 'govuk-form-group--error' : ''}`}>
         <fieldset className="govuk-fieldset" role="group" aria-describedby="dob-hint">
@@ -144,16 +147,16 @@ const FormDeparture = ({
 
         <div className="govuk-form-group">
           <label className="govuk-label govuk-label--m" htmlFor="departurePort">
-            Departure point
+            Name of departure port or location
           </label>
           <div className="govuk-hint">
-            You can enter a port, marina or anchorage name
+            For example MDL Hamble Point Marina
           </div>
           <PortField
             defaultValue={data.departurePort}
             fieldName="departurePort"
             onConfirm={(result) => {
-              updateFieldValue('departurePort', result.unlocode || result.name);
+              updatePortFields(true, { name: result.name, unlocode: result.unlocode });
             }}
           />
         </div>
@@ -167,6 +170,11 @@ const FormDeparture = ({
       >
         Save and continue
       </button>
+      <p className="govuk-body">
+        <Link to="/voyage-plans" className="govuk-link govuk-link--no-visited-state" onClick={(e) => handleSubmit(e, FORM_STEPS.DEPARTURE_SAVE_AND_EXIT, voyageId)}>
+          Save and come back later
+        </Link>
+      </p>
     </section>
   );
 };
