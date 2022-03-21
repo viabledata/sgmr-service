@@ -22,4 +22,3 @@ spec:
       name: {{.SGMR_SERVICE_NAME}}
   policyTypes:
     - Ingress
-    - Egress

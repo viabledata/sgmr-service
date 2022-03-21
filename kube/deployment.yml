@@ -24,6 +24,7 @@ spec:
         image: "{{.SGMR_SERVICE_IMAGE}}:{{.SGMR_SERVICE_TAG}}"
         imagePullPolicy: Always
         securityContext:
+          allowPrivilegeEscalation: false
           runAsNonRoot: true
           runAsUser: 100
         resources:
@@ -45,14 +46,15 @@ spec:
         image: "{{.NGINX_IMAGE}}:{{.NGINX_TAG}}"
         imagePullPolicy: Always
         securityContext:
+          allowPrivilegeEscalation: false
           runAsNonRoot: true
         resources:
          limits:
-          memory: "100Mi"
-          cpu: "100m"
+          memory: "1024Mi"
+          cpu: "1000m"
          requests:
-          memory: "50Mi"
-          cpu: "100m"
+          memory: "1024Mi"
+          cpu: "1000m"
         env:
           - name: PROXY_SERVICE_HOST
             value: 'http://127.0.0.1'
@@ -80,3 +82,4 @@ spec:
       - name: certs
         secret:
           secretName: "{{.SGMR_SERVICE_NAME}}-pod-cmio"
+          
