@@ -8,6 +8,7 @@ import {
 import { FORM_STEPS } from '../../constants/ClientConstants';
 import { getData, patchData } from '../../utils/apiHooks';
 import scrollToTopOnError from '../../utils/scrollToTopOnError';
+import sortNames from '../../utils/sortData';
 import PeopleTable from './PeopleTable';
 import { formatPerson } from './VoyageFormDataFormatting';
 
@@ -17,7 +18,7 @@ const FormVoyagePeople = ({
   document.title = 'People on your voyage';
 
   const [savedPeople, setSavedPeople] = useState([]);
-  const [voyagePeople, setVoyagePeople] = useState([]);
+  // const [voyagePeople, setVoyagePeople] = useState([]);
   const [peopleToAdd, setPeopleToAdd] = useState([]);
 
   const handleLinkToNewPersonForm = (e) => {
@@ -27,7 +28,9 @@ const FormVoyagePeople = ({
   };
 
   const handleAddPeopleButton = async () => {
-    if (!peopleToAdd.length && !voyagePeople.length) {
+    if (!peopleToAdd.length 
+      // && !voyagePeople.length
+      ) {
       setErrors({ voyageForm: 'You need to add at least one person to your voyage' });
       scrollToTopOnError('voyageForm');
     } else {
@@ -45,14 +48,14 @@ const FormVoyagePeople = ({
     }
   };
 
-  const fetchVoyagePeople = async () => {
-    const response = await getData(`${VOYAGE_REPORT_URL}/${voyageId}/people`);
-    setVoyagePeople(response.items);
-  };
+  // const fetchVoyagePeople = async () => {
+  //   const response = await getData(`${VOYAGE_REPORT_URL}/${voyageId}/people`);
+  //   setVoyagePeople(sortNames(response.items));
+  // };
 
   const fetchSavedPeople = async () => {
     const userSavedPeopleLocal = await getData(PEOPLE_URL);
-    setSavedPeople(userSavedPeopleLocal);
+    setSavedPeople(sortNames(userSavedPeopleLocal));
   };
 
   const handlePeopleSelectionChange = (selectedPeople) => {
@@ -62,7 +65,7 @@ const FormVoyagePeople = ({
   useEffect(() => {
     if (voyageId) {
       fetchSavedPeople();
-      fetchVoyagePeople();
+      // fetchVoyagePeople();
     }
   }, [voyageId]);
 
@@ -103,7 +106,7 @@ const FormVoyagePeople = ({
         </>
       )}
 
-      {!!voyagePeople.length && (
+      {/* {!!voyagePeople.length && (
         <>
           <p className="govuk-body-l">
             People already added to the voyage plan:
@@ -121,7 +124,7 @@ const FormVoyagePeople = ({
             Save and continue
           </button>
         </>
-      )}
+      )} */}
     </section>
   );
 };
