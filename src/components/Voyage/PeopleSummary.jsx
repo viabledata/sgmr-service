@@ -21,7 +21,7 @@ const PeopleSummary = ({ voyageId, source }) => {
         return 'Employed Crew';
     }
   };
-console.log(manifestData)
+
   useEffect(() => {
     getData(`${VOYAGE_REPORT_URL}/${voyageId}/people`, location.pathname)
       .then((resp) => { setManifestData(sortNames(resp.items)); });
