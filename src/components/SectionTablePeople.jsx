@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 // App imports
 import { PEOPLE_URL } from '../constants/ApiConstants';
 import { getData } from '../utils/apiHooks';
+import sortNames from '../utils/sortData';
 
 const SectionTablePeople = ({ pageData }) => {
   document.title = 'People';
@@ -14,12 +15,7 @@ const SectionTablePeople = ({ pageData }) => {
   const storeData = () => {
     getData(`${PEOPLE_URL}?pagination=false`)
       .then((resp) => {
-        setPeopleData(resp.sort((a, b) => {
-          if (a.lastName === b.lastName) {
-            return a.firstName < b.firstName ? -1 : 1;
-          }
-          return a.lastName < b.lastName ? -1 : 1;
-        }));
+        setPeopleData(sortNames(resp));
       });
   };
 
