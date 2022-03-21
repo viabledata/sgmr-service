@@ -12,7 +12,6 @@ import {
 import { PORTS_URL } from '../constants/ApiConstants';
 import Auth from '../lib/Auth';
 
-
 const PortField = ({
   onConfirm = () => {}, fieldName, defaultValue,
 }) => {

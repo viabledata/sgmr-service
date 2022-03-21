@@ -22,7 +22,6 @@ let countries = [];
 const FormArrival = ({
   handleSubmit, handleChange, updatePortFields, data, errors, voyageId,
 }) => {
-
   const [searchTerm, setSearchTerm] = useState(data.arrivalCountry || '');
 
   const fetchCountries = (query) => {
