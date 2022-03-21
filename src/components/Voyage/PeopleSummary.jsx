@@ -5,6 +5,7 @@ import { VOYAGE_REPORT_URL } from '../../constants/ApiConstants';
 import { FORM_STEPS } from '../../constants/ClientConstants';
 import { getData } from '../../utils/apiHooks';
 import { formatUIDate } from '../../utils/date';
+import sortNames from '../../utils/sortData';
 import Details from '../Details';
 
 const PeopleSummary = ({ voyageId, source }) => {
@@ -20,10 +21,10 @@ const PeopleSummary = ({ voyageId, source }) => {
         return 'Employed Crew';
     }
   };
-
+console.log(manifestData)
   useEffect(() => {
     getData(`${VOYAGE_REPORT_URL}/${voyageId}/people`, location.pathname)
-      .then((resp) => { setManifestData(resp.items); });
+      .then((resp) => { setManifestData(sortNames(resp.items)); });
   }, []);
 
   if (!manifestData) { return null; }
@@ -43,7 +44,7 @@ const PeopleSummary = ({ voyageId, source }) => {
         {manifestData.map((person) => {
           return (
             <tbody className="govuk-table__body" key={person.id}>
-              <tr className="govuk-table__row" role="row">
+              <tr className="govuk-table__row" role="row" data-testid="row">
                 <td className="govuk-table__cell" role="cell">
                   <span className="responsive-table__heading" aria-hidden="true">
                     Last name
