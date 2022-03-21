@@ -1,25 +1,36 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 
 import { FORM_STEPS } from '../../constants/ClientConstants';
+import formatPortValue from '../../utils/formatPortData';
 import FormError from './FormError';
 import PortField from '../PortField';
 
 const FormArrival = ({
-  handleSubmit, handleChange, updateFieldValue, data, errors, voyageId,
+  handleSubmit, handleChange, updatePortFields, data, errors, voyageId,
 }) => {
-  document.title = 'Arrival details';
+  const [portValue, setPortValue] = useState();
+  document.title = 'Intended arrival details';
+
+  useEffect(() => {
+    if (data.departurePort || data.departurePortName) {
+      setPortValue(formatPortValue(data, 'arrival'));
+    }
+  }, [data]);
 
   if (!data) { return null; }
   return (
     <section>
-      <h1 className="govuk-heading-xl">Arrival details</h1>
-      <p className="govuk-body-l">You can update these details if your plans change, for example, due to bad weather</p>
+      <h1 className="govuk-heading-xl">Intended arrival details</h1>
+      <p className="govuk-body-l">
+        Provide the intended departure details for the voyage. You can update these details if your voyage plan changes because of the weather or an emergency on board.
+      </p>
 
       <div id="arrivalDate" className={`govuk-form-group ${errors.arrivalDate ? 'govuk-form-group--error' : ''}`}>
         <fieldset className="govuk-fieldset" role="group" aria-describedby="dob-hint">
           <legend className="govuk-fieldset__legend">
             <label className="govuk-label govuk-label--m" htmlFor="arrivalDate">
-              Arrival date
+              Intended arrival date
             </label>
             <FormError error={errors.arrivalDate} />
           </legend>
@@ -143,17 +154,16 @@ const FormArrival = ({
         <FormError error={errors.arrivalLocation} />
         <div className={`govuk-form-group ${errors.arrivalPort ? 'govuk-form-group--error' : ''}`}>
           <label className="govuk-label govuk-label--m" htmlFor="arrivalPort">
-            Arrival point
+            Name of arrival port or location
           </label>
-
           <div className="govuk-hint">
-            You can enter a port, marina or anchorage name
+            For example MDL Hamble Point Marina
           </div>
           <PortField
-            defaultValue={data.arrivalPort}
+            defaultValue={portValue}
             fieldName="arrivalPort"
             onConfirm={(result) => {
-              updateFieldValue('arrivalPort', result.unlocode || result.name);
+              updatePortFields('arrivalPort', { name: result?.name || '', unlocode: result?.unlocode || '' });
             }}
           />
         </div>
@@ -167,6 +177,11 @@ const FormArrival = ({
       >
         Save and continue
       </button>
+      <p className="govuk-body">
+        <Link to="/voyage-plans" className="govuk-link govuk-link--no-visited-state" onClick={(e) => handleSubmit(e, FORM_STEPS.ARRIVAL_SAVE_AND_EXIT, voyageId)}>
+          Save and come back later
+        </Link>
+      </p>
     </section>
   );
 };

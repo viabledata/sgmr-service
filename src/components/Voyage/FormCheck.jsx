@@ -8,6 +8,7 @@ import {
   SAVE_VOYAGE_VESSEL_URL,
 } from '../../constants/ClientConstants';
 import { formatUIDate } from '../../utils/date';
+import formatPortValue from '../../utils/formatPortData';
 import PeopleSummary from './PeopleSummary';
 
 const FormCheck = ({
@@ -46,7 +47,7 @@ const FormCheck = ({
         </div>
         <div className="govuk-summary-list__row">
           <dt className="govuk-summary-list__key">Departure point</dt>
-          <dd className="govuk-summary-list__value">{voyageData.departurePort}</dd>
+          <dd className="govuk-summary-list__value">{formatPortValue(voyageData, 'departure')}</dd>
         </div>
       </dl>
       <div className="govuk-summary-list govuk-!-margin-bottom-9">
@@ -84,7 +85,7 @@ const FormCheck = ({
         </div>
         <div className="govuk-summary-list__row">
           <dt className="govuk-summary-list__key">Arrival point</dt>
-          <dd className="govuk-summary-list__value">{voyageData.arrivalPort}</dd>
+          <dd className="govuk-summary-list__value">{formatPortValue(voyageData, 'arrival')}</dd>
         </div>
       </dl>
       <div className="govuk-summary-list govuk-!-margin-bottom-9">
