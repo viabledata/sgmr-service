@@ -12,42 +12,41 @@ import {
 import { PORTS_URL } from '../constants/ApiConstants';
 import Auth from '../lib/Auth';
 
-let ports = [];
-
-function fetchPorts(query) {
-  if (query.length < 3) {
-    ports = [];
-  } else {
-    axios.get(`${PORTS_URL}?name=${encodeURIComponent(query)}`, {
-      headers: { Authorization: `Bearer ${Auth.retrieveToken()}` },
-    })
-      .then((resp) => {
-        ports = resp.data;
-      })
-      .catch((err) => {
-        if (err.response) {
-          ports = [];
-        }
-      });
-  }
-}
-
 const PortField = ({
-  onConfirm = () => {}, fieldName, defaultValue = '', ...props
+  onConfirm = () => {}, fieldName, defaultValue,
 }) => {
+  const [portList, setPortList] = useState([]);
   const [portEntered, setPortEntered] = useState('');
-  const [searchTerm, setSearchTerm] = useState(defaultValue || '');
+  const [searchTerm, setSearchTerm] = useState('');
   const [otherValue, setOtherValue] = useState('');
+
+  const fetchPorts = (query) => {
+    if (query.length >= 2) {
+      axios.get(`${PORTS_URL}?name=${encodeURIComponent(query)}`, {
+        headers: { Authorization: `Bearer ${Auth.retrieveToken()}` },
+      })
+        .then((resp) => {
+          setPortList(resp.data);
+        })
+        .catch((err) => {
+          if (err.response) {
+            setPortList([]);
+          }
+        });
+    }
+  };
 
   const handleSearchTermChange = (event) => {
     setSearchTerm(event.target.value);
+    fetchPorts(event.target.value);
   };
 
-  const togglePortField = (other, value) => {
-    if (other) {
-      setOtherValue('');
+  const togglePortField = (isSelectorField, value) => {
+    if (isSelectorField) {
+      setOtherValue(''); // user selects from the autoselect
+      setPortList([]);
     } else {
-      setSearchTerm('');
+      setSearchTerm(''); // user is typing in the 'other' field
       setOtherValue(value);
       setPortEntered({ name: value, unlocode: null });
     }
@@ -70,6 +69,10 @@ const PortField = ({
     onConfirm(portEntered);
   }, [portEntered]);
 
+  useEffect(() => {
+    setSearchTerm(defaultValue || '');
+  }, [defaultValue]);
+
   return (
     <>
       <Combobox
@@ -77,29 +80,28 @@ const PortField = ({
         data-testid="portContainer"
         aria-label="Ports"
         onSelect={(e) => handlePortSelection(e)}
-        name={fieldName}
-        {...props}
       >
         <ComboboxInput
+          id="autocomplete"
           className="govuk-input"
           data-testid="port"
+          name={`autocomplete${fieldName}`}
           onChange={handleSearchTermChange}
           value={searchTerm}
         />
-        {fetchPorts(searchTerm)}
-        {ports && (
+        {portList.length > 0 && (
           <ComboboxPopover className="shadow-popup">
-            {ports.length > 0 ? (
+            {portList.length > 0 ? (
               <ComboboxList className="comboBoxListItem">
-                {ports.slice(0, 10).map((port) => {
-                  const str = port.unlocode === '' ? `${port.name}` : `${port.name} (${port.unlocode})`;
+                {portList.slice(0, 10).map((port) => {
+                  const str = port.unlocode === '' ? `${port?.name}` : `${port.name} (${port.unlocode})`;
                   return <ComboboxOption role="option" key={str} value={str} />;
                 })}
               </ComboboxList>
             ) : (
-              <span style={{ display: 'none' }}>
+              <ComboboxList className="comboBoxListItem">
                 No results found
-              </span>
+              </ComboboxList>
             )}
           </ComboboxPopover>
         )}

@@ -70,14 +70,9 @@ const FormVoyageContainer = () => {
     removeError(name);
   };
 
-  const updatePortFields = (isDeparture, portDetails) => {
-    if (isDeparture) {
-      setFormData({ ...formData, departurePort: portDetails.unlocode, departurePortName: portDetails.name });
-      removeError('departureLocation');
-    } else {
-      setFormData({ ...formData, arrivalPort: portDetails.unlocode, arrivalPortName: portDetails.name });
-      removeError('arrivalLocation');
-    }
+  const updatePortFields = (portField, portDetails) => {
+    setFormData({ ...formData, [portField]: portDetails.unlocode, [`${portField}Name`]: portDetails.name });
+    removeError(`${portField}location`);
   };
 
   const handleChange = (e) => {
@@ -217,13 +212,11 @@ const FormVoyageContainer = () => {
       // get initial data set from formData
       const data = formData;
 
-      // check for autocomplete field current value
-      const autocompleteField = document.getElementById('autocomplete')?.name ? document.getElementById('autocomplete').name : null;
-      const autocompleteValue = document.getElementById('autocomplete')?.value === '' ? null : document.getElementById('autocomplete')?.value;
-      const autocompleteNameValue = autocompleteField ? { [autocompleteField]: autocompleteValue } : null;
+      const fieldType = !document.getElementById('autocomplete')?.value ? (document.getElementById('autocomplete').name).replace('autocomplete', '') : null;
+      const updatedPortValues = fieldType ? { [fieldType]: null, [`${fieldType}Name`]: null } : null;
 
       // update data for submitting
-      const updatedData = { ...data, ...autocompleteNameValue };
+      const updatedData = { ...data, ...updatedPortValues };
       const dataToSubmit = formatDataToSubmit(sourceForm, updatedData, extraParams);
       setFormData(updatedData);
 

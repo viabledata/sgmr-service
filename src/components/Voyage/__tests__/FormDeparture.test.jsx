@@ -19,6 +19,5 @@ describe('FormDeparture', () => {
     expect(screen.getAllByRole('textbox').length).toBe(6); // day, month, year, hour, minute
     expect(screen.getAllByRole('combobox').length).toBe(1); // port
     expect(screen.getByTestId('portContainer')).toHaveAttribute('id', 'portsCombobox');
-    expect(screen.getByTestId('portContainer')).toHaveAttribute('name', 'departurePort');
   });
 });
