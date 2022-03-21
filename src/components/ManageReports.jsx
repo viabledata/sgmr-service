@@ -6,7 +6,6 @@ import { EDIT_VOYAGE_CHECK_DETAILS_URL } from '../constants/ClientConstants';
 import { pageSizeParam } from '../lib/config';
 import { deleteItem, getData } from '../utils/apiHooks';
 import { formatUIDate } from '../utils/date';
-import formatPortValue from '../utils/formatPortData';
 import Pagination from './Pagination';
 import LoadingSpinner from './LoadingSpinner';
 
