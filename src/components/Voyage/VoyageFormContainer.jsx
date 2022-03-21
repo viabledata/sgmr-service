@@ -210,22 +210,14 @@ const FormVoyageContainer = () => {
       }
     } else {
       // get initial data set from formData
-      const data = formData;
-
-      const fieldType = !document.getElementById('autocomplete')?.value ? (document.getElementById('autocomplete').name).replace('autocomplete', '') : null;
-      const updatedPortValues = fieldType ? { [fieldType]: null, [`${fieldType}Name`]: null } : null;
 
       // update data for submitting
-      const updatedData = { ...data, ...updatedPortValues };
-      const dataToSubmit = formatDataToSubmit(sourceForm, updatedData, extraParams);
-      setFormData(updatedData);
+      const dataToSubmit = formatDataToSubmit(sourceForm, formData, extraParams);
+      // setFormData(updatedData);
 
       // validate data
-      const validationErrors = await VoyageFormValidation(updatedData, sourceForm);
+      const validationErrors = await VoyageFormValidation(formData, sourceForm);
       setErrors(validationErrors);
-
-      // store updated data in state & session storage
-      setFormData(updatedData);
 
       // Handle missing voyageId (for if user comes to a subpage directly, and we haven't got the id)
       if (!voyageId) {
