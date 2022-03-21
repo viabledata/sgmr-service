@@ -19,7 +19,7 @@ import PortField from '../PortField';
 let countries = [];
 
 const FormDeparture = ({
-  handleSubmit, handleChange, updateFieldValue, updatePortFields, data, errors, voyageId,
+  handleSubmit, handleChange, updatePortFields, data, errors, voyageId,
 }) => {
   const [searchTerm, setSearchTerm] = useState(data.departureCountry || '');
 
@@ -42,14 +42,11 @@ const FormDeparture = ({
   };
 
   const handleSelect = (e) => {
-    updateFieldValue('departureCountry', e);
-    console.log(e);
     setSearchTerm(e);
     countries = [];
   };
 
   const handleComboboxInputChange = (e) => {
-    updateFieldValue('departureCountry', null);
     setSearchTerm(e.target.value);
   };
 
@@ -193,7 +190,7 @@ const FormDeparture = ({
           Country of departure
         </label>
         <Combobox
-          aria-label="Country of Registration"
+          aria-label="Country of departure"
           onSelect={(e) => handleSelect(e)}
         >
           <ComboboxInput

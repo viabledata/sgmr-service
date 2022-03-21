@@ -89,7 +89,6 @@ const PortField = ({
           value={searchTerm}
         />
         {fetchPorts(searchTerm)}
-        {console.log(searchTerm)}
         {ports && (
           <ComboboxPopover className="shadow-popup">
             {ports.length > 0 ? (

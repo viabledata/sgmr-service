@@ -234,7 +234,6 @@ const FormVoyageContainer = () => {
       // validate data
       const validationErrors = await VoyageFormValidation(updatedData, sourceForm);
       setErrors(validationErrors);
-      console.log(validationErrors);
 
       // store updated data in state & session storage
       setFormData(updatedData);
@@ -318,7 +317,6 @@ const FormVoyageContainer = () => {
                 <FormDeparture
                   handleSubmit={handleSubmit}
                   handleChange={handleChange}
-                  updateFieldValue={updateFieldValue}
                   updatePortFields={updatePortFields}
                   setCountryError={setCountryError}
                   data={formData || voyageData}

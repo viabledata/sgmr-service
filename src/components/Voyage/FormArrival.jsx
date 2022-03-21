@@ -1,14 +1,55 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
+import {
+  Combobox,
+  ComboboxInput,
+  ComboboxPopover,
+  ComboboxList,
+  ComboboxOption,
+} from '@reach/combobox';
+
+import axios from 'axios';
+import Auth from '../../lib/Auth';
 import { FORM_STEPS } from '../../constants/ClientConstants';
+import { COUNTRIES_URL } from '../../constants/ApiConstants';
 import FormError from './FormError';
 import PortField from '../PortField';
-import { countries } from '../../utils/staticFormData';
+
+let countries = [];
 
 const FormArrival = ({
   handleSubmit, handleChange, updatePortFields, data, errors, voyageId,
 }) => {
+  const [searchTerm, setSearchTerm] = useState(data.arrivalCountry || '');
+
+  const fetchCountries = (query) => {
+    if (query.length < 3) {
+      countries = [];
+    } else {
+      axios.get(`${COUNTRIES_URL}?name=${encodeURIComponent(query)}`, {
+        headers: { Authorization: `Bearer ${Auth.retrieveToken()}` },
+      })
+        .then((resp) => {
+          countries = resp.data.data;
+        })
+        .catch((err) => {
+          if (err.response) {
+            countries = [];
+          }
+        });
+    }
+  };
+
+  const handleSelect = (e) => {
+    setSearchTerm(e);
+    countries = [];
+  };
+
+  const handleComboboxInputChange = (e) => {
+    setSearchTerm(e.target.value);
+  };
+
   document.title = 'Intended arrival details';
 
   if (!data) { return null; }
@@ -145,21 +186,38 @@ const FormArrival = ({
 
       <div id="arrivalCountry" className={`govuk-form-group ${errors.arrivalCountry ? 'govuk-form-group--error' : ''}`}>
         <FormError error={errors.arrivalCountry} />
-        <label className="govuk-label govuk-label--m" htmlFor="arrivalCountry">
+        <label className="govuk-label govuk-label--m" htmlFor="country-input">
           Country of arrival
         </label>
-        <select
-          className="govuk-select"
-          name="arrivalCountry"
-          type="text"
-          value={data.arrivalCountry || 'Please select'}
-          onChange={handleChange}
+        <Combobox
+          aria-label="Country of arrival"
+          onSelect={(e) => handleSelect(e)}
         >
-          <option disabled>Please select</option>
-          {countries.map((arrivalCountry) => (
-            <option key={arrivalCountry.id} value={arrivalCountry.value}>{arrivalCountry.label}</option>
-          ))}
-        </select>
+          <ComboboxInput
+            id="country-input"
+            className="govuk-input"
+            name="arrivalCountry"
+            value={searchTerm}
+            onChange={(e) => handleComboboxInputChange(e)}
+          />
+          {fetchCountries(searchTerm)}
+          {countries && (
+          <ComboboxPopover className="shadow-popup">
+            {countries.length > 0 ? (
+              <ComboboxList className="comboBoxListItem">
+                {countries.slice(0, 10).map((country) => (
+                  <ComboboxOption
+                    key={country.iso31661alpha3}
+                    value={`${country.name}`}
+                  />
+                ))}
+              </ComboboxList>
+            ) : (
+              <span />
+            )}
+          </ComboboxPopover>
+          )}
+        </Combobox>
       </div>
 
       <div id="arrivalLocation" className={`govuk-form-group ${errors.arrivalLocation ? 'govuk-form-group--error' : ''}`}>
