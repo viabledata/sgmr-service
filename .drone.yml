@@ -67,7 +67,7 @@ steps:
 
 - name: unit_test
   pull: if-not-exists
-  image: quay.io/ukhomeofficedigital/cop-node:12-alpine
+  image: quay.io/ukhomeofficedigital/cop-node:16
   commands:
   - node -v
   - npm -v
@@ -79,7 +79,7 @@ steps:
 
 - name: linting
   pull: if-not-exists
-  image: quay.io/ukhomeofficedigital/cop-node:12-alpine
+  image: quay.io/ukhomeofficedigital/cop-node:16
   commands:
   - npm run lint -- .
   when:
@@ -111,6 +111,13 @@ steps:
     event:
     - push
 
+- name: sonarqube_scan
+  pull: if-not-exists
+  image: quay.io/ukhomeofficedigital/sonar-scanner-node:latest
+  when:
+    event:
+    - push
+    
 - name: image_to_quay
   image: plugins/docker
   settings:

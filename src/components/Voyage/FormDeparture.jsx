@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import {
@@ -13,6 +13,7 @@ import axios from 'axios';
 import Auth from '../../lib/Auth';
 import { FORM_STEPS } from '../../constants/ClientConstants';
 import { COUNTRIES_URL } from '../../constants/ApiConstants';
+import formatPortValue from '../../utils/formatPortData';
 import FormError from './FormError';
 import PortField from '../PortField';
 
@@ -50,7 +51,14 @@ const FormDeparture = ({
     setSearchTerm(e.target.value);
   };
 
+  const [portValue, setPortValue] = useState();
   document.title = 'Intended departure details';
+
+  useEffect(() => {
+    if (data.departurePort || data.departurePortName) {
+      setPortValue(formatPortValue(data, 'departure'));
+    }
+  }, [data]);
 
   if (!data) { return null; }
   return (
@@ -231,11 +239,11 @@ const FormDeparture = ({
             For example MDL Hamble Point Marina
           </div>
           <PortField
-            defaultValue={data.departurePort}
+            defaultValue={portValue}
             fieldName="departurePort"
             country={data.departureCountry}
             onConfirm={(result) => {
-              updatePortFields(true, { name: result.name, unlocode: result.unlocode });
+              updatePortFields('departurePort', { name: result?.name || '', unlocode: result?.unlocode || '' });
             }}
           />
         </div>

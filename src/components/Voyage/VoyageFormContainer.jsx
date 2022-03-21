@@ -70,14 +70,9 @@ const FormVoyageContainer = () => {
     removeError(name);
   };
 
-  const updatePortFields = (isDeparture, portDetails) => {
-    if (isDeparture) {
-      setFormData({ ...formData, departurePort: portDetails.unlocode, departurePortName: portDetails.name });
-      removeError('departureLocation');
-    } else {
-      setFormData({ ...formData, arrivalPort: portDetails.unlocode, arrivalPortName: portDetails.name });
-      removeError('arrivalLocation');
-    }
+  const updatePortFields = (portField, portDetails) => {
+    setFormData({ ...formData, [portField]: portDetails.unlocode, [`${portField}Name`]: portDetails.name });
+    removeError(`${portField}location`);
   };
 
   const setCountryError = () => {
@@ -219,24 +214,14 @@ const FormVoyageContainer = () => {
       }
     } else {
       // get initial data set from formData
-      const data = formData;
-
-      // check for autocomplete field current value
-      const autocompleteField = document.getElementById('autocomplete')?.name ? document.getElementById('autocomplete').name : null;
-      const autocompleteValue = document.getElementById('autocomplete')?.value === '' ? null : document.getElementById('autocomplete')?.value;
-      const autocompleteNameValue = autocompleteField ? { [autocompleteField]: autocompleteValue } : null;
 
       // update data for submitting
-      const updatedData = { ...data, ...autocompleteNameValue };
-      const dataToSubmit = formatDataToSubmit(sourceForm, updatedData, extraParams);
-      setFormData(updatedData);
+      const dataToSubmit = formatDataToSubmit(sourceForm, formData, extraParams);
+      // setFormData(updatedData);
 
       // validate data
-      const validationErrors = await VoyageFormValidation(updatedData, sourceForm);
+      const validationErrors = await VoyageFormValidation(formData, sourceForm);
       setErrors(validationErrors);
-
-      // store updated data in state & session storage
-      setFormData(updatedData);
 
       // Handle missing voyageId (for if user comes to a subpage directly, and we haven't got the id)
       if (!voyageId) {

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import {
@@ -13,6 +13,7 @@ import axios from 'axios';
 import Auth from '../../lib/Auth';
 import { FORM_STEPS } from '../../constants/ClientConstants';
 import { COUNTRIES_URL } from '../../constants/ApiConstants';
+import formatPortValue from '../../utils/formatPortData';
 import FormError from './FormError';
 import PortField from '../PortField';
 
@@ -21,6 +22,7 @@ let countries = [];
 const FormArrival = ({
   handleSubmit, handleChange, updatePortFields, data, errors, voyageId,
 }) => {
+
   const [searchTerm, setSearchTerm] = useState(data.arrivalCountry || '');
 
   const fetchCountries = (query) => {
@@ -50,7 +52,15 @@ const FormArrival = ({
     setSearchTerm(e.target.value);
   };
 
+  const [portValue, setPortValue] = useState();
+
   document.title = 'Intended arrival details';
+
+  useEffect(() => {
+    if (data.departurePort || data.departurePortName) {
+      setPortValue(formatPortValue(data, 'arrival'));
+    }
+  }, [data]);
 
   if (!data) { return null; }
   return (
@@ -230,10 +240,10 @@ const FormArrival = ({
             For example MDL Hamble Point Marina
           </div>
           <PortField
-            defaultValue={data.arrivalPort}
+            defaultValue={portValue}
             fieldName="arrivalPort"
             onConfirm={(result) => {
-              updatePortFields(false, { name: result.name, unlocode: result.unlocode });
+              updatePortFields('arrivalPort', { name: result?.name || '', unlocode: result?.unlocode || '' });
             }}
           />
         </div>
