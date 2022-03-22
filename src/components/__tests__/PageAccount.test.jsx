@@ -1,8 +1,17 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import PageAccount from '../PageAccount';
 import UserContext from '../UserContext';
+
+const mockHistoryPush = jest.fn();
+
+jest.mock('react-router-dom', () => ({
+  ...jest.requireActual('react-router-dom'),
+  useHistory: () => ({
+    push: mockHistoryPush,
+  }),
+}));
 
 const customRender = (ui, { providerProps, ...renderOptions }) => {
   return render(
@@ -44,5 +53,18 @@ describe('PageAccount tests', () => {
 
     document.title = 'Changed document title';
     expect(document.title).toBe('Changed document title');
+  });
+
+  it('should redirect the user when they click edit account', () => {
+    customRender(<PageAccount />, { providerProps });
+
+    fireEvent.click(screen.getByText('Edit Account'));
+    expect(mockHistoryPush).toBeCalledWith('/account/edit');
+  });
+
+  it('should not render page if there is no user data', () => {
+    const { container } = customRender(<PageAccount />, { providerProps: {} });
+    // expect empty component
+    expect(container.childElementCount).toEqual(0);
   });
 });

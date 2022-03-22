@@ -29,6 +29,7 @@ const VesselTable = ({
                     type="checkbox"
                     className="govuk-checkboxes__input jsCheckbox"
                     id={vessel.id}
+                    data-testid={vessel.id}
                     onChange={(e) => handleCheckboxes(e)}
                     name="vessel"
                   />

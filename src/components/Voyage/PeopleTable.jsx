@@ -43,6 +43,7 @@ const PeopleTable = ({ peopleData, onSelectionChange = () => {} }) => {
                     type="checkbox"
                     className="govuk-checkboxes__input"
                     value={person.id}
+                    data-testid={person.id}
                     onChange={handleCheckboxes}
                     name="people"
                     checked={peopleToRemove.includes(person.id)}
