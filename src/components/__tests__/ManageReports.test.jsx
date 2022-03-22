@@ -36,12 +36,12 @@ describe('ManageReports', () => {
     mockAxios.reset();
   });
 
-  it('should render reports and filter by status correctly', async () => {
+  it('should display draft reports on load', async () => {
     mockAxios
-      .onGet(`${USER_VOYAGE_REPORT_URL}${pageSizeParam}&page=1`)
+      .onGet(`${USER_VOYAGE_REPORT_URL}?${pageSizeParam}&page=1&status=Draft`)
       .reply(200, {
         _meta: {
-          toatalItems: 6,
+          toatalItems: 2,
         },
         items: [
           {
@@ -63,7 +63,62 @@ describe('ManageReports', () => {
             arrivalPort: 'GB BPT',
             id: '2',
             status: {
+              name: 'Draft',
+            },
+          },
+        ],
+      });
+    renderPage();
+
+    await waitFor(() => {
+      expect(screen.getByText('Manage your voyage plans')).toBeInTheDocument();
+      expect(screen.getAllByText('Draft').length).toBe(2);
+      expect(screen.getByText('Submitted')).toBeInTheDocument();
+      expect(screen.getByText('Cancelled')).toBeInTheDocument();
+      expect(screen.getByText('Boat 1')).toBeInTheDocument();
+      expect(screen.getByText('Boat 2')).toBeInTheDocument();
+    });
+  });
+
+  it('should display submitted reports on submitted tab', async () => {
+    // Draft reports load on page render
+    mockAxios
+      .onGet(`${USER_VOYAGE_REPORT_URL}?${pageSizeParam}&page=1&status=Draft`)
+      .reply(200, {
+        _meta: {
+          toatalItems: 2,
+        },
+        items: [],
+      });
+
+    // Second call when status tab changes
+    mockAxios
+      .onGet(`${USER_VOYAGE_REPORT_URL}?${pageSizeParam}&page=1&status=Submitted&status=PreSubmitted&status=Failed`)
+      .reply(200, {
+        _meta: {
+          toatalItems: 3,
+        },
+        items: [
+          {
+            vesselName: 'Boat 1',
+            departureDate: '2022-12-30',
+            departurePort: 'GB BPT',
+            departureTime: '12:00:00',
+            arrivalPort: 'GB BPT',
+            id: '1',
+            status: {
               name: 'Submitted',
+            },
+          },
+          {
+            vesselName: 'Boat 2',
+            departureDate: '2022-12-30',
+            departurePort: 'GB BPT',
+            departureTime: '12:00:00',
+            arrivalPort: 'GB BPT',
+            id: '2',
+            status: {
+              name: 'PreSubmitted',
             },
           },
           {
@@ -74,39 +129,6 @@ describe('ManageReports', () => {
             arrivalPort: 'GB BPT',
             id: '3',
             status: {
-              name: 'PreSubmitted',
-            },
-          },
-          {
-            vesselName: 'Boat 4',
-            departureDate: '2022-12-30',
-            departurePort: 'GB BPT',
-            departureTime: '12:00:00',
-            arrivalPort: 'GB BPT',
-            id: '4',
-            status: {
-              name: 'Cancelled',
-            },
-          },
-          {
-            vesselName: 'Boat 5',
-            departureDate: '2022-12-30',
-            departurePort: 'GB BPT',
-            departureTime: '12:00:00',
-            arrivalPort: 'GB BPT',
-            id: '5',
-            status: {
-              name: 'PreCancelled',
-            },
-          },
-          {
-            vesselName: 'Boat 6',
-            departureDate: '2022-12-30',
-            departurePort: 'GB BPT',
-            departureTime: '12:00:00',
-            arrivalPort: 'GB BPT',
-            id: '6',
-            status: {
               name: 'Failed',
             },
           },
@@ -114,30 +136,71 @@ describe('ManageReports', () => {
       });
     renderPage();
 
-    await waitFor(() => {
-      // Default draft tab
-      expect(screen.getByText('Manage your voyage plans')).toBeInTheDocument();
-      expect(screen.getAllByText('Draft').length).toBe(2);
-      expect(screen.getByText('Submitted')).toBeInTheDocument();
-      expect(screen.getByText('Cancelled')).toBeInTheDocument();
-      expect(screen.getByText('Boat 1')).toBeInTheDocument();
+    fireEvent.click(screen.getByText('Submitted'));
 
-      // Submitted tab
-      fireEvent.click(screen.getByText('Submitted'));
+    await waitFor(() => {
+      expect(screen.getAllByText('Submitted').length).toBe(2);
+      expect(screen.getByText('Boat 1')).toBeInTheDocument();
       expect(screen.getByText('Boat 2')).toBeInTheDocument();
       expect(screen.getByText('Boat 3')).toBeInTheDocument();
-      expect(screen.getByText('Boat 6')).toBeInTheDocument();
+    });
+  });
 
-      // Cancelled tab
-      fireEvent.click(screen.getByText('Cancelled'));
-      expect(screen.getByText('Boat 4')).toBeInTheDocument();
-      expect(screen.getByText('Boat 5')).toBeInTheDocument();
+  it('should display cancelled reports on cancelled tab', async () => {
+    mockAxios
+      .onGet(`${USER_VOYAGE_REPORT_URL}?${pageSizeParam}&page=1&status=Draft`)
+      .reply(200, {
+        _meta: {
+          toatalItems: 2,
+        },
+        items: [],
+      });
+
+    mockAxios
+      .onGet(`${USER_VOYAGE_REPORT_URL}?${pageSizeParam}&page=1&status=Cancelled&status=PreCancelled`)
+      .reply(200, {
+        _meta: {
+          toatalItems: 2,
+        },
+        items: [
+          {
+            vesselName: 'Boat 1',
+            departureDate: '2022-12-30',
+            departurePort: 'GB BPT',
+            departureTime: '12:00:00',
+            arrivalPort: 'GB BPT',
+            id: '1',
+            status: {
+              name: 'Cancelled',
+            },
+          },
+          {
+            vesselName: 'Boat 2',
+            departureDate: '2022-12-30',
+            departurePort: 'GB BPT',
+            departureTime: '12:00:00',
+            arrivalPort: 'GB BPT',
+            id: '2',
+            status: {
+              name: 'PreCancelled',
+            },
+          },
+        ],
+      });
+    renderPage();
+
+    fireEvent.click(screen.getByText('Cancelled'));
+
+    await waitFor(() => {
+      expect(screen.getAllByText('Cancelled').length).toBe(2);
+      expect(screen.getByText('Boat 1')).toBeInTheDocument();
+      expect(screen.getByText('Boat 2')).toBeInTheDocument();
     });
   });
 
   it('should delete a voyage plan if departure data is missing', async () => {
     mockAxios
-      .onGet(`${USER_VOYAGE_REPORT_URL}${pageSizeParam}&page=1`)
+      .onGet(`${USER_VOYAGE_REPORT_URL}?${pageSizeParam}&page=1&status=Draft`)
       .reply(200, {
         _meta: {
           toatalItems: 2,
