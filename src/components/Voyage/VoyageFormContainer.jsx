@@ -69,6 +69,12 @@ const FormVoyageContainer = () => {
     setFormData({ ...formData, [name]: value });
     removeError(name);
   };
+
+  const updatePortFields = (portField, portDetails) => {
+    setFormData({ ...formData, [portField]: portDetails.unlocode, [`${portField}Name`]: portDetails.name });
+    removeError(`${portField}location`);
+  };
+
   const handleChange = (e) => {
     updateFieldValue(e.target.name, e.target.value);
   };
@@ -146,7 +152,14 @@ const FormVoyageContainer = () => {
     let nextPage;
     const currentPage = parseInt(pageNum, 10);
     switch (sourceForm) {
-      case FORM_STEPS.CHECK: history.push('/save-voyage/page-submitted'); break;
+      case FORM_STEPS.CHECK: history.push('/save-voyage/page-submitted');
+        break;
+      case FORM_STEPS.ARRIVAL_SAVE_AND_EXIT:
+        history.push('/voyage-plans');
+        break;
+      case FORM_STEPS.DEPARTURE_SAVE_AND_EXIT:
+        history.push('/voyage-plans');
+        break;
       default:
         nextPage = currentPage < maxPages ? currentPage + 1 : currentPage;
         setPageNum(nextPage);
@@ -158,13 +171,13 @@ const FormVoyageContainer = () => {
     let dataToSubmit;
 
     switch (sourceForm) {
-      case FORM_STEPS.ARRIVAL:
+      case FORM_STEPS.ARRIVAL || FORM_STEPS.ARRIVAL_SAVE_AND_EXIT:
         dataToSubmit = formatDepartureArrival(VOYAGE_STATUSES.DRAFT, dataToFormat, voyageData);
         break;
       case FORM_STEPS.CHECK:
         dataToSubmit = { status: VOYAGE_STATUSES.PRE_SUBMITTED };
         break;
-      case FORM_STEPS.DEPARTURE:
+      case FORM_STEPS.DEPARTURE || FORM_STEPS.DEPARTURE_SAVE_AND_EXIT:
         dataToSubmit = formatDepartureArrival(VOYAGE_STATUSES.DRAFT, dataToFormat, voyageData);
         break;
       case FORM_STEPS.NEW_PERSON:
@@ -197,24 +210,14 @@ const FormVoyageContainer = () => {
       }
     } else {
       // get initial data set from formData
-      const data = formData;
-
-      // check for autocomplete field current value
-      const autocompleteField = document.getElementById('autocomplete')?.name ? document.getElementById('autocomplete').name : null;
-      const autocompleteValue = document.getElementById('autocomplete')?.value === '' ? null : document.getElementById('autocomplete')?.value;
-      const autocompleteNameValue = autocompleteField ? { [autocompleteField]: autocompleteValue } : null;
 
       // update data for submitting
-      const updatedData = { ...data, ...autocompleteNameValue };
-      const dataToSubmit = formatDataToSubmit(sourceForm, updatedData, extraParams);
-      setFormData(updatedData);
+      const dataToSubmit = formatDataToSubmit(sourceForm, formData, extraParams);
+      // setFormData(updatedData);
 
       // validate data
-      const validationErrors = await VoyageFormValidation(updatedData, sourceForm);
+      const validationErrors = await VoyageFormValidation(formData, sourceForm);
       setErrors(validationErrors);
-
-      // store updated data in state & session storage
-      setFormData(updatedData);
 
       // Handle missing voyageId (for if user comes to a subpage directly, and we haven't got the id)
       if (!voyageId) {
@@ -295,7 +298,7 @@ const FormVoyageContainer = () => {
                 <FormDeparture
                   handleSubmit={handleSubmit}
                   handleChange={handleChange}
-                  updateFieldValue={updateFieldValue}
+                  updatePortFields={updatePortFields}
                   data={formData || voyageData}
                   errors={errors}
                   voyageId={voyageId}
@@ -305,7 +308,7 @@ const FormVoyageContainer = () => {
                 <FormArrival
                   handleSubmit={handleSubmit}
                   handleChange={handleChange}
-                  updateFieldValue={updateFieldValue}
+                  updatePortFields={updatePortFields}
                   data={formData || voyageData}
                   errors={errors}
                   voyageId={voyageId}

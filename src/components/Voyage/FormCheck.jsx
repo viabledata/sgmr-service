@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 
 import {
   SAVE_VOYAGE_ARRIVALS_URL, SAVE_VOYAGE_DEPARTURE_URL,
@@ -8,12 +8,14 @@ import {
   SAVE_VOYAGE_VESSEL_URL,
 } from '../../constants/ClientConstants';
 import { formatUIDate } from '../../utils/date';
+import formatPortValue from '../../utils/formatPortData';
 import PeopleSummary from './PeopleSummary';
 
 const FormCheck = ({
   voyageId, voyageData, handleSubmit, errors,
 }) => {
   document.title = 'Check your information';
+  const history = useHistory();
 
   if (!voyageData) { return null; }
   return (
@@ -46,7 +48,7 @@ const FormCheck = ({
         </div>
         <div className="govuk-summary-list__row">
           <dt className="govuk-summary-list__key">Departure point</dt>
-          <dd className="govuk-summary-list__value">{voyageData.departurePort}</dd>
+          <dd className="govuk-summary-list__value">{formatPortValue(voyageData, 'departure')}</dd>
         </div>
       </dl>
       <div className="govuk-summary-list govuk-!-margin-bottom-9">
@@ -84,7 +86,7 @@ const FormCheck = ({
         </div>
         <div className="govuk-summary-list__row">
           <dt className="govuk-summary-list__key">Arrival point</dt>
-          <dd className="govuk-summary-list__value">{voyageData.arrivalPort}</dd>
+          <dd className="govuk-summary-list__value">{formatPortValue(voyageData, 'arrival')}</dd>
         </div>
       </dl>
       <div className="govuk-summary-list govuk-!-margin-bottom-9">
@@ -213,27 +215,35 @@ const FormCheck = ({
 
       {voyageData.status.name !== 'Cancelled' && voyageData.status.name !== 'PreCancelled'
         && (
-        <>
-          <h2 className="govuk-heading-m">Submit your Pleasure Craft Voyage Plan</h2>
-          <p className="govuk-body">
-            By submitting this voyage plan you are confirming that, to the best of your knowledge,
-            the information you are providing is correct and you have the explicit permission of the persons named in this voyage plan to submit information on their behalf.
-          </p>
+          <>
+            <h2 className="govuk-heading-m">Submit your Pleasure Craft Voyage Plan</h2>
+            <p className="govuk-body">
+              By submitting this voyage plan you are confirming that, to the best of your knowledge,
+              the information you are providing is correct and you have the explicit permission of the persons named in this voyage plan to submit information on their behalf.
+            </p>
 
-          <div id="submitBlock" className="govuk-button-group">
-            <button
-              type="button"
-              className="govuk-button"
-              data-module="govuk-button"
-              onClick={(e) => handleSubmit(e, 'check', voyageId)}
-            >
-              Accept and submit voyage plan
-            </button>
-            <Link className="govuk-button govuk-button--warning" to={`/voyage-plans/${voyageId}/delete`}>
-              Cancel voyage plan
-            </Link>
-          </div>
-        </>
+            <div id="submitBlock" className="govuk-button-group">
+              <button
+                type="button"
+                className="govuk-button"
+                data-module="govuk-button"
+                onClick={(e) => handleSubmit(e, 'check', voyageId)}
+              >
+                Accept and submit voyage plan
+              </button>
+              <button
+                type="button"
+                className="govuk-button govuk-button--warning"
+                data-module="govuk-button"
+                onClick={(e) => {
+                  e.preventDefault();
+                  history.push(`/voyage-plans/${voyageId}/delete`);
+                }}
+              >
+                Cancel voyage plan
+              </button>
+            </div>
+          </>
         )}
     </section>
   );

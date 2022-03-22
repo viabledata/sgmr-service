@@ -70,9 +70,10 @@ const ManageReports = (pageData) => {
       });
   };
 
-  // Sets tab data on load
+  // Sets tab data on load & ensures session data clear
   useEffect(() => {
     setTabData(tabs);
+    sessionStorage.removeItem('formData');
   }, [pageData]);
 
   // Calls api whenever current page changes
