@@ -22,7 +22,9 @@ export const EDIT_ACCOUNT_URL = '/account/edit';
 export const FORM_STEPS = {
   CHECK: 'check',
   ARRIVAL: 'arrival',
+  ARRIVAL_SAVE_AND_EXIT: 'arrivalSaveAndExit',
   DEPARTURE: 'departure',
+  DEPARTURE_SAVE_AND_EXIT: 'departureSaveAndExit',
   PEOPLE: 'people',
   PEOPLE_MANIFEST: 'peopleManifest',
   NEW_PERSON: 'newPerson',

@@ -29,6 +29,7 @@ const VesselTable = ({
                     type="checkbox"
                     className="govuk-checkboxes__input jsCheckbox"
                     id={vessel.id}
+                    data-testid={vessel.id}
                     onChange={(e) => handleCheckboxes(e)}
                     name="vessel"
                   />
@@ -42,7 +43,10 @@ const VesselTable = ({
                   <span className="responsive-table__heading" aria-hidden="true">
                     Pleasure craft name
                   </span>
-                  <Link to={`/pleasure-crafts/${vessel.id}`}>
+                  <Link
+                    to={`/pleasure-crafts/${vessel.id}`}
+                    aria-label={`Edit the ${vessel.vesselType} named ${vessel.vesselName}`}
+                  >
                     {vessel.vesselName}
                   </Link>
                 </td>

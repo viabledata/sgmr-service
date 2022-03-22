@@ -39,14 +39,14 @@ const VoyageFormValidation = async (dataToValidate, source) => {
 
   if (
     source === FORM_STEPS.DEPARTURE
-    && !dataToValidate.departurePort
+    && !dataToValidate.departurePortName
     && (!dataToValidate.departureLat || !dataToValidate.departureLong)
   ) {
     errors.departureLocation = 'You must enter a departure point';
   }
   if (
     source === FORM_STEPS.ARRIVAL
-    && !dataToValidate.arrivalPort
+    && !dataToValidate.arrivalPortName
     && (!dataToValidate.arrivalLat || !dataToValidate.arrivalLong)
   ) {
     errors.arrivalLocation = 'You must enter an arrival point';
