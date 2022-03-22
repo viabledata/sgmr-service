@@ -36,6 +36,7 @@ const ManageReports = (pageData) => {
   ];
 
   const pageSize = 10;
+  let reportStatus;
 
   const createActiveTab = (e) => {
     const tabArray = [...tabData];
@@ -48,12 +49,26 @@ const ManageReports = (pageData) => {
       }
     });
     setTabData(tabArray);
+    setCurrentPage(1);
+  };
+
+  const voyageReportStatus = () => {
+    if (tableName === 'Draft') {
+      reportStatus = 'status=Draft';
+    }
+    if (tableName === 'Submitted') {
+      // Failed reports count as submitted, as the user does not need to know about failed voyage plan submissions
+      reportStatus = 'status=Submitted&status=PreSubmitted&status=Failed';
+    }
+    if (tableName === 'Cancelled') {
+      reportStatus = 'status=Cancelled&status=PreCancelled';
+    }
+    return reportStatus;
   };
 
   const getReportList = () => {
     const validReports = [];
-    // Defualt page size on api is 10 so only page number needed
-    getData(`${USER_VOYAGE_REPORT_URL}${pageSizeParam}&page=${currentPage}`)
+    getData(`${USER_VOYAGE_REPORT_URL}?${pageSizeParam}&page=${currentPage}&${reportStatus}`)
       .then((resp) => {
         setTotalCount(resp._meta.totalItems);
         if (!resp.errors) {
@@ -76,11 +91,12 @@ const ManageReports = (pageData) => {
     sessionStorage.removeItem('formData');
   }, [pageData]);
 
-  // Calls api whenever current page changes
+  // Calls api whenever tableName or currentPage changes
   useEffect(() => {
     setIsLoading(true);
+    voyageReportStatus();
     getReportList();
-  }, [pageData, currentPage]);
+  }, [tableName, currentPage]);
 
   if (!pageData || !tabData || tabData.length === 0) { return null; }
   return (
@@ -120,19 +136,17 @@ const ManageReports = (pageData) => {
             <LoadingSpinner loading={isLoading} />
             {!isLoading
               && (
-              <table className="govuk-table">
-                <thead className="govuk-table__head">
-                  <tr className="govuk-table__row" role="row">
-                    <th scope="col" className="govuk-table__header">Pleasure craft</th>
-                    <th scope="col" className="govuk-table__header">Departure date</th>
-                    <th scope="col" className="govuk-table__header">Departure port</th>
-                    <th scope="col" className="govuk-table__header">Arrival port</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {reportList && reportList.map((voyage) => {
-                    // Failed reports will show up as submitted to the user as they will be sent to servicedesk, and the user does not need to know if their submission has failed.
-                    if (voyage.status.name === tableName || voyage.status.name === `Pre${tableName}` || (voyage.status.name === 'Failed' && tableName === 'Submitted')) {
+                <table className="govuk-table">
+                  <thead className="govuk-table__head">
+                    <tr className="govuk-table__row" role="row">
+                      <th scope="col" className="govuk-table__header">Pleasure craft</th>
+                      <th scope="col" className="govuk-table__header">Departure date</th>
+                      <th scope="col" className="govuk-table__header">Departure port</th>
+                      <th scope="col" className="govuk-table__header">Arrival port</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {reportList && reportList.map((voyage) => {
                       return (
                         <tr className="govuk-table__row" key={voyage.id} role="row">
                           <td className="govuk-table__cell" role="cell">
@@ -173,10 +187,9 @@ const ManageReports = (pageData) => {
                           </td>
                         </tr>
                       );
-                    }
-                  })}
-                </tbody>
-              </table>
+                    })}
+                  </tbody>
+                </table>
               )}
           </div>
           <Pagination
