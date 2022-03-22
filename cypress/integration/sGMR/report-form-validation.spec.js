@@ -26,8 +26,8 @@ describe('Validate voyage plan form', () => {
       cy.addVessel(vessel);
     });
 
-    departurePort = 'Dover';
-    arrivalPort = 'Felixstowe';
+    departurePort = 'Dover Marina';
+    arrivalPort = 'FelixstoweFerry';
     departureDateTime = getFutureDate(1, 'DD/MM/YYYY HH:MM');
     arrivalDateTime = getFutureDate(2, 'DD/MM/YYYY HH:MM');
   });
@@ -37,6 +37,8 @@ describe('Validate voyage plan form', () => {
     cy.navigation('Voyage Plans');
     cy.url().should('include', '/voyage-plans');
     cy.get('.govuk-button--start').should('have.text', 'Start now').click();
+    cy.url().should('include', '/voyage-plans/start');
+    cy.get('button[title="saveButton"]').should('have.text','Continue').click();
   });
 
   it('Should verify Departure details mandatory data', () => {
@@ -60,6 +62,7 @@ describe('Validate voyage plan form', () => {
     ];
     cy.enterDepartureDetails(departureDateTime, departurePort);
     cy.saveAndContinue();
+    cy.wait(1000);
     cy.url().should('include', '/page-2');
     cy.saveAndContinue();
     cy.get('.govuk-error-message').each((error, index) => {

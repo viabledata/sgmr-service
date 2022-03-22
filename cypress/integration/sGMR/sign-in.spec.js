@@ -67,6 +67,19 @@ describe('Sign-in flow', () => {
       cy.wrap(error).should('contain.text', errors[index]).and('be.visible');
     });
   });
+  it('should not be signed-in with invalid username and invalid password', () => {
+    const errors = [
+      'You must enter your password',
+      'You must enter an email address and password',
+    ]
+    cy.get('input[name="email"]').clear().type('randomemail@mail.com');
+    cy.get('input[name="password"]').clear().type('wrongpassword');
+    cy.get('.govuk-button').click();
+
+    cy.get('.govuk-error-summary__list').each((error, index) => {
+      cy.wrap(error).should('contain.text', errors[index]).and('be.visible');
+    });
+  });
 
   afterEach(() => {
     sessionStorage.removeItem('token');

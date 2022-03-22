@@ -29,10 +29,10 @@ describe('Add new voyage plan', () => {
       vessel = vesselObj;
     });
 
-    departurePort = 'Dover';
-    departurePortCode = 'GB DVR';
-    arrivalPort = 'Felixstowe';
-    arrivalPortCode = 'GB FXT';
+    departurePort = 'Dover Marina';
+    departurePortCode = 'ZZZD';
+    arrivalPort = 'FelixstoweFerry';
+    arrivalPortCode = 'ZZZA';
     departureDateTime = getFutureDate(1, 'DD/MM/YYYY HH:MM');
     departDate = departureDateTime.split(' ')[0];
     arrivalDateTime = getFutureDate(2, 'DD/MM/YYYY HH:MM');
@@ -49,12 +49,16 @@ describe('Add new voyage plan', () => {
       numberOfCancelledReports = res;
     });
     cy.get('.govuk-button--start').should('have.text', 'Start now').click();
+    cy.wait(2000);
+    cy.url().should('include', '/voyage-plans/start');
+    cy.get('button[title="saveButton"]').should('have.text','Continue').click();
   });
 
   it('Should submit voyage plan successfully', () => {
     cy.checkAccessibility();
     cy.enterDepartureDetails(departureDateTime, departurePort);
     cy.saveAndContinue();
+    cy.wait(1000);
     cy.checkAccessibility();
     cy.enterArrivalDetails(arrivalDateTime, arrivalPort);
     cy.saveAndContinue();
@@ -95,6 +99,7 @@ describe('Add new voyage plan', () => {
     cy.get('.govuk-error-message').should('not.be.visible');
     cy.checkAccessibility();
     cy.contains('Accept and submit voyage plan').click();
+    cy.wait(2000);
     cy.url().should('include', '/save-voyage/page-submitted');
     cy.get('.govuk-panel__title').should('have.text', 'Pleasure Craft Voyage Plan Submitted');
     cy.navigation('Voyage Plans');
@@ -137,6 +142,7 @@ describe('Add new voyage plan', () => {
     cy.contains('Cancel voyage').click();
     cy.get('#confirm-yes').check();
     cy.contains('Continue').click();
+    cy.wait(1000);
     cy.url().should('include', '/voyage-plans');
     cy.navigation('Voyage Plans');
     cy.checkReports('Cancelled', (+numberOfCancelledReports) + (+1));

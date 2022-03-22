@@ -36,10 +36,10 @@ describe('Add voyage plan with saved data', () => {
     cy.login();
     cy.injectAxe();
 
-    departurePort = 'Dover';
-    departurePortCode = 'GB DVR';
-    arrivalPort = 'Felixstowe';
-    arrivalPortCode = 'GB FXT';
+    departurePort = 'Dover Marina';
+    departurePortCode = 'ZZZD';
+    arrivalPort = 'FelixstoweFerry';
+    arrivalPortCode = 'ZZZA';
     departureDateTime = getFutureDate(1, 'DD/MM/YYYY HH:MM');
     departDate = departureDateTime.split(' ')[0];
     arrivalDateTime = getFutureDate(2, 'DD/MM/YYYY HH:MM');
@@ -50,6 +50,8 @@ describe('Add voyage plan with saved data', () => {
     });
     cy.checkAccessibility();
     cy.get('.govuk-button--start').should('have.text', 'Start now').click();
+    cy.url().should('include', '/voyage-plans/start');
+    cy.get('button[title="saveButton"]').should('have.text','Continue').click();
   });
 
   it('Should be able to Cancel a submitted voyage plan using Saved People & Pleasure Craft', () => {
@@ -74,6 +76,7 @@ describe('Add voyage plan with saved data', () => {
     cy.saveAndContinue();
     cy.get('.govuk-error-message').should('not.be.visible');
     cy.contains('Accept and submit voyage plan').click();
+    cy.wait(2000);
     cy.url().should('include', '/save-voyage/page-submitted');
     cy.get('.govuk-panel__title').should('have.text', 'Pleasure Craft Voyage Plan Submitted');
     cy.navigation('Voyage Plans');
@@ -102,6 +105,7 @@ describe('Add voyage plan with saved data', () => {
         .within(() => {
           cy.get('#cancelled').should('have.text', 'Cancelled')
             .click();
+          cy.wait(1000);
         });
       expect(reportData).to.deep.include({
         'Pleasure craft': `Pleasure craft${vessel.name}`,

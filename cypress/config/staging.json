@@ -1,0 +1,10 @@
+{
+  "baseUrl": "https://www.staging.sgmr.cop.homeoffice.gov.uk",
+  "env": {
+    "envname": "staging",
+    "api_server": "https://sgmr-data-api.staging.sgmr.cop.homeoffice.gov.uk/v1",
+    "mailSlurpApiKey": "081bc049b4c4224ec7a3285e89c78bf7e2ab01fa9fc59bf0c691b6e6c7dbaa63",
+    "host": "https://www.staging.sgmr.cop.homeoffice.gov.uk",
+    "dbName": "sgmr_db"
+  }
+}

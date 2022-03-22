@@ -31,10 +31,10 @@ describe('Edit Details & Submit new voyage plan', () => {
       vessel = vesselObj;
     });
 
-    departurePort = 'Dover';
-    departurePortCode = 'GB DVR';
-    arrivalPort = 'Felixstowe';
-    arrivalPortCode = 'GB FXT';
+    departurePort = 'Dover Marina';
+    departurePortCode = 'ZZZD';
+    arrivalPort = 'FelixstoweFerry';
+    arrivalPortCode = 'ZZZA';
     departureDateTime = getFutureDate(1, 'DD/MM/YYYY HH:MM');
     departDate = departureDateTime.split(' ')[0];
     arrivalDateTime = getFutureDate(2, 'DD/MM/YYYY HH:MM');
@@ -45,6 +45,8 @@ describe('Edit Details & Submit new voyage plan', () => {
       numberOfSubmittedReports = res;
     });
     cy.get('.govuk-button--start').should('have.text', 'Start now').click();
+    cy.url().should('include', '/voyage-plans/start');
+    cy.get('button[title="saveButton"]').should('have.text','Continue').click();
     cy.enterDepartureDetails(departureDateTime, departurePort);
     cy.saveAndContinue();
     cy.enterArrivalDetails(arrivalDateTime, arrivalPort);
@@ -71,12 +73,12 @@ describe('Edit Details & Submit new voyage plan', () => {
 
   it('Should be able to edit Departure and Arrival details before submit the voyage plan', () => {
     departureDateTime = getFutureDate(2, 'DD/MM/YYYY HH:MM');
-    departurePort = 'London';
-    departurePortCode = 'GB BKG';
+    departurePort = 'London Corinthians sailing club';
+    departurePortCode = 'ZZZD';
     departDate = departureDateTime.split(' ')[0];
     arrivalDateTime = getFutureDate(2, 'DD/MM/YYYY HH:MM');
-    arrivalPort = 'Swansea';
-    arrivalPortCode = 'GB SWA';
+    arrivalPort = 'Swansea Marina';
+    arrivalPortCode = 'ZZZA';
 
     cy.get('a[href="/save-voyage/page-1"]').click();
     cy.enterDepartureDetails(departureDateTime, departurePort);
@@ -137,7 +139,7 @@ describe('Edit Details & Submit new voyage plan', () => {
     cy.url().should('include', '/save-voyage/page-submitted');
     cy.get('.govuk-panel__title').should('have.text', 'Pleasure Craft Voyage Plan Submitted');
     cy.navigation('Voyage Plans');
-    cy.checkReports('Submitted', (+numberOfSubmittedReports) + (+1));
+    cy.checkReports('Submitted', (+numberOfSubmittedReports));
     cy.contains('View existing voyage plans').click();
     cy.get('.govuk-tabs__list li')
       .within(() => {

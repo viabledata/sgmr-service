@@ -18,7 +18,7 @@ describe('User Request for Password reset', () => {
   //   });
   //   cy.get('.govuk-button').click();
   //   cy.get('.govuk-body-l').should('have.text', 'A link to reset your password was sent to the provided email address.');
-  //   cy.waitForLatestEmail('64536d92-2cdc-499e-aa3a-c532fbc60f02@mailslurp.com').then((mail) => {
+  //   cy.waitForLatestEmail('688c5a8a-5f56-4ef4-8363-7faddc5de807@mailslurp.com').then((mail) => {
   //     assert.isDefined(mail);
   //     const token = /token=([A-Za-z0-9-_=]+\.[A-Za-z0-9-_=]+\.?[A-Za-z0-9-_.+/=]*)/.exec(mail.body)[1];
   //     cy.visit(`/new-password?token=${token}`);
