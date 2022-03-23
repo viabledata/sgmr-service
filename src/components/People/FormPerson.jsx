@@ -95,14 +95,14 @@ const FormPerson = ({
       </div>
 
       <div id="dateOfBirth" className={`govuk-form-group ${errors.dateOfBirth ? 'govuk-form-group--error' : ''}`}>
-        <fieldset className="govuk-fieldset" role="group" aria-describedby="dob-hint">
+        <fieldset className="govuk-fieldset" role="group" aria-describedby="dateOfBirth-hint">
           <legend className="govuk-fieldset__legend">
             <label className="govuk-label" htmlFor="dateOfBirth">
               Date of Birth
             </label>
             <FormError error={errors.dateOfBirth} />
           </legend>
-          <div className="govuk-hint">
+          <div className="govuk-hint" id="dateOfBirth-hint">
             For example, 31 3 1980
           </div>
           <div className="govuk-date-input">
@@ -350,7 +350,7 @@ const FormPerson = ({
           Issuing state
         </label>
         <FormError error={errors.documentIssuingState} />
-        <div className="govuk-hint">
+        <div className="govuk-hint" id="documentIssuingState-hint">
           Please enter 3 letter ISO country code, for example GBR
         </div>
         <input
@@ -360,6 +360,7 @@ const FormPerson = ({
           maxLength={3}
           value={formData.documentIssuingState || ''}
           onChange={handleChange}
+          aria-describedby="documentIssuingState-hint"
         />
       </div>
 
@@ -370,7 +371,7 @@ const FormPerson = ({
               Expiry date
             </label>
           </legend>
-          <div className="govuk-hint">
+          <div className="govuk-hint" id="documentExpiryDate-hint">
             For example, 31 3 2022
           </div>
           <div className="govuk-date-input">
