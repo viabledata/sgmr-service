@@ -32,9 +32,9 @@ steps:
   image: quay.io/ukhomeofficedigital/cop-secrets
   environment:
     AWS_ACCESS_KEY_ID:
-      from_secret: STAGING_DRONE_AWS_ACCESS_KEY_ID
+      from_secret: STAGING_DRONE_SPCR_AWS_ACCESS_KEY_ID
     AWS_SECRET_ACCESS_KEY:
-      from_secret: STAGING_DRONE_AWS_SECRET_ACCESS_KEY
+      from_secret: STAGING_DRONE_SPCR_AWS_SECRET_ACCESS_KEY
     DEPLOY_ENV: staging
     DRONE_SERVER: https://drone-gh.acp.homeoffice.gov.uk
     DRONE_TOKEN:
@@ -51,9 +51,9 @@ steps:
   image: quay.io/ukhomeofficedigital/cop-secrets
   environment:
     AWS_ACCESS_KEY_ID:
-      from_secret: PRODUCTION_DRONE_AWS_ACCESS_KEY_ID
+      from_secret: PRODUCTION_DRONE_SPCR_AWS_ACCESS_KEY_ID
     AWS_SECRET_ACCESS_KEY:
-      from_secret: PRODUCTION_DRONE_AWS_SECRET_ACCESS_KEY
+      from_secret: PRODUCTION_DRONE_SPCR_AWS_SECRET_ACCESS_KEY
     DEPLOY_ENV: production
     DRONE_SERVER: https://drone-gh.acp.homeoffice.gov.uk
     DRONE_TOKEN:
