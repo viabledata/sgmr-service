@@ -257,29 +257,29 @@ steps:
   - kd --insecure-skip-tls-verify -f kube/ingress.yml
   environment:
     KUBE_NAMESPACE:
-      from_secret: STAGING_KUBE_NAMESPACE_COP_SGMR
+      from_secret: STAGING_KUBE_NAMESPACE_COP_SPCR
     KUBE_SERVER:
       from_secret: STAGING_KUBE_SERVER
     KUBE_TOKEN:
-      from_secret: STAGING_SGMR_KUBE_TOKEN
+      from_secret: STAGING_SPCR_KUBE_TOKEN
     MAILSLURP_API_KEY:
-      from_secret: STAGING_SGMR_MAILSLURP_API_KEY
+      from_secret: STAGING_SPCR_MAILSLURP_API_KEY
     NGINX_IMAGE:
       from_secret: NGINX_IMAGE
     NGINX_TAG:
       from_secret: NGINX_TAG
     SGMR_DATA_API_BASE_URL:
-      from_secret: STAGING_SGMR_DATA_API_BASE_URL
+      from_secret: STAGING_SPCR_DATA_API_BASE_URL
     SGMR_MAINTENANCE:
-      from_secret: STAGING_SGMR_MAINTENANCE
+      from_secret: STAGING_SPCR_MAINTENANCE
     SGMR_SERVICE_IMAGE:
-      from_secret: SGMR_SERVICE_IMAGE
+      from_secret: STAGING_SPCR_SERVICE_IMAGE
     SGMR_SERVICE_NAME:
-      from_secret: SGMR_SERVICE_NAME
+      from_secret: STAGING_SPCR_SERVICE_NAME
     SGMR_SERVICE_PORT:
-      from_secret: SGMR_SERVICE_PORT
+      from_secret: STAGING_SPCR_SERVICE_PORT
     SGMR_SERVICE_URL:
-      from_secret: STAGING_SGMR_SERVICE_URL
+      from_secret: STAGING_SPCR_SERVICE_URL
     WHITELIST:
       from_secret: STAGING_WHITELIST
   when:
@@ -300,29 +300,29 @@ steps:
   - kd --insecure-skip-tls-verify -f kube/ingress.yml
   environment:
     KUBE_NAMESPACE:
-      from_secret: PRODUCTION_KUBE_NAMESPACE_COP_SGMR
+      from_secret: PRODUCTION_KUBE_NAMESPACE_COP_SPCR
     KUBE_SERVER:
       from_secret: PRODUCTION_KUBE_SERVER
     KUBE_TOKEN:
-      from_secret: PRODUCTION_SGMR_KUBE_TOKEN
+      from_secret: PRODUCTION_SPCR_KUBE_TOKEN
     MAILSLURP_API_KEY:
-      from_secret: PRODUCTION_SGMR_MAILSLURP_API_KEY
+      from_secret: PRODUCTION_SPCR_MAILSLURP_API_KEY
     NGINX_IMAGE:
       from_secret: NGINX_IMAGE
     NGINX_TAG:
       from_secret: NGINX_TAG
     SGMR_DATA_API_BASE_URL:
-      from_secret: PRODUCTION_SGMR_DATA_API_BASE_URL
+      from_secret: PRODUCTION_SPCR_DATA_API_BASE_URL
     SGMR_MAINTENANCE:
-      from_secret: PRODUCTION_SGMR_MAINTENANCE
+      from_secret: PRODUCTION_SPCR_MAINTENANCE
     SGMR_SERVICE_IMAGE:
-      from_secret: SGMR_SERVICE_IMAGE
+      from_secret: PRODUCTION_SPCR_SERVICE_IMAGE
     SGMR_SERVICE_NAME:
-      from_secret: SGMR_SERVICE_NAME
+      from_secret: PRODUCTION_SPCR_SERVICE_NAME
     SGMR_SERVICE_PORT:
-      from_secret: SGMR_SERVICE_PORT
+      from_secret: PRODUCTION_SPCR_SERVICE_PORT
     SGMR_SERVICE_URL:
-      from_secret: PRODUCTION_SGMR_SERVICE_URL
+      from_secret: PRODUCTION_SPCR_SERVICE_URL
     WHITELIST:
       from_secret: PRODUCTION_WHITELIST
   when:
