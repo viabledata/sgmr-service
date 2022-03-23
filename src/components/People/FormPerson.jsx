@@ -201,7 +201,7 @@ const FormPerson = ({
       </div>
 
       <div id="peopleType" className={`govuk-form-group ${errors.peopleType ? 'govuk-form-group--error' : ''}`}>
-        <fieldset className="govuk-fieldset" aria-describedby="person-type-hint">
+        <fieldset className="govuk-fieldset">
           <legend className="govuk-fieldset__legend">
             <label className="govuk-fieldset__heading" htmlFor="personType">
               Person type
@@ -257,7 +257,7 @@ const FormPerson = ({
 
       <h2 className="govuk-heading-l">Travel document details</h2>
       <div id="documentType" className={`govuk-form-group ${errors.documentType ? 'govuk-form-group--error' : ''}`}>
-        <fieldset className="govuk-fieldset" aria-describedby="travel-document-type-hint">
+        <fieldset className="govuk-fieldset">
           <legend className="govuk-fieldset__legend">
             <label className="govuk-fieldset__heading" htmlFor="travelDoc">
               Travel document type
