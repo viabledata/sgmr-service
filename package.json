@@ -5,7 +5,7 @@
     "scripts": {
         "build": "webpack --mode=production",
         "build:dev": "webpack --mode=development",
-        "lint": "eslint \"./src/**/*.{js,jsx}\" -f table",
+        "lint": "eslint \"**/*.{js,jsx}\" -f table",
         "lint:extra": "eslint \"./src/**/*.{js,jsx}\" --fix",
         "start": "webpack serve --mode=development",
         "test": "jest --coverage",
@@ -76,6 +76,7 @@
         "yargs": "^16.1.1"
     },
     "dependencies": {
+        "@reach/combobox": "^0.16.5",
         "accessible-autocomplete": "^2.0.3",
         "axios": "^0.21.2",
         "core-js": "^3.6.4",
