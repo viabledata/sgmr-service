@@ -146,7 +146,7 @@ const EditAccount = () => {
                 </div>
               )}
 
-              <div id="firstName" className={`govuk-form-group ${errors.firstName ? 'govuk-form-group--error' : ''}`}>
+              <div className={`govuk-form-group ${errors.firstName ? 'govuk-form-group--error' : ''}`}>
                 <label className="govuk-label govuk-label--m" htmlFor="firstName">
                   First name
                 </label>
@@ -162,7 +162,7 @@ const EditAccount = () => {
                 />
               </div>
 
-              <div id="lastName" className={`govuk-form-group ${errors.lastName ? 'govuk-form-group--error' : ''}`}>
+              <div className={`govuk-form-group ${errors.lastName ? 'govuk-form-group--error' : ''}`}>
                 <label className="govuk-label govuk-label--m" htmlFor="lastName">
                   Last name
                 </label>
@@ -178,7 +178,7 @@ const EditAccount = () => {
                 />
               </div>
 
-              <div id="mobileNumber" className={`govuk-form-group ${errors.mobileNumber ? 'govuk-form-group--error' : ''}`}>
+              <div className={`govuk-form-group ${errors.mobileNumber ? 'govuk-form-group--error' : ''}`}>
                 <label className="govuk-label govuk-label--m" htmlFor="mobileNumber">
                   Telephone number
                 </label>
