@@ -8,7 +8,6 @@ describe('Voyage form required fields errors', () => {
       responsibleContactNo: 'You must enter a contact number',
       responsibleCounty: 'You must enter a country name',
       responsibleGivenName: 'You must enter a first name',
-      responsiblePostcode: 'You must enter a postcode',
       responsibleSurname: 'You must enter a last name',
       responsibleTown: 'You must enter a town or a city name',
     };
@@ -123,7 +122,7 @@ describe('Voyage form invalid inputs', () => {
 
   it('should throw error if arrival date is in the past', async () => {
     const expectedErrors = {
-      arrivalDate: 'You must enter an arrival time in the future',
+      arrivalDate: 'You must enter an arrival date in the future',
     };
     const data = {
       arrivalDateDay: '01',
@@ -141,7 +140,7 @@ describe('Voyage form invalid inputs', () => {
 
   it('should throw error if departure date is in the past', async () => {
     const expectedErrors = {
-      departureDate: 'You must enter a departure time in the future',
+      departureDate: 'You must enter a departure date in the future',
     };
     const data = {
       departureDateDay: '01',
@@ -159,7 +158,7 @@ describe('Voyage form invalid inputs', () => {
 
   it('should throw error if arrival date is before departure', async () => {
     const expectedErrors = {
-      arrivalDate: 'You must enter an arrival time after your departure',
+      arrivalDate: 'You must enter an arrival date after your departure',
     };
     const data = {
       // arrival date is a day before departure
@@ -220,7 +219,7 @@ describe('Voyage form invalid inputs', () => {
     const data = {
       responsibleAddressLine1: '123 Street',
       responsibleContactNo: 'a',
-      responsibleCounty: 'County',
+      responsibleCounty: 'Country',
       responsibleGivenName: 'John',
       responsiblePostcode: 'AB1 2CD',
       responsibleSurname: 'Doe',
