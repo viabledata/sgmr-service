@@ -97,7 +97,7 @@ const VoyageFormValidation = async (dataToValidate, source) => {
     if (isDateToday(dataToValidate.departureDateYear, dataToValidate.departureDateMonth, dataToValidate.departureDateDay)) {
       errors.departureTime = 'You must enter a departure time in the future';
     } else {
-      errors.departureDate = 'You must enter a departure time in the future';
+      errors.departureDate = 'You must enter a departure date in the future';
     }
   }
   // Arrival date must be in the future
@@ -111,7 +111,7 @@ const VoyageFormValidation = async (dataToValidate, source) => {
     if (isDateToday(dataToValidate.arrivalDateYear, dataToValidate.arrivalDateMonth, dataToValidate.arrivalDateDay)) {
       errors.arrivalTime = 'You must enter an arrival time in the future';
     } else {
-      errors.arrivalDate = 'You must enter an arrival time in the future';
+      errors.arrivalDate = 'You must enter an arrival date in the future';
     }
   }
   // Arrival date must be after the departure date
@@ -131,7 +131,7 @@ const VoyageFormValidation = async (dataToValidate, source) => {
       dataToValidate.departureTimeMinute,
     ))
   ) {
-    errors.arrivalDate = 'You must enter an arrival time after your departure';
+    errors.arrivalDate = 'You must enter an arrival date after your departure';
   }
 
   if (errors) { scrollToTopOnError('voyageForm'); }

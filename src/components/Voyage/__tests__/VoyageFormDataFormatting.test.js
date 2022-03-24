@@ -133,7 +133,7 @@ describe('Voyage form data formatting', () => {
     const data = {
       responsibleAddressLine1: '123 Street',
       responsibleContactNo: '01234567891',
-      responsibleCounty: 'County',
+      responsibleCounty: 'Country',
       responsibleGivenName: 'John',
       responsiblePostcode: 'AB1 2CD',
       responsibleSurname: 'Doe',

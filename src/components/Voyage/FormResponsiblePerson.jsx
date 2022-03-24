@@ -98,8 +98,12 @@ const FormResponsiblePerson = ({
             onChange={handleChange}
           />
         </div>
+        {
+          /* It should be noted that responsibleCounty should actually be responsibleCountry, however this has not been changed currently as the
+             backend needs to be updated first */
+        }
         <div id="responsibleCounty" className={`govuk-form-group ${errors.responsibleCounty ? 'govuk-form-group--error' : ''}`}>
-          <label className="govuk-label" htmlFor="responsibleCounty">County</label>
+          <label className="govuk-label" htmlFor="responsibleCounty">Country</label>
           <FormError error={errors.responsibleCounty} />
           <input
             className="govuk-input govuk-!-width-two-thirds"
@@ -109,9 +113,8 @@ const FormResponsiblePerson = ({
             onChange={handleChange}
           />
         </div>
-        <div id="responsiblePostcode" className={`govuk-form-group ${errors.responsiblePostcode ? 'govuk-form-group--error' : ''}`}>
+        <div id="responsiblePostcode" className="govuk-form-group">
           <label className="govuk-label" htmlFor="responsiblePostcode">Postcode or ZIP</label>
-          <FormError error={errors.responsiblePostcode} />
           <input
             className="govuk-input govuk-input--width-10"
             name="responsiblePostcode"
