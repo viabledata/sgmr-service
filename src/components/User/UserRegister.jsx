@@ -92,6 +92,7 @@ const UserRegister = () => {
                 <FormError error={errors.firstName} />
                 <input
                   id="firstName-field"
+                  data-testid="firstName-field"
                   className="govuk-input"
                   name="firstName"
                   type="text"
@@ -107,6 +108,7 @@ const UserRegister = () => {
                 <FormError error={errors.lastName} />
                 <input
                   id="lastName-field"
+                  data-testid="lastName-field"
                   className="govuk-input"
                   name="lastName"
                   type="text"
@@ -123,6 +125,7 @@ const UserRegister = () => {
                 <div className="govuk-hint">We will send an access code to this number. For international numbers include the country code.</div>
                 <input
                   id="mobileNumber-field"
+                  data-testid="mobileNumber-field"
                   className="govuk-input"
                   name="mobileNumber"
                   type="text"
@@ -138,6 +141,7 @@ const UserRegister = () => {
                 <div className="govuk-hint">You will use this to sign into your account.</div>
                 <input
                   id="email-field"
+                  data-testid="email-field"
                   className="govuk-input"
                   name="email"
                   type="text"
@@ -153,6 +157,7 @@ const UserRegister = () => {
                 <FormError error={errors.confirmEmail} />
                 <input
                   id="confirmEmail-field"
+                  data-testid="confirmEmail-field"
                   className="govuk-input"
                   name="confirmEmail"
                   type="text"

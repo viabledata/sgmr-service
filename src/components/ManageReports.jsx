@@ -70,9 +70,10 @@ const ManageReports = (pageData) => {
       });
   };
 
-  // Sets tab data on load
+  // Sets tab data on load & ensures session data clear
   useEffect(() => {
     setTabData(tabs);
+    sessionStorage.removeItem('formData');
   }, [pageData]);
 
   // Calls api whenever current page changes
@@ -138,10 +139,15 @@ const ManageReports = (pageData) => {
                             <span className="responsive-table__heading" aria-hidden="true">
                               Pleasure craft
                             </span>
-                            <Link to={{
-                              pathname: EDIT_VOYAGE_CHECK_DETAILS_URL,
-                              state: { voyageId: voyage.id },
-                            }}
+                            <Link
+                              to={{
+                                pathname: EDIT_VOYAGE_CHECK_DETAILS_URL,
+                                state: { voyageId: voyage.id },
+                              }}
+                              aria-label={
+                                `Open voyage for ${voyage.vesselName}, departure on ${formatUIDate(voyage.departureDate)}, 
+                                departure port ${voyage.departurePort}, arrival port ${voyage.arrivalPort}`
+                              }
                             >
                               {voyage.vesselName}
                             </Link>
@@ -150,10 +156,15 @@ const ManageReports = (pageData) => {
                             <span className="responsive-table__heading" aria-hidden="true">
                               Departure date
                             </span>
-                            <Link to={{
-                              pathname: EDIT_VOYAGE_CHECK_DETAILS_URL,
-                              state: { voyageId: voyage.id },
-                            }}
+                            <Link
+                              to={{
+                                pathname: EDIT_VOYAGE_CHECK_DETAILS_URL,
+                                state: { voyageId: voyage.id },
+                              }}
+                              aria-label={
+                                `Open voyage for ${voyage.vesselName}, departure on ${formatUIDate(voyage.departureDate)}, 
+                                departure port ${voyage.departurePort}, arrival port ${voyage.arrivalPort}`
+                              }
                             >
                               {formatUIDate(voyage.departureDate)}
                             </Link>

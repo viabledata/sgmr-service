@@ -23,7 +23,6 @@ test('Renders with errors', () => {
       responsibleAddressLine2: 'responsibleAddressLine2Error',
       responsibleTown: 'responsibleTownError',
       responsibleCounty: 'responsibleCountyError',
-      responsiblePostcode: 'responsiblePostcodeError',
     }}
   />);
 
@@ -34,5 +33,4 @@ test('Renders with errors', () => {
   expect(screen.getByText('responsibleAddressLine2Error')).toBeInTheDocument();
   expect(screen.getByText('responsibleTownError')).toBeInTheDocument();
   expect(screen.getByText('responsibleCountyError')).toBeInTheDocument();
-  expect(screen.getByText('responsiblePostcodeError')).toBeInTheDocument();
 });
