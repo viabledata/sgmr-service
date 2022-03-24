@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 // App imports
 import { PEOPLE_URL } from '../constants/ApiConstants';
 import { getData } from '../utils/apiHooks';
+import sortNames from '../utils/sortData';
 
 const SectionTablePeople = ({ pageData }) => {
   document.title = 'People';
@@ -13,7 +14,9 @@ const SectionTablePeople = ({ pageData }) => {
 
   const storeData = () => {
     getData(`${PEOPLE_URL}?pagination=false`)
-      .then((resp) => { setPeopleData(resp); });
+      .then((resp) => {
+        setPeopleData(sortNames(resp));
+      });
   };
 
   const getPersonType = (personType) => {
@@ -59,7 +62,7 @@ const SectionTablePeople = ({ pageData }) => {
               <tbody className="govuk-table__body">
                 {Object.entries(peopleData).map((person) => {
                   return (
-                    <tr className="govuk-table__row" key={person[1].id} role="row">
+                    <tr className="govuk-table__row" data-testid="row" key={person[1].id} role="row">
                       <td className="govuk-table__cell" role="cell">
                         <span className="responsive-table__heading" aria-hidden="true">
                           Last Name
