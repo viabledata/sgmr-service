@@ -182,12 +182,6 @@ export const responsiblePersonValidationRules = [
     type: 'required',
     message: 'You must enter a country name',
   },
-  {
-    inputField: 'responsiblePostcode',
-    errorDisplayId: 'responsiblePostcode',
-    type: 'required',
-    message: 'You must enter a postcode',
-  },
 ];
 
 export const vesselValidationRules = [
