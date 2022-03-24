@@ -218,13 +218,13 @@ steps:
       from_secret: CYPRESS_PROJECT_ID
     JOB_NAME: "\"sgmr-e2e-tests\""
     KUBE_NAMESPACE:
-      from_secret: DEV_KUBE_NAMESPACE_COP_SGMR
+      from_secret: DEV_KUBE_NAMESPACE_SPCR
     KUBE_SERVER:
       from_secret: DEV_KUBE_SERVER
     KUBE_TOKEN:
-      from_secret: DEV_SGMR_KUBE_TOKEN
+      from_secret: DEV_SPCR_KUBE_TOKEN
     MAILSLURP_API_KEY:
-      from_secret: DEV_SGMR_MAILSLURP_API_KEY
+      from_secret: DEV_SPCR_MAILSLURP_API_KEY
     PROTOCOL_HTTPS:
       from_secret: PROTOCOL_HTTPS
     REPORT_BASE_URL:
@@ -236,7 +236,7 @@ steps:
     S3_SECRET_KEY:
       from_secret: TESTS_S3_SECRET_KEY
     SGMR_SERVICE_NAME:
-      from_secret: SGMR_SERVICE_NAME
+      from_secret: DEV_SPCR_SERVICE_NAME
     SLACK_WEB_HOOK:
       from_secret: TESTS_SLACK_WEBHOOK
   when:
