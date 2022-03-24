@@ -220,7 +220,7 @@ describe('Voyage form invalid inputs', () => {
     const data = {
       responsibleAddressLine1: '123 Street',
       responsibleContactNo: 'a',
-      responsibleCounty: 'County',
+      responsibleCounty: 'Country',
       responsibleGivenName: 'John',
       responsiblePostcode: 'AB1 2CD',
       responsibleSurname: 'Doe',
