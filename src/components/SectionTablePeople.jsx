@@ -67,10 +67,12 @@ const SectionTablePeople = ({ pageData }) => {
                         <span className="responsive-table__heading" aria-hidden="true">
                           Last Name
                         </span>
-                        <Link to={{
-                          pathname: '/people/edit-person',
-                          state: { peopleId: person[1].id },
-                        }}
+                        <Link
+                          to={{
+                            pathname: '/people/edit-person',
+                            state: { peopleId: person[1].id },
+                          }}
+                          aria-label={`Edit ${person[1].firstName} ${person[1].lastName}`}
                         >
                           {person[1].lastName}
                         </Link>

@@ -27,15 +27,23 @@ const providerProps = {
   },
 };
 
-test('Welcome banner displays the users details', () => {
-  customRender(<WelcomeBanner />, { providerProps });
+describe('WelcomeBanner', () => {
+  it('should display the users details', () => {
+    customRender(<WelcomeBanner />, { providerProps });
 
-  expect(screen.getByText('Welcome back, John')).toBeInTheDocument();
-});
+    expect(screen.getByText('Welcome back, John')).toBeInTheDocument();
+  });
 
-test('Welcome back text should be a paragraph', () => {
-  customRender(<WelcomeBanner />, { providerProps });
+  it('should show the welcome back text as a heading', () => {
+    customRender(<WelcomeBanner />, { providerProps });
 
-  const content = screen.getByText('Welcome back, John');
-  expect(content.outerHTML).toEqual('<h3 class="govuk-heading-m">Welcome back, John</h3>');
+    const content = screen.getByText('Welcome back, John');
+    expect(content.outerHTML).toEqual('<h3 class="govuk-heading-m">Welcome back, John</h3>');
+  });
+
+  it('should not render page if there is no user data', () => {
+    const { container } = customRender(<WelcomeBanner />, { providerProps: {} });
+    // expect empty component
+    expect(container.childElementCount).toEqual(0);
+  });
 });

@@ -8,7 +8,6 @@ describe('Voyage form required fields errors', () => {
       responsibleContactNo: 'You must enter a contact number',
       responsibleCounty: 'You must enter a country name',
       responsibleGivenName: 'You must enter a first name',
-      responsiblePostcode: 'You must enter a postcode',
       responsibleSurname: 'You must enter a last name',
       responsibleTown: 'You must enter a town or a city name',
     };
@@ -94,6 +93,7 @@ describe('Voyage form invalid inputs', () => {
       arrivalTimeHour: '24',
       arrivalTimeMinute: '00',
       arrivalPort: 'BRP',
+      arrivalPortName: 'Bridport',
     };
 
     const result = await VoyageFormValidation(data, FORM_STEPS.ARRIVAL);
@@ -113,6 +113,7 @@ describe('Voyage form invalid inputs', () => {
       departureTimeHour: '24',
       departureTimeMinute: '00',
       departurePort: 'BRP',
+      departurePortName: 'Bridport',
     };
 
     const result = await VoyageFormValidation(data, FORM_STEPS.DEPARTURE);
@@ -130,6 +131,7 @@ describe('Voyage form invalid inputs', () => {
       arrivalTimeHour: '12',
       arrivalTimeMinute: '00',
       arrivalPort: 'BRP',
+      arrivalPortName: 'Bridport',
     };
 
     const result = await VoyageFormValidation(data, FORM_STEPS.ARRIVAL);
@@ -147,6 +149,7 @@ describe('Voyage form invalid inputs', () => {
       departureTimeHour: '12',
       departureTimeMinute: '00',
       departurePort: 'BRP',
+      departurePortName: 'Bridport',
     };
 
     const result = await VoyageFormValidation(data, FORM_STEPS.DEPARTURE);
@@ -165,12 +168,14 @@ describe('Voyage form invalid inputs', () => {
       arrivalTimeHour: '12',
       arrivalTimeMinute: '00',
       arrivalPort: 'BRP',
+      arrivalPortName: 'Bridport',
       departureDateDay: '02',
       departureDateMonth: '01',
       departureDateYear: '2023',
       departureTimeHour: '12',
       departureTimeMinute: '00',
       departurePort: 'BRP',
+      departurePortName: 'Bridport',
     };
 
     const result = await VoyageFormValidation(data, FORM_STEPS.ARRIVAL);
@@ -214,7 +219,7 @@ describe('Voyage form invalid inputs', () => {
     const data = {
       responsibleAddressLine1: '123 Street',
       responsibleContactNo: 'a',
-      responsibleCounty: 'County',
+      responsibleCounty: 'Country',
       responsibleGivenName: 'John',
       responsiblePostcode: 'AB1 2CD',
       responsibleSurname: 'Doe',
