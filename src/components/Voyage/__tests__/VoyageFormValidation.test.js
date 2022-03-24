@@ -8,7 +8,6 @@ describe('Voyage form required fields errors', () => {
       responsibleContactNo: 'You must enter a contact number',
       responsibleCounty: 'You must enter a country name',
       responsibleGivenName: 'You must enter a first name',
-      responsiblePostcode: 'You must enter a postcode',
       responsibleSurname: 'You must enter a last name',
       responsibleTown: 'You must enter a town or a city name',
     };
@@ -220,7 +219,7 @@ describe('Voyage form invalid inputs', () => {
     const data = {
       responsibleAddressLine1: '123 Street',
       responsibleContactNo: 'a',
-      responsibleCounty: 'County',
+      responsibleCounty: 'Country',
       responsibleGivenName: 'John',
       responsiblePostcode: 'AB1 2CD',
       responsibleSurname: 'Doe',

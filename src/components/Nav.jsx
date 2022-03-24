@@ -67,11 +67,13 @@ const Nav = () => {
       headers: { Authorization: `Bearer ${Auth.retrieveToken()}` },
     })
       .then(() => {
+        setActivePage('/voyage-plans');
         Auth.logout();
         sessionStorage.clear();
         history.push('/sign-in');
       })
       .catch(() => {
+        setActivePage('voyage-plans');
         Auth.logout();
         history.push('/sign-in');
       });
@@ -121,7 +123,7 @@ const Nav = () => {
               );
             })}
             <li className="govuk-header__navigation-item">
-              <a href="#sign-out" className="govuk-header__link" onClick={() => handleSignout()}>Signout</a>
+              <a href="#sign-out" className="govuk-header__link" onClick={() => handleSignout()}>Sign out</a>
             </li>
           </ul>
         </nav>

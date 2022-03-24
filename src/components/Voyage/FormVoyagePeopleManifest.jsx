@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { VOYAGE_REPORT_URL } from '../../constants/ApiConstants';
 import { FORM_STEPS } from '../../constants/ClientConstants';
 import { deleteItem, getData } from '../../utils/apiHooks';
+import sortNames from '../../utils/sortData';
 import scrollToTopOnError from '../../utils/scrollToTopOnError';
 import PeopleTable from './PeopleTable';
 
@@ -33,7 +34,7 @@ const FormVoyagePeopleManifest = ({
 
   const storePeopleData = async () => {
     const voyagePeople = await getData(`${VOYAGE_REPORT_URL}/${voyageId}/people`);
-    setPeopleData(voyagePeople.items);
+    setPeopleData(sortNames(voyagePeople.items));
   };
 
   useEffect(() => {
