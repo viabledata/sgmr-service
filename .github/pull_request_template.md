@@ -1,17 +1,12 @@
-## Description
+### AC / Description of changes
 
 
-## Developer Checklist
-
-\* Required
-
-- [ ] Up-to-date with master branch? \*
-
-- [ ] Does it have tests?
-
-- [ ] Pull request URL linked to JIRA ticket? \*
-
-- [ ] All reviewer comments resolved/answered? \*
+### To Test
 
 
-Ensure you delete the branch once the Pull Request is merged.
+### Notes
+
+---
+* remember to merge to feature branches not master *
+
+
