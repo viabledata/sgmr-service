@@ -50,7 +50,7 @@ const PeopleTable = ({ peopleData, onSelectionChange = () => {} }) => {
                     checked={peopleToRemove.includes(person.id)}
                   />
                   <label className="govuk-label govuk-checkboxes__label" htmlFor={person.id}>
-                    <span className="govuk-visually-hidden" >{`Select ${person.firstName} ${person.lastName}`}</span>
+                    <span className="govuk-visually-hidden">{`Select ${person.firstName} ${person.lastName}`}</span>
                   </label>
                 </div>
               </td>
