@@ -366,3 +366,4 @@ Cypress.Commands.add('removeTestData', () => {
 
   sessionStorage.removeItem('token');
 });
+//
