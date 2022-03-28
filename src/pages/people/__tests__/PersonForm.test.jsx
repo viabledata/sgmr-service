@@ -6,14 +6,14 @@ import {
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { PEOPLE_URL } from '../../../constants/ApiConstants';
-import PeopleForm from '../PeopleForm';
+import PersonForm from '../PersonForm';
 
 const renderPage = ({
   type, source, personId, pageNumber,
 }) => {
   render(
     <MemoryRouter initialEntries={[{ pathname: `/page-${pageNumber}` }]}>
-      <PeopleForm type={type} source={source} personId={personId} />
+      <PersonForm type={type} source={source} personId={personId} />
     </MemoryRouter>,
   );
 };
