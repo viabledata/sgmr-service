@@ -25,7 +25,7 @@ const FormArrival = ({
   const [searchTerm, setSearchTerm] = useState(data.arrivalCountry || '');
 
   const fetchCountries = (query) => {
-    if (query.length < 3) {
+    if (query.length < 2) {
       countries = [];
     } else {
       axios.get(`${COUNTRIES_URL}?name=${encodeURIComponent(query)}`, {
