@@ -300,7 +300,7 @@ steps:
   - kd --insecure-skip-tls-verify -f kube/ingress.yml
   environment:
     KUBE_NAMESPACE:
-      from_secret: PRODUCTION_KUBE_NAMESPACE_COP_SPCR
+      from_secret: PRODUCTION_KUBE_NAMESPACE_SPCR
     KUBE_SERVER:
       from_secret: PRODUCTION_KUBE_SERVER
     KUBE_TOKEN:
