@@ -48,6 +48,18 @@ const personValidationRules = {
       },
       message: 'You must enter a valid date of birth',
     },
+    {
+      inputField: 'placeOfBirth',
+      errorDisplayId: 'placeOfBirth',
+      type: 'required',
+      message: 'You must enter a place of birth',
+    },
+    {
+      inputField: 'gender',
+      errorDisplayId: 'gender',
+      type: 'required',
+      message: 'You must select a gender',
+    },
   ],
   page2: [
     {
@@ -63,36 +75,33 @@ const personValidationRules = {
       message: 'You must enter a document number',
     },
     {
+      inputField: 'documentIssuingState',
+      errorDisplayId: 'documentIssuingState',
+      type: 'required',
+      message: 'You must select a document issuing state',
+    },
+    {
       inputField: 'nationality',
       errorDisplayId: 'nationality',
       type: 'required',
       message: 'You must select a nationality',
     },
     {
-      inputField: 'documentExpiryDate',
-      errorDisplayId: 'documentExpiryDate',
-      type: 'required',
-      message: 'You must select a document expiry',
-    },
-    {
       inputField: 'documentExpiryDateYear',
       errorDisplayId: 'documentExpiryDate',
-      type: 'requiredOnVisible',
-      visibilityIndicator: 'documentExpiryDateYes',
+      type: 'required',
       message: 'You must enter an expiry date',
     },
     {
       inputField: 'documentExpiryDateMonth',
       errorDisplayId: 'documentExpiryDate',
-      type: 'requiredOnVisible',
-      visibilityIndicator: 'documentExpiryDateYes',
+      type: 'required',
       message: 'You must enter an expiry date',
     },
     {
       inputField: 'documentExpiryDateDay',
       errorDisplayId: 'documentExpiryDate',
-      type: 'requiredOnVisible',
-      visibilityIndicator: 'documentExpiryDateYes',
+      type: 'required',
       message: 'You must enter an expiry date',
     },
     {

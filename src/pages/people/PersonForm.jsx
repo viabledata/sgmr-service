@@ -284,6 +284,74 @@ const PersonForm = ({ source, type, personId }) => {
                       </div>
                     </div>
                   </div>
+                  <div id="placeOfBirth" className={`govuk-form-group ${errors.placeOfBirth ? 'govuk-form-group--error' : ''}`}>
+                    <label className="govuk-label" htmlFor="placeOfBirthInput">
+                      Place of birth
+                    </label>
+                    <FormFieldError error={errors.placeOfBirth} />
+                    <input
+                      id="placeOfBirthInput"
+                      className="govuk-input"
+                      name="placeOfBirth"
+                      type="text"
+                      value={formData?.placeOfBirth || ''}
+                      onChange={handleChange}
+                    />
+                  </div>
+                  <div id="gender" className={`govuk-form-group ${errors.gender ? 'govuk-form-group--error' : ''}`}>
+                    <fieldset className="govuk-fieldset">
+                      <legend className="govuk-fieldset__legend">
+                        <label className="govuk-fieldset__heading" htmlFor="gender">
+                          Gender
+                        </label>
+                      </legend>
+                      <div className="govuk-radios govuk-radios">
+                        <FormFieldError error={errors.gender} />
+                        <div className="govuk-radios__item">
+                          <input
+                            className="govuk-radios__input"
+                            name="gender"
+                            id="female"
+                            type="radio"
+                            value="Female"
+                            checked={formData.gender === 'Female' ? 'checked' : ''}
+                            onChange={handleChange}
+                          />
+                          <label className="govuk-label govuk-radios__label" htmlFor="female">
+                            Female
+                          </label>
+                        </div>
+                        <div className="govuk-radios__item">
+                          <input
+                            className="govuk-radios__input"
+                            name="gender"
+                            id="male"
+                            type="radio"
+                            value="Male"
+                            checked={formData.gender === 'Male' ? 'checked' : ''}
+                            onChange={handleChange}
+                          />
+                          <label className="govuk-label govuk-radios__label" htmlFor="male">
+                            Male
+                          </label>
+                        </div>
+                        <div className="govuk-radios__item">
+                          <input
+                            className="govuk-radios__input"
+                            name="gender"
+                            id="non-binary"
+                            type="radio"
+                            value="Non-binary"
+                            checked={formData.gender === 'Non-binary' ? 'checked' : ''}
+                            onChange={handleChange}
+                          />
+                          <label className="govuk-label govuk-radios__label" htmlFor="non-binary">
+                            Non-binary
+                          </label>
+                        </div>
+                      </div>
+                    </fieldset>
+                  </div>
                   <div className="govuk-button-group">
                     <button
                       type="button"
@@ -425,6 +493,22 @@ const PersonForm = ({ source, type, personId }) => {
                       onChange={handleChange}
                     />
                   </div>
+                  <div id="documentIssuingState" className={`govuk-form-group ${errors.documentIssuingState ? 'govuk-form-group--error' : ''}`}>
+                    <label className="govuk-label" htmlFor="documentIssuingStateInput">
+                      Issuing state
+                    </label>
+                    <div id="documentIssuingState-hint" className="govuk-hint">Please enter 3 letter ISO country code, for example GBR</div>
+                    <FormFieldError error={errors.documentIssuingState} />
+                    <input
+                      id="documentIssuingStateInput"
+                      className="govuk-input govuk-input--width-3"
+                      name="documentIssuingState"
+                      type="text"
+                      maxLength={3}
+                      value={formData?.documentIssuingState || ''}
+                      onChange={handleChange}
+                    />
+                  </div>
                   <div id="nationality" className={`govuk-form-group ${errors.nationality ? 'govuk-form-group--error' : ''}`}>
                     <label className="govuk-label" htmlFor="nationality">
                       Nationality
@@ -444,102 +528,65 @@ const PersonForm = ({ source, type, personId }) => {
                     </select>
                   </div>
                   <div id="documentExpiryDate" className={`govuk-form-group ${errors.documentExpiryDate ? 'govuk-form-group--error' : ''}`}>
-                    <fieldset className="govuk-fieldset" aria-describedby="expiry-date-hint">
-                      <legend className="govuk-fieldset__legend govuk-fieldset__legend">Does your document have an expiry date?</legend>
-                      <FormFieldError error={errors.documentExpiryDate} />
-                      <div className="govuk-radios" data-module="govuk-radios">
-                        <div className="govuk-radios__item">
-                          <input
-                            className="govuk-radios__input"
-                            id="documentExpiryDateYes"
-                            name="documentExpiryDate"
-                            type="radio"
-                            value="documentExpiryDateYes"
-                            data-aria-controls="documentExpiryDateYes"
-                            checked={formData.documentExpiryDate === 'documentExpiryDateYes' ? 'checked' : ''}
-                            onChange={handleChange}
-                          />
-                          <label className="govuk-label govuk-radios__label" htmlFor="documentExpiryDateYes">
-                            Yes
-                          </label>
-                        </div>
-                        {formData.documentExpiryDate === 'documentExpiryDateYes' && (
-                        <div className="govuk-radios__conditional" id="documentExpiryDate">
-                          <div className="govuk-form-group">
-                            <fieldset className="govuk-fieldset" aria-describedby="documentExpiryDate-hint" role="group">
-                              <legend className="govuk-fieldset__legend"> Expiry date</legend>
-                              <div id="documentExpiryDate-hint" className="govuk-hint">For example 31 03 1980</div>
-                              <div className="govuk-date-input" id="documentExpiryDate">
-                                <div className="govuk-date-input__item">
-                                  <div className="govuk-form-group">
-                                    <label className="govuk-label govuk-date-input__label" htmlFor="documentExpiryDateDay">Day</label>
-                                    <input
-                                      className="govuk-input govuk-date-input__input govuk-input--width-2"
-                                      name="documentExpiryDateDay"
-                                      id="documentExpiryDateDay"
-                                      type="text"
-                                      maxLength={2}
-                                      pattern="[0-9]*"
-                                      inputMode="numeric"
-                                      value={formData?.documentExpiryDateDay || ''}
-                                      onChange={handleChange}
-                                    />
-                                  </div>
-                                </div>
-                                <div className="govuk-date-input__item">
-                                  <div className="govuk-form-group">
-                                    <label className="govuk-label govuk-date-input__label" htmlFor="documentExpiryDateMonth">Month</label>
-                                    <input
-                                      className="govuk-input govuk-date-input__input govuk-input--width-2"
-                                      name="documentExpiryDateMonth"
-                                      id="documentExpiryDateMonth"
-                                      type="text"
-                                      maxLength={2}
-                                      pattern="[0-9]*"
-                                      inputMode="numeric"
-                                      value={formData?.documentExpiryDateMonth || ''}
-                                      onChange={handleChange}
-                                    />
-                                  </div>
-                                </div>
-                                <div className="govuk-date-input__item">
-                                  <div className="govuk-form-group">
-                                    <label className="govuk-label govuk-date-input__label" htmlFor="documentExpiryDateYear">Year</label>
-                                    <input
-                                      className="govuk-input govuk-date-input__input govuk-input--width-4"
-                                      name="documentExpiryDateYear"
-                                      id="documentExpiryDateYear"
-                                      type="text"
-                                      maxLength={4}
-                                      pattern="[0-9]*"
-                                      inputMode="numeric"
-                                      value={formData?.documentExpiryDateYear || ''}
-                                      onChange={handleChange}
-                                    />
-                                  </div>
-                                </div>
+                    <div className="govuk-radios">
+                      <div className="govuk-form-group">
+                        <fieldset className="govuk-fieldset" aria-describedby="documentExpiryDate-hint" role="group">
+                          <legend className="govuk-fieldset__legend"> Expiry date</legend>
+                          <div id="documentExpiryDate-hint" className="govuk-hint">For example 31 03 1980</div>
+                          <FormFieldError error={errors.documentExpiryDate} />
+                          <div className="govuk-date-input">
+                            <div className="govuk-date-input__item">
+                              <div className="govuk-form-group">
+                                <label className="govuk-label govuk-date-input__label" htmlFor="documentExpiryDateDay">Day</label>
+                                <input
+                                  className="govuk-input govuk-date-input__input govuk-input--width-2"
+                                  name="documentExpiryDateDay"
+                                  id="documentExpiryDateDay"
+                                  type="text"
+                                  maxLength={2}
+                                  pattern="[0-9]*"
+                                  inputMode="numeric"
+                                  value={formData?.documentExpiryDateDay || ''}
+                                  onChange={handleChange}
+                                />
                               </div>
-                            </fieldset>
+                            </div>
+                            <div className="govuk-date-input__item">
+                              <div className="govuk-form-group">
+                                <label className="govuk-label govuk-date-input__label" htmlFor="documentExpiryDateMonth">Month</label>
+                                <input
+                                  className="govuk-input govuk-date-input__input govuk-input--width-2"
+                                  name="documentExpiryDateMonth"
+                                  id="documentExpiryDateMonth"
+                                  type="text"
+                                  maxLength={2}
+                                  pattern="[0-9]*"
+                                  inputMode="numeric"
+                                  value={formData?.documentExpiryDateMonth || ''}
+                                  onChange={handleChange}
+                                />
+                              </div>
+                            </div>
+                            <div className="govuk-date-input__item">
+                              <div className="govuk-form-group">
+                                <label className="govuk-label govuk-date-input__label" htmlFor="documentExpiryDateYear">Year</label>
+                                <input
+                                  className="govuk-input govuk-date-input__input govuk-input--width-4"
+                                  name="documentExpiryDateYear"
+                                  id="documentExpiryDateYear"
+                                  type="text"
+                                  maxLength={4}
+                                  pattern="[0-9]*"
+                                  inputMode="numeric"
+                                  value={formData?.documentExpiryDateYear || ''}
+                                  onChange={handleChange}
+                                />
+                              </div>
+                            </div>
                           </div>
-                        </div>
-                        )}
-                        <div className="govuk-radios__item">
-                          <input
-                            className="govuk-radios__input"
-                            id="documentExpiryDateNo"
-                            name="documentExpiryDate"
-                            type="radio"
-                            value="documentExpiryDateNo"
-                            data-aria-controls="documentExpiryDateNo"
-                            checked={formData.documentExpiryDate === 'documentExpiryDateNo' ? 'checked' : ''}
-                            onChange={handleChange}
-                          />
-                          <label className="govuk-label govuk-radios__label" htmlFor="documentExpiryDateNo">
-                            No
-                          </label>
-                        </div>
+                        </fieldset>
                       </div>
-                    </fieldset>
+                    </div>
                   </div>
                   <div className="govuk-button-group">
                     <button
