@@ -54,7 +54,6 @@ module.exports = {
     new webpack.EnvironmentPlugin({
       SGMR_DATA_API_BASE_URL: 'http://localhost:5000/v1',
       SGMR_MAINTENANCE: false,
-      GOV_NOTIFY_SUPPORT_EMAIL: 'SPCR@homeoffice.gov.uk',
     }),
     new HtmlWebpackPlugin({ template: './index.html' }),
   ],
