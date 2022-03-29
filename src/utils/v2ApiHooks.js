@@ -8,7 +8,7 @@ const postData = async (url, dataToSubmit, pageSource) => {
   const data = await axios.post(url, dataToSubmit, {
     headers: { Authorization: `Bearer ${Auth.retrieveToken()}` },
   })
-    .then((resp) => { return resp.data; })
+    .then((resp) => { return resp; })
     .catch((err) => {
       switch (err.response?.status) {
         case 401:
