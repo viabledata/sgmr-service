@@ -30,7 +30,7 @@ const getData = (url, pageSource) => {
   const data = axios.get(url, {
     headers: { Authorization: `Bearer ${Auth.retrieveToken()}` },
   })
-    .then((resp) => { return resp.data; })
+    .then((resp) => { return resp; })
     .catch((err) => {
       if (err.response) {
         switch (err.response.status) {
@@ -49,7 +49,7 @@ const patchData = (url, dataToSubmit, pageSource) => {
   const data = axios.patch(url, dataToSubmit, {
     headers: { Authorization: `Bearer ${Auth.retrieveToken()}` },
   })
-    .then((resp) => { return resp.data; })
+    .then((resp) => { return resp; })
     .catch((err) => {
       if (err.response) {
         switch (err.response.status) {
@@ -68,7 +68,7 @@ const deleteItem = (url, pageSource) => {
   const data = axios.delete(url, {
     headers: { Authorization: `Bearer ${Auth.retrieveToken()}` },
   })
-    .then((resp) => { return resp.data; })
+    .then((resp) => { return resp; })
     .catch((err) => {
       if (err.response) {
         switch (err.response.status) {
