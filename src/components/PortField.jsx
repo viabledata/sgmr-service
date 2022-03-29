@@ -88,6 +88,7 @@ const PortField = ({
           name={`autocomplete${fieldName}`}
           onChange={handleSearchTermChange}
           value={searchTerm}
+          type="inputText"
         />
         {portList.length > 0 && (
           <ComboboxPopover className="shadow-popup">
