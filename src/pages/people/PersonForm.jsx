@@ -94,7 +94,7 @@ const PersonForm = ({ source, type, personId }) => {
       lastName: formData.lastName,
       documentType: formData.documentType,
       documentNumber: formData.documentNumber,
-      documentIssuingState: formData.documentIssuingState,
+      documentIssuingState: formData.documentIssuingState.toUpperCase(),
       documentExpiryDate: formatDate(formData.documentExpiryDateYear, formData.documentExpiryDateMonth, formData.documentExpiryDateDay),
       dateOfBirth: formatDate(formData.dateOfBirthYear, formData.dateOfBirthMonth, formData.dateOfBirthDay),
       nationality: formData.nationality,
