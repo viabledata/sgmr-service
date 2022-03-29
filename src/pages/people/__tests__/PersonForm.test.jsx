@@ -5,7 +5,6 @@ import {
 } from '@testing-library/react';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
-import { PEOPLE_URL } from '../../../constants/ApiConstants';
 import PersonForm from '../PersonForm';
 
 const renderPage = ({
@@ -62,6 +61,8 @@ describe('Creating and editing people', () => {
     expect(screen.queryAllByText('You must enter a given name')).toHaveLength(2);
     expect(screen.queryAllByText('You must enter a surname')).toHaveLength(2);
     expect(screen.queryAllByText('You must enter a date of birth')).toHaveLength(2);
+    expect(screen.queryAllByText('You must enter a place of birth')).toHaveLength(2);
+    expect(screen.queryAllByText('You must select a gender')).toHaveLength(2);
   });
 
   it('should scroll to error if user clicks on error text', async () => {
@@ -83,6 +84,8 @@ describe('Creating and editing people', () => {
     fireEvent.change(screen.getByLabelText('Day'), { target: { value: '1' } });
     fireEvent.change(screen.getByLabelText('Month'), { target: { value: '11' } });
     fireEvent.change(screen.getByLabelText('Year'), { target: { value: '1990' } });
+    fireEvent.change(screen.getByLabelText('Place of birth'), { target: { value: 'London' } });
+    fireEvent.click(screen.getByLabelText('Male'));
     await waitFor(() => fireEvent.click(screen.getByText('Continue')));
     expect(screen.getByText('Select a travel document type')).toBeInTheDocument();
   });
@@ -98,8 +101,9 @@ describe('Creating and editing people', () => {
     await waitFor(() => fireEvent.click(screen.getByText('Save')));
     expect(screen.queryAllByText('You must select a document type')).toHaveLength(2);
     expect(screen.queryAllByText('You must enter a document number')).toHaveLength(2);
+    expect(screen.queryAllByText('You must select a document issuing state')).toHaveLength(2);
     expect(screen.queryAllByText('You must select a nationality')).toHaveLength(2);
-    expect(screen.queryAllByText('You must select a document expiry')).toHaveLength(2);
+    expect(screen.queryAllByText('You must enter an expiry date')).toHaveLength(2);
   });
 
   it('should render errors on save if document type is OTHER and other text input is null', async () => {
@@ -111,21 +115,6 @@ describe('Creating and editing people', () => {
 
     await waitFor(() => fireEvent.click(screen.getByText('Save')));
     expect(screen.queryAllByText('You must select a document type')).toHaveLength(2);
-  });
-
-  it('should render errors on save if document expiry is YES and expiry date is null or invalid', async () => {
-    renderPage({ pageNumber: 2 });
-    fireEvent.click(screen.getByLabelText('No'));
-    expect(screen.getByLabelText('No')).toBeChecked();
-    expect(screen.queryByText('Expiry date')).not.toBeInTheDocument();
-
-    fireEvent.click(screen.getByLabelText('Yes'));
-    expect(screen.getByLabelText('Yes')).toBeChecked();
-    expect(screen.getByLabelText('No')).not.toBeChecked();
-    expect(screen.getByText('Expiry date')).toBeInTheDocument();
-
-    await waitFor(() => fireEvent.click(screen.getByText('Save')));
-    expect(screen.queryAllByText('You must enter an expiry date')).toHaveLength(2);
   });
 
   it('should clear error for a field if user interacts with that field', async () => {
@@ -148,73 +137,27 @@ describe('Creating and editing people', () => {
   });
 
   it('should store form data in the session for use on refresh', async () => {
-    const expectedPage1FormData = '{"firstName":"Joe","lastName":"Bloggs","dateOfBirthDay":"1","dateOfBirthMonth":"11","dateOfBirthYear":"1990"}';
+    const expectedPage1FormData = '{"firstName":"Joe","lastName":"Blogs","dateOfBirthDay":"1","dateOfBirthMonth":"11","dateOfBirthYear":"1990","placeOfBirth":"London","gender":"Male"}';
     // eslint-disable-next-line max-len
-    const expectedPage2FormData = '{"firstName":"Joe","lastName":"Bloggs","dateOfBirthDay":"1","dateOfBirthMonth":"11","dateOfBirthYear":"1990","documentType":"Passport","documentNumber":"abc123","nationality":"","documentExpiryDate":"documentExpiryDateNo"}';
+    const expectedPage2FormData = '{"firstName":"Joe","lastName":"Blogs","dateOfBirthDay":"1","dateOfBirthMonth":"11","dateOfBirthYear":"1990","placeOfBirth":"London","gender":"Male","documentType":"Passport","documentNumber":"abc123","documentIssuingState":"GBR","nationality":"AUS","documentExpiryDateDay":"1","documentExpiryDateMonth":"11","documentExpiryDateYear":"2025"}';
     renderPage({ pageNumber: 1 });
     fireEvent.change(screen.getByLabelText('Given name(s)'), { target: { value: 'Joe' } });
-    fireEvent.change(screen.getByLabelText('Surname'), { target: { value: 'Bloggs' } });
+    fireEvent.change(screen.getByLabelText('Surname'), { target: { value: 'Blogs' } });
     fireEvent.change(screen.getByLabelText('Day'), { target: { value: '1' } });
     fireEvent.change(screen.getByLabelText('Month'), { target: { value: '11' } });
     fireEvent.change(screen.getByLabelText('Year'), { target: { value: '1990' } });
+    fireEvent.change(screen.getByLabelText('Place of birth'), { target: { value: 'London' } });
+    fireEvent.click(screen.getByLabelText('Male'));
     expect(window.sessionStorage.getItem('formData')).toStrictEqual(expectedPage1FormData);
 
     renderPage({ pageNumber: 2 });
     fireEvent.click(screen.getByLabelText('Passport'));
     fireEvent.change(screen.getByLabelText('Travel document number'), { target: { value: 'abc123' } });
-    await waitFor(() => fireEvent.change(screen.getByRole('combobox'), { target: { value: 'Australia' } }));
-    fireEvent.click(screen.getByLabelText('No'));
+    fireEvent.change(screen.getByLabelText('Issuing state'), { target: { value: 'GBR' } });
+    fireEvent.change(screen.getByTestId('nationality-field'), { target: { value: 'AUS' } });
+    fireEvent.change(screen.getByTestId('documentExpiryDateDay-field'), { target: { value: '1' } });
+    fireEvent.change(screen.getByTestId('documentExpiryDateMonth-field'), { target: { value: '11' } });
+    fireEvent.change(screen.getByTestId('documentExpiryDateYear-field'), { target: { value: '2025' } });
     expect(window.sessionStorage.getItem('formData')).toStrictEqual(expectedPage2FormData);
-  });
-
-  it('should prefill person details if type is edit', async () => {
-    mockAxios
-      .onGet(`${PEOPLE_URL}/person123`)
-      .reply(200, {
-        id: 'person123',
-        firstName: 'Joe',
-        lastName: 'Blogs',
-        dateOfBirth: '1990-11-01',
-        nationality: 'AIA',
-        documentType: 'Passport',
-        documentNumber: '12345',
-        documentExpiryDate: '2025-02-22',
-      });
-
-    await waitFor(() => {
-      renderPage({
-        type: 'edit', source: 'edit', personId: 'person123', pageNumber: 1,
-      });
-    });
-
-    expect(screen.getByText('Update details of the person you sail with').outerHTML).toEqual('<h1 class="govuk-heading-l">Update details of the person you sail with</h1>');
-    expect(screen.getByDisplayValue('Joe')).toBeInTheDocument();
-    expect(screen.getByDisplayValue('Blogs')).toBeInTheDocument();
-    expect(screen.getByDisplayValue('01')).toBeInTheDocument();
-    expect(screen.getByDisplayValue('11')).toBeInTheDocument();
-    expect(screen.getByDisplayValue('1990')).toBeInTheDocument();
-
-    await waitFor(() => {
-      renderPage({
-        type: 'edit', source: 'edit', personId: 'person123', pageNumber: 2,
-      });
-    });
-    expect(screen.getByDisplayValue('Passport')).toBeChecked();
-    expect(screen.getByDisplayValue('12345')).toBeInTheDocument();
-    expect(screen.queryByRole('combobox').value).toBe('AIA');
-    expect(screen.getByLabelText('Yes')).toBeChecked();
-    expect(screen.getByDisplayValue('2025')).toBeInTheDocument();
-    expect(screen.getByDisplayValue('02')).toBeInTheDocument();
-    expect(screen.getByDisplayValue('22')).toBeInTheDocument();
-  });
-
-  it('should show a delete option if you are in edit type', async () => {
-    renderPage({ type: 'edit', source: 'edit', pageNumber: 1 });
-    expect(screen.getByText('Delete this person')).toBeInTheDocument();
-  });
-
-  it('should show NOT a delete option if you are NOT in edit type', async () => {
-    renderPage({ pageNumber: 1 });
-    expect(screen.queryByText('Delete this person')).not.toBeInTheDocument();
   });
 });

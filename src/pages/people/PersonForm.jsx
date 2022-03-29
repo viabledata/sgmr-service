@@ -515,6 +515,7 @@ const PersonForm = ({ source, type, personId }) => {
                     </label>
                     <FormFieldError error={errors.nationality} />
                     <select
+                      data-testId="nationality-field"
                       className="govuk-select"
                       name="nationality"
                       type="text"
@@ -542,6 +543,7 @@ const PersonForm = ({ source, type, personId }) => {
                                   className="govuk-input govuk-date-input__input govuk-input--width-2"
                                   name="documentExpiryDateDay"
                                   id="documentExpiryDateDay"
+                                  data-testid="documentExpiryDateDay-field"
                                   type="text"
                                   maxLength={2}
                                   pattern="[0-9]*"
@@ -558,6 +560,7 @@ const PersonForm = ({ source, type, personId }) => {
                                   className="govuk-input govuk-date-input__input govuk-input--width-2"
                                   name="documentExpiryDateMonth"
                                   id="documentExpiryDateMonth"
+                                  data-testid="documentExpiryDateMonth-field"
                                   type="text"
                                   maxLength={2}
                                   pattern="[0-9]*"
@@ -574,6 +577,7 @@ const PersonForm = ({ source, type, personId }) => {
                                   className="govuk-input govuk-date-input__input govuk-input--width-4"
                                   name="documentExpiryDateYear"
                                   id="documentExpiryDateYear"
+                                  data-testid="documentExpiryDateYear-field"
                                   type="text"
                                   maxLength={4}
                                   pattern="[0-9]*"
