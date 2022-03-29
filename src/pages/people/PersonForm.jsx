@@ -94,13 +94,13 @@ const PersonForm = ({ source, type, personId }) => {
       lastName: formData.lastName,
       documentType: formData.documentType,
       documentNumber: formData.documentNumber,
-      documentExpiryDate:
-        formData.documentExpiryDate === 'documentExpiryDateYes'
-          ? formatDate(formData.documentExpiryDateYear, formData.documentExpiryDateMonth, formData.documentExpiryDateDay)
-          : '2025-1-1',
+      documentIssuingState: formData.documentIssuingState,
+      documentExpiryDate: formatDate(formData.documentExpiryDateYear, formData.documentExpiryDateMonth, formData.documentExpiryDateDay),
       dateOfBirth: formatDate(formData.dateOfBirthYear, formData.dateOfBirthMonth, formData.dateOfBirthDay),
       nationality: formData.nationality,
-      peopleType: 'crew',
+      placeOfBirth: formData.placeOfBirth,
+      gender: formData.gender,
+      peopleType: 'Crew',
     };
   };
 
