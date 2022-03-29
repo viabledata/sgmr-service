@@ -1,19 +1,21 @@
 import React from 'react';
-import { MemoryRouter } from 'react-router-dom';
+import { MemoryRouter, Router } from 'react-router-dom';
 import {
   fireEvent, render, screen, waitFor,
 } from '@testing-library/react';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { createMemoryHistory } from 'history';
 import { PEOPLE_URL } from '../../../constants/ApiConstants';
 import PersonForm from '../PersonForm';
 
 const renderPage = ({
-  type, source, personId, pageNumber,
+  type, source, pageNumber,
 }) => {
   render(
     <MemoryRouter initialEntries={[{ pathname: `/page-${pageNumber}` }]}>
-      <PersonForm type={type} source={source} personId={personId} />
+      <PersonForm type={type} source={source} />
     </MemoryRouter>,
   );
 };
@@ -193,6 +195,9 @@ describe('Creating and editing people', () => {
   });
 
   it('should prefill person details if type is edit', async () => {
+    const history = createMemoryHistory();
+    const state = { peopleId: 'person123', source: 'edit' };
+    history.push('/people/edit-person/page-1', state);
     mockAxios
       .onGet(`${PEOPLE_URL}/person123`)
       .reply(200, {
@@ -200,16 +205,21 @@ describe('Creating and editing people', () => {
         firstName: 'Joe',
         lastName: 'Blogs',
         dateOfBirth: '1990-11-01',
+        gender: 'Male',
         nationality: 'AIA',
+        placeOfBirth: 'London',
+        documentIssuingState: 'GBR',
         documentType: 'Passport',
         documentNumber: '12345',
         documentExpiryDate: '2025-02-22',
       });
 
     await waitFor(() => {
-      renderPage({
-        type: 'edit', source: 'edit', personId: 'person123', pageNumber: 1,
-      });
+      render(
+        <Router history={history}>
+          <PersonForm type="edit" source="edit" />
+        </Router>,
+      );
     });
 
     expect(screen.getByText('Update details of the person you sail with').outerHTML).toEqual('<h1 class="govuk-heading-l">Update details of the person you sail with</h1>');
@@ -218,15 +228,18 @@ describe('Creating and editing people', () => {
     expect(screen.getByDisplayValue('01')).toBeInTheDocument();
     expect(screen.getByDisplayValue('11')).toBeInTheDocument();
     expect(screen.getByDisplayValue('1990')).toBeInTheDocument();
+    expect(screen.getByDisplayValue('London')).toBeInTheDocument();
+    expect(screen.getByDisplayValue('Male')).toBeChecked();
 
     await waitFor(() => {
       renderPage({
-        type: 'edit', source: 'edit', personId: 'person123', pageNumber: 2,
+        type: 'edit', source: 'edit', pageNumber: 2,
       });
     });
     expect(screen.getByDisplayValue('Passport')).toBeChecked();
     expect(screen.getByDisplayValue('12345')).toBeInTheDocument();
     expect(screen.queryByRole('combobox').value).toBe('AIA');
+    expect(screen.getByDisplayValue('GBR')).toBeInTheDocument();
     expect(screen.getByDisplayValue('2025')).toBeInTheDocument();
     expect(screen.getByDisplayValue('02')).toBeInTheDocument();
     expect(screen.getByDisplayValue('22')).toBeInTheDocument();
