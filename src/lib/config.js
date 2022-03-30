@@ -7,3 +7,4 @@ export const apiUrl = `${apiBaseUrl}/${apiVersion}`;
 export const govUrl = 'https://www.gov.uk/';
 export const siteMaintenance = !!JSON.parse(process.env.SGMR_MAINTENANCE || false);
 export const pageSizeParam = '?per_page=10';
+export const supportEmail = process.env.GOV_NOTIFY_SUPPORT_EMAIL; // || 'youremail@emailprovider.com'

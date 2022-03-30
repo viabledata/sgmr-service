@@ -42,6 +42,8 @@ spec:
             value: {{.SGMR_DATA_API_BASE_URL}}
           - name: SGMR_MAINTENANCE
             value: {{.SGMR_MAINTENANCE}}
+          - name: GOV_NOTIFY_SUPPORT_EMAIL
+            value: {{.GOV_NOTIFY_SUPPORT_EMAIL}}
       - name: proxy
         image: "{{.NGINX_IMAGE}}:{{.NGINX_TAG}}"
         imagePullPolicy: Always

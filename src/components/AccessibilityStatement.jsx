@@ -1,4 +1,5 @@
 import React from 'react';
+import { supportEmail } from '../lib/config';
 
 const AccessibilityStatement = () => {
   document.title = 'Accessibility statement';
@@ -66,8 +67,8 @@ const AccessibilityStatement = () => {
               <li>
                 Email address:
                 &nbsp;
-                <a href="mailto:sgmrsupport@digital.homeoffice.gov.uk">
-                  sgmrsupport@digital.homeoffice.gov.uk
+                <a href={`mailto: ${supportEmail}`}>
+                  {supportEmail}
                 </a>
               </li>
             </ul>

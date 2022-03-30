@@ -11,6 +11,7 @@ do
   echo "== ENV sub for $file =="
   sed -i 's,REPLACE_SGMR_DATA_API_BASE_URL,'${SGMR_DATA_API_BASE_URL}',g' $file
   sed -i 's,REPLACE_SGMR_MAINTENANCE,'${SGMR_MAINTENANCE}',g' $file
+  sed -i 's,REPLACE_GOV_NOTIFY_SUPPORT_EMAIL,'${GOV_NOTIFY_SUPPORT_EMAIL}',g' $file
 done
 echo "== Finished ENV sub =="
 # --- End Insert ENV to JS bundle ---
