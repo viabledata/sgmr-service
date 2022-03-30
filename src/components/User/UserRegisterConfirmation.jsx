@@ -45,7 +45,7 @@ const UserRegisterConfirmation = () => {
               Click the verification link inside the email. This link will remain valid
               for 3 hours. If you can&apos;t see the email, please check any spam folders.
             </p>
-            <Link to={`/registration-confirmation?email=${email}`} onClick={(e) => resendCode(e, email)}>Resend verification email</Link>
+            <Link className="govuk-link" to={`/registration-confirmation?email=${email}`} onClick={(e) => resendCode(e, email)}>Resend verification email</Link>
           </div>
         </div>
       </main>

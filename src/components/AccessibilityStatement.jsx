@@ -67,7 +67,7 @@ const AccessibilityStatement = () => {
               <li>
                 Email address:
                 &nbsp;
-                <a href={`mailto: ${supportEmail}`}>
+                <a className="govuk-link" href={`mailto: ${supportEmail}`}>
                   {supportEmail}
                 </a>
               </li>

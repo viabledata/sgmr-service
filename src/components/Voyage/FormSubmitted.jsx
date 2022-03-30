@@ -21,7 +21,7 @@ const FormVoyageSubmitted = () => {
             </p>
             <p className="govuk-body">
               If you need to make any changes to this voyage plan you will need to submit another voyage plan with the new information and cancel this one. This can be done on the&nbsp;
-              <Link to="/voyage-plans">Manage Pleasure Craft Voyage Plans</Link>
+              <Link className="govuk-link" to="/voyage-plans">Manage Pleasure Craft Voyage Plans</Link>
               &nbsp;page.
             </p>
           </div>

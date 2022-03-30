@@ -22,7 +22,7 @@ const Help = () => {
               You can get support with using this service by emailing the Tell Border Force and HMRC you are sailing to or from the UK in a pleasure craft team at:
             </p>
             <p className="govuk-body">
-              <a href={`mailto: ${supportEmail}`}>
+              <a className="govuk-link" href={`mailto: ${supportEmail}`}>
                 {supportEmail}
               </a>
             </p>

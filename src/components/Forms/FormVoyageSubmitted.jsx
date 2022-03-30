@@ -18,7 +18,7 @@ const FormVoyageSubmitted = () => {
             <p className="govuk-body">We&apos;ve sent your voyage plan to UK Border Force.</p>
             <p className="govuk-body">
               You can&nbsp;
-              <Link to="/voyage-plans">add a return voyage or manage your voyage plans.</Link>
+              <Link className="govuk-link" to="/voyage-plans">add a return voyage or manage your voyage plans.</Link>
             </p>
           </div>
         </div>
