@@ -43,12 +43,15 @@ const PeopleTable = ({ peopleData, onSelectionChange = () => {} }) => {
                     type="checkbox"
                     className="govuk-checkboxes__input"
                     value={person.id}
+                    id={person.id}
                     data-testid={person.id}
                     onChange={handleCheckboxes}
                     name="people"
                     checked={peopleToRemove.includes(person.id)}
                   />
-                  <label className="govuk-label govuk-checkboxes__label" htmlFor={person.id}>&nbsp;</label>
+                  <label className="govuk-label govuk-checkboxes__label" htmlFor={person.id}>
+                    <span className="govuk-visually-hidden">{`Select ${person.firstName} ${person.lastName}`}</span>
+                  </label>
                 </div>
               </td>
               <td className="govuk-table__cell" role="cell">
