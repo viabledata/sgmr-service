@@ -19,6 +19,7 @@ Cypress.Commands.add('enterUserInfo', (user) => {
 
 Cypress.Commands.add('enterVesselInfo', (newVessel) => {
   cy.get('[name="vesselName"]').clear().type(newVessel.name);
+  cy.wait(1000);
   cy.get('[name="vesselType"]').clear().type(newVessel.type);
   cy.get('[name="moorings"]').clear().type(newVessel.moorings);
   cy.get('[name="registration"]').clear().type(newVessel.regNumber);
@@ -126,7 +127,9 @@ Cypress.Commands.add('enterDepartureDetails', (date, port) => {
   cy.get('input[name="departureTimeMinute"]').clear().type(departureTime[1]);
   cy.log(port);
   cy.get('input[id="autocomplete"]').clear().type(port);
-  cy.get('ul[id="autocomplete__listbox"] .autocomplete__option').contains(port).click();
+  cy.wait(5000);
+  cy.get('.comboBoxListItem').find('li').click();
+  cy.wait(2000);
 });
 
 Cypress.Commands.add('enterArrivalDetails', (date, port) => {
@@ -138,8 +141,10 @@ Cypress.Commands.add('enterArrivalDetails', (date, port) => {
   cy.get('input[name="arrivalDateYear"]').clear().type(arrivalDate[2]);
   cy.get('input[name="arrivalTimeHour"]').clear().type(arrivalTime[0]);
   cy.get('input[name="arrivalTimeMinute"]').clear().type(arrivalTime[1]);
-  cy.get('input[id="autocomplete"]').clear().type(port);
-  cy.get('ul[id="autocomplete__listbox"] .autocomplete__option').contains(port).click();
+  cy.get('#portsCombobox').clear().type(port);
+  cy.wait(5000);
+  cy.get('.comboBoxListItem').find('li').click();
+  cy.wait(2000);
 });
 
 Cypress.Commands.add('enterSkipperDetails', () => {
@@ -219,11 +224,9 @@ Cypress.Commands.add('addVessel', (vessel) => {
 });
 
 Cypress.Commands.add('selectCheckbox', (option) => {
-  cy.get('.table-clickable td').contains(option)
-    .prev('.multiple-choice--hod')
-    .find('input[type="checkbox"]')
-    .check()
-    .should('be.checked');
+  cy.contains(option).parent().parent().find('input[type="checkbox"]')
+      .check()
+      .should('be.checked');
 });
 
 Cypress.Commands.add('checkReports', (type, numberOfReports) => {
@@ -277,12 +280,12 @@ Cypress.Commands.add('waitForLatestEmail', (inboxId) => {
 });
 
 Cypress.Commands.add('deleteAllEmails', () => {
-  mailslurp.emptyInbox('64536d92-2cdc-499e-aa3a-c532fbc60f02');
+  mailslurp.emptyInbox('49c33d3a-4f67-4a6e-b5d9-b81439b6e7ea');
 });
 
 Cypress.Commands.add('activateAccount', () => {
   let apiServer = Cypress.env('api_server');
-  cy.waitForLatestEmail('64536d92-2cdc-499e-aa3a-c532fbc60f02').then((mail) => {
+  cy.waitForLatestEmail('49c33d3a-4f67-4a6e-b5d9-b81439b6e7ea').then((mail) => {
     assert.isDefined(mail);
     const token = /token=([A-Za-z0-9-_=]+\.[A-Za-z0-9-_=]+\.?[A-Za-z0-9-_.+/=]*)/.exec(mail.body)[1];
     const email = /email=([A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,})/i.exec(mail.body)[1];
@@ -363,3 +366,4 @@ Cypress.Commands.add('removeTestData', () => {
 
   sessionStorage.removeItem('token');
 });
+//

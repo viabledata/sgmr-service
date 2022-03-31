@@ -78,7 +78,7 @@ const PortField = ({
       <Combobox
         id="portsCombobox"
         data-testid="portContainer"
-        aria-label="Ports"
+        aria-label="Begin typing for port selections to appear"
         onSelect={(e) => handlePortSelection(e)}
       >
         <ComboboxInput

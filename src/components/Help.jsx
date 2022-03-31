@@ -1,5 +1,5 @@
 import React from 'react';
-import { govUrl } from '../lib/config';
+import { govUrl, supportEmail } from '../lib/config';
 
 const Help = () => {
   document.title = 'Help';
@@ -22,8 +22,8 @@ const Help = () => {
               You can get support with using this service by emailing the Tell Border Force and HMRC you are sailing to or from the UK in a pleasure craft team at:
             </p>
             <p className="govuk-body">
-              <a href="mailto: sgmrsupport@digital.homeoffice.gov.uk">
-                sgmrsupport@digital.homeoffice.gov.uk
+              <a href={`mailto: ${supportEmail}`}>
+                {supportEmail}
               </a>
             </p>
 

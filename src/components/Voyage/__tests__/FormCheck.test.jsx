@@ -29,7 +29,7 @@ const renderPage = (props = {
     registration: 'Boat',
     responsibleAddressLine1: 'Address',
     responsibleContactNo: '12345678910',
-    responsibleCounty: 'County',
+    responsibleCounty: 'Country',
     responsibleGivenName: 'John',
     responsiblePostcode: 'A1B2C3D4',
     responsibleSurname: 'Doe',
@@ -57,7 +57,7 @@ describe('FormCheck', () => {
     expect(screen.getByText('Departure details')).toBeInTheDocument();
     expect(screen.getByText('27/01/2022')).toBeInTheDocument();
     expect(screen.getByText('06/06/2022')).toBeInTheDocument();
-    expect(screen.getByText('Address, Town, County, A1B2C3D4')).toBeInTheDocument();
+    expect(screen.getByText('Address, Town, Country, A1B2C3D4')).toBeInTheDocument();
     expect(screen.getByText('Cancel voyage plan')).toBeInTheDocument();
     expect(screen.getByText('Accept and submit voyage plan')).toBeInTheDocument();
   });
@@ -93,7 +93,7 @@ describe('FormCheck', () => {
         registration: 'Boat',
         responsibleAddressLine1: 'Address',
         responsibleContactNo: '12345678910',
-        responsibleCounty: 'County',
+        responsibleCounty: 'Country',
         responsibleGivenName: 'John',
         responsiblePostcode: 'A1B2C3D4',
         responsibleSurname: 'Doe',

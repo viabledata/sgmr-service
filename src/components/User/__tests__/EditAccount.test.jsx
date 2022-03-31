@@ -42,7 +42,8 @@ describe('Edit Account page details', () => {
     expect(screen.getByDisplayValue('John')).toBeInTheDocument();
     expect(screen.getByDisplayValue('Doe')).toBeInTheDocument();
     expect(screen.getByDisplayValue('07444112888')).toBeInTheDocument();
-    expect(screen.getByRole('button')).toHaveTextContent('Save changes');
+    expect(screen.getAllByRole('button')[0]).toHaveTextContent('Save changes');
+    expect(screen.getAllByRole('button')[1]).toHaveTextContent('Delete this account');
   });
 });
 

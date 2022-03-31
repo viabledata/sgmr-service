@@ -33,7 +33,7 @@ const PeopleTable = ({ peopleData, onSelectionChange = () => {} }) => {
       <tbody className="govuk-table__body">
         {peopleData.map((person) => {
           return (
-            <tr className="govuk-table__row" key={person.id} role="row">
+            <tr className="govuk-table__row" key={person.id} data-testId="row">
               <td className="govuk-table__cell multiple-choice--hod" role="cell">
                 <span className="responsive-table__heading" aria-hidden="true">
                   (Tick to select)

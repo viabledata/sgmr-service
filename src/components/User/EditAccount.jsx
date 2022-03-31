@@ -106,6 +106,11 @@ const EditAccount = () => {
     }
   };
 
+  // Handle Delete
+  const handleDelete = () => {
+    history.push('/account/delete');
+  };
+
   return (
     <div className="govuk-width-container ">
       <div className="govuk-breadcrumbs">
@@ -141,7 +146,7 @@ const EditAccount = () => {
                 </div>
               )}
 
-              <div id="firstName" className={`govuk-form-group ${errors.firstName ? 'govuk-form-group--error' : ''}`}>
+              <div className={`govuk-form-group ${errors.firstName ? 'govuk-form-group--error' : ''}`}>
                 <label className="govuk-label govuk-label--m" htmlFor="firstName">
                   First name
                 </label>
@@ -157,7 +162,7 @@ const EditAccount = () => {
                 />
               </div>
 
-              <div id="lastName" className={`govuk-form-group ${errors.lastName ? 'govuk-form-group--error' : ''}`}>
+              <div className={`govuk-form-group ${errors.lastName ? 'govuk-form-group--error' : ''}`}>
                 <label className="govuk-label govuk-label--m" htmlFor="lastName">
                   Last name
                 </label>
@@ -173,7 +178,7 @@ const EditAccount = () => {
                 />
               </div>
 
-              <div id="mobileNumber" className={`govuk-form-group ${errors.mobileNumber ? 'govuk-form-group--error' : ''}`}>
+              <div className={`govuk-form-group ${errors.mobileNumber ? 'govuk-form-group--error' : ''}`}>
                 <label className="govuk-label govuk-label--m" htmlFor="mobileNumber">
                   Telephone number
                 </label>
@@ -215,9 +220,9 @@ const EditAccount = () => {
         <h2 className="govuk-heading-m">Delete account</h2>
         <p className="govuk-body-m">Delete this account and stop using the service.</p>
         <p className="govuk-body">
-          <Link className="govuk-button govuk-button--warning" to="/account/delete">
+          <button className="govuk-button govuk-button--warning" type="button" onClick={handleDelete}>
             Delete this account
-          </Link>
+          </button>
         </p>
       </main>
     </div>
