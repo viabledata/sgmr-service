@@ -121,7 +121,7 @@ const PortField = ({
             Please enter the location if it&apos;s not available in the dropdown
           </div>
           <input
-            id="portOtherInput"
+            id={`${fieldName}other`}
             className="govuk-input"
             name={`${fieldName}other`}
             type="text"

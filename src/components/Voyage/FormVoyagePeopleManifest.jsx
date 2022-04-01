@@ -84,7 +84,6 @@ const FormVoyagePeopleManifest = ({
       <div className="govuk-form-group">
         <fieldset
           className="govuk-fieldset"
-          aria-describedby="confirm-people-hint"
         >
           <legend className="govuk-fieldset__legend govuk-fieldset__legend--s">
             <h1 className="govuk-fieldset__heading govuk-!-font-weight-regular">

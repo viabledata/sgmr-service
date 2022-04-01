@@ -27,14 +27,14 @@ const FormArrival = ({
       </p>
 
       <div id="arrivalDate" className={`govuk-form-group ${errors.arrivalDate ? 'govuk-form-group--error' : ''}`}>
-        <fieldset className="govuk-fieldset" role="group" aria-describedby="dob-hint">
+        <fieldset className="govuk-fieldset" role="group" aria-describedby="arrivalDate-hint">
           <legend className="govuk-fieldset__legend">
             <label className="govuk-label govuk-label--m" htmlFor="arrivalDate">
               Intended arrival date
             </label>
             <FormError error={errors.arrivalDate} />
           </legend>
-          <div className="govuk-hint">
+          <div className="govuk-hint" id="arrivalDate-hint">
             For example, 20 2 2020
           </div>
           <div className="govuk-date-input">
@@ -106,7 +106,7 @@ const FormArrival = ({
             </label>
             <FormError error={errors.arrivalTime} />
           </legend>
-          <div className="govuk-hint">
+          <div className="govuk-hint" id="arrivalTime-hint">
             For example, 17 30
           </div>
           <div className="govuk-date-input">
