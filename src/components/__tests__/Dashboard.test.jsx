@@ -37,7 +37,7 @@ describe('Dashboard', () => {
 
   it('should filter by status correctly', async () => {
     mockAxios
-      .onGet(`${USER_VOYAGE_REPORT_URL}${pageSizeParam}`)
+      .onGet(`${USER_VOYAGE_REPORT_URL}?${pageSizeParam}`)
       .reply(200, {
         items: [
           {
@@ -109,7 +109,7 @@ describe('Dashboard', () => {
 
   it('should delete voyage plan if departure data is missing', async () => {
     mockAxios
-      .onGet(`${USER_VOYAGE_REPORT_URL}${pageSizeParam}`)
+      .onGet(`${USER_VOYAGE_REPORT_URL}?${pageSizeParam}`)
       .reply(200, {
         items: [
           {
@@ -130,7 +130,7 @@ describe('Dashboard', () => {
 
   it('should redirect when a user clicks start now', async () => {
     mockAxios
-      .onGet(`${USER_VOYAGE_REPORT_URL}${pageSizeParam}`)
+      .onGet(`${USER_VOYAGE_REPORT_URL}?${pageSizeParam}`)
       .reply(200, {
         items: [],
       });

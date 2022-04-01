@@ -9,13 +9,14 @@ const FormVessel = ({
   return (
     <section>
       <div id="vesselName" className={`govuk-form-group ${errors.vesselName ? 'govuk-form-group--error' : ''}`}>
-        <label className="govuk-label" htmlFor="vesselName">
+        <label className="govuk-label" htmlFor="vesselName-input">
           Pleasure craft name
         </label>
         <FormError error={errors.vesselName} />
         <div className="govuk-hint">For example Baroness</div>
         <input
           className="govuk-input"
+          id="vesselName-input"
           name="vesselName"
           type="text"
           value={formData.vesselName || ''}
@@ -24,13 +25,14 @@ const FormVessel = ({
       </div>
 
       <div id="vesselType" className={`govuk-form-group ${errors.vesselType ? 'govuk-form-group--error' : ''}`}>
-        <label className="govuk-label" htmlFor="vesselType">
+        <label className="govuk-label" htmlFor="vesselType-input">
           Pleasure craft type
         </label>
         <FormError error={errors.vesselType} />
         <div className="govuk-hint">For example Yacht or Sailboat</div>
         <input
           className="govuk-input"
+          id="vesselType-input"
           name="vesselType"
           type="text"
           value={formData.vesselType || ''}
@@ -39,13 +41,14 @@ const FormVessel = ({
       </div>
 
       <div id="moorings" className={`govuk-form-group ${errors.moorings ? 'govuk-form-group--error' : ''}`}>
-        <label className="govuk-label" htmlFor="moorings">
+        <label className="govuk-label" htmlFor="moorings-input">
           Usual moorings
         </label>
         <div className="govuk-hint">A description, UNLOCODE or set of Coordinates for where the pleasure craft is usually moored</div>
         <FormError error={errors.moorings} />
         <input
           className="govuk-input"
+          id="moorings-input"
           name="moorings"
           type="text"
           value={formData.moorings || ''}
@@ -54,12 +57,13 @@ const FormVessel = ({
       </div>
 
       <div id="registration" className={`govuk-form-group ${errors.registration ? 'govuk-form-group--error' : ''}`}>
-        <label className="govuk-label" htmlFor="registration">
+        <label className="govuk-label" htmlFor="registration-input">
           Registration number
         </label>
         <FormError error={errors.registration} />
         <input
           className="govuk-input"
+          id="registration-input"
           name="registration"
           type="text"
           value={formData.registration || ''}
@@ -68,11 +72,12 @@ const FormVessel = ({
       </div>
 
       <div id="hullIdentificationNumber" className="govuk-form-group">
-        <label className="govuk-label" htmlFor="hullIdentificationNumber">
+        <label className="govuk-label" htmlFor="hullIdentificationNumber-input">
           Hull identification number (optional)
         </label>
         <input
           className="govuk-input"
+          id="hullIdentificationNumber-input"
           name="hullIdentificationNumber"
           type="text"
           value={formData.hullIdentificationNumber || ''}
@@ -81,11 +86,12 @@ const FormVessel = ({
       </div>
 
       <div id="callsign" className="govuk-form-group">
-        <label className="govuk-label" htmlFor="callsign">
+        <label className="govuk-label" htmlFor="callsign-input">
           Callsign (optional)
         </label>
         <input
           className="govuk-input"
+          id="callsign-input"
           name="callsign"
           type="text"
           value={formData.callsign || ''}
@@ -94,11 +100,12 @@ const FormVessel = ({
       </div>
 
       <div id="vesselNationality" className="govuk-form-group">
-        <label className="govuk-label" htmlFor="vesselNationality">
+        <label className="govuk-label" htmlFor="vesselNationality-select">
           Pleasure craft nationality (optional)
         </label>
         <select
           className="govuk-select"
+          id="vesselNationality-select"
           name="vesselNationality"
           value={formData.vesselNationality || ''}
           onChange={handleChange}
@@ -111,11 +118,12 @@ const FormVessel = ({
       </div>
 
       <div id="portOfRegistry" className="govuk-form-group">
-        <label className="govuk-label" htmlFor="portOfRegistry">
+        <label className="govuk-label" htmlFor="portOfRegistry-input">
           Port of registry (optional)
         </label>
         <input
           className="govuk-input"
+          id="portOfRegistry-input"
           name="portOfRegistry"
           type="text"
           value={formData.portOfRegistry || ''}

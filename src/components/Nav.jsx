@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { useLocation, useHistory, Link } from 'react-router-dom';
+import { useHistory, Link } from 'react-router-dom';
 import axios from 'axios';
 
 // App imports
 import { LOGOUT_URL } from '../constants/ApiConstants';
 import Auth from '../lib/Auth';
 
-const Nav = () => {
-  const location = useLocation();
+const Nav = (urlStem) => {
   const history = useHistory();
   const serviceName = 'Tell Border Force and HMRC you are sailing to or from the UK in a pleasure craft';
   const [navArray, setNavArray] = useState([]);
@@ -49,7 +48,7 @@ const Nav = () => {
   const setActivePage = (url) => {
     const tempArr = [...navData];
     tempArr.map((elem) => {
-      const currentUrl = !url ? location.pathname : url;
+      const currentUrl = !url ? urlStem : url;
       if (currentUrl === elem.urlStem) {
         elem.active = true;
         document.activeElement.blur();
