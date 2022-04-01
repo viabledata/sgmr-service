@@ -121,7 +121,7 @@ const FormResponsiblePerson = ({
           />
         </div>
         <div id="responsiblePostcode" className="govuk-form-group">
-          <label className="govuk-label" htmlFor="responsiblePostcode">Postcode or ZIP</label>
+          <label className="govuk-label" htmlFor="responsiblePostcode-input">Postcode or ZIP</label>
           <input
             className="govuk-input govuk-input--width-10"
             id="responsiblePostcode-input"

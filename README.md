@@ -40,6 +40,7 @@ docker build -t sgmr-service .
 ```bash
 docker run -p 8080:8080 \
     --env API_BASE_URL=https://your.api.com \
+    --env GOV_NOTIFY_SUPPORT_EMAIL=youremail@emailprovider.com \
     sgmr-service
 ```
 
@@ -114,4 +115,15 @@ npm run cypress:test:report -- -b chrome
 Running specific test and generating mochawesome html report with screenshots
 ```sh
 npm run cypress:test:report -- -b chrome -s cypress/integration/sGMR/user-register.spec.js
+```
+
+## Changing the support email
+
+If you would like to use a dummy email for testing purposes, change the following line in `config.js` from
+```
+export const supportEmail = process.env.GOV_NOTIFY_SUPPORT_EMAIL;
+```
+to:
+```
+export const supportEmail = 'youremail@emailprovider.com';
 ```

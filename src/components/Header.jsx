@@ -1,9 +1,11 @@
 import React from 'react';
-
+import { useLocation } from 'react-router-dom';
 // app imports
 import Nav from './Nav';
 
 const Header = () => {
+  const location = useLocation();
+
   return (
     <header className="govuk-header" role="banner" data-module="govuk-header">
       <a href="#main-content" className="govuk-skip-link">Skip to main content</a>
@@ -21,7 +23,7 @@ const Header = () => {
             </span>
           </a>
         </div>
-        <Nav />
+        <Nav urlStem={location.pathname} />
       </div>
     </header>
   );
