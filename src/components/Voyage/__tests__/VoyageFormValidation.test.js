@@ -64,6 +64,14 @@ describe('Voyage form required fields errors', () => {
     expect(result).toEqual(expectedErrors);
   });
 
+  it('should not contain arrival error on departure', async () => {
+    const errors = {
+      arrivalDate: 'You must enter an arrival date',
+    };
+    const result = await VoyageFormValidation({}, FORM_STEPS.DEPARTURE);
+    expect(result).not.toContain(errors.arrivalDate);
+  });
+
   it('should validate voyage check', async () => {
     const expectedErrors = {
       arrivalDate: 'You must enter an arrival date',
