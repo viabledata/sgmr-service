@@ -103,80 +103,80 @@ const PleasureCraftForm = ({ type }) => {
                         value={formData?.pleasureCraftName || ''}
                         onChange={handleChange}
                       />
-                      <div id="pleasureCraftType" className={`govuk-form-group ${errors.pleasureCraftType ? 'govuk-form-group--error' : ''}`}>
-                        <fieldset className="govuk-fieldset">
-                          <legend className="govuk-fieldset__legend">
-                            <label className="govuk-fieldset__heading" htmlFor="pleasureCraftType">
-                              Type of pleasure craft
+                    </div>
+                    <div id="pleasureCraftType" className={`govuk-form-group ${errors.pleasureCraftType ? 'govuk-form-group--error' : ''}`}>
+                      <fieldset className="govuk-fieldset">
+                        <legend className="govuk-fieldset__legend">
+                          <label className="govuk-fieldset__heading" htmlFor="pleasureCraftType">
+                            Type of pleasure craft
+                          </label>
+                        </legend>
+                        <div className="govuk-radios govuk-radios">
+                          <FormFieldError error={errors.pleasureCraftType} />
+                          <div className="govuk-radios__item">
+                            <input
+                              className="govuk-radios__input"
+                              name="pleasureCraftType"
+                              id="sailingboat"
+                              type="radio"
+                              value="sailingboat"
+                              checked={formData.pleasureCraftType === 'sailingboat' ? 'checked' : ''}
+                              onChange={handleChange}
+                            />
+                            <label className="govuk-label govuk-radios__label" htmlFor="sailingboat">
+                              Sailing boat (with or without an engine)
                             </label>
-                          </legend>
-                          <div className="govuk-radios govuk-radios">
-                            <FormFieldError error={errors.pleasureCraftType} />
-                            <div className="govuk-radios__item">
-                              <input
-                                className="govuk-radios__input"
-                                name="pleasureCraftType"
-                                id="sailingboat"
-                                type="radio"
-                                value="sailingboat"
-                                checked={formData.pleasureCraftType === 'sailingboat' ? 'checked' : ''}
-                                onChange={handleChange}
-                              />
-                              <label className="govuk-label govuk-radios__label" htmlFor="sailingboat">
-                                Sailing boat (with or without an engine)
-                              </label>
-                            </div>
-                            <div className="govuk-radios__item">
-                              <input
-                                className="govuk-radios__input"
-                                name="pleasureCraftType"
-                                id="motorboat"
-                                type="radio"
-                                value="motorboat"
-                                checked={formData.pleasureCraftType === 'motorboat' ? 'checked' : ''}
-                                onChange={handleChange}
-                              />
-                              <label className="govuk-label govuk-radios__label" htmlFor="motorboat">
-                                Motorboat
-                              </label>
-                            </div>
-                            <div className="govuk-radios__item">
-                              <input
-                                className="govuk-radios__input"
-                                name="pleasureCraftType"
-                                id="otherCraft"
-                                type="radio"
-                                value="otherCraft"
-                                checked={formData.pleasureCraftType === 'otherCraft' ? 'checked' : ''}
-                                onChange={handleChange}
-                              />
-                              <label className="govuk-label govuk-radios__label" htmlFor="otherCraft">
-                                Other
-                              </label>
-                            </div>
                           </div>
-                        </fieldset>
-                      </div>
-                      <div className="govuk-button-group">
-                        <button
-                          type="button"
-                          className="govuk-button"
-                          data-module="govuk-button"
-                          onClick={(e) => {
-                            goToNextPage(e, { url: 'nextFormPageIs', runValidation: true });
-                          }}
-                        >
-                          Continue
-                        </button>
-                      </div>
+                          <div className="govuk-radios__item">
+                            <input
+                              className="govuk-radios__input"
+                              name="pleasureCraftType"
+                              id="motorboat"
+                              type="radio"
+                              value="motorboat"
+                              checked={formData.pleasureCraftType === 'motorboat' ? 'checked' : ''}
+                              onChange={handleChange}
+                            />
+                            <label className="govuk-label govuk-radios__label" htmlFor="motorboat">
+                              Motorboat
+                            </label>
+                          </div>
+                          <div className="govuk-radios__item">
+                            <input
+                              className="govuk-radios__input"
+                              name="pleasureCraftType"
+                              id="otherCraft"
+                              type="radio"
+                              value="otherCraft"
+                              checked={formData.pleasureCraftType === 'otherCraft' ? 'checked' : ''}
+                              onChange={handleChange}
+                            />
+                            <label className="govuk-label govuk-radios__label" htmlFor="otherCraft">
+                              Other
+                            </label>
+                          </div>
+                        </div>
+                      </fieldset>
+                    </div>
+                    <div className="govuk-button-group">
                       <button
                         type="button"
-                        className="govuk-button govuk-button--text"
-                        onClick={(e) => { goToNextPage(e, { url: sourcePage, runValidation: false }); }}
+                        className="govuk-button"
+                        data-module="govuk-button"
+                        onClick={(e) => {
+                          goToNextPage(e, { url: 'nextFormPageIs', runValidation: true });
+                        }}
                       >
-                        Exit without saving
+                        Continue
                       </button>
                     </div>
+                    <button
+                      type="button"
+                      className="govuk-button govuk-button--text"
+                      onClick={(e) => { goToNextPage(e, { url: sourcePage, runValidation: false }); }}
+                    >
+                      Exit without saving
+                    </button>
                   </>
                 )}
             </div>
