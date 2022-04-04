@@ -515,7 +515,7 @@ const PersonForm = ({ source, type, personId }) => {
                     </label>
                     <FormFieldError error={errors.nationality} />
                     <select
-                      data-testId="nationality-field"
+                      data-testid="nationality-field"
                       className="govuk-select"
                       name="nationality"
                       type="text"
