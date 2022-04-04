@@ -19,6 +19,7 @@ const PleasureCraftForm = ({ type }) => {
   // const [title, setTitle] = useState('Add a pleasure craft');
 
   document.title = type === 'edit' ? 'Edit pleasure craft' : 'Save pleasure craft';
+  const pleasureCraftTypeOther = formData.pleasureCraftType !== undefined && formData.pleasureCraftType !== 'sailingboat' && formData.pleasureCraftType !== 'motorboat';
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -147,14 +148,28 @@ const PleasureCraftForm = ({ type }) => {
                               name="pleasureCraftType"
                               id="otherCraft"
                               type="radio"
-                              value="otherCraft"
-                              checked={formData.pleasureCraftType === 'otherCraft' ? 'checked' : ''}
+                              value=""
+                              checked={pleasureCraftTypeOther ? 'checked' : ''}
                               onChange={handleChange}
                             />
                             <label className="govuk-label govuk-radios__label" htmlFor="otherCraft">
                               Other
                             </label>
                           </div>
+                          {pleasureCraftTypeOther && (
+                          <div className="govuk-form-group">
+                            <label className="govuk-label" htmlFor="pleasureCraftType-other">
+                              Please specify
+                              <input
+                                className="govuk-input"
+                                name="pleasureCraftType"
+                                type="text"
+                                value={pleasureCraftTypeOther ? formData.pleasureCraftType : ''}
+                                onChange={handleChange}
+                              />
+                            </label>
+                          </div>
+                          )}
                         </div>
                       </fieldset>
                     </div>
