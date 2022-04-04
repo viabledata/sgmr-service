@@ -31,7 +31,7 @@ const contentArray = [
     formIntroHeading: 'Save a new person',
     formIntroBlurb: 'Save the details of people that you regularly sail with.',
     buttonText: 'Save a person',
-    buttonLink: 'people/save-person?source=people',
+    buttonLink: 'people/save-person/page-1',
     buttonClass: 'govuk-button--start',
     buttonLocation: 'formIntro',
     reportType: 'people',
