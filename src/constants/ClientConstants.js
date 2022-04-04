@@ -14,6 +14,7 @@ export const EDIT_VOYAGE_CHECK_DETAILS_URL = '/save-voyage/page-7';
 export const SAVE_VOYAGE_SUBMITTED_URL = '/save-voyage/voyage-submitted';
 export const VESSELS_PAGE_URL = '/pleasure-crafts';
 export const ADD_VESSELS_URL = '/pleasure-crafts/save-pleasure-craft';
+export const PLEASURE_CRAFT_PAGE_URL = '/pleasure-crafts';
 export const PEOPLE_PAGE_URL = '/people';
 export const ADD_PERSON_URL = '/people/save-person';
 export const ACCOUNT_PAGE_URL = '/account';
