@@ -70,7 +70,7 @@ const SectionTablePeople = ({ pageData }) => {
                         <Link
                           to={{
                             pathname: '/people/edit-person/page-1',
-                            state: { peopleId: person[1].id },
+                            state: { peopleId: person[1].id, source: 'edit' },
                           }}
                           aria-label={`Edit ${person[1].firstName} ${person[1].lastName}`}
                         >
