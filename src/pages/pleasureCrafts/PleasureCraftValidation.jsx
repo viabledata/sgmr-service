@@ -10,7 +10,7 @@ const pleasureCraftValidation = {
       inputField: 'pleasureCraftType',
       errorDisplayId: 'pleasureCraftType',
       type: 'required',
-      message: 'You must enter a pleasure craft type',
+      message: 'You must select a type of pleasure craft',
     },
   ],
 };
