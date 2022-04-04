@@ -26,8 +26,8 @@ import EditAccount from './User/EditAccount';
 import UserRegisterConfirmation from './User/UserRegisterConfirmation';
 import AccountActivation from './User/AccountActivation';
 
-import CreateAVessel from './Vessel/CreateAVessel';
 import EditVessel from './Vessel/EditVessel';
+import PleasureCraftForm from '../pages/pleasureCrafts/PleasureCraftForm';
 
 import VoyageFormContainer from './Voyage/VoyageFormContainer';
 import FormVoyageSubmitted from './Forms/FormVoyageSubmitted';
@@ -101,7 +101,7 @@ const Main = () => {
               <PageContainer />
             </SecureRoute>
             <SecureRoute exact path="/pleasure-crafts/save-pleasure-craft">
-              <CreateAVessel />
+              <PleasureCraftForm />
             </SecureRoute>
             <SecureRoute exact path="/pleasure-crafts/:vesselId">
               <EditVessel />
