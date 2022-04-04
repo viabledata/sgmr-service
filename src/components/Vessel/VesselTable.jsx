@@ -44,6 +44,7 @@ const VesselTable = ({
                     Pleasure craft name
                   </span>
                   <Link
+                    className="govuk-link"
                     to={`/pleasure-crafts/${vessel.id}`}
                     aria-label={`Edit the ${vessel.vesselType} named ${vessel.vesselName}`}
                   >

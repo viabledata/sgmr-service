@@ -140,6 +140,7 @@ const ManageReports = (pageData) => {
                               Pleasure craft
                             </span>
                             <Link
+                              className="govuk-link"
                               to={{
                                 pathname: EDIT_VOYAGE_CHECK_DETAILS_URL,
                                 state: { voyageId: voyage.id },
@@ -157,6 +158,7 @@ const ManageReports = (pageData) => {
                               Departure date
                             </span>
                             <Link
+                              className="govuk-link"
                               to={{
                                 pathname: EDIT_VOYAGE_CHECK_DETAILS_URL,
                                 state: { voyageId: voyage.id },
