@@ -12,11 +12,12 @@ const FormPerson = ({
   return (
     <section>
       <div id="firstName" className={`govuk-form-group ${errors.firstName ? 'govuk-form-group--error' : ''}`}>
-        <label className="govuk-label" htmlFor="firstName">
+        <label className="govuk-label" htmlFor="firstName-input">
           First name
           <FormError error={errors.firstName} />
           <input
             className="govuk-input"
+            id="firstName-input"
             name="firstName"
             type="text"
             value={formData.firstName || ''}
@@ -26,11 +27,12 @@ const FormPerson = ({
       </div>
 
       <div id="lastName" className={`govuk-form-group ${errors.lastName ? 'govuk-form-group--error' : ''}`}>
-        <label className="govuk-label" htmlFor="lastName">
+        <label className="govuk-label" htmlFor="lastName-input">
           Last Name
           <FormError error={errors.lastName} />
           <input
             className="govuk-input"
+            id="lastName-input"
             name="lastName"
             type="text"
             value={formData.lastName || ''}
@@ -95,14 +97,14 @@ const FormPerson = ({
       </div>
 
       <div id="dateOfBirth" className={`govuk-form-group ${errors.dateOfBirth ? 'govuk-form-group--error' : ''}`}>
-        <fieldset className="govuk-fieldset" role="group" aria-describedby="dob-hint">
+        <fieldset className="govuk-fieldset" role="group" aria-describedby="dateOfBirth-hint">
           <legend className="govuk-fieldset__legend">
             <label className="govuk-label" htmlFor="dateOfBirth">
               Date of Birth
             </label>
             <FormError error={errors.dateOfBirth} />
           </legend>
-          <div className="govuk-hint">
+          <div className="govuk-hint" id="dateOfBirth-hint">
             For example, 31 3 1980
           </div>
           <div className="govuk-date-input">
@@ -168,11 +170,12 @@ const FormPerson = ({
       </div>
 
       <div id="placeOfBirth" className={`govuk-form-group ${errors.placeOfBirth ? 'govuk-form-group--error' : ''}`}>
-        <label className="govuk-label" htmlFor="placeOfBirth">
+        <label className="govuk-label" htmlFor="placeOfBirth-input">
           Place of birth
           <FormError error={errors.placeOfBirth} />
           <input
             className="govuk-input"
+            id="placeOfBirth-input"
             name="placeOfBirth"
             type="text"
             value={formData.placeOfBirth || ''}
@@ -182,12 +185,13 @@ const FormPerson = ({
       </div>
 
       <div id="nationality" className={`govuk-form-group ${errors.nationality ? 'govuk-form-group--error' : ''}`}>
-        <label className="govuk-label" htmlFor="nationality">
+        <label className="govuk-label" htmlFor="nationality-select">
           Nationality
         </label>
         <FormError error={errors.nationality} />
         <select
           className="govuk-select"
+          id="nationality-select"
           name="nationality"
           type="text"
           value={formData.nationality || 'Please select'}
@@ -201,7 +205,7 @@ const FormPerson = ({
       </div>
 
       <div id="peopleType" className={`govuk-form-group ${errors.peopleType ? 'govuk-form-group--error' : ''}`}>
-        <fieldset className="govuk-fieldset" aria-describedby="person-type-hint">
+        <fieldset className="govuk-fieldset">
           <legend className="govuk-fieldset__legend">
             <label className="govuk-fieldset__heading" htmlFor="personType">
               Person type
@@ -257,7 +261,7 @@ const FormPerson = ({
 
       <h2 className="govuk-heading-l">Travel document details</h2>
       <div id="documentType" className={`govuk-form-group ${errors.documentType ? 'govuk-form-group--error' : ''}`}>
-        <fieldset className="govuk-fieldset" aria-describedby="travel-document-type-hint">
+        <fieldset className="govuk-fieldset">
           <legend className="govuk-fieldset__legend">
             <label className="govuk-fieldset__heading" htmlFor="travelDoc">
               Travel document type
@@ -332,11 +336,12 @@ const FormPerson = ({
       </div>
 
       <div id="documentNumber" className={`govuk-form-group ${errors.documentNumber ? 'govuk-form-group--error' : ''}`}>
-        <label className="govuk-label" htmlFor="documentNumber">
+        <label className="govuk-label" htmlFor="documentNumber-input">
           Document number
           <FormError error={errors.documentNumber} />
           <input
             className="govuk-input"
+            id="documentNumber-input"
             name="documentNumber"
             type="text"
             value={formData.documentNumber || ''}
@@ -346,20 +351,22 @@ const FormPerson = ({
       </div>
 
       <div id="documentIssuingState" className={`govuk-form-group ${errors.documentIssuingState ? 'govuk-form-group--error' : ''}`}>
-        <label className="govuk-label" htmlFor="documentIssuingState">
+        <label className="govuk-label" htmlFor="documentIssuingState-input">
           Issuing state
         </label>
         <FormError error={errors.documentIssuingState} />
-        <div className="govuk-hint">
+        <div className="govuk-hint" id="documentIssuingState-hint">
           Please enter 3 letter ISO country code, for example GBR
         </div>
         <input
           className="govuk-input govuk-input--width-3"
+          id="documentIssuingState-input"
           name="documentIssuingState"
           type="text"
           maxLength={3}
           value={formData.documentIssuingState || ''}
           onChange={handleChange}
+          aria-describedby="documentIssuingState-hint"
         />
       </div>
 
@@ -370,7 +377,7 @@ const FormPerson = ({
               Expiry date
             </label>
           </legend>
-          <div className="govuk-hint">
+          <div className="govuk-hint" id="documentExpiryDate-hint">
             For example, 31 3 2022
           </div>
           <div className="govuk-date-input">
