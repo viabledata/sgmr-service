@@ -11,6 +11,7 @@ import validate from '../../utils/validateFormData';
 import scrollToTop from '../../utils/scrollToTop';
 import nationalities from '../../utils/staticFormData';
 import PeopleValidation from './PersonValidation';
+import ErrorSummary from '../../components-v2/ErrorSummary';
 
 const PersonForm = ({ source, type }) => {
   const history = useHistory();
@@ -177,7 +178,8 @@ const PersonForm = ({ source, type }) => {
             <div className="govuk-grid-column-two-thirds">
               {formPageIs === 1
                 && (
-                <>
+                  <>
+                  <ErrorSummary errors={errors} />
                   <h1 className="govuk-heading-l">{title}</h1>
                   <div id="firstName" className={`govuk-form-group ${errors.firstName ? 'govuk-form-group--error' : ''}`}>
                     <label className="govuk-label" htmlFor="firstNameInput">
@@ -187,7 +189,8 @@ const PersonForm = ({ source, type }) => {
                     <FormFieldError error={errors.firstName} />
                     <input
                       id="firstNameInput"
-                      className="govuk-input"
+                      // Do we want input field to error too?
+                      className={`govuk-input ${errors.firstName ? 'govuk-input--error' : ''}`}
                       name="firstName"
                       type="text"
                       value={formData?.firstName || ''}
@@ -202,7 +205,7 @@ const PersonForm = ({ source, type }) => {
                     <FormFieldError error={errors.lastName} />
                     <input
                       id="lastNameInput"
-                      className="govuk-input"
+                      className={`govuk-input ${errors.lastName ? 'govuk-input--error' : ''}`}
                       name="lastName"
                       type="text"
                       value={formData?.lastName || ''}
@@ -210,7 +213,7 @@ const PersonForm = ({ source, type }) => {
                     />
                   </div>
                   <div id="dateOfBirth" className={`govuk-form-group ${errors.dateOfBirth ? 'govuk-form-group--error' : ''}`}>
-                    <label className="govuk-label" htmlFor="dateOfBirthDay">
+                    <label className="govuk-label" htmlFor="dateOfBirth">
                       Date of birth
                     </label>
                     <div id="dateOfBirth-hint" className="govuk-hint">Enter this as shown on your passport, for example, 31 03 1980</div>
@@ -218,13 +221,13 @@ const PersonForm = ({ source, type }) => {
                     <div className="govuk-date-input">
                       <div className="govuk-date-input__item">
                         <div className="govuk-form-group">
-                          <label className="govuk-label govuk-date-input__label" htmlFor="dateOfBirthDay">
+                          <label className="govuk-label govuk-date-input__label" htmlFor="dateOfBirthInput">
                             Day
                           </label>
                           <input
-                            className="govuk-input govuk-date-input__input govuk-input--width-2"
+                            className={`govuk-input govuk-date-input__input govuk-input--width-2`}
                             name="dateOfBirthDay"
-                            id="dateOfBirthDay"
+                            id="dateOfBirthInput"
                             type="text"
                             maxLength={2}
                             autoComplete="bday-day"
@@ -241,7 +244,7 @@ const PersonForm = ({ source, type }) => {
                             Month
                           </label>
                           <input
-                            className="govuk-input govuk-date-input__input govuk-input--width-2"
+                            className={`govuk-input govuk-date-input__input govuk-input--width-2`}
                             name="dateOfBirthMonth"
                             id="dateOfBirthMonth"
                             type="text"
@@ -260,7 +263,7 @@ const PersonForm = ({ source, type }) => {
                             Year
                           </label>
                           <input
-                            className="govuk-input govuk-date-input__input govuk-input--width-4"
+                            className={`govuk-input govuk-date-input__input govuk-input--width-4`}
                             name="dateOfBirthYear"
                             id="dateOfBirthYear"
                             type="text"
@@ -292,7 +295,7 @@ const PersonForm = ({ source, type }) => {
                   <div id="gender" className={`govuk-form-group ${errors.gender ? 'govuk-form-group--error' : ''}`}>
                     <fieldset className="govuk-fieldset">
                       <legend className="govuk-fieldset__legend">
-                        <label className="govuk-fieldset__heading" htmlFor="gender">
+                        <label className="govuk-fieldset__heading" htmlFor="genderInput">
                           Gender
                         </label>
                       </legend>
@@ -302,7 +305,7 @@ const PersonForm = ({ source, type }) => {
                           <input
                             className="govuk-radios__input"
                             name="gender"
-                            id="female"
+                            id="genderInput"
                             type="radio"
                             value="Female"
                             checked={formData.gender === 'Female' ? 'checked' : ''}
@@ -372,10 +375,11 @@ const PersonForm = ({ source, type }) => {
                     Exit without saving
                   </button>
                 </>
-                )}
-              {formPageIs === 2
+              )}
+            {formPageIs === 2
               && (
                 <>
+                  <ErrorSummary errors={errors} />
                   <h1 className="govuk-heading-l">Travel document details</h1>
                   <div id="pageError" className={`govuk-form-group ${errors.documentType ? 'govuk-form-group--error' : ''}`}>
                     <fieldset id="documentType" className="govuk-fieldset">
@@ -390,7 +394,7 @@ const PersonForm = ({ source, type }) => {
                         <div className="govuk-radios__item">
                           <input
                             className="govuk-radios__input"
-                            id="documentTypePassport"
+                            id="documentTypeInput"
                             name="documentType"
                             type="radio"
                             value="Passport"
@@ -398,7 +402,7 @@ const PersonForm = ({ source, type }) => {
                             onChange={handleChange}
                             data-aria-controls="documentTypePassport"
                           />
-                          <label className="govuk-label govuk-radios__label" htmlFor="documentTypePassport">
+                          <label className="govuk-label govuk-radios__label" htmlFor="documentTypeInput">
                             Passport
                           </label>
                         </div>
@@ -481,12 +485,13 @@ const PersonForm = ({ source, type }) => {
                     />
                   </div>
                   <div id="nationality" className={`govuk-form-group ${errors.nationality ? 'govuk-form-group--error' : ''}`}>
-                    <label className="govuk-label" htmlFor="nationality">
+                    <label className="govuk-label" htmlFor="nationalityInput">
                       Nationality
                     </label>
                     <FormFieldError error={errors.nationality} />
                     <select
                       data-testid="nationality-field"
+                      id="nationalityInput"
                       className="govuk-select"
                       name="nationality"
                       type="text"
@@ -509,11 +514,11 @@ const PersonForm = ({ source, type }) => {
                           <div className="govuk-date-input">
                             <div className="govuk-date-input__item">
                               <div className="govuk-form-group">
-                                <label className="govuk-label govuk-date-input__label" htmlFor="documentExpiryDateDay">Day</label>
+                                <label className="govuk-label govuk-date-input__label" htmlFor="documentExpiryDateInput">Day</label>
                                 <input
                                   className="govuk-input govuk-date-input__input govuk-input--width-2"
                                   name="documentExpiryDateDay"
-                                  id="documentExpiryDateDay"
+                                  id="documentExpiryDateInput"
                                   data-testid="documentExpiryDateDay-field"
                                   type="text"
                                   maxLength={2}
