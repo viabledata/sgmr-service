@@ -56,12 +56,6 @@ const PersonForm = ({ source, type }) => {
     setErrors(removeError(e.target.name, errors));
   };
 
-  const handleErrorClick = (e, id) => {
-    e.preventDefault();
-    const scrollToError = document.getElementById(id);
-    scrollToError.scrollIntoView();
-  };
-
   const validateForm = async () => {
     const newErrors = await validate(PeopleValidation[`page${formPageIs}`], formData);
     setErrors(newErrors);
@@ -185,24 +179,6 @@ const PersonForm = ({ source, type }) => {
                 && (
                 <>
                   <h1 className="govuk-heading-l">{title}</h1>
-                  {Object.keys(errors).length >= 1 && (
-                  <div className="govuk-error-summary" aria-labelledby="error-summary-title" role="alert" tabIndex="-1" data-module="govuk-error-summary">
-                    <h2 className="govuk-error-summary__title">
-                      There is a problem
-                    </h2>
-                    <div className="govuk-error-summary__body">
-                      <ul className="govuk-list govuk-error-summary__list">
-                        {Object.entries(errors).reverse().map((elem) => (
-                          <li key={elem[0]}>
-                            {elem[0] !== 'title'
-                            //  eslint-disable-next-line jsx-a11y/anchor-is-valid
-                            && <a onClick={(e) => handleErrorClick(e, elem[0])} href="#">{elem[1]}</a>}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  </div>
-                  )}
                   <div id="firstName" className={`govuk-form-group ${errors.firstName ? 'govuk-form-group--error' : ''}`}>
                     <label className="govuk-label" htmlFor="firstNameInput">
                       Given name(s)
@@ -401,26 +377,6 @@ const PersonForm = ({ source, type }) => {
               && (
                 <>
                   <h1 className="govuk-heading-l">Travel document details</h1>
-                  {Object.keys(errors).length >= 1 && (
-                  <div className="govuk-error-summary" aria-labelledby="error-summary-title" role="alert" tabIndex="-1" data-module="govuk-error-summary">
-                    <h2 className="govuk-error-summary__title">
-                      There is a problem
-                    </h2>
-                    <div className="govuk-error-summary__body">
-                      <ul className="govuk-list govuk-error-summary__list">
-                        {Object.entries(errors).reverse().map((elem) => (
-                          <li key={elem[0]}>
-                            {(elem[0] !== 'title' && elem[0] !== 'helpError')
-                            //  eslint-disable-next-line jsx-a11y/anchor-is-valid
-                            && <a onClick={(e) => handleErrorClick(e, elem[0])} href="#">{elem[1]}</a>}
-                            {elem[0] === 'helpError'
-                            && <a href="/page/help">{elem[1]}</a>}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  </div>
-                  )}
                   <div id="pageError" className={`govuk-form-group ${errors.documentType ? 'govuk-form-group--error' : ''}`}>
                     <fieldset id="documentType" className="govuk-fieldset">
                       <legend className="govuk-fieldset__legend govuk-fieldset__legend">Select a travel document type</legend>
