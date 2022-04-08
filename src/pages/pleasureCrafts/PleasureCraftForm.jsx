@@ -8,23 +8,24 @@ import scrollToTop from '../../utils/scrollToTop';
 import validate from '../../utils/validateFormData';
 import PleasureCraftValidation from './PleasureCraftValidation';
 
-const PleasureCraftForm = ({ type }) => {
+const PleasureCraftForm = ({ source, type }) => {
   const history = useHistory();
   const location = useLocation();
   const locationPath = location.pathname;
+  // const locationState = location.state;
   const [errors, setErrors] = useState({});
   const [formData, setFormData] = useState(JSON.parse(sessionStorage.getItem('formData')) || {});
   const [formPageIs, setFormPageIs] = useState(1);
-  const sourcePage = PLEASURE_CRAFT_PAGE_URL;
-  // const [sourcePage, setSourcePage] = useState(PLEASURE_CRAFT_PAGE_URL);
-  const title = 'Add a pleasure craft';
-  // const [title, setTitle] = useState('Add a pleasure craft');
+  const [sourcePage, setSourcePage] = useState(PLEASURE_CRAFT_PAGE_URL);
+  const [submittedNextPage, setSubmittedNextPage] = useState(PLEASURE_CRAFT_PAGE_URL);
+  const [submitType, setSubmitType] = useState();
+  const [title, setTitle] = useState('Add a pleasure craft');
 
   document.title = type === 'edit' ? 'Edit pleasure craft' : 'Save pleasure craft';
   const pleasureCraftTypeOther = formData.pleasureCraftType !== undefined && formData.pleasureCraftType !== 'sailingboat' && formData.pleasureCraftType !== 'motorboat';
   const pleasureCraftMMSIYes = formData.pleasureCraftMMSI !== undefined && formData.pleasureCraftMMSI !== 'No';
-  const pleasureCraftCallSignYes = formData.pleasureCraftCallSign !== undefined && formData.pleasureCraftCallSign !== 'No';
-  const pleasureCraftRegistrationCountryYes = formData.pleasureCraftRegistrationCountry !== undefined && formData.pleasureCraftRegistrationCountry !== 'No';
+  const callSignYes = formData.callSign !== undefined && formData.callSign !== 'No';
+  const registrationCountryYes = formData.registrationCountry !== undefined && formData.registrationCountry !== 'No';
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -68,9 +69,40 @@ const PleasureCraftForm = ({ type }) => {
     }
   };
 
+  const formatDataToSubmit = () => {
+    return {
+
+      vesselName: formData.pleasureCraftName,
+      vesselType: formData.pleasureCraftType,
+      moorings: formData.pleasureCraftMooring,
+      registration: formData.pleasureCraftRegistrationNumber,
+      vesselNationality: formData.registrationCountryName,
+      callsign: formData.callSignReference,
+      hullIdentificationNumber: '', // we no longer ask this
+      portOfRegistry: '', // we no longer ask this,
+      // The next two are new items we capture
+      ais: formData.pleasureCraftAIS,
+      mmsi: formData.pleasureCraftMMSINumber,
+    };
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(formData)
+    let response;
+    if (!await validateForm()) {
+      if (submitType === 'PATCH') {
+        // response = await patchData(`${PEOPLE_URL}/${personId}`, formatDataToSubmit(formData), locationPath);
+      } else {
+        console.log(formatDataToSubmit(formData));
+        // response = await postData(PEOPLE_URL, formatDataToSubmit(formData), locationPath);
+      }
+    }
+
+    if (response && response.status === 200) {
+      history.push(submittedNextPage);
+    } else if (response) {
+      setErrors({ [response.id]: response.message });
+    }
   };
 
   useEffect(() => {
@@ -78,6 +110,38 @@ const PleasureCraftForm = ({ type }) => {
     setFormPageIs(parseInt(locationPath.split('page-').pop(), 10));
     scrollToTop();
   }, [locationPath]);
+
+  useEffect(() => {
+    // if (locationState?.source === 'edit' || source === 'edit') {
+    //   source = 'edit';
+    //   if (personId) { getPersonData(); }
+    // }
+    switch (source) {
+      case 'onboarding':
+        setTitle('Add details of a person you frequently sail with');
+        setSubmitType('POST');
+        break;
+      case 'voyage':
+        setTitle('Add details of the person you are sailing with');
+        setSubmitType('POST');
+        break;
+      case 'edit':
+        setTitle('Update details of the person you sail with');
+        setSubmitType('PATCH');
+        setSubmittedNextPage(PLEASURE_CRAFT_PAGE_URL);
+        setSourcePage(PLEASURE_CRAFT_PAGE_URL);
+        break;
+      default:
+        setTitle('Add details of the person you frequently sail with');
+        setSubmitType('POST');
+        setSubmittedNextPage(PLEASURE_CRAFT_PAGE_URL);
+        setSourcePage(PLEASURE_CRAFT_PAGE_URL);
+    }
+  }, [source]);
+
+  useEffect(() => {
+    sessionStorage.setItem('formData', JSON.stringify(formData));
+  }, [formData]);
 
   return (
     <div className="govuk-width-container ">
@@ -264,38 +328,38 @@ const PleasureCraftForm = ({ type }) => {
                     />
                   </div>
 
-                  <div id="pleasureCraftRegistrationCountry" className={`govuk-form-group ${errors.pleasureCraftRegistrationCountry ? 'govuk-form-group--error' : ''}`}>
+                  <div id="registrationCountry" className={`govuk-form-group ${errors.registrationCountry ? 'govuk-form-group--error' : ''}`}>
                     <fieldset className="govuk-fieldset">
                       <legend className="govuk-fieldset__legend">
-                        <label className="govuk-fieldset__heading" htmlFor="pleasureCraftRegistrationCountry">
+                        <label className="govuk-fieldset__heading" htmlFor="registrationCountry">
                           Does this pleasure craft have a Country of Registration?
                         </label>
                       </legend>
                       <div className="govuk-radios govuk-radios">
-                        <FormFieldError error={errors.pleasureCraftRegistrationCountry} />
+                        <FormFieldError error={errors.registrationCountry} />
                         <div className="govuk-radios__item">
                           <input
                             className="govuk-radios__input"
-                            name="pleasureCraftRegistrationCountry"
-                            id="pleasureCraftRegistrationCountry-yes"
+                            name="registrationCountry"
+                            id="registrationCountryYes"
                             type="radio"
-                            value="Yes"
-                            checked={formData.pleasureCraftRegistrationCountry === 'Yes' ? 'checked' : ''}
+                            value="registrationCountryYes"
+                            checked={formData.registrationCountry === 'registrationCountryYes' ? 'checked' : ''}
                             onChange={handleChange}
                           />
-                          <label className="govuk-label govuk-radios__label" htmlFor="pleasureCraftRegistrationCountry-yes">
+                          <label className="govuk-label govuk-radios__label" htmlFor="registrationCountryYes">
                             Yes
                           </label>
                         </div>
-                        {pleasureCraftRegistrationCountryYes && (
+                        {registrationCountryYes && (
                         <div className="govuk-form-group">
-                          <label className="govuk-label" htmlFor="pleasureCraftRegistrationCountry-number">
+                          <label className="govuk-label" htmlFor="registrationCountryName">
                             Country of registration
                             <input
                               className="govuk-input"
-                              name="pleasureCraftRegistrationCountryNumber"
+                              name="registrationCountryName"
                               type="text"
-                              defaultValue={pleasureCraftRegistrationCountryYes ? formData.pleasureCraftRegistrationCountryNumber : ''}
+                              defaultValue={registrationCountryYes ? formData.registrationCountryName : ''}
                               onChange={handleChange}
                             />
                           </label>
@@ -304,14 +368,14 @@ const PleasureCraftForm = ({ type }) => {
                         <div className="govuk-radios__item">
                           <input
                             className="govuk-radios__input"
-                            name="pleasureCraftRegistrationCountry"
-                            id="pleasureCraftRegistrationCountry-no"
+                            name="registrationCountry"
+                            id="registrationCountryNo"
                             type="radio"
-                            value="No"
-                            checked={formData.pleasureCraftRegistrationCountry === 'No' ? 'checked' : ''}
+                            value="registrationCountryNo"
+                            checked={formData.registrationCountry === 'registrationCountryNo' ? 'checked' : ''}
                             onChange={handleChange}
                           />
-                          <label className="govuk-label govuk-radios__label" htmlFor="pleasureCraftRegistrationCountry-no">
+                          <label className="govuk-label govuk-radios__label" htmlFor="registrationCountryNo">
                             No
                           </label>
                         </div>
@@ -332,13 +396,13 @@ const PleasureCraftForm = ({ type }) => {
                           <input
                             className="govuk-radios__input"
                             name="pleasureCraftAIS"
-                            id="pleasureCraftAIS-yes"
+                            id="pleasureCraftAISYes"
                             type="radio"
-                            value="Yes"
-                            checked={formData.pleasureCraftAIS === 'Yes' ? 'checked' : ''}
+                            value="pleasureCraftAISYes"
+                            checked={formData.pleasureCraftAIS === 'pleasureCraftAISYes' ? 'checked' : ''}
                             onChange={handleChange}
                           />
-                          <label className="govuk-label govuk-radios__label" htmlFor="pleasureCraftAIS-yes">
+                          <label className="govuk-label govuk-radios__label" htmlFor="pleasureCraftAISYes">
                             Yes
                           </label>
                         </div>
@@ -346,13 +410,13 @@ const PleasureCraftForm = ({ type }) => {
                           <input
                             className="govuk-radios__input"
                             name="pleasureCraftAIS"
-                            id="pleasureCraftAIS-no"
+                            id="pleasureCraftAISNo"
                             type="radio"
-                            value="No"
-                            checked={formData.pleasureCraftAIS === 'No' ? 'checked' : ''}
+                            value="pleasureCraftAISNo"
+                            checked={formData.pleasureCraftAIS === 'pleasureCraftAISNo' ? 'checked' : ''}
                             onChange={handleChange}
                           />
-                          <label className="govuk-label govuk-radios__label" htmlFor="pleasureCraftAIS-no">
+                          <label className="govuk-label govuk-radios__label" htmlFor="pleasureCraftAISNNo">
                             No
                           </label>
                         </div>
@@ -373,19 +437,19 @@ const PleasureCraftForm = ({ type }) => {
                           <input
                             className="govuk-radios__input"
                             name="pleasureCraftMMSI"
-                            id="pleasureCraftMMSI-yes"
+                            id="pleasureCraftMMSIYes"
                             type="radio"
-                            value="Yes"
-                            checked={formData.pleasureCraftMMSI === 'Yes' ? 'checked' : ''}
+                            value="pleasureCraftMMSIYes"
+                            checked={formData.pleasureCraftMMSI === 'pleasureCraftMMSIYes' ? 'checked' : ''}
                             onChange={handleChange}
                           />
-                          <label className="govuk-label govuk-radios__label" htmlFor="pleasureCraftMMSI-yes">
+                          <label className="govuk-label govuk-radios__label" htmlFor="pleasureCraftMMSIYes">
                             Yes
                           </label>
                         </div>
                         {pleasureCraftMMSIYes && (
                           <div className="govuk-form-group">
-                            <label className="govuk-label" htmlFor="pleasureCraftMMSI-number">
+                            <label className="govuk-label" htmlFor="pleasureCraftMMSINumber">
                               MMSI number
                               <input
                                 className="govuk-input"
@@ -401,13 +465,13 @@ const PleasureCraftForm = ({ type }) => {
                           <input
                             className="govuk-radios__input"
                             name="pleasureCraftMMSI"
-                            id="pleasureCraftMMSI-no"
+                            id="pleasureCraftMMSINo"
                             type="radio"
-                            value="No"
-                            checked={formData.pleasureCraftMMSI === 'No' ? 'checked' : ''}
+                            value="pleasureCraftMMSINo"
+                            checked={formData.pleasureCraftMMSI === 'pleasureCraftMMSINo' ? 'checked' : ''}
                             onChange={handleChange}
                           />
-                          <label className="govuk-label govuk-radios__label" htmlFor="pleasureCraftMMSI-no">
+                          <label className="govuk-label govuk-radios__label" htmlFor="pleasureCraftMMSINo">
                             No
                           </label>
                         </div>
@@ -415,38 +479,39 @@ const PleasureCraftForm = ({ type }) => {
                     </fieldset>
                   </div>
 
-                  <div id="pleasureCraftCallSign" className={`govuk-form-group ${errors.pleasureCraftCallSign ? 'govuk-form-group--error' : ''}`}>
+                  <div id="pleasureCraftCallSign" className={`govuk-form-group ${errors.callSign ? 'govuk-form-group--error' : ''}`}>
                     <fieldset className="govuk-fieldset">
                       <legend className="govuk-fieldset__legend">
-                        <label className="govuk-fieldset__heading" htmlFor="pleasureCraftCallSign">
+                        <label className="govuk-fieldset__heading" htmlFor="callSign">
                           Does this pleasure craft have a Call sign?
                         </label>
                       </legend>
                       <div className="govuk-radios govuk-radios">
-                        <FormFieldError error={errors.pleasureCraftCallSign} />
+                        <FormFieldError error={errors.callSign} />
                         <div className="govuk-radios__item">
                           <input
                             className="govuk-radios__input"
-                            name="pleasureCraftCallSign"
-                            id="pleasureCraftCallSign-yes"
+                            name="callSign"
+                            id="callSignYes"
                             type="radio"
-                            value="Yes"
-                            checked={formData.pleasureCraftCallSign === 'Yes' ? 'checked' : ''}
+                            value="callSignYes"
+                            checked={formData.callSign === 'callSignYes' ? 'checked' : ''}
                             onChange={handleChange}
                           />
-                          <label className="govuk-label govuk-radios__label" htmlFor="pleasureCraftCallSign-yes">
+                          <label className="govuk-label govuk-radios__label" htmlFor="callSignYes">
                             Yes
                           </label>
                         </div>
-                        {pleasureCraftCallSignYes && (
+                        {callSignYes && (
                           <div className="govuk-form-group">
-                            <label className="govuk-label" htmlFor="pleasureCraftCallSign-number">
+                            <label className="govuk-label" htmlFor="callSignReference">
                               Call sign
                               <input
                                 className="govuk-input"
-                                name="pleasureCraftCallSignNumber"
+                                id="callSignReference"
+                                name="callSignReference"
                                 type="text"
-                                defaultValue={pleasureCraftCallSignYes ? formData.pleasureCraftCallSignNumber : ''}
+                                defaultValue={formData.callSignReference}
                                 onChange={handleChange}
                               />
                             </label>
@@ -455,14 +520,14 @@ const PleasureCraftForm = ({ type }) => {
                         <div className="govuk-radios__item">
                           <input
                             className="govuk-radios__input"
-                            name="pleasureCraftCallSign"
-                            id="pleasureCraftCallSign-no"
+                            name="callSign"
+                            id="callSign-no"
                             type="radio"
-                            value="No"
-                            checked={formData.pleasureCraftCallSign === 'No' ? 'checked' : ''}
+                            value="callSignNo"
+                            checked={formData.callSign === 'No' ? 'checked' : ''}
                             onChange={handleChange}
                           />
-                          <label className="govuk-label govuk-radios__label" htmlFor="pleasureCraftCallSign-no">
+                          <label className="govuk-label govuk-radios__label" htmlFor="callSignNo">
                             No
                           </label>
                         </div>
