@@ -100,7 +100,7 @@ const Main = () => {
             <SecureRoute exact path="/pleasure-crafts">
               <PageContainer />
             </SecureRoute>
-            <SecureRoute exact path="/pleasure-crafts/save-pleasure-craft">
+            <SecureRoute exact path="/pleasure-crafts/save-pleasure-craft/page-([1-2]{1})">
               <PleasureCraftForm />
             </SecureRoute>
             <SecureRoute exact path="/pleasure-crafts/:vesselId">

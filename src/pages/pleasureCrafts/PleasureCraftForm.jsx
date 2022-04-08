@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { useHistory, useLocation } from 'react-router-dom';
 
 import FormFieldError from '../../components-v2/FormFieldError';
 import { PLEASURE_CRAFT_PAGE_URL } from '../../constants/ClientConstants';
@@ -10,6 +10,8 @@ import PleasureCraftValidation from './PleasureCraftValidation';
 
 const PleasureCraftForm = ({ type }) => {
   const history = useHistory();
+  const location = useLocation();
+  const locationPath = location.pathname;
   const [errors, setErrors] = useState({});
   const [formData, setFormData] = useState(JSON.parse(sessionStorage.getItem('formData')) || {});
   const [formPageIs, setFormPageIs] = useState(1);
@@ -44,10 +46,10 @@ const PleasureCraftForm = ({ type }) => {
     let nextPageUrl;
     switch (url) {
       case 'nextFormPageIs':
-        nextPageUrl = `/pleasure-craft/${type || 'save'}-pleasure-craft/page-${formPageIs + 1}`;
+        nextPageUrl = `/pleasure-crafts/${type || 'save'}-pleasure-craft/page-${formPageIs + 1}`;
         break;
       case 'previousFormPageIs':
-        nextPageUrl = `/pleasure-craft/${type || 'save'}-pleasure-craft/page-${formPageIs - 1}`;
+        nextPageUrl = `/pleasure-crafts/${type || 'save'}-pleasure-craft/page-${formPageIs - 1}`;
         setFormPageIs(formPageIs - 1);
         break;
       default: nextPageUrl = url;
@@ -62,6 +64,12 @@ const PleasureCraftForm = ({ type }) => {
       history.push(nextPageUrl);
     }
   };
+
+  useEffect(() => {
+    setErrors({}); // always clear errors when changing page
+    setFormPageIs(parseInt(locationPath.split('page-').pop(), 10));
+    scrollToTop();
+  }, [locationPath]);
 
   return (
     <div className="govuk-width-container ">
@@ -194,6 +202,88 @@ const PleasureCraftForm = ({ type }) => {
                     </button>
                   </>
                 )}
+              {formPageIs === 2
+              && (
+                <>
+                  <h1 className="govuk-heading-l">Travel document details</h1>
+                  {Object.keys(errors).length >= 1 && (
+                  <div className="govuk-error-summary" aria-labelledby="error-summary-title" role="alert" tabIndex="-1" data-module="govuk-error-summary">
+                    <h2 className="govuk-error-summary__title">
+                      There is a problem
+                    </h2>
+                    <div className="govuk-error-summary__body">
+                      <ul className="govuk-list govuk-error-summary__list">
+                        {Object.entries(errors).reverse().map((elem) => (
+                          <li key={elem[0]}>
+                            {(elem[0] !== 'title' && elem[0] !== 'helpError')
+                            //  eslint-disable-next-line jsx-a11y/anchor-is-valid
+                            && <a onClick={(e) => handleErrorClick(e, elem[0])} href="#">{elem[1]}</a>}
+                            {elem[0] === 'helpError'
+                            && <a href="/page/help">{elem[1]}</a>}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+                  )}
+                  <div id="pleasureCraftRegistrationNumber" className={`govuk-form-group ${errors.pleasureCraftRegistrationNumber ? 'govuk-form-group--error' : ''}`}>
+                    <label className="govuk-label" htmlFor="pleasureCraftRegistrationNumberInput">
+                      Registration number
+                    </label>
+                    <FormFieldError error={errors.pleasureCraftRegistrationNumber} />
+                    <input
+                      id="pleasureCraftRegistrationNumberInput"
+                      className="govuk-input"
+                      name="pleasureCraftRegistrationNumber"
+                      type="text"
+                      value={formData?.pleasureCraftRegistrationNumber || ''}
+                      onChange={handleChange}
+                    />
+                  </div>
+                  <div id="pleasureCraftRegistrationCountry" className={`govuk-form-group ${errors.pleasureCraftRegistrationCountry ? 'govuk-form-group--error' : ''}`}>
+                    <label className="govuk-label" htmlFor="pleasureCraftRegistrationCountryInput">
+                      Country of registration
+                    </label>
+                    <FormFieldError error={errors.pleasureCraftRegistrationCountry} />
+                    <input
+                      id="pleasureCraftRegistrationCountryInput"
+                      className="govuk-input"
+                      name="pleasureCraftRegistrationCountry"
+                      type="text"
+                      value={formData?.pleasureCraftRegistrationCountry || ''}
+                      onChange={handleChange}
+                    />
+                  </div>
+
+                  {/* <div className="govuk-button-group">
+                    <button
+                      type="button"
+                      className="govuk-button govuk-button--secondary"
+                      data-module="govuk-button"
+                      onClick={(e) => {
+                        goToNextPage(e, { url: 'previousFormPageIs', runValidation: false });
+                      }}
+                    >
+                      Back
+                    </button>
+                    <button
+                      type="button"
+                      className="govuk-button"
+                      data-module="govuk-button"
+                      onClick={(e) => { handleSubmit(e); }}
+                    >
+                      Save
+                    </button>
+                  </div>
+                  <button
+                    type="button"
+                    className="govuk-button govuk-button--text"
+                    onClick={(e) => { goToNextPage(e, { url: sourcePage, runValidation: false }); }}
+                  >
+                    Exit without saving
+                  </button> */}
+                </>
+              )}
             </div>
           </div>
         </div>

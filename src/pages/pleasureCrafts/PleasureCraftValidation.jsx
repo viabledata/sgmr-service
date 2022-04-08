@@ -13,6 +13,20 @@ const pleasureCraftValidation = {
       message: 'You must select a type of pleasure craft',
     },
   ],
+  page2: [
+    {
+      inputField: 'pleasureCraftRegistrationNumber',
+      errorDisplayId: 'pleasureCraftRegistrationNumber',
+      type: 'required',
+      message: 'You must enter a pleasure craft registration number',
+    },
+    {
+      inputField: 'pleasureCraftRegistrationCountry',
+      errorDisplayId: 'pleasureCraftRegistrationCountry',
+      type: 'required',
+      message: 'You must enter a pleasure craft country of registration',
+    },
+  ],
 };
 
 export default pleasureCraftValidation;
