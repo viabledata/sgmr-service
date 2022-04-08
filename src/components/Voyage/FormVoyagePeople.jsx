@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 
 import {
   PEOPLE_URL,
@@ -13,18 +14,12 @@ import PeopleTable from './PeopleTable';
 import { formatPerson } from './VoyageFormDataFormatting';
 
 const FormVoyagePeople = ({
-  voyageId, setErrors, createNextPage, setPageNum,
+  voyageId, setErrors, createNextPage,
 }) => {
   document.title = 'People on your voyage';
 
   const [savedPeople, setSavedPeople] = useState([]);
   const [peopleToAdd, setPeopleToAdd] = useState([]);
-
-  const handleLinkToNewPersonForm = (e) => {
-    e.preventDefault();
-    setPageNum('4b');
-    setErrors({});
-  };
 
   const handleAddPeopleButton = async () => {
     if (!peopleToAdd.length) {
@@ -68,14 +63,15 @@ const FormVoyagePeople = ({
         {savedPeople
           ? "Select people you've saved previously to add to this voyage plan, or "
           : "You don't have any saved people on your account, "}
-        {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-        <a
-          href="#"
-          className="govuk-link govuk-link--no-visited-state"
-          onClick={(e) => handleLinkToNewPersonForm(e, voyageId)}
+        <Link
+          to={{
+            pathname: '/people/save-person/page-1',
+            state: { source: 'voyage' },
+          }}
+          aria-label="Save a new person"
         >
           add a new person
-        </a>
+        </Link>
       </p>
 
       {!!savedPeople.length && (

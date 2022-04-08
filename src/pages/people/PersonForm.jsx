@@ -3,7 +3,7 @@ import { useHistory, useLocation, withRouter } from 'react-router-dom';
 
 import FormFieldError from '../../components-v2/FormFieldError';
 import { PEOPLE_URL } from '../../constants/ApiConstants';
-import { PEOPLE_PAGE_URL } from '../../constants/ClientConstants';
+import { PEOPLE_PAGE_URL, SAVE_VOYAGE_PEOPLE_URL } from '../../constants/ClientConstants';
 import { getData, patchData, postData } from '../../utils/v2ApiHooks';
 import { formatDate } from '../../utils/date';
 import removeError from '../../utils/errorHandlers';
@@ -142,6 +142,8 @@ const PersonForm = ({ source, type }) => {
       case 'voyage':
         setTitle('Add details of the person you are sailing with');
         setSubmitType('POST');
+        setSubmittedNextPage(SAVE_VOYAGE_PEOPLE_URL);
+        setSourcePage(SAVE_VOYAGE_PEOPLE_URL);
         break;
       case 'edit':
         setTitle('Update details of the person you sail with');

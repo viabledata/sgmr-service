@@ -1,4 +1,5 @@
 import React from 'react';
+import { BrowserRouter } from 'react-router-dom';
 import {
   render, screen, waitFor, within,
 } from '@testing-library/react';
@@ -54,7 +55,7 @@ describe('People table', () => {
       ]);
 
     render(
-      <FormVoyagePeople voyageId="123" />,
+      <BrowserRouter><FormVoyagePeople voyageId="123" /></BrowserRouter>,
     );
     await waitFor(() => {
       expect(mockAxios.history.get.length).toBe(1);
