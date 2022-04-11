@@ -74,25 +74,25 @@ describe('Creating and editing people', () => {
     expect(screen.queryAllByText('You must select a type of pleasure craft')).toHaveLength(2);
   });
 
-  // it('should scroll to error if user clicks on error text', async () => {
-  //   renderPage({ pageNumber: 1 });
-  //   await waitFor(() => fireEvent.click(screen.getByText('Continue')));
-  //   expect(screen.queryAllByText('You must enter a pleasure craft name')).toHaveLength(2);
-  //   expect(screen.getByRole('link', { name: 'You must enter a pleasure craft name' })).toBeInTheDocument();
+  it('should scroll to error if user clicks on error text', async () => {
+    renderPage({ pageNumber: 1 });
+    await waitFor(() => fireEvent.click(screen.getByText('Continue')));
+    expect(screen.queryAllByText('You must enter a pleasure craft name')).toHaveLength(2);
+    expect(screen.getByRole('link', { name: 'You must enter a pleasure craft name' })).toBeInTheDocument();
 
-  //   const scrollIntoViewMock = jest.fn();
-  //   window.HTMLElement.prototype.scrollIntoView = scrollIntoViewMock;
-  //   await waitFor(() => fireEvent.click(screen.getByRole('link', { name: 'You must enter a pleasure craft name' })));
-  //   expect(scrollIntoViewMock).toBeCalled();
-  // });
+    const scrollIntoViewMock = jest.fn();
+    window.HTMLElement.prototype.scrollIntoView = scrollIntoViewMock;
+    await waitFor(() => fireEvent.click(screen.getByRole('link', { name: 'You must enter a pleasure craft name' })));
+    expect(scrollIntoViewMock).toBeCalled();
+  });
 
-  // it('should load next page when user clicks continue and there are no errors', async () => {
-  //   renderPage({ pageNumber: 1 });
-  //   fireEvent.change(screen.getByLabelText('Name of pleasure craft'), { target: { value: 'Starlight' } });
-  //   fireEvent.click(screen.getByLabelText('Motorboat'));
-  //   await waitFor(() => fireEvent.click(screen.getByText('Continue')));
-  //   expect(screen.getByText('Does this pleasure craft have a Registration number?')).toBeInTheDocument();
-  // });
+  it('should load next page when user clicks continue and there are no errors', async () => {
+    renderPage({ pageNumber: 1 });
+    fireEvent.change(screen.getByLabelText('Name of pleasure craft'), { target: { value: 'Starlight' } });
+    fireEvent.click(screen.getByLabelText('Motorboat'));
+    await waitFor(() => fireEvent.click(screen.getByText('Continue')));
+    expect(screen.getByText('Registration number')).toBeInTheDocument();
+  });
 
   // it('should render errors on save if fields on page 2 are empty', async () => {
   //   renderPage({ pageNumber: 1 });

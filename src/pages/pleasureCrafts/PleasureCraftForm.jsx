@@ -2,7 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 
 import FormFieldError from '../../components-v2/FormFieldError';
+import { PLEASURE_CRAFT_URL } from '../../constants/ApiConstants';
 import { PLEASURE_CRAFT_PAGE_URL } from '../../constants/ClientConstants';
+import { postData } from '../../utils/v2ApiHooks';
 import removeError from '../../utils/errorHandlers';
 import scrollToTop from '../../utils/scrollToTop';
 import validate from '../../utils/validateFormData';
@@ -23,9 +25,9 @@ const PleasureCraftForm = ({ source, type }) => {
 
   document.title = type === 'edit' ? 'Edit pleasure craft' : 'Save pleasure craft';
   const pleasureCraftTypeOther = formData.pleasureCraftType !== undefined && formData.pleasureCraftType !== 'sailingboat' && formData.pleasureCraftType !== 'motorboat';
-  const pleasureCraftMMSIYes = formData.pleasureCraftMMSI !== undefined && formData.pleasureCraftMMSI !== 'No';
-  const callSignYes = formData.callSign !== undefined && formData.callSign !== 'No';
-  const registrationCountryYes = formData.registrationCountry !== undefined && formData.registrationCountry !== 'No';
+  const pleasureCraftMMSIYes = formData.pleasureCraftMMSI !== undefined && formData.pleasureCraftMMSI !== 'pleasureCraftMMSINo';
+  const callSignYes = formData.callSign !== undefined && formData.callSign !== 'callSignNo';
+  const registrationCountryYes = formData.registrationCountry !== undefined && formData.registrationCountry !== 'registrationCountryNo';
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -93,8 +95,7 @@ const PleasureCraftForm = ({ source, type }) => {
       if (submitType === 'PATCH') {
         // response = await patchData(`${PEOPLE_URL}/${personId}`, formatDataToSubmit(formData), locationPath);
       } else {
-        console.log(formatDataToSubmit(formData));
-        // response = await postData(PEOPLE_URL, formatDataToSubmit(formData), locationPath);
+        response = await postData(PLEASURE_CRAFT_URL, formatDataToSubmit(formData), locationPath);
       }
     }
 

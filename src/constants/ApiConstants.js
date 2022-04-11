@@ -9,6 +9,7 @@ export const PASSWORD_RESET_CONFIRMATION = `${apiUrl}/password-reset-confirmatio
 export const VOYAGE_REPORT_URL = `${apiUrl}/voyagereport`;
 export const PEOPLE_URL = `${apiUrl}/user/people`;
 export const VESSELS_URL = `${apiUrl}/user/vessels`;
+export const PLEASURE_CRAFT_URL = `${apiUrl}/user/vessels`;
 export const SUBMIT_VERIFICATION_CODE_URL = `${apiUrl}/submit-verification-code`;
 export const RESEND_VERIFICATION_CODE_URL = `${apiUrl}/resend-verification-code`;
 export const REGISTRATION_URL = `${apiUrl}/registration`;
