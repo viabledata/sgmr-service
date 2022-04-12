@@ -52,10 +52,18 @@ const VoyageFormValidation = async (dataToValidate, source) => {
     errors.arrivalLocation = 'You must enter an arrival point';
   }
 
-  if (dataToValidate.departureDateYear && !(isDateValid(dataToValidate.departureDateYear, dataToValidate.departureDateMonth, dataToValidate.departureDateDay))) {
+  if (
+    source === FORM_STEPS.DEPARTURE
+    && dataToValidate.departureDateYear
+    && !(isDateValid(dataToValidate.departureDateYear, dataToValidate.departureDateMonth, dataToValidate.departureDateDay))
+  ) {
     errors.departureDate = 'You must enter a valid date';
   }
-  if (dataToValidate.arrivalDateYear && !(isDateValid(dataToValidate.arrivalDateYear, dataToValidate.arrivalDateMonth, dataToValidate.arrivalDateDay))) {
+  if (
+    source === FORM_STEPS.ARRIVAL
+    && dataToValidate.arrivalDateYear
+    && !(isDateValid(dataToValidate.arrivalDateYear, dataToValidate.arrivalDateMonth, dataToValidate.arrivalDateDay))
+  ) {
     errors.arrivalDate = 'You must enter a valid date';
   }
 
@@ -80,20 +88,22 @@ const VoyageFormValidation = async (dataToValidate, source) => {
   }
 
   // Time fields must be valid
-  if (dataToValidate.departureTimeHour && !(isTimeValid(dataToValidate.departureTimeHour, dataToValidate.departureTimeMinute))) {
+  if (source === FORM_STEPS.DEPARTURE && dataToValidate.departureTimeHour && !(isTimeValid(dataToValidate.departureTimeHour, dataToValidate.departureTimeMinute))) {
     errors.departureTime = 'You must enter a valid time';
   }
-  if (dataToValidate.arrivalTimeHour && !(isTimeValid(dataToValidate.arrivalTimeHour, dataToValidate.arrivalTimeMinute))) {
+  if (source === FORM_STEPS.ARRIVAL && dataToValidate.arrivalTimeHour && !(isTimeValid(dataToValidate.arrivalTimeHour, dataToValidate.arrivalTimeMinute))) {
     errors.arrivalTime = 'You must enter a valid time';
   }
   // Departure date must be in the future
-  if (isTimeAndDateBeforeNow(
-    dataToValidate.departureDateYear,
-    dataToValidate.departureDateMonth,
-    dataToValidate.departureDateDay,
-    dataToValidate.departureTimeHour,
-    dataToValidate.departureTimeMinute,
-  )) {
+  if (source === FORM_STEPS.DEPARTURE
+    && isTimeAndDateBeforeNow(
+      dataToValidate.departureDateYear,
+      dataToValidate.departureDateMonth,
+      dataToValidate.departureDateDay,
+      dataToValidate.departureTimeHour,
+      dataToValidate.departureTimeMinute,
+    )
+  ) {
     if (isDateToday(dataToValidate.departureDateYear, dataToValidate.departureDateMonth, dataToValidate.departureDateDay)) {
       errors.departureTime = 'You must enter a departure time in the future';
     } else {
@@ -101,13 +111,16 @@ const VoyageFormValidation = async (dataToValidate, source) => {
     }
   }
   // Arrival date must be in the future
-  if (isTimeAndDateBeforeNow(
-    dataToValidate.arrivalDateYear,
-    dataToValidate.arrivalDateMonth,
-    dataToValidate.arrivalDateDay,
-    dataToValidate.arrivalTimeHour,
-    dataToValidate.arrivalTimeMinute,
-  )) {
+  if (
+    source === FORM_STEPS.ARRIVAL
+    && isTimeAndDateBeforeNow(
+      dataToValidate.arrivalDateYear,
+      dataToValidate.arrivalDateMonth,
+      dataToValidate.arrivalDateDay,
+      dataToValidate.arrivalTimeHour,
+      dataToValidate.arrivalTimeMinute,
+    )
+  ) {
     if (isDateToday(dataToValidate.arrivalDateYear, dataToValidate.arrivalDateMonth, dataToValidate.arrivalDateDay)) {
       errors.arrivalTime = 'You must enter an arrival time in the future';
     } else {
@@ -130,6 +143,7 @@ const VoyageFormValidation = async (dataToValidate, source) => {
       dataToValidate.departureTimeHour,
       dataToValidate.departureTimeMinute,
     ))
+    && source === FORM_STEPS.ARRIVAL
   ) {
     errors.arrivalDate = 'You must enter an arrival date after your departure';
   }
