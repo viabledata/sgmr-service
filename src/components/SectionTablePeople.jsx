@@ -68,6 +68,7 @@ const SectionTablePeople = ({ pageData }) => {
                           Last Name
                         </span>
                         <Link
+                          className="govuk-link"
                           to={{
                             pathname: '/people/edit-person/page-1',
                             state: { peopleId: person[1].id, source: 'edit' },

@@ -23,14 +23,14 @@ const LandingPage = () => {
                 <span className="govuk-warning-text__assistive">Warning</span>
                 There are now new rules in place for entering the UK.
                 <br />
-                <a href="https://www.gov.uk/uk-border-control">Find out more here.</a>
+                <a className="govuk-link" href="https://www.gov.uk/uk-border-control">Find out more here.</a>
               </strong>
             </div>
             <div className="govuk-inset-text">
               From 1 October 2021, most EU, EEA and Swiss citizens will only be able to enter the UK using a valid passport. ID cards will no longer be
               accepted as a valid travel document for entry into the UK. For further details and exceptions,
               {' '}
-              <a href="https://www.gov.uk/guidance/visiting-the-uk-as-an-eu-eea-or-swiss-citizen">please check GOV.UK.</a>
+              <a className="govuk-link" href="https://www.gov.uk/guidance/visiting-the-uk-as-an-eu-eea-or-swiss-citizen">please check GOV.UK.</a>
             </div>
             <h2 className="govuk-heading-m">What you&apos;ll need:</h2>
             <ul className="govuk-list govuk-list--bullet">

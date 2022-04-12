@@ -14,7 +14,7 @@ const ActivationSuccess = () => (
     <p className="govuk-body">
       We have successfully verified your account. You can now
       {' '}
-      <Link to="/sign-in">sign in</Link>
+      <Link className="govuk-link" to="/sign-in">sign in</Link>
       .
     </p>
   </>

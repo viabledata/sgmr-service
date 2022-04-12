@@ -53,6 +53,7 @@ const FormCheck = ({
       </dl>
       <div className="govuk-summary-list govuk-!-margin-bottom-9">
         <Link
+          className="govuk-link"
           to={{
             pathname: SAVE_VOYAGE_DEPARTURE_URL,
             state: { voyageId },
@@ -91,6 +92,7 @@ const FormCheck = ({
       </dl>
       <div className="govuk-summary-list govuk-!-margin-bottom-9">
         <Link
+          className="govuk-link"
           to={{
             pathname: SAVE_VOYAGE_ARRIVALS_URL,
             state: { voyageId },
@@ -144,6 +146,7 @@ const FormCheck = ({
       </dl>
       <div className="govuk-summary-list govuk-!-margin-bottom-9">
         <Link
+          className="govuk-link"
           to={{
             pathname: SAVE_VOYAGE_VESSEL_URL,
             state: { voyageId },
@@ -162,6 +165,7 @@ const FormCheck = ({
       />
       <div className="govuk-summary-list govuk-!-margin-bottom-9">
         <Link
+          className="govuk-link"
           to={{
             pathname: SAVE_VOYAGE_PEOPLE_MANIFEST_URL,
             state: { voyageId },
@@ -203,6 +207,7 @@ const FormCheck = ({
       </dl>
       <div className="govuk-summary-list govuk-!-margin-bottom-9">
         <Link
+          className="govuk-link"
           to={{
             pathname: SAVE_VOYAGE_RESPONSIBLE_PERSON_URL,
             state: { voyageId },

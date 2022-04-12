@@ -14,7 +14,7 @@ const PrivacyCookiePolicy = () => {
               and citizenship system, which is part of the Home Office.
               Please visit the guidance at
               {' '}
-              <a href="https://www.gov.uk/government/publications/personal-information-use-in-borders-immigration-and-citizenship">
+              <a className="govuk-link" href="https://www.gov.uk/government/publications/personal-information-use-in-borders-immigration-and-citizenship">
                 Borders, immigration and citizenship: privacy information notice
               </a>
               {' '}
@@ -100,7 +100,7 @@ const PrivacyCookiePolicy = () => {
             <p className="govuk-body">
               If you want to exercise these rights please email us at:
               {' '}
-              <a href="mailto:subjectaccessrequest@homeoffice.gov.uk">subjectaccessrequest@homeoffice.gov.uk</a>
+              <a className="govuk-link" href="mailto:subjectaccessrequest@homeoffice.gov.uk">subjectaccessrequest@homeoffice.gov.uk</a>
             </p>
           </div>
         </div>

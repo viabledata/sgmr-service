@@ -74,7 +74,7 @@ const NewPassword = () => {
         <p className="govuk-body-l">
           We updated your password, you can now
           {' '}
-          <Link to="/sign-in">sign in</Link>
+          <Link className="govuk-link" to="/sign-in">sign in</Link>
           .
         </p>
       </PageWrapper>

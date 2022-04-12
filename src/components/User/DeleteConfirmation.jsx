@@ -19,7 +19,7 @@ const DeleteConfirmation = () => {
             <p className="govuk-body">
               Use the
               {' '}
-              <Link to="/register">registration form</Link>
+              <Link className="govuk-link" to="/register">registration form</Link>
               {' '}
               to create a new one.
             </p>
