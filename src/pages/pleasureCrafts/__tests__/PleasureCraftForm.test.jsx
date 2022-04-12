@@ -127,26 +127,26 @@ describe('Creating and editing people', () => {
     expect(screen.queryAllByText('You must enter a call sign')).toHaveLength(2);
   });
 
-  // it('should load previous page when user clicks back regardless of errors', async () => {
-  //   renderPage({ pageNumber: 2 });
-  //   await waitFor(() => fireEvent.click(screen.getByText('Back')));
-  //   expect(screen.getByText('Name of pleasure craft')).toBeInTheDocument();
-  // });
+  it('should load previous page when user clicks back regardless of errors', async () => {
+    renderPage({ pageNumber: 2 });
+    await waitFor(() => fireEvent.click(screen.getByText('Back')));
+    expect(screen.getByText('Name of pleasure craft')).toBeInTheDocument();
+  });
 
-  // it('should clear error for a field if user interacts with that field', async () => {
-  //   renderPage({ pageNumber: 1 });
-  //   await waitFor(() => fireEvent.click(screen.getByText('Continue')));
-  //   expect(screen.queryAllByText('You must enter a pleasure craft name')).toHaveLength(2);
-  //   expect(screen.queryAllByText('You must enter a type of pleasure craft')).toHaveLength(2);
+  it('should clear error for a field if user interacts with that field', async () => {
+    renderPage({ pageNumber: 1 });
+    await waitFor(() => fireEvent.click(screen.getByText('Continue')));
+    expect(screen.queryAllByText('You must enter a pleasure craft name')).toHaveLength(2);
+    expect(screen.queryAllByText('You must select a type of pleasure craft')).toHaveLength(2);
 
-  //   fireEvent.change(screen.getByLabelText('Name of pleasure craft'), { target: { value: 'S' } });
-  //   expect(screen.queryAllByText('You must enter a pleasure craft name')).toHaveLength(0);
-  //   expect(screen.queryAllByText('You must enter a type of pleasure craft')).toHaveLength(2);
-  // });
+    fireEvent.change(screen.getByLabelText('Name of pleasure craft'), { target: { value: 'S' } });
+    expect(screen.queryAllByText('You must enter a pleasure craft name')).toHaveLength(0);
+    expect(screen.queryAllByText('You must select a type of pleasure craft')).toHaveLength(2);
+  });
 
-  // it('should allow you to exit without saving even if required fields arent valid', async () => {
-  //   renderPage({ pageNumber: 1 });
-  //   await waitFor(() => fireEvent.click(screen.getByText('Exit without saving')));
-  //   expect(screen.queryAllByText('There is a problem')).toHaveLength(0);
-  // });
+  it('should allow you to exit without saving even if required fields arent valid', async () => {
+    renderPage({ pageNumber: 1 });
+    await waitFor(() => fireEvent.click(screen.getByText('Exit without saving')));
+    expect(screen.queryAllByText('There is a problem')).toHaveLength(0);
+  });
 });
