@@ -12,7 +12,7 @@ import {
 import { NATIONALITIES_URL } from '../constants/ApiConstants';
 import Auth from '../lib/Auth';
 
-const CountryField = ({
+const CountryNationalityField = ({
   onConfirm = () => {}, fieldName, defaultValue,
 }) => {
   const [countryList, setCountryList] = useState([]);
@@ -103,4 +103,4 @@ const CountryField = ({
   );
 };
 
-export default CountryField;
+export default CountryNationalityField;
