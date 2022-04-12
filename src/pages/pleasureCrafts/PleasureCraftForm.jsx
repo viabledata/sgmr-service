@@ -24,8 +24,8 @@ const PleasureCraftForm = ({ source, type }) => {
   const [title, setTitle] = useState('Add a pleasure craft');
 
   document.title = type === 'edit' ? 'Edit pleasure craft' : 'Save pleasure craft';
-  const pleasureCraftTypeOther = formData.pleasureCraftType !== undefined && formData.pleasureCraftType !== 'sailingboat' && formData.pleasureCraftType !== 'motorboat';
-  const pleasureCraftMMSIYes = formData.pleasureCraftMMSI !== undefined && formData.pleasureCraftMMSI !== 'pleasureCraftMMSINo';
+  const typeOther = formData.type !== undefined && formData.type !== 'sailingboat' && formData.type !== 'motorboat';
+  // Waiting on API update: const pleasureCraftMMSIYes = formData.pleasureCraftMMSI !== undefined && formData.pleasureCraftMMSI !== 'pleasureCraftMMSINo';
   const callSignYes = formData.callSign !== undefined && formData.callSign !== 'callSignNo';
   const registrationCountryYes = formData.registrationCountry !== undefined && formData.registrationCountry !== 'registrationCountryNo';
 
@@ -75,16 +75,16 @@ const PleasureCraftForm = ({ source, type }) => {
     return {
 
       vesselName: formData.pleasureCraftName,
-      vesselType: formData.pleasureCraftType,
-      moorings: formData.pleasureCraftMooring,
-      registration: formData.pleasureCraftRegistrationNumber,
+      vesselType: formData.type,
+      moorings: formData.mooring,
+      registration: formData.registrationNumber,
       vesselNationality: formData.registrationCountryName,
       callsign: formData.callSignReference,
       hullIdentificationNumber: '', // we no longer ask this
       portOfRegistry: '', // we no longer ask this,
-      // The next two are new items we capture
-      ais: formData.pleasureCraftAIS,
-      mmsi: formData.pleasureCraftMMSINumber,
+      // The next two are new items we capture, but cannot yet pass to the API
+      // Waiting on API update: ais: formData.pleasureCraftAIS,
+      // Waiting on API update: mmsi: formData.pleasureCraftMMSINumber,
     };
   };
 
@@ -186,23 +186,23 @@ const PleasureCraftForm = ({ source, type }) => {
                         onChange={handleChange}
                       />
                     </div>
-                    <div id="pleasureCraftType" className={`govuk-form-group ${errors.pleasureCraftType ? 'govuk-form-group--error' : ''}`}>
+                    <div id="type" className={`govuk-form-group ${errors.type ? 'govuk-form-group--error' : ''}`}>
                       <fieldset className="govuk-fieldset">
                         <legend className="govuk-fieldset__legend">
-                          <label className="govuk-fieldset__heading" htmlFor="pleasureCraftType">
+                          <label className="govuk-fieldset__heading" htmlFor="type">
                             Type of pleasure craft
                           </label>
                         </legend>
                         <div className="govuk-radios govuk-radios">
-                          <FormFieldError error={errors.pleasureCraftType} />
+                          <FormFieldError error={errors.type} />
                           <div className="govuk-radios__item">
                             <input
                               className="govuk-radios__input"
-                              name="pleasureCraftType"
+                              name="type"
                               id="sailingboat"
                               type="radio"
                               value="sailingboat"
-                              checked={formData.pleasureCraftType === 'sailingboat' ? 'checked' : ''}
+                              checked={formData.type === 'sailingboat' ? 'checked' : ''}
                               onChange={handleChange}
                             />
                             <label className="govuk-label govuk-radios__label" htmlFor="sailingboat">
@@ -212,11 +212,11 @@ const PleasureCraftForm = ({ source, type }) => {
                           <div className="govuk-radios__item">
                             <input
                               className="govuk-radios__input"
-                              name="pleasureCraftType"
+                              name="type"
                               id="motorboat"
                               type="radio"
                               value="motorboat"
-                              checked={formData.pleasureCraftType === 'motorboat' ? 'checked' : ''}
+                              checked={formData.type === 'motorboat' ? 'checked' : ''}
                               onChange={handleChange}
                             />
                             <label className="govuk-label govuk-radios__label" htmlFor="motorboat">
@@ -226,26 +226,26 @@ const PleasureCraftForm = ({ source, type }) => {
                           <div className="govuk-radios__item">
                             <input
                               className="govuk-radios__input"
-                              name="pleasureCraftType"
+                              name="type"
                               id="otherCraft"
                               type="radio"
                               value=""
-                              checked={pleasureCraftTypeOther ? 'checked' : ''}
+                              checked={typeOther ? 'checked' : ''}
                               onChange={handleChange}
                             />
                             <label className="govuk-label govuk-radios__label" htmlFor="otherCraft">
                               Other
                             </label>
                           </div>
-                          {pleasureCraftTypeOther && (
+                          {typeOther && (
                           <div className="govuk-form-group">
-                            <label className="govuk-label" htmlFor="pleasureCraftType-other">
+                            <label className="govuk-label" htmlFor="type-other">
                               Please specify
                               <input
                                 className="govuk-input"
-                                name="pleasureCraftType"
+                                name="type"
                                 type="text"
-                                value={pleasureCraftTypeOther ? formData.pleasureCraftType : ''}
+                                value={typeOther ? formData.type : ''}
                                 onChange={handleChange}
                               />
                             </label>
@@ -254,18 +254,18 @@ const PleasureCraftForm = ({ source, type }) => {
                         </div>
                       </fieldset>
                     </div>
-                    <div id="pleasureCraftMooring" className={`govuk-form-group ${errors.pleasureCraftMooring ? 'govuk-form-group--error' : ''}`}>
-                      <label className="govuk-label" htmlFor="pleasureCraftMooringInput">
+                    <div id="mooring" className={`govuk-form-group ${errors.mooring ? 'govuk-form-group--error' : ''}`}>
+                      <label className="govuk-label" htmlFor="mooringInput">
                         Usual moorings
                       </label>
-                      <div id="pleasureCraftMooring-hint" className="govuk-hint">A description, UNLOCODE or set of Coordinates for where the pleasure craft is usually moored</div>
-                      <FormFieldError error={errors.pleasureCraftMooring} />
+                      <div id="mooring-hint" className="govuk-hint">A description, UNLOCODE or set of Coordinates for where the pleasure craft is usually moored</div>
+                      <FormFieldError error={errors.mooring} />
                       <input
-                        id="pleasureCraftMooringInput"
+                        id="mooringInput"
                         className="govuk-input"
-                        name="pleasureCraftMooring"
+                        name="mooring"
                         type="text"
-                        value={formData?.pleasureCraftMooring || ''}
+                        value={formData?.mooring || ''}
                         onChange={handleChange}
                       />
                     </div>
@@ -314,17 +314,17 @@ const PleasureCraftForm = ({ source, type }) => {
                     </div>
                   </div>
                   )}
-                  <div id="pleasureCraftRegistrationNumber" className={`govuk-form-group ${errors.pleasureCraftRegistrationNumber ? 'govuk-form-group--error' : ''}`}>
-                    <label className="govuk-label" htmlFor="pleasureCraftRegistrationNumberInput">
+                  <div id="registrationNumber" className={`govuk-form-group ${errors.registrationNumber ? 'govuk-form-group--error' : ''}`}>
+                    <label className="govuk-label" htmlFor="registrationNumberInput">
                       Registration number
                     </label>
-                    <FormFieldError error={errors.pleasureCraftRegistrationNumber} />
+                    <FormFieldError error={errors.registrationNumber} />
                     <input
-                      id="pleasureCraftRegistrationNumberInput"
+                      id="registrationNumberInput"
                       className="govuk-input"
-                      name="pleasureCraftRegistrationNumber"
+                      name="registrationNumber"
                       type="text"
-                      value={formData?.pleasureCraftRegistrationNumber || ''}
+                      value={formData?.registrationNumber || ''}
                       onChange={handleChange}
                     />
                   </div>
@@ -347,6 +347,7 @@ const PleasureCraftForm = ({ source, type }) => {
                             value="registrationCountryYes"
                             checked={formData.registrationCountry === 'registrationCountryYes' ? 'checked' : ''}
                             onChange={handleChange}
+                            data-testid="registrationCountryYes"
                           />
                           <label className="govuk-label govuk-radios__label" htmlFor="registrationCountryYes">
                             Yes
@@ -384,6 +385,7 @@ const PleasureCraftForm = ({ source, type }) => {
                     </fieldset>
                   </div>
 
+                  {/* // Waiting on API update:
                   <div id="pleasureCraftAIS" className={`govuk-form-group ${errors.pleasureCraftAIS ? 'govuk-form-group--error' : ''}`}>
                     <fieldset className="govuk-fieldset">
                       <legend className="govuk-fieldset__legend">
@@ -423,8 +425,9 @@ const PleasureCraftForm = ({ source, type }) => {
                         </div>
                       </div>
                     </fieldset>
-                  </div>
+                  </div> */}
 
+                  {/* // Waiting on API update:
                   <div id="pleasureCraftMMSI" className={`govuk-form-group ${errors.pleasureCraftMMSI ? 'govuk-form-group--error' : ''}`}>
                     <fieldset className="govuk-fieldset">
                       <legend className="govuk-fieldset__legend">
@@ -478,9 +481,9 @@ const PleasureCraftForm = ({ source, type }) => {
                         </div>
                       </div>
                     </fieldset>
-                  </div>
+                  </div> */}
 
-                  <div id="pleasureCraftCallSign" className={`govuk-form-group ${errors.callSign ? 'govuk-form-group--error' : ''}`}>
+                  <div id="callSign" className={`govuk-form-group ${errors.callSign ? 'govuk-form-group--error' : ''}`}>
                     <fieldset className="govuk-fieldset">
                       <legend className="govuk-fieldset__legend">
                         <label className="govuk-fieldset__heading" htmlFor="callSign">
@@ -498,6 +501,7 @@ const PleasureCraftForm = ({ source, type }) => {
                             value="callSignYes"
                             checked={formData.callSign === 'callSignYes' ? 'checked' : ''}
                             onChange={handleChange}
+                            data-testid="callSignYes"
                           />
                           <label className="govuk-label govuk-radios__label" htmlFor="callSignYes">
                             Yes

@@ -90,43 +90,42 @@ describe('Creating and editing people', () => {
     renderPage({ pageNumber: 1 });
     fireEvent.change(screen.getByLabelText('Name of pleasure craft'), { target: { value: 'Starlight' } });
     fireEvent.click(screen.getByLabelText('Motorboat'));
+    fireEvent.change(screen.getByLabelText('Usual moorings'), { target: { value: 'London' } });
     await waitFor(() => fireEvent.click(screen.getByText('Continue')));
     expect(screen.getByText('Registration number')).toBeInTheDocument();
   });
 
-  // it('should render errors on save if fields on page 2 are empty', async () => {
-  //   renderPage({ pageNumber: 1 });
-  //   await waitFor(() => fireEvent.click(screen.getByText('Continue')));
-  //   expect(screen.queryAllByText('You must select if the pleasure craft has a registration number')).toHaveLength(2);
-  //   expect(screen.queryAllByText('You must select if the pleasure craft has an Automatic Identification System (AIS)')).toHaveLength(2);
-  //   expect(screen.queryAllByText('You must select if the pleasure craft has a Maritime Mobile Service Identify number (MMSI)')).toHaveLength(2);
-  //   expect(screen.queryAllByText('You must select if the pleasure craft has a Call sign')).toHaveLength(2);
-  // });
+  it('should render errors on save if fields on page 2 are empty', async () => {
+    renderPage({ pageNumber: 2 });
+    await waitFor(() => fireEvent.click(screen.getByText('Save')));
+    expect(screen.queryAllByText('You must enter a registration number')).toHaveLength(2);
+    expect(screen.queryAllByText('You must select if your pleasure craft has acountry of registration')).toHaveLength(2);
+    // Waiting on API update: expect(screen.queryAllByText('You must select if the pleasure craft has an Automatic Identification System (AIS)')).toHaveLength(2);
+    // Waiting on API update: expect(screen.queryAllByText('You must select if the pleasure craft has a Maritime Mobile Service Identify number (MMSI)')).toHaveLength(2);
+    expect(screen.queryAllByText('You must select if the pleasure craft has a call sign')).toHaveLength(2);
+  });
 
-  // it('should render errors on save if registration number is YES and other text input is null', async () => {
-  //   renderPage({ pageNumber: 2 });
-  //   expect(screen.queryByText('Registration number')).not.toBeInTheDocument();
-  //   expect(screen.queryByText('Country of registration')).not.toBeInTheDocument();
-  //   fireEvent.click(screen.getByLabelText('Yes'));
-  //   expect(screen.getByLabelText('Yes')).toBeChecked();
-  //   expect(screen.getByText('Registration number')).toBeInTheDocument();
-  //   expect(screen.getByText('Country of registration')).toBeInTheDocument();
+  it('should render errors on save if registration country is YES and other text input is null', async () => {
+    renderPage({ pageNumber: 2 });
+    expect(screen.queryByText('Country of registration')).not.toBeInTheDocument();
+    fireEvent.click(screen.getByTestId('registrationCountryYes'));
+    expect(screen.getByTestId('registrationCountryYes')).toBeChecked();
+    expect(screen.getByText('Country of registration')).toBeInTheDocument();
 
-  //   await waitFor(() => fireEvent.click(screen.getByText('Save')));
-  //   expect(screen.queryAllByText('You must enter a registration number')).toHaveLength(2);
-  //   expect(screen.queryAllByText('You must enter a country of registration')).toHaveLength(2);
-  // });
+    await waitFor(() => fireEvent.click(screen.getByText('Save')));
+    expect(screen.queryAllByText('You must enter a country of registration')).toHaveLength(2);
+  });
 
-  // it('should render errors on save if call sign is YES and other text input is null', async () => {
-  //   renderPage({ pageNumber: 2 });
-  //   expect(screen.queryByText('Call sign')).not.toBeInTheDocument();
-  //   fireEvent.click(screen.getByLabelText('Yes'));
-  //   expect(screen.getByLabelText('Yes')).toBeChecked();
-  //   expect(screen.getByText('Call sign')).toBeInTheDocument();
+  it('should render errors on save if call sign is YES and other text input is null', async () => {
+    renderPage({ pageNumber: 2 });
+    expect(screen.queryByText('Call sign')).not.toBeInTheDocument();
+    fireEvent.click(screen.getByTestId('callSignYes'));
+    expect(screen.getByTestId('callSignYes')).toBeChecked();
+    expect(screen.getByText('Call sign')).toBeInTheDocument();
 
-  //   await waitFor(() => fireEvent.click(screen.getByText('Save')));
-  //   expect(screen.queryAllByText('You must enter a Call sign')).toHaveLength(2);
-  // });
+    await waitFor(() => fireEvent.click(screen.getByText('Save')));
+    expect(screen.queryAllByText('You must enter a call sign')).toHaveLength(2);
+  });
 
   // it('should load previous page when user clicks back regardless of errors', async () => {
   //   renderPage({ pageNumber: 2 });
