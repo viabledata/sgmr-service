@@ -190,7 +190,7 @@ const PersonForm = ({ source, type }) => {
                     <input
                       id="firstNameInput"
                       // Do we want input field to error too?
-                      className={`govuk-input ${errors.firstName ? 'govuk-input--error' : ''}`}
+                      className="govuk-input"
                       name="firstName"
                       type="text"
                       value={formData?.firstName || ''}
@@ -205,7 +205,7 @@ const PersonForm = ({ source, type }) => {
                     <FormFieldError error={errors.lastName} />
                     <input
                       id="lastNameInput"
-                      className={`govuk-input ${errors.lastName ? 'govuk-input--error' : ''}`}
+                      className="govuk-input"
                       name="lastName"
                       type="text"
                       value={formData?.lastName || ''}
