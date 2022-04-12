@@ -54,7 +54,7 @@ module.exports = {
     new webpack.EnvironmentPlugin({
       SGMR_DATA_API_BASE_URL: 'http://localhost:5000/v1',
       SGMR_MAINTENANCE: false,
-      GOV_NOTIFY_SUPPORT_EMAIL: 'testemail@email.com', // for testing purposes you can replace with a personal email address
+      GOV_NOTIFY_SUPPORT_EMAIL: 'test', // for testing purposes you can replace with a personal email address
     }),
     new HtmlWebpackPlugin({ template: './index.html' }),
   ],
