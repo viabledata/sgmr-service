@@ -179,204 +179,204 @@ const PersonForm = ({ source, type }) => {
               {formPageIs === 1
                 && (
                   <>
-                  <ErrorSummary errors={errors} />
-                  <h1 className="govuk-heading-l">{title}</h1>
-                  <div id="firstName" className={`govuk-form-group ${errors.firstName ? 'govuk-form-group--error' : ''}`}>
-                    <label className="govuk-label" htmlFor="firstNameInput">
-                      Given name(s)
-                    </label>
-                    <div id="firstName-hint" className="govuk-hint">The person&apos;s first and middle names</div>
-                    <FormFieldError error={errors.firstName} />
-                    <input
-                      id="firstNameInput"
+                    <ErrorSummary errors={errors} />
+                    <h1 className="govuk-heading-l">{title}</h1>
+                    <div id="firstName" className={`govuk-form-group ${errors.firstName ? 'govuk-form-group--error' : ''}`}>
+                      <label className="govuk-label" htmlFor="firstNameInput">
+                        Given name(s)
+                      </label>
+                      <div id="firstName-hint" className="govuk-hint">The person&apos;s first and middle names</div>
+                      <FormFieldError error={errors.firstName} />
+                      <input
+                        id="firstNameInput"
                       // Do we want input field to error too?
-                      className="govuk-input"
-                      name="firstName"
-                      type="text"
-                      value={formData?.firstName || ''}
-                      onChange={handleChange}
-                    />
-                  </div>
-                  <div id="lastName" className={`govuk-form-group ${errors.lastName ? 'govuk-form-group--error' : ''}`}>
-                    <label className="govuk-label" htmlFor="lastNameInput">
-                      Surname
-                    </label>
-                    <div id="lastName-hint" className="govuk-hint">If the person has more than one surname, enter them all</div>
-                    <FormFieldError error={errors.lastName} />
-                    <input
-                      id="lastNameInput"
-                      className="govuk-input"
-                      name="lastName"
-                      type="text"
-                      value={formData?.lastName || ''}
-                      onChange={handleChange}
-                    />
-                  </div>
-                  <div id="dateOfBirth" className={`govuk-form-group ${errors.dateOfBirth ? 'govuk-form-group--error' : ''}`}>
-                    <label className="govuk-label" htmlFor="dateOfBirth">
-                      Date of birth
-                    </label>
-                    <div id="dateOfBirth-hint" className="govuk-hint">Enter this as shown on your passport, for example, 31 03 1980</div>
-                    <FormFieldError error={errors.dateOfBirth} />
-                    <div className="govuk-date-input">
-                      <div className="govuk-date-input__item">
-                        <div className="govuk-form-group">
-                          <label className="govuk-label govuk-date-input__label" htmlFor="dateOfBirthInput">
-                            Day
-                          </label>
-                          <input
-                            className={`govuk-input govuk-date-input__input govuk-input--width-2`}
-                            name="dateOfBirthDay"
-                            id="dateOfBirthInput"
-                            type="text"
-                            maxLength={2}
-                            autoComplete="bday-day"
-                            pattern="[0-9]*"
-                            inputMode="numeric"
-                            value={formData?.dateOfBirthDay || ''}
-                            onChange={handleChange}
-                          />
+                        className="govuk-input"
+                        name="firstName"
+                        type="text"
+                        value={formData?.firstName || ''}
+                        onChange={handleChange}
+                      />
+                    </div>
+                    <div id="lastName" className={`govuk-form-group ${errors.lastName ? 'govuk-form-group--error' : ''}`}>
+                      <label className="govuk-label" htmlFor="lastNameInput">
+                        Surname
+                      </label>
+                      <div id="lastName-hint" className="govuk-hint">If the person has more than one surname, enter them all</div>
+                      <FormFieldError error={errors.lastName} />
+                      <input
+                        id="lastNameInput"
+                        className="govuk-input"
+                        name="lastName"
+                        type="text"
+                        value={formData?.lastName || ''}
+                        onChange={handleChange}
+                      />
+                    </div>
+                    <div id="dateOfBirth" className={`govuk-form-group ${errors.dateOfBirth ? 'govuk-form-group--error' : ''}`}>
+                      <label className="govuk-label" htmlFor="dateOfBirth">
+                        Date of birth
+                      </label>
+                      <div id="dateOfBirth-hint" className="govuk-hint">Enter this as shown on your passport, for example, 31 03 1980</div>
+                      <FormFieldError error={errors.dateOfBirth} />
+                      <div className="govuk-date-input">
+                        <div className="govuk-date-input__item">
+                          <div className="govuk-form-group">
+                            <label className="govuk-label govuk-date-input__label" htmlFor="dateOfBirthInput">
+                              Day
+                            </label>
+                            <input
+                              className="govuk-input govuk-date-input__input govuk-input--width-2"
+                              name="dateOfBirthDay"
+                              id="dateOfBirthInput"
+                              type="text"
+                              maxLength={2}
+                              autoComplete="bday-day"
+                              pattern="[0-9]*"
+                              inputMode="numeric"
+                              value={formData?.dateOfBirthDay || ''}
+                              onChange={handleChange}
+                            />
+                          </div>
                         </div>
-                      </div>
-                      <div className="govuk-date-input__item">
-                        <div className="govuk-form-group">
-                          <label className="govuk-label govuk-date-input__label" htmlFor="dateOfBirthMonth">
-                            Month
-                          </label>
-                          <input
-                            className={`govuk-input govuk-date-input__input govuk-input--width-2`}
-                            name="dateOfBirthMonth"
-                            id="dateOfBirthMonth"
-                            type="text"
-                            maxLength={2}
-                            autoComplete="bday-month"
-                            pattern="[0-9]*"
-                            inputMode="numeric"
-                            value={formData?.dateOfBirthMonth || ''}
-                            onChange={handleChange}
-                          />
+                        <div className="govuk-date-input__item">
+                          <div className="govuk-form-group">
+                            <label className="govuk-label govuk-date-input__label" htmlFor="dateOfBirthMonth">
+                              Month
+                            </label>
+                            <input
+                              className="govuk-input govuk-date-input__input govuk-input--width-2"
+                              name="dateOfBirthMonth"
+                              id="dateOfBirthMonth"
+                              type="text"
+                              maxLength={2}
+                              autoComplete="bday-month"
+                              pattern="[0-9]*"
+                              inputMode="numeric"
+                              value={formData?.dateOfBirthMonth || ''}
+                              onChange={handleChange}
+                            />
+                          </div>
                         </div>
-                      </div>
-                      <div className="govuk-date-input__item">
-                        <div className="govuk-form-group">
-                          <label className="govuk-label" htmlFor="dateOfBirthYear">
-                            Year
-                          </label>
-                          <input
-                            className={`govuk-input govuk-date-input__input govuk-input--width-4`}
-                            name="dateOfBirthYear"
-                            id="dateOfBirthYear"
-                            type="text"
-                            maxLength={4}
-                            autoComplete="bday-year"
-                            pattern="[0-9]*"
-                            inputMode="numeric"
-                            value={formData?.dateOfBirthYear || ''}
-                            onChange={handleChange}
-                          />
+                        <div className="govuk-date-input__item">
+                          <div className="govuk-form-group">
+                            <label className="govuk-label" htmlFor="dateOfBirthYear">
+                              Year
+                            </label>
+                            <input
+                              className="govuk-input govuk-date-input__input govuk-input--width-4"
+                              name="dateOfBirthYear"
+                              id="dateOfBirthYear"
+                              type="text"
+                              maxLength={4}
+                              autoComplete="bday-year"
+                              pattern="[0-9]*"
+                              inputMode="numeric"
+                              value={formData?.dateOfBirthYear || ''}
+                              onChange={handleChange}
+                            />
+                          </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                  <div id="placeOfBirth" className={`govuk-form-group ${errors.placeOfBirth ? 'govuk-form-group--error' : ''}`}>
-                    <label className="govuk-label" htmlFor="placeOfBirthInput">
-                      Place of birth
-                    </label>
-                    <FormFieldError error={errors.placeOfBirth} />
-                    <input
-                      id="placeOfBirthInput"
-                      className="govuk-input"
-                      name="placeOfBirth"
-                      type="text"
-                      value={formData?.placeOfBirth || ''}
-                      onChange={handleChange}
-                    />
-                  </div>
-                  <div id="gender" className={`govuk-form-group ${errors.gender ? 'govuk-form-group--error' : ''}`}>
-                    <fieldset className="govuk-fieldset">
-                      <legend className="govuk-fieldset__legend">
-                        <label className="govuk-fieldset__heading" htmlFor="genderInput">
-                          Gender
-                        </label>
-                      </legend>
-                      <div className="govuk-radios govuk-radios">
-                        <FormFieldError error={errors.gender} />
-                        <div className="govuk-radios__item">
-                          <input
-                            className="govuk-radios__input"
-                            name="gender"
-                            id="genderInput"
-                            type="radio"
-                            value="Female"
-                            checked={formData.gender === 'Female' ? 'checked' : ''}
-                            onChange={handleChange}
-                          />
-                          <label className="govuk-label govuk-radios__label" htmlFor="female">
-                            Female
+                    <div id="placeOfBirth" className={`govuk-form-group ${errors.placeOfBirth ? 'govuk-form-group--error' : ''}`}>
+                      <label className="govuk-label" htmlFor="placeOfBirthInput">
+                        Place of birth
+                      </label>
+                      <FormFieldError error={errors.placeOfBirth} />
+                      <input
+                        id="placeOfBirthInput"
+                        className="govuk-input"
+                        name="placeOfBirth"
+                        type="text"
+                        value={formData?.placeOfBirth || ''}
+                        onChange={handleChange}
+                      />
+                    </div>
+                    <div id="gender" className={`govuk-form-group ${errors.gender ? 'govuk-form-group--error' : ''}`}>
+                      <fieldset className="govuk-fieldset">
+                        <legend className="govuk-fieldset__legend">
+                          <label className="govuk-fieldset__heading" htmlFor="genderInput">
+                            Gender
                           </label>
+                        </legend>
+                        <div className="govuk-radios govuk-radios">
+                          <FormFieldError error={errors.gender} />
+                          <div className="govuk-radios__item">
+                            <input
+                              className="govuk-radios__input"
+                              name="gender"
+                              id="genderInput"
+                              type="radio"
+                              value="Female"
+                              checked={formData.gender === 'Female' ? 'checked' : ''}
+                              onChange={handleChange}
+                            />
+                            <label className="govuk-label govuk-radios__label" htmlFor="female">
+                              Female
+                            </label>
+                          </div>
+                          <div className="govuk-radios__item">
+                            <input
+                              className="govuk-radios__input"
+                              name="gender"
+                              id="male"
+                              type="radio"
+                              value="Male"
+                              checked={formData.gender === 'Male' ? 'checked' : ''}
+                              onChange={handleChange}
+                            />
+                            <label className="govuk-label govuk-radios__label" htmlFor="male">
+                              Male
+                            </label>
+                          </div>
+                          <div className="govuk-radios__item">
+                            <input
+                              className="govuk-radios__input"
+                              name="gender"
+                              id="non-binary"
+                              type="radio"
+                              value="Non-binary"
+                              checked={formData.gender === 'Non-binary' ? 'checked' : ''}
+                              onChange={handleChange}
+                            />
+                            <label className="govuk-label govuk-radios__label" htmlFor="non-binary">
+                              Non-binary
+                            </label>
+                          </div>
                         </div>
-                        <div className="govuk-radios__item">
-                          <input
-                            className="govuk-radios__input"
-                            name="gender"
-                            id="male"
-                            type="radio"
-                            value="Male"
-                            checked={formData.gender === 'Male' ? 'checked' : ''}
-                            onChange={handleChange}
-                          />
-                          <label className="govuk-label govuk-radios__label" htmlFor="male">
-                            Male
-                          </label>
-                        </div>
-                        <div className="govuk-radios__item">
-                          <input
-                            className="govuk-radios__input"
-                            name="gender"
-                            id="non-binary"
-                            type="radio"
-                            value="Non-binary"
-                            checked={formData.gender === 'Non-binary' ? 'checked' : ''}
-                            onChange={handleChange}
-                          />
-                          <label className="govuk-label govuk-radios__label" htmlFor="non-binary">
-                            Non-binary
-                          </label>
-                        </div>
-                      </div>
-                    </fieldset>
-                  </div>
-                  <div className="govuk-button-group">
+                      </fieldset>
+                    </div>
+                    <div className="govuk-button-group">
+                      <button
+                        type="button"
+                        className="govuk-button"
+                        data-module="govuk-button"
+                        onClick={(e) => {
+                          goToNextPage(e, { url: 'nextFormPageIs', runValidation: true });
+                        }}
+                      >
+                        Continue
+                      </button>
+                      {type === 'edit' && (
+                      <button
+                        type="button"
+                        className="govuk-button govuk-button--warning"
+                        onClick={(e) => { goToNextPage(e, { url: `/people/${personId}/delete`, runValidation: false }); }}
+                      >
+                        Delete this person
+                      </button>
+                      )}
+                    </div>
                     <button
                       type="button"
-                      className="govuk-button"
-                      data-module="govuk-button"
-                      onClick={(e) => {
-                        goToNextPage(e, { url: 'nextFormPageIs', runValidation: true });
-                      }}
+                      className="govuk-button govuk-button--text"
+                      onClick={(e) => { goToNextPage(e, { url: sourcePage, runValidation: false }); }}
                     >
-                      Continue
+                      Exit without saving
                     </button>
-                    {type === 'edit' && (
-                    <button
-                      type="button"
-                      className="govuk-button govuk-button--warning"
-                      onClick={(e) => { goToNextPage(e, { url: `/people/${personId}/delete`, runValidation: false }); }}
-                    >
-                      Delete this person
-                    </button>
-                    )}
-                  </div>
-                  <button
-                    type="button"
-                    className="govuk-button govuk-button--text"
-                    onClick={(e) => { goToNextPage(e, { url: sourcePage, runValidation: false }); }}
-                  >
-                    Exit without saving
-                  </button>
-                </>
-              )}
-            {formPageIs === 2
+                  </>
+                )}
+              {formPageIs === 2
               && (
                 <>
                   <ErrorSummary errors={errors} />

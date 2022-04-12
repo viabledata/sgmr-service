@@ -1,12 +1,11 @@
 import React from 'react';
 
 const ErrorSummary = ({ errors }) => {
-
   const handleErrorClick = (e, id) => {
     e.preventDefault();
     const scrollToError = document.getElementById(id);
     scrollToError.scrollIntoView();
-    document.getElementById(`${id}Input`).focus()
+    document.getElementById(`${id}Input`).focus();
   };
 
   if (Object.keys(errors).length === 0) return null;
@@ -26,7 +25,7 @@ const ErrorSummary = ({ errors }) => {
         </ul>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default ErrorSummary
+export default ErrorSummary;
