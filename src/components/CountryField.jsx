@@ -59,8 +59,8 @@ const CountryField = ({
   return (
     <Combobox
       id="countryCombobox"
-      data-testid="countryContainer"
       aria-label="Begin typing for country selections to appear"
+      autocomplete={false}
       onSelect={(value) => {
         // O(1) lookup for data
         const data = optionData.current[value];
@@ -70,7 +70,6 @@ const CountryField = ({
       <ComboboxInput
         id="countryCombobox-input"
         className="govuk-input"
-        data-testid="country-input"
         name={`autocomplete${fieldName}`}
         onChange={handleSearchTermChange}
         value={searchTerm}
