@@ -14,6 +14,7 @@ export const RESEND_VERIFICATION_CODE_URL = `${apiUrl}/resend-verification-code`
 export const REGISTRATION_URL = `${apiUrl}/registration`;
 export const PORTS_URL = `${apiUrl}/ports`;
 export const COUNTRIES_URL = `${apiUrl}/countries`;
+export const NATIONALITIES_URL = `${apiUrl}/nationalities`;
 export const ACTIVATE_ACCOUNT = `${apiUrl}/activate-account`;
 export const RESEND_ACTIVATION_LINK = `${apiUrl}/resend-activation-link`;
 
