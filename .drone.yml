@@ -107,7 +107,7 @@ steps:
     WHITELIST_FILE: whitelist
   when:
     branch:
-    - spcr
+    - master
     event:
     - push
 
@@ -132,7 +132,7 @@ steps:
       from_secret: QUAY_USERNAME
   when:
     branch:
-    - spcr
+    - master
     event:
     - push
 
@@ -151,7 +151,7 @@ steps:
       from_secret: QUAY_USERNAME
   when:
     branch:
-    - spcr
+    - master
     event:
     - push
 
@@ -194,7 +194,7 @@ steps:
       from_secret: DEV_WHITELIST
   when:
     branch:
-    - spcr
+    - master
     event:
     - push
 
