@@ -13,9 +13,9 @@ steps:
   image: quay.io/ukhomeofficedigital/cop-secrets
   environment:
     AWS_ACCESS_KEY_ID:
-      from_secret: DEV_DRONE_AWS_ACCESS_KEY_ID
+      from_secret:  DEV_DRONE_SPCR_AWS_ACCESS_KEY_ID
     AWS_SECRET_ACCESS_KEY:
-      from_secret: DEV_DRONE_AWS_SECRET_ACCESS_KEY
+      from_secret: DEV_DRONE_SPCR_AWS_SECRET_ACCESS_KEY
     DEPLOY_ENV: dev
     DRONE_SERVER: https://drone-gh.acp.homeoffice.gov.uk
     DRONE_TOKEN:
@@ -32,9 +32,9 @@ steps:
   image: quay.io/ukhomeofficedigital/cop-secrets
   environment:
     AWS_ACCESS_KEY_ID:
-      from_secret: STAGING_DRONE_AWS_ACCESS_KEY_ID
+      from_secret: STAGING_DRONE_SPCR_AWS_ACCESS_KEY_ID
     AWS_SECRET_ACCESS_KEY:
-      from_secret: STAGING_DRONE_AWS_SECRET_ACCESS_KEY
+      from_secret: STAGING_DRONE_SPCR_AWS_SECRET_ACCESS_KEY
     DEPLOY_ENV: staging
     DRONE_SERVER: https://drone-gh.acp.homeoffice.gov.uk
     DRONE_TOKEN:
@@ -51,9 +51,9 @@ steps:
   image: quay.io/ukhomeofficedigital/cop-secrets
   environment:
     AWS_ACCESS_KEY_ID:
-      from_secret: PRODUCTION_DRONE_AWS_ACCESS_KEY_ID
+      from_secret: PRODUCTION_DRONE_SPCR_AWS_ACCESS_KEY_ID
     AWS_SECRET_ACCESS_KEY:
-      from_secret: PRODUCTION_DRONE_AWS_SECRET_ACCESS_KEY
+      from_secret: PRODUCTION_DRONE_SPCR_AWS_SECRET_ACCESS_KEY
     DEPLOY_ENV: production
     DRONE_SERVER: https://drone-gh.acp.homeoffice.gov.uk
     DRONE_TOKEN:
@@ -167,13 +167,13 @@ steps:
   - kd --insecure-skip-tls-verify -f kube/ingress.yml
   environment:
     KUBE_NAMESPACE:
-      from_secret: DEV_KUBE_NAMESPACE_COP_SGMR
+      from_secret: DEV_KUBE_NAMESPACE_SPCR
     KUBE_SERVER:
       from_secret: DEV_KUBE_SERVER
     KUBE_TOKEN:
-      from_secret: DEV_SGMR_KUBE_TOKEN
+      from_secret: DEV_SPCR_KUBE_TOKEN
     MAILSLURP_API_KEY:
-      from_secret: DEV_SGMR_MAILSLURP_API_KEY
+      from_secret: DEV_SPCR_MAILSLURP_API_KEY
     NGINX_IMAGE:
       from_secret: NGINX_IMAGE
     NGINX_TAG:
@@ -181,17 +181,17 @@ steps:
     GOV_NOTIFY_SUPPORT_EMAIL:
       from_secret: GOV_NOTIFY_SUPPORT_EMAIL
     SGMR_DATA_API_BASE_URL:
-      from_secret: DEV_SGMR_DATA_API_BASE_URL
+      from_secret: DEV_SPCR_DATA_API_BASE_URL
     SGMR_MAINTENANCE:
-      from_secret: DEV_SGMR_MAINTENANCE
+      from_secret: DEV_SPCR_MAINTENANCE
     SGMR_SERVICE_IMAGE:
-      from_secret: SGMR_SERVICE_IMAGE
+      from_secret: DEV_SPCR_SERVICE_IMAGE
     SGMR_SERVICE_NAME:
-      from_secret: SGMR_SERVICE_NAME
+      from_secret: DEV_SPCR_SERVICE_NAME
     SGMR_SERVICE_PORT:
-      from_secret: SGMR_SERVICE_PORT
+      from_secret: DEV_SPCR_SERVICE_PORT
     SGMR_SERVICE_URL:
-      from_secret: DEV_SGMR_SERVICE_URL
+      from_secret: DEV_SPCR_SERVICE_URL
     WHITELIST:
       from_secret: DEV_WHITELIST
   when:
@@ -220,13 +220,13 @@ steps:
       from_secret: CYPRESS_PROJECT_ID
     JOB_NAME: "\"sgmr-e2e-tests\""
     KUBE_NAMESPACE:
-      from_secret: DEV_KUBE_NAMESPACE_COP_SGMR
+      from_secret: DEV_KUBE_NAMESPACE_SPCR
     KUBE_SERVER:
       from_secret: DEV_KUBE_SERVER
     KUBE_TOKEN:
-      from_secret: DEV_SGMR_KUBE_TOKEN
+      from_secret: DEV_SPCR_KUBE_TOKEN
     MAILSLURP_API_KEY:
-      from_secret: DEV_SGMR_MAILSLURP_API_KEY
+      from_secret: DEV_SPCR_MAILSLURP_API_KEY
     PROTOCOL_HTTPS:
       from_secret: PROTOCOL_HTTPS
     REPORT_BASE_URL:
@@ -238,7 +238,7 @@ steps:
     S3_SECRET_KEY:
       from_secret: TESTS_S3_SECRET_KEY
     SGMR_SERVICE_NAME:
-      from_secret: SGMR_SERVICE_NAME
+      from_secret: DEV_SPCR_SERVICE_NAME
     SLACK_WEB_HOOK:
       from_secret: TESTS_SLACK_WEBHOOK
   when:
@@ -259,13 +259,13 @@ steps:
   - kd --insecure-skip-tls-verify -f kube/ingress.yml
   environment:
     KUBE_NAMESPACE:
-      from_secret: STAGING_KUBE_NAMESPACE_COP_SGMR
+      from_secret: STAGING_KUBE_NAMESPACE_SPCR
     KUBE_SERVER:
       from_secret: STAGING_KUBE_SERVER
     KUBE_TOKEN:
-      from_secret: STAGING_SGMR_KUBE_TOKEN
+      from_secret: STAGING_SPCR_KUBE_TOKEN
     MAILSLURP_API_KEY:
-      from_secret: STAGING_SGMR_MAILSLURP_API_KEY
+      from_secret: STAGING_SPCR_MAILSLURP_API_KEY
     NGINX_IMAGE:
       from_secret: NGINX_IMAGE
     NGINX_TAG:
@@ -273,17 +273,17 @@ steps:
     GOV_NOTIFY_SUPPORT_EMAIL:
       from_secret: GOV_NOTIFY_SUPPORT_EMAIL
     SGMR_DATA_API_BASE_URL:
-      from_secret: STAGING_SGMR_DATA_API_BASE_URL
+      from_secret: STAGING_SPCR_DATA_API_BASE_URL
     SGMR_MAINTENANCE:
-      from_secret: STAGING_SGMR_MAINTENANCE
+      from_secret: STAGING_SPCR_MAINTENANCE
     SGMR_SERVICE_IMAGE:
-      from_secret: SGMR_SERVICE_IMAGE
+      from_secret: STAGING_SPCR_SERVICE_IMAGE
     SGMR_SERVICE_NAME:
-      from_secret: SGMR_SERVICE_NAME
+      from_secret: STAGING_SPCR_SERVICE_NAME
     SGMR_SERVICE_PORT:
-      from_secret: SGMR_SERVICE_PORT
+      from_secret: STAGING_SPCR_SERVICE_PORT
     SGMR_SERVICE_URL:
-      from_secret: STAGING_SGMR_SERVICE_URL
+      from_secret: STAGING_SPCR_SERVICE_URL
     WHITELIST:
       from_secret: STAGING_WHITELIST
   when:
@@ -304,13 +304,13 @@ steps:
   - kd --insecure-skip-tls-verify -f kube/ingress.yml
   environment:
     KUBE_NAMESPACE:
-      from_secret: PRODUCTION_KUBE_NAMESPACE_COP_SGMR
+      from_secret: PRODUCTION_KUBE_NAMESPACE_SPCR
     KUBE_SERVER:
       from_secret: PRODUCTION_KUBE_SERVER
     KUBE_TOKEN:
-      from_secret: PRODUCTION_SGMR_KUBE_TOKEN
+      from_secret: PRODUCTION_SPCR_KUBE_TOKEN
     MAILSLURP_API_KEY:
-      from_secret: PRODUCTION_SGMR_MAILSLURP_API_KEY
+      from_secret: PRODUCTION_SPCR_MAILSLURP_API_KEY
     NGINX_IMAGE:
       from_secret: NGINX_IMAGE
     NGINX_TAG:
@@ -318,17 +318,17 @@ steps:
     GOV_NOTIFY_SUPPORT_EMAIL:
       from_secret: GOV_NOTIFY_SUPPORT_EMAIL
     SGMR_DATA_API_BASE_URL:
-      from_secret: PRODUCTION_SGMR_DATA_API_BASE_URL
+      from_secret: PRODUCTION_SPCR_DATA_API_BASE_URL
     SGMR_MAINTENANCE:
-      from_secret: PRODUCTION_SGMR_MAINTENANCE
+      from_secret: PRODUCTION_SPCR_MAINTENANCE
     SGMR_SERVICE_IMAGE:
-      from_secret: SGMR_SERVICE_IMAGE
+      from_secret: PRODUCTION_SPCR_SERVICE_IMAGE
     SGMR_SERVICE_NAME:
-      from_secret: SGMR_SERVICE_NAME
+      from_secret: PRODUCTION_SPCR_SERVICE_NAME
     SGMR_SERVICE_PORT:
-      from_secret: SGMR_SERVICE_PORT
+      from_secret: PRODUCTION_SPCR_SERVICE_PORT
     SGMR_SERVICE_URL:
-      from_secret: PRODUCTION_SGMR_SERVICE_URL
+      from_secret: PRODUCTION_SPCR_SERVICE_URL
     WHITELIST:
       from_secret: PRODUCTION_WHITELIST
   when:
