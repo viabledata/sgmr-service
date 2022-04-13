@@ -23,8 +23,11 @@ const PleasureCraftForm = ({ source, type }) => {
   const [submitType, setSubmitType] = useState();
   const [title, setTitle] = useState('Add a pleasure craft');
 
+  const SAILINGBOAT_TEXT = 'Sailing boat';
+  const MOTORBOAT_TEXT = 'Motorboat';
+
   document.title = type === 'edit' ? 'Edit pleasure craft' : 'Save pleasure craft';
-  const typeOther = formData.type !== undefined && formData.type !== 'sailingboat' && formData.type !== 'motorboat';
+  const typeOther = formData.type !== undefined && formData.type !== SAILINGBOAT_TEXT && formData.type !== MOTORBOAT_TEXT;
   // Waiting on API update: const pleasureCraftMMSIYes = formData.pleasureCraftMMSI !== undefined && formData.pleasureCraftMMSI !== 'pleasureCraftMMSINo';
   const callSignYes = formData.callSign !== undefined && formData.callSign !== 'callSignNo';
   const registrationCountryYes = formData.registrationCountry !== undefined && formData.registrationCountry !== 'registrationCountryNo';
@@ -201,8 +204,8 @@ const PleasureCraftForm = ({ source, type }) => {
                               name="type"
                               id="sailingboat"
                               type="radio"
-                              value="sailingboat"
-                              checked={formData.type === 'sailingboat' ? 'checked' : ''}
+                              value={SAILINGBOAT_TEXT}
+                              checked={formData.type === SAILINGBOAT_TEXT ? 'checked' : ''}
                               onChange={handleChange}
                             />
                             <label className="govuk-label govuk-radios__label" htmlFor="sailingboat">
@@ -215,8 +218,8 @@ const PleasureCraftForm = ({ source, type }) => {
                               name="type"
                               id="motorboat"
                               type="radio"
-                              value="motorboat"
-                              checked={formData.type === 'motorboat' ? 'checked' : ''}
+                              value={MOTORBOAT_TEXT}
+                              checked={formData.type === MOTORBOAT_TEXT ? 'checked' : ''}
                               onChange={handleChange}
                             />
                             <label className="govuk-label govuk-radios__label" htmlFor="motorboat">
@@ -529,7 +532,7 @@ const PleasureCraftForm = ({ source, type }) => {
                             id="callSign-no"
                             type="radio"
                             value="callSignNo"
-                            checked={formData.callSign === 'No' ? 'checked' : ''}
+                            checked={formData.callSign === 'callSignNo' ? 'checked' : ''}
                             onChange={handleChange}
                           />
                           <label className="govuk-label govuk-radios__label" htmlFor="callSignNo">
