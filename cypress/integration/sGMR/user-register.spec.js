@@ -80,7 +80,7 @@ describe('User Registration', () => {
     cy.url().should('not.include', '/sign-in?source=registration');
   });
 
-  it('Should not regiister user with exiting user information', () => {
+  it('Should not register user with exiting user information', () => {
     cy.server();
     cy.route('POST', `${apiServer}/registration`);
 

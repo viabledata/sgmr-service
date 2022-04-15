@@ -6,4 +6,4 @@ dbName=$1
 docker exec -i $dbName \
 psql -U user -d $dbName \
 -c 'delete from voyagereportpeople where first_name like '\''%Auto-%'\''; 
-    delete from voyagereport where user_id in (select id from users where email = '\''658bfbb0-47bc-4bb6-b256-412c1534b602@mailslurp.com'\'');'
+    delete from voyagereport where user_id in (select id from users where email = '\''49c33d3a-4f67-4a6e-b5d9-b81439b6e7ea@mailslurp.com'\'');'

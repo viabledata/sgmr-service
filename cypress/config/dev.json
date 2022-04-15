@@ -1,10 +1,10 @@
 {
-    "baseUrl": "https://www.dev.sgmr.cop.homeoffice.gov.uk",
+    "baseUrl": "https://www.dev.spcr.homeoffice.gov.uk/",
     "env": {
       "envname": "development",
       "api_server": "https://sgmr-data-api.dev.sgmr.cop.homeoffice.gov.uk/v1",
       "mailSlurpApiKey": "80250d59c05636d2428adb3f38adfe94c929a000d2a3e391d3526748357e7859",
-      "host": "https://www.dev.sgmr.cop.homeoffice.gov.uk",
+      "host": "https://www.dev.spcr.homeoffice.gov.uk/",
       "dbName": "sgmr_db"
     }  
 }

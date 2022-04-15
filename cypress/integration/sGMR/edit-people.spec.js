@@ -1,6 +1,6 @@
 const faker = require('faker');
 
-describe('Edit exiting People information in the account', () => {
+describe('Edit existing People information in the account', () => {
     let people;
 
     before(() => {
@@ -92,6 +92,17 @@ describe('Edit exiting People information in the account', () => {
 
         cy.get('input[name="documentNumber"]').should('not.have.value', people.documentNumber);
         cy.get('input[name="documentIssuingState"]').should('not.have.value', people.issuingState);
+    });
+    it('Should be able to delete the added person',()=>{
+        cy.get('tr td:nth-child(1)').contains(people.lastName).click();
+        cy.url().should('include', '/people/edit-person');
+        cy.get('input[name="lastName"]').should('have.value',people.lastName);
+        cy.get('input[name="firstName"]').should('have.value',people.firstName);
+        cy.get('.govuk-button--warning').click();
+        cy.get('#confirm-yes').check();
+        cy.get('.govuk-button').contains('Continue').click()
+        cy.url().should('include', '/people');
+        cy.contains('Person successfully deleted');
     });
 
     after(() => {

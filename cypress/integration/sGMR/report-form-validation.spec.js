@@ -54,7 +54,7 @@ describe('Validate voyage plan form', () => {
         });
     });
 
-    it('Should verify Arraival details mandatory data', () => {
+    it('Should verify Arrival details mandatory data', () => {
         const errors = [
             'You must enter an arrival date',
             'You must enter an arrival time',
