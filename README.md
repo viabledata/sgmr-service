@@ -116,6 +116,17 @@ Running specific test and generating mochawesome html report with screenshots
 ```sh
 npm run cypress:test:report -- -b chrome -s cypress/integration/sGMR/user-register.spec.js
 ```
+Run tests against specific environment, generate report and upload it into S3 bucket
+```sh
+./scripts/env-setup.sh
+```
+Add JOB_NAME = <somename> in .env
+```sh
+source .env
+```
+Run the script to execute all the tests & generate report
+```sh
+./scripts/run-test.sh
 
 ## Changing the support email
 

@@ -69,6 +69,7 @@ describe('Edit Details & Submit new voyage plan', () => {
         cy.checkNoErrors();
         cy.enterSkipperDetails();
         cy.saveAndContinue();
+        cy.wait(1000);
         cy.get('.govuk-error-message').should('not.be.visible');
     });
 
@@ -100,6 +101,7 @@ describe('Edit Details & Submit new voyage plan', () => {
         cy.checkNoErrors();
         cy.url().should('include', 'page-6');
         cy.saveAndContinue();
+        cy.wait(1000)
         cy.get('.govuk-error-message').should('not.be.visible');
         cy.contains('Accept and submit voyage plan').click();
         cy.url().should('include', '/save-voyage/page-submitted');
@@ -137,6 +139,7 @@ describe('Edit Details & Submit new voyage plan', () => {
         cy.checkNoErrors();
         cy.url().should('include', 'page-6');
         cy.saveAndContinue();
+        cy.wait(1000);
         cy.get('.govuk-error-message').should('not.be.visible');
         cy.contains('Accept and submit voyage plan').click();
         cy.url().should('include', '/save-voyage/page-submitted');

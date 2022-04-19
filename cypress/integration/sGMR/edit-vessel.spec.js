@@ -57,6 +57,18 @@ describe('Edit existing pleasure craft information', () => {
         });
     });
 
+    it('Should be able to delete the saved pleasure craft',()=>{
+        cy.get('.govuk-table td a').contains(vessel.name).click();
+        cy.url().should('include', '/pleasure-crafts/');
+        cy.get('[name="vesselName"]').should('have.value',vessel.name);
+        cy.get('.govuk-button--warning').click();
+        cy.get('#confirm-yes').check();
+        cy.get('.govuk-button').contains('Continue').click()
+        cy.url().should('include', '/pleasure-crafts');
+        cy.contains('Pleasure craft successfully deleted');
+        cy.get('.govuk-table td a').should('not.have.value',vessel.name);
+    })
+
     after(() => {
         cy.deleteAllEmails();
         cy.removeTestData();
