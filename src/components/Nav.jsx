@@ -123,6 +123,7 @@ const Nav = (urlStem) => {
             })}
             <li className="govuk-header__navigation-item">
               <a href="#sign-out" className="govuk-header__link" onClick={() => handleSignout()}>Sign out</a>
+              {/* Link tag cannot be used as we do not have a signout route */}
             </li>
           </ul>
         </nav>
