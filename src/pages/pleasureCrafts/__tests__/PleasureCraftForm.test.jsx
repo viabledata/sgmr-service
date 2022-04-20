@@ -165,7 +165,7 @@ describe('Creating and editing pleasure craft', () => {
   it('should store form data in the session for use on refresh', async () => {
     const expectedPage1FormData = '{"pleasureCraftName":"Moonfish","type":"Sailing boat","mooring":"London"}';
     // eslint-disable-next-line max-len
-    const expectedPage2FormData = '{"pleasureCraftName":"Moonfish","type":"Sailing boat","mooring":"London","registrationNumber":"Moonfish123","registrationCountry":"registrationCountryYes","registrationCountryName":"GBR","callSign":"callSignYes","callSignReference":"MoonMoon"}';
+    const expectedPage2FormData = '{"pleasureCraftName":"Moonfish","type":"Sailing boat","mooring":"London","registrationNumber":"Moonfish123","registrationCountry":"registrationCountryNo","callSign":"callSignYes","callSignReference":"MoonMoon"}';
     renderPage({ pageNumber: 1 });
     fireEvent.change(screen.getByLabelText('Name of pleasure craft'), { target: { value: 'Moonfish' } });
     fireEvent.click(screen.getByLabelText('Sailing boat (with or without an engine)'));
@@ -174,8 +174,7 @@ describe('Creating and editing pleasure craft', () => {
 
     renderPage({ pageNumber: 2 });
     fireEvent.change(screen.getByLabelText('Registration number'), { target: { value: 'Moonfish123' } });
-    fireEvent.click(screen.getByTestId('registrationCountryYes'));
-    fireEvent.change(screen.getByLabelText('Country of registration'), { target: { value: 'GBR' } });
+    fireEvent.click(screen.getByTestId('registrationCountryNo'));
     fireEvent.click(screen.getByTestId('callSignYes'));
     fireEvent.change(screen.getByLabelText('Call sign'), { target: { value: 'MoonMoon' } });
     expect(window.sessionStorage.getItem('formData')).toStrictEqual(expectedPage2FormData);

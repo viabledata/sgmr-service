@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 
+import CountrySelector from '../../components-v2/CountrySelector';
 import FormFieldError from '../../components-v2/FormFieldError';
 import { PLEASURE_CRAFT_URL } from '../../constants/ApiConstants';
 import { PLEASURE_CRAFT_PAGE_URL } from '../../constants/ClientConstants';
@@ -34,7 +35,7 @@ const PleasureCraftForm = ({ source, type }) => {
   const registrationCountryYes = formData.registrationCountry !== undefined && formData.registrationCountry !== 'registrationCountryNo';
 
   const getPleasureCraftData = async (forThisPleasureCraft) => {
-    const resp = await getData(`${PLEASURE_CRAFT_URL}/${forThisPleasureCraft}`, 'people');
+    const resp = await getData(`${PLEASURE_CRAFT_URL}/${forThisPleasureCraft}`);
 
     setFormData({
       id: resp.data.id,
@@ -50,7 +51,8 @@ const PleasureCraftForm = ({ source, type }) => {
   };
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const fieldValue = e.target.source === 'CountrySelector' ? e.target.countryName : e.target.value;
+    setFormData({ ...formData, [e.target.name]: fieldValue });
     setErrors(removeError(e.target.name, errors));
   };
 
@@ -181,6 +183,158 @@ const PleasureCraftForm = ({ source, type }) => {
                 && (
                   <>
                     <h1 className="govuk-heading-l">{title}</h1>
+                    <form autoComplete="off">
+                      {Object.keys(errors).length >= 1 && (
+                      <div className="govuk-error-summary" aria-labelledby="error-summary-title" role="alert" tabIndex="-1" data-module="govuk-error-summary">
+                        <h2 className="govuk-error-summary__title">
+                          There is a problem
+                        </h2>
+                        <div className="govuk-error-summary__body">
+                          <ul className="govuk-list govuk-error-summary__list">
+                            {Object.entries(errors).reverse().map((elem) => (
+                              <li key={elem[0]}>
+                                {elem[0] !== 'title'
+                            //  eslint-disable-next-line jsx-a11y/anchor-is-valid
+                            && <a onClick={(e) => handleErrorClick(e, elem[0])} href="#">{elem[1]}</a>}
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      </div>
+                      )}
+                      <div id="pleasureCraftName" className={`govuk-form-group ${errors.pleasureCraftName ? 'govuk-form-group--error' : ''}`}>
+                        <label className="govuk-label" htmlFor="pleasureCraftNameInput">
+                          Name of pleasure craft
+                        </label>
+                        <FormFieldError error={errors.pleasureCraftName} />
+                        <input
+                          id="pleasureCraftNameInput"
+                          className="govuk-input"
+                          name="pleasureCraftName"
+                          type="text"
+                          value={formData?.pleasureCraftName || ''}
+                          onChange={handleChange}
+                        />
+                      </div>
+                      <div id="type" className={`govuk-form-group ${errors.type ? 'govuk-form-group--error' : ''}`}>
+                        <fieldset className="govuk-fieldset">
+                          <legend className="govuk-fieldset__legend">
+                            <label className="govuk-fieldset__heading" htmlFor="type">
+                              Type of pleasure craft
+                            </label>
+                          </legend>
+                          <div className="govuk-radios govuk-radios">
+                            <FormFieldError error={errors.type} />
+                            <div className="govuk-radios__item">
+                              <input
+                                className="govuk-radios__input"
+                                name="type"
+                                id="sailingboat"
+                                type="radio"
+                                value={SAILINGBOAT_TEXT}
+                                checked={formData.type === SAILINGBOAT_TEXT ? 'checked' : ''}
+                                onChange={handleChange}
+                              />
+                              <label className="govuk-label govuk-radios__label" htmlFor="sailingboat">
+                                Sailing boat (with or without an engine)
+                              </label>
+                            </div>
+                            <div className="govuk-radios__item">
+                              <input
+                                className="govuk-radios__input"
+                                name="type"
+                                id="motorboat"
+                                type="radio"
+                                value={MOTORBOAT_TEXT}
+                                checked={formData.type === MOTORBOAT_TEXT ? 'checked' : ''}
+                                onChange={handleChange}
+                              />
+                              <label className="govuk-label govuk-radios__label" htmlFor="motorboat">
+                                Motorboat
+                              </label>
+                            </div>
+                            <div className="govuk-radios__item">
+                              <input
+                                className="govuk-radios__input"
+                                name="type"
+                                id="otherCraft"
+                                type="radio"
+                                value=""
+                                checked={typeOther ? 'checked' : ''}
+                                onChange={handleChange}
+                              />
+                              <label className="govuk-label govuk-radios__label" htmlFor="otherCraft">
+                                Other
+                              </label>
+                            </div>
+                            {typeOther && (
+                            <div className="govuk-form-group">
+                              <label className="govuk-label" htmlFor="type-other">
+                                Please specify
+                                <input
+                                  className="govuk-input"
+                                  name="type"
+                                  type="text"
+                                  value={typeOther ? formData.type : ''}
+                                  onChange={handleChange}
+                                />
+                              </label>
+                            </div>
+                            )}
+                          </div>
+                        </fieldset>
+                      </div>
+                      <div id="mooring" className={`govuk-form-group ${errors.mooring ? 'govuk-form-group--error' : ''}`}>
+                        <label className="govuk-label" htmlFor="mooringInput">
+                          Usual moorings
+                        </label>
+                        <div id="mooring-hint" className="govuk-hint">A description, UNLOCODE or set of Coordinates for where the pleasure craft is usually moored</div>
+                        <FormFieldError error={errors.mooring} />
+                        <input
+                          id="mooringInput"
+                          className="govuk-input"
+                          name="mooring"
+                          type="text"
+                          value={formData?.mooring || ''}
+                          onChange={handleChange}
+                        />
+                      </div>
+                      <div className="govuk-button-group">
+                        <button
+                          type="button"
+                          className="govuk-button"
+                          data-module="govuk-button"
+                          onClick={(e) => {
+                            goToNextPage(e, { url: 'nextFormPageIs', runValidation: true });
+                          }}
+                        >
+                          Continue
+                        </button>
+                        {type === 'edit' && (
+                        <button
+                          type="button"
+                          className="govuk-button govuk-button--warning"
+                          onClick={(e) => { goToNextPage(e, { url: `/pleasure-crafts/${pleasureCraftId}/delete`, runValidation: false }); }}
+                        >
+                          Delete this pleasure craft
+                        </button>
+                        )}
+                      </div>
+                      <button
+                        type="button"
+                        className="govuk-button govuk-button--text"
+                        onClick={(e) => { goToNextPage(e, { url: sourcePage, runValidation: false }); }}
+                      >
+                        Exit without saving
+                      </button>
+                    </form>
+                  </>
+                )}
+              {formPageIs === 2
+              && (
+                <>
+                  <h1 className="govuk-heading-l">Pleasure craft details</h1>
+                  <form autoComplete="off">
                     {Object.keys(errors).length >= 1 && (
                     <div className="govuk-error-summary" aria-labelledby="error-summary-title" role="alert" tabIndex="-1" data-module="govuk-error-summary">
                       <h2 className="govuk-error-summary__title">
@@ -190,239 +344,88 @@ const PleasureCraftForm = ({ source, type }) => {
                         <ul className="govuk-list govuk-error-summary__list">
                           {Object.entries(errors).reverse().map((elem) => (
                             <li key={elem[0]}>
-                              {elem[0] !== 'title'
+                              {(elem[0] !== 'title' && elem[0] !== 'helpError')
                             //  eslint-disable-next-line jsx-a11y/anchor-is-valid
                             && <a onClick={(e) => handleErrorClick(e, elem[0])} href="#">{elem[1]}</a>}
+                              {elem[0] === 'helpError'
+                            && <a href="/page/help">{elem[1]}</a>}
                             </li>
                           ))}
                         </ul>
                       </div>
                     </div>
                     )}
-                    <div id="pleasureCraftName" className={`govuk-form-group ${errors.pleasureCraftName ? 'govuk-form-group--error' : ''}`}>
-                      <label className="govuk-label" htmlFor="pleasureCraftNameInput">
-                        Name of pleasure craft
+                    <div id="registrationNumber" className={`govuk-form-group ${errors.registrationNumber ? 'govuk-form-group--error' : ''}`}>
+                      <label className="govuk-label" htmlFor="registrationNumberInput">
+                        Registration number
                       </label>
-                      <FormFieldError error={errors.pleasureCraftName} />
+                      <FormFieldError error={errors.registrationNumber} />
                       <input
-                        id="pleasureCraftNameInput"
+                        id="registrationNumberInput"
                         className="govuk-input"
-                        name="pleasureCraftName"
+                        name="registrationNumber"
                         type="text"
-                        value={formData?.pleasureCraftName || ''}
+                        value={formData?.registrationNumber || ''}
                         onChange={handleChange}
                       />
                     </div>
-                    <div id="type" className={`govuk-form-group ${errors.type ? 'govuk-form-group--error' : ''}`}>
+
+                    <div id="registrationCountry" className={`govuk-form-group ${errors.registrationCountry ? 'govuk-form-group--error' : ''}`}>
                       <fieldset className="govuk-fieldset">
                         <legend className="govuk-fieldset__legend">
-                          <label className="govuk-fieldset__heading" htmlFor="type">
-                            Type of pleasure craft
+                          <label className="govuk-fieldset__heading" htmlFor="registrationCountry">
+                            Does this pleasure craft have a Country of Registration?
                           </label>
                         </legend>
                         <div className="govuk-radios govuk-radios">
-                          <FormFieldError error={errors.type} />
+                          <FormFieldError error={errors.registrationCountry} />
                           <div className="govuk-radios__item">
                             <input
                               className="govuk-radios__input"
-                              name="type"
-                              id="sailingboat"
+                              name="registrationCountry"
+                              id="registrationCountryYes"
                               type="radio"
-                              value={SAILINGBOAT_TEXT}
-                              checked={formData.type === SAILINGBOAT_TEXT ? 'checked' : ''}
+                              value="registrationCountryYes"
+                              checked={formData.registrationCountry === 'registrationCountryYes' ? 'checked' : ''}
                               onChange={handleChange}
+                              data-testid="registrationCountryYes"
                             />
-                            <label className="govuk-label govuk-radios__label" htmlFor="sailingboat">
-                              Sailing boat (with or without an engine)
+                            <label className="govuk-label govuk-radios__label" htmlFor="registrationCountryYes">
+                              Yes
                             </label>
                           </div>
-                          <div className="govuk-radios__item">
-                            <input
-                              className="govuk-radios__input"
-                              name="type"
-                              id="motorboat"
-                              type="radio"
-                              value={MOTORBOAT_TEXT}
-                              checked={formData.type === MOTORBOAT_TEXT ? 'checked' : ''}
-                              onChange={handleChange}
-                            />
-                            <label className="govuk-label govuk-radios__label" htmlFor="motorboat">
-                              Motorboat
-                            </label>
-                          </div>
-                          <div className="govuk-radios__item">
-                            <input
-                              className="govuk-radios__input"
-                              name="type"
-                              id="otherCraft"
-                              type="radio"
-                              value=""
-                              checked={typeOther ? 'checked' : ''}
-                              onChange={handleChange}
-                            />
-                            <label className="govuk-label govuk-radios__label" htmlFor="otherCraft">
-                              Other
-                            </label>
-                          </div>
-                          {typeOther && (
+                          {registrationCountryYes && (
                           <div className="govuk-form-group">
-                            <label className="govuk-label" htmlFor="type-other">
-                              Please specify
-                              <input
-                                className="govuk-input"
-                                name="type"
-                                type="text"
-                                value={typeOther ? formData.type : ''}
-                                onChange={handleChange}
+                            <label className="govuk-label" htmlFor="registrationCountryName">
+                              Country of registration
+                              <CountrySelector
+                                defaultValue={registrationCountryYes ? formData.registrationCountryName : ''}
+                                fieldName="registrationCountryName"
+                                onConfirm={(response) => { handleChange(response); }}
                               />
                             </label>
                           </div>
                           )}
+                          <div className="govuk-radios__item">
+                            <input
+                              className="govuk-radios__input"
+                              name="registrationCountry"
+                              id="registrationCountryNo"
+                              type="radio"
+                              value="registrationCountryNo"
+                              checked={formData.registrationCountry === 'registrationCountryNo' ? 'checked' : ''}
+                              onChange={handleChange}
+                              data-testid="registrationCountryNo"
+                            />
+                            <label className="govuk-label govuk-radios__label" htmlFor="registrationCountryNo">
+                              No
+                            </label>
+                          </div>
                         </div>
                       </fieldset>
                     </div>
-                    <div id="mooring" className={`govuk-form-group ${errors.mooring ? 'govuk-form-group--error' : ''}`}>
-                      <label className="govuk-label" htmlFor="mooringInput">
-                        Usual moorings
-                      </label>
-                      <div id="mooring-hint" className="govuk-hint">A description, UNLOCODE or set of Coordinates for where the pleasure craft is usually moored</div>
-                      <FormFieldError error={errors.mooring} />
-                      <input
-                        id="mooringInput"
-                        className="govuk-input"
-                        name="mooring"
-                        type="text"
-                        value={formData?.mooring || ''}
-                        onChange={handleChange}
-                      />
-                    </div>
-                    <div className="govuk-button-group">
-                      <button
-                        type="button"
-                        className="govuk-button"
-                        data-module="govuk-button"
-                        onClick={(e) => {
-                          goToNextPage(e, { url: 'nextFormPageIs', runValidation: true });
-                        }}
-                      >
-                        Continue
-                      </button>
-                      {type === 'edit' && (
-                      <button
-                        type="button"
-                        className="govuk-button govuk-button--warning"
-                        onClick={(e) => { goToNextPage(e, { url: `/pleasure-crafts/${pleasureCraftId}/delete`, runValidation: false }); }}
-                      >
-                        Delete this pleasure craft
-                      </button>
-                      )}
-                    </div>
-                    <button
-                      type="button"
-                      className="govuk-button govuk-button--text"
-                      onClick={(e) => { goToNextPage(e, { url: sourcePage, runValidation: false }); }}
-                    >
-                      Exit without saving
-                    </button>
-                  </>
-                )}
-              {formPageIs === 2
-              && (
-                <>
-                  <h1 className="govuk-heading-l">Pleasure craft details</h1>
-                  {Object.keys(errors).length >= 1 && (
-                  <div className="govuk-error-summary" aria-labelledby="error-summary-title" role="alert" tabIndex="-1" data-module="govuk-error-summary">
-                    <h2 className="govuk-error-summary__title">
-                      There is a problem
-                    </h2>
-                    <div className="govuk-error-summary__body">
-                      <ul className="govuk-list govuk-error-summary__list">
-                        {Object.entries(errors).reverse().map((elem) => (
-                          <li key={elem[0]}>
-                            {(elem[0] !== 'title' && elem[0] !== 'helpError')
-                            //  eslint-disable-next-line jsx-a11y/anchor-is-valid
-                            && <a onClick={(e) => handleErrorClick(e, elem[0])} href="#">{elem[1]}</a>}
-                            {elem[0] === 'helpError'
-                            && <a href="/page/help">{elem[1]}</a>}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  </div>
-                  )}
-                  <div id="registrationNumber" className={`govuk-form-group ${errors.registrationNumber ? 'govuk-form-group--error' : ''}`}>
-                    <label className="govuk-label" htmlFor="registrationNumberInput">
-                      Registration number
-                    </label>
-                    <FormFieldError error={errors.registrationNumber} />
-                    <input
-                      id="registrationNumberInput"
-                      className="govuk-input"
-                      name="registrationNumber"
-                      type="text"
-                      value={formData?.registrationNumber || ''}
-                      onChange={handleChange}
-                    />
-                  </div>
 
-                  <div id="registrationCountry" className={`govuk-form-group ${errors.registrationCountry ? 'govuk-form-group--error' : ''}`}>
-                    <fieldset className="govuk-fieldset">
-                      <legend className="govuk-fieldset__legend">
-                        <label className="govuk-fieldset__heading" htmlFor="registrationCountry">
-                          Does this pleasure craft have a Country of Registration?
-                        </label>
-                      </legend>
-                      <div className="govuk-radios govuk-radios">
-                        <FormFieldError error={errors.registrationCountry} />
-                        <div className="govuk-radios__item">
-                          <input
-                            className="govuk-radios__input"
-                            name="registrationCountry"
-                            id="registrationCountryYes"
-                            type="radio"
-                            value="registrationCountryYes"
-                            checked={formData.registrationCountry === 'registrationCountryYes' ? 'checked' : ''}
-                            onChange={handleChange}
-                            data-testid="registrationCountryYes"
-                          />
-                          <label className="govuk-label govuk-radios__label" htmlFor="registrationCountryYes">
-                            Yes
-                          </label>
-                        </div>
-                        {registrationCountryYes && (
-                        <div className="govuk-form-group">
-                          <label className="govuk-label" htmlFor="registrationCountryName">
-                            Country of registration
-                            <input
-                              id="registrationCountryName"
-                              className="govuk-input"
-                              name="registrationCountryName"
-                              type="text"
-                              defaultValue={registrationCountryYes ? formData.registrationCountryName : ''}
-                              onChange={handleChange}
-                            />
-                          </label>
-                        </div>
-                        )}
-                        <div className="govuk-radios__item">
-                          <input
-                            className="govuk-radios__input"
-                            name="registrationCountry"
-                            id="registrationCountryNo"
-                            type="radio"
-                            value="registrationCountryNo"
-                            checked={formData.registrationCountry === 'registrationCountryNo' ? 'checked' : ''}
-                            onChange={handleChange}
-                          />
-                          <label className="govuk-label govuk-radios__label" htmlFor="registrationCountryNo">
-                            No
-                          </label>
-                        </div>
-                      </div>
-                    </fieldset>
-                  </div>
-
-                  {/* // Waiting on API update:
+                    {/* // Waiting on API update:
                   <div id="pleasureCraftAIS" className={`govuk-form-group ${errors.pleasureCraftAIS ? 'govuk-form-group--error' : ''}`}>
                     <fieldset className="govuk-fieldset">
                       <legend className="govuk-fieldset__legend">
@@ -464,7 +467,7 @@ const PleasureCraftForm = ({ source, type }) => {
                     </fieldset>
                   </div> */}
 
-                  {/* // Waiting on API update:
+                    {/* // Waiting on API update:
                   <div id="pleasureCraftMMSI" className={`govuk-form-group ${errors.pleasureCraftMMSI ? 'govuk-form-group--error' : ''}`}>
                     <fieldset className="govuk-fieldset">
                       <legend className="govuk-fieldset__legend">
@@ -520,31 +523,31 @@ const PleasureCraftForm = ({ source, type }) => {
                     </fieldset>
                   </div> */}
 
-                  <div id="callSign" className={`govuk-form-group ${errors.callSign ? 'govuk-form-group--error' : ''}`}>
-                    <fieldset className="govuk-fieldset">
-                      <legend className="govuk-fieldset__legend">
-                        <label className="govuk-fieldset__heading" htmlFor="callSign">
-                          Does this pleasure craft have a Call sign?
-                        </label>
-                      </legend>
-                      <div className="govuk-radios govuk-radios">
-                        <FormFieldError error={errors.callSign} />
-                        <div className="govuk-radios__item">
-                          <input
-                            className="govuk-radios__input"
-                            name="callSign"
-                            id="callSignYes"
-                            type="radio"
-                            value="callSignYes"
-                            checked={formData.callSign === 'callSignYes' ? 'checked' : ''}
-                            onChange={handleChange}
-                            data-testid="callSignYes"
-                          />
-                          <label className="govuk-label govuk-radios__label" htmlFor="callSignYes">
-                            Yes
+                    <div id="callSign" className={`govuk-form-group ${errors.callSign ? 'govuk-form-group--error' : ''}`}>
+                      <fieldset className="govuk-fieldset">
+                        <legend className="govuk-fieldset__legend">
+                          <label className="govuk-fieldset__heading" htmlFor="callSign">
+                            Does this pleasure craft have a Call sign?
                           </label>
-                        </div>
-                        {callSignYes && (
+                        </legend>
+                        <div className="govuk-radios govuk-radios">
+                          <FormFieldError error={errors.callSign} />
+                          <div className="govuk-radios__item">
+                            <input
+                              className="govuk-radios__input"
+                              name="callSign"
+                              id="callSignYes"
+                              type="radio"
+                              value="callSignYes"
+                              checked={formData.callSign === 'callSignYes' ? 'checked' : ''}
+                              onChange={handleChange}
+                              data-testid="callSignYes"
+                            />
+                            <label className="govuk-label govuk-radios__label" htmlFor="callSignYes">
+                              Yes
+                            </label>
+                          </div>
+                          {callSignYes && (
                           <div className="govuk-form-group">
                             <label className="govuk-label" htmlFor="callSignReference">
                               Call sign
@@ -558,52 +561,53 @@ const PleasureCraftForm = ({ source, type }) => {
                               />
                             </label>
                           </div>
-                        )}
-                        <div className="govuk-radios__item">
-                          <input
-                            className="govuk-radios__input"
-                            name="callSign"
-                            id="callSign-no"
-                            type="radio"
-                            value="callSignNo"
-                            checked={formData.callSign === 'callSignNo' ? 'checked' : ''}
-                            onChange={handleChange}
-                          />
-                          <label className="govuk-label govuk-radios__label" htmlFor="callSignNo">
-                            No
-                          </label>
+                          )}
+                          <div className="govuk-radios__item">
+                            <input
+                              className="govuk-radios__input"
+                              name="callSign"
+                              id="callSign-no"
+                              type="radio"
+                              value="callSignNo"
+                              checked={formData.callSign === 'callSignNo' ? 'checked' : ''}
+                              onChange={handleChange}
+                            />
+                            <label className="govuk-label govuk-radios__label" htmlFor="callSign-no">
+                              No
+                            </label>
+                          </div>
                         </div>
-                      </div>
-                    </fieldset>
-                  </div>
+                      </fieldset>
+                    </div>
 
-                  <div className="govuk-button-group">
+                    <div className="govuk-button-group">
+                      <button
+                        type="button"
+                        className="govuk-button govuk-button--secondary"
+                        data-module="govuk-button"
+                        onClick={(e) => {
+                          goToNextPage(e, { url: 'previousFormPageIs', runValidation: false });
+                        }}
+                      >
+                        Back
+                      </button>
+                      <button
+                        type="button"
+                        className="govuk-button"
+                        data-module="govuk-button"
+                        onClick={(e) => { handleSubmit(e); }}
+                      >
+                        Save
+                      </button>
+                    </div>
                     <button
                       type="button"
-                      className="govuk-button govuk-button--secondary"
-                      data-module="govuk-button"
-                      onClick={(e) => {
-                        goToNextPage(e, { url: 'previousFormPageIs', runValidation: false });
-                      }}
+                      className="govuk-button govuk-button--text"
+                      onClick={(e) => { goToNextPage(e, { url: sourcePage, runValidation: false }); }}
                     >
-                      Back
+                      Exit without saving
                     </button>
-                    <button
-                      type="button"
-                      className="govuk-button"
-                      data-module="govuk-button"
-                      onClick={(e) => { handleSubmit(e); }}
-                    >
-                      Save
-                    </button>
-                  </div>
-                  <button
-                    type="button"
-                    className="govuk-button govuk-button--text"
-                    onClick={(e) => { goToNextPage(e, { url: sourcePage, runValidation: false }); }}
-                  >
-                    Exit without saving
-                  </button>
+                  </form>
                 </>
               )}
             </div>
