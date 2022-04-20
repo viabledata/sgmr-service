@@ -10,6 +10,7 @@ import UserContext from '../../components/UserContext';
 const Dashboard = () => {
   const history = useHistory();
   const { setUser } = useContext(UserContext);
+  const [showOnboarding, setShowOnboarding] = useState(true);
   const [reportList, setReportList] = useState();
   document.title = 'Voyage plans';
 
@@ -25,6 +26,9 @@ const Dashboard = () => {
         }
       });
       setReportList(validReports);
+      if (validReports.length > 0) {
+        setShowOnboarding(false);
+      }
     }
   };
 
@@ -38,15 +42,19 @@ const Dashboard = () => {
   const getUserContext = async () => {
     const userData = await getData(USER_URL);
     setUser(userData.data);
+    if (userData.data.people.length > 0 || userData.data.vessels.length > 0) {
+      setShowOnboarding(false);
+    }
   };
 
-  // Setting user context ....
   useEffect(() => {
-    getUserContext();
+    setShowOnboarding(true);
+    getUserContext(); // Setting user context
     getReportList();
-  }, []);
+  }, [setReportList, setShowOnboarding]);
 
   if (!reportList) { return null; }
+  console.log(showOnboarding);
   return (
     <div className="govuk-width-container">
       <main className="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" role="main">
