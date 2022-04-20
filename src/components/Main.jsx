@@ -19,15 +19,13 @@ import AccessibilityStatement from './AccessibilityStatement';
 import PageContainer from './PageContainer';
 
 import PersonForm from '../pages/people/PersonForm';
+import PleasureCraftForm from '../pages/pleasureCrafts/PleasureCraftForm';
 
 import SignIn from './User/SignIn';
 import UserRegister from './User/UserRegister';
 import EditAccount from './User/EditAccount';
 import UserRegisterConfirmation from './User/UserRegisterConfirmation';
 import AccountActivation from './User/AccountActivation';
-
-import EditVessel from './Vessel/EditVessel';
-import PleasureCraftForm from '../pages/pleasureCrafts/PleasureCraftForm';
 
 import VoyageFormContainer from './Voyage/VoyageFormContainer';
 import FormVoyageSubmitted from './Forms/FormVoyageSubmitted';
@@ -103,8 +101,8 @@ const Main = () => {
             <SecureRoute exact path="/pleasure-crafts/save-pleasure-craft/page-([1-2]{1})">
               <PleasureCraftForm />
             </SecureRoute>
-            <SecureRoute exact path="/pleasure-crafts/:vesselId">
-              <EditVessel />
+            <SecureRoute exact path="/pleasure-crafts/edit-pleasure-craft/page-([1-2]{1})">
+              <PleasureCraftForm type="edit" />
             </SecureRoute>
             <SecureRoute exact path="/pleasure-crafts/:entityId/delete">
               <ActionEntity
