@@ -134,21 +134,21 @@ const PleasureCraftForm = ({ source, type }) => {
   useEffect(() => {
     switch (sourceLocation) {
       case 'onboarding':
-        setTitle('Add details of a person you frequently sail with');
+        setTitle('Add a pleasure craft');
         setSubmitType('POST');
         break;
       case 'voyage':
-        setTitle('Add details of the person you are sailing with');
+        setTitle('Add a pleasure craft');
         setSubmitType('POST');
         break;
       case 'edit':
-        setTitle('Update details of the person you sail with');
+        setTitle('Update details of your pleasure craft');
         setSubmitType('PATCH');
         setSubmittedNextPage(PLEASURE_CRAFT_PAGE_URL);
         setSourcePage(PLEASURE_CRAFT_PAGE_URL);
         break;
       default:
-        setTitle('Add details of the person you frequently sail with');
+        setTitle('Add a pleasure craft');
         setSubmitType('POST');
         setSubmittedNextPage(PLEASURE_CRAFT_PAGE_URL);
         setSourcePage(PLEASURE_CRAFT_PAGE_URL);
@@ -307,6 +307,15 @@ const PleasureCraftForm = ({ source, type }) => {
                       >
                         Continue
                       </button>
+                      {type === 'edit' && (
+                      <button
+                        type="button"
+                        className="govuk-button govuk-button--warning"
+                        onClick={(e) => { goToNextPage(e, { url: `/pleasure-crafts/${pleasureCraftId}/delete`, runValidation: false }); }}
+                      >
+                        Delete this pleasure craft
+                      </button>
+                      )}
                     </div>
                     <button
                       type="button"
@@ -385,6 +394,7 @@ const PleasureCraftForm = ({ source, type }) => {
                           <label className="govuk-label" htmlFor="registrationCountryName">
                             Country of registration
                             <input
+                              id="registrationCountryName"
                               className="govuk-input"
                               name="registrationCountryName"
                               type="text"
