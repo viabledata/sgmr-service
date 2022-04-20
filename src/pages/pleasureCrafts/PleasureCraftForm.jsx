@@ -4,7 +4,7 @@ import { useHistory, useLocation } from 'react-router-dom';
 import FormFieldError from '../../components-v2/FormFieldError';
 import { PLEASURE_CRAFT_URL } from '../../constants/ApiConstants';
 import { PLEASURE_CRAFT_PAGE_URL } from '../../constants/ClientConstants';
-import { postData } from '../../utils/v2ApiHooks';
+import { getData, patchData, postData } from '../../utils/v2ApiHooks';
 import removeError from '../../utils/errorHandlers';
 import scrollToTop from '../../utils/scrollToTop';
 import validate from '../../utils/validateFormData';
@@ -14,10 +14,11 @@ const PleasureCraftForm = ({ source, type }) => {
   const history = useHistory();
   const location = useLocation();
   const locationPath = location.pathname;
-  // const locationState = location.state;
   const [errors, setErrors] = useState({});
   const [formData, setFormData] = useState(JSON.parse(sessionStorage.getItem('formData')) || {});
   const [formPageIs, setFormPageIs] = useState(1);
+  const [pleasureCraftId, setPleasureCraftId] = useState();
+  const [sourceLocation, setSourceLocation] = useState();
   const [sourcePage, setSourcePage] = useState(PLEASURE_CRAFT_PAGE_URL);
   const [submittedNextPage, setSubmittedNextPage] = useState(PLEASURE_CRAFT_PAGE_URL);
   const [submitType, setSubmitType] = useState();
@@ -31,6 +32,22 @@ const PleasureCraftForm = ({ source, type }) => {
   // Waiting on API update: const pleasureCraftMMSIYes = formData.pleasureCraftMMSI !== undefined && formData.pleasureCraftMMSI !== 'pleasureCraftMMSINo';
   const callSignYes = formData.callSign !== undefined && formData.callSign !== 'callSignNo';
   const registrationCountryYes = formData.registrationCountry !== undefined && formData.registrationCountry !== 'registrationCountryNo';
+
+  const getPleasureCraftData = async (forThisPleasureCraft) => {
+    const resp = await getData(`${PLEASURE_CRAFT_URL}/${forThisPleasureCraft}`, 'people');
+
+    setFormData({
+      id: resp.data.id,
+      pleasureCraftName: resp.data.vesselName || null,
+      type: resp.data.vesselType || null,
+      mooring: resp.data.moorings || null,
+      registrationNumber: resp.data.registration || null,
+      registrationCountry: resp.data.vesselNationality ? 'registrationCountryYes' : 'registrationCountryNo',
+      registrationCountryName: resp.data.vesselNationality || null,
+      callSign: resp.data.callsign ? 'callSignYes' : 'callSignNo',
+      callSignReference: resp.data.callsign || null,
+    });
+  };
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -76,13 +93,12 @@ const PleasureCraftForm = ({ source, type }) => {
 
   const formatDataToSubmit = () => {
     return {
-
       vesselName: formData.pleasureCraftName,
       vesselType: formData.type,
       moorings: formData.mooring,
       registration: formData.registrationNumber,
-      vesselNationality: formData.registrationCountryName,
-      callsign: formData.callSignReference,
+      vesselNationality: formData.registrationCountry === 'registrationCountryYes' ? formData.registrationCountryName : '',
+      callsign: formData.callSign === 'callSignYes' ? formData.callSignReference : '',
       hullIdentificationNumber: '', // we no longer ask this
       portOfRegistry: '', // we no longer ask this,
       // The next two are new items we capture, but cannot yet pass to the API
@@ -96,7 +112,7 @@ const PleasureCraftForm = ({ source, type }) => {
     let response;
     if (!await validateForm()) {
       if (submitType === 'PATCH') {
-        // response = await patchData(`${PEOPLE_URL}/${personId}`, formatDataToSubmit(formData), locationPath);
+        response = await patchData(`${PLEASURE_CRAFT_URL}/${pleasureCraftId}`, formatDataToSubmit(formData), locationPath);
       } else {
         response = await postData(PLEASURE_CRAFT_URL, formatDataToSubmit(formData), locationPath);
       }
@@ -116,11 +132,7 @@ const PleasureCraftForm = ({ source, type }) => {
   }, [locationPath]);
 
   useEffect(() => {
-    // if (locationState?.source === 'edit' || source === 'edit') {
-    //   source = 'edit';
-    //   if (personId) { getPersonData(); }
-    // }
-    switch (source) {
+    switch (sourceLocation) {
       case 'onboarding':
         setTitle('Add details of a person you frequently sail with');
         setSubmitType('POST');
@@ -141,11 +153,23 @@ const PleasureCraftForm = ({ source, type }) => {
         setSubmittedNextPage(PLEASURE_CRAFT_PAGE_URL);
         setSourcePage(PLEASURE_CRAFT_PAGE_URL);
     }
-  }, [source]);
+  }, [sourceLocation]);
 
   useEffect(() => {
     sessionStorage.setItem('formData', JSON.stringify(formData));
   }, [formData]);
+
+  useEffect(() => {
+    if (location.state?.source) {
+      setSourceLocation(location.state?.source);
+    } else {
+      setSourceLocation(source);
+    }
+    if (location.state?.pleasureCraftId) {
+      setPleasureCraftId(location.state.pleasureCraftId);
+      getPleasureCraftData(location.state.pleasureCraftId);
+    }
+  }, [setPleasureCraftId, setSourceLocation]);
 
   return (
     <div className="govuk-width-container ">
