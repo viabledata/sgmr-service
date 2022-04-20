@@ -30,14 +30,14 @@ const pleasureCraftValidation = {
       inputField: 'registrationCountry',
       errorDisplayId: 'registrationCountry',
       type: 'required',
-      message: 'You must select if your pleasure craft has acountry of registration',
+      message: 'You must select if your pleasure craft has a country of registration',
     },
     {
       inputField: 'registrationCountryName',
       errorDisplayId: 'registrationCountry',
       type: 'requiredOnVisible',
       visibilityIndicator: 'registrationCountryYes',
-      message: 'You must enter a country of registration',
+      message: 'You must select a country of registration',
     },
     // { // Waiting on API update:
     //   inputField: 'pleasureCraftAIS',

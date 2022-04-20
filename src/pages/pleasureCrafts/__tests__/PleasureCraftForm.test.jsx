@@ -111,7 +111,7 @@ describe('Creating and editing pleasure craft', () => {
     renderPage({ pageNumber: 2 });
     await waitFor(() => fireEvent.click(screen.getByText('Save')));
     expect(screen.queryAllByText('You must enter a registration number')).toHaveLength(2);
-    expect(screen.queryAllByText('You must select if your pleasure craft has acountry of registration')).toHaveLength(2);
+    expect(screen.queryAllByText('You must select if your pleasure craft has a country of registration')).toHaveLength(2);
     // Waiting on API update: expect(screen.queryAllByText('You must select if the pleasure craft has an Automatic Identification System (AIS)')).toHaveLength(2);
     // Waiting on API update: expect(screen.queryAllByText('You must select if the pleasure craft has a Maritime Mobile Service Identify number (MMSI)')).toHaveLength(2);
     expect(screen.queryAllByText('You must select if the pleasure craft has a call sign')).toHaveLength(2);
@@ -125,7 +125,7 @@ describe('Creating and editing pleasure craft', () => {
     expect(screen.getByText('Country of registration')).toBeInTheDocument();
 
     await waitFor(() => fireEvent.click(screen.getByText('Save')));
-    expect(screen.queryAllByText('You must enter a country of registration')).toHaveLength(2);
+    expect(screen.queryAllByText('You must select a country of registration')).toHaveLength(2);
   });
 
   it('should render errors on save if call sign is YES and other text input is null', async () => {
