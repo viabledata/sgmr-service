@@ -58,11 +58,10 @@ const EditAccount = () => {
     validationRules.map((elem) => {
       if (!(elem.field in formData) || formData[elem.field] === '') {
         tempObj[elem.field] = elem.message;
+      } else if (!(VALID_INTERNATIONAL_MOBILE_REGEX.test(formData.mobileNumber))) {
+        tempObj.mobileNumber = 'You must enter a valid telephone number e.g. 07700 900982, +33 63998 010101';
       } else {
         return null;
-      }
-      if (!(VALID_INTERNATIONAL_MOBILE_REGEX.test(formData.mobileNumber))) {
-        tempObj.mobileNumber = 'You must enter a valid telephone number e.g. 07700 900982, +33 63998 010101';
       }
     });
     setErrors(tempObj);
