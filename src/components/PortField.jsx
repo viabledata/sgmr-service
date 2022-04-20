@@ -46,7 +46,7 @@ const PortField = ({
       setOtherValue(''); // user selects from the autoselect
       setPortList([]);
     } else {
-      setSearchTerm(''); // user is typing in the 'other' field
+      setSearchTerm(value); // user is typing in the 'other' field
       setOtherValue(value);
       setPortEntered({ name: value, unlocode: null });
     }
@@ -77,14 +77,14 @@ const PortField = ({
     <>
       <Combobox
         id="portsCombobox"
-        data-testid="portContainer"
+        data-testid="port"
         aria-label="Begin typing for port selections to appear"
         onSelect={(e) => handlePortSelection(e)}
       >
         <ComboboxInput
           id="autocomplete"
           className="govuk-input"
-          data-testid="port"
+          data-testid="portInput"
           name={`autocomplete${fieldName}`}
           onChange={handleSearchTermChange}
           value={searchTerm}
