@@ -18,6 +18,7 @@ import Help from './Help';
 import AccessibilityStatement from './AccessibilityStatement';
 import PageContainer from './PageContainer';
 
+import Dashboard from '../pages/dashboard/Dashboard';
 import PersonForm from '../pages/people/PersonForm';
 import PleasureCraftForm from '../pages/pleasureCrafts/PleasureCraftForm';
 
@@ -64,14 +65,16 @@ const Main = () => {
             <Route exact path="/">
               <LandingPage />
             </Route>
+
+            <SecureRoute exact path="/voyage-plans">
+              <Dashboard />
+            </SecureRoute>
+
             <SecureRoute exact path="/page/help">
               <VoyageHelp />
             </SecureRoute>
             <SecureRoute exact path="/voyage-plans/start">
               <VoyageHelp source="voyage" />
-            </SecureRoute>
-            <SecureRoute exact path="/voyage-plans">
-              <PageContainer />
             </SecureRoute>
             <SecureRoute exact path="/save-voyage/page-([1-7]{1})">
               <VoyageFormContainer />
