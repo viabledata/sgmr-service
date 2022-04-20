@@ -11,6 +11,8 @@ describe('Edit Details & Submit new voyage plan', () => {
     let person;
     let departDate;
     let numberOfSubmittedReports;
+    let numberOfDraftReports;
+    let numberOfCancelledReports;
 
     before(() => {
         cy.registerUser();
@@ -41,8 +43,15 @@ describe('Edit Details & Submit new voyage plan', () => {
 
         cy.navigation('Voyage Plans');
         cy.url().should('include', '/voyage-plans');
+        cy.getNumberOfReports('Draft').then((res) => {
+            numberOfDraftReports = res;
+        });
+
         cy.getNumberOfReports('Submitted').then((res) => {
             numberOfSubmittedReports = res;
+        });
+        cy.getNumberOfReports('Cancelled').then((res) => {
+            numberOfCancelledReports = res;
         });
         cy.get('.govuk-button--start').should('have.text', 'Start now').click();
         cy.wait(1000);
@@ -169,6 +178,66 @@ describe('Edit Details & Submit new voyage plan', () => {
         cy.get('[name="vesselType"]').should('have.value', vessel.type);
         cy.get('[name="moorings"]').should('have.value', vessel.moorings);
         cy.get('[name="registration"]').should('have.value', vessel.regNumber);
+    });
+
+    it('Should be able to edit the draft and submit the report', ()=>{
+        cy.visit('/voyage-plans');
+        cy.url().should('include','voyage-plans')
+        cy.contains('View existing voyage plans').click();
+        cy.get('.govuk-tabs__list')
+            .within(() =>{
+                cy.get('#draft').should('have.text','Draft')
+                    .click();
+                cy.wait(1000);
+            })
+        cy.contains('h2','Draft').next().getTable().should((reportData) =>{
+            expect(reportData).to.deep.include({
+                'Pleasure craft': `Pleasure craft${vessel.name}`,
+                'Departure date': `Departure date${departDate}`,
+                'Departure port': `Departure port${departurePortCode}`,
+                'Arrival port': `Arrival port${arrivalPortCode}`
+            })
+        })
+        cy.contains('a', vessel.name).click();
+        cy.url().should('include','/save-voyage/page-7');
+        cy.contains('.govuk-button','Accept and submit voyage plan').click();
+        cy.url().should('include','save-voyage/page-submitted')
+        cy.get('.govuk-panel__title').should('have.text','Pleasure Craft Voyage Plan Submitted')
+        cy.navigation('Voyage Plans')
+      //cy.checkReports('Submitted', (+numberOfSubmittedReports) + (+1));
+        cy.contains('View existing voyage plans').click();
+        cy.get('.govuk-tabs__list li')
+            .within(() => {
+                cy.get('#submitted').should('have.text', 'Submitted')
+                    .click();
+                cy.wait(2000);
+            });
+        cy.contains('h2', 'Submitted').next().getTable().should((reportData) => {
+            expect(reportData).to.deep.include({
+                'Pleasure craft': `Pleasure craft${vessel.name}`,
+                'Departure date': `Departure date${departDate}`,
+                'Departure port': `Departure port${departurePortCode}`,
+                'Arrival port': `Arrival port${arrivalPortCode}`
+            });
+        });
+        cy.visit('/voyage-plans');
+        // cy.checkReports('Draft', (+numberOfDraftReports) + (-1));
+        cy.url().should('include','voyage-plans')
+        cy.contains('View existing voyage plans').click();
+        cy.get('.govuk-tabs__list')
+            .within(() =>{
+                cy.get('#draft').should('have.text','Draft')
+                    .click();
+                cy.wait(1000);
+            })
+        cy.contains('h2','Draft').next().getTable().should((reportData) =>{
+            expect(reportData).not.to.deep.include({
+                'Pleasure craft': `Pleasure craft${vessel.name}`,
+                'Departure date': `Departure date${departDate}`,
+                'Departure port': `Departure port${departurePortCode}`,
+                'Arrival port': `Arrival port${arrivalPortCode}`
+            })
+        })
     });
 
     after(() => {

@@ -103,6 +103,11 @@ describe('User Registration', () => {
     cy.get('.govuk-button').click();
 
     cy.get('.govuk-error-message').should('contain.text', 'The password must contain 3 of the following: an uppercase letter, a lowercase letter, a symbol, a number');
+
+    cy.get('input[name="password"]').clear().type('test1234');
+    cy.get('input[name="confirmPassword"]').clear().type('test');
+    cy.get('.govuk-button').click();
+    cy.get('.govuk-error-message').should('contain.text','Passwords must match')
   });
 
   it('Should not register if mobile number is not valid', () => {
