@@ -45,8 +45,11 @@ const VesselTable = ({
                   </span>
                   <Link
                     className="govuk-link"
-                    to={`/pleasure-crafts/${vessel.id}`}
-                    aria-label={`Edit the ${vessel.vesselType} named ${vessel.vesselName}`}
+                    to={{
+                      pathname: '/pleasure-crafts/edit-pleasure-craft/page-1',
+                      state: { pleasureCraftId: vessel.id, source: 'edit' },
+                    }}
+                    aria-label={`Edit ${vessel.vesselType} named ${vessel.vesselName}`}
                   >
                     {vessel.vesselName}
                   </Link>
