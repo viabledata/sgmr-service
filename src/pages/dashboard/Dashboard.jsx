@@ -1,22 +1,44 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { USER_URL, USER_VOYAGE_REPORT_URL, VOYAGE_REPORT_URL } from '../../constants/ApiConstants';
 import { deleteItem, getData } from '../../utils/v2ApiHooks';
 import { pageSizeParam } from '../../lib/config';
-import NotificationBanner from '../../components/NotificationBanner';
 import OnboardingBanner from '../onboarding/OnboardingBanner';
 import WelcomeBanner from '../../components/WelcomeBanner';
-import UserContext from '../../components/UserContext';
 
 const Dashboard = () => {
   const history = useHistory();
-  const { setUser } = useContext(UserContext);
   const [countPeople, setCountPeople] = useState();
   const [countPleasureCrafts, setCountPleasureCrafts] = useState();
   const [countVoyages, setCountVoyages] = useState();
   const [showOnboarding, setShowOnboarding] = useState(false);
-  const [reportList, setReportList] = useState();
+  const [userName, setUserName] = useState();
+  const [voyageStatusCounts, setVoyageStatusCounts] = useState();
   document.title = 'Voyage plans';
+
+  const calcVoyageCounts = (reports) => {
+    const draftReportCount = reports.filter((voyage) => {
+      return voyage.status.name === 'Draft';
+    });
+    const submittedReportCount = reports.filter((voyage) => {
+      return (
+        voyage.status.name === 'Submitted'
+        || voyage.status.name === 'PreSubmitted'
+        || voyage.status.name === 'Failed'
+      );
+    });
+    const cancelledReportCount = reports.filter((voyage) => {
+      return (
+        voyage.status.name === 'Cancelled'
+        || voyage.status.name === 'PreCancelled'
+      );
+    });
+    setVoyageStatusCounts({
+      draft: draftReportCount.length,
+      submitted: submittedReportCount.length,
+      cancelled: cancelledReportCount.length,
+    });
+  };
 
   const getReportList = async () => {
     const validReports = [];
@@ -29,40 +51,32 @@ const Dashboard = () => {
           validReports.push(report);
         }
       });
-      setReportList(validReports);
+      calcVoyageCounts(validReports);
       setCountVoyages(validReports.length);
     }
   };
 
-  const calcVoyageCounts = (currentStatus) => {
-    const newArray = reportList.filter((voyage) => {
-      return voyage.status.name === currentStatus;
-    });
-    return newArray.length;
-  };
-
-  const getUserContext = async () => {
+  const getUserDetails = async () => {
     const userData = await getData(USER_URL);
-    setUser(userData.data);
+    setUserName(userData.data.firstName);
     setCountPeople(userData.data.people.length);
     setCountPleasureCrafts(userData.data.vessels.length);
   };
 
   useEffect(() => {
-    getUserContext(); // Setting user context
-    getReportList();
-  }, [setReportList]);
-
-  useEffect(() => {
-    setShowOnboarding(countPeople === 0 && countPleasureCrafts === 1 && countVoyages === 1);
+    setShowOnboarding(countPeople === 1 && countPleasureCrafts === 1 && countPeople === 1);
+    setShowOnboarding(countPeople === 0 && countPleasureCrafts === 0 && countPeople === 0);
   }, [countPeople, countPleasureCrafts, countVoyages, setShowOnboarding]);
 
-  if (!reportList) { return null; }
+  useEffect(() => {
+    getUserDetails();
+    getReportList();
+  }, [setShowOnboarding, setCountPeople, setCountPeople, setCountVoyages, setVoyageStatusCounts]);
+
   return (
     <div className="govuk-width-container">
       <main className="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" role="main">
-        <NotificationBanner />
-        <WelcomeBanner />
+        <WelcomeBanner user={userName} />
         {showOnboarding && (<OnboardingBanner />)}
 
         <div className="govuk-grid-row">
@@ -99,19 +113,19 @@ const Dashboard = () => {
             <div className="govuk-grid-row">
               <div className="govuk-grid-column-one-third panel-number">
                 <p className="govuk-body-s">
-                  <strong className="panel-number-large" data-testid="draft-count">{calcVoyageCounts('Draft')}</strong>
+                  <strong className="panel-number-large" data-testid="draft-count">{voyageStatusCounts?.draft}</strong>
                   Draft
                 </p>
               </div>
               <div className="govuk-grid-column-one-third panel-number">
                 <p className="govuk-body-s">
-                  <strong className="panel-number-large" data-testid="submitted-count">{calcVoyageCounts('PreSubmitted') + calcVoyageCounts('Submitted') + calcVoyageCounts('Failed')}</strong>
+                  <strong className="panel-number-large" data-testid="submitted-count">{voyageStatusCounts?.submitted}</strong>
                   Submitted
                 </p>
               </div>
               <div className="govuk-grid-column-one-third panel-number">
                 <p className="govuk-body-s">
-                  <strong className="panel-number-large" data-testid="cancelled-count">{calcVoyageCounts('Cancelled') + calcVoyageCounts('PreCancelled')}</strong>
+                  <strong className="panel-number-large" data-testid="cancelled-count">{voyageStatusCounts?.cancelled}</strong>
                   Cancelled
                 </p>
               </div>
