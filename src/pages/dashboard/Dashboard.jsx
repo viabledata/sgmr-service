@@ -8,11 +8,9 @@ import WelcomeBanner from '../../components/WelcomeBanner';
 
 const Dashboard = () => {
   const history = useHistory();
-  const [countPeople, setCountPeople] = useState();
-  const [countPleasureCrafts, setCountPleasureCrafts] = useState();
   const [countVoyages, setCountVoyages] = useState();
   const [showOnboarding, setShowOnboarding] = useState(false);
-  const [userName, setUserName] = useState();
+  const [userData, setUserData] = useState();
   const [voyageStatusCounts, setVoyageStatusCounts] = useState();
   document.title = 'Voyage plans';
 
@@ -57,26 +55,26 @@ const Dashboard = () => {
   };
 
   const getUserDetails = async () => {
-    const userData = await getData(USER_URL);
-    setUserName(userData.data.firstName);
-    setCountPeople(userData.data.people.length);
-    setCountPleasureCrafts(userData.data.vessels.length);
+    const user = await getData(USER_URL);
+    setUserData(user.data);
   };
 
   useEffect(() => {
-    setShowOnboarding(countPeople === 1 && countPleasureCrafts === 1 && countPeople === 1);
-    setShowOnboarding(countPeople === 0 && countPleasureCrafts === 0 && countPeople === 0);
-  }, [countPeople, countPleasureCrafts, countVoyages, setShowOnboarding]);
+    if (userData) {
+      setShowOnboarding(userData.people.length === 1 && userData.vessels.length === 1 && countVoyages === 1);
+    }
+  }, [userData, setShowOnboarding]);
 
   useEffect(() => {
     getUserDetails();
     getReportList();
-  }, [setShowOnboarding, setCountPeople, setCountPeople, setCountVoyages, setVoyageStatusCounts]);
+  }, [setUserData, setVoyageStatusCounts]);
 
+  if (!userData || !voyageStatusCounts) { return null; }
   return (
     <div className="govuk-width-container">
       <main className="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" role="main">
-        <WelcomeBanner user={userName} />
+        <WelcomeBanner user={userData.firstName} />
         {showOnboarding && (<OnboardingBanner />)}
 
         <div className="govuk-grid-row">
