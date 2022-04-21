@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { USER_URL, USER_VOYAGE_REPORT_URL, VOYAGE_REPORT_URL } from '../../constants/ApiConstants';
 import { deleteItem, getData } from '../../utils/v2ApiHooks';
 import { pageSizeParam } from '../../lib/config';
@@ -54,7 +54,7 @@ const Dashboard = () => {
   }, [setReportList]);
 
   useEffect(() => {
-    setShowOnboarding(countPeople === 0 && countPleasureCrafts === 0 && countVoyages === 1);
+    setShowOnboarding(countPeople === 0 && countPleasureCrafts === 1 && countVoyages === 1);
   }, [countPeople, countPleasureCrafts, countVoyages, setShowOnboarding]);
 
   if (!reportList) { return null; }
@@ -66,43 +66,26 @@ const Dashboard = () => {
         {showOnboarding && (<OnboardingBanner />)}
 
         <div className="govuk-grid-row">
-          {!showOnboarding && (
-          <div className="govuk-grid-column-full">
-            <h1 className="govuk-heading-xl">Voyage Plans Dashboard</h1>
-          </div>
-          )}
           <div className="govuk-grid-column-one-half">
             <h2 className="govuk-heading-m">Create a voyage plan</h2>
             <p className="govuk-body">
-              You can use this online form to create and tell Border Force and HMRC you are sailing to or from the UK in a pleasure craft to UK Border Force, notifying them of
-              your travel plans.
+              Tell Border Force and HMRC that you are planning to sail to or from the UK.
             </p>
             {!showOnboarding
               ? (
                 <button
                   type="button"
-                  className="govuk-button govuk-button--start"
+                  className="govuk-button"
                   data-module="govuk-button"
                   onClick={() => history.push('/voyage-plans/start')}
                 >
-                  Start now
-                  <svg
-                    className="govuk-button__start-icon"
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="17.5"
-                    height="19"
-                    viewBox="0 0 33 40"
-                    role="presentation"
-                    focusable="false"
-                  >
-                    <path fill="currentColor" d="M0 0h13l20 20-20 20H0l20-20z" />
-                  </svg>
+                  Create a new voyage plan
                 </button>
               )
               : (
                 <button
                   type="button"
-                  className="govuk-button govuk-button--secondary govuk-!-margin-top-2 govuk-!-margin-bottom-8"
+                  className="govuk-button govuk-button--secondary"
                   data-module="govuk-button"
                   onClick={() => history.push('/voyage-plans/start')}
                 >
@@ -111,8 +94,8 @@ const Dashboard = () => {
               )}
           </div>
           <div className="govuk-grid-column-one-half">
-            <h2 className="govuk-heading-m">Manage existing voyage plans</h2>
-            <p className="govuk-body">View your voyage plans to edit, cancel or delete them, depending on its status.</p>
+            <h2 className="govuk-heading-m">Manage your voyage plans</h2>
+            <p className="govuk-body">You can view, update or cancel voyage plans you created up to 12 months ago.</p>
             <div className="govuk-grid-row">
               <div className="govuk-grid-column-one-third panel-number">
                 <p className="govuk-body-s">
@@ -133,7 +116,14 @@ const Dashboard = () => {
                 </p>
               </div>
             </div>
-            <Link className="govuk-link govuk-body" to="/manage-voyage-plans">View existing voyage plans</Link>
+            <button
+              type="button"
+              className="govuk-button govuk-button--secondary"
+              data-module="govuk-button"
+              onClick={() => history.push('/manage-voyage-plans')}
+            >
+              View existing voyage plans
+            </button>
           </div>
         </div>
       </main>
