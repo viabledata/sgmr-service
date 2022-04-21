@@ -10,7 +10,10 @@ import UserContext from '../../components/UserContext';
 const Dashboard = () => {
   const history = useHistory();
   const { setUser } = useContext(UserContext);
-  const [showOnboarding, setShowOnboarding] = useState(true);
+  const [countPeople, setCountPeople] = useState();
+  const [countPleasureCrafts, setCountPleasureCrafts] = useState();
+  const [countVoyages, setCountVoyages] = useState();
+  const [showOnboarding, setShowOnboarding] = useState(false);
   const [reportList, setReportList] = useState();
   document.title = 'Voyage plans';
 
@@ -26,13 +29,11 @@ const Dashboard = () => {
         }
       });
       setReportList(validReports);
-      if (validReports.length > 0) {
-        setShowOnboarding(false);
-      }
+      setCountVoyages(validReports.length);
     }
   };
 
-  const countVoyages = (currentStatus) => {
+  const calcVoyageCounts = (currentStatus) => {
     const newArray = reportList.filter((voyage) => {
       return voyage.status.name === currentStatus;
     });
@@ -42,24 +43,31 @@ const Dashboard = () => {
   const getUserContext = async () => {
     const userData = await getData(USER_URL);
     setUser(userData.data);
-    if (userData.data.people.length > 0 || userData.data.vessels.length > 0) {
-      setShowOnboarding(false);
-    }
+    setCountPeople(userData.data.people.length);
+    setCountPleasureCrafts(userData.data.vessels.length);
   };
 
   useEffect(() => {
-    setShowOnboarding(true);
     getUserContext(); // Setting user context
     getReportList();
-  }, [setReportList, setShowOnboarding]);
+  }, [setReportList]);
+
+  useEffect(() => {
+    setShowOnboarding(countPeople === 0 && countPleasureCrafts === 0 && countVoyages === 1);
+  }, [countPeople, countPleasureCrafts, countVoyages, setShowOnboarding]);
 
   if (!reportList) { return null; }
-  console.log(showOnboarding);
   return (
     <div className="govuk-width-container">
       <main className="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" role="main">
         <NotificationBanner />
         <WelcomeBanner />
+        {showOnboarding
+        && (
+        <div>
+          onboarding
+        </div>
+        )}
 
         <div className="govuk-grid-row">
           <div className="govuk-grid-column-full">
@@ -97,19 +105,19 @@ const Dashboard = () => {
             <div className="govuk-grid-row">
               <div className="govuk-grid-column-one-third panel-number">
                 <p className="govuk-body-s">
-                  <strong className="panel-number-large" data-testid="draft-count">{countVoyages('Draft')}</strong>
+                  <strong className="panel-number-large" data-testid="draft-count">{calcVoyageCounts('Draft')}</strong>
                   Draft
                 </p>
               </div>
               <div className="govuk-grid-column-one-third panel-number">
                 <p className="govuk-body-s">
-                  <strong className="panel-number-large" data-testid="submitted-count">{countVoyages('PreSubmitted') + countVoyages('Submitted') + countVoyages('Failed')}</strong>
+                  <strong className="panel-number-large" data-testid="submitted-count">{calcVoyageCounts('PreSubmitted') + calcVoyageCounts('Submitted') + calcVoyageCounts('Failed')}</strong>
                   Submitted
                 </p>
               </div>
               <div className="govuk-grid-column-one-third panel-number">
                 <p className="govuk-body-s">
-                  <strong className="panel-number-large" data-testid="cancelled-count">{countVoyages('Cancelled') + countVoyages('PreCancelled')}</strong>
+                  <strong className="panel-number-large" data-testid="cancelled-count">{calcVoyageCounts('Cancelled') + calcVoyageCounts('PreCancelled')}</strong>
                   Cancelled
                 </p>
               </div>
