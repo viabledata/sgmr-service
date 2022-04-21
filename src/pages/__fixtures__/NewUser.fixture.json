@@ -1,0 +1,16 @@
+{
+  "id": "123",
+  "firstName": "Fred",
+  "lastName": "Flintston",
+  "email": "FredsEmail",
+  "mobileNumber": "07500123123",
+  "state": "verified",
+  "dateCreated": "2022-04-20T14:38:19.738963",
+  "lastUpdated": "2022-04-21T14:14:23.462662",
+  "role": {
+    "name": "User",
+    "id": "560bce8a-92f8-4f93-a54f-f562c652266e"
+  },
+  "vessels": [],
+  "people": []
+}
