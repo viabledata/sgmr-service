@@ -1,7 +1,4 @@
-export const SIGN_IN_URL = '/sign-in';
-export const REGISTER_URL = '/register';
-export const VERIFY_URL = '/verify';
-export const RESEND_CODE_URL = '/resend-code';
+// v1
 export const REPORT_PAGE_URL = '/voyage-plans';
 export const SAVE_VOYAGE_DEPARTURE_URL = '/save-voyage/page-1';
 export const SAVE_VOYAGE_ARRIVALS_URL = '/save-voyage/page-2';
@@ -13,12 +10,6 @@ export const SAVE_VOYAGE_CHECK_DETAILS_URL = '/save-voyage/page-7';
 export const EDIT_VOYAGE_CHECK_DETAILS_URL = '/save-voyage/page-7';
 export const SAVE_VOYAGE_SUBMITTED_URL = '/save-voyage/voyage-submitted';
 export const VESSELS_PAGE_URL = '/pleasure-crafts';
-export const ADD_VESSELS_URL = '/pleasure-crafts/save-pleasure-craft';
-export const PLEASURE_CRAFT_PAGE_URL = '/pleasure-crafts';
-export const PEOPLE_PAGE_URL = '/people';
-export const ADD_PERSON_URL = '/people/save-person';
-export const ACCOUNT_PAGE_URL = '/account';
-export const EDIT_ACCOUNT_URL = '/account/edit';
 
 export const FORM_STEPS = {
   CHECK: 'check',
@@ -35,3 +26,20 @@ export const FORM_STEPS = {
   VOYAGE: 'voyage',
   CANCEL: 'cancel',
 };
+
+// v2
+// Account
+export const ACCOUNT_PAGE_URL = '/account';
+export const EDIT_ACCOUNT_URL = '/account/edit';
+export const SIGN_IN_URL = '/sign-in';
+export const REGISTER_URL = '/register';
+export const VERIFY_URL = '/verify';
+export const RESEND_CODE_URL = '/resend-code';
+// People
+export const PEOPLE_PAGE_URL = '/people';
+export const ADD_PERSON_URL = '/people/save-person';
+// Pleasure Crafts
+export const ADD_VESSELS_URL = '/pleasure-crafts/save-pleasure-craft';
+export const PLEASURE_CRAFT_PAGE_URL = '/pleasure-crafts';
+// Reports
+export const DASHBOARD_URL = '/voyage-plans';

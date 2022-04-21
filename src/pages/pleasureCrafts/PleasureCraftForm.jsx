@@ -3,7 +3,7 @@ import { useHistory, useLocation } from 'react-router-dom';
 
 import FormFieldError from '../../components-v2/FormFieldError';
 import { PLEASURE_CRAFT_URL } from '../../constants/ApiConstants';
-import { PLEASURE_CRAFT_PAGE_URL } from '../../constants/ClientConstants';
+import { DASHBOARD_URL, PLEASURE_CRAFT_PAGE_URL } from '../../constants/ClientConstants';
 import { getData, patchData, postData } from '../../utils/v2ApiHooks';
 import removeError from '../../utils/errorHandlers';
 import scrollToTop from '../../utils/scrollToTop';
@@ -136,6 +136,8 @@ const PleasureCraftForm = ({ source, type }) => {
       case 'onboarding':
         setTitle('Add a pleasure craft');
         setSubmitType('POST');
+        setSubmittedNextPage(DASHBOARD_URL);
+        setSourcePage(DASHBOARD_URL);
         break;
       case 'voyage':
         setTitle('Add a pleasure craft');
