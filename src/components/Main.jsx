@@ -28,7 +28,7 @@ import UserRegisterConfirmation from './User/UserRegisterConfirmation';
 import AccountActivation from './User/AccountActivation';
 
 import VoyageFormContainer from './Voyage/VoyageFormContainer';
-import FormVoyageSubmitted from './Forms/FormVoyageSubmitted';
+import VoyageSubmitted from '../pages/voyage/VoyageSubmitted';
 import UserContext from './UserContext';
 import DeleteAccount from './User/DeleteAccount';
 import DeleteConfirmation from './User/DeleteConfirmation';
@@ -93,7 +93,7 @@ const Main = () => {
               />
             </SecureRoute>
             <SecureRoute exact path="/save-voyage/page-submitted">
-              <FormVoyageSubmitted />
+              <VoyageSubmitted />
             </SecureRoute>
             <SecureRoute exact path="/pleasure-crafts">
               <PageContainer />
