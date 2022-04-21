@@ -1,12 +1,14 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import axios from 'axios';
-
-import { LOGIN_URL } from '../../constants/ApiConstants';
+import { LOGIN_URL, USER_URL } from '../../constants/ApiConstants';
 import Auth from '../../lib/Auth';
+import { getData } from '../../utils/v2ApiHooks';
+import UserContext from '../UserContext';
 
 const SignIn = () => {
   document.title = 'Sign In';
+  const { setUser } = useContext(UserContext);
 
   const history = useHistory();
   const [formData, setFormData] = useState({});
@@ -56,6 +58,11 @@ const SignIn = () => {
     return true;
   };
 
+  const getUserContext = async () => {
+    const userData = await getData(USER_URL);
+    setUser(userData.data);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     // Ensure required fields have a value
@@ -63,6 +70,7 @@ const SignIn = () => {
       try {
         const response = await axios.post(LOGIN_URL, formData);
         if (response.data.token) { Auth.storeToken(response.data.token); }
+        getUserContext();
         history.push('/voyage-plans');
       } catch (err) {
         setErrors({ ...errors, main: 'Email and password combination is invalid' });
