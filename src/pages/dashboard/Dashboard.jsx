@@ -4,6 +4,7 @@ import { USER_URL, USER_VOYAGE_REPORT_URL, VOYAGE_REPORT_URL } from '../../const
 import { deleteItem, getData } from '../../utils/v2ApiHooks';
 import { pageSizeParam } from '../../lib/config';
 import NotificationBanner from '../../components/NotificationBanner';
+import OnboardingBanner from '../onboarding/OnboardingBanner';
 import WelcomeBanner from '../../components/WelcomeBanner';
 import UserContext from '../../components/UserContext';
 
@@ -62,42 +63,52 @@ const Dashboard = () => {
       <main className="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" role="main">
         <NotificationBanner />
         <WelcomeBanner />
-        {showOnboarding
-        && (
-        <div>
-          onboarding
-        </div>
-        )}
+        {showOnboarding && (<OnboardingBanner />)}
 
         <div className="govuk-grid-row">
+          {!showOnboarding && (
           <div className="govuk-grid-column-full">
             <h1 className="govuk-heading-xl">Voyage Plans Dashboard</h1>
           </div>
+          )}
           <div className="govuk-grid-column-one-half">
-            <h2 className="govuk-heading-m">Create a new voyage plan</h2>
+            <h2 className="govuk-heading-m">Create a voyage plan</h2>
             <p className="govuk-body">
               You can use this online form to create and tell Border Force and HMRC you are sailing to or from the UK in a pleasure craft to UK Border Force, notifying them of
               your travel plans.
             </p>
-            <button
-              type="button"
-              className="govuk-button govuk-button--start"
-              data-module="govuk-button"
-              onClick={() => history.push('/voyage-plans/start')}
-            >
-              Start now
-              <svg
-                className="govuk-button__start-icon"
-                xmlns="http://www.w3.org/2000/svg"
-                width="17.5"
-                height="19"
-                viewBox="0 0 33 40"
-                role="presentation"
-                focusable="false"
-              >
-                <path fill="currentColor" d="M0 0h13l20 20-20 20H0l20-20z" />
-              </svg>
-            </button>
+            {!showOnboarding
+              ? (
+                <button
+                  type="button"
+                  className="govuk-button govuk-button--start"
+                  data-module="govuk-button"
+                  onClick={() => history.push('/voyage-plans/start')}
+                >
+                  Start now
+                  <svg
+                    className="govuk-button__start-icon"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="17.5"
+                    height="19"
+                    viewBox="0 0 33 40"
+                    role="presentation"
+                    focusable="false"
+                  >
+                    <path fill="currentColor" d="M0 0h13l20 20-20 20H0l20-20z" />
+                  </svg>
+                </button>
+              )
+              : (
+                <button
+                  type="button"
+                  className="govuk-button govuk-button--secondary govuk-!-margin-top-2 govuk-!-margin-bottom-8"
+                  data-module="govuk-button"
+                  onClick={() => history.push('/voyage-plans/start')}
+                >
+                  Create a new voyage plan
+                </button>
+              )}
           </div>
           <div className="govuk-grid-column-one-half">
             <h2 className="govuk-heading-m">Manage existing voyage plans</h2>
