@@ -1,0 +1,104 @@
+{
+  "items": [
+    {
+      "id": "Cancelled1",
+      "departureDate": "2024-01-01",
+      "departurePort": "AU POR",
+      "departurePortName": "Port Melbourne",
+      "departureTime": "11:11:00",
+      "status": {
+        "name": "Cancelled"
+      }
+    },
+    {
+      "id": "PreCancelled1",
+      "departureDate": "2024-01-01",
+      "departurePort": "AU POR",
+      "departurePortName": "Port Melbourne",
+      "departureTime": "11:11:00",
+      "status": {
+        "name": "PreCancelled"
+      }
+    },
+    {
+      "id": "Draft1",
+      "departureDate": "2024-01-01",
+      "departurePort": "AU POR",
+      "departurePortName": "Port Melbourne",
+      "departureTime": "11:11:00",
+      "status": {
+        "name": "Draft"
+      }
+    },
+    {
+      "id": "Draft2",
+      "departureDate": "2024-01-01",
+      "departurePort": "AU POR",
+      "departurePortName": "Port Melbourne",
+      "departureTime": "11:11:00",
+      "status": {
+        "name": "Draft"
+      }
+    },
+    {
+      "id": "Draft3",
+      "departureDate": "2024-01-01",
+      "departurePort": "AU POR",
+      "departurePortName": "Port Melbourne",
+      "departureTime": "11:11:00",
+      "status": {
+        "name": "Draft"
+      }
+    },
+    {
+      "id": "Failed1",
+      "departureDate": "2024-01-01",
+      "departurePort": "AU POR",
+      "departurePortName": "Port Melbourne",
+      "departureTime": "11:11:00",
+      "status": {
+        "name": "Failed"
+      }
+    },
+    {
+      "id": "Submitted1",
+      "departureDate": "2024-01-01",
+      "departurePort": "AU POR",
+      "departurePortName": "Port Melbourne",
+      "departureTime": "11:11:00",
+      "status": {
+        "name": "Submitted"
+      }
+    },
+    {
+      "id": "Submitted2",
+      "departureDate": "2024-01-01",
+      "departurePort": "AU POR",
+      "departurePortName": "Port Melbourne",
+      "departureTime": "11:11:00",
+      "status": {
+        "name": "Submitted"
+      }
+    },
+    {
+      "id": "PreSubmitted1",
+      "departureDate": "2024-01-01",
+      "departurePort": "AU POR",
+      "departurePortName": "Port Melbourne",
+      "departureTime": "11:11:00",
+      "status": {
+        "name": "PreSubmitted"
+      }
+    },
+    {
+      "id": "PreSubmitted2",
+      "departureDate": "2024-01-01",
+      "departurePort": "AU POR",
+      "departurePortName": "Port Melbourne",
+      "departureTime": "11:11:00",
+      "status": {
+        "name": "PreSubmitted"
+      }
+    }
+  ]
+}

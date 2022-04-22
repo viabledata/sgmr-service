@@ -8,10 +8,9 @@ import WelcomeBanner from '../../components/WelcomeBanner';
 
 const Dashboard = () => {
   const history = useHistory();
-  const [countVoyages, setCountVoyages] = useState();
   const [showOnboarding, setShowOnboarding] = useState(false);
   const [userData, setUserData] = useState();
-  const [voyageStatusCounts, setVoyageStatusCounts] = useState();
+  const [voyageStatusCounts, setVoyageStatusCounts] = useState({});
   document.title = 'Voyage plans';
 
   const calcVoyageCounts = (reports) => {
@@ -50,7 +49,6 @@ const Dashboard = () => {
         }
       });
       calcVoyageCounts(validReports);
-      setCountVoyages(validReports.length);
     }
   };
 
@@ -60,10 +58,11 @@ const Dashboard = () => {
   };
 
   useEffect(() => {
-    if (userData) {
-      setShowOnboarding(userData.people.length === 1 && userData.vessels.length === 1 && countVoyages === 1);
+    if (userData && Object.keys(voyageStatusCounts).length > 0) {
+      const totalVoyages = Object.values(voyageStatusCounts).reduce((a, b) => a + b);
+      setShowOnboarding(userData.people.length === 0 && userData.vessels.length === 0 && totalVoyages === 0);
     }
-  }, [userData, setShowOnboarding]);
+  }, [userData, voyageStatusCounts, setShowOnboarding]);
 
   useEffect(() => {
     getUserDetails();
