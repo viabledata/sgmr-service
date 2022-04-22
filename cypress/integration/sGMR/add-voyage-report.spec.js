@@ -102,7 +102,7 @@ describe('Add new voyage plan', () => {
         cy.url().should('include', '/save-voyage/page-submitted');
         cy.get('.govuk-panel__title').should('have.text', 'Pleasure Craft Voyage Plan Submitted');
         cy.navigation('Voyage Plans');
-        cy.checkReports('Submitted', (+numberOfSubmittedReports) + (+1));
+      //  cy.checkReports('Submitted', (+numberOfSubmittedReports) + (+1));
         cy.contains('View existing voyage plans').click();
         cy.get('.govuk-tabs__list li')
             .within(() => {
@@ -147,7 +147,7 @@ describe('Add new voyage plan', () => {
         cy.url().should('include', '/voyage-plans');
         cy.contains('Voyage plan has been successfully cancelled.');
         cy.navigation('Voyage Plans');
-        cy.checkReports('Cancelled', (+numberOfCancelledReports) + (+1));
+     //   cy.checkReports('Cancelled', (+numberOfCancelledReports) + (+1));
         cy.contains('View existing voyage plans').click();
         cy.get('.govuk-tabs__list li')
             .within(() => {

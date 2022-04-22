@@ -1,16 +1,19 @@
 const faker = require('faker');
 
 describe('Edit existing People information in the account', () => {
-    let people;
+    let persons=[];
+    const numberOfPeople=2;
 
     before(() => {
         cy.registerUser();
         cy.login();
         cy.navigation('People');
+        for (let i = 0; i < numberOfPeople; i++) {
         cy.getPersonObj().then((personObj) => {
-            people = personObj;
-            cy.addPeople(people);
+            persons[i] = personObj;
+            cy.addPeople(persons[i]);
         });
+    }
     });
 
     beforeEach(() => {
@@ -22,29 +25,29 @@ describe('Edit existing People information in the account', () => {
     });
 
     it('Should be able to edit existing people information and save', () => {
-        cy.contains('a', people.lastName).click();
+        cy.contains('a', persons[1].lastName).click();
         cy.checkAccessibility();
-        people.firstName = `Auto-${faker.name.firstName()}`;
-        people.lastName = faker.name.lastName();
-        people.personType = 'Employed Crew';
-        people.travelDocType = 'IdentityCard';
-        people.documentNumber = faker.datatype.number();
-        people.issuingState = 'AUS';
-        people.personTypeValue = 'Crew';
+        persons[1].firstName = `Auto-${faker.name.firstName()}`;
+        persons[1].lastName = faker.name.lastName();
+        persons[1].personType = 'Employed Crew';
+        persons[1].travelDocType = 'IdentityCard';
+        persons[1].documentNumber = faker.datatype.number();
+        persons[1].issuingState = 'AUS';
+        persons[1].personTypeValue = 'Crew';
 
         const expectedPerson = [
             {
-                'Last Name': `Last Name${people.lastName}`,
-                'First Name': `First Name${people.firstName}`,
-                'Type': `Type${people.personType}`,
+                'Last Name': `Last Name${persons[1].lastName}`,
+                'First Name': `First Name${persons[1].firstName}`,
+                'Type': `Type${persons[1].personType}`,
             }
         ];
-        cy.get('input[name="firstName"]').clear().type(people.firstName);
-        cy.get('input[name="lastName"]').clear().type(people.lastName);
-        cy.get('[type="radio"]').check(people.personTypeValue).should('be.checked');
-        cy.get('[type="radio"]').check(people.travelDocType).should('be.checked');
-        cy.get('input[name="documentNumber"]').clear().type(people.documentNumber);
-        cy.get('input[name="documentIssuingState"]').clear().type(people.issuingState);
+        cy.get('input[name="firstName"]').clear().type(persons[1].firstName);
+        cy.get('input[name="lastName"]').clear().type(persons[1].lastName);
+        cy.get('[type="radio"]').check(persons[1].personTypeValue).should('be.checked');
+        cy.get('[type="radio"]').check(persons[1].travelDocType).should('be.checked');
+        cy.get('input[name="documentNumber"]').clear().type(persons[1].documentNumber);
+        cy.get('input[name="documentIssuingState"]').clear().type(persons[1].issuingState);
         cy.get('.govuk-button').contains('Add to saved people list').click();
         cy.get('.govuk-error-message').should('not.exist');
 
@@ -53,33 +56,33 @@ describe('Edit existing People information in the account', () => {
             expectedPerson.forEach((item) => expect(peopleData).to.deep.include(item));
         });
 
-        cy.contains('a', people.lastName).click();
+        cy.contains('a', persons[1].lastName).click();
 
-        cy.get('input[name="documentNumber"]').should('have.value', people.documentNumber);
-        cy.get('input[name="documentIssuingState"]').should('have.value', people.issuingState);
+        cy.get('input[name="documentNumber"]').should('have.value', persons[1].documentNumber);
+        cy.get('input[name="documentIssuingState"]').should('have.value', persons[1].issuingState);
         cy.checkAccessibility();
     });
 
     it('Should be able to edit existing people information and NOT save', () => {
-        cy.contains('a', people.lastName).click();
+        cy.contains('a', persons[1].lastName).click();
         cy.checkAccessibility();
-        people.travelDocType = 'Passport';
-        people.documentNumber = faker.datatype.number();
-        people.issuingState = 'CUB';
+        persons[1].travelDocType = 'Passport';
+        persons[1].documentNumber = faker.datatype.number();
+        persons[1].issuingState = 'CUB';
 
         const expectedPerson = [
             {
-                'Last Name': `Last Name${people.lastName}`,
-                'First Name': `First Name${people.firstName}`,
-                'Type': `Type${people.personType}`,
+                'Last Name': `Last Name${persons[1].lastName}`,
+                'First Name': `First Name${persons[1].firstName}`,
+                'Type': `Type${persons[1].personType}`,
             }
         ];
         cy.get('input[name="firstName"]').clear().type(`Auto-${faker.name.firstName()}`);
         cy.get('input[name="lastName"]').clear().type(faker.name.lastName());
-        cy.get('[type="radio"]').check(people.personTypeValue).should('be.checked');
-        cy.get('[type="radio"]').check(people.travelDocType).should('be.checked');
-        cy.get('input[name="documentNumber"]').clear().type(people.documentNumber);
-        cy.get('input[name="documentIssuingState"]').clear().type(people.issuingState);
+        cy.get('[type="radio"]').check(persons[1].personTypeValue).should('be.checked');
+        cy.get('[type="radio"]').check(persons[1].travelDocType).should('be.checked');
+        cy.get('input[name="documentNumber"]').clear().type(persons[1].documentNumber);
+        cy.get('input[name="documentIssuingState"]').clear().type(persons[1].issuingState);
         cy.get('.govuk-link--no-visited-state').click();
         cy.get('.govuk-error-message').should('not.exist');
 
@@ -88,16 +91,16 @@ describe('Edit existing People information in the account', () => {
             expectedPerson.forEach((item) => expect(peopleData).to.deep.include(item));
         });
 
-        cy.contains('a', people.lastName).click();
+        cy.contains('a', persons[1].lastName).click();
 
-        cy.get('input[name="documentNumber"]').should('not.have.value', people.documentNumber);
-        cy.get('input[name="documentIssuingState"]').should('not.have.value', people.issuingState);
+        cy.get('input[name="documentNumber"]').should('not.have.value', persons[1].documentNumber);
+        cy.get('input[name="documentIssuingState"]').should('not.have.value', persons[1].issuingState);
     });
     it('Should be able to delete the added person',()=>{
-        cy.get('tr td:nth-child(1)').contains(people.lastName).click();
+        cy.get('tr td:nth-child(1)').contains(persons[1].lastName).click();
         cy.url().should('include', '/people/edit-person');
-        cy.get('input[name="lastName"]').should('have.value',people.lastName);
-        cy.get('input[name="firstName"]').should('have.value',people.firstName);
+        cy.get('input[name="lastName"]').should('have.value',persons[1].lastName);
+        cy.get('input[name="firstName"]').should('have.value',persons[1].firstName);
         cy.get('.govuk-button--warning').click();
         cy.get('#confirm-yes').check();
         cy.get('.govuk-button').contains('Continue').click()
