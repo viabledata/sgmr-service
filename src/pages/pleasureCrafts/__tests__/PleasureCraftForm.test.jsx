@@ -111,7 +111,7 @@ describe('Creating and editing pleasure craft', () => {
     renderPage({ pageNumber: 2 });
     await waitFor(() => fireEvent.click(screen.getByText('Save')));
     expect(screen.queryAllByText('You must enter a registration number')).toHaveLength(2);
-    expect(screen.queryAllByText('You must select if your pleasure craft has acountry of registration')).toHaveLength(2);
+    expect(screen.queryAllByText('You must select if your pleasure craft has a country of registration')).toHaveLength(2);
     // Waiting on API update: expect(screen.queryAllByText('You must select if the pleasure craft has an Automatic Identification System (AIS)')).toHaveLength(2);
     // Waiting on API update: expect(screen.queryAllByText('You must select if the pleasure craft has a Maritime Mobile Service Identify number (MMSI)')).toHaveLength(2);
     expect(screen.queryAllByText('You must select if the pleasure craft has a call sign')).toHaveLength(2);
@@ -125,7 +125,7 @@ describe('Creating and editing pleasure craft', () => {
     expect(screen.getByText('Country of registration')).toBeInTheDocument();
 
     await waitFor(() => fireEvent.click(screen.getByText('Save')));
-    expect(screen.queryAllByText('You must enter a country of registration')).toHaveLength(2);
+    expect(screen.queryAllByText('You must select a country of registration')).toHaveLength(2);
   });
 
   it('should render errors on save if call sign is YES and other text input is null', async () => {
@@ -165,7 +165,7 @@ describe('Creating and editing pleasure craft', () => {
   it('should store form data in the session for use on refresh', async () => {
     const expectedPage1FormData = '{"pleasureCraftName":"Moonfish","type":"Sailing boat","mooring":"London"}';
     // eslint-disable-next-line max-len
-    const expectedPage2FormData = '{"pleasureCraftName":"Moonfish","type":"Sailing boat","mooring":"London","registrationNumber":"Moonfish123","registrationCountry":"registrationCountryYes","registrationCountryName":"GBR","callSign":"callSignYes","callSignReference":"MoonMoon"}';
+    const expectedPage2FormData = '{"pleasureCraftName":"Moonfish","type":"Sailing boat","mooring":"London","registrationNumber":"Moonfish123","registrationCountry":"registrationCountryNo","callSign":"callSignYes","callSignReference":"MoonMoon"}';
     renderPage({ pageNumber: 1 });
     fireEvent.change(screen.getByLabelText('Name of pleasure craft'), { target: { value: 'Moonfish' } });
     fireEvent.click(screen.getByLabelText('Sailing boat (with or without an engine)'));
@@ -174,8 +174,7 @@ describe('Creating and editing pleasure craft', () => {
 
     renderPage({ pageNumber: 2 });
     fireEvent.change(screen.getByLabelText('Registration number'), { target: { value: 'Moonfish123' } });
-    fireEvent.click(screen.getByTestId('registrationCountryYes'));
-    fireEvent.change(screen.getByLabelText('Country of registration'), { target: { value: 'GBR' } });
+    fireEvent.click(screen.getByTestId('registrationCountryNo'));
     fireEvent.click(screen.getByTestId('callSignYes'));
     fireEvent.change(screen.getByLabelText('Call sign'), { target: { value: 'MoonMoon' } });
     expect(window.sessionStorage.getItem('formData')).toStrictEqual(expectedPage2FormData);
