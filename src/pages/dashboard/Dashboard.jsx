@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { USER_URL, USER_VOYAGE_REPORT_URL, VOYAGE_REPORT_URL } from '../../constants/ApiConstants';
 import { deleteItem, getData } from '../../utils/v2ApiHooks';
-import { pageSizeParam } from '../../lib/config';
 import ErrorSummary from '../../components-v2/ErrorSummary';
 import OnboardingBanner from '../onboarding/OnboardingBanner';
 import WelcomeBanner from '../../components/WelcomeBanner';
@@ -39,20 +38,24 @@ const Dashboard = () => {
     });
   };
 
-  const getReportList = async () => {
-    const validReports = [];
-    const resp = await getData(`${USER_VOYAGE_REPORT_URL}?${pageSizeParam}`);
-    if (!resp.errors) {
-      resp.data.items.map((report) => {
-        if (!report.departureDate && !report.departureTime && !report.departurePort) {
-          deleteItem(`${VOYAGE_REPORT_URL}/${report.id}`);
+  const getReportList = async (currentPage, array) => {
+    const resp = await getData(`${USER_VOYAGE_REPORT_URL}?page=${currentPage}`);
+    const totalPages = resp.data._meta.totalPages;
+
+    if (resp.errors) { setErrors(resp); }
+
+    if (currentPage > totalPages) {
+      calcVoyageCounts(array);
+    } else {
+      currentPage += 1;
+      resp.data.items.map((item) => {
+        if (!item.departureDate && !item.departureTime && !item.departurePort) {
+          deleteItem(`${VOYAGE_REPORT_URL}/${item.id}`);
         } else {
-          validReports.push(report);
+          array.push(item);
         }
       });
-      calcVoyageCounts(validReports);
-    } else {
-      setErrors(resp);
+      getReportList(currentPage, array);
     }
   };
 
@@ -74,7 +77,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     getUserDetails();
-    getReportList();
+    getReportList(1, []);
   }, [setUserData, setVoyageStatusCounts]);
 
   if (errors) { return (<ErrorSummary errors={{ helpError: 'View help page' }} />); }
