@@ -1,0 +1,28 @@
+{
+  "id": "123",
+  "firstName": "Barney",
+  "lastName": "Rubble",
+  "email": "barneysemsil",
+  "mobileNumber": "07590123123",
+  "state": "verified",
+  "dateCreated": "2022-04-22T09:27:57.414204",
+  "lastUpdated": "2022-04-22T09:28:58.983139",
+  "role": {
+    "id": "560bce8a-92f8-4f93-a54f-f562c652266e",
+    "name": "User"
+  },
+  "vessels": [
+    {
+      "id": "1",
+      "vesselName": "Moonfish",
+      "registration": "MOON123",
+      "hullIdentificationNumber": "",
+      "vesselType": "Sailing boat",
+      "portOfRegistry": "",
+      "vesselNationality": "",
+      "moorings": "London",
+      "callsign": ""
+    }
+  ],
+  "people": []
+}

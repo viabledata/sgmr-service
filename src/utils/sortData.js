@@ -1,4 +1,5 @@
 const sortNames = (names) => {
+  if (!names) { return null; }
   return names.sort((a, b) => {
     if (a.lastName.toLowerCase() === b.lastName.toLowerCase()) {
       return a.firstName.toLowerCase() < b.firstName.toLowerCase() ? -1 : 1;
