@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { USER_URL, USER_VOYAGE_REPORT_URL, VOYAGE_REPORT_URL } from '../../constants/ApiConstants';
 import { deleteItem, getData } from '../../utils/v2ApiHooks';
 import { pageSizeParam } from '../../lib/config';
+import ErrorSummary from '../../components-v2/ErrorSummary';
 import OnboardingBanner from '../onboarding/OnboardingBanner';
 import WelcomeBanner from '../../components/WelcomeBanner';
 
 const Dashboard = () => {
   const history = useHistory();
+  const [errors, setErrors] = useState();
   const [showOnboarding, setShowOnboarding] = useState(false);
   const [userData, setUserData] = useState();
   const [voyageStatusCounts, setVoyageStatusCounts] = useState({});
@@ -49,12 +51,18 @@ const Dashboard = () => {
         }
       });
       calcVoyageCounts(validReports);
+    } else {
+      setErrors(resp);
     }
   };
 
   const getUserDetails = async () => {
     const user = await getData(USER_URL);
-    setUserData(user.data);
+    if (!user.errors) {
+      setUserData(user.data);
+    } else {
+      setErrors(user);
+    }
   };
 
   useEffect(() => {
@@ -69,6 +77,7 @@ const Dashboard = () => {
     getReportList();
   }, [setUserData, setVoyageStatusCounts]);
 
+  if (errors) { return (<ErrorSummary errors={{ helpError: 'View help page' }} />); }
   if (!userData || !voyageStatusCounts) { return null; }
   return (
     <div className="govuk-width-container">

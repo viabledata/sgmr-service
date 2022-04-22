@@ -171,5 +171,40 @@ describe('Dashboard', () => {
     expect(screen.getByText('Create a new voyage plan')).toHaveClass('govuk-button');
     expect(screen.getByText('Create a new voyage plan')).not.toHaveClass('govuk-button--secondary');
   });
-  // test api fails
+
+  it('should handle both APIs having failures', async () => {
+    mockAxios
+      .onGet(`${USER_VOYAGE_REPORT_URL}?${pageSizeParam}`)
+      .reply(404, { message: 'testing failures' })
+      .onGet(USER_URL)
+      .reply(500, { message: 'testing failures' });
+
+    await waitFor(() => render(<Router><Dashboard /></Router>));
+    expect(screen.getByText('There is a problem')).toBeInTheDocument();
+    expect(screen.getByText('View help page')).toBeInTheDocument();
+  });
+
+  it('should handle user API having failures', async () => {
+    mockAxios
+      .onGet(`${USER_VOYAGE_REPORT_URL}?${pageSizeParam}`)
+      .reply(200, { items: [] })
+      .onGet(USER_URL)
+      .reply(404, { message: 'testing failures' });
+
+    await waitFor(() => render(<Router><Dashboard /></Router>));
+    expect(screen.getByText('There is a problem')).toBeInTheDocument();
+    expect(screen.getByText('View help page')).toBeInTheDocument();
+  });
+
+  it('should handle voyage API having failures', async () => {
+    mockAxios
+      .onGet(`${USER_VOYAGE_REPORT_URL}?${pageSizeParam}`)
+      .reply(500, { message: 'testing failures' })
+      .onGet(USER_URL)
+      .reply(200, mockedUserWithPeopleAndVessels);
+
+    await waitFor(() => render(<Router><Dashboard /></Router>));
+    expect(screen.getByText('There is a problem')).toBeInTheDocument();
+    expect(screen.getByText('View help page')).toBeInTheDocument();
+  });
 });
