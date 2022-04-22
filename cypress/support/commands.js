@@ -128,7 +128,7 @@ Cypress.Commands.add('enterDepartureDetails', (date, port) => {
   cy.log(port);
   cy.get('input[id="autocomplete"]').clear().type(port);
   cy.wait(5000);
-  cy.get('.comboBoxListItem').find('li').click();
+  cy.get('ul[id=\'listbox--portsCombobox\'] li:nth-child(1)').click();
   cy.wait(2000);
 });
 
@@ -143,7 +143,7 @@ Cypress.Commands.add('enterArrivalDetails', (date, port) => {
   cy.get('input[name="arrivalTimeMinute"]').clear().type(arrivalTime[1]);
   cy.get('#portsCombobox').clear().type(port);
   cy.wait(5000);
-  cy.get('.comboBoxListItem').find('li').click();
+  cy.get('ul[id=\'listbox--portsCombobox\'] li:nth-child(1)').click();
   cy.wait(2000);
 });
 
@@ -366,4 +366,4 @@ Cypress.Commands.add('removeTestData', () => {
 
   sessionStorage.removeItem('token');
 });
-//
+
