@@ -179,7 +179,7 @@ steps:
     NGINX_TAG:
       from_secret: NGINX_TAG
     GOV_NOTIFY_SUPPORT_EMAIL:
-      from_secret: GOV_NOTIFY_SUPPORT_EMAIL
+      from_secret: SPCR_GOV_NOTIFY_SUPPORT_EMAIL
     SGMR_DATA_API_BASE_URL:
       from_secret: DEV_SPCR_DATA_API_BASE_URL
     SGMR_MAINTENANCE:
@@ -271,7 +271,7 @@ steps:
     NGINX_TAG:
       from_secret: NGINX_TAG
     GOV_NOTIFY_SUPPORT_EMAIL:
-      from_secret: GOV_NOTIFY_SUPPORT_EMAIL
+      from_secret: SPCR_GOV_NOTIFY_SUPPORT_EMAIL
     SGMR_DATA_API_BASE_URL:
       from_secret: STAGING_SPCR_DATA_API_BASE_URL
     SGMR_MAINTENANCE:
@@ -316,7 +316,7 @@ steps:
     NGINX_TAG:
       from_secret: NGINX_TAG
     GOV_NOTIFY_SUPPORT_EMAIL:
-      from_secret: GOV_NOTIFY_SUPPORT_EMAIL
+      from_secret: SPCR_GOV_NOTIFY_SUPPORT_EMAIL
     SGMR_DATA_API_BASE_URL:
       from_secret: PRODUCTION_SPCR_DATA_API_BASE_URL
     SGMR_MAINTENANCE:
