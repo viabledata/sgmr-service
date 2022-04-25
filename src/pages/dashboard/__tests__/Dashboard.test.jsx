@@ -5,7 +5,6 @@ import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 
 import { USER_URL, USER_VOYAGE_REPORT_URL } from '../../../constants/ApiConstants';
-import { pageSizeParam } from '../../../lib/config';
 import mockedNewUser from '../../__fixtures__/NewUser.fixture.json';
 import mockedUserWithPeople from '../../__fixtures__/UserWithPeople.fixture.json';
 import mockedUserWithPeopleAndVessels from '../../__fixtures__/UserWithPeopleAndVessels.fixture.json';
@@ -20,10 +19,13 @@ describe('Dashboard', () => {
     mockAxios.reset();
   });
 
+  // mock pages for pagination
+  const currentPage = 1;
+
   it('should load with common content', async () => {
     mockAxios
-      .onGet(`${USER_VOYAGE_REPORT_URL}?${pageSizeParam}`)
-      .reply(200, { items: [] })
+      .onGet(`${USER_VOYAGE_REPORT_URL}?page=${currentPage}`)
+      .reply(200, mockedVoyageReports)
       .onGet(USER_URL)
       .reply(200, mockedNewUser);
 
@@ -38,8 +40,8 @@ describe('Dashboard', () => {
 
   it('should show 0 counts of your voyages when there are none', async () => {
     mockAxios
-      .onGet(`${USER_VOYAGE_REPORT_URL}?${pageSizeParam}`)
-      .reply(200, { items: [] })
+      .onGet(`${USER_VOYAGE_REPORT_URL}?page=${currentPage}`)
+      .reply(200, { items: [], _meta: { totalPages: 1 } })
       .onGet(USER_URL)
       .reply(200, mockedNewUser);
 
@@ -53,7 +55,22 @@ describe('Dashboard', () => {
 
   it('should show the counts of your voyages', async () => {
     mockAxios
-      .onGet(`${USER_VOYAGE_REPORT_URL}?${pageSizeParam}`)
+      .onGet(`${USER_VOYAGE_REPORT_URL}?page=${currentPage}`)
+      .reply(200, mockedVoyageReports)
+      .onGet(USER_URL)
+      .reply(200, mockedNewUser);
+
+    await waitFor(() => render(<Router><Dashboard /></Router>));
+    expect(screen.getByTestId('draft-count')).toHaveTextContent(3);
+    // Count should include Submitted, PreSubmitted and Failed reports
+    expect(screen.getByTestId('submitted-count')).toHaveTextContent(5);
+    // Count should include Cancelled and PreCancelled
+    expect(screen.getByTestId('cancelled-count')).toHaveTextContent(2);
+  });
+
+  it('should show the counts of your voyages when there are more than one page worth', async () => {
+    mockAxios
+      .onGet(`${USER_VOYAGE_REPORT_URL}?page=${currentPage}`)
       .reply(200, mockedVoyageReports)
       .onGet(USER_URL)
       .reply(200, mockedNewUser);
@@ -69,8 +86,8 @@ describe('Dashboard', () => {
   it('should show onboarding section when conditions are met', async () => {
     // conditions: user has no people, user has no vessels, voyage has no reports
     mockAxios
-      .onGet(`${USER_VOYAGE_REPORT_URL}?${pageSizeParam}`)
-      .reply(200, { items: [] })
+      .onGet(`${USER_VOYAGE_REPORT_URL}?page=${currentPage}`)
+      .reply(200, { items: [], _meta: { totalPages: 1 } })
       .onGet(USER_URL)
       .reply(200, mockedNewUser);
 
@@ -85,7 +102,7 @@ describe('Dashboard', () => {
   it('should NOT show onboarding section when voyage reports exist', async () => {
     // condition tested: user has no people, user has no vessels, voyage HAS reports
     mockAxios
-      .onGet(`${USER_VOYAGE_REPORT_URL}?${pageSizeParam}`)
+      .onGet(`${USER_VOYAGE_REPORT_URL}?page=${currentPage}`)
       .reply(200, mockedVoyageReports)
       .onGet(USER_URL)
       .reply(200, mockedNewUser);
@@ -101,8 +118,8 @@ describe('Dashboard', () => {
   it('should NOT show onboarding section when vessels exist', async () => {
     // conditions: user has no people, user HAS vessels, voyage has no reports
     mockAxios
-      .onGet(`${USER_VOYAGE_REPORT_URL}?${pageSizeParam}`)
-      .reply(200, { items: [] })
+      .onGet(`${USER_VOYAGE_REPORT_URL}?page=${currentPage}`)
+      .reply(200, { items: [], _meta: { totalPages: 1 } })
       .onGet(USER_URL)
       .reply(200, mockedUserWithVessels);
 
@@ -117,8 +134,8 @@ describe('Dashboard', () => {
   it('should NOT show onboarding section when people exist', async () => {
     // conditions: user HAS people, user has no vessels, voyage has no reports
     mockAxios
-      .onGet(`${USER_VOYAGE_REPORT_URL}?${pageSizeParam}`)
-      .reply(200, { items: [] })
+      .onGet(`${USER_VOYAGE_REPORT_URL}?page=${currentPage}`)
+      .reply(200, { items: [], _meta: { totalPages: 1 } })
       .onGet(USER_URL)
       .reply(200, mockedUserWithPeople);
 
@@ -133,7 +150,7 @@ describe('Dashboard', () => {
   it('should NOT show onboarding section when people, vessels, and voyages exist', async () => {
     // conditions: user HAS people, user has no vessels, voyage has no reports
     mockAxios
-      .onGet(`${USER_VOYAGE_REPORT_URL}?${pageSizeParam}`)
+      .onGet(`${USER_VOYAGE_REPORT_URL}?page=${currentPage}`)
       .reply(200, mockedVoyageReports)
       .onGet(USER_URL)
       .reply(200, mockedUserWithPeopleAndVessels);
@@ -149,8 +166,8 @@ describe('Dashboard', () => {
   it('should show the create a new voyage plan button as a secondary button when onboarding is true', async () => {
     // conditions: user has no people, user HAS vessels, voyage has no reports
     mockAxios
-      .onGet(`${USER_VOYAGE_REPORT_URL}?${pageSizeParam}`)
-      .reply(200, { items: [] })
+      .onGet(`${USER_VOYAGE_REPORT_URL}?page=${currentPage}`)
+      .reply(200, { items: [], _meta: { totalPages: 1 } })
       .onGet(USER_URL)
       .reply(200, mockedNewUser);
 
@@ -162,8 +179,8 @@ describe('Dashboard', () => {
   it('should show the create a new voyage plan button as a primary button when onboarding is true', async () => {
     // conditions: user has no people, user HAS vessels, voyage has no reports
     mockAxios
-      .onGet(`${USER_VOYAGE_REPORT_URL}?${pageSizeParam}`)
-      .reply(200, { items: [] })
+      .onGet(`${USER_VOYAGE_REPORT_URL}?page=${currentPage}`)
+      .reply(200, { items: [], _meta: { totalPages: 1 } })
       .onGet(USER_URL)
       .reply(200, mockedUserWithPeopleAndVessels);
 
@@ -174,7 +191,7 @@ describe('Dashboard', () => {
 
   it('should handle both APIs having failures', async () => {
     mockAxios
-      .onGet(`${USER_VOYAGE_REPORT_URL}?${pageSizeParam}`)
+      .onGet(`${USER_VOYAGE_REPORT_URL}?page=${currentPage}`)
       .reply(404, { message: 'testing failures' })
       .onGet(USER_URL)
       .reply(500, { message: 'testing failures' });
@@ -186,8 +203,8 @@ describe('Dashboard', () => {
 
   it('should handle user API having failures', async () => {
     mockAxios
-      .onGet(`${USER_VOYAGE_REPORT_URL}?${pageSizeParam}`)
-      .reply(200, { items: [] })
+      .onGet(`${USER_VOYAGE_REPORT_URL}?page=${currentPage}`)
+      .reply(200, { items: [], _meta: { totalPages: 1 } })
       .onGet(USER_URL)
       .reply(404, { message: 'testing failures' });
 
@@ -198,7 +215,7 @@ describe('Dashboard', () => {
 
   it('should handle voyage API having failures', async () => {
     mockAxios
-      .onGet(`${USER_VOYAGE_REPORT_URL}?${pageSizeParam}`)
+      .onGet(`${USER_VOYAGE_REPORT_URL}?page=${currentPage}`)
       .reply(500, { message: 'testing failures' })
       .onGet(USER_URL)
       .reply(200, mockedUserWithPeopleAndVessels);

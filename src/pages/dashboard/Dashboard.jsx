@@ -38,24 +38,26 @@ const Dashboard = () => {
     });
   };
 
-  const getReportList = async (currentPage, array) => {
-    const resp = await getData(`${USER_VOYAGE_REPORT_URL}?page=${currentPage}`);
-    const totalPages = resp.data._meta.totalPages;
+  const getReportList = async (currentPage, array, totalPages) => {
+    const lastPage = !totalPages ? 1 : totalPages;
 
-    if (resp.errors) { setErrors(resp); }
-
-    if (currentPage > totalPages) {
+    if (currentPage > lastPage) {
       calcVoyageCounts(array);
     } else {
-      currentPage += 1;
-      resp.data.items.map((item) => {
-        if (!item.departureDate && !item.departureTime && !item.departurePort) {
-          deleteItem(`${VOYAGE_REPORT_URL}/${item.id}`);
-        } else {
-          array.push(item);
-        }
-      });
-      getReportList(currentPage, array);
+      const resp = await getData(`${USER_VOYAGE_REPORT_URL}?page=${currentPage}`);
+      if (!resp.errors) {
+        resp.data.items.map((item) => {
+          if (!item.departureDate && !item.departureTime && !item.departurePort) {
+            deleteItem(`${VOYAGE_REPORT_URL}/${item.id}`);
+          } else {
+            array.push(item);
+          }
+        });
+        const nextPage = currentPage + 1;
+        getReportList(nextPage, array, resp.data._meta.totalPages);
+      } else {
+        setErrors(resp);
+      }
     }
   };
 
